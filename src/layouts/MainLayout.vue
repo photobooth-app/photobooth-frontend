@@ -17,7 +17,7 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label header> Links </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -36,69 +36,44 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-//import LineChart from "../components/LineChart.vue";
 
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
+    title: "Photobooth",
+    caption: "Main Program",
+    icon: "home",
+    link: "#",
   },
   {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
+    title: "Gallery",
+    caption: "show all media",
+    icon: "picture",
+    link: "#gallery",
   },
   {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
+    title: "Admin",
+    caption: "admin area",
+    icon: "admin",
+    link: "#admin",
   },
   {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
+    title: "Playground",
+    caption: "used for testing",
+    icon: "testing",
+    link: "#playground",
   },
   {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
+    title: "API docs",
+    caption: "fastapi automatic documentation",
+    icon: "testing",
+    link: "/docs",
   },
 ];
 
 export default defineComponent({
   name: "MainLayout",
-  computed: {
-    datasetsfull() {
-      return {
-        datasets: [
-          {
-            label: "Force",
-            backgroundColor: "#f87979",
-            data: this.store.graph.data,
-          },
-        ],
-      };
-    },
-  },
-  components: { EssentialLink /*LineChart*/ },
+
+  components: { EssentialLink },
 
   setup() {
     const leftDrawerOpen = ref(false);
