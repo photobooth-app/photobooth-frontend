@@ -39,7 +39,8 @@
     ><br />
 
     <div>
-      Latest LocationService results: <span id="locationservice"></span>
+      Latest LocationService results:
+      <span id="locationservice">{{ this.store.stats.geolocation }}</span>
       <a target="_new" id="mapslink" href="#">open in maps</a>
     </div>
     <form target="_blank" method="post" action="/cmd/capture">
@@ -61,25 +62,14 @@
 import { ref } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
-
-const socket = new WebSocket("ws://photobooth:8001");
-socket.addEventListener("open", function (event) {
-  socket.send("Connection Established");
-});
-
-socket.addEventListener("message", function (event) {
-  console.log(event.data);
-});
+import { useMainStore } from "../stores/main-store.js";
 
 export default {
   // name: 'PageName',
   setup() {
     const $q = useQuasar();
     const data = ref(null);
-
-    function contactServer() {
-      socket.send("Initialize");
-    }
+    const store = useMainStore();
 
     function loadData(url) {
       api
@@ -93,7 +83,7 @@ export default {
         });
     }
 
-    return { data, loadData, contactServer };
+    return { data, loadData, store };
   },
 };
 </script>
