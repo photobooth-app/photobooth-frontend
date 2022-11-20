@@ -23,18 +23,24 @@ export default defineComponent({
       .on("message", (message, lastEventId) => {
         console.info(message, lastEventId);
         this.store.messages = [
-          `${message} (Msg received, lastEventId: ${lastEventId})`,
+          `${message} (#${lastEventId})`,
           ...this.store.messages.slice(0, 10),
         ];
       }) // "message" and "" and null equal!
       .on("error", (err) =>
         console.error("Failed to parse or lost connection:", err)
       )
-      .on("stats/focuser", (focuser) => {
-        this.store.stats.focuser = focuser;
+      .on("autofocus/sharpness", (focuser) => {
+        this.store.stats.sharpness = JSON.parse(focuser);
       })
-      .on("stats/geolocation", (geolocation) => {
-        this.store.stats.geolocation = geolocation;
+      .on("frameserver/metadata", (metadata) => {
+        this.store.stats.metadata = JSON.parse(metadata);
+      })
+      .on("locationservice/geolocation", (geolocation) => {
+        this.store.stats.geolocation = JSON.parse(geolocation);
+      })
+      .on("config/currentconfig", (currentconfig) => {
+        this.store.serverConfig = JSON.parse(currentconfig);
       })
       .on("ping", (value) => {
         //last SSE ping
@@ -44,9 +50,7 @@ export default defineComponent({
       .then((sse) => {
         console.log("SSE connected!");
       })
-      .catch((err) =>
-        console.error("Failed make initial SSE connection:", err)
-      );
+      .catch((err) => console.error("Failed make SSE connection:", err));
   },
 });
 </script>

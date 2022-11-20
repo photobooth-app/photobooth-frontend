@@ -9,6 +9,17 @@ import axios from "axios";
 // for each client)
 const api = axios.create({ baseURL: "/" });
 
+function remoteProcedureCall(url) {
+  api
+    .get(url)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch(() => {
+      console.log("error");
+    });
+}
+
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
@@ -21,4 +32,4 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-export { api };
+export { api, remoteProcedureCall };

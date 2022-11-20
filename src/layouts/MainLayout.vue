@@ -11,13 +11,13 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Photobooth Imageserver </q-toolbar-title>
+        <q-toolbar-title>qPhotobooth</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Links </q-item-label>
+        <q-item-label header> Navigation </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -41,31 +41,37 @@ const linksList = [
   {
     title: "Photobooth",
     caption: "Main Program",
-    icon: "home",
+    icon: "photo_camera",
     link: "#",
   },
   {
     title: "Gallery",
     caption: "show all media",
-    icon: "picture",
+    icon: "photo_library",
     link: "#gallery",
+  },
+  {
+    title: "Status",
+    caption: "Additional information",
+    icon: "insights",
+    link: "#status",
   },
   {
     title: "Admin",
     caption: "admin area",
-    icon: "admin",
+    icon: "settings",
     link: "#admin",
   },
   {
     title: "Playground",
     caption: "used for testing",
-    icon: "testing",
+    icon: "quiz",
     link: "#playground",
   },
   {
     title: "API docs",
     caption: "fastapi automatic documentation",
-    icon: "testing",
+    icon: "description",
     link: "/docs",
   },
 ];
