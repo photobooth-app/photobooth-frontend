@@ -3,8 +3,8 @@
     <q-card style="" class="q-pa-md">
       <div class="text-h6">Dashboard</div>
       autofocus timer:
-      <q-btn label="on" @click="loadData('/cmd/autofocus/on')" />
-      <q-btn label="off" @click="loadData('/cmd/autofocus/off')" />
+      <q-btn label="on" @click="remoteProcedureCall('/cmd/autofocus/on')" />
+      <q-btn label="off" @click="remoteProcedureCall('/cmd/autofocus/off')" />
       <br /><br />
     </q-card>
     <q-card class="q-pa-md q-mt-md">
@@ -76,6 +76,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useMainStore } from "../stores/main-store.js";
+import { remoteProcedureCall } from "boot/axios";
 
 export default defineComponent({
   name: "MainLayout",
@@ -87,6 +88,7 @@ export default defineComponent({
     return {
       // you can return the whole store instance to use it in the template
       store,
+      remoteProcedureCall,
     };
   },
 });
