@@ -1,5 +1,55 @@
 <template>
   <q-page padding>
+    <div class="q-pa-md">
+      <q-carousel
+        swipeable
+        animated
+        v-model="slide"
+        thumbnails
+        infinite
+        :autoplay="autoplay"
+        draggable="false"
+        arrows
+        transition-prev="slide-right"
+        transition-next="slide-left"
+      >
+        <q-carousel-slide
+          :name="1"
+          img-src="https://cdn.quasar.dev/img/mountains.jpg"
+        />
+        <q-carousel-slide
+          :name="2"
+          img-src="https://cdn.quasar.dev/img/parallax1.jpg"
+        />
+        <q-carousel-slide
+          :name="3"
+          img-src="https://cdn.quasar.dev/img/parallax2.jpg"
+        />
+        <q-carousel-slide
+          :name="4"
+          img-src="https://cdn.quasar.dev/img/quasar.jpg"
+        /><q-carousel-slide
+          :name="4"
+          img-src="https://cdn.quasar.dev/img/quasar.jpg"
+        /><q-carousel-slide
+          :name="4"
+          img-src="https://cdn.quasar.dev/img/quasar.jpg"
+        /><q-carousel-slide
+          :name="4"
+          img-src="https://cdn.quasar.dev/img/quasar.jpg"
+        /><q-carousel-slide
+          :name="4"
+          img-src="https://cdn.quasar.dev/img/quasar.jpg"
+        /><q-carousel-slide
+          :name="4"
+          img-src="https://cdn.quasar.dev/img/quasar.jpg"
+        /><q-carousel-slide
+          :name="4"
+          img-src="https://cdn.quasar.dev/img/quasar.jpg"
+        />
+      </q-carousel>
+    </div>
+
     capture:
     <a id="countdown" href="javascript:cmdGet('/cmd/infoled/countdown')"
       >countdown</a
@@ -44,7 +94,7 @@ export default {
         });
     }
 
-    return { loadData, store };
+    return { loadData, store, slide: ref(1), autoplay: ref(false) };
   },
 };
 </script>
