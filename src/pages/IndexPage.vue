@@ -1,8 +1,16 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-none column items-stretch">
     <img
       src="stream.mjpg"
-      style="width: 100%; height: 100%; object-fit: cover"
+      class="col"
+      style="
+        min-width: 100%;
+        min-height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+        object-position: center;
+      "
     />
     <q-page-sticky position="bottom" :offset="[0, 25]">
       <div class="q-gutter-sm">
