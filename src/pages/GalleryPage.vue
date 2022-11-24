@@ -16,7 +16,7 @@
             :ratio="1"
           >
             <div class="absolute-bottom text-subtitle2">
-              #{{ index }}: {{ this.store.gallery.images[0].thumbnail }}
+              #{{ index }}: {{ this.store.gallery.images[index].thumbnail }}
             </div>
           </q-img>
         </q-card>
