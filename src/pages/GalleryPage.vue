@@ -10,13 +10,13 @@
       >
         <q-card class="q-ma-sm" @click="openPic(index)">
           <q-img
-            :src="getPic(index)"
+            :src="getImageDetail(index)"
             loading="lazy"
             spinner-color="white"
             :ratio="1"
           >
             <div class="absolute-bottom text-subtitle2">
-              #{{ index }}: {{ this.store.gallery.images[index].thumbnail }}
+              #{{ index }}: {{ this.store.gallery.images[index].caption }}
             </div>
           </q-img>
         </q-card>
@@ -36,12 +36,12 @@
             <q-img
               spinner-color="white"
               loading="lazy"
-              :src="getPic(this.selected)"
+              :src="getImageDetail(this.selected, 'preview')"
               style="max-width: 100%; max-height: 100%"
               fit="contain"
             >
               <div class="absolute-top-left text-subtitle2">
-                {{ this.store.gallery.images[0].thumbnail }}
+                {{ this.store.gallery.images[this.selected].caption }}
               </div>
             </q-img>
           </q-card-section>
@@ -59,14 +59,22 @@
               <q-icon left size="5em" name="close" />
               <div>Close</div>
             </q-btn>
-            <q-btn color="primary" no-caps to="">
+            <vue-qrcode
+              :value="getImageDetail(this.selected, 'ext_download_url')"
+            />
+            <q-btn
+              color="primary"
+              no-caps
+              target="_blank"
+              :href="getImageDetail(this.selected, 'image')"
+            >
               <q-icon left size="5em" name="download" />
               <div>Download</div>
             </q-btn>
-            <q-btn color="primary" no-caps to="">
+            <!--<q-btn color="primary" no-caps to="">
               <q-icon left size="5em" name="qr_code" />
               <div>Download</div>
-            </q-btn>
+            </q-btn>-->
             <q-btn color="primary" no-caps to="">
               <q-icon left size="5em" name="delete" />
               <div>Delete</div>
@@ -86,9 +94,13 @@
 <script>
 import { useMainStore } from "../stores/main-store.js";
 import { ref } from "vue";
+import VueQrcode from "vue-qrcode";
 
 export default {
   // name: 'PageName',
+  components: {
+    VueQrcode,
+  },
   setup() {
     const store = useMainStore();
 
@@ -110,8 +122,8 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    getPic(index, type = "thumbnail") {
-      return this.store.gallery.images[index][type];
+    getImageDetail(index, detail = "thumbnail") {
+      return this.store.gallery.images[index][detail];
     },
     openPic(index = 0) {
       this.selected = index;

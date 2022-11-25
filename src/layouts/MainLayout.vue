@@ -1,96 +1,35 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>qPhotobooth</q-toolbar-title>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Navigation </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
+  <q-layout view="hHh lpR fFf" class="bg-image">
     <q-page-container>
       <router-view />
+      <q-page-sticky
+        v-show="isSubPageDisplayHomebutton"
+        position="top-left"
+        :offset="[25, 25]"
+      >
+        <div class="q-gutter-sm">
+          <q-btn color="primary" no-caps to="/">
+            <q-icon left size="5em" name="arrow_back_ios_new" />
+            <div>Start</div>
+          </q-btn>
+        </div>
+      </q-page-sticky>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-import EssentialLink from "components/EssentialLink.vue";
-
-const linksList = [
-  {
-    title: "Photobooth",
-    caption: "Main Program",
-    icon: "photo_camera",
-    link: "#",
-  },
-  {
-    title: "Gallery",
-    caption: "show all media",
-    icon: "photo_library",
-    link: "#gallery",
-  },
-  {
-    title: "Status",
-    caption: "Additional information",
-    icon: "insights",
-    link: "#status",
-  },
-  {
-    title: "Admin",
-    caption: "admin area",
-    icon: "settings",
-    link: "#admin",
-  },
-  {
-    title: "Playground",
-    caption: "used for testing",
-    icon: "quiz",
-    link: "#playground",
-  },
-  {
-    title: "API docs",
-    caption: "fastapi automatic documentation",
-    icon: "description",
-    link: "/docs",
-  },
-];
 
 export default defineComponent({
   name: "MainLayout",
 
-  components: { EssentialLink },
-
-  setup() {
-    const leftDrawerOpen = ref(false);
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-    };
+  components: {},
+  computed: {
+    isSubPageDisplayHomebutton() {
+      return this.$route.path != "/" ? true : false;
+    },
   },
+  setup() {},
 });
 </script>

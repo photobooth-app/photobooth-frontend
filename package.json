@@ -16,9 +16,11 @@
     "chart.js": "^4.0.1",
     "core-js": "^3.6.5",
     "pinia": "^2.0.11",
+    "qrcode": "^1.5.1",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
     "vue-chartjs": "^4.1.2",
+    "vue-qrcode": "^2.2.0",
     "vue-router": "^4.0.0",
     "vue-sse": "^2.5.2"
   },
