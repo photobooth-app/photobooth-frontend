@@ -1,43 +1,20 @@
 <template>
   <q-page class="q-pa-none column items-stretch">
-    <div
-      id="preview-stream"
-      class="col"
-      style="background: no-repeat center/100% url('stream.mjpg')"
-    >
-      <!--<img
-      src="stream.mjpg"
-      class="col"
-      style="
-        min-width: 100%;
-        min-height: 100%;
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: cover;
-        object-position: center;
-      "
-    />-->
-      <q-circular-progress
-        show-value
-        class="text-light-blue q-ma-md"
-        :value="timerCount"
-        min="0"
-        max="5"
-        reverse
-        size="150px"
-        color="light-blue"
-      />
+    <div id="preview-stream" style="background-image: url('stream.mjpg')">
+      <countdown-timer
+        ref="countdowntimer"
+        :duration="5"
+        :countdownOffset="0.5"
+      ></countdown-timer>
+
+      <div
+        style="position: absolute; width: 100%; height: 100%"
+        id="frontpage_text"
+        v-html="store.serverConfig['UI_FRONTPAGE_TEXT']"
+      ></div>
       <q-page-sticky position="bottom" :offset="[0, 25]">
         <div class="q-gutter-sm">
           <q-btn color="primary" no-caps @click="takePicture()">
-            <q-icon left size="5em" name="photo_camera" />
-            <div>Countdown</div>
-          </q-btn>
-          <q-btn
-            color="primary"
-            no-caps
-            @click="remoteProcedureCall('/cmd/capture')"
-          >
             <q-icon left size="5em" name="photo_camera" />
             <div>Take<br />Picture!</div>
           </q-btn>
@@ -60,47 +37,33 @@ import { defineComponent } from "vue";
 import { ref } from "vue";
 import { api, remoteProcedureCall } from "boot/axios";
 import { useQuasar } from "quasar";
-
-function cmdGet(url) {
-  $.get(url, function (data) {
-    console.log(data);
-  });
-}
+import { useMainStore } from "../stores/main-store.js";
+import CountdownTimer from "../components/CountdownTimer";
 
 export default defineComponent({
-  data() {
-    return {
-      timerCount: 5,
-    };
-  },
+  components: { CountdownTimer },
 
-  watch: {
-    timerCount: {
-      handler(value) {
-        if (value > 0) {
-          setTimeout(() => {
-            this.timerCount--;
-          }, 1000);
-        }
-      },
-      immediate: false, // This ensures the watcher is triggered upon creation
-    },
-  },
   setup() {
     const $q = useQuasar();
-
-    return { remoteProcedureCall };
+    const store = useMainStore();
+    const countdowntimer = ref(null);
+    function takePicture() {
+      const countdowntimerRef = countdowntimer.value;
+      countdowntimerRef.startTimer();
+      remoteProcedureCall("/chose/1pic");
+    }
+    return { store, remoteProcedureCall, countdowntimer, takePicture };
   },
+  /*
   methods: {
     takePicture() {
-      this.timerCount = 4;
-      remoteProcedureCall("/cmd/arm/countdown");
-
-      // when countdown is 0, pic shall be taken. --> controlled by server, not client. remoteProcedureCall('/cmd/capture')
+      //this.countdownTimer.startTimer();
+      //this.countdowntimer.duration = 5;
+      const countdowntimerRef = countdowntimer.value;
+      countdowntimerRef.startTimer();
+      remoteProcedureCall("/chose/1pic");
     },
-  },
+  },*/
   computed: {},
-  name: "IndexPage",
-  components: {},
 });
 </script>

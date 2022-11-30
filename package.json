@@ -1,9 +1,9 @@
 {
-  "name": "imageserver_frontend",
+  "name": "qPhotobooth",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "imageserver frontend",
-  "author": "Michael <michael@groene.de>",
+  "description": "qPhotobooth",
+  "productName": "qPhotobooth",
+  "author": "Michael Gröne <michael@groene.de>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",

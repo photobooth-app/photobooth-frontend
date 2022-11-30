@@ -24,7 +24,7 @@ export default defineComponent({
         console.info(message, lastEventId);
         this.store.messages = [
           `${message} (#${lastEventId})`,
-          ...this.store.messages.slice(0, 10),
+          ...this.store.messages.slice(0, 20),
         ];
       }) // "message" and "" and null equal!
       .on("error", (err) =>
@@ -35,6 +35,12 @@ export default defineComponent({
       })
       .on("frameserver/metadata", (metadata) => {
         this.store.stats.metadata = JSON.parse(metadata);
+      })
+      .on("statemachine/processinfo", (procinfo) => {
+        const _procinfo = JSON.parse(procinfo);
+        console.log(_procinfo);
+        this.store.statemachine.countdown = _procinfo["countdown"];
+        this.store.statemachine.state = _procinfo["state"];
       })
       .on("locationservice/geolocation", (geolocation) => {
         this.store.stats.geolocation = JSON.parse(geolocation);

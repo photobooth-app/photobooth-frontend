@@ -152,11 +152,11 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `imageserver frontend`,
-        short_name: `imageserver frontend`,
-        description: `A Quasar Project`,
+        name: `qPhotobooth`,
+        short_name: `qPhotobooth`,
+        description: `qPhotobooth`,
         display: "standalone",
-        orientation: "portrait",
+        orientation: "landscape",
         background_color: "#ffffff",
         theme_color: "#027be3",
         icons: [
