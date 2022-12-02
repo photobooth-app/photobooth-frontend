@@ -46,24 +46,16 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
     const store = useMainStore();
-    const countdowntimer = ref(null);
-    function takePicture() {
-      const countdowntimerRef = countdowntimer.value;
-      countdowntimerRef.startTimer();
-      remoteProcedureCall("/chose/1pic");
-    }
-    return { store, remoteProcedureCall, countdowntimer, takePicture };
+
+    return { store, remoteProcedureCall };
   },
-  /*
+
   methods: {
     takePicture() {
-      //this.countdownTimer.startTimer();
-      //this.countdowntimer.duration = 5;
-      const countdowntimerRef = countdowntimer.value;
-      countdowntimerRef.startTimer();
+      this.$refs.countdowntimer.startTimer(); //https://vuejs.org/guide/essentials/template-refs.html#ref-on-component
       remoteProcedureCall("/chose/1pic");
     },
-  },*/
+  },
   computed: {},
 });
 </script>
