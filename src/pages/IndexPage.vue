@@ -1,17 +1,24 @@
 <template>
-  <q-page class="q-pa-none column items-stretch">
-    <div id="preview-stream" style="background-image: url('stream.mjpg')">
+  <q-page class="q-pa-none column">
+    <div
+      id="preview-stream"
+      style="background-image: url('stream.mjpg')"
+      class="full-width column justify-center content-center"
+    >
       <countdown-timer
         ref="countdowntimer"
-        :duration="5"
+        :duration="3"
+        :remainingSeconds="countdown"
         :countdownOffset="0.5"
       ></countdown-timer>
 
       <div
+        v-show="showFrontpage"
         style="position: absolute; width: 100%; height: 100%"
         id="frontpage_text"
         v-html="store.serverConfig['UI_FRONTPAGE_TEXT']"
       ></div>
+
       <q-page-sticky position="bottom" :offset="[0, 25]">
         <div class="q-gutter-sm">
           <q-btn color="primary" no-caps @click="takePicture()">
@@ -52,10 +59,22 @@ export default defineComponent({
 
   methods: {
     takePicture() {
-      this.$refs.countdowntimer.startTimer(); //https://vuejs.org/guide/essentials/template-refs.html#ref-on-component
       remoteProcedureCall("/chose/1pic");
     },
   },
-  computed: {},
+  computed: {
+    countdown: {
+      get() {
+        return this.store.statemachine.countdown
+          ? this.store.statemachine.countdown
+          : 0;
+      },
+    },
+    showFrontpage: {
+      get() {
+        return this.store.statemachine.state == "idle";
+      },
+    },
+  },
 });
 </script>

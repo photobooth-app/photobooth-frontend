@@ -28,20 +28,15 @@ export default defineComponent({
   name: "CountdownTimer",
 
   data() {
-    return {
-      remainingSeconds: 0.0,
-      timerFinished: true,
-    };
+    return {};
   },
-  watch: {
-    letsseewhetherweneed: function () {},
-  },
+  watch: {},
   computed: {
     totalDuration() {
       return +this.duration + +this.countdownOffset;
     },
     showBox() {
-      return !this.timerFinished;
+      return this.remainingSeconds > 0;
     },
     showCountdown() {
       return +this.remainingSeconds >= this.messageDuration;
@@ -50,34 +45,13 @@ export default defineComponent({
       return !this.showCountdown;
     },
   },
-  mounted() {
-    //this.startTimer();
-  },
-  beforeUnmounted() {
-    clearInterval(this.intervalId);
-  },
-  methods: {
-    startTimer() {
-      var timer = this.totalDuration;
-
-      this.timerFinished = false;
-      this.intervalId = setInterval(() => {
-        this.remainingSeconds = Number.parseFloat(
-          Number.parseFloat(timer).toFixed(1)
-        );
-        if (timer >= 0) {
-          timer -= 0.01;
-        } else {
-          timer = 0;
-
-          this.timerFinished = true;
-
-          clearInterval(this.intervalId);
-        }
-      }, 10);
-    },
-  },
+  methods: {},
   props: {
+    remainingSeconds: {
+      type: Number,
+      required: true,
+    },
+
     duration: {
       type: Number,
       required: true,
