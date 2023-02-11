@@ -1,6 +1,9 @@
 <template>
   <q-page padding>
     <div class="q-pa-md">
+      <q-btn color="purple" @click="showNotif" label="Show Notification" />
+    </div>
+    <div class="q-pa-md">
       <q-carousel
         swipeable
         animated
@@ -94,7 +97,18 @@ export default {
         });
     }
 
-    return { loadData, store, slide: ref(1), autoplay: ref(false) };
+    return {
+      loadData,
+      store,
+      slide: ref(1),
+      autoplay: ref(false),
+      showNotif() {
+        $q.notify({
+          message: "Jim pinged you.",
+          color: "purple",
+        });
+      },
+    };
   },
 };
 </script>

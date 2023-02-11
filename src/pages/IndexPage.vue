@@ -16,7 +16,7 @@
         v-show="showFrontpage"
         style="position: absolute; width: 100%; height: 100%"
         id="frontpage_text"
-        v-html="store.serverConfig['UI_FRONTPAGE_TEXT']"
+        v-html="store.serverConfig.personalize['UI_FRONTPAGE_TEXT']"
       ></div>
 
       <q-page-sticky position="bottom" :offset="[0, 25]">
@@ -71,6 +71,11 @@ export default defineComponent({
       },
     },
     showFrontpage: {
+      get() {
+        return this.store.statemachine.state == "idle";
+      },
+    },
+    newItemReceived: {
       get() {
         return this.store.statemachine.state == "idle";
       },

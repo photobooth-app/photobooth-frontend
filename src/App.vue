@@ -24,7 +24,7 @@ export default defineComponent({
         console.info(message, lastEventId);
         this.store.messages = [
           `${message} (#${lastEventId})`,
-          ...this.store.messages.slice(0, 20),
+          ...this.store.messages.slice(0, 19),
         ];
       }) // "message" and "" and null equal!
       .on("error", (err) =>
@@ -41,6 +41,12 @@ export default defineComponent({
         console.log(_procinfo);
         this.store.statemachine.countdown = _procinfo["countdown"];
         this.store.statemachine.state = _procinfo["state"];
+      })
+      .on("imagedb/newarrival", (data) => {
+        const _data = JSON.parse(data);
+        console.log(_data);
+        this.store.gallery.newArrivalItem = _data;
+        this.$router.push({ path: "/newItemArrived" });
       })
       .on("locationservice/geolocation", (geolocation) => {
         this.store.stats.geolocation = JSON.parse(geolocation);

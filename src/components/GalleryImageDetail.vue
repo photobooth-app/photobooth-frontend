@@ -1,16 +1,23 @@
 <template>
-  <div class="column q-pa-none full-height full-height">
+  <div class="q-pa-none">
+    <swiper :navigation="true" :modules="modules" class="mySwiper">
+      <swiper-slide>Slide 1</swiper-slide><swiper-slide>Slide 2</swiper-slide
+      ><swiper-slide>Slide 3</swiper-slide><swiper-slide>Slide 4</swiper-slide
+      ><swiper-slide>Slide 5</swiper-slide><swiper-slide>Slide 6</swiper-slide
+      ><swiper-slide>Slide 7</swiper-slide><swiper-slide>Slide 8</swiper-slide
+      ><swiper-slide>Slide 9</swiper-slide>
+    </swiper>
     <q-card class="column bg-image" style="width: 100%; height: 100%">
       <q-card-section class="col no-padding" align="center">
         <q-img
           spinner-color="white"
           loading="lazy"
-          :src="store.gallery.images[id]['preview']"
+          :src="store.gallery.images[indexSelected]['preview']"
           style="max-width: 100%; max-height: 100%"
           fit="contain"
         >
           <div class="absolute-bottom-left text-subtitle2">
-            {{ store.gallery.images[id].caption }}
+            {{ store.gallery.images[indexSelected].caption }}
           </div>
         </q-img>
       </q-card-section>
@@ -27,7 +34,7 @@
             width: 200,
             errorCorrectionLevel: 'high',
           }"
-          :value="getImageQrData(id)"
+          :value="getImageQrData(indexSelected)"
         />
         <div>Scan to Download!</div>
       </div>
@@ -48,6 +55,7 @@
           <q-icon left size="5em" name="close" />
           <div>back to gallery</div>
         </q-btn>
+        <q-btn label="next" @onclick="currentId = 'NEXT'" target="_blank" />
       </div>
     </q-page-sticky>
 
@@ -65,12 +73,12 @@
           label="Delete"
           color="negative"
           v-close-popup
-          @click="deleteImage(id)"
+          @click="deleteImage(store.gallery.images[indexSelected]['id'])"
         /><q-btn
           label-position="left"
           icon="download"
           label="Download"
-          :href="store.gallery.images[id]['image']"
+          :href="store.gallery.images[indexSelected]['image']"
           target="_blank"
         />
       </q-fab>
@@ -80,15 +88,54 @@
 
 <script>
 import VueQrcode from "vue-qrcode";
+import { ref } from "vue";
 import { useMainStore } from "../stores/main-store.js";
+
+// import Swiper bundle with all modules installed
+import Swiper from "swiper/bundle";
+
+// import styles bundle
+import "swiper/css/bundle";
+
+// init Swiper:
+const swiper = new Swiper(".swiper", {
+  // Optional parameters
+  direction: "vertical",
+  loop: true,
+
+  // If we need pagination
+  pagination: {
+    el: ".swiper-pagination",
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+
+  // And if we need scrollbar
+  scrollbar: {
+    el: ".swiper-scrollbar",
+  },
+});
 
 export default {
   // name: 'ComponentName',
   props: {
-    id: {
-      type: String,
+    indexSelected: {
+      type: Number,
       required: true,
     },
+  },
+  beforeCreate() {
+    console.log(this.indexSelected);
+    //this.currentId = this.index;
+  },
+  data() {
+    return {
+      //currentId: "",
+    };
   },
   setup() {
     const store = useMainStore();
@@ -96,6 +143,7 @@ export default {
     return {
       // you can return the whole store instance to use it in the template
       store,
+      fabRight: ref(false),
     };
   },
   components: {
@@ -108,18 +156,17 @@ export default {
         .then((response) => {
           console.log(response);
           //remove from local store also:
-          delete this.store.gallery.images[id];
-          //this.store.gallery.images = response.data;
+          this.store.gallery.images.splice(this.indexSelected, 1);
         })
         .catch((err) => console.log(err));
     },
-    getImageDetail(id, detail = "thumbnail") {
-      return this.store.gallery.images[id][detail];
+    getImageDetail(index, detail = "thumbnail") {
+      return this.store.gallery.images[index][detail];
     },
-    getImageQrData(id) {
+    getImageQrData(index) {
       return String(this.store.serverConfig["EXT_DOWNLOAD_URL"]).replace(
         "{filename}",
-        this.store.gallery.images[id]["filename"]
+        this.store.gallery.images[index]["filename"]
       );
     },
   },

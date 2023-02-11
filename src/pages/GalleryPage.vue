@@ -30,7 +30,9 @@
       full-height
       full-width
     >
-      <gallery-image-detail :id="selected"></gallery-image-detail>
+      <gallery-image-detail
+        :indexSelected="indexSelected"
+      ></gallery-image-detail>
     </q-dialog>
   </q-page>
 </template>
@@ -55,9 +57,8 @@ export default {
       // you can return the whole store instance to use it in the template
       store,
       GalleryImageDetail,
-      selected: ref(0),
+      indexSelected: ref(null),
       showImageDetail: ref(false),
-      fabRight: ref(false),
     };
   },
   computed: {
@@ -79,13 +80,13 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    getImageDetail(id, detail = "thumbnail") {
-      return this.store.gallery.images[id][detail];
+    getImageDetail(index, detail = "thumbnail") {
+      return this.store.gallery.images[index][detail];
     },
 
-    openPic(id) {
-      console.log(id);
-      this.selected = id;
+    openPic(index) {
+      console.log(index);
+      this.indexSelected = index;
       this.showImageDetail = true;
     },
   },
