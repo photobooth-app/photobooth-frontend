@@ -13,6 +13,7 @@
           />
           <q-route-tab to="/admin/status" icon="insights" label="Status" />
           <q-route-tab to="/admin/playground" icon="quiz" label="Playground" />
+          <q-route-tab to="/admin/config" icon="quiz" label="Config" />
         </q-tabs>
 
         <q-space />

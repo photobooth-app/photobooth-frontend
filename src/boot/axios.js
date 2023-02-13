@@ -15,8 +15,9 @@ function remoteProcedureCall(url) {
     .then((response) => {
       console.log(response);
     })
-    .catch(() => {
-      console.log("error");
+    .catch((error) => {
+      console.log("error remoteprocedurecall");
+      console.log(error);
     });
 }
 

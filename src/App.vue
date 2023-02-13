@@ -5,19 +5,26 @@
 <script>
 import { defineComponent } from "vue";
 import { useMainStore } from "stores/main-store.js";
+import { useRouter } from "vue-router";
 let sseClient;
 
 export default defineComponent({
   name: "App",
   setup() {
     const store = useMainStore();
+    const router = useRouter();
+
+    // on app init navigate to init; after init go to index(or previous requested page)
+    if (store.uiState.initialized != true) {
+      router.push({ path: "/init" });
+    }
 
     return {
       // you can return the whole store instance to use it in the template
       store,
     };
   },
-  mounted() {
+  created() {
     sseClient = this.$sse
       .create("/eventstream")
       .on("message", (message, lastEventId) => {
@@ -53,10 +60,13 @@ export default defineComponent({
       })
       .on("config/currentconfig", (currentconfig) => {
         this.store.serverConfig = JSON.parse(currentconfig);
+        this.store.uiState.initialized = true;
       })
       .on("ping", (value) => {
         //last SSE ping
         this.store.ping = value;
+        // todo: make this a computed property supervising last ping. If last ping is more than 2 secs old, assume unconnected.
+        this.store.uiState.connected = true;
       })
       .connect()
       .then((sse) => {

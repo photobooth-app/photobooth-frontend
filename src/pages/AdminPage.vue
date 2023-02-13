@@ -288,29 +288,12 @@
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
-    <q-page-sticky position="bottom-right" :offset="[25, 25]">
-      <div class="q-gutter-sm">
-        <q-btn
-          label="reset"
-          @click="remoteProcedureCall('/cmd/config/reset')"
-        />
-        <q-btn
-          label="restore"
-          @click="remoteProcedureCall('/cmd/config/load')"
-        />
-        <q-btn
-          color="primary"
-          label="persist"
-          @click="uploadConfigAndPersist()"
-        />
-      </div>
-    </q-page-sticky>
   </q-page>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-import { mapActions } from "pinia";
+
 import { useMainStore } from "../stores/main-store.js";
 import { remoteProcedureCall } from "boot/axios";
 import { LocalStorage } from "quasar";
@@ -348,9 +331,7 @@ export default defineComponent({
       },
     },*/
   },
-  methods: {
-    ...mapActions(useMainStore, ["uploadConfigAndPersist"]),
-  },
+
   setup() {
     const store = useMainStore();
 

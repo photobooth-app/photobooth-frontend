@@ -31,37 +31,12 @@ export const useMainStore = defineStore("main-store", () => {
 
   const ping = ref(null);
 
-  // actions
-  function uploadConfigAndPersist() {
-    console.log("sync config to server");
-
-    api
-      .post("/config/current", this.serverConfig)
-      .then((response) => {
-        Notify.create("Persisted config, trying to restart service");
-        console.log(response);
-      })
-      .catch((error) => {
-        Notify.create("error saving config, check browser console");
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
-        }
-        console.log(error.config);
-      });
-    ///api.send....
-  }
+  const uiState = ref({
+    //after first init set to true, safe to display UI, config is all set.
+    initialized: false,
+    // set false if connection lost, e.g. display a message if not connected
+    connected: false,
+  });
 
   return {
     serverConfig,
@@ -70,6 +45,6 @@ export const useMainStore = defineStore("main-store", () => {
     gallery,
     statemachine,
     ping,
-    uploadConfigAndPersist,
+    uiState,
   };
 });
