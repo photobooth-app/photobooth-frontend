@@ -1,292 +1,109 @@
 <template>
-  <q-page>
-    <q-card>
-      <q-tabs
-        v-model="tab"
-        class="text-grey"
-        active-color="secondary"
-        indicator-color="secondary"
-        align="justify"
-      >
-        <q-tab name="common" label="Common" />
-        <q-tab name="personalize" label="Personalize" />
-        <q-tab name="camera" label="Camera" />
-      </q-tabs>
-      <q-separator />
+  <q-page padding>
+    <q-card class="q-pa-md">
+      <div>
+        <div class="text-h5">Server</div>
+        <div class="row">
+          <div class="q-ma-sm">
+            <div class="text-h6">Host Control</div>
+            <div class="text-no-wrap">
+              <q-dialog v-model="confirm_reboot">
+                <q-card>
+                  <q-card-section class="row items-center">
+                    <q-avatar
+                      icon="restart_alt"
+                      color="primary"
+                      text-color="white"
+                    />
+                    <span class="q-ml-sm">You sure to reboot the system?</span>
+                  </q-card-section>
 
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="common">
-          <div>
-            <div class="text-h5">Debug</div>
-            <div class="row">
-              <div class="col-4 q-ma-sm">
-                <div class="text-h6">Debug Level</div>
-                <div class="text-no-wrap">
-                  <q-radio
-                    val="DEBUG"
-                    v-model="store.serverConfig.debugging.DEBUG_LEVEL"
-                    label="debug"
-                  />
-                  <q-radio
-                    v-model="store.serverConfig.debugging.DEBUG_LEVEL"
-                    val="INFO"
-                    label="info"
-                  />
-                  <q-radio
-                    v-model="store.serverConfig.debugging.DEBUG_LEVEL"
-                    val="WARNING"
-                    label="warning"
-                  />
-                  <q-radio
-                    v-model="store.serverConfig.debugging.DEBUG_LEVEL"
-                    val="ERROR"
-                    label="error"
-                  />
-                </div>
-              </div>
-              <div class="col-4 q-ma-sm">
-                <div class="text-h6">Debug Overlay</div>
-                <div class="text-no-wrap">
-                  <q-toggle
-                    v-model="store.serverConfig.debugging['DEBUG_OVERLAY']"
-                    label="Show debug overlay in preview"
-                  />
-                </div>
-              </div>
+                  <q-card-actions align="right">
+                    <q-btn flat label="Cancel" color="primary" v-close-popup />
+                    <q-btn
+                      label="Reboot"
+                      color="primary"
+                      @click="remoteProcedureCall('/cmd/server/reboot')"
+                      v-close-popup
+                    />
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+
+              <q-dialog v-model="confirm_shutdown">
+                <q-card>
+                  <q-card-section class="row items-center">
+                    <q-avatar
+                      icon="power_settings_new"
+                      color="primary"
+                      text-color="white"
+                    />
+                    <span class="q-ml-sm"
+                      >You sure to shutdown the system?</span
+                    >
+                  </q-card-section>
+
+                  <q-card-actions align="right">
+                    <q-btn flat label="Cancel" v-close-popup />
+                    <q-btn
+                      label="Shutdown"
+                      color="primary"
+                      v-close-popup
+                      @click="remoteProcedureCall('/cmd/server/shutdown')"
+                    />
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+
+              <q-dialog v-model="confirm_restart_service">
+                <q-card>
+                  <q-card-section class="row items-center">
+                    <q-avatar
+                      icon="power_settings_new"
+                      color="primary"
+                      text-color="white"
+                    />
+                    <span class="q-ml-sm"
+                      >You sure to restart the service?</span
+                    >
+                  </q-card-section>
+
+                  <q-card-actions align="right">
+                    <q-btn flat label="Cancel" v-close-popup />
+                    <q-btn
+                      label="Restart"
+                      color="primary"
+                      v-close-popup
+                      @click="
+                        remoteProcedureCall('/cmd/server/restart_service')
+                      "
+                    />
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+              <q-btn
+                class="q-mr-sm"
+                label="Reboot Host"
+                @click="confirm_reboot = true"
+              />
+              <q-btn
+                class="q-mr-sm"
+                label="Shutdown Host"
+                @click="confirm_shutdown = true"
+              />
+              <q-btn
+                class="q-mr-sm"
+                label="Restart Service"
+                @click="confirm_restart_service = true"
+              />
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="q-gutter-sm q-ma-md">
-            Server Control
-
-            <q-dialog v-model="confirm_reboot">
-              <q-card>
-                <q-card-section class="row items-center">
-                  <q-avatar
-                    icon="restart_alt"
-                    color="primary"
-                    text-color="white"
-                  />
-                  <span class="q-ml-sm">You sure to reboot the system?</span>
-                </q-card-section>
-
-                <q-card-actions align="right">
-                  <q-btn flat label="Cancel" color="primary" v-close-popup />
-                  <q-btn
-                    label="Reboot"
-                    color="primary"
-                    @click="remoteProcedureCall('/cmd/server/reboot')"
-                    v-close-popup
-                  />
-                </q-card-actions>
-              </q-card>
-            </q-dialog>
-
-            <q-dialog v-model="confirm_shutdown">
-              <q-card>
-                <q-card-section class="row items-center">
-                  <q-avatar
-                    icon="power_settings_new"
-                    color="primary"
-                    text-color="white"
-                  />
-                  <span class="q-ml-sm">You sure to shutdown the system?</span>
-                </q-card-section>
-
-                <q-card-actions align="right">
-                  <q-btn flat label="Cancel" v-close-popup />
-                  <q-btn
-                    label="Shutdown"
-                    color="primary"
-                    v-close-popup
-                    @click="remoteProcedureCall('/cmd/server/shutdown')"
-                  />
-                </q-card-actions>
-              </q-card>
-            </q-dialog>
-
-            <q-btn label="Reboot" @click="confirm_reboot = true" />
-            <q-btn label="Shutdown" @click="confirm_shutdown = true" />
-
-            Health: CPU load, Connection Status, CPU Temperature
-          </div>
-        </q-tab-panel>
-
-        <q-tab-panel name="personalize">
-          <div class="text-h6">Personalize</div>
-          Frontpage-Text - Füge Smilies ein (Windows-Taste + .)
-          <div class="q-pa-md q-gutter-sm">
-            <q-editor
-              v-model="store.serverConfig.personalize['UI_FRONTPAGE_TEXT']"
-              flat
-              min-height="25rem"
-              content-class="bg-amber-3"
-              toolbar-bg="primary"
-              :toolbar="[
-                [
-                  'left',
-                  'center',
-                  'right',
-                  'justify',
-                  'bold',
-                  'italic',
-                  'underline',
-                  'strike',
-                  'undo',
-                  'redo',
-                ],
-                [
-                  {
-                    label: $q.lang.editor.formatting,
-                    icon: $q.iconSet.editor.formatting,
-                    list: 'no-icons',
-                    options: ['p', 'h3', 'h4', 'h5', 'h6', 'code'],
-                  },
-                ],
-              ]"
-            />
-          </div>
-        </q-tab-panel>
-
-        <q-tab-panel name="camera">
-          <div>
-            <div class="text-h5">Camera Settings</div>
-            <div class="row">
-              <div class="col-4 q-ma-sm">
-                <div class="text-h6">Exposure Mode</div>
-                <div class="text-no-wrap">
-                  <q-radio
-                    v-model="
-                      store.serverConfig.backends.picam2[
-                        'PICAM2_AE_EXPOSURE_MODE'
-                      ]
-                    "
-                    val="0"
-                    label="normal"
-                  />
-                  <q-radio
-                    v-model="
-                      store.serverConfig.backends.picam2[
-                        'PICAM2_AE_EXPOSURE_MODE'
-                      ]
-                    "
-                    val="1"
-                    label="short"
-                  />
-                  <q-radio
-                    v-model="
-                      store.serverConfig.backends.picam2[
-                        'PICAM2_AE_EXPOSURE_MODE'
-                      ]
-                    "
-                    val="2"
-                    label="long"
-                    disable
-                  />
-                  <q-radio
-                    v-model="
-                      store.serverConfig.backends.picam2[
-                        'PICAM2_AE_EXPOSURE_MODE'
-                      ]
-                    "
-                    val="3"
-                    label="custom"
-                    disable
-                  />
-                </div>
-              </div>
-
-              <div class="col-4 q-ma-sm">
-                <div class="text-h6">Autofocus</div>
-                <div class="text-no-wrap">
-                  <q-toggle
-                    label="Automatic Advanced Autofocus"
-                    v-model="store.serverConfig.focuser['ENABLED']"
-                  ></q-toggle>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="text-h5 q-mt-lg">Image Processing</div>
-          <div class="row">
-            <div class="col-4 q-ma-sm">
-              <div class="text-h6">Quality</div>
-
-              <div class="q-pa-md">
-                <q-badge>
-                  LORES_QUALITY:
-                  {{ store.serverConfig.common["LORES_QUALITY"] }}
-                </q-badge>
-                <q-slider
-                  v-model="store.serverConfig.common['LORES_QUALITY']"
-                  :min="0"
-                  :max="100"
-                  label
-                />
-              </div>
-
-              <div class="q-pa-md">
-                <q-badge>
-                  THUMBNAIL_QUALITY:
-                  {{ store.serverConfig.common["THUMBNAIL_QUALITY"] }}
-                </q-badge>
-                <q-slider
-                  v-model="store.serverConfig.common['THUMBNAIL_QUALITY']"
-                  :min="0"
-                  :max="100"
-                  label
-                />
-              </div>
-
-              <div class="q-pa-md">
-                <q-badge>
-                  PREVIEW_QUALITY:
-                  {{ store.serverConfig.common["PREVIEW_QUALITY"] }}
-                </q-badge>
-                <q-slider
-                  v-model="store.serverConfig.common['PREVIEW_QUALITY']"
-                  :min="0"
-                  :max="100"
-                  label
-                />
-              </div>
-
-              <div class="q-pa-md">
-                <q-badge>
-                  HIRES_QUALITY:
-                  {{ store.serverConfig.common["HIRES_QUALITY"] }}
-                </q-badge>
-                <q-slider
-                  v-model="store.serverConfig.common['HIRES_QUALITY']"
-                  :min="0"
-                  :max="100"
-                  label
-                />
-              </div>
-            </div>
-            <div class="col-4 q-ma-sm">
-              <div class="text-h6">Image Sizes</div>
-
-              <div class="q-pa-md">
-                <q-input
-                  v-model="store.serverConfig.common['PREVIEW_MIN_WIDTH']"
-                  type="number"
-                  label="PREVIEW_MIN_WIDTH"
-                />
-              </div>
-
-              <div class="q-pa-md">
-                <q-input
-                  v-model="store.serverConfig.common['THUMBNAIL_MIN_WIDTH']"
-                  type="number"
-                  label="THUMBNAIL_MIN_WIDTH"
-                />
-              </div>
-            </div>
-          </div>
-        </q-tab-panel>
-      </q-tab-panels>
+      <div class="q-gutter-sm q-ma-md">
+        Server Control Health: CPU load, Connection Status, CPU Temperature
+      </div>
     </q-card>
   </q-page>
 </template>
@@ -342,6 +159,7 @@ export default defineComponent({
       remoteProcedureCall,
       confirm_reboot: ref(false),
       confirm_shutdown: ref(false),
+      confirm_restart_service: ref(false),
     };
   },
 });

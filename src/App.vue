@@ -30,7 +30,7 @@ export default defineComponent({
       .on("message", (message, lastEventId) => {
         console.info(message, lastEventId);
         this.store.messages = [
-          `${message} (#${lastEventId})`,
+          `${message}`,
           ...this.store.messages.slice(0, 19),
         ];
       }) // "message" and "" and null equal!

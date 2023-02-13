@@ -11,15 +11,14 @@
         :remainingSeconds="countdown"
         :countdownOffset="0.5"
       ></countdown-timer>
-      <!--
-        TODO: This needs to be uncommented, but needs to be ensured, that the structure is available before rendering!
+
       <div
         v-show="showFrontpage"
         style="position: absolute; width: 100%; height: 100%"
         id="frontpage_text"
         v-html="store.serverConfig.personalize['UI_FRONTPAGE_TEXT']"
       ></div>
-      -->
+
       <q-page-sticky position="bottom" :offset="[0, 25]">
         <div class="q-gutter-sm">
           <q-btn color="primary" no-caps @click="takePicture()">

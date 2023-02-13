@@ -70,6 +70,42 @@
     <div style="width: 500px">
       <canvas id="myChart"></canvas>
     </div>
+
+    <q-card>
+      <div class="text-h6">Personalize</div>
+      Frontpage-Text - Füge Smilies ein (Windows-Taste + .)
+      <div class="q-pa-md q-gutter-sm">
+        <q-editor
+          v-model="store.serverConfig.personalize['UI_FRONTPAGE_TEXT']"
+          flat
+          min-height="25rem"
+          content-class="bg-amber-3"
+          toolbar-bg="primary"
+          :toolbar="[
+            [
+              'left',
+              'center',
+              'right',
+              'justify',
+              'bold',
+              'italic',
+              'underline',
+              'strike',
+              'undo',
+              'redo',
+            ],
+            [
+              {
+                label: $q.lang.editor.formatting,
+                icon: $q.iconSet.editor.formatting,
+                list: 'no-icons',
+                options: ['p', 'h3', 'h4', 'h5', 'h6', 'code'],
+              },
+            ],
+          ]"
+        />
+      </div>
+    </q-card>
   </q-page>
 </template>
 

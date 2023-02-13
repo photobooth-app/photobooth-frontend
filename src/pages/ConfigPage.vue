@@ -1,6 +1,17 @@
 <template>
   <q-page padding>
-    <q-select v-model="selected_group" :options="main_groups" color="primary" />
+    <q-tabs
+      v-model="selected_group"
+      class="text-grey"
+      active-color="secondary"
+      indicator-color="secondary"
+      mobile-arrows
+      align="justify"
+    >
+      <q-tab v-for="tab in main_groups" :key="tab" :label="tab" :name="tab" />
+    </q-tabs>
+    <q-separator />
+    <!--<q-select v-model="selected_group" :options="main_groups" color="primary" />-->
     <q-card class="q-pa-md q-mt-md">
       <div class="text-h6 q-mb-md">{{ selected_group }}</div>
       <blitz-form
@@ -73,12 +84,8 @@ export default {
 
         Object.entries(schema["allOf"][0]["properties"]).forEach((entry) => {
           const [id, property] = entry;
-          console.log(id);
-          console.log(property);
-          console.log(Object.keys(property));
 
           let form_entry = {
-            //id: selected_group.value + "." + id,
             id: id,
             label: property["title"],
             component: "QInput",
@@ -106,6 +113,7 @@ export default {
 
           if (Object.keys(property).includes("enum")) {
             console.log("enum");
+            //TODO: Not working yet!
             form_entry["component"] = "QSelect";
             form_entry["options"] = property["enum"];
           }
