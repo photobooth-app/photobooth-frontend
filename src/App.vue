@@ -29,11 +29,14 @@ export default defineComponent({
       .create("/eventstream")
       .on("message", (message, lastEventId) => {
         console.info(message, lastEventId);
-        this.store.messages = [
-          `${message}`,
-          ...this.store.messages.slice(0, 19),
-        ];
+        // TODO: make this a notifier ...
       }) // "message" and "" and null equal!
+      .on("logrecord", (logrecord) => {
+        this.store.logrecords = [
+          JSON.parse(logrecord),
+          ...this.store.logrecords.slice(0, 99),
+        ];
+      })
       .on("error", (err) =>
         console.error("Failed to parse or lost connection:", err)
       )
