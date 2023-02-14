@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { useMainStore } from "stores/main-store.js";
 import { useRouter } from "vue-router";
 let sseClient;
@@ -14,15 +14,27 @@ export default defineComponent({
     const store = useMainStore();
     const router = useRouter();
 
+    const initialized = ref(false);
+
     // on app init navigate to init; after init go to index(or previous requested page)
-    if (store.uiState.initialized != true) {
+    if (initialized.value != true) {
       router.push({ path: "/init" });
     }
 
     return {
       // you can return the whole store instance to use it in the template
+      initialized,
+      router,
       store,
     };
+  },
+
+  watch: {
+    initialized(newValue, oldValue) {
+      console.log("watcher");
+      if (oldValue == false && newValue == true)
+        this.router.push({ path: "/" });
+    },
   },
   created() {
     sseClient = this.$sse
@@ -64,12 +76,14 @@ export default defineComponent({
       .on("config/currentconfig", (currentconfig) => {
         this.store.serverConfig = JSON.parse(currentconfig);
         this.store.uiState.initialized = true;
+        this.initialized = true;
       })
       .on("ping", (value) => {
         //last SSE ping
         this.store.ping = value;
         // todo: make this a computed property supervising last ping. If last ping is more than 2 secs old, assume unconnected.
         this.store.uiState.connected = true;
+        this.initialized = true;
       })
       .connect()
       .then((sse) => {

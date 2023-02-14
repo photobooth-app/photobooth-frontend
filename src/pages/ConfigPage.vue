@@ -19,6 +19,7 @@
         :schema="schema_blitzar"
         :internalLabels="false"
         :columnCount="2"
+        v-if="renderBlitzForm"
         class="blitzar-form"
       />
     </q-card>
@@ -63,6 +64,7 @@ export default {
 
     let schema_axios = {};
     const main_groups = ref([]);
+    const renderBlitzForm = ref(false);
     const selected_group = ref("");
 
     const schema_blitzar = computed(() => {
@@ -148,6 +150,8 @@ export default {
           schema_axios = response.data.properties;
           main_groups.value = Object.keys(schema_axios);
           selected_group.value = main_groups.value[0];
+
+          renderBlitzForm.value = true;
         })
         .catch((response) => {
           console.log(response);
@@ -163,6 +167,9 @@ export default {
     getSchema();
 
     const restoreConfig = () => {
+      //hide form, later will be displayed again - this forces the form to rerender and reflect the latest values from store.
+      renderBlitzForm.value = false;
+
       api
         .get("/config/current")
         .then(async (response) => {
@@ -174,6 +181,7 @@ export default {
           to be revisited later. ask user to f5 for now.
           */
           serverConfig.value = response.data;
+          renderBlitzForm.value = true;
 
           $q.notify({
             message: "config restored from server, pls reload page!",
@@ -229,7 +237,6 @@ export default {
             });
           }
         });
-      ///api.send....
     };
 
     onBeforeMount(() => console.log("Composition API beforemounted"));
@@ -237,6 +244,7 @@ export default {
 
     return {
       schema_blitzar,
+      renderBlitzForm,
       mainStore,
       main_groups,
       selected_group,
@@ -247,59 +255,4 @@ export default {
     };
   },
 };
-
-// example scheme data for blitzar
-/*
-    const schema_backends = [
-      {
-        id: "LIVEPREVIEW_ENABLED",
-        label: "LIVEPREVIEW_ENABLED",
-        component: "QToggle",
-        subLabel: "LIVEPREVIEW_ENABLED",
-      },
-      {
-        id: "common.LORES_QUALITY",
-        label: "common.Lores Quality",
-        component: "QSlider",
-      },
-      { id: "MAIN_BACKEND", label: "MAIN_BACKEND", component: "QInput" },
-      { id: "LIVE_BACKEND", label: "LIVE_BACKEND", component: "QInput" },
-      {
-        id: "LIVE_BACKEND",
-        label: "LIVE_BACKEND",
-        component: "QSelect",
-        options: ["asdf", "jklö"],
-      },
-    ];
-
-    const schema_common = [
-      {
-        id: "CAPTURE_CAM_RESOLUTION_HEIGHT",
-        label: "CAPTURE_CAM_RESOLUTION_HEIGHT",
-        component: "QInput",
-        subLabel: "CAPTURE_CAM_RESOLUTION_HEIGHT",
-        // component props:
-        placeholder: "2500",
-      },
-      {
-        id: "LORES_QUALITY",
-        label: "Lores Quality",
-        component: "QSlider",
-        min: 0,
-        max: 100,
-        labelAlways: true,
-      },
-      {
-        id: "LORES_QUALITY",
-        label: "Lores Quality",
-        component: "QInput",
-        type: "number",
-      },
-      {
-        id: "CAMERA_TRANSFORM_HFLIP",
-        label: "CAMERA_TRANSFORM_HFLIP",
-        component: "QToggle",
-      },
-    ];
-    */
 </script>

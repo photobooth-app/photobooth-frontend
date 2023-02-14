@@ -6,14 +6,16 @@
           <img src="stream.mjpg" style="height: 90px" />
           <q-route-tab to="/" icon="arrow_back_ios_new" label="Booth" />
           <q-route-tab to="/admin" icon="dashboard" label="Dashboard" />
+
           <q-route-tab
             to="/admin/gallery"
             icon="photo_library"
             label="Gallery"
           />
-          <q-route-tab to="/admin/status" icon="insights" label="Status" />
-          <q-route-tab to="/admin/playground" icon="quiz" label="Playground" />
           <q-route-tab to="/admin/config" icon="quiz" label="Config" />
+          <q-route-tab to="/admin/status" icon="insights" label="Status" />
+
+          <q-route-tab to="/admin/playground" icon="quiz" label="Playground" />
         </q-tabs>
 
         <q-space />

@@ -8,7 +8,7 @@
             <div class="text-h6">Host Control</div>
             <div class="text-no-wrap">
               <q-dialog v-model="confirm_reboot">
-                <q-card>
+                <q-card class="q-pa-sm">
                   <q-card-section class="row items-center">
                     <q-avatar
                       icon="restart_alt"
@@ -31,7 +31,7 @@
               </q-dialog>
 
               <q-dialog v-model="confirm_shutdown">
-                <q-card>
+                <q-card class="q-pa-sm">
                   <q-card-section class="row items-center">
                     <q-avatar
                       icon="power_settings_new"
@@ -56,10 +56,10 @@
               </q-dialog>
 
               <q-dialog v-model="confirm_restart_service">
-                <q-card>
+                <q-card class="q-pa-sm">
                   <q-card-section class="row items-center">
                     <q-avatar
-                      icon="power_settings_new"
+                      icon="restart_alt"
                       color="primary"
                       text-color="white"
                     />
@@ -100,7 +100,9 @@
           </div>
         </div>
       </div>
-
+    </q-card>
+    <q-card style="" class="q-pa-md q-mt-md">
+      <div class="text-h5">Controls</div>
       <div class="q-gutter-sm q-ma-md">
         Server Control Health: CPU load, Connection Status, CPU Temperature
       </div>
@@ -129,24 +131,6 @@ export default defineComponent({
     if (LocalStorage.has("adminPage_tab")) {
       this.tab = LocalStorage.getItem("adminPage_tab");
     }
-  },
-  computed: {
-    /*tab: {
-      // this seems like a good solution, but does not work unfortunately. change to routed tabs later maybe...
-      get() {
-        if (LocalStorage.has("adminPage_tab")) {
-          return LocalStorage.getItem("adminPage_tab");
-        } else {
-          return "common";
-        }
-      },
-      set(val) {
-        console.log(val);
-        LocalStorage.set("adminPage_tab", val);
-        this.$emit("tab");
-        return val;
-      },
-    },*/
   },
 
   setup() {

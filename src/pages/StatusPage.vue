@@ -1,12 +1,5 @@
 <template>
   <q-page padding>
-    <q-card style="" class="q-pa-md">
-      <div class="text-h6">Dashboard</div>
-      autofocus timer:
-      <q-btn label="on" @click="remoteProcedureCall('/cmd/autofocus/on')" />
-      <q-btn label="off" @click="remoteProcedureCall('/cmd/autofocus/off')" />
-      <br /><br />
-    </q-card>
     <q-card class="q-pa-md q-mt-md">
       <div class="text-h6">Autofocus Results</div>
       <div>
