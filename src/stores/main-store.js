@@ -15,7 +15,7 @@ export const useMainStore = defineStore("main-store", () => {
     metadata: {},
   });
 
-  const messages = ref([]);
+  const logrecords = ref([]);
 
   const gallery = ref({
     images: [],
@@ -41,7 +41,7 @@ export const useMainStore = defineStore("main-store", () => {
   return {
     serverConfig,
     stats,
-    messages,
+    logrecords,
     gallery,
     statemachine,
     ping,

@@ -34,38 +34,37 @@
         Latest LocationService results:
         <span id="locationservice">{{ this.store.stats.geolocation }}</span>
         <a target="_new" id="mapslink" href="#">open in maps</a>
-        <iframe
-          width="425"
-          height="350"
-          frameborder="0"
-          scrolling="no"
-          marginheight="0"
-          marginwidth="0"
-          src="https://www.openstreetmap.org/export/embed.html?&amp;layer=mapnik&amp;marker=52.35885%2C9.74953"
-          style="border: 1px solid black"
-        ></iframe
-        ><br /><small
-          ><a
-            href="https://www.openstreetmap.org/?mlat=52.35896&amp;mlon=9.74939#map=19/52.35896/9.74939"
-            >Größere Karte anzeigen</a
-          ></small
-        >
       </div>
     </q-card>
     <q-card class="q-pa-md q-mt-md">
-      <div class="text-h6">Log Messages</div>
+      <div class="row">
+        <div class="text-h6">Log Records</div>
+
+        <q-badge
+          align="top"
+          :label="store.serverConfig['debugging']['DEBUG_LEVEL']"
+        />
+      </div>
 
       <q-markup-table>
         <thead>
-          <tr>
-            <th class="text-left">Time</th>
-            <th class="text-right">Message</th>
+          <tr class="text-left">
+            <th>Level</th>
+            <th>Time</th>
+            <th>Name</th>
+            <th>Function Name</th>
+            <th>LineNo</th>
+            <th style="width: 100%">Message</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(message, idx) in this.store.messages" :key="idx">
-            <td>-</td>
-            <td>{{ message }}</td>
+          <tr v-for="(record, idx) in this.store.logrecords" :key="idx">
+            <td>{{ record.level }}</td>
+            <td>{{ record.time }}</td>
+            <td>{{ record.name }}</td>
+            <td>{{ record.funcName }}</td>
+            <td>{{ record.lineno }}</td>
+            <td>{{ record.message }}</td>
           </tr>
         </tbody>
       </q-markup-table>

@@ -10,16 +10,16 @@
     >
       <q-tab v-for="tab in main_groups" :key="tab" :label="tab" :name="tab" />
     </q-tabs>
+
     <q-separator />
-    <!--<q-select v-model="selected_group" :options="main_groups" color="primary" />-->
     <q-card class="q-pa-md q-mt-md">
-      <div class="text-h6 q-mb-md">{{ selected_group }}</div>
       <blitz-form
         v-model="serverConfig[selected_group]"
         :key="selected_group"
         :schema="schema_blitzar"
         :internalLabels="false"
         :columnCount="2"
+        class="blitzar-form"
       />
     </q-card>
     <q-page-sticky position="bottom-right" :offset="[25, 25]">
@@ -80,7 +80,7 @@ export default {
 
       console.log("allOf" in schema);
       if ("allOf" in schema) {
-        // group that needs to be parsed (recursive)
+        // group that needs to be parsed
 
         Object.entries(schema["allOf"][0]["properties"]).forEach((entry) => {
           const [id, property] = entry;
@@ -89,9 +89,9 @@ export default {
             id: id,
             label: property["title"],
             component: "QInput",
-            subLabel: `${property["description"] || ""} (default=${
+            /*subLabel: `${property["description"] || ""} (default=${
               property["default"]
-            })`,
+            })`,*/
           };
 
           if (property["type"] == "boolean") {
@@ -118,6 +118,17 @@ export default {
             form_entry["options"] = property["enum"];
           }
 
+          form_entry["slots"] = {
+            label: {
+              component: "QTooltip",
+              slot: `ℹ️ ${property["description"] || ""} (default=${
+                property["default"]
+              })`,
+              anchor: "bottom left",
+              self: "top left",
+            },
+          };
+
           blitzar_schema.push(form_entry);
         });
       } else {
@@ -130,7 +141,6 @@ export default {
 
     const getSchema = () => {
       api
-        //.get("http://mockbin.org/bin/7cbd6191-5fb8-4bdb-99fa-41974824d4db") // dereferenced input
         .get("/config/schema?type=dereferenced") // dereferenced input
         .then(async (response) => {
           console.log(response.data);
@@ -138,18 +148,13 @@ export default {
           schema_axios = response.data.properties;
           main_groups.value = Object.keys(schema_axios);
           selected_group.value = main_groups.value[0];
-
-          $q.notify({
-            message: "got scheme!",
-            color: "green",
-          });
         })
         .catch((response) => {
           console.log(response);
           console.log("error");
 
           $q.notify({
-            message: "error getting scheme!",
+            message: "error getting scheme! check logs",
             color: "red",
           });
         });
@@ -201,26 +206,28 @@ export default {
           console.log(response);
         })
         .catch((error) => {
-          $q.notify({
-            message: "error saving config, check browser console",
-            color: "red",
-          });
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
+          if (error.response.data.detail) {
+            let notify_msg = "check following fields:<br/>";
+            Object.values(error.response.data.detail).forEach((detail) => {
+              notify_msg += detail["loc"].join(" -> ");
+              notify_msg += `: ${detail["msg"]}`;
+              notify_msg += "<br/>";
+            });
+
+            $q.notify({
+              caption: "validation error",
+              icon: "error",
+              html: true,
+              message: `${notify_msg}`,
+              color: "red",
+            });
+            return;
           } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
+            $q.notify({
+              message: "error saving config, check browser console and logs",
+              color: "red",
+            });
           }
-          console.log(error.config);
         });
       ///api.send....
     };
@@ -230,6 +237,7 @@ export default {
 
     return {
       schema_blitzar,
+      mainStore,
       main_groups,
       selected_group,
       serverConfig,
