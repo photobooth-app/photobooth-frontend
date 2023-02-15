@@ -17,6 +17,8 @@ const routes = [
   {
     // extended layout for admins
     path: "/admin",
+    //TODO: implement route guard: https://dev.to/rachel_cheuk/part-1-user-roles-and-management-quasar-8jp
+    meta: { requiresAuth: true, requiresAdmin: true },
     component: () => import("layouts/AdminLayout.vue"),
     children: [
       { path: "", component: () => import("pages/AdminPage.vue") },

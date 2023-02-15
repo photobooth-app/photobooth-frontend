@@ -11,8 +11,9 @@
         <q-card class="q-ma-sm" @click="openPic(index)">
           <q-img
             :src="getImageDetail(index)"
-            loading="lazy"
-            spinner-color="white"
+            loading="eager"
+            no-transition
+            no-spinner
             :ratio="1"
           >
             <div class="absolute-bottom text-subtitle2">

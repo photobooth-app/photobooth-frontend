@@ -6,7 +6,6 @@
 import { defineComponent, ref, watch } from "vue";
 import { useMainStore } from "stores/main-store.js";
 import { useRouter } from "vue-router";
-let sseClient;
 
 export default defineComponent({
   name: "App",
@@ -14,30 +13,45 @@ export default defineComponent({
     const store = useMainStore();
     const router = useRouter();
 
-    const initialized = ref(false);
+    const connected = ref(false);
 
-    // on app init navigate to init; after init go to index(or previous requested page)
-    if (initialized.value != true) {
-      router.push({ path: "/init" });
-    }
+    // on app init push to init page
+    //TODO: improve and make this a guard.
+    router.push("/init");
+
+    setInterval(function () {
+      const timeoutConnected = 2000;
+      if (Date.now() - store.lastHeartbeat > timeoutConnected)
+        connected.value = false;
+    }, 200);
+
+    setInterval(function () {
+      if (connected.value == false)
+        console.log(
+          "regular check: not connected. TODO: implement reconnect functionality once initialized"
+        );
+      //TODO:sseClient.connect()
+    }, 500);
 
     return {
-      // you can return the whole store instance to use it in the template
-      initialized,
+      connected,
       router,
       store,
     };
   },
 
   watch: {
-    initialized(newValue, oldValue) {
-      console.log("watcher");
-      if (oldValue == false && newValue == true)
+    connected(newValue, oldValue) {
+      console.log("watcher connected run");
+      if (oldValue == true && newValue == false)
+        this.router.push({ path: "/init" });
+      if (oldValue == false && newValue == true) {
         this.router.push({ path: "/" });
+      }
     },
   },
   created() {
-    sseClient = this.$sse
+    let sseClient = this.$sse
       .create("/eventstream")
       .on("message", (message, lastEventId) => {
         console.info(message, lastEventId);
@@ -75,15 +89,16 @@ export default defineComponent({
       })
       .on("config/currentconfig", (currentconfig) => {
         this.store.serverConfig = JSON.parse(currentconfig);
-        this.store.uiState.initialized = true;
-        this.initialized = true;
       })
-      .on("ping", (value) => {
+      .on("ping", () => {
         //last SSE ping
-        this.store.ping = value;
-        // todo: make this a computed property supervising last ping. If last ping is more than 2 secs old, assume unconnected.
-        this.store.uiState.connected = true;
-        this.initialized = true;
+        this.store.lastHeartbeat = Date.now();
+        if (typeof this.store.serverConfig === "object") {
+          //if serverConfig is of type object, a config is received already and we can assume app is able to proceed/is initialized
+          this.connected = true;
+        } else {
+          console.log("serverconfig not yet received, waiting for next ping");
+        }
       })
       .connect()
       .then((sse) => {

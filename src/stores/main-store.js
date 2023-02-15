@@ -29,22 +29,14 @@ export const useMainStore = defineStore("main-store", () => {
     state: null,
   });
 
-  const ping = ref(null);
-
-  const uiState = ref({
-    //after first init set to true, safe to display UI, config is all set.
-    initialized: false,
-    // set false if connection lost, e.g. display a message if not connected
-    connected: false,
-  });
+  const lastHeartbeat = ref(null);
 
   return {
     serverConfig,
     stats,
+    lastHeartbeat,
     logrecords,
     gallery,
     statemachine,
-    ping,
-    uiState,
   };
 });
