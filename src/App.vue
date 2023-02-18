@@ -66,12 +66,6 @@ export default defineComponent({
       .on("error", (err) =>
         console.error("Failed to parse or lost connection:", err)
       )
-      .on("autofocus/sharpness", (focuser) => {
-        this.store.stats.sharpness = JSON.parse(focuser);
-      })
-      .on("frameserver/metadata", (metadata) => {
-        this.store.stats.metadata = JSON.parse(metadata);
-      })
       .on("statemachine/processinfo", (procinfo) => {
         const _procinfo = JSON.parse(procinfo);
         console.log(_procinfo);
@@ -86,6 +80,9 @@ export default defineComponent({
       })
       .on("locationservice/geolocation", (geolocation) => {
         this.store.stats.geolocation = JSON.parse(geolocation);
+      })
+      .on("information", (information) => {
+        Object.assign(this.store.information, JSON.parse(information));
       })
       .on("config/currentconfig", (currentconfig) => {
         this.store.serverConfig = JSON.parse(currentconfig);

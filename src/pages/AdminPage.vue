@@ -101,37 +101,16 @@
         </div>
       </div>
     </q-card>
-    <q-card style="" class="q-pa-md q-mt-md">
-      <div class="text-h5">Controls</div>
-      <div class="q-gutter-sm q-ma-md">
-        Server Control Health: CPU load, Connection Status, CPU Temperature
-      </div>
-    </q-card>
   </q-page>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-
 import { useMainStore } from "../stores/main-store.js";
 import { remoteProcedureCall } from "boot/axios";
-import { LocalStorage } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
-
-  components: {},
-  watch: {
-    // whenever question changes, this function will run
-    tab(newVal, oldVal) {
-      LocalStorage.set("adminPage_tab", newVal);
-    },
-  },
-  mounted() {
-    if (LocalStorage.has("adminPage_tab")) {
-      this.tab = LocalStorage.getItem("adminPage_tab");
-    }
-  },
 
   setup() {
     const store = useMainStore();
@@ -139,7 +118,6 @@ export default defineComponent({
     return {
       // you can return the whole store instance to use it in the template
       store,
-      tab: ref("common"),
       remoteProcedureCall,
       confirm_reboot: ref(false),
       confirm_shutdown: ref(false),

@@ -29,11 +29,14 @@ export const useMainStore = defineStore("main-store", () => {
     state: null,
   });
 
+  const information = ref({});
+
   const lastHeartbeat = ref(null);
 
   return {
     serverConfig,
     stats,
+    information,
     lastHeartbeat,
     logrecords,
     gallery,

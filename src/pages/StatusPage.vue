@@ -1,41 +1,40 @@
 <template>
   <q-page padding>
-    <q-card class="q-pa-md q-mt-md">
-      <div class="text-h6">Autofocus Results</div>
-      <div>
-        <ul>
-          <li :key="item" v-for="(item, key) in this.store.stats.sharpness">
-            {{ key }}: {{ item }}
-          </li>
-        </ul>
-      </div>
-    </q-card>
-    <q-card class="q-pa-md q-mt-md">
-      <div class="text-h6">Metadata</div>
-      <div>
-        Recent Images Metadata:
-        <ul>
-          <li :key="item" v-for="(item, key) in this.store.stats.metadata">
-            {{ key }}: {{ item }}
-          </li>
-        </ul>
-      </div>
-    </q-card>
-    <q-card class="q-pa-md q-mt-md">
-      <div class="text-h6">Geolocation</div>
-      <div>
-        Latest LocationService results:
-        <span id="locationservice">{{ this.store.stats.geolocation }}</span>
-        <a target="_new" id="mapslink" href="#">open in maps</a>
+    <q-card style="" class="q-pa-md q-mt-md">
+      <div class="text-h5">Maintenance / Information</div>
+      <div class="q-gutter-sm q-ma-md">
+        <div>
+          CPU: 1min: {{ store.information["cpu1_5_15"][0] }} 5min:
+          {{ store.information["cpu1_5_15"][1] }} 15min:
+          {{ store.information["cpu1_5_15"][2] }}
+          #active threads: {{ store.information["active_threads"] }}
+        </div>
+        <div>
+          Disk: total
+          {{ (store.information["disk"]["total"] / 1024 ** 3).toFixed(1) }}GB
+          free:
+          {{ (store.information["disk"]["free"] / 1024 ** 3).toFixed(1) }}GB
+        </div>
+        <div>
+          Memory: total
+          {{ (store.information["memory"]["total"] / 1024 ** 3).toFixed(1) }}GB
+          free:
+          {{ (store.information["memory"]["free"] / 1024 ** 3).toFixed(1) }}GB
+          available:
+          {{
+            (store.information["memory"]["available"] / 1024 ** 3).toFixed(1)
+          }}GB
+        </div>
+        <div>TODO: RPI Temp, ...</div>
       </div>
     </q-card>
     <q-card class="q-pa-md q-mt-md">
       <div class="row">
-        <div class="text-h6">Log Records</div>
+        <div class="text-h5">Log Records</div>
 
         <q-badge
           align="top"
-          :label="store.serverConfig['debugging']['DEBUG_LEVEL']"
+          :label="store.serverConfig['common']['DEBUG_LEVEL']"
         />
       </div>
 

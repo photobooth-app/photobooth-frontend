@@ -12,6 +12,7 @@
     </q-tabs>
 
     <q-separator />
+    <div>{{ group_description }}</div>
     <q-card class="q-pa-md q-mt-md">
       <blitz-form
         v-model="serverConfig[selected_group]"
@@ -62,14 +63,23 @@ export default {
     const mainStore = useMainStore();
     let { serverConfig } = storeToRefs(mainStore);
 
-    let schema_axios = {};
+    let schema_dereferenced = {};
     const main_groups = ref([]);
     const renderBlitzForm = ref(false);
     const selected_group = ref("");
 
+    const group_description = computed(() => {
+      if (selected_group.value != "") {
+        return schema_dereferenced[selected_group.value]["allOf"][0][
+          "description"
+        ];
+      } else {
+        return "-";
+      }
+    });
     const schema_blitzar = computed(() => {
       if (selected_group.value != "") {
-        return mapBlitzarScheme(schema_axios[selected_group.value]);
+        return mapBlitzarScheme(schema_dereferenced[selected_group.value]);
       } else {
         return [];
       }
@@ -113,11 +123,13 @@ export default {
             if (property["maximum"]) form_entry["max"] = property["maximum"];
           }
 
-          if (Object.keys(property).includes("enum")) {
-            console.log("enum");
-            //TODO: Not working yet!
+          // check whether an enum
+          if (
+            property["allOf"] &&
+            Object.keys(property["allOf"][0]).includes("enum")
+          ) {
             form_entry["component"] = "QSelect";
-            form_entry["options"] = property["enum"];
+            form_entry["options"] = property["allOf"][0]["enum"];
           }
 
           form_entry["slots"] = {
@@ -147,8 +159,8 @@ export default {
         .then(async (response) => {
           console.log(response.data);
 
-          schema_axios = response.data.properties;
-          main_groups.value = Object.keys(schema_axios);
+          schema_dereferenced = response.data.properties;
+          main_groups.value = Object.keys(schema_dereferenced);
           selected_group.value = main_groups.value[0];
 
           renderBlitzForm.value = true;
@@ -176,15 +188,11 @@ export default {
           console.log(response.data);
           console.log(serverConfig.value);
 
-          /*
-          TODO: for unkonw reason after following statement, the blitzform does not update to serverloaded values. store reflects correct restored content.
-          to be revisited later. ask user to f5 for now.
-          */
           serverConfig.value = response.data;
           renderBlitzForm.value = true;
 
           $q.notify({
-            message: "config restored from server, pls reload page!",
+            message: "config restored from server",
             color: "green",
           });
         })
@@ -247,6 +255,7 @@ export default {
       renderBlitzForm,
       mainStore,
       main_groups,
+      group_description,
       selected_group,
       serverConfig,
       remoteProcedureCall,
