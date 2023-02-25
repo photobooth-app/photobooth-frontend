@@ -74,9 +74,7 @@
                       label="Restart"
                       color="primary"
                       v-close-popup
-                      @click="
-                        remoteProcedureCall('/cmd/server/restart_service')
-                      "
+                      @click="remoteProcedureCall('/cmd/service/restart')"
                     />
                   </q-card-actions>
                 </q-card>

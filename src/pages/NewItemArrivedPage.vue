@@ -52,7 +52,9 @@ export default {
   },
   methods: {
     startTimer() {
-      var duration = this.store.serverConfig["PROCESS_AUTOCLOSE_TIMER"];
+      var duration =
+        this.store.serverConfig["common"]["PROCESS_AUTOCLOSE_TIMER"];
+      console.log(`starting newitemarrived timer, duration=${duration}`);
       this.remainingSeconds = duration;
 
       this.intervalId = setInterval(() => {
