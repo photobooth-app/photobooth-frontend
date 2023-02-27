@@ -155,7 +155,7 @@ export default {
 
     const getSchema = () => {
       api
-        .get("/config/schema?type=dereferenced") // dereferenced input
+        .get("/config/schema?schema_type=dereferenced") // dereferenced input
         .then(async (response) => {
           console.log(response.data);
 
