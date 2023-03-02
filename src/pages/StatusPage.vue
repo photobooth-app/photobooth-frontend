@@ -25,6 +25,12 @@
             (store.information["memory"]["available"] / 1024 ** 3).toFixed(1)
           }}GB
         </div>
+        <div>
+          Cma: total
+          {{ (store.information["cma"]["CmaTotal"] / 1024 ** 1).toFixed(1) }}MB
+          free:
+          {{ (store.information["cma"]["CmaFree"] / 1024 ** 1).toFixed(1) }}MB
+        </div>
         <div>TODO: RPI Temp, ...</div>
       </div>
     </q-card>
@@ -36,6 +42,7 @@
           align="top"
           :label="store.serverConfig['common']['DEBUG_LEVEL']"
         />
+        <QBtn href="/log/latest" target="_blank">download log</QBtn>
       </div>
 
       <q-markup-table>
@@ -68,11 +75,12 @@
 import { defineComponent, ref } from "vue";
 import { useMainStore } from "../stores/main-store.js";
 import { remoteProcedureCall } from "boot/axios";
+import { QBtn } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
 
-  components: {},
+  components: { QBtn },
   setup() {
     const store = useMainStore();
 
