@@ -1,6 +1,5 @@
 <template>
   <q-page padding>
-    {{ numberOfImages }}
     <div class="row justify-center q-gutter-sm">
       <q-intersection
         :key="item.id"
