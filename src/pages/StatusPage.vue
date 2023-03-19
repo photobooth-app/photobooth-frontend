@@ -1,47 +1,77 @@
 <template>
   <q-page padding>
-    <q-card style="" class="q-pa-md q-mt-md">
-      <div class="text-h5">Maintenance / Information</div>
-      <div class="q-gutter-sm q-ma-md">
-        <div>
-          CPU: 1min: {{ store.information["cpu1_5_15"][0] }} 5min:
-          {{ store.information["cpu1_5_15"][1] }} 15min:
-          {{ store.information["cpu1_5_15"][2] }}
-          #active threads: {{ store.information["active_threads"] }}
-        </div>
-        <div>
-          Disk: total
-          {{ (store.information["disk"]["total"] / 1024 ** 3).toFixed(1) }}GB
-          free:
-          {{ (store.information["disk"]["free"] / 1024 ** 3).toFixed(1) }}GB
-        </div>
-        <div>
-          Memory: total
-          {{ (store.information["memory"]["total"] / 1024 ** 3).toFixed(1) }}GB
-          free:
-          {{ (store.information["memory"]["free"] / 1024 ** 3).toFixed(1) }}GB
-          available:
-          {{
-            (store.information["memory"]["available"] / 1024 ** 3).toFixed(1)
-          }}GB
-        </div>
-        <div>
-          Cma: total
-          {{ (store.information["cma"]["CmaTotal"] / 1024 ** 1).toFixed(1) }}MB
-          free:
-          {{ (store.information["cma"]["CmaFree"] / 1024 ** 1).toFixed(1) }}MB
-        </div>
-        <div>TODO: RPI Temp, ...</div>
-      </div>
-    </q-card>
+    <div class="row col-xs-12 col-sm-4 col-md-3 col-lg-3">
+      <q-card style="" class="q-pa-md q-ma-md">
+        <q-card-section>
+          <div class="text-h5">Maintenance</div>
+          <div class="q-gutter-sm q-ma-md">
+            <div>
+              CPU: {{ store.information["cpu1_5_15"][0] }}% /
+              {{ store.information["cpu1_5_15"][1] }}% /
+              {{ store.information["cpu1_5_15"][2] }}%
+            </div>
+            <div>
+              No. active threads: {{ store.information["active_threads"] }}
+            </div>
+            <div>
+              Free disk:
+              {{ (store.information["disk"]["free"] / 1024 ** 3).toFixed(1) }}GB
+            </div>
+            <div>
+              Memory:
+              {{
+                (store.information["memory"]["total"] / 1024 ** 3).toFixed(1)
+              }}GB total
+              {{ (store.information["memory"]["free"] / 1024 ** 3).toFixed(1) }}GB free
+              {{
+                (store.information["memory"]["available"] / 1024 ** 3).toFixed(1)
+              }}GB available
+            </div>
+            <div>
+              Cma:
+              {{
+                (store.information["cma"]["CmaTotal"] / 1024 ** 1).toFixed(1)
+              }}MB total /
+              {{ (store.information["cma"]["CmaFree"] / 1024 ** 1).toFixed(1) }}MB free
+            </div>
+          </div>
+
+        </q-card-section>
+      </q-card>
+      <q-card style="" class="q-pa-md q-ma-md">
+        <q-card-section>
+          <div class="text-h5">Primary Backend Stats</div>
+          <div class="text-subtitle2">only avail stats displayed</div>
+          <table>
+            <tr v-for="(value, key, index) in store.information['imageserver_stats']['primary']" v-bind:key="index">
+              <td align="right">
+                {{ key }}
+              </td>
+              <td>{{ value }}</td>
+            </tr>
+          </table>
+        </q-card-section>
+      </q-card>
+      <q-card style="" class="q-pa-md q-ma-md">
+        <q-card-section>
+          <div class="text-h5">Secondary Backend Stats</div>
+          <div class="text-subtitle2">only avail stats displayed</div>
+          <table>
+            <tr v-for="(value, key, index) in store.information['imageserver_stats']['secondary']" v-bind:key="index">
+              <td align="right">
+                {{ key }}
+              </td>
+              <td>{{ value }}</td>
+            </tr>
+          </table>
+        </q-card-section>
+      </q-card>
+    </div>
     <q-card class="q-pa-md q-mt-md">
       <div class="row">
         <div class="text-h5">Log Records</div>
 
-        <q-badge
-          align="top"
-          :label="store.serverConfig['common']['DEBUG_LEVEL']"
-        />
+        <q-badge align="top" :label="store.serverConfig['common']['DEBUG_LEVEL']" />
         <QBtn href="/log/latest" target="_blank">download log</QBtn>
       </div>
 
@@ -81,7 +111,7 @@ export default defineComponent({
   name: "MainLayout",
 
   components: { QBtn },
-  setup() {
+  setup () {
     const store = useMainStore();
 
     return {
