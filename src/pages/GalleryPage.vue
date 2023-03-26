@@ -1,20 +1,9 @@
 <template>
   <q-page padding>
     <div class="row justify-center q-gutter-sm">
-      <q-intersection
-        :key="item.id"
-        once
-        v-for="(item, index) in this.store.gallery.images"
-        class="preview-item"
-      >
+      <q-intersection :key="item.id" once v-for="(item, index) in this.store.gallery.images" class="preview-item">
         <q-card class="q-ma-sm" @click="openPic(index)">
-          <q-img
-            :src="getImageDetail(index)"
-            loading="eager"
-            no-transition
-            no-spinner
-            :ratio="1"
-          >
+          <q-img :src="getImageDetail(index)" loading="eager" no-transition no-spinner :ratio="1">
             <div class="absolute-bottom text-subtitle2">
               {{ this.store.gallery.images[index].caption }}
             </div>
@@ -23,16 +12,8 @@
       </q-intersection>
     </div>
 
-    <q-dialog
-      transition-show="jump-up"
-      transition-hide="jump-down"
-      v-model="showImageDetail"
-      full-height
-      full-width
-    >
-      <gallery-image-detail
-        :indexSelected="indexSelected"
-      ></gallery-image-detail>
+    <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
+      <gallery-image-detail :indexSelected="indexSelected"></gallery-image-detail>
     </q-dialog>
   </q-page>
 </template>
@@ -50,7 +31,7 @@ import GalleryImageDetail from "../components/GalleryImageDetail";
 export default {
   // name: 'PageName',
   components: { GalleryImageDetail },
-  setup() {
+  setup () {
     const store = useMainStore();
 
     return {
@@ -63,13 +44,13 @@ export default {
   },
   computed: {
     numberOfImages: {
-      get() {
+      get () {
         console.log(Object.keys(this.store.gallery["images"]).length);
         return Object.keys(this.store.gallery["images"]).length;
       },
     },
   },
-  mounted() {
+  mounted () {
     //initially get all images, later use eventstream?
     this.$api
       .get("gallery/images")
@@ -80,11 +61,11 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    getImageDetail(index, detail = "thumbnail") {
+    getImageDetail (index, detail = "thumbnail") {
       return this.store.gallery.images[index][detail];
     },
 
-    openPic(index) {
+    openPic (index) {
       console.log(index);
       this.indexSelected = index;
       this.showImageDetail = true;

@@ -1243,10 +1243,10 @@
   resolved "https://registry.npmjs.org/@positron/stack-trace/-/stack-trace-1.0.0.tgz"
   integrity sha512-nWlGg+aMfQDhGYa5FtBhZwldeo2MtdjHdxmEQvhBXEnxgD5IhIYl0PHvex8SdwyN7qcSoMykMWdjyAX7ZxkpMw==
 
-"@quasar/app-webpack@^3.7.1":
-  version "3.7.1"
-  resolved "https://registry.npmjs.org/@quasar/app-webpack/-/app-webpack-3.7.1.tgz"
-  integrity sha512-gy77FP3PY/T2HDUa7cGU7oHKbdTmHUOLT4YBd/HvIsIHenjmZCaj/g+ero1kuoKRBy00Y5CalM5tDJnhO8PXOQ==
+"@quasar/app-webpack@^3.7.2":
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/@quasar/app-webpack/-/app-webpack-3.7.2.tgz#feaea083d79c5e6c62052dfe87a6e7df73d44e5e"
+  integrity sha512-OztjmlXaLqjBRm6YPV9/Q+WfXhdu9mcXk5OXExyEpzCII7dfa4m1UMzp+AOsgDXUgoSBt5Wg1WmAICLnKELAjw==
   dependencies:
     "@quasar/babel-preset-app" "2.0.2"
     "@quasar/fastclick" "1.1.5"
@@ -1338,10 +1338,10 @@
     core-js "^3.6.5"
     core-js-compat "^3.6.5"
 
-"@quasar/extras@^1.15.10":
-  version "1.15.10"
-  resolved "https://registry.npmjs.org/@quasar/extras/-/extras-1.15.10.tgz"
-  integrity sha512-6w8e+wPNfcWhzW43tlnJPHOrcNwAgaaNJ3zBz8k+BMqpenA3fHZhFhxCYEVRZVqPFE2IK/8nRiPBp4t9xlW5tA==
+"@quasar/extras@^1.16.0":
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/@quasar/extras/-/extras-1.16.0.tgz#9451b1a756e8a688018f284f8ab2b5aff75ea309"
+  integrity sha512-5Q9UkTKC+H4bTLkz1/nLOcnA+b39psIIej5jqeFov61Ob+3rcBePfgTPN0/7nhZwlzanrzdHP9nF0wpdEefmhQ==
 
 "@quasar/fastclick@1.1.5":
   version "1.1.5"
@@ -2835,13 +2835,6 @@ dom-serializer@^1.0.1:
     domelementtype "^2.0.1"
     domhandler "^4.2.0"
     entities "^2.0.0"
-
-dom7@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.npmjs.org/dom7/-/dom7-4.0.4.tgz"
-  integrity sha512-DSSgBzQ4rJWQp1u6o+3FVwMNnT5bzQbMb+o31TjYYeRi05uAcpF8koxdfzeoe5ElzPmua7W7N28YJhF7iEKqIw==
-  dependencies:
-    ssr-window "^4.0.0"
 
 domelementtype@^2.0.1, domelementtype@^2.2.0:
   version "2.3.0"
@@ -5133,10 +5126,10 @@ qs@6.11.0:
   dependencies:
     side-channel "^1.0.4"
 
-quasar@^2.11.5:
-  version "2.11.5"
-  resolved "https://registry.npmjs.org/quasar/-/quasar-2.11.5.tgz"
-  integrity sha512-rX4Rwp9wlCeB9A6RQUxEx/q84LMBVVm6WTECkoq8r/+NBgl9aHVexzZQBnRn2i61D0BJpdX5VcnMxAnJkTx/kA==
+quasar@^2.11.9:
+  version "2.11.9"
+  resolved "https://registry.yarnpkg.com/quasar/-/quasar-2.11.9.tgz#239413cd14e9be9bcabc125f97209944832e5277"
+  integrity sha512-ZHSZRQJk/zN6whhvihh0EyRpAs3IYBZZ+1O5/RSe7nXyOXOVi6RwPBzleab5HoTxtHL5Yuk3/bKgb3CywAyBQQ==
 
 queue-microtask@^1.2.2:
   version "1.2.3"
@@ -5640,11 +5633,6 @@ spdy@^4.0.2:
     select-hose "^2.0.0"
     spdy-transport "^3.0.0"
 
-ssr-window@^4.0.0, ssr-window@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/ssr-window/-/ssr-window-4.0.2.tgz"
-  integrity sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==
-
 stable@^0.1.8:
   version "0.1.8"
   resolved "https://registry.npmjs.org/stable/-/stable-0.1.8.tgz"
@@ -5751,14 +5739,6 @@ svgo@^2.7.0:
     csso "^4.2.0"
     picocolors "^1.0.0"
     stable "^0.1.8"
-
-swiper@^8.4.5:
-  version "8.4.5"
-  resolved "https://registry.npmjs.org/swiper/-/swiper-8.4.5.tgz"
-  integrity sha512-zveyEFBBv4q1sVkbJHnuH4xCtarKieavJ4SxP0QEHvdpPLJRuD7j/Xg38IVVLbp7Db6qrPsLUePvxohYx39Agw==
-  dependencies:
-    dom7 "^4.0.4"
-    ssr-window "^4.0.2"
 
 table@6.8.1:
   version "6.8.1"

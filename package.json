@@ -11,14 +11,13 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.15.10",
+    "@quasar/extras": "^1.16.0",
     "axios": "^0.21.1",
     "blitzar": "^1.2.2",
     "core-js": "^3.6.5",
     "pinia": "^2.0.11",
     "qrcode": "^1.5.1",
-    "quasar": "^2.11.5",
-    "swiper": "^8.4.5",
+    "quasar": "^2.11.9",
     "vue": "3",
     "vue-qrcode": "^2.2.0",
     "vue-router": "4",
@@ -26,7 +25,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
-    "@quasar/app-webpack": "^3.7.1",
+    "@quasar/app-webpack": "^3.7.2",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^9.0.0",
