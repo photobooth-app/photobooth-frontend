@@ -58,6 +58,7 @@
 import VueQrcode from "vue-qrcode";
 import { ref } from "vue";
 import { useMainStore } from "../stores/main-store.js";
+import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import { openURL } from 'quasar'
 
 export default {
@@ -95,10 +96,12 @@ export default {
   },
   setup () {
     const store = useMainStore();
+    const uiSettingsStore = useUiSettingsStore();
 
     return {
       // you can return the whole store instance to use it in the template
       store,
+      uiSettingsStore,
       openURL,
       fabRight: ref(false),
       currentSlideId: ref(""),
@@ -124,11 +127,7 @@ export default {
       return this.store.gallery.images[index][detail];
     },
     getImageQrData () {
-      const link = String(this.store.serverConfig.common["EXT_DOWNLOAD_URL"]).replace(
-        "{filename}",
-        this.store.gallery.images[this.currentSlideIndex]["filename"]
-      );
-      console.log(link);
+      const link = this.store.gallery.images[this.currentSlideIndex]["ext_download_url"]
       return link;
     },
   },

@@ -4,10 +4,6 @@ import { ref } from "vue";
 import { Notify } from "quasar";
 
 export const useMainStore = defineStore("main-store", () => {
-  //state: () => ({
-  //to be in sync with booth
-  const serverConfig = ref({});
-
   //session data only (graph history, ...)
   const stats = ref({
     sharpness: [],
@@ -29,12 +25,35 @@ export const useMainStore = defineStore("main-store", () => {
     state: null,
   });
 
-  const information = ref({});
+  const information = ref({
+    cpu1_5_15: [null, null, null],
+    active_threads: null,
+    memory: {
+      total: null,
+      available: null,
+      percent: null,
+      used: null,
+      free: null,
+    },
+    cma: {
+      CmaTotal: null,
+      CmaFree: null,
+    },
+    disk: {
+      total: null,
+      used: null,
+      free: null,
+      percent: null,
+    },
+    imageserver_stats: {
+      primary: null,
+      secondary: null,
+    },
+  });
 
   const lastHeartbeat = ref(null);
 
   return {
-    serverConfig,
     stats,
     information,
     lastHeartbeat,

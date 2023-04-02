@@ -1,23 +1,45 @@
 <template>
   <router-view />
+  <q-dialog v-model="showConnectionOverlay" persistent>
+    <connection-overlay />
+  </q-dialog>
 </template>
 
 <script>
 import { defineComponent, ref, watch } from "vue";
 import { useMainStore } from "stores/main-store.js";
+import { useUiSettingsStore } from "stores/ui-settings-store.js";
 import { useRouter } from "vue-router";
+import ConnectionOverlay from "./components/ConnectionOverlay";
+
 
 export default defineComponent({
   name: "App",
-  setup() {
+  components: { ConnectionOverlay },
+  data () {
+    return {
+
+    }
+  },
+  computed: {
+    // a computed getter
+    showConnectionOverlay () {
+      return !this.connected
+    }
+  },
+  setup () {
     const store = useMainStore();
+    const uiSettingsStore = useUiSettingsStore();
     const router = useRouter();
+
+    //load initial ui settings
+    uiSettingsStore.loadUiSettings();
+
+    //TODO: need to make app wait until fully init?
+    console.log(uiSettingsStore.isLoaded)
 
     const connected = ref(false);
 
-    // on app init push to init page
-    //TODO: improve and make this a guard.
-    router.push("/init");
 
     setInterval(function () {
       const timeoutConnected = 2000;
@@ -37,20 +59,12 @@ export default defineComponent({
       connected,
       router,
       store,
+      uiSettingsStore,
+      ConnectionOverlay
     };
   },
 
-  watch: {
-    connected(newValue, oldValue) {
-      console.log("watcher connected run");
-      if (oldValue == true && newValue == false)
-        this.router.push({ path: "/init" });
-      if (oldValue == false && newValue == true) {
-        this.router.push({ path: "/" });
-      }
-    },
-  },
-  created() {
+  created () {
     let sseClient = this.$sse
       .create("/eventstream")
       .on("message", (message, lastEventId) => {
@@ -84,24 +98,18 @@ export default defineComponent({
       .on("information", (information) => {
         Object.assign(this.store.information, JSON.parse(information));
       })
-      .on("config/currentconfig", (currentconfig) => {
-        this.store.serverConfig = JSON.parse(currentconfig);
-      })
       .on("ping", () => {
         //last SSE ping
         this.store.lastHeartbeat = Date.now();
-        if (typeof this.store.serverConfig === "object") {
-          //if serverConfig is of type object, a config is received already and we can assume app is able to proceed/is initialized
-          this.connected = true;
-        } else {
-          console.log("serverconfig not yet received, waiting for next ping");
-        }
+        this.connected = true;
       })
       .connect()
       .then((sse) => {
         console.log("SSE connected!");
       })
       .catch((err) => console.error("Failed make SSE connection:", err));
+
+
   },
 });
 </script>

@@ -1,41 +1,21 @@
 <template>
   <q-page padding>
-    <q-tabs
-      v-model="selected_group"
-      class="text-grey"
-      active-color="secondary"
-      indicator-color="secondary"
-      mobile-arrows
-      align="justify"
-    >
+    <q-tabs v-model="selected_group" class="text-grey" active-color="secondary" indicator-color="secondary" mobile-arrows
+      align="justify">
       <q-tab v-for="tab in main_groups" :key="tab" :label="tab" :name="tab" />
     </q-tabs>
 
     <q-separator />
     <div>{{ group_description }}</div>
     <q-card class="q-pa-md q-mt-md">
-      <blitz-form
-        v-model="serverConfig[selected_group]"
-        :key="selected_group"
-        :schema="schema_blitzar"
-        :internalLabels="false"
-        :columnCount="2"
-        v-if="renderBlitzForm"
-        class="blitzar-form"
-      />
+      <blitz-form v-model="serverConfig[selected_group]" :key="selected_group" :schema="schema_blitzar"
+        :internalLabels="false" :columnCount="2" v-if="renderBlitzForm" class="blitzar-form" />
     </q-card>
     <q-page-sticky position="bottom-right" :offset="[25, 25]">
       <div class="q-gutter-sm">
-        <q-btn
-          label="reset"
-          @click="remoteProcedureCall('/cmd/config/reset')"
-        />
-        <q-btn label="restore" @click="restoreConfig()" />
-        <q-btn
-          color="primary"
-          label="persist"
-          @click="uploadConfigAndPersist()"
-        />
+        <q-btn label="reset" @click="remoteProcedureCall('/cmd/config/reset')" />
+        <q-btn label="restore" @click="getConfig('current')" />
+        <q-btn color="primary" label="persist" @click="uploadConfigAndPersist()" />
       </div>
     </q-page-sticky>
   </q-page>
@@ -45,9 +25,7 @@
 import { ref, onMounted, onBeforeMount, computed, watch } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
-import { useMainStore } from "../stores/main-store.js";
 import { remoteProcedureCall } from "boot/axios";
-import { storeToRefs } from "pinia";
 
 // Blitzar to create forms
 // register all quasar elements used in blitzar scheme via quasar.config.js -> framework -> components
@@ -58,10 +36,9 @@ export default {
   // name: 'PageName',
   components: { BlitzForm },
 
-  setup() {
+  setup () {
     const $q = useQuasar();
-    const mainStore = useMainStore();
-    let { serverConfig } = storeToRefs(mainStore);
+    const serverConfig = ref({})
 
     let schema_dereferenced = {};
     const main_groups = ref([]);
@@ -135,9 +112,8 @@ export default {
           form_entry["slots"] = {
             label: {
               component: "QTooltip",
-              slot: `ℹ️ ${property["description"] || ""} (default=${
-                property["default"]
-              })`,
+              slot: `ℹ️ ${property["description"] || ""} (default=${property["default"]
+                })`,
               anchor: "bottom left",
               self: "top left",
             },
@@ -163,7 +139,6 @@ export default {
           main_groups.value = Object.keys(schema_dereferenced);
           selected_group.value = main_groups.value[0];
 
-          renderBlitzForm.value = true;
         })
         .catch((response) => {
           console.log(response);
@@ -176,14 +151,13 @@ export default {
         });
     };
 
-    getSchema();
 
-    const restoreConfig = () => {
+    const getConfig = (which = "current") => {
       //hide form, later will be displayed again - this forces the form to rerender and reflect the latest values from store.
       renderBlitzForm.value = false;
 
       api
-        .get("/config/current")
+        .get(`/config/${which}`)
         .then(async (response) => {
           console.log(response.data);
           console.log(serverConfig.value);
@@ -192,7 +166,7 @@ export default {
           renderBlitzForm.value = true;
 
           $q.notify({
-            message: "config restored from server",
+            message: `${which} config loaded from server`,
             color: "green",
           });
         })
@@ -206,6 +180,11 @@ export default {
           });
         });
     };
+
+
+    getSchema();
+    getConfig("currentActive");
+
 
     // actions
     const uploadConfigAndPersist = () => {
@@ -253,13 +232,12 @@ export default {
     return {
       schema_blitzar,
       renderBlitzForm,
-      mainStore,
       main_groups,
       group_description,
       selected_group,
       serverConfig,
       remoteProcedureCall,
-      restoreConfig,
+      getConfig,
       uploadConfigAndPersist,
     };
   },

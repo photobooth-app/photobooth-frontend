@@ -1,23 +1,12 @@
 <template>
   <q-page class="q-pa-none column">
-    <div
-      id="preview-stream"
-      style="background-image: url('stream.mjpg')"
-      class="full-width column justify-center content-center"
-    >
-      <countdown-timer
-        ref="countdowntimer"
-        :duration="3"
-        :remainingSeconds="countdown"
-        :countdownOffset="0.5"
-      ></countdown-timer>
+    <div id="preview-stream" style="background-image: url('stream.mjpg')"
+      class="full-width column justify-center content-center">
+      <countdown-timer ref="countdowntimer" :duration="3" :remainingSeconds="countdown"
+        :countdownOffset="0.5"></countdown-timer>
 
-      <div
-        v-show="showFrontpage"
-        style="position: absolute; width: 100%; height: 100%"
-        id="frontpage_text"
-        v-html="store.serverConfig.personalize['UI_FRONTPAGE_TEXT']"
-      ></div>
+      <div v-show="showFrontpage" style="position: absolute; width: 100%; height: 100%" id="frontpage_text"
+        v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
 
       <q-page-sticky position="bottom" :offset="[0, 25]">
         <div class="q-gutter-sm">
@@ -45,38 +34,44 @@ import { ref } from "vue";
 import { api, remoteProcedureCall } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useMainStore } from "../stores/main-store.js";
+import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import CountdownTimer from "../components/CountdownTimer";
 
 export default defineComponent({
   components: { CountdownTimer },
 
-  setup() {
+  setup () {
     const $q = useQuasar();
     const store = useMainStore();
+    const uiSettingsStore = useUiSettingsStore();
 
-    return { store, remoteProcedureCall };
+    return {
+      store,
+      uiSettingsStore,
+      remoteProcedureCall
+    };
   },
 
   methods: {
-    takePicture() {
+    takePicture () {
       remoteProcedureCall("/chose/1pic");
     },
   },
   computed: {
     countdown: {
-      get() {
+      get () {
         return this.store.statemachine.countdown
           ? this.store.statemachine.countdown
           : 0;
       },
     },
     showFrontpage: {
-      get() {
+      get () {
         return this.store.statemachine.state == "idle";
       },
     },
     newItemReceived: {
-      get() {
+      get () {
         return this.store.statemachine.state == "idle";
       },
     },

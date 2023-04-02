@@ -71,7 +71,7 @@
       <div class="row">
         <div class="text-h5">Log Records</div>
 
-        <q-badge align="top" :label="store.serverConfig['common']['DEBUG_LEVEL']" />
+        <!--<q-badge align="top" :label="store.serverConfig['common']['DEBUG_LEVEL']" />-->
         <QBtn href="/log/latest" target="_blank">download log</QBtn>
       </div>
 

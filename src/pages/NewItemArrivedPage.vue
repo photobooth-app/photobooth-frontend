@@ -1,18 +1,10 @@
 <template>
   <q-page padding full-height full-width>
-    <q-linear-progress
-      :value="remainingSecondsNormalized"
-      class="q-mt-md"
-      animation-speed="200"
-    />
+    <q-linear-progress :value="remainingSecondsNormalized" class="q-mt-md" animation-speed="200" />
     <q-card class="column bg-image" style="width: 100%; height: 100%">
       <q-card-section class="col no-padding" align="center">
-        <q-img
-          spinner-color="white"
-          :src="store.gallery.newArrivalItem['preview']"
-          style="max-width: 100%; max-height: 100%"
-          fit="contain"
-        >
+        <q-img spinner-color="white" :src="store.gallery.newArrivalItem['preview']"
+          style="max-width: 100%; max-height: 100%" fit="contain">
           <div class="absolute-bottom-left text-subtitle2">
             {{ store.gallery.newArrivalItem.caption }}
           </div>
@@ -24,36 +16,39 @@
 
 <script>
 import { useMainStore } from "../stores/main-store.js";
+import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import { ref } from "vue";
 
 export default {
   // name: 'PageName',
   components: {},
-  data() {
+  data () {
     return {
       intervalId: 0,
       remainingSeconds: 0,
       remainingSecondsNormalized: 0,
     };
   },
-  setup() {
+  setup () {
     const store = useMainStore();
+    const uiSettingsStore = useUiSettingsStore();
 
     return {
       // you can return the whole store instance to use it in the template
       store,
+      uiSettingsStore,
     };
   },
-  mounted() {
+  mounted () {
     this.startTimer();
   },
-  beforeUnmount() {
+  beforeUnmount () {
     clearInterval(this.intervalId);
   },
   methods: {
-    startTimer() {
+    startTimer () {
       var duration =
-        this.store.serverConfig["common"]["PROCESS_AUTOCLOSE_TIMER"];
+        this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
       console.log(`starting newitemarrived timer, duration=${duration}`);
       this.remainingSeconds = duration;
 
