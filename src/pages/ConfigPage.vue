@@ -6,11 +6,20 @@
     </q-tabs>
 
     <q-separator />
-    <div>{{ group_description }}</div>
-    <q-card class="q-pa-md q-mt-md">
-      <blitz-form v-model="serverConfig[selected_group]" :key="selected_group" :schema="schema_blitzar"
-        :internalLabels="false" :columnCount="2" v-if="renderBlitzForm" class="blitzar-form" />
-    </q-card>
+
+
+    <div class="q-mt-md row justify-center">
+      <div class="col-12 col-md-8 q-mb-xl">
+        <div class="text-h5">{{ group_title }}</div>
+        <p>{{ group_description }}</p>
+      </div>
+
+      <div class="col-12 col-md-8 q-mb-xl"><!--some empty space for sticky not to overlay last element-->
+        <blitz-form v-model="serverConfig[selected_group]" :key="selected_group" :schema="schema_blitzar"
+          :internalLabels="false" label-position="left" v-if="renderBlitzForm" class="blitzar-form" />
+      </div>
+
+    </div>
     <q-page-sticky position="bottom-right" :offset="[25, 25]">
       <div class="q-gutter-sm">
         <q-btn label="reset" @click="remoteProcedureCall('/cmd/config/reset')" />
@@ -18,9 +27,25 @@
         <q-btn color="primary" label="persist" @click="uploadConfigAndPersist()" />
       </div>
     </q-page-sticky>
+
   </q-page>
 </template>
-<style lang="scss"></style>
+
+<style lang="scss">
+.blitz-field {
+  margin-bottom: 8px;
+}
+
+.blitz-field .blitz-field__sub-label {
+  font-weight: normal;
+  opacity: initial;
+  color: $grey
+}
+
+.blitz-field--label-left {
+  grid-template-columns: 1fr 1fr;
+}
+</style>
 <script>
 import { ref, onMounted, onBeforeMount, computed, watch } from "vue";
 import { api } from "boot/axios";
@@ -45,6 +70,16 @@ export default {
     const renderBlitzForm = ref(false);
     const selected_group = ref("");
 
+
+    const group_title = computed(() => {
+      if (selected_group.value != "") {
+        return schema_dereferenced[selected_group.value]["allOf"][0][
+          "title"
+        ];
+      } else {
+        return "-";
+      }
+    });
     const group_description = computed(() => {
       if (selected_group.value != "") {
         return schema_dereferenced[selected_group.value]["allOf"][0][
@@ -63,6 +98,15 @@ export default {
     });
 
     const mapBlitzarScheme = (schema) => {
+      const escapeHTML = str => str.replace(/[&<>'"]/g,
+        tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag]));
+
       console.log("creating blitzar schema");
       console.log(schema);
       let blitzar_schema = [];
@@ -78,9 +122,7 @@ export default {
             id: id,
             label: property["title"],
             component: "QInput",
-            /*subLabel: `${property["description"] || ""} (default=${
-              property["default"]
-            })`,*/
+            filled: true,
           };
 
           if (property["type"] == "boolean") {
@@ -109,15 +151,7 @@ export default {
             form_entry["options"] = property["allOf"][0]["enum"];
           }
 
-          form_entry["slots"] = {
-            label: {
-              component: "QTooltip",
-              slot: `ℹ️ ${property["description"] || ""} (default=${property["default"]
-                })`,
-              anchor: "bottom left",
-              self: "top left",
-            },
-          };
+          form_entry["subLabel"] = `${property["description"] || ""} (default=${escapeHTML((property["default"] || "undefined").toString())})`;
 
           blitzar_schema.push(form_entry);
         });
@@ -233,6 +267,7 @@ export default {
       schema_blitzar,
       renderBlitzForm,
       main_groups,
+      group_title,
       group_description,
       selected_group,
       serverConfig,

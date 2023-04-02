@@ -26,6 +26,10 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
   actions: {
     loadUiSettings() {
       console.log("loadUiSettings");
+      if (this.isLoaded) {
+        console.log("settings loaded once already, skipping");
+        return;
+      }
       this.storeState = STATES.WIP;
       api
         .get("/config/ui")
@@ -36,7 +40,6 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
           this.storeState = STATES.DONE;
         })
         .catch((e) => {
-          console.log(e);
           console.log("loadUiSettings failed");
           this.storeState = STATES.ERROR;
         });
