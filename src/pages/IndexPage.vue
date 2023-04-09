@@ -18,7 +18,7 @@
             <q-icon left size="5em" name="photo_library" />
             <div>Gallery</div>
           </q-btn>
-          <q-btn color="secondary" no-caps to="/admin">
+          <q-btn color="secondary" no-caps to="/admin" v-if="uiSettingsStore.uiSettings.SHOW_ADMIN_LINK_ON_FRONTPAGE">
             <q-icon left size="5em" name="admin_panel_settings" />
             <div>Admin</div>
           </q-btn>

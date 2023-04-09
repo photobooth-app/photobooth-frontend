@@ -23,6 +23,7 @@ const routes = [
       { path: "", component: () => import("pages/AdminPage.vue") },
       { path: "gallery", component: () => import("pages/GalleryPage.vue") },
       { path: "status", component: () => import("pages/StatusPage.vue") },
+      { path: "help", component: () => import("pages/AdminHelpPage.vue") },
       {
         path: "playground",
         component: () => import("pages/PlaygroundPage.vue"),
