@@ -130,7 +130,7 @@ export default {
           }
           if (property["type"] == "integer" || property["type"] == "float") {
             form_entry["component"] = "QInput";
-            if (form_entry["ui_component"])
+            if (property["ui_component"])
               form_entry["component"] = property["ui_component"];
             form_entry["type"] = "number";
             form_entry["labelAlways"] = true;
