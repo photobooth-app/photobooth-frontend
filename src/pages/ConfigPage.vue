@@ -151,7 +151,7 @@ export default {
             form_entry["options"] = property["allOf"][0]["enum"];
           }
 
-          form_entry["subLabel"] = `${property["description"] || ""} (default=${escapeHTML((property["default"] || "undefined").toString())})`;
+          form_entry["subLabel"] = `${property["description"] || ""} (default=${escapeHTML((("default" in property) ? property["default"] : "undefined").toString())})`;
 
           blitzar_schema.push(form_entry);
         });
