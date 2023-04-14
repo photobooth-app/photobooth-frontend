@@ -39,7 +39,7 @@
         <q-fab-action label-position="left" icon="delete" label="Delete" color="secondary" v-close-popup
           @click="deleteImage(currentSlideId)" />
         <q-fab-action label-position="left" icon="download" label="Download" color="primary"
-          @click="(evt) => { openURL(store.gallery.images[currentSlideIndex]['image']); }" />
+          @click="(evt) => { openURL(store.gallery.images[currentSlideIndex]['full']); }" />
         <q-fab-action label-position="left" icon="print" label="Print" color="primary" />
       </q-fab>
     </q-page-sticky>
