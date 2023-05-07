@@ -48,7 +48,7 @@ module.exports = configure(function (ctx) {
 
       // transpile: false,
       // publicPath: '/',
-      distDir: "../imageserver_backend/web/",
+      distDir: "../photobooth-app/web/",
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -221,7 +221,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "imageserver_frontend",
+        appId: "qPhotobooth",
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

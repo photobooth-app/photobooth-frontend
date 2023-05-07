@@ -115,7 +115,7 @@ export default {
   methods: {
     deleteImage (id) {
       this.$api
-        .get("gallery/delete", { params: { image_id: id } })
+        .get("/mediacollection/delete", { params: { image_id: id } })
         .then((response) => {
           console.log(response);
           //remove from local store also:

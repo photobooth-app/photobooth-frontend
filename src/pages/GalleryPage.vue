@@ -53,7 +53,7 @@ export default {
   mounted () {
     //initially get all images, later use eventstream?
     this.$api
-      .get("gallery/images")
+      .get("/mediacollection/getitems")
       .then((response) => {
         console.log(response);
         this.store.gallery.images = response.data;

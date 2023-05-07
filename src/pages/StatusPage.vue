@@ -38,6 +38,8 @@
 
         </q-card-section>
       </q-card>
+      <!--
+        # currently disabled since not working
       <q-card style="" class="q-pa-md q-ma-md">
         <q-card-section>
           <div class="text-h5">Primary Backend Stats</div>
@@ -66,6 +68,7 @@
           </table>
         </q-card-section>
       </q-card>
+    -->
     </div>
     <q-card class="q-pa-md q-mt-md">
       <div class="row">

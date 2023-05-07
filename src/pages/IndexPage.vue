@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-none column">
-    <div id="preview-stream" style="background-image: url('stream.mjpg')"
+    <div id="preview-stream" style="background-image: url('/aquisition/stream.mjpg')"
       class="full-width column justify-center content-center">
       <countdown-timer ref="countdowntimer" :duration="3" :remainingSeconds="countdown"
         :countdownOffset="0.5"></countdown-timer>
@@ -54,7 +54,7 @@ export default defineComponent({
 
   methods: {
     takePicture () {
-      remoteProcedureCall("/chose/1pic");
+      remoteProcedureCall("/processing/chose/1pic");
     },
   },
   computed: {
