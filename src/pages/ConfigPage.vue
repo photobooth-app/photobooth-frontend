@@ -22,7 +22,7 @@
     </div>
     <q-page-sticky position="bottom-right" :offset="[25, 25]">
       <div class="q-gutter-sm">
-        <q-btn label="reset" @click="remoteProcedureCall('/cmd/config/reset')" />
+        <q-btn label="reset" @click="remoteProcedureCall('/config/reset')" />
         <q-btn label="restore" @click="getConfig('current')" />
         <q-btn color="primary" label="persist" @click="uploadConfigAndPersist()" />
       </div>
