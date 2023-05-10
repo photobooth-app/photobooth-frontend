@@ -72,7 +72,7 @@ export default defineComponent({
 
     initSseClient () {
       this.sseClient = this.$sse
-        .create("/eventstream")
+        .create("/sse")
         .on("message", (message, lastEventId) => {
           console.info(message, lastEventId);
           // TODO: make this a notifier ...
