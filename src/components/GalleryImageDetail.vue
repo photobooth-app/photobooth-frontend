@@ -127,7 +127,10 @@ export default {
       return this.store.gallery.images[index][detail];
     },
     getImageQrData () {
-      const link = this.store.gallery.images[this.currentSlideIndex]["ext_download_url"]
+      const link = String(this.uiSettingsStore.uiSettings.EXT_DOWNLOAD_URL).replace(
+        "{filename}",
+        this.store.gallery.images[this.currentSlideIndex]["filename"]
+      );
       return link;
     },
   },
