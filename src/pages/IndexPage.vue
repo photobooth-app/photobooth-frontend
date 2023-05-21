@@ -5,6 +5,8 @@
       <countdown-timer ref="countdowntimer" :duration="3" :remainingSeconds="countdown"
         :countdownOffset="0.5"></countdown-timer>
 
+      <q-spinner-grid size="20em" v-show="showProcessing" />
+
       <div v-show="showFrontpage" style="position: absolute; width: 100%; height: 100%" id="frontpage_text"
         v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
 
@@ -58,6 +60,12 @@ export default defineComponent({
     },
   },
   computed: {
+
+    showProcessing: {
+      get () {
+        return this.store.statemachine.state == "postprocess_still";
+      },
+    },
     countdown: {
       get () {
         return this.store.statemachine.countdown
