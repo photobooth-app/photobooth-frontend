@@ -246,10 +246,7 @@ export default {
     const uploadConfigAndPersist = () => {
       console.log("sync config to server");
       console.log(serverConfig.value);
-      $q.notify({
-        message: "Update config, restarting services. Please wait.",
-        color: "green",
-      });
+
       api
         .post("/config/current", serverConfig.value)
         .then((response) => {
@@ -257,7 +254,7 @@ export default {
           uiSettingsStore.loadUiSettings(true);
 
           $q.notify({
-            message: "Config persisted and reloaded from server. Services restarted.",
+            message: "Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!",
             color: "green",
           });
 

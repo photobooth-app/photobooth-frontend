@@ -49,9 +49,25 @@
                 </q-card-actions>
               </q-card>
             </q-dialog>
+
+            <q-dialog v-model="confirm_reload_service">
+              <q-card class="q-pa-sm">
+                <q-card-section class="row items-center">
+                  <q-avatar icon="restart_alt" color="primary" text-color="white" />
+                  <span class="q-ml-sm">You sure to reload the service?</span>
+                </q-card-section>
+
+                <q-card-actions align="right">
+                  <q-btn flat label="Cancel" v-close-popup />
+                  <q-btn label="Reload" color="primary" v-close-popup
+                    @click="remoteProcedureCall('/system/service/reload')" />
+                </q-card-actions>
+              </q-card>
+            </q-dialog>
             <q-btn class="q-mr-sm" label="Reboot Host" @click="confirm_reboot = true" />
             <q-btn class="q-mr-sm" label="Shutdown Host" @click="confirm_shutdown = true" />
             <q-btn class="q-mr-sm" label="Restart Service" @click="confirm_restart_service = true" />
+            <q-btn class="q-mr-sm" label="Reload Service" @click="confirm_reload_service = true" />
           </div>
         </div>
       </div>
@@ -102,6 +118,7 @@ export default defineComponent({
       confirm_reboot: ref(false),
       confirm_shutdown: ref(false),
       confirm_restart_service: ref(false),
+      confirm_reload_service: ref(false),
       confirm_delete_all: ref(false),
     };
   },
