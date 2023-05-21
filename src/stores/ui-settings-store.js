@@ -26,9 +26,9 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
     storeState: STATES.INIT,
   }),
   actions: {
-    loadUiSettings() {
+    loadUiSettings(forceReload = false) {
       console.log("loadUiSettings");
-      if (this.isLoaded) {
+      if (this.isLoaded && forceReload == false) {
         console.log("settings loaded once already, skipping");
         return;
       }

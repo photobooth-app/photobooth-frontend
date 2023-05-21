@@ -50,6 +50,7 @@
 import { ref, onMounted, onBeforeMount, computed, watch } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useUiSettingsStore } from "stores/ui-settings-store.js";
 import { remoteProcedureCall } from "boot/axios";
 
 // Blitzar to create forms
@@ -71,6 +72,8 @@ export default {
     const main_groups = ref([]);
     const renderBlitzForm = ref(false);
     const selected_group = ref("");
+
+    const uiSettingsStore = useUiSettingsStore();
 
 
     const group_title = computed(() => {
@@ -243,15 +246,21 @@ export default {
     const uploadConfigAndPersist = () => {
       console.log("sync config to server");
       console.log(serverConfig.value);
-
+      $q.notify({
+        message: "Update config, restarting services. Please wait.",
+        color: "green",
+      });
       api
         .post("/config/current", serverConfig.value)
         .then((response) => {
+          // reload ui settings into store as on app startup.
+          uiSettingsStore.loadUiSettings(true);
+
           $q.notify({
-            message: "Persisted config, trying to restart service",
+            message: "Config persisted and reloaded from server. Services restarted.",
             color: "green",
           });
-          console.log(response);
+
         })
         .catch((error) => {
           if (error.response.data.detail) {
@@ -277,6 +286,9 @@ export default {
             });
           }
         });
+
+
+
     };
 
     onBeforeMount(() => console.log("Composition API beforemounted"));
