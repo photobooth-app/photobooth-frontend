@@ -15,7 +15,7 @@
       </div>
 
       <div class="col-12 col-md-8 q-mb-xl"><!--some empty space for sticky not to overlay last element-->
-        <blitz-form v-model="serverConfig[selected_group]" :key="selected_group" :schema="schema_blitzar"
+        <BlitzForm v-model="serverConfig[selected_group]" :key="selected_group" :schema="schema_blitzar"
           :internalLabels="false" label-position="left" v-if="renderBlitzForm" class="blitzar-form" />
       </div>
 
@@ -54,12 +54,14 @@ import { remoteProcedureCall } from "boot/axios";
 
 // Blitzar to create forms
 // register all quasar elements used in blitzar scheme via quasar.config.js -> framework -> components
-import { BlitzForm } from "blitzar";
+import { BlitzForm, BlitzListForm } from "blitzar";
 import "blitzar/dist/style.css";
+
 
 export default {
   // name: 'PageName',
-  components: { BlitzForm },
+  // eslint-disable-next-line
+  components: { BlitzForm, BlitzListForm },
 
   setup () {
     const $q = useQuasar();
@@ -107,51 +109,68 @@ export default {
           '"': '&quot;'
         }[tag]));
 
+      const createFormEntry = (id, property) => {
+
+        let form_entry = {
+          id: id,
+          label: property["title"],
+          component: "QInput",
+          filled: true,
+        };
+
+        if (property["type"] == "boolean") {
+          form_entry["component"] = "QToggle";
+        }
+        if (property["type"] == "integer" || property["type"] == "float") {
+          form_entry["component"] = "QInput";
+          if (property["ui_component"])
+            form_entry["component"] = property["ui_component"];
+          form_entry["type"] = "number";
+          form_entry["labelAlways"] = true;
+          if (property["exclusiveMinimum"])
+            form_entry["min"] = property["exclusiveMinimum"];
+          if (property["exclusiveMaximum"])
+            form_entry["max"] = property["exclusiveMaximum"];
+          if (property["minimum"]) form_entry["min"] = property["minimum"];
+          if (property["maximum"]) form_entry["max"] = property["maximum"];
+        }
+
+        // check whether an enum
+        if (
+          property["allOf"] &&
+          Object.keys(property["allOf"][0]).includes("enum")
+        ) {
+          form_entry["component"] = "QSelect";
+          form_entry["options"] = property["allOf"][0]["enum"];
+        }
+
+        form_entry["subLabel"] = `${property["description"] || ""} (default=${escapeHTML((("default" in property) ? property["default"] : "undefined").toString())})`;
+
+
+        return form_entry
+      }
+
       console.log("creating blitzar schema");
       console.log(schema);
       let blitzar_schema = [];
 
-      console.log("allOf" in schema);
       if ("allOf" in schema) {
         // group that needs to be parsed
 
         Object.entries(schema["allOf"][0]["properties"]).forEach((entry) => {
           const [id, property] = entry;
 
-          let form_entry = {
-            id: id,
-            label: property["title"],
-            component: "QInput",
-            filled: true,
-          };
+          let form_entry = createFormEntry(id, property)
 
-          if (property["type"] == "boolean") {
-            form_entry["component"] = "QToggle";
+          if (property["type"] == "array" && property["items"]) {
+            // pydantic list[...] render to BlitzListForms:
+            form_entry["component"] = "BlitzListForm";
+            form_entry["schema"] = []
+            Object.entries(property["items"]["properties"]).forEach((item_property) => {
+              const [id, property] = item_property;
+              form_entry["schema"].push(createFormEntry(id, property))
+            })
           }
-          if (property["type"] == "integer" || property["type"] == "float") {
-            form_entry["component"] = "QInput";
-            if (property["ui_component"])
-              form_entry["component"] = property["ui_component"];
-            form_entry["type"] = "number";
-            form_entry["labelAlways"] = true;
-            if (property["exclusiveMinimum"])
-              form_entry["min"] = property["exclusiveMinimum"];
-            if (property["exclusiveMaximum"])
-              form_entry["max"] = property["exclusiveMaximum"];
-            if (property["minimum"]) form_entry["min"] = property["minimum"];
-            if (property["maximum"]) form_entry["max"] = property["maximum"];
-          }
-
-          // check whether an enum
-          if (
-            property["allOf"] &&
-            Object.keys(property["allOf"][0]).includes("enum")
-          ) {
-            form_entry["component"] = "QSelect";
-            form_entry["options"] = property["allOf"][0]["enum"];
-          }
-
-          form_entry["subLabel"] = `${property["description"] || ""} (default=${escapeHTML((("default" in property) ? property["default"] : "undefined").toString())})`;
 
           blitzar_schema.push(form_entry);
         });
