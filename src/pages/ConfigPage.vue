@@ -165,15 +165,23 @@ export default {
 
           let form_entry = createFormEntry(id, property)
 
-          if (property["type"] == "array" && property["items"]) {
-            // pydantic list[...] render to BlitzListForms:
+          if (property["type"] == "array" && property["items"] && property["items"]["type"] == "object") {
+            // pydantic list[Group(BaseModel)] render to BlitzListForms:
             form_entry["component"] = "BlitzListForm";
             form_entry["schema"] = []
             Object.entries(property["items"]["properties"]).forEach((item_property) => {
               const [id, property] = item_property;
               form_entry["schema"].push(createFormEntry(id, property))
             })
-          }
+          }/*
+          TODO: this shall be rendered to a checkbox list for avail filter: else if (property["type"] == "array" && property["items"] && property["items"]["enum"] && property["items"]["type"] == "string") {
+              // pydantic list[Enum(str, Enum)] render to checklist currently:
+              form_entry["component"] = "QCheckbox";
+              form_entry["schema"] = []
+              Object.entries(property["items"]["enum"]).forEach((enum_str) => {
+                form_entry["schema"].push(createFormEntry(id, enum_str))
+              })
+            }*/
 
           blitzar_schema.push(form_entry);
         });
