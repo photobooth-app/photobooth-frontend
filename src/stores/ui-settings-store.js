@@ -21,6 +21,10 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       AUTOCLOSE_NEW_ITEM_ARRIVED: null,
       SHOW_ADMIN_LINK_ON_FRONTPAGE: null,
       EXT_DOWNLOAD_URL: null,
+      gallery_show_filter: null,
+      gallery_show_download: null,
+      gallery_show_delete: null,
+      gallery_show_print: null,
     },
 
     storeState: STATES.INIT,

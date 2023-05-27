@@ -4,11 +4,13 @@
     <q-header elevated class="bg-primary text-white">
 
       <q-toolbar>
-        <q-btn flat class="q-mr-sm" icon="delete" label="Delete" v-close-popup @click="deleteImage(currentSlideId)" />
-        <q-btn flat class="q-mr-sm" icon="download" label="Download"
-          @click="(evt) => { openURL(store.gallery.images[currentSlideIndex]['full']); }" />
-        <q-btn flat class="q-mr-sm" icon="print" label="Print" />
-        <q-btn flat class="q-mr-sm" icon="filter" label="Filter" @click="toggleRightDrawer" />
+        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_delete" flat class="q-mr-sm" icon="delete" label="Delete"
+          v-close-popup @click="deleteImage(currentSlideId)" />
+        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_download" flat class="q-mr-sm" icon="download"
+          label="Download" @click="(evt) => { openURL(store.gallery.images[currentSlideIndex]['full']); }" />
+        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_print" flat class="q-mr-sm" icon="print" label="Print" />
+        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_filter" flat class="q-mr-sm" icon="filter" label="Filter"
+          @click="toggleRightDrawer" />
 
         <q-space />
 
@@ -22,7 +24,6 @@
           {{ store.gallery.images[currentSlideIndex]['caption'] }}
         </div>
 
-
         <q-space />
 
         <q-btn dense flat icon="close" v-close-popup />
@@ -34,9 +35,10 @@
 
     </q-header>
 
-    <q-drawer v-model="rightDrawerOpen" side="right" elevated overlay>
+    <q-drawer v-if="uiSettingsStore.uiSettings.gallery_show_filter" v-model="rightDrawerOpen" side="right" elevated
+      overlay>
       <q-img v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`" :key="filter"
-        v-for="filter in  availableFilter ">
+        @click="applyFilter(currentSlideId, filter)" v-for="filter in  availableFilter ">
         <div class="absolute-bottom-left text-subtitle2">
           {{ filter }}
         </div>
@@ -183,6 +185,17 @@ export default {
   },
 
   methods: {
+    applyFilter (id, filter) {
+      this.$api
+        .get(`/mediaprocessing/applyfilter/${id}/${filter}`)
+        .then((response) => {
+          console.log(response);
+          //remove from local store also:
+          console.error("TODO: trigger reload image")
+        })
+        .catch((err) => console.log(err));
+
+    },
     deleteImage (id) {
       this.$api
         .get("/mediacollection/delete", { params: { image_id: id } })
