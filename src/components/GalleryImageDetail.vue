@@ -1,49 +1,65 @@
 <template>
-  <div class="q-pa-none galleryimagedetail">
+  <q-layout view="hhh Lpr ffr" @click="abortTimer">
 
-    <q-carousel class="bg-image" style="width: 100%; height: 100%" control-type="unelevated" control-color="primary"
-      swipeable animated v-model="currentSlideId" thumbnails :autoplay="autoplay" draggable="false" arrows
-      transition-prev="slide-right" transition-next="slide-left"
-      @transition="(newVal, oldVal) => { currentSlideIndex = store.gallery.images.findIndex(item => item.id === newVal); }">
-      <q-carousel-slide :img-src="slide.preview" v-for="(slide, index) in slicedImages" :key="slide.id" :name="slide.id">
+    <q-header elevated class="bg-primary text-white">
 
-        <div class="absolute-bottom-left text-subtitle2">
-          <div>{{ slide.caption }}</div>
-          <div>index: {{ index }}, id: {{ slide.id }}</div>
-        </div>
-      </q-carousel-slide>
-    </q-carousel>
-
-    <q-page-sticky position="top-right" :offset="[30, 30]">
-      <div class="q-gutter-sm">
-        <vue-qrcode type="image/png" tag="svg" :margin="2" :color="{ dark: '#111111', light: '#EEEEEE' }" :options="{
-          width: 200,
-          errorCorrectionLevel: 'high',
-        }" :value="getImageQrData()" />
-      </div>
-    </q-page-sticky>
-
-    <q-page-sticky position="top-left" :offset="[20, 20]">
-      <div class="q-gutter-sm">
-        <q-btn v-close-popup color="primary" no-caps>
-          <q-icon left size="5em" name="arrow_back_ios_new" />
-          <div>close</div>
-        </q-btn>
-      </div>
-    </q-page-sticky>
-
-
-    <q-page-sticky position="bottom-right" :offset="[35, 35]">
-      <q-fab direction="up" v-model="fabRight" vertical-actions-align="right" glossy color="grey"
-        icon="keyboard_arrow_up">
-        <q-fab-action label-position="left" icon="delete" label="Delete" color="secondary" v-close-popup
-          @click="deleteImage(currentSlideId)" />
-        <q-fab-action label-position="left" icon="download" label="Download" color="primary"
+      <q-toolbar>
+        <q-btn flat class="q-mr-sm" icon="delete" label="Delete" v-close-popup @click="deleteImage(currentSlideId)" />
+        <q-btn flat class="q-mr-sm" icon="download" label="Download"
           @click="(evt) => { openURL(store.gallery.images[currentSlideIndex]['full']); }" />
-        <q-fab-action label-position="left" icon="print" label="Print" color="primary" />
-      </q-fab>
-    </q-page-sticky>
-  </div>
+        <q-btn flat class="q-mr-sm" icon="print" label="Print" />
+        <q-btn flat class="q-mr-sm" icon="filter" label="Filter" @click="toggleRightDrawer" />
+
+        <q-space />
+
+        <div class="q-mr-sm">
+          <q-icon name="tag" />
+          <span>{{ currentSlideIndex + 1 }} of {{ store.gallery.images.length }} total</span>
+        </div>
+        <q-space />
+        <div class="q-mr-sm">
+          <q-icon name="image" />
+          {{ store.gallery.images[currentSlideIndex]['caption'] }}
+        </div>
+
+
+        <q-space />
+
+        <q-btn dense flat icon="close" v-close-popup />
+
+      </q-toolbar>
+
+      <q-linear-progress :value="remainingSecondsNormalized" animation-speed="200" color="grey"
+        v-if="displayLinearProgressBar && remainingSeconds > 0" />
+
+    </q-header>
+
+    <q-drawer v-model="rightDrawerOpen" side="right" elevated overlay>
+      FILTER previews here
+    </q-drawer>
+
+    <q-page-container class="q-pa-none galleryimagedetail full-height">
+
+
+      <q-carousel class="bg-image" style="width: 100%; height: 100%" control-type="flat" control-color="primary" swipeable
+        v-touch-swipe.mouse.down="handleSwipeDown" animated v-model="currentSlideId" thumbnails :autoplay="autoplay"
+        draggable="false" arrows transition-prev="slide-right" transition-next="slide-left"
+        @transition="(newVal, oldVal) => { currentSlideIndex = store.gallery.images.findIndex(item => item.id === newVal); abortTimer() }">
+
+        <q-carousel-slide :img-src="slide.preview" v-for="(slide) in slicedImages" :key="slide.id" :name="slide.id" />
+
+      </q-carousel>
+
+      <q-page-sticky position="top-right" :offset="[30, 30]">
+        <div class="q-gutter-sm">
+          <vue-qrcode type="image/png" tag="svg" :margin="2" :width=200 error-correction-level="low"
+            :color="{ dark: '#111111', light: '#EEEEEE' }" :value="getImageQrData()" />
+        </div>
+      </q-page-sticky>
+
+    </q-page-container>
+
+  </q-layout>
 </template>
 
 <style lang="sass" scoped>
@@ -92,11 +108,16 @@ export default {
   data () {
     return {
       //currentId: "",
+      intervalTimerId: null,
+      remainingSeconds: 0,
+      remainingSecondsNormalized: 0,
+      displayLinearProgressBar: true,
     };
   },
   setup () {
     const store = useMainStore();
     const uiSettingsStore = useUiSettingsStore();
+    const rightDrawerOpen = ref(false);
 
     return {
       // you can return the whole store instance to use it in the template
@@ -107,11 +128,26 @@ export default {
       currentSlideId: ref(""),
       currentSlideIndex: ref(0),
       autoplay: ref(false),
+      showFilterDialog: ref(false),
+      rightDrawerOpen,
+      toggleRightDrawer () {
+        rightDrawerOpen.value = !rightDrawerOpen.value
+      },
+      handleSwipeDown ({ evt }) {
+        console.log("TODO: add method to close dialog programmatically")
+      }
     };
   },
   components: {
     VueQrcode,
   },
+  mounted () {
+    this.startTimer();
+  },
+  beforeUnmount () {
+    clearInterval(this.intervalTimerId);
+  },
+
   methods: {
     deleteImage (id) {
       this.$api
@@ -132,6 +168,27 @@ export default {
         this.store.gallery.images[this.currentSlideIndex]["filename"]
       );
       return link;
+    },
+    abortTimer () {
+      clearInterval(this.intervalTimerId);
+      this.remainingSeconds = 0
+      this.remainingSecondsNormalized = 0
+    },
+    startTimer () {
+      var duration = this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
+      console.log(`starting newitemarrived timer, duration=${duration}`);
+      this.remainingSeconds = duration;
+
+      this.intervalTimerId = setInterval(() => {
+        this.remainingSecondsNormalized = this.remainingSeconds / duration;
+
+        this.remainingSeconds -= 0.05;
+
+        if (this.remainingSeconds <= 0) {
+          clearInterval(this.intervalTimerId);
+          this.$router.push({ path: "/" });
+        }
+      }, 50);
     },
   },
 };

@@ -24,9 +24,25 @@ export default route(function (/* { store, ssrContext } */) {
     : createWebHashHistory;
 
   const Router = createRouter({
-    scrollBehavior: () => ({ left: 0, top: 0 }),
-    /*scrollBehavior: (to, from, savedPosition) =>
-      savedPosition ? { savedPosition } : { left: 0, top: 0 },*/
+    //scrollBehavior: () => ({ left: 0, top: 0 }),
+    // seems to not work properly - TODO
+    scrollBehavior: (to, from, savedPosition) =>
+      savedPosition ? { savedPosition } : { left: 0, top: 0 },
+    // following works, but: TODO
+    /*scrollBehavior(to, from, savedPosition) {
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+      let position = { x: 0, y: 0 };
+      if (savedPosition) {
+        position = savedPosition;
+      }
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(position);
+        }, 100);
+      });
+    },*/
     routes,
 
     // Leave this as is and make changes in quasar.conf.js instead!

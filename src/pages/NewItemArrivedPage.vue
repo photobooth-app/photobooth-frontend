@@ -1,32 +1,30 @@
-<template>
-  <q-page padding full-height full-width>
-    <q-linear-progress :value="remainingSecondsNormalized" class="q-mt-md" animation-speed="200" />
-    <q-card class="column bg-image" style="width: 100%; height: 100%">
-      <q-card-section class="col no-padding" align="center">
-        <q-img spinner-color="white" :src="store.gallery.newArrivalItem['preview']"
-          style="max-width: 100%; max-height: 100%" fit="contain">
-          <div class="absolute-bottom-left text-subtitle2">
-            {{ store.gallery.newArrivalItem.caption }}
-          </div>
-        </q-img>
-      </q-card-section>
-    </q-card>
+<template >
+  <q-page class="q-pa-none fullscreen" @click="abortTimer">
+    <q-linear-progress :value="remainingSecondsNormalized" animation-speed="200" v-if="displayLinearProgressBar" />
+
+    <!-- latest img is always index 0 -->
+    <gallery-image-detail :indexSelected="0" style="height:100%"></gallery-image-detail>
+
+
   </q-page>
 </template>
+
 
 <script>
 import { useMainStore } from "../stores/main-store.js";
 import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import { ref } from "vue";
+import GalleryImageDetail from "../components/GalleryImageDetail";
 
 export default {
   // name: 'PageName',
-  components: {},
+  components: { GalleryImageDetail },
   data () {
     return {
-      intervalId: 0,
+      intervalTimerId: null,
       remainingSeconds: 0,
       remainingSecondsNormalized: 0,
+      displayLinearProgressBar: true,
     };
   },
   setup () {
@@ -37,31 +35,36 @@ export default {
       // you can return the whole store instance to use it in the template
       store,
       uiSettingsStore,
+      GalleryImageDetail,
     };
   },
   mounted () {
     this.startTimer();
   },
   beforeUnmount () {
-    clearInterval(this.intervalId);
+    clearInterval(this.intervalTimerId);
   },
   methods: {
+    abortTimer () {
+      clearInterval(this.intervalTimerId);
+      this.remainingSeconds = 0
+      this.remainingSecondsNormalized = 0
+    },
     startTimer () {
-      var duration =
-        this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
+      var duration = this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
       console.log(`starting newitemarrived timer, duration=${duration}`);
       this.remainingSeconds = duration;
 
-      this.intervalId = setInterval(() => {
+      this.intervalTimerId = setInterval(() => {
         this.remainingSecondsNormalized = this.remainingSeconds / duration;
 
-        this.remainingSeconds -= 0.1;
+        this.remainingSeconds -= 0.05;
 
         if (this.remainingSeconds <= 0) {
-          clearInterval(this.intervalId);
+          clearInterval(this.intervalTimerId);
           this.$router.push({ path: "/" });
         }
-      }, 100);
+      }, 50);
     },
   },
 };

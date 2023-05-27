@@ -13,7 +13,7 @@
     </div>
 
     <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
-      <gallery-image-detail :indexSelected="indexSelected"></gallery-image-detail>
+      <gallery-image-detail :indexSelected="indexSelected" class="full-height"></gallery-image-detail>
     </q-dialog>
   </q-page>
 </template>
@@ -49,6 +49,9 @@ export default {
         return Object.keys(this.store.gallery["images"]).length;
       },
     },
+    itemId () {
+      return this.$route.params.id
+    },
   },
   mounted () {
     //initially get all images, later use eventstream?
@@ -57,6 +60,21 @@ export default {
       .then((response) => {
         console.log(response);
         this.store.gallery.images = response.data;
+
+        if (this.itemId) {
+          console.log(`initial id given, try loading image id: ${this.itemId}`)
+
+          //try find it in the index:
+          const imageIndex = this.store.gallery.images.findIndex(item => item.id === this.itemId);
+          if (imageIndex != -1) {
+            console.log(`found image at index no: ${imageIndex}`)
+            this.openPic(imageIndex);
+          }
+          else {
+            console.error(`initial id given not found: ${this.itemId}`);
+          }
+        }
+
       })
       .catch((err) => console.log(err));
   },

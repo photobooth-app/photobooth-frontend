@@ -10,6 +10,11 @@
       <div v-show="showFrontpage" style="position: absolute; width: 100%; height: 100%" id="frontpage_text"
         v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
 
+      <!--
+      <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
+        <gallery-image-detail :indexSelected="0" class="full-height"></gallery-image-detail>
+      </q-dialog>
+    -->
       <q-page-sticky position="bottom" :offset="[0, 25]">
         <div class="q-gutter-sm">
           <q-btn color="primary" no-caps @click="takePicture()">
