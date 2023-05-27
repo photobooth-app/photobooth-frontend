@@ -35,7 +35,12 @@
     </q-header>
 
     <q-drawer v-model="rightDrawerOpen" side="right" elevated overlay>
-      FILTER previews here
+      <q-img v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`" :key="filter"
+        v-for="filter in  availableFilter ">
+        <div class="absolute-bottom-left text-subtitle2">
+          {{ filter }}
+        </div>
+      </q-img>
     </q-drawer>
 
     <q-page-container class="q-pa-none galleryimagedetail full-height">
@@ -46,7 +51,7 @@
         draggable="false" arrows transition-prev="slide-right" transition-next="slide-left"
         @transition="(newVal, oldVal) => { currentSlideIndex = store.gallery.images.findIndex(item => item.id === newVal); abortTimer() }">
 
-        <q-carousel-slide :img-src="slide.preview" v-for="(slide) in slicedImages" :key="slide.id" :name="slide.id" />
+        <q-carousel-slide :img-src="slide.preview" v-for="( slide ) in  slicedImages " :key="slide.id" :name="slide.id" />
 
       </q-carousel>
 
@@ -112,6 +117,35 @@ export default {
       remainingSeconds: 0,
       remainingSecondsNormalized: 0,
       displayLinearProgressBar: true,
+      availableFilter: [
+        "original",
+        "_1977",
+        "aden",
+        "brannan",
+        "brooklyn",
+        "clarendon",
+        "earlybird",
+        "gingham",
+        "hudson",
+        "inkwell",
+        "kelvin",
+        "lark",
+        "lofi",
+        "maven",
+        "mayfair",
+        "moon",
+        "nashville",
+        "perpetua",
+        "reyes",
+        "rise",
+        "slumber",
+        "stinson",
+        "toaster",
+        "valencia",
+        "walden",
+        "willow",
+        "xpro2"
+      ],
     };
   },
   setup () {
