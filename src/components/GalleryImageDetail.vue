@@ -1,13 +1,18 @@
 <template>
   <q-layout view="hhh Lpr ffr" @click="abortTimer">
-
     <q-header elevated class="bg-primary text-white">
-
       <q-toolbar>
+        <q-btn dense flat icon="close" v-close-popup />
+
+        <q-space />
+
         <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_delete" flat class="q-mr-sm" icon="delete" label="Delete"
           v-close-popup @click="deleteImage(currentSlideId)" />
         <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_download" flat class="q-mr-sm" icon="download"
-          label="Download" @click="(evt) => { openURL(store.gallery.images[currentSlideIndex]['full']); }" />
+          label="Download" @click="(evt) => {
+            openURL(itemRepository[currentSlideIndex]['full']);
+          }
+            " />
         <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_print" flat class="q-mr-sm" icon="print" label="Print" />
         <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_filter" flat class="q-mr-sm" icon="filter" label="Filter"
           @click="toggleRightDrawer" />
@@ -16,29 +21,24 @@
 
         <div class="q-mr-sm">
           <q-icon name="tag" />
-          <span>{{ currentSlideIndex + 1 }} of {{ store.gallery.images.length }} total</span>
+          <span>{{ currentSlideIndex + 1 }} of
+            {{ itemRepository.length }} total</span>
         </div>
         <q-space />
         <div class="q-mr-sm">
           <q-icon name="image" />
-          {{ store.gallery.images[currentSlideIndex]['caption'] }}
+          {{ itemRepository[currentSlideIndex]["caption"] }}
         </div>
-
-        <q-space />
-
-        <q-btn dense flat icon="close" v-close-popup />
-
       </q-toolbar>
 
       <q-linear-progress :value="remainingSecondsNormalized" animation-speed="200" color="grey"
         v-if="displayLinearProgressBar && remainingSeconds > 0" />
-
     </q-header>
 
     <q-drawer v-if="uiSettingsStore.uiSettings.gallery_show_filter" v-model="rightDrawerOpen" side="right" elevated
       overlay>
       <q-img v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`" :key="filter"
-        @click="applyFilter(currentSlideId, filter)" v-for="filter in  availableFilter ">
+        @click="applyFilter(currentSlideId, filter)" v-for="filter in availableFilter">
         <div class="absolute-bottom-left text-subtitle2">
           {{ filter }}
         </div>
@@ -46,43 +46,39 @@
     </q-drawer>
 
     <q-page-container class="q-pa-none galleryimagedetail full-height">
-
-
       <q-carousel class="bg-image" style="width: 100%; height: 100%" control-type="flat" control-color="primary" swipeable
         v-touch-swipe.mouse.down="handleSwipeDown" animated v-model="currentSlideId" thumbnails :autoplay="autoplay"
-        draggable="false" arrows transition-prev="slide-right" transition-next="slide-left"
-        @transition="(newVal, oldVal) => { currentSlideIndex = store.gallery.images.findIndex(item => item.id === newVal); abortTimer() }">
-
-        <q-carousel-slide :img-src="slide.preview" v-for="( slide ) in  slicedImages " :key="slide.id" :name="slide.id" />
-
+        draggable="false" arrows transition-prev="slide-right" transition-next="slide-left" @transition="(newVal, oldVal) => {
+          currentSlideIndex = itemRepository.findIndex(
+            (item) => item.id === newVal
+          );
+          abortTimer();
+        }
+          ">
+        <q-carousel-slide :img-src="slide.preview" v-for="slide in slicedImages" :key="slide.id" :name="slide.id" />
       </q-carousel>
 
       <q-page-sticky position="top-right" :offset="[30, 30]">
         <div class="q-gutter-sm">
-          <vue-qrcode type="image/png" tag="svg" :margin="2" :width=200 error-correction-level="low"
+          <vue-qrcode type="image/png" tag="svg" :margin="2" :width="200" error-correction-level="low"
             :color="{ dark: '#111111', light: '#EEEEEE' }" :value="getImageQrData()" />
         </div>
       </q-page-sticky>
-
     </q-page-container>
-
   </q-layout>
 </template>
 
 <style lang="sass" scoped>
-  .q-carousel__slide
-    background-size: contain
-    background-repeat: no-repeat
-
-
+.q-carousel__slide
+  background-size: contain
+  background-repeat: no-repeat
 </style>
 
 <script>
 import VueQrcode from "vue-qrcode";
 import { ref } from "vue";
-import { useMainStore } from "../stores/main-store.js";
 import { useUiSettingsStore } from "../stores/ui-settings-store.js";
-import { openURL } from 'quasar'
+import { openURL } from "quasar";
 
 export default {
   // name: 'ComponentName',
@@ -92,24 +88,28 @@ export default {
       type: Number,
       required: true,
     },
+    itemRepository: {
+      //repo to display
+      type: Array,
+      required: true,
+    },
   },
   computed: {
     // a computed getter
     slicedImages () {
       // `this` points to the component instance
-      const window = 5
-      var totalItems = this.store.gallery.images.length;
+      const window = 5;
+      var totalItems = this.itemRepository.length;
       var lowerBound = Math.max(0, this.currentSlideIndex - 2);
       var upperBound = Math.max(0, this.currentSlideIndex + 3);
 
-
-      return this.store.gallery.images.slice(lowerBound, upperBound);
-    }
+      return this.itemRepository.slice(lowerBound, upperBound);
+    },
   },
   beforeCreate () {
     console.log(this.indexSelected);
     this.currentSlideIndex = this.indexSelected;
-    this.currentSlideId = this.store.gallery.images[this.indexSelected].id;
+    this.currentSlideId = this.itemRepository[this.indexSelected].id;
     //this.currentId = this.index;
   },
   data () {
@@ -146,18 +146,16 @@ export default {
         "valencia",
         "walden",
         "willow",
-        "xpro2"
+        "xpro2",
       ],
     };
   },
   setup () {
-    const store = useMainStore();
     const uiSettingsStore = useUiSettingsStore();
     const rightDrawerOpen = ref(false);
 
     return {
       // you can return the whole store instance to use it in the template
-      store,
       uiSettingsStore,
       openURL,
       fabRight: ref(false),
@@ -167,11 +165,11 @@ export default {
       showFilterDialog: ref(false),
       rightDrawerOpen,
       toggleRightDrawer () {
-        rightDrawerOpen.value = !rightDrawerOpen.value
+        rightDrawerOpen.value = !rightDrawerOpen.value;
       },
       handleSwipeDown ({ evt }) {
-        console.log("TODO: add method to close dialog programmatically")
-      }
+        console.log("TODO: add method to close dialog programmatically");
+      },
     };
   },
   components: {
@@ -185,16 +183,31 @@ export default {
   },
 
   methods: {
+    //https://stackoverflow.com/questions/1077041/refresh-image-with-a-new-one-at-the-same-url/66312176#66312176
+    async reloadImg (url) {
+      // fetch to update cache on regular images, if we do not fetch, on next gallery visit old images are displayed
+      await fetch(url, { cache: "reload", mode: "no-cors" });
+
+      //now update also current displayed images (some are images, some are in background)
+      // drawback: due to ?time file is transferred twice from server. but without there is no good way to force the browser to render new pic
+      const time = new Date().getTime();
+      document.body.querySelectorAll(`img[src*='${url}']`).forEach((img) => {
+        img.src = url + "?" + time;
+      });
+      document.body
+        .querySelectorAll(`div[style*="background-image"][style*="${url}"]`)
+        .forEach((div) => (div.style.backgroundImage = `url(${url}?${time})`));
+    },
     applyFilter (id, filter) {
       this.$api
         .get(`/mediaprocessing/applyfilter/${id}/${filter}`)
         .then((response) => {
-          console.log(response);
-          //remove from local store also:
-          console.error("TODO: trigger reload image")
+          const index = this.itemRepository.findIndex((item) => item.id === id);
+          this.reloadImg(this.itemRepository[index].full);
+          this.reloadImg(this.itemRepository[index].preview);
+          this.reloadImg(this.itemRepository[index].thumbnail);
         })
         .catch((err) => console.log(err));
-
     },
     deleteImage (id) {
       this.$api
@@ -202,27 +215,32 @@ export default {
         .then((response) => {
           console.log(response);
           //remove from local store also:
-          this.store.gallery.images.splice(this.currentSlideIndex, 1);
+          // TODO:
+          // eslint-disable-next-line vue/no-mutating-props
+          this.itemRepository.splice(this.currentSlideIndex, 1);
         })
         .catch((err) => console.log(err));
     },
     getImageDetail (index, detail = "thumbnail") {
-      return this.store.gallery.images[index][detail];
+      return this.itemRepository[index][detail];
     },
     getImageQrData () {
-      const link = String(this.uiSettingsStore.uiSettings.EXT_DOWNLOAD_URL).replace(
+      const link = String(
+        this.uiSettingsStore.uiSettings.EXT_DOWNLOAD_URL
+      ).replace(
         "{filename}",
-        this.store.gallery.images[this.currentSlideIndex]["filename"]
+        this.itemRepository[this.currentSlideIndex]["filename"]
       );
       return link;
     },
     abortTimer () {
       clearInterval(this.intervalTimerId);
-      this.remainingSeconds = 0
-      this.remainingSecondsNormalized = 0
+      this.remainingSeconds = 0;
+      this.remainingSecondsNormalized = 0;
     },
     startTimer () {
-      var duration = this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
+      var duration =
+        this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
       console.log(`starting newitemarrived timer, duration=${duration}`);
       this.remainingSeconds = duration;
 

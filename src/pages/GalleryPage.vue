@@ -13,7 +13,8 @@
     </div>
 
     <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
-      <gallery-image-detail :indexSelected="indexSelected" class="full-height"></gallery-image-detail>
+      <gallery-image-detail :itemRepository="this.store.gallery.images" :indexSelected="indexSelected"
+        class="full-height"></gallery-image-detail>
     </q-dialog>
   </q-page>
 </template>

@@ -3,8 +3,11 @@
     <q-linear-progress :value="remainingSecondsNormalized" animation-speed="200" v-if="displayLinearProgressBar" />
 
     <!-- latest img is always index 0 -->
-    <gallery-image-detail :indexSelected="0" style="height:100%"></gallery-image-detail>
 
+    <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
+      <gallery-image-detail :itemRepository="[this.store.gallery.newArrivalItem]" :indexSelected="0"
+        class="full-height"></gallery-image-detail>
+    </q-dialog>
 
   </q-page>
 </template>
@@ -25,6 +28,7 @@ export default {
       remainingSeconds: 0,
       remainingSecondsNormalized: 0,
       displayLinearProgressBar: true,
+      showImageDetail: true
     };
   },
   setup () {

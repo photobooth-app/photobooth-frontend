@@ -98,7 +98,7 @@ export default defineComponent({
         .on("imagedb/newarrival", (data) => {
           const _data = JSON.parse(data);
           console.log(_data);
-          //this.store.gallery.newArrivalItem = _data;
+          this.store.gallery.newArrivalItem = _data;
           this.$router.push({ path: `/gallery/${_data.id}` });
         })
         .on("locationservice/geolocation", (geolocation) => {
