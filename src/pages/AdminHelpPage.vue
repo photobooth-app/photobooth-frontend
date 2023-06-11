@@ -1,39 +1,23 @@
 <template>
   <q-page padding>
-    <h3>Getting started?</h3>
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-      magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-      gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-      elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
-      eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-      dolor sit amet.</p>
+    <h4>Getting started?</h4>
+    <p>You made it here, so congrats: You got the app work on your computer 🎉. How to continue?</p>
     <ul>
-      <li>Lorem ipsum dolor sit amet, consetetur</li>
-      <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</li>
-      <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</li>
-      <li>Lorem ipsum dolor sit amet, consetetur</li>
-      <li>Lorem ipsum dolor sit amet, consetetur</li>
+      <li>Maybe you want to setup the camera? <a href="https://mgrl.github.io/photobooth-docs/setup/">Move on to camera
+          setup documentation</a></li>
+      <li>Need some extras? Watch out for WLED integration, sync files and more <a
+          href="https://mgrl.github.io/photobooth-docs/extras/">extras</a>.</li>
+      <li>Got in trouble? Find help in the <a
+          href="https://mgrl.github.io/photobooth-docs/help/troubleshooting/">troubleshooting guide</a>.</li>
+      <li>Still problems? <a href="https://github.com/mgrl/photobooth-app/discussions">Reach out in a discussion</a>.</li>
     </ul>
-    <h4>Reference Implementation</h4>
-    <p>...</p>
 
-    <h3>Got started, have questions?</h3>
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-      magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-      gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-      elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
-      eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-      dolor sit amet.</p>
     <h4>Photobooth REST-API</h4>
+    <p>The photobooth apps frontend is using the backends rest api.
+      It's well documented and can be used to integrate
+      further with your systems. Check the openapi documentation here.</p>
     <a href="/api/doc" target="_blank">API Schema</a>
 
-    <h3>How to contribute / How to modify code?</h3>
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-      magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-      gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-      elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
-      eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-      dolor sit amet.</p>
   </q-page>
 </template>
 
