@@ -14,8 +14,9 @@
           }
             " />
         <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_print" flat class="q-mr-sm" icon="print" label="Print" />
-        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_filter" flat class="q-mr-sm" icon="filter" label="Filter"
-          @click="toggleRightDrawer" />
+        <q-btn
+          v-if="uiSettingsStore.uiSettings.gallery_show_filter && uiSettingsStore.uiSettings.gallery_filter_userselectable.length > 0"
+          flat class="q-mr-sm" icon="filter" label="Filter" @click="toggleRightDrawer" />
 
         <q-space />
 
@@ -38,7 +39,8 @@
     <q-drawer v-if="uiSettingsStore.uiSettings.gallery_show_filter" v-model="rightDrawerOpen" side="right" elevated
       overlay>
       <q-img v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`" :key="filter"
-        @click="applyFilter(currentSlideId, filter)" v-for="filter in availableFilter">
+        @click="applyFilter(currentSlideId, filter)"
+        v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable">
         <div class="absolute-bottom-left text-subtitle2">
           {{ filter }}
         </div>
@@ -119,35 +121,6 @@ export default {
       remainingSeconds: 0,
       remainingSecondsNormalized: 0,
       displayLinearProgressBar: true,
-      availableFilter: [
-        "original",
-        "_1977",
-        "aden",
-        "brannan",
-        "brooklyn",
-        "clarendon",
-        "earlybird",
-        "gingham",
-        "hudson",
-        "inkwell",
-        "kelvin",
-        "lark",
-        "lofi",
-        "maven",
-        "mayfair",
-        "moon",
-        "nashville",
-        "perpetua",
-        "reyes",
-        "rise",
-        "slumber",
-        "stinson",
-        "toaster",
-        "valencia",
-        "walden",
-        "willow",
-        "xpro2",
-      ],
     };
   },
   setup () {

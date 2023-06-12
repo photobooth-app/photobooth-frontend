@@ -22,6 +22,7 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       SHOW_ADMIN_LINK_ON_FRONTPAGE: null,
       EXT_DOWNLOAD_URL: null,
       gallery_show_filter: null,
+      gallery_filter_userselectable: null,
       gallery_show_download: null,
       gallery_show_delete: null,
       gallery_show_print: null,

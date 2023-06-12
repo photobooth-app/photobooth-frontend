@@ -85,7 +85,6 @@ export default {
     },
 
     openPic (index) {
-      console.log(index);
       this.indexSelected = index;
       this.showImageDetail = true;
     },

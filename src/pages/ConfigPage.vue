@@ -173,15 +173,14 @@ export default {
               const [id, property] = item_property;
               form_entry["schema"].push(createFormEntry(id, property))
             })
-          }/*
-          TODO: this shall be rendered to a checkbox list for avail filter: else if (property["type"] == "array" && property["items"] && property["items"]["enum"] && property["items"]["type"] == "string") {
-              // pydantic list[Enum(str, Enum)] render to checklist currently:
-              form_entry["component"] = "QCheckbox";
-              form_entry["schema"] = []
-              Object.entries(property["items"]["enum"]).forEach((enum_str) => {
-                form_entry["schema"].push(createFormEntry(id, enum_str))
-              })
-            }*/
+          } else if (property["type"] == "array" && property["items"] && property["items"]["enum"] && property["items"]["type"] == "string") {
+            // pydantic list[Enum(str, Enum)] render to multiselect currently:
+            form_entry["component"] = "QSelect";
+            form_entry["multiple"] = true;
+            form_entry["use-chips"] = true;
+            form_entry["stack-label"] = true;
+            form_entry["options"] = property["items"]["enum"];
+          }
 
           blitzar_schema.push(form_entry);
         });
