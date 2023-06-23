@@ -198,13 +198,7 @@ export default {
       return this.itemRepository[index][detail];
     },
     getImageQrData () {
-      const link = String(
-        this.uiSettingsStore.uiSettings.EXT_DOWNLOAD_URL
-      ).replace(
-        "{filename}",
-        this.itemRepository[this.currentSlideIndex]["filename"]
-      );
-      return link;
+      return this.itemRepository[this.currentSlideIndex]['share_url'];
     },
     abortTimer () {
       clearInterval(this.intervalTimerId);
