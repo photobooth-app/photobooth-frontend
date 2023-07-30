@@ -7,13 +7,14 @@
         <q-space />
 
         <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_delete" flat class="q-mr-sm" icon="delete" label="Delete"
-          v-close-popup @click="deleteImage(currentSlideId)" />
+          v-close-popup @click="deleteItem(currentSlideId)" />
         <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_download" flat class="q-mr-sm" icon="download"
           label="Download" @click="(evt) => {
             openURL(itemRepository[currentSlideIndex]['full']);
           }
             " />
-        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_print" flat class="q-mr-sm" icon="print" label="Print" />
+        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_print" flat class="q-mr-sm" icon="print" label="Print"
+          @click="printItem(currentSlideId)" />
         <q-btn
           v-if="uiSettingsStore.uiSettings.gallery_show_filter && uiSettingsStore.uiSettings.gallery_filter_userselectable.length > 0"
           flat class="q-mr-sm" icon="filter" label="Filter" @click="toggleRightDrawer" />
@@ -80,7 +81,8 @@
 import VueQrcode from "vue-qrcode";
 import { ref } from "vue";
 import { useUiSettingsStore } from "../stores/ui-settings-store.js";
-import { openURL } from "quasar";
+import { openURL, useQuasar } from "quasar";
+
 
 export default {
   // name: 'ComponentName',
@@ -126,6 +128,7 @@ export default {
   setup () {
     const uiSettingsStore = useUiSettingsStore();
     const rightDrawerOpen = ref(false);
+    const $q = useQuasar();
 
     return {
       // you can return the whole store instance to use it in the template
@@ -182,7 +185,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    deleteImage (id) {
+    deleteItem (id) {
       this.$api
         .get("/mediacollection/delete", { params: { image_id: id } })
         .then((response) => {
@@ -193,6 +196,49 @@ export default {
           this.itemRepository.splice(this.currentSlideIndex, 1);
         })
         .catch((err) => console.log(err));
+    },
+    printItem (id) {
+      this.$api
+        .get(`/print/item/${id}`)
+        .then((response) => {
+          console.log(response);
+          this.$q.notify({
+            message: "Started printing...",
+            type: "positive",
+            spinner: true,
+            //timeout: 2000
+          });
+        })
+        .catch((error) => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response);
+
+            if (error.response.status == 425) {
+              this.$q.notify({
+                message: error.response.data['detail'],
+                caption: "Print Service",
+                type: "info"
+              });
+            } else {
+              this.$q.notify({
+                message: error.response.data['detail'],
+                caption: "Print Service",
+                type: "negative"
+              });
+            }
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.error(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error', error.message);
+          }
+          //console.error(error.config);
+        });
     },
     getImageDetail (index, detail = "thumbnail") {
       return this.itemRepository[index][detail];
