@@ -8,7 +8,7 @@
         <q-space />
 
         <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_delete" flat class="q-mr-sm" icon="delete" label="Delete"
-          v-close-popup @click="deleteItem(currentSlideId)" />
+          @click="deleteItem(currentSlideId); $emit('closeEvent')" />
         <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_download" flat class="q-mr-sm" icon="download"
           label="Download" @click="(evt) => {
             openURL(itemRepository[currentSlideIndex]['full']);
