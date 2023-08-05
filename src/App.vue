@@ -35,15 +35,9 @@ export default defineComponent({
     const connected = ref(false);
     const lineEstablished = ref(false);
 
-    //load initial ui settings
-    //uiSettingsStore.loadUiSettings();
-
 
     //TODO: need to make app wait until fully init?
     console.log(uiSettingsStore.isLoaded)
-
-
-
 
     setInterval(function () {
       const timeoutConnected = 2000;
@@ -97,9 +91,9 @@ export default defineComponent({
         })
         .on("imagedb/newarrival", (data) => {
           const _data = JSON.parse(data);
-          console.log(_data);
           this.store.gallery.newArrivalItem = _data;
-          this.$router.push({ path: `/gallery/${_data.id}` });
+          this.$router.push({ path: `/NewItemArrived` });
+
         })
         .on("locationservice/geolocation", (geolocation) => {
           this.store.stats.geolocation = JSON.parse(geolocation);

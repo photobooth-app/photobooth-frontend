@@ -1,13 +1,9 @@
 <template >
-  <q-page class="q-pa-none fullscreen" @click="abortTimer">
-    <q-linear-progress :value="remainingSecondsNormalized" animation-speed="200" v-if="displayLinearProgressBar" />
+  <q-page class="q-pa-none fullscreen">
 
-    <!-- latest img is always index 0 -->
+    <gallery-image-detail @close-event="$router.go(-1)" :itemRepository="[this.store.gallery.newArrivalItem]"
+      :indexSelected="0" :startTimerOnOpen="true" class="full-height"></gallery-image-detail>
 
-    <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
-      <gallery-image-detail :itemRepository="[this.store.gallery.newArrivalItem]" :indexSelected="0"
-        class="full-height"></gallery-image-detail>
-    </q-dialog>
 
   </q-page>
 </template>
@@ -43,33 +39,11 @@ export default {
     };
   },
   mounted () {
-    this.startTimer();
   },
   beforeUnmount () {
-    clearInterval(this.intervalTimerId);
   },
   methods: {
-    abortTimer () {
-      clearInterval(this.intervalTimerId);
-      this.remainingSeconds = 0
-      this.remainingSecondsNormalized = 0
-    },
-    startTimer () {
-      var duration = this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
-      console.log(`starting newitemarrived timer, duration=${duration}`);
-      this.remainingSeconds = duration;
 
-      this.intervalTimerId = setInterval(() => {
-        this.remainingSecondsNormalized = this.remainingSeconds / duration;
-
-        this.remainingSeconds -= 0.05;
-
-        if (this.remainingSeconds <= 0) {
-          clearInterval(this.intervalTimerId);
-          this.$router.push({ path: "/" });
-        }
-      }, 50);
-    },
   },
 };
 </script>

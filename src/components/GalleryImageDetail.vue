@@ -1,8 +1,9 @@
+
 <template>
   <q-layout view="hhh Lpr ffr" @click="abortTimer">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn dense flat icon="close" v-close-popup />
+        <q-btn dense flat icon="close" @click="$emit('closeEvent')" />
 
         <q-space />
 
@@ -21,7 +22,7 @@
 
         <q-space />
 
-        <div class="q-mr-sm">
+        <div class="q-mr-sm" v-if="itemRepository.length > 1">
           <q-icon name="tag" />
           <span>{{ currentSlideIndex + 1 }} of
             {{ itemRepository.length }} total</span>
@@ -33,8 +34,12 @@
         </div>
       </q-toolbar>
 
-      <q-linear-progress :value="remainingSecondsNormalized" animation-speed="200" color="grey"
+      <!-- progress bar to timeout and close -->
+      <q-linear-progress class="absolute" :value="remainingSecondsNormalized" animation-speed="200" color="grey"
         v-if="displayLinearProgressBar && remainingSeconds > 0" />
+      <!-- progress bar to show waiting to load filter, ... -->
+      <q-linear-progress class="absolute" indeterminate animation-speed="2100" color="primary"
+        v-if="displayLoadingSpinner" />
     </q-header>
 
     <q-drawer v-if="uiSettingsStore.uiSettings.gallery_show_filter" v-model="rightDrawerOpen" side="right" elevated
@@ -48,9 +53,11 @@
       </q-img>
     </q-drawer>
 
+
+
     <q-page-container class="q-pa-none galleryimagedetail full-height">
-      <q-carousel class="bg-image" style="width: 100%; height: 100%" control-type="flat" control-color="primary" swipeable
-        v-touch-swipe.mouse.down="handleSwipeDown" animated v-model="currentSlideId" thumbnails :autoplay="autoplay"
+      <q-carousel style="width: 100%; height: 100%" control-type="flat" control-color="primary" swipeable
+        v-touch-swipe.mouse.down="handleSwipeDown" animated v-model="currentSlideId" :autoplay="autoplay"
         draggable="false" arrows transition-prev="slide-right" transition-next="slide-left" @transition="(newVal, oldVal) => {
           currentSlideIndex = itemRepository.findIndex(
             (item) => item.id === newVal
@@ -58,7 +65,13 @@
           abortTimer();
         }
           ">
-        <q-carousel-slide :img-src="slide.preview" v-for="slide in slicedImages" :key="slide.id" :name="slide.id" />
+
+        <q-carousel-slide v-for="slide in slicedImages" :key="slide.id" :name="slide.id"
+          class="column no-wrap flex-center full-height">
+
+          <img :draggable="false" class="rounded-borders full-height"
+            style="object-fit: contain; max-width: 100%; max-height:100%;" :src="slide.preview" />
+        </q-carousel-slide>
       </q-carousel>
 
       <q-page-sticky position="top-right" :offset="[30, 30]">
@@ -67,6 +80,7 @@
             :color="{ dark: '#111111', light: '#EEEEEE' }" :value="getImageQrData()" />
         </div>
       </q-page-sticky>
+
     </q-page-container>
   </q-layout>
 </template>
@@ -96,6 +110,12 @@ export default {
       //repo to display
       type: Array,
       required: true,
+    },
+    startTimerOnOpen: {
+      //repo to display
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   computed: {
@@ -139,6 +159,7 @@ export default {
       currentSlideIndex: ref(0),
       autoplay: ref(false),
       showFilterDialog: ref(false),
+      displayLoadingSpinner: ref(false),
       rightDrawerOpen,
       toggleRightDrawer () {
         rightDrawerOpen.value = !rightDrawerOpen.value;
@@ -152,7 +173,8 @@ export default {
     VueQrcode,
   },
   mounted () {
-    this.startTimer();
+    if (this.startTimerOnOpen)
+      this.startTimer();
   },
   beforeUnmount () {
     clearInterval(this.intervalTimerId);
@@ -161,6 +183,7 @@ export default {
   methods: {
     //https://stackoverflow.com/questions/1077041/refresh-image-with-a-new-one-at-the-same-url/66312176#66312176
     async reloadImg (url) {
+
       // fetch to update cache on regular images, if we do not fetch, on next gallery visit old images are displayed
       await fetch(url, { cache: "reload", mode: "no-cors" });
 
@@ -168,13 +191,12 @@ export default {
       // drawback: due to ?time file is transferred twice from server. but without there is no good way to force the browser to render new pic
       const time = new Date().getTime();
       document.body.querySelectorAll(`img[src*='${url}']`).forEach((img) => {
-        img.src = url + "?" + time;
+        img.src = url + "#" + time;
       });
-      document.body
-        .querySelectorAll(`div[style*="background-image"][style*="${url}"]`)
-        .forEach((div) => (div.style.backgroundImage = `url(${url}?${time})`));
+
     },
     applyFilter (id, filter) {
+      this.displayLoadingSpinner = true;
       this.$api
         .get(`/mediaprocessing/applyfilter/${id}/${filter}`)
         .then((response) => {
@@ -182,8 +204,12 @@ export default {
           this.reloadImg(this.itemRepository[index].full);
           this.reloadImg(this.itemRepository[index].preview);
           this.reloadImg(this.itemRepository[index].thumbnail);
+          this.displayLoadingSpinner = false;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          this.displayLoadingSpinner = false;
+        });
     },
     deleteItem (id) {
       this.$api
