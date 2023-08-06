@@ -22,7 +22,7 @@
 
         <q-space />
 
-        <div class="q-mr-sm" v-if="itemRepository.length > 1">
+        <div class="q-mr-sm" v-if="!singleItemView">
           <q-icon name="tag" />
           <span>{{ currentSlideIndex + 1 }} of
             {{ itemRepository.length }} total</span>
@@ -56,23 +56,36 @@
 
 
     <q-page-container class="q-pa-none galleryimagedetail full-height">
-      <q-carousel style="width: 100%; height: 100%" control-type="flat" control-color="primary" swipeable
-        v-touch-swipe.mouse.down="handleSwipeDown" animated v-model="currentSlideId" :autoplay="autoplay"
-        draggable="false" arrows transition-prev="slide-right" transition-next="slide-left" @transition="(newVal, oldVal) => {
-          currentSlideIndex = itemRepository.findIndex(
-            (item) => item.id === newVal
-          );
-          abortTimer();
-        }
-          ">
 
-        <q-carousel-slide v-for="slide in slicedImages" :key="slide.id" :name="slide.id"
-          class="column no-wrap flex-center full-height">
-
+      <div v-if="singleItemView" class="full-height">
+        <q-card class="column no-wrap flex-center full-height q-pa-sm">
           <img :draggable="false" class="rounded-borders full-height"
-            style="object-fit: contain; max-width: 100%; max-height:100%;" :src="slide.preview" />
-        </q-carousel-slide>
-      </q-carousel>
+            style="object-fit: contain; max-width: 100%; max-height:100%;" :src="this.itemRepository[0].preview" />
+        </q-card>
+      </div>
+
+
+      <div v-else class="full-height">
+
+
+        <q-carousel class=" " style="width: 100%; height: 100%" control-type="flat" control-color="primary" swipeable
+          v-touch-swipe.mouse.down="handleSwipeDown" animated v-model="currentSlideId" :autoplay="autoplay"
+          draggable="false" arrows transition-prev="slide-right" transition-next="slide-left" @transition="(newVal, oldVal) => {
+            currentSlideIndex = itemRepository.findIndex(
+              (item) => item.id === newVal
+            );
+            abortTimer();
+          }
+            ">
+
+          <q-carousel-slide v-for="slide in slicedImages" :key="slide.id" :name="slide.id"
+            class="column no-wrap flex-center full-height q-pa-sm">
+
+            <img :draggable="false" class="rounded-borders full-height"
+              style="object-fit: contain; max-width: 100%; max-height:100%;" :src="slide.preview" />
+          </q-carousel-slide>
+        </q-carousel>
+      </div>
 
       <q-page-sticky position="top-right" :offset="[30, 30]">
         <div class="q-gutter-sm">
@@ -107,8 +120,7 @@ export default {
       required: true,
     },
     itemRepository: {
-      //repo to display
-      type: Array,
+      //repo to display / array or single item
       required: true,
     },
     startTimerOnOpen: {
@@ -117,16 +129,21 @@ export default {
       required: false,
       default: false,
     },
+    singleItemView: {
+      type: Boolean,
+      default: false,
+    }
   },
   computed: {
     // a computed getter
     slicedImages () {
       // `this` points to the component instance
+      console.log("changed")
       const window = 5;
       var totalItems = this.itemRepository.length;
       var lowerBound = Math.max(0, this.currentSlideIndex - 2);
       var upperBound = Math.max(0, this.currentSlideIndex + 3);
-
+      console.log(this.itemRepository.slice(lowerBound, upperBound))
       return this.itemRepository.slice(lowerBound, upperBound);
     },
   },
@@ -266,9 +283,7 @@ export default {
           //console.error(error.config);
         });
     },
-    getImageDetail (index, detail = "thumbnail") {
-      return this.itemRepository[index][detail];
-    },
+
     getImageQrData () {
       return this.itemRepository[this.currentSlideIndex]['share_url'];
     },

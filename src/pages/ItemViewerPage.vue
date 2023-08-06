@@ -1,16 +1,14 @@
 <template >
   <q-page class="q-pa-none fullscreen">
 
-    <gallery-image-detail @close-event="$router.go(-1)" :itemRepository="[this.store.gallery.newArrivalItem]"
-      :indexSelected="0" :startTimerOnOpen="true" class="full-height"></gallery-image-detail>
-
-
+    <gallery-image-detail @close-event="$router.push('/')" :itemRepository="this.mediacollectionStore.collection"
+      :indexSelected="0" :singleItemView="true" :startTimerOnOpen="true" class="full-height"></gallery-image-detail>
   </q-page>
 </template>
 
 
 <script>
-import { useMainStore } from "../stores/main-store.js";
+import { useMediacollectionStore } from "../stores/mediacollection-store.js";
 import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import { ref } from "vue";
 import GalleryImageDetail from "../components/GalleryImageDetail";
@@ -27,13 +25,17 @@ export default {
       showImageDetail: true
     };
   },
+  computed: {
+
+
+  },
   setup () {
-    const store = useMainStore();
+    const mediacollectionStore = useMediacollectionStore();
     const uiSettingsStore = useUiSettingsStore();
 
     return {
       // you can return the whole store instance to use it in the template
-      store,
+      mediacollectionStore,
       uiSettingsStore,
       GalleryImageDetail,
     };

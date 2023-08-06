@@ -9,6 +9,7 @@
 import { defineComponent, ref, watch } from "vue";
 import { useMainStore } from "stores/main-store.js";
 import { useUiSettingsStore } from "stores/ui-settings-store.js";
+import { useMediacollectionStore } from "stores/mediacollection-store.js";
 import { useRouter } from "vue-router";
 import ConnectionOverlay from "./components/ConnectionOverlay";
 
@@ -30,6 +31,7 @@ export default defineComponent({
   setup () {
     const store = useMainStore();
     const uiSettingsStore = useUiSettingsStore();
+    const mediacollectionStore = useMediacollectionStore();
     const router = useRouter();
     let sseClient = null;
     const connected = ref(false);
@@ -53,16 +55,33 @@ export default defineComponent({
       router,
       store,
       uiSettingsStore,
+      mediacollectionStore,
       ConnectionOverlay
     };
   },
   methods: {
-    init () {
-      this.uiSettingsStore.loadUiSettings();
+
+    async init () {
+      this.uiSettingsStore.initStore();
+      this.mediacollectionStore.initStore();
+
+      await this.until(_ => this.uiSettingsStore.isLoaded == true);
+      await this.until(_ => this.mediacollectionStore.isLoaded == true);
+
       this.initSseClient();
-
-
     },
+
+
+    until (conditionFunction) {
+
+      const poll = resolve => {
+        if (conditionFunction()) resolve();
+        else setTimeout(_ => poll(resolve), 400);
+      }
+
+      return new Promise(poll);
+    },
+
 
     initSseClient () {
       this.sseClient = this.$sse
@@ -91,8 +110,9 @@ export default defineComponent({
         })
         .on("imagedb/newarrival", (data) => {
           const _data = JSON.parse(data);
-          this.store.gallery.newArrivalItem = _data;
-          this.$router.push({ path: `/NewItemArrived` });
+          console.log("received new item to add to collection:", _data);
+          this.mediacollectionStore.collection.unshift(_data);
+          this.$router.push({ path: `/itemviewer/${_data['id']}` });
 
         })
         .on("locationservice/geolocation", (geolocation) => {
@@ -121,18 +141,23 @@ export default defineComponent({
     }
   },
 
-  created () {
+
+  async created () {
+
+    console.log("app created, waiting for stores to init first dataset")
     this.init();
+    console.log("data initialization finished")
 
-    setInterval(() => {
-      if (!this.lineEstablished) {
-        console.log(
-          "initial connection has not been made yet! retrying. Once connection was successful, sseclient auto reestablishes connection on loss."
-        );
 
-        this.init();
-      }
-    }, 1500);
+    // setInterval(() => {
+    //   if (!this.lineEstablished) {
+    //     console.log(
+    //       "initial connection has not been made yet! retrying. Once connection was successful, sseclient auto reestablishes connection on loss."
+    //     );
+
+    //     this.init();
+    //   }
+    // }, 1500);
 
 
 

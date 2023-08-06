@@ -258,7 +258,7 @@ export default {
         .post("/config/current", serverConfig.value)
         .then((response) => {
           // reload ui settings into store as on app startup.
-          uiSettingsStore.loadUiSettings(true);
+          uiSettingsStore.initStore(true);
 
           $q.notify({
             message: "Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!",
@@ -267,7 +267,9 @@ export default {
 
         })
         .catch((error) => {
-          if (error.response.data.detail) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
             let notify_msg = "check following fields:<br/>";
             Object.values(error.response.data.detail).forEach((detail) => {
               notify_msg += detail["loc"].join(" -> ");
@@ -283,12 +285,20 @@ export default {
               color: "red",
             });
             return;
+
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.error(error.request);
           } else {
-            $q.notify({
-              message: "error saving config, check browser console and logs",
-              color: "red",
-            });
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error', error.message);
           }
+          $q.notify({
+            message: "error saving config, check browser console and logs",
+            color: "red",
+          });
         });
 
 

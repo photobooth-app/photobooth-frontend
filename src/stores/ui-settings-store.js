@@ -31,13 +31,15 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
     storeState: STATES.INIT,
   }),
   actions: {
-    loadUiSettings(forceReload = false) {
+    initStore(forceReload = false) {
       console.log("loadUiSettings");
       if (this.isLoaded && forceReload == false) {
         console.log("settings loaded once already, skipping");
         return;
       }
+
       this.storeState = STATES.WIP;
+
       api
         .get("/config/ui")
         .then((res) => {
@@ -54,11 +56,9 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
   },
   getters: {
     isLoaded() {
-      console.log("isLoaded");
       return this.storeState === STATES.DONE;
     },
     isLoading() {
-      console.log("isLoading");
       return this.storeState === STATES.WIP;
     },
   },

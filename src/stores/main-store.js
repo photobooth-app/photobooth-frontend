@@ -13,13 +13,6 @@ export const useMainStore = defineStore("main-store", () => {
 
   const logrecords = ref([]);
 
-  const gallery = ref({
-    images: [],
-
-    newArrivalItem: {},
-    newArrivalPresenter: false,
-  });
-
   const statemachine = ref({
     countdown: 0,
     state: null,
@@ -58,7 +51,7 @@ export const useMainStore = defineStore("main-store", () => {
     information,
     lastHeartbeat,
     logrecords,
-    gallery,
+    // gallery,
     statemachine,
   };
 });
