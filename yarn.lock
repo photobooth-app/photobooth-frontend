@@ -1238,10 +1238,10 @@
   resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.21.tgz"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@quasar/app-webpack@^3.9.2":
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/@quasar/app-webpack/-/app-webpack-3.9.2.tgz#cbf28e2ef84a94a0507f2f17218b29a2ebf6dd88"
-  integrity sha512-F/LyEXExcnw1niVjuLoSaRLBS2rlmsQJxuOWed6qL9Xnh+KzW1S/V1FxtDtJOQCjbI2S9YvOP6wcmuB6xEiatg==
+"@quasar/app-webpack@^3.9.4":
+  version "3.9.4"
+  resolved "https://registry.yarnpkg.com/@quasar/app-webpack/-/app-webpack-3.9.4.tgz#c762ab3d962f0f98fb52dd0f903f194b1179d2b1"
+  integrity sha512-EtW/7iqzESBdb5lvEE6aFyLGPxcBIHFLfoh1bPnc8jGaTwLJqfxkyQ7uhE+i6Ev+DTUdCVjkSdeqt3j4T6VAPw==
   dependencies:
     "@quasar/babel-preset-app" "2.0.2"
     "@quasar/render-ssr-error" "^1.0.1"
@@ -1331,10 +1331,10 @@
     core-js "^3.6.5"
     core-js-compat "^3.6.5"
 
-"@quasar/extras@^1.16.4":
-  version "1.16.4"
-  resolved "https://registry.yarnpkg.com/@quasar/extras/-/extras-1.16.4.tgz#34fc2517fffecb5c27e4cea1b69b62aaf890ff73"
-  integrity sha512-q2kPTNHI5aprgE2yQfRIf6aud+qSXH3YTNmhcfRp/rENh7kRjoM+b5BBPxgHlO1si1ARddbmr+Fxu/L05hfXnQ==
+"@quasar/extras@^1.16.5":
+  version "1.16.5"
+  resolved "https://registry.yarnpkg.com/@quasar/extras/-/extras-1.16.5.tgz#77fd7b8e77e45a2798067a1e4aeafb39a95daf51"
+  integrity sha512-3VAJS9NECr1OSHX674+3YvEMIlHclr81aZrEkoBtVqr+sX4In22Up44toua+qNFsxnoATPqzpwKOJxA3iAF71Q==
 
 "@quasar/render-ssr-error@^1.0.1":
   version "1.0.1"
@@ -5082,10 +5082,10 @@ qs@6.11.0:
   dependencies:
     side-channel "^1.0.4"
 
-quasar@^2.12.0:
-  version "2.12.0"
-  resolved "https://registry.npmjs.org/quasar/-/quasar-2.12.0.tgz"
-  integrity sha512-B8xoeOWNs/Iv7M+FGRvXGYI1qDnJH8AtIb7RiP+zMfMkBcEp+6HJHU/9ODPemC4yteDjO+HPX2f7OhNZKgsPIw==
+quasar@^2.12.4:
+  version "2.12.4"
+  resolved "https://registry.yarnpkg.com/quasar/-/quasar-2.12.4.tgz#e60adea97f33a9bc9daab5ae5c4713c7c3917f3e"
+  integrity sha512-NDhLPUFQdUeKBRccggiwc6gsRXjgVjAZibX6xPmM1I4TKtZuwXM7OBlEtaqWbpshsFF5mC0xKnGeKAMy1ySJ8A==
 
 queue-microtask@^1.2.2:
   version "1.2.3"
