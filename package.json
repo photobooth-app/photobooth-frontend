@@ -1,8 +1,8 @@
 {
-  "name": "qPhotobooth",
+  "name": "photobooth-app-frontend",
   "version": "0.0.1",
-  "description": "qPhotobooth",
-  "productName": "qPhotobooth",
+  "description": "photobooth-app",
+  "productName": "photobooth-app",
   "author": "Michael Gröne <michael@groene.de>",
   "private": true,
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.5",
-    "axios": "^0.21.1",
+    "axios": "^1.4.0",
     "blitzar": "^1.2.2",
     "core-js": "^3.6.5",
     "pinia": "^2.0.11",
@@ -27,10 +27,10 @@
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app-webpack": "^3.9.4",
     "eslint": "^8.10.0",
-    "eslint-config-prettier": "^8.1.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-vue": "^9.0.0",
-    "eslint-webpack-plugin": "^3.1.1",
-    "prettier": "^2.5.1"
+    "eslint-webpack-plugin": "^4.0.0",
+    "prettier": "^3.0.0"
   },
   "browserslist": [
     "last 10 Chrome versions",
@@ -45,7 +45,7 @@
   ],
   "engines": {
     "node": ">= 12.22.1",
-    "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
-  }
+    "npm": ">= 6.13.4"
+  },
+  "packageManager": "yarn@3.6.1"
 }
