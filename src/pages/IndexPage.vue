@@ -10,16 +10,15 @@
       <div v-show="showFrontpage" style="position: absolute; width: 100%; height: 100%" id="frontpage_text"
         v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
 
-      <!--
-      <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
-        <gallery-image-detail :indexSelected="0" class="full-height"></gallery-image-detail>
-      </q-dialog>
-    -->
       <q-page-sticky position="bottom" :offset="[0, 25]">
         <div class="q-gutter-sm">
           <q-btn color="primary" no-caps @click="takePicture()">
             <q-icon left size="5em" name="photo_camera" />
             <div>Take<br />Picture!</div>
+          </q-btn>
+          <q-btn color="primary" no-caps @click="takeCollage()">
+            <q-icon left size="5em" name="auto_awesome_mosaic" />
+            <div>Create<br />Collage!</div>
           </q-btn>
           <q-btn color="primary" no-caps to="/gallery">
             <q-icon left size="5em" name="photo_library" />
@@ -62,6 +61,9 @@ export default defineComponent({
   methods: {
     takePicture () {
       remoteProcedureCall("/processing/chose/1pic");
+    },
+    takeCollage () {
+      remoteProcedureCall("/processing/chose/collage");
     },
   },
   computed: {
