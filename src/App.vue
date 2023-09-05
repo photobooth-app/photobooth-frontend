@@ -86,46 +86,64 @@ export default defineComponent({
     initSseClient () {
       this.sseClient = this.$sse
         .create("/sse")
-        .on("message", (message, lastEventId) => {
-          console.info(message, lastEventId);
-          // TODO: make this a notifier ...
-        }) // "message" and "" and null equal!
-        .on("logrecord", (logrecord) => {
-          this.store.logrecords = [
-            JSON.parse(logrecord),
-            ...this.store.logrecords.slice(0, 99),
-          ];
-        })
-        .on("error", (err) =>
+
+        .on(
+          "error", (err) =>
           console.error("Failed to parse or lost connection:", err)
           // If this error is due to an unexpected disconnection, EventSource will
           // automatically attempt to reconnect indefinitely. You will _not_ need to
           // re-add your handlers.
+          // Info there is general "message" "" and null events avail. Photobooth doesnt use the generic ones as not specific enough
+          // "message" and "" and null equal!
         )
-        .on("statemachine/processinfo", (procinfo) => {
-          const _procinfo = JSON.parse(procinfo);
-          console.log(_procinfo);
-          this.store.statemachine.countdown = _procinfo["countdown"];
-          this.store.statemachine.state = _procinfo["state"];
-        })
-        .on("imagedb/newarrival", (data) => {
-          const _data = JSON.parse(data);
-          console.log("received new item to add to collection:", _data);
-          this.mediacollectionStore.collection.unshift(_data);
-          this.$router.push({ path: `/itemviewer/${_data['id']}` });
+        .on(
+          "FrontendNotification", (message, lastEventId) => {
+            // linked to SseEventFrontendNotification, event: FrontendNotification
+            // TODO: make this a notifier ...
+            console.warn(message, lastEventId);
+          }
+        )
+        .on(
+          "LogRecord", (logrecord) => {
+            this.store.logrecords = [
+              JSON.parse(logrecord),
+              ...this.store.logrecords.slice(0, 99),
+            ];
+          }
+        )
+        .on(
+          "ProcessStateinfo", (procinfo) => {
+            const _procinfo = JSON.parse(procinfo);
+            console.log(_procinfo);
+            this.store.statemachine.countdown = _procinfo["countdown"];
+            this.store.statemachine.state = _procinfo["state"];
+          }
+        )
+        .on(
+          "DbInsert", (data) => {
+            const _data = JSON.parse(data);
+            console.log("received new item to add to collection:", _data);
+            this.mediacollectionStore.collection.unshift(_data['mediaitem']);
 
-        })
-        .on("locationservice/geolocation", (geolocation) => {
-          this.store.stats.geolocation = JSON.parse(geolocation);
-        })
-        .on("information", (information) => {
-          Object.assign(this.store.information, JSON.parse(information));
-        })
-        .on("ping", () => {
-          //last SSE ping
-          this.store.lastHeartbeat = Date.now();
-          this.connected = true;
-        })
+            // also to present? // or also to confirm/repeat?
+            if (_data['present'] || _data['to_confirm_or_reject']) {
+              this.$router.push({ path: `/itemviewer/${_data['mediaitem']['id']}` });
+            }
+
+          }
+        )
+        .on(
+          "InformationRecord", (information) => {
+            Object.assign(this.store.information, JSON.parse(information));
+          }
+        )
+        .on(
+          "ping", () => {
+            //last SSE ping, used to detect connection health
+            this.store.lastHeartbeat = Date.now();
+            this.connected = true;
+          }
+        )
         .connect()
         .then((sse) => {
           console.log(sse);
