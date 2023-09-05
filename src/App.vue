@@ -115,8 +115,7 @@ export default defineComponent({
           "ProcessStateinfo", (procinfo) => {
             const _procinfo = JSON.parse(procinfo);
             console.log(_procinfo);
-            this.store.statemachine.countdown = _procinfo["countdown"];
-            this.store.statemachine.state = _procinfo["state"];
+            this.store.statemachine = _procinfo;
           }
         )
         .on(
@@ -127,7 +126,7 @@ export default defineComponent({
 
             // also to present? // or also to confirm/repeat?
             if (_data['present'] || _data['to_confirm_or_reject']) {
-              this.$router.push({ path: `/itemviewer/${_data['mediaitem']['id']}` });
+              this.$router.push({ path: `/itemviewer/${_data['mediaitem']['id']}`, query: { approval: _data['to_confirm_or_reject'] } });
             }
 
           }
