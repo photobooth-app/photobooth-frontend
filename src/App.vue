@@ -125,9 +125,11 @@ export default defineComponent({
             this.mediacollectionStore.collection.unshift(_data['mediaitem']);
 
             // also to present? // or also to confirm/repeat?
-            if (_data['present'] || _data['to_confirm_or_reject']) {
+            if (this.$route.path.indexOf('/admin') >= 0)  // not display if on admin path
+              return
+            if (_data['present'] || _data['to_confirm_or_reject'])
               this.$router.push({ path: `/itemviewer/${_data['mediaitem']['id']}`, query: { approval: _data['to_confirm_or_reject'] } });
-            }
+
 
           }
         )
