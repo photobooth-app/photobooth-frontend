@@ -15,7 +15,9 @@ export const useMainStore = defineStore("main-store", () => {
 
   const statemachine = ref({
     countdown: 0,
+    duration: 0,
     state: null,
+    processing: false,
   });
 
   const information = ref({
