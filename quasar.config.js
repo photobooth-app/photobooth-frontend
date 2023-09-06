@@ -85,6 +85,16 @@ module.exports = configure(function (ctx) {
         "/": {
           target: "http://127.0.0.1:8000",
           changeOrigin: true,
+
+          // fix proxy not forwarding the disconnect since node 16
+          // https://github.com/webpack/webpack-dev-server/issues/2769#issuecomment-1516916665
+          onProxyReq: (proxyReq, req, res) => {
+            res.on("close", () => proxyReq.destroy());
+          },
+
+          // additional settings made in above issue - maybe need later.
+          // proxyTimeout: 1000 * 5,
+          // timeout: 1000 * 5,
         },
       },
       compress: false, //workaround for /events SSE make to work
