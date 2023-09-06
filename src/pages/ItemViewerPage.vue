@@ -1,16 +1,23 @@
 <template >
   <q-page class="q-pa-none fullscreen">
 
-    <gallery-image-detail @close-event="$router.push('/')" :itemRepository="this.mediacollectionStore.collection"
+    <gallery-image-detail @close-event="userCloseViewer()" :itemRepository="this.mediacollectionStore.collection"
       :indexSelected="0" :singleItemView="true" :startTimerOnOpen="!approval" class="full-height"></gallery-image-detail>
 
 
     <q-page-sticky position="bottom" :offset="[0, 25]" v-if="approval">
       <div class="q-gutter-sm">
-        <q-btn color="secondary" label="try again"
-          @click="remoteProcedureCall('/processing/cmd/reject'); $router.push('/')" />
-        <q-btn color="primary" label="confirm"
-          @click="remoteProcedureCall('/processing/cmd/confirm'); $router.push('/')" />
+
+        <q-btn color="secondary" no-caps @click="userReject()" class="q-mr-xl">
+          <q-icon left size="7em" name="thumb_down" />
+          <div>Try again!</div>
+        </q-btn>
+
+
+        <q-btn color="primary" no-caps @click="userConfirm()">
+          <q-icon left size="7em" name="thumb_up" />
+          <div>Awesome, next!</div>
+        </q-btn>
       </div>
     </q-page-sticky>
 
@@ -66,6 +73,23 @@ export default {
   beforeUnmount () {
   },
   methods: {
+    userConfirm () {
+      remoteProcedureCall("/processing/cmd/confirm");
+      this.$router.push('/')
+    },
+    userReject () {
+      remoteProcedureCall("/processing/cmd/reject");
+      this.$router.push('/')
+    },
+    userCloseViewer () {
+      // closing the window that was meant to use for approval
+      // need to inform the statemachine to reset
+      if (this.approval)
+        remoteProcedureCall("/processing/cmd/abort");
+
+      this.$router.push('/')
+    },
+
 
   },
 };

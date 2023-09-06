@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-none column">
-    <div id="preview-stream" style="background-image: url('/aquisition/stream.mjpg')"
+    <div v-if="showPreview" id="preview-stream" style="background-image: url('/aquisition/stream.mjpg')"
       class="full-width column justify-center content-center">
       <countdown-timer ref="countdowntimer" :duration="this.store.statemachine.duration"
         :remainingSeconds="this.store.statemachine.countdown"
@@ -15,19 +15,19 @@
         <div v-if="showFrontpage">
           <div class="q-gutter-sm">
             <q-btn color="primary" no-caps @click="takePicture()">
-              <q-icon left size="5em" name="photo_camera" />
+              <q-icon left size="7em" name="photo_camera" />
               <div>Take<br />Picture!</div>
             </q-btn>
             <q-btn color="primary" no-caps @click="takeCollage()">
-              <q-icon left size="5em" name="auto_awesome_mosaic" />
+              <q-icon left size="7em" name="auto_awesome_mosaic" />
               <div>Create<br />Collage!</div>
             </q-btn>
             <q-btn color="primary" no-caps to="/gallery">
-              <q-icon left size="5em" name="photo_library" />
+              <q-icon left size="7em" name="photo_library" />
               <div>Gallery</div>
             </q-btn>
             <q-btn color="secondary" no-caps to="/admin" v-if="uiSettingsStore.uiSettings.SHOW_ADMIN_LINK_ON_FRONTPAGE">
-              <q-icon left size="5em" name="admin_panel_settings" />
+              <q-icon left size="7em" name="admin_panel_settings" />
               <div>Admin</div>
             </q-btn>
           </div>
@@ -81,6 +81,16 @@ export default defineComponent({
         return this.store.statemachine.countdown
           ? this.store.statemachine.countdown
           : 0;
+      },
+    },
+
+    showPreview: {
+      get () {
+        const enabled = true
+        const machineIdle = this.store.statemachine.state == "idle"
+        const machineCounting = this.store.statemachine.state == "counting"
+
+        return enabled && (machineIdle || machineCounting);
       },
     },
     showFrontpage: {

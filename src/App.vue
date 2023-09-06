@@ -12,7 +12,7 @@ import { useUiSettingsStore } from "stores/ui-settings-store.js";
 import { useMediacollectionStore } from "stores/mediacollection-store.js";
 import { useRouter } from "vue-router";
 import ConnectionOverlay from "./components/ConnectionOverlay";
-
+import { remoteProcedureCall } from "boot/axios";
 
 export default defineComponent({
   name: "App",
@@ -56,7 +56,8 @@ export default defineComponent({
       store,
       uiSettingsStore,
       mediacollectionStore,
-      ConnectionOverlay
+      ConnectionOverlay,
+      remoteProcedureCall
     };
   },
   methods: {
@@ -69,6 +70,12 @@ export default defineComponent({
       await this.until(_ => this.mediacollectionStore.isLoaded == true);
 
       this.initSseClient();
+
+
+      // for now on app start we send an abort to the backend.
+      // could be improved to actually handle the state the machine is in and send ui to according state
+      remoteProcedureCall("/processing/cmd/abort");
+
     },
 
 
