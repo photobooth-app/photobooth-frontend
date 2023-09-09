@@ -8,6 +8,7 @@
 <script>
 import { defineComponent, ref, watch } from "vue";
 import { useMainStore } from "stores/main-store.js";
+import { useStateStore } from "stores/state-store.js";
 import { useUiSettingsStore } from "stores/ui-settings-store.js";
 import { useMediacollectionStore } from "stores/mediacollection-store.js";
 import { useRouter } from "vue-router";
@@ -30,6 +31,7 @@ export default defineComponent({
   },
   setup () {
     const store = useMainStore();
+    const stateStore = useStateStore();
     const uiSettingsStore = useUiSettingsStore();
     const mediacollectionStore = useMediacollectionStore();
     const router = useRouter();
@@ -54,6 +56,7 @@ export default defineComponent({
       lineEstablished,
       router,
       store,
+      stateStore,
       uiSettingsStore,
       mediacollectionStore,
       ConnectionOverlay,
@@ -122,7 +125,10 @@ export default defineComponent({
           "ProcessStateinfo", (procinfo) => {
             const _procinfo = JSON.parse(procinfo);
             console.log(_procinfo);
-            this.store.statemachine = _procinfo;
+            //this.stateStore = _procinfo; // not works :)
+            this.stateStore.state = _procinfo["state"];
+            this.stateStore.duration = _procinfo["duration"];
+            this.stateStore.processing = _procinfo["processing"];
           }
         )
         .on(

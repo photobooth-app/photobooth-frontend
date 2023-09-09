@@ -2,9 +2,8 @@
   <q-page class="q-pa-none column">
     <div v-if="showPreview" id="preview-stream" style="background-image: url('/aquisition/stream.mjpg')"
       class="full-width column justify-center content-center">
-      <countdown-timer ref="countdowntimer" :duration="this.store.statemachine.duration"
-        :remainingSeconds="this.store.statemachine.countdown"
-        :messageDuration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME" :countdownOffset="0.5"></countdown-timer>
+      <countdown-timer v-if="showCountdownCounting" ref="countdowntimer" :duration="this.stateStore.duration"
+        :messageDuration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME"></countdown-timer>
 
       <q-spinner-grid size="20em" v-show="showProcessing" />
 
@@ -43,6 +42,7 @@ import { ref } from "vue";
 import { api, remoteProcedureCall } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useMainStore } from "../stores/main-store.js";
+import { useStateStore } from "../stores/state-store.js";
 import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import CountdownTimer from "../components/CountdownTimer";
 
@@ -52,10 +52,13 @@ export default defineComponent({
   setup () {
     const $q = useQuasar();
     const store = useMainStore();
+    const stateStore = useStateStore();
     const uiSettingsStore = useUiSettingsStore();
+
 
     return {
       store,
+      stateStore,
       uiSettingsStore,
       remoteProcedureCall
     };
@@ -67,35 +70,40 @@ export default defineComponent({
     },
     takeCollage () {
       remoteProcedureCall("/processing/chose/collage");
+
     },
+  },
+  watch: {
+
   },
   computed: {
 
     showProcessing: {
       get () {
-        return this.store.statemachine.processing;
-      },
-    },
-    remainingCountdown: {
-      get () {
-        return this.store.statemachine.countdown
-          ? this.store.statemachine.countdown
-          : 0;
+        return this.stateStore.processing;
       },
     },
 
+
+    showCountdownCounting: {
+      get () {
+        const machineCounting = this.stateStore.state == "counting"
+
+        return this.stateStore.duration > 0 && (machineCounting);
+      },
+    },
     showPreview: {
       get () {
         const enabled = true
-        const machineIdle = this.store.statemachine.state == "idle"
-        const machineCounting = this.store.statemachine.state == "counting"
+        const machineIdle = this.stateStore.state == "idle"
+        const machineCounting = this.stateStore.state == "counting"
 
         return enabled && (machineIdle || machineCounting);
       },
     },
     showFrontpage: {
       get () {
-        return this.store.statemachine.state == "idle";
+        return this.stateStore.state == "idle";
       },
     },
   },

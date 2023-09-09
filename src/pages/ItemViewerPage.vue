@@ -16,7 +16,9 @@
 
         <q-btn color="primary" no-caps @click="userConfirm()">
           <q-icon left size="7em" name="thumb_up" />
-          <div>Awesome, next!</div>
+          <div>Awesome, next!<br>{{ this.mainStore.statemachine.current_capture_no }} / {{
+            this.mainStore.statemachine.total_captures_no
+          }}</div>
         </q-btn>
       </div>
     </q-page-sticky>

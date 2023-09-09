@@ -13,13 +13,6 @@ export const useMainStore = defineStore("main-store", () => {
 
   const logrecords = ref([]);
 
-  const statemachine = ref({
-    countdown: 0,
-    duration: 0,
-    state: null,
-    processing: false,
-  });
-
   const information = ref({
     cpu1_5_15: [null, null, null],
     active_threads: null,
@@ -53,7 +46,5 @@ export const useMainStore = defineStore("main-store", () => {
     information,
     lastHeartbeat,
     logrecords,
-    // gallery,
-    statemachine,
   };
 });

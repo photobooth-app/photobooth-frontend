@@ -1,8 +1,13 @@
 <template>
   <div style="width: 40%; height: 40%" v-show="showBox">
     <q-circular-progress v-show="showCountdown" show-value class="text-light-blue" style="width: 100%; height: 100%"
-      :value="remainingSeconds" :min="0" :max="this.duration" reverse size="150px" color="light-blue" />
-    <q-icon :name="icon" v-show="showMessage" size="200px" style="width: 100%; height: 100%" />
+      :value="parseFloat(remainingSeconds.toFixed(1))" :min="0" :max="this.duration" reverse size="150px"
+      color="light-blue" />
+    <div v-show="showMessage">
+      <span>{{ message }}</span>
+      <q-icon :name="icon" size="200px" style="width: 100%; height: 100%" />
+    </div>
+
   </div>
 </template>
 
@@ -14,10 +19,17 @@ export default defineComponent({
 
   data () {
     return {
-      //remainingSeconds: 0,
+      intervalTimerId: null,
+      remainingSeconds: 0,
     };
   },
-  watch: {},
+
+  mounted () {
+    this.startTimer();
+  },
+  beforeUnmount () {
+    clearInterval(this.intervalTimerId);
+  },
   computed: {
 
     showBox () {
@@ -31,13 +43,25 @@ export default defineComponent({
     },
   },
   methods: {
+    abortTimer () {
+      clearInterval(this.intervalTimerId);
+      this.remainingSeconds = 0;
+    },
+    startTimer () {
+      console.log(`starting timer, duration=${this.duration}`);
+      this.remainingSeconds = this.duration;
 
+      this.intervalTimerId = setInterval(() => {
+        this.remainingSeconds -= 0.05;
+
+        if (this.remainingSeconds <= 0) {
+          clearInterval(this.intervalTimerId);
+        }
+      }, 50);
+    },
   },
   props: {
-    remainingSeconds: {
-      type: Number,
-      required: true,
-    },
+
 
     duration: {
       type: Number,
