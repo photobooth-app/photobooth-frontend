@@ -2,8 +2,8 @@
 <template>
   <q-layout view="hhh Lpr ffr" @click="abortTimer">
     <q-header elevated class="bg-primary text-white">
-      <q-toolbar>
-        <q-btn dense flat icon="close" @click="$emit('closeEvent')" />
+      <q-toolbar class="toolbar">
+        <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
 
         <q-space />
 

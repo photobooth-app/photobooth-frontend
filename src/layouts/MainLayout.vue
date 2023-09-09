@@ -2,14 +2,10 @@
   <q-layout view="hHh lpR fFf" class="bg-image">
     <q-page-container>
       <router-view />
-      <q-page-sticky
-        v-show="isSubPageDisplayHomebutton"
-        position="top-left"
-        :offset="[25, 25]"
-      >
+      <q-page-sticky v-show="isSubPageDisplayHomebutton" position="top-left" :offset="[25, 25]">
         <div class="q-gutter-sm">
-          <q-btn color="primary" no-caps to="/">
-            <q-icon left size="5em" name="arrow_back_ios_new" />
+          <q-btn color="primary" no-caps to="/" class="action-button">
+            <q-icon left name="arrow_back_ios_new" />
             <div>Start</div>
           </q-btn>
         </div>
@@ -26,10 +22,10 @@ export default defineComponent({
 
   components: {},
   computed: {
-    isSubPageDisplayHomebutton() {
+    isSubPageDisplayHomebutton () {
       return this.$route.path != "/" ? true : false;
     },
   },
-  setup() {},
+  setup () { },
 });
 </script>

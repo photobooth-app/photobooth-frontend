@@ -31,3 +31,18 @@
   -webkit-transform: rotateZ(360deg);
   -webkit-transform: translate3d(0, 0, 0);
 }
+
+.action-button {
+  font-size: 2rem;
+
+  * > .q-icon {
+    font-size: 7rem;
+  }
+}
+
+.toolbar {
+  //font-size: 2rem;
+  .q-btn {
+    font-size: 1.1rem;
+  }
+}

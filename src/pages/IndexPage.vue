@@ -13,20 +13,21 @@
       <q-page-sticky position="bottom" :offset="[0, 25]">
         <div v-if="showFrontpage">
           <div class="q-gutter-sm">
-            <q-btn color="primary" no-caps @click="takePicture()">
-              <q-icon left size="7em" name="photo_camera" />
+            <q-btn color="primary" no-caps @click="takePicture()" class="action-button">
+              <q-icon left name="photo_camera" />
               <div>Take<br />Picture!</div>
             </q-btn>
-            <q-btn color="primary" no-caps @click="takeCollage()">
-              <q-icon left size="7em" name="auto_awesome_mosaic" />
+            <q-btn color="primary" no-caps @click="takeCollage()" class="action-button">
+              <q-icon left name="auto_awesome_mosaic" />
               <div>Create<br />Collage!</div>
             </q-btn>
-            <q-btn color="primary" no-caps to="/gallery">
-              <q-icon left size="7em" name="photo_library" />
+            <q-btn color="primary" no-caps to="/gallery" class="action-button">
+              <q-icon left name="photo_library" />
               <div>Gallery</div>
             </q-btn>
-            <q-btn color="secondary" no-caps to="/admin" v-if="uiSettingsStore.uiSettings.SHOW_ADMIN_LINK_ON_FRONTPAGE">
-              <q-icon left size="7em" name="admin_panel_settings" />
+            <q-btn color="secondary" no-caps to="/admin" v-if="uiSettingsStore.uiSettings.SHOW_ADMIN_LINK_ON_FRONTPAGE"
+              class="action-button">
+              <q-icon left name="admin_panel_settings" />
               <div>Admin</div>
             </q-btn>
           </div>
