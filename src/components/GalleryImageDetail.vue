@@ -87,7 +87,7 @@
         </q-carousel>
       </div>
 
-      <q-page-sticky position="top-right" :offset="[30, 30]">
+      <q-page-sticky v-if="uiSettingsStore.uiSettings.gallery_show_qrcode" position="top-right" :offset="[30, 30]">
         <div class="q-gutter-sm">
           <vue-qrcode type="image/png" tag="svg" :margin="2" :width="200" error-correction-level="low"
             :color="{ dark: '#111111', light: '#EEEEEE' }" :value="getImageQrData()" />

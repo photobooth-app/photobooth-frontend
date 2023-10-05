@@ -14,13 +14,13 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
   state: () => ({
     uiSettings: {
       FRONTPAGE_TEXT: null,
-      GALLERY_ENABLE: null,
-      GALLERY_EMPTY_MSG: null,
       TAKEPIC_MSG: null,
       TAKEPIC_MSG_TIME: null,
       AUTOCLOSE_NEW_ITEM_ARRIVED: null,
       SHOW_ADMIN_LINK_ON_FRONTPAGE: null,
-      EXT_DOWNLOAD_URL: null,
+      GALLERY_ENABLED: null,
+      GALLERY_EMPTY_MSG: null,
+      gallery_show_qrcode: null,
       gallery_show_filter: null,
       gallery_filter_userselectable: null,
       gallery_show_download: null,
