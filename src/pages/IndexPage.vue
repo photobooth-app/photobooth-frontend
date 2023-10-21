@@ -7,8 +7,7 @@
 
       <q-spinner-grid size="20em" v-show="showProcessing" />
 
-      <div v-show="showFrontpage" style="position: absolute; width: 100%; height: 100%" id="frontpage_text"
-        v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
+      <div v-show="showFrontpage" id="frontpage_text" v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
 
       <q-page-sticky position="bottom" :offset="[0, 25]">
         <div v-if="showFrontpage">

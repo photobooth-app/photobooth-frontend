@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
-    {{ itemId }}
-    <div class="row justify-center q-gutter-sm">
+
+    <div v-if="!isGalleryEmpty" class="row justify-center q-gutter-sm">
       <q-intersection :key="item.id" once v-for="(item, index) in this.mediacollectionStore.collection"
         class="preview-item">
         <q-card class="q-ma-sm" @click="openPic(index)">
@@ -13,6 +13,9 @@
         </q-card>
       </q-intersection>
     </div>
+    <div v-else v-html="uiSettingsStore.uiSettings.GALLERY_EMPTY_MSG"></div>
+
+
 
     <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
       <gallery-image-detail @close-event="showImageDetail = false" :itemRepository="this.mediacollectionStore.collection"
@@ -28,6 +31,7 @@
 
 <script>
 import { useMainStore } from "../stores/main-store.js";
+import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import { useMediacollectionStore } from "../stores/mediacollection-store.js";
 import { ref } from "vue";
 import GalleryImageDetail from "../components/GalleryImageDetail";
@@ -37,11 +41,13 @@ export default {
   components: { GalleryImageDetail },
   setup () {
     const store = useMainStore();
+    const uiSettingsStore = useUiSettingsStore();
     const mediacollectionStore = useMediacollectionStore();
 
     return {
       // you can return the whole store instance to use it in the template
       store,
+      uiSettingsStore,
       mediacollectionStore,
       GalleryImageDetail,
       indexSelected: ref(null),
@@ -52,6 +58,10 @@ export default {
 
     itemId () {
       return this.$route.params.id
+    },
+
+    isGalleryEmpty () {
+      return this.mediacollectionStore.collection_number_of_items == 0
     },
   },
   mounted () {
