@@ -37,6 +37,15 @@ export const useMainStore = defineStore("main-store", () => {
       primary: null,
       secondary: null,
     },
+    version: null,
+    platform_system: null,
+    platform_release: null,
+    platform_machine: null,
+    platform_python_version: null,
+    platform_node: null,
+    platform_cpu_count: null,
+    data_directory: null,
+    python_executable: null,
   });
 
   const lastHeartbeat = ref(null);

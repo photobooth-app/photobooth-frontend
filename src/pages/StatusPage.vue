@@ -1,10 +1,12 @@
 <template>
   <q-page padding>
     <div class="row col-xs-12 col-sm-4 col-md-3 col-lg-3">
-      <q-card style="" class="q-pa-md q-ma-md">
+      <q-card class="q-mr-md q-mb-md">
         <q-card-section>
-          <div class="text-h5">Maintenance</div>
-          <div class="q-gutter-sm q-ma-md">
+          <div class="text-h5">System Information</div>
+          <div class="q-gutter-sm q-mt-sm">
+            <div> Data directory: {{ store.information.data_directory }} </div>
+            <div> App version: {{ store.information.version }} </div>
             <div>
               CPU: {{ store.information["cpu1_5_15"][0] }}% /
               {{ store.information["cpu1_5_15"][1] }}% /
@@ -38,9 +40,24 @@
 
         </q-card-section>
       </q-card>
-      <!--
-        # currently disabled since not working
-      <q-card style="" class="q-pa-md q-ma-md">
+
+      <q-card style="" class="q-mr-md q-mb-md">
+        <q-card-section>
+          <div class="text-h5">Platform</div>
+          <div class="q-gutter-sm q-mt-sm">
+            <div> Hostname: {{ store.information.platform_node }} </div>
+            <div>
+              Machine: {{ store.information.platform_machine }}, {{ store.information.platform_cpu_count }} cores
+            </div>
+            <div> Platform: {{ store.information.platform_system }} {{ store.information.platform_release }} </div>
+            <div> Python executable: {{ store.information.python_executable }} </div>
+            <div> Python version: {{ store.information.platform_python_version }} </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- # currently disabled since not working -->
+      <!-- <q-card style="" class="q-mr-md q-mb-md">
         <q-card-section>
           <div class="text-h5">Primary Backend Stats</div>
           <div class="text-subtitle2">only avail stats displayed</div>
@@ -54,7 +71,7 @@
           </table>
         </q-card-section>
       </q-card>
-      <q-card style="" class="q-pa-md q-ma-md">
+      <q-card style="" class="q-mr-md q-mb-md">
         <q-card-section>
           <div class="text-h5">Secondary Backend Stats</div>
           <div class="text-subtitle2">only avail stats displayed</div>
@@ -67,9 +84,11 @@
             </tr>
           </table>
         </q-card-section>
-      </q-card>
-    -->
+      </q-card> -->
+
     </div>
+
+
     <q-card class="q-pa-md q-mt-md">
       <div class="row">
         <div class="text-h5">Log Records</div>
