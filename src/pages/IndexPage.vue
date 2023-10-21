@@ -1,13 +1,17 @@
 <template>
-  <q-page class="q-pa-none column">
+  <q-page class="q-pa-none column full-height">
+    <div class="full-height full-width column justify-center content-center" style="position: absolute;"
+      v-if="showProcessing">
+      <q-spinner-grid size="20em" />
+    </div>
+
     <div v-if="showPreview" id="preview-stream" style="background-image: url('/aquisition/stream.mjpg')"
       class="full-width column justify-center content-center">
       <countdown-timer v-if="showCountdownCounting" ref="countdowntimer" :duration="this.stateStore.duration"
         :messageDuration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME"></countdown-timer>
 
-      <q-spinner-grid size="20em" v-show="showProcessing" />
 
-      <div v-show="showFrontpage" id="frontpage_text" v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
+      <div v-if="showFrontpage" id="frontpage_text" v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
 
       <q-page-sticky position="bottom" :offset="[0, 25]">
         <div v-if="showFrontpage">
@@ -38,8 +42,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { ref } from "vue";
-import { api, remoteProcedureCall } from "boot/axios";
+import { remoteProcedureCall } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useMainStore } from "../stores/main-store.js";
 import { useStateStore } from "../stores/state-store.js";
@@ -80,10 +83,9 @@ export default defineComponent({
 
     showProcessing: {
       get () {
-        return this.stateStore.processing;
+        return this.stateStore.state == "job_postprocess";
       },
     },
-
 
     showCountdownCounting: {
       get () {

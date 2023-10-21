@@ -1,20 +1,13 @@
 import { defineStore } from "pinia";
-import { api } from "src/boot/axios";
-import { ref } from "vue";
 
-export const useStateStore = defineStore("state-store", () => {
-  const state = ref(null);
-
-  const duration = ref(null);
-
-  const processing = ref(null);
-
-  const current_capture_no = ref(null);
-  const total_captures_no = ref(null);
-
-  return {
-    state,
-    duration,
-    processing,
-  };
+export const useStateStore = defineStore("state-store", {
+  state: () => ({
+    state: null,
+    duration: null,
+    //  processing = ref(null);   //could be implemented later to check server state more accurate. for now: computed prob checking for job_postprocessing state because only this one takes a bit
+    current_capture_no: null,
+    total_captures_no: null,
+  }),
+  actions: {},
+  getters: {},
 });
