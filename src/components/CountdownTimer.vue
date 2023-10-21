@@ -4,7 +4,6 @@
       :value="parseFloat(remainingSeconds.toFixed(1))" :min="0" :max="this.duration" reverse size="150px"
       color="light-blue" />
     <div v-show="showMessage">
-      <span>{{ message }}</span>
       <q-icon :name="icon" size="200px" style="width: 100%; height: 100%" />
     </div>
 
@@ -71,11 +70,6 @@ export default defineComponent({
     messageDuration: {
       type: Number,
       default: 0.5,
-    },
-
-    message: {
-      type: String,
-      default: "Cheeeese :)",
     },
 
     icon: {

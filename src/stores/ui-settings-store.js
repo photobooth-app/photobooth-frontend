@@ -14,7 +14,6 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
   state: () => ({
     uiSettings: {
       FRONTPAGE_TEXT: null,
-      TAKEPIC_MSG: null,
       TAKEPIC_MSG_TIME: null,
       AUTOCLOSE_NEW_ITEM_ARRIVED: null,
       SHOW_ADMIN_LINK_ON_FRONTPAGE: null,
