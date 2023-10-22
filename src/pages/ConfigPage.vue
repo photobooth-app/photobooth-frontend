@@ -22,7 +22,7 @@
     </div>
     <q-page-sticky position="bottom-right" :offset="[25, 25]">
       <div class="q-gutter-sm">
-        <q-btn label="reset" @click="remoteProcedureCall('/config/reset')" />
+        <q-btn label="reset" @click="remoteProcedureCall('/admin/config/reset')" />
         <q-btn label="restore" @click="getConfig('current')" />
         <q-btn color="primary" label="persist" @click="uploadConfigAndPersist()" />
       </div>
@@ -194,7 +194,7 @@ export default {
 
     const getSchema = () => {
       api
-        .get("/config/schema?schema_type=dereferenced") // dereferenced input
+        .get("/admin/config/schema?schema_type=dereferenced") // dereferenced input
         .then(async (response) => {
           console.log(response.data);
 
@@ -220,7 +220,7 @@ export default {
       renderBlitzForm.value = false;
 
       api
-        .get(`/config/${which}`)
+        .get(`/admin/config/${which}`)
         .then(async (response) => {
           console.log(response.data);
           console.log(serverConfig.value);
@@ -228,10 +228,6 @@ export default {
           serverConfig.value = response.data;
           renderBlitzForm.value = true;
 
-          $q.notify({
-            message: `${which} config loaded from server`,
-            color: "green",
-          });
         })
         .catch((response) => {
           console.log(response);
@@ -255,7 +251,7 @@ export default {
       console.log(serverConfig.value);
 
       api
-        .post("/config/current", serverConfig.value)
+        .post("/admin/config/current", serverConfig.value)
         .then((response) => {
           // reload ui settings into store as on app startup.
           uiSettingsStore.initStore(true);

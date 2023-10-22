@@ -22,6 +22,7 @@ const routes = [
     children: [
       { path: "", component: () => import("pages/AdminPage.vue") },
       { path: "gallery", component: () => import("pages/GalleryPage.vue") },
+      { path: "files", component: () => import("pages/AdminFilesPage.vue") },
       { path: "status", component: () => import("pages/StatusPage.vue") },
       { path: "help", component: () => import("pages/AdminHelpPage.vue") },
       {

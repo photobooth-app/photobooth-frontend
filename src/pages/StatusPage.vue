@@ -5,7 +5,10 @@
         <q-card-section>
           <div class="text-h5">System Information</div>
           <div class="q-gutter-sm q-mt-sm">
-            <div> Data directory: {{ store.information.data_directory }} </div>
+            <div>
+              Data directory: {{ store.information.data_directory }}
+              <q-btn no-caps to="/admin/files">browse</q-btn>
+            </div>
             <div> App version: {{ store.information.version }} </div>
             <div>
               CPU: {{ store.information["cpu1_5_15"][0] }}% /

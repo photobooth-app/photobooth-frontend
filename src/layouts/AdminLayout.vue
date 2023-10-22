@@ -7,7 +7,8 @@
           <q-route-tab to="/admin" icon="dashboard" label="Dashboard" />
 
           <q-route-tab to="/admin/gallery" icon="photo_library" label="Gallery" />
-          <q-route-tab to="/admin/config" icon="quiz" label="Config" />
+          <q-route-tab to="/admin/config" icon="settings" label="Config" />
+          <q-route-tab to="/admin/files" icon="folder_shared" label="Files" />
           <q-route-tab to="/admin/status" icon="insights" label="Status" />
 
           <!--<q-route-tab to="/admin/playground" icon="quiz" label="Playground" />-->
