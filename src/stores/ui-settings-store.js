@@ -13,11 +13,15 @@ const STATES = {
 export const useUiSettingsStore = defineStore("ui-settings-store", {
   state: () => ({
     uiSettings: {
+      show_takepic_on_frontpage: null,
+      show_collage_on_frontpage: null,
+      show_gallery_on_frontpage: null,
+      show_admin_on_frontpage: null,
+
       FRONTPAGE_TEXT: null,
       TAKEPIC_MSG_TIME: null,
       AUTOCLOSE_NEW_ITEM_ARRIVED: null,
-      SHOW_ADMIN_LINK_ON_FRONTPAGE: null,
-      GALLERY_ENABLED: null,
+
       GALLERY_EMPTY_MSG: null,
       gallery_show_qrcode: null,
       gallery_show_filter: null,
