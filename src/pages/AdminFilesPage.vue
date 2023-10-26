@@ -262,10 +262,20 @@ export default {
 
     async function createNewFolder (folder_name) {
       // https://javascript.info/fetch
+
+      let newfolder_fullpath = folder_name
+
+      if (folder_current.value) {
+        // add current folder if not empty (avoid to appear like an absolute path)
+        newfolder_fullpath = folder_current.value + "/" + newfolder_fullpath;
+      }
+
+      console.log(newfolder_fullpath);
+
       let response = await fetch(`/admin/files/folder/new`, {
         method: "POST",
         headers: { "Content-Type": "application/json", },
-        body: JSON.stringify(`${folder_current.value}/${folder_name}`),
+        body: JSON.stringify(newfolder_fullpath),
 
       });
 
