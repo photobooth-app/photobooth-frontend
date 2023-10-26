@@ -99,7 +99,7 @@
             <q-btn class="q-mr-sm" label="Reboot Host" @click="confirm_reboot = true" />
             <q-btn class="q-mr-sm" label="Shutdown Host" @click="confirm_shutdown = true" />
             <q-btn class="q-mr-sm" label="Restart Service" @click="confirm_restart_service = true" />
-            <q-btn class="q-mr-sm" label="Reload Service" @click="confirm_reload_service = true" />
+            <!--TODO: does not work reliable. may be removed <q-btn class="q-mr-sm" label="Reload Service" @click="confirm_reload_service = true" /> -->
             <q-btn class="q-mr-sm" label="Install Service" @click="confirm_install_service = true" />
             <q-btn class="q-mr-sm" label="Uninstall Service" @click="confirm_uninstall_service = true" />
           </div>
