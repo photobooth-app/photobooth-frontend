@@ -71,7 +71,6 @@ export default {
   watch: {
     // whenever question changes, this function will run
     itemId (newItemId, oldItemId) {
-      console.log("watcher")
       const index = this.mediacollectionStore.getIndexOfItemId(newItemId);
       if (index == -1)
         console.error(`image id not found ${newItemId}`);

@@ -129,6 +129,13 @@ export default defineComponent({
             this.stateStore.state = _procinfo["state"];
             this.stateStore.duration = _procinfo["duration"];
             //this.stateStore.processing = _procinfo["processing"];  // TODO: currently derived by state. it's ok for now.
+
+
+            if (this.stateStore.state == "counting" && (this.$route.path != '/' && this.$route.path.indexOf('/admin') == -1)) {
+              // quick fix: receive "counting" state but not on indexpage, push router to index
+              console.log("counting state received, pushing to index page to countdown")
+              this.$router.push("/");
+            }
           }
         )
         .on(
