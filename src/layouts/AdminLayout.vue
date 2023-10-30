@@ -18,7 +18,7 @@
         <q-space />
 
         <q-toolbar-title> Admin Center </q-toolbar-title>
-        <a href="https://mgrl.github.io/photobooth-docs/" target="_new"><img src="icons/logo-text-white-transparent.png"
+        <a href="https://photobooth-app.org/" target="_new"><img src="icons/logo-text-white-transparent.png"
             style="max-height:40px" /></a>
 
 
