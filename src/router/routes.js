@@ -36,6 +36,15 @@ const routes = [
     ],
   },
 
+  {
+    // extended layout for admins
+    path: "/standalone",
+    component: () => import("layouts/StandaloneLayout.vue"),
+    children: [
+      { path: "gallery", component: () => import("pages/GalleryPage.vue") },
+    ],
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
