@@ -1,12 +1,20 @@
 <template>
   <div style="width: 40%; height: 40%" v-show="showBox">
-    <q-circular-progress v-show="showCountdown" show-value class="text-light-blue" style="width: 100%; height: 100%"
-      :value="parseFloat(remainingSeconds.toFixed(1))" :min="0" :max="this.duration" reverse size="150px"
-      color="light-blue" />
+    <q-circular-progress
+      v-show="showCountdown"
+      show-value
+      class="text-light-blue"
+      style="width: 100%; height: 100%"
+      :value="parseFloat(remainingSeconds.toFixed(1))"
+      :min="0"
+      :max="this.duration"
+      reverse
+      size="150px"
+      color="light-blue"
+    />
     <div v-show="showMessage">
       <q-icon :name="icon" size="200px" style="width: 100%; height: 100%" />
     </div>
-
   </div>
 </template>
 
@@ -16,37 +24,36 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "CountdownTimer",
 
-  data () {
+  data() {
     return {
       intervalTimerId: null,
       remainingSeconds: 0,
     };
   },
 
-  mounted () {
+  mounted() {
     this.startTimer();
   },
-  beforeUnmount () {
+  beforeUnmount() {
     clearInterval(this.intervalTimerId);
   },
   computed: {
-
-    showBox () {
+    showBox() {
       return this.remainingSeconds > 0;
     },
-    showCountdown () {
+    showCountdown() {
       return +this.remainingSeconds >= this.messageDuration;
     },
-    showMessage () {
+    showMessage() {
       return !this.showCountdown;
     },
   },
   methods: {
-    abortTimer () {
+    abortTimer() {
       clearInterval(this.intervalTimerId);
       this.remainingSeconds = 0;
     },
-    startTimer () {
+    startTimer() {
       console.log(`starting timer, duration=${this.duration}`);
       this.remainingSeconds = this.duration;
 
@@ -60,8 +67,6 @@ export default defineComponent({
     },
   },
   props: {
-
-
     duration: {
       type: Number,
       required: true,

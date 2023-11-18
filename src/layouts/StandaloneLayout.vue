@@ -13,6 +13,6 @@ export default defineComponent({
   name: "StandaloneLayout",
   components: {},
   computed: {},
-  setup () { },
+  setup() {},
 });
 </script>
