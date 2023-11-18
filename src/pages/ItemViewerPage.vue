@@ -1,32 +1,34 @@
-<template >
+<template>
   <q-page class="q-pa-none fullscreen">
-
-    <gallery-image-detail @close-event="userCloseViewer()" :itemRepository="this.mediacollectionStore.collection"
-      :indexSelected="0" :singleItemView="true" :startTimerOnOpen="!approval" class="full-height"></gallery-image-detail>
-
+    <gallery-image-detail
+      @close-event="userCloseViewer()"
+      :itemRepository="this.mediacollectionStore.collection"
+      :indexSelected="0"
+      :singleItemView="true"
+      :startTimerOnOpen="!approval"
+      class="full-height"
+    ></gallery-image-detail>
 
     <q-page-sticky position="bottom" :offset="[0, 25]" v-if="approval">
       <div class="q-gutter-sm">
-
         <q-btn color="secondary" no-caps @click="userReject()" class="q-mr-xl">
           <q-icon left size="7em" name="thumb_down" />
           <div>Try again!</div>
         </q-btn>
 
-
         <q-btn color="primary" no-caps @click="userConfirm()">
           <q-icon left size="7em" name="thumb_up" />
-          <div>Awesome, next!<br>{{ this.mainStore.statemachine.current_capture_no }} / {{
-            this.mainStore.statemachine.total_captures_no
-          }}</div>
+          <div>
+            Awesome, next!<br />{{
+              this.mainStore.statemachine.current_capture_no
+            }}
+            / {{ this.mainStore.statemachine.total_captures_no }}
+          </div>
         </q-btn>
       </div>
     </q-page-sticky>
-
-
   </q-page>
 </template>
-
 
 <script>
 import { useMainStore } from "../stores/main-store.js";
@@ -40,21 +42,23 @@ export default {
   // name: 'PageName',
   components: { GalleryImageDetail },
   //props: (route) => ({ approval: (route.query.approval === 'true') }),
-  data () {
+  data() {
     return {
       intervalTimerId: null,
       remainingSeconds: 0,
       remainingSecondsNormalized: 0,
       displayLinearProgressBar: true,
-      showImageDetail: true
+      showImageDetail: true,
     };
   },
   computed: {
     approval: {
-      get () { return (this.$route.query.approval === 'true') },
+      get() {
+        return this.$route.query.approval === "true";
+      },
     },
   },
-  setup () {
+  setup() {
     const mainStore = useMainStore();
     const mediacollectionStore = useMediacollectionStore();
     const uiSettingsStore = useUiSettingsStore();
@@ -68,31 +72,27 @@ export default {
       remoteProcedureCall,
     };
   },
-  mounted () {
+  mounted() {
     // string representation: console.log((this.$route.query.approval));
     // bool: console.log((this.approval));
   },
-  beforeUnmount () {
-  },
+  beforeUnmount() {},
   methods: {
-    userConfirm () {
+    userConfirm() {
       remoteProcedureCall("/processing/cmd/confirm");
-      this.$router.push('/')
+      this.$router.push("/");
     },
-    userReject () {
+    userReject() {
       remoteProcedureCall("/processing/cmd/reject");
-      this.$router.push('/')
+      this.$router.push("/");
     },
-    userCloseViewer () {
+    userCloseViewer() {
       // closing the window that was meant to use for approval
       // need to inform the statemachine to reset
-      if (this.approval)
-        remoteProcedureCall("/processing/cmd/abort");
+      if (this.approval) remoteProcedureCall("/processing/cmd/abort");
 
-      this.$router.push('/')
+      this.$router.push("/");
     },
-
-
   },
 };
 </script>

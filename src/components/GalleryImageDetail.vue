@@ -1,31 +1,68 @@
-
 <template>
   <q-layout view="hhh Lpr ffr" @click="abortTimer">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar class="toolbar">
-        <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
+        <q-btn
+          dense
+          flat
+          icon="close"
+          size="1.5rem"
+          @click="$emit('closeEvent')"
+        />
 
         <q-space />
 
-        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_delete" flat class="q-mr-sm" icon="delete" label="Delete"
-          @click="deleteItem(currentSlideId); $emit('closeEvent')" />
-        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_download" flat class="q-mr-sm" icon="download"
-          label="Download" @click="(evt) => {
-            openURL(itemRepository[currentSlideIndex]['full']);
-          }
-            " />
-        <q-btn v-if="uiSettingsStore.uiSettings.gallery_show_print" flat class="q-mr-sm" icon="print" label="Print"
-          @click="printItem(currentSlideId)" />
         <q-btn
-          v-if="uiSettingsStore.uiSettings.gallery_show_filter && uiSettingsStore.uiSettings.gallery_filter_userselectable.length > 0"
-          flat class="q-mr-sm" icon="filter" label="Filter" @click="toggleRightDrawer" />
+          v-if="uiSettingsStore.uiSettings.gallery_show_delete"
+          flat
+          class="q-mr-sm"
+          icon="delete"
+          label="Delete"
+          @click="
+            deleteItem(currentSlideId);
+            $emit('closeEvent');
+          "
+        />
+        <q-btn
+          v-if="uiSettingsStore.uiSettings.gallery_show_download"
+          flat
+          class="q-mr-sm"
+          icon="download"
+          label="Download"
+          @click="
+            (evt) => {
+              openURL(itemRepository[currentSlideIndex]['full']);
+            }
+          "
+        />
+        <q-btn
+          v-if="uiSettingsStore.uiSettings.gallery_show_print"
+          flat
+          class="q-mr-sm"
+          icon="print"
+          label="Print"
+          @click="printItem(currentSlideId)"
+        />
+        <q-btn
+          v-if="
+            uiSettingsStore.uiSettings.gallery_show_filter &&
+            uiSettingsStore.uiSettings.gallery_filter_userselectable.length > 0
+          "
+          flat
+          class="q-mr-sm"
+          icon="filter"
+          label="Filter"
+          @click="toggleRightDrawer"
+        />
 
         <q-space />
 
         <div class="q-mr-sm" v-if="!singleItemView">
           <q-icon name="tag" />
-          <span>{{ currentSlideIndex + 1 }} of
-            {{ itemRepository.length }} total</span>
+          <span
+            >{{ currentSlideIndex + 1 }} of
+            {{ itemRepository.length }} total</span
+          >
         </div>
         <q-space />
         <div class="q-mr-sm">
@@ -35,65 +72,112 @@
       </q-toolbar>
 
       <!-- progress bar to timeout and close -->
-      <q-linear-progress class="absolute" :value="remainingSecondsNormalized" animation-speed="200" color="grey"
-        v-if="displayLinearProgressBar && remainingSeconds > 0" />
+      <q-linear-progress
+        class="absolute"
+        :value="remainingSecondsNormalized"
+        animation-speed="200"
+        color="grey"
+        v-if="displayLinearProgressBar && remainingSeconds > 0"
+      />
       <!-- progress bar to show waiting to load filter, ... -->
-      <q-linear-progress class="absolute" indeterminate animation-speed="2100" color="primary"
-        v-if="displayLoadingSpinner" />
+      <q-linear-progress
+        class="absolute"
+        indeterminate
+        animation-speed="2100"
+        color="primary"
+        v-if="displayLoadingSpinner"
+      />
     </q-header>
 
-    <q-drawer v-if="uiSettingsStore.uiSettings.gallery_show_filter" v-model="rightDrawerOpen" side="right" elevated
-      overlay>
-      <q-img v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`" :key="filter"
+    <q-drawer
+      v-if="uiSettingsStore.uiSettings.gallery_show_filter"
+      v-model="rightDrawerOpen"
+      side="right"
+      elevated
+      overlay
+    >
+      <q-img
+        v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`"
+        :key="filter"
         @click="applyFilter(currentSlideId, filter)"
-        v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable">
+        v-for="filter in uiSettingsStore.uiSettings
+          .gallery_filter_userselectable"
+      >
         <div class="absolute-bottom-left text-subtitle2">
           {{ filter }}
         </div>
       </q-img>
     </q-drawer>
 
-
-
     <q-page-container class="q-pa-none galleryimagedetail full-height">
-
       <div v-if="singleItemView" class="full-height">
         <q-card class="column no-wrap flex-center full-height q-pa-sm">
-          <img :draggable="false" class="rounded-borders full-height"
-            style="object-fit: contain; max-width: 100%; max-height:100%;" :src="this.itemRepository[0].preview" />
+          <img
+            :draggable="false"
+            class="rounded-borders full-height"
+            style="object-fit: contain; max-width: 100%; max-height: 100%"
+            :src="this.itemRepository[0].preview"
+          />
         </q-card>
       </div>
 
-
       <div v-else class="full-height">
-
-
-        <q-carousel class=" " style="width: 100%; height: 100%" control-type="flat" control-color="primary" swipeable
-          v-touch-swipe.mouse.down="handleSwipeDown" animated v-model="currentSlideId" :autoplay="autoplay"
-          draggable="false" arrows transition-prev="slide-right" transition-next="slide-left" @transition="(newVal, oldVal) => {
-            currentSlideIndex = itemRepository.findIndex(
-              (item) => item.id === newVal
-            );
-            abortTimer();
-          }
-            ">
-
-          <q-carousel-slide v-for="slide in slicedImages" :key="slide.id" :name="slide.id"
-            class="column no-wrap flex-center full-height q-pa-sm">
-
-            <img :draggable="false" class="rounded-borders full-height"
-              style="object-fit: contain; max-width: 100%; max-height:100%;" :src="slide.preview" />
+        <q-carousel
+          class=" "
+          style="width: 100%; height: 100%"
+          control-type="flat"
+          control-color="primary"
+          swipeable
+          v-touch-swipe.mouse.down="handleSwipeDown"
+          animated
+          v-model="currentSlideId"
+          :autoplay="autoplay"
+          draggable="false"
+          arrows
+          transition-prev="slide-right"
+          transition-next="slide-left"
+          @transition="
+            (newVal, oldVal) => {
+              currentSlideIndex = itemRepository.findIndex(
+                (item) => item.id === newVal,
+              );
+              abortTimer();
+            }
+          "
+        >
+          <q-carousel-slide
+            v-for="slide in slicedImages"
+            :key="slide.id"
+            :name="slide.id"
+            class="column no-wrap flex-center full-height q-pa-sm"
+          >
+            <img
+              :draggable="false"
+              class="rounded-borders full-height"
+              style="object-fit: contain; max-width: 100%; max-height: 100%"
+              :src="slide.preview"
+            />
           </q-carousel-slide>
         </q-carousel>
       </div>
 
-      <q-page-sticky v-if="uiSettingsStore.uiSettings.gallery_show_qrcode" position="top-right" :offset="[30, 30]">
+      <q-page-sticky
+        v-if="uiSettingsStore.uiSettings.gallery_show_qrcode"
+        position="top-right"
+        :offset="[30, 30]"
+      >
         <div class="q-gutter-sm">
-          <vue-qrcode type="image/png" tag="svg" :margin="2" :width="200" error-correction-level="low"
-            :color="{ dark: '#111111', light: '#EEEEEE' }" :value="getImageQrData()" />
+          <vue-qrcode
+            type="image/png"
+            tag="svg"
+            :margin="2"
+            :width="200"
+            error-correction-level="low"
+            :color="{ dark: '#111111', light: '#EEEEEE' }"
+            :value="getImageQrData()"
+          />
         </div>
       </q-page-sticky>
-
     </q-page-container>
   </q-layout>
 </template>
@@ -109,7 +193,6 @@ import VueQrcode from "vue-qrcode";
 import { ref } from "vue";
 import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import { openURL, useQuasar } from "quasar";
-
 
 export default {
   // name: 'ComponentName',
@@ -132,28 +215,28 @@ export default {
     singleItemView: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   computed: {
     // a computed getter
-    slicedImages () {
+    slicedImages() {
       // `this` points to the component instance
-      console.log("changed")
+      console.log("changed");
       const window = 5;
       var totalItems = this.itemRepository.length;
       var lowerBound = Math.max(0, this.currentSlideIndex - 2);
       var upperBound = Math.max(0, this.currentSlideIndex + 3);
-      console.log(this.itemRepository.slice(lowerBound, upperBound))
+      console.log(this.itemRepository.slice(lowerBound, upperBound));
       return this.itemRepository.slice(lowerBound, upperBound);
     },
   },
-  beforeCreate () {
+  beforeCreate() {
     console.log(this.indexSelected);
     this.currentSlideIndex = this.indexSelected;
     this.currentSlideId = this.itemRepository[this.indexSelected].id;
     //this.currentId = this.index;
   },
-  data () {
+  data() {
     return {
       //currentId: "",
       intervalTimerId: null,
@@ -162,7 +245,7 @@ export default {
       displayLinearProgressBar: true,
     };
   },
-  setup () {
+  setup() {
     const uiSettingsStore = useUiSettingsStore();
     const rightDrawerOpen = ref(false);
     const $q = useQuasar();
@@ -178,10 +261,10 @@ export default {
       showFilterDialog: ref(false),
       displayLoadingSpinner: ref(false),
       rightDrawerOpen,
-      toggleRightDrawer () {
+      toggleRightDrawer() {
         rightDrawerOpen.value = !rightDrawerOpen.value;
       },
-      handleSwipeDown ({ evt }) {
+      handleSwipeDown({ evt }) {
         console.log("TODO: add method to close dialog programmatically");
       },
     };
@@ -189,18 +272,16 @@ export default {
   components: {
     VueQrcode,
   },
-  mounted () {
-    if (this.startTimerOnOpen)
-      this.startTimer();
+  mounted() {
+    if (this.startTimerOnOpen) this.startTimer();
   },
-  beforeUnmount () {
+  beforeUnmount() {
     clearInterval(this.intervalTimerId);
   },
 
   methods: {
     //https://stackoverflow.com/questions/1077041/refresh-image-with-a-new-one-at-the-same-url/66312176#66312176
-    async reloadImg (url) {
-
+    async reloadImg(url) {
       // fetch to update cache on regular images, if we do not fetch, on next gallery visit old images are displayed
       await fetch(url, { cache: "reload", mode: "no-cors" });
 
@@ -210,9 +291,8 @@ export default {
       document.body.querySelectorAll(`img[src*='${url}']`).forEach((img) => {
         img.src = url + "#" + time;
       });
-
     },
-    applyFilter (id, filter) {
+    applyFilter(id, filter) {
       this.displayLoadingSpinner = true;
       this.$api
         .get(`/mediaprocessing/applyfilter/${id}/${filter}`)
@@ -228,7 +308,7 @@ export default {
           this.displayLoadingSpinner = false;
         });
     },
-    deleteItem (id) {
+    deleteItem(id) {
       this.$api
         .get("/mediacollection/delete", { params: { image_id: id } })
         .then((response) => {
@@ -240,7 +320,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    printItem (id) {
+    printItem(id) {
       this.$api
         .get(`/print/item/${id}`)
         .then((response) => {
@@ -260,15 +340,15 @@ export default {
 
             if (error.response.status == 425) {
               this.$q.notify({
-                message: error.response.data['detail'],
+                message: error.response.data["detail"],
                 caption: "Print Service",
-                type: "info"
+                type: "info",
               });
             } else {
               this.$q.notify({
-                message: error.response.data['detail'],
+                message: error.response.data["detail"],
                 caption: "Print Service",
-                type: "negative"
+                type: "negative",
               });
             }
           } else if (error.request) {
@@ -278,21 +358,21 @@ export default {
             console.error(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            console.error('Error', error.message);
+            console.error("Error", error.message);
           }
           //console.error(error.config);
         });
     },
 
-    getImageQrData () {
-      return this.itemRepository[this.currentSlideIndex]['share_url'];
+    getImageQrData() {
+      return this.itemRepository[this.currentSlideIndex]["share_url"];
     },
-    abortTimer () {
+    abortTimer() {
       clearInterval(this.intervalTimerId);
       this.remainingSeconds = 0;
       this.remainingSecondsNormalized = 0;
     },
-    startTimer () {
+    startTimer() {
       var duration =
         this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
       console.log(`starting newitemarrived timer, duration=${duration}`);

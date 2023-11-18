@@ -18,18 +18,16 @@ import { remoteProcedureCall } from "boot/axios";
 export default defineComponent({
   name: "App",
   components: { ConnectionOverlay },
-  data () {
-    return {
-
-    }
+  data() {
+    return {};
   },
   computed: {
     // a computed getter
-    showConnectionOverlay () {
-      return !this.connected
-    }
+    showConnectionOverlay() {
+      return !this.connected;
+    },
   },
-  setup () {
+  setup() {
     const store = useMainStore();
     const stateStore = useStateStore();
     const uiSettingsStore = useUiSettingsStore();
@@ -39,17 +37,14 @@ export default defineComponent({
     const connected = ref(false);
     const lineEstablished = ref(false);
 
-
     //TODO: need to make app wait until fully init?
-    console.log(uiSettingsStore.isLoaded)
+    console.log(uiSettingsStore.isLoaded);
 
     setInterval(function () {
       const timeoutConnected = 2000;
       if (Date.now() - store.lastHeartbeat > timeoutConnected)
         connected.value = false;
     }, 200);
-
-
 
     return {
       connected,
@@ -60,111 +55,100 @@ export default defineComponent({
       uiSettingsStore,
       mediacollectionStore,
       ConnectionOverlay,
-      remoteProcedureCall
+      remoteProcedureCall,
     };
   },
   methods: {
-
-    async init () {
+    async init() {
       this.uiSettingsStore.initStore();
       this.mediacollectionStore.initStore();
 
-      await this.until(_ => this.uiSettingsStore.isLoaded == true);
-      await this.until(_ => this.mediacollectionStore.isLoaded == true);
+      await this.until((_) => this.uiSettingsStore.isLoaded == true);
+      await this.until((_) => this.mediacollectionStore.isLoaded == true);
 
       this.initSseClient();
-
 
       // for now on app start we send an abort to the backend.
       // could be improved to actually handle the state the machine is in and send ui to according state
       remoteProcedureCall("/processing/cmd/abort");
-
     },
 
-
-    until (conditionFunction) {
-
-      const poll = resolve => {
+    until(conditionFunction) {
+      const poll = (resolve) => {
         if (conditionFunction()) resolve();
-        else setTimeout(_ => poll(resolve), 400);
-      }
+        else setTimeout((_) => poll(resolve), 400);
+      };
 
       return new Promise(poll);
     },
 
-
-    initSseClient () {
+    initSseClient() {
       this.sseClient = this.$sse
         .create("/sse")
 
         .on(
-          "error", (err) =>
-          console.error("Failed to parse or lost connection:", err)
+          "error",
+          (err) => console.error("Failed to parse or lost connection:", err),
           // If this error is due to an unexpected disconnection, EventSource will
           // automatically attempt to reconnect indefinitely. You will _not_ need to
           // re-add your handlers.
           // Info there is general "message" "" and null events avail. Photobooth doesnt use the generic ones as not specific enough
           // "message" and "" and null equal!
         )
-        .on(
-          "FrontendNotification", (message, lastEventId) => {
-            // linked to SseEventFrontendNotification, event: FrontendNotification
-            // TODO: make this a notifier ...
-            console.warn(message, lastEventId);
-          }
-        )
-        .on(
-          "LogRecord", (logrecord) => {
-            this.store.logrecords = [
-              JSON.parse(logrecord),
-              ...this.store.logrecords.slice(0, 99),
-            ];
-          }
-        )
-        .on(
-          "ProcessStateinfo", (procinfo) => {
-            const _procinfo = JSON.parse(procinfo);
-            console.log(_procinfo);
-            //this.stateStore = _procinfo; // not works :)
-            this.stateStore.state = _procinfo["state"];
-            this.stateStore.duration = _procinfo["duration"];
-            //this.stateStore.processing = _procinfo["processing"];  // TODO: currently derived by state. it's ok for now.
+        .on("FrontendNotification", (message, lastEventId) => {
+          // linked to SseEventFrontendNotification, event: FrontendNotification
+          // TODO: make this a notifier ...
+          console.warn(message, lastEventId);
+        })
+        .on("LogRecord", (logrecord) => {
+          this.store.logrecords = [
+            JSON.parse(logrecord),
+            ...this.store.logrecords.slice(0, 99),
+          ];
+        })
+        .on("ProcessStateinfo", (procinfo) => {
+          const _procinfo = JSON.parse(procinfo);
+          console.log(_procinfo);
+          //this.stateStore = _procinfo; // not works :)
+          this.stateStore.state = _procinfo["state"];
+          this.stateStore.duration = _procinfo["duration"];
+          //this.stateStore.processing = _procinfo["processing"];  // TODO: currently derived by state. it's ok for now.
 
-
-            if (this.stateStore.state == "counting" && (this.$route.path != '/' && this.$route.path.indexOf('/admin') == -1)) {
-              // quick fix: receive "counting" state but not on indexpage, push router to index
-              console.log("counting state received, pushing to index page to countdown")
-              this.$router.push("/");
-            }
+          if (
+            this.stateStore.state == "counting" &&
+            this.$route.path != "/" &&
+            this.$route.path.indexOf("/admin") == -1
+          ) {
+            // quick fix: receive "counting" state but not on indexpage, push router to index
+            console.log(
+              "counting state received, pushing to index page to countdown",
+            );
+            this.$router.push("/");
           }
-        )
-        .on(
-          "DbInsert", (data) => {
-            const _data = JSON.parse(data);
-            console.log("received new item to add to collection:", _data);
-            this.mediacollectionStore.collection.unshift(_data['mediaitem']);
+        })
+        .on("DbInsert", (data) => {
+          const _data = JSON.parse(data);
+          console.log("received new item to add to collection:", _data);
+          this.mediacollectionStore.collection.unshift(_data["mediaitem"]);
 
-            // also to present? // or also to confirm/repeat?
-            if (this.$route.path.indexOf('/admin') >= 0)  // not display if on admin path
-              return
-            if (_data['present'] || _data['to_confirm_or_reject'])
-              this.$router.push({ path: `/itemviewer/${_data['mediaitem']['id']}`, query: { approval: _data['to_confirm_or_reject'] } });
-
-
-          }
-        )
-        .on(
-          "InformationRecord", (information) => {
-            Object.assign(this.store.information, JSON.parse(information));
-          }
-        )
-        .on(
-          "ping", () => {
-            //last SSE ping, used to detect connection health
-            this.store.lastHeartbeat = Date.now();
-            this.connected = true;
-          }
-        )
+          // also to present? // or also to confirm/repeat?
+          if (this.$route.path.indexOf("/admin") >= 0)
+            // not display if on admin path
+            return;
+          if (_data["present"] || _data["to_confirm_or_reject"])
+            this.$router.push({
+              path: `/itemviewer/${_data["mediaitem"]["id"]}`,
+              query: { approval: _data["to_confirm_or_reject"] },
+            });
+        })
+        .on("InformationRecord", (information) => {
+          Object.assign(this.store.information, JSON.parse(information));
+        })
+        .on("ping", () => {
+          //last SSE ping, used to detect connection health
+          this.store.lastHeartbeat = Date.now();
+          this.connected = true;
+        })
         .connect()
         .then((sse) => {
           console.log(sse);
@@ -174,19 +158,15 @@ export default defineComponent({
         .catch((err) => {
           // When this error is caught, it means the initial connection to the
           // events server failed.  No automatic attempts to reconnect will be made.
-          console.error("Failed make initial SSE connection!", err)
+          console.error("Failed make initial SSE connection!", err);
         });
-
-    }
+    },
   },
 
-
-  async created () {
-
-    console.log("app created, waiting for stores to init first dataset")
+  async created() {
+    console.log("app created, waiting for stores to init first dataset");
     this.init();
-    console.log("data initialization finished")
-
+    console.log("data initialization finished");
 
     // setInterval(() => {
     //   if (!this.lineEstablished) {
@@ -197,9 +177,6 @@ export default defineComponent({
     //     this.init();
     //   }
     // }, 1500);
-
-
-
   },
 });
 </script>

@@ -1,12 +1,17 @@
 <template>
   <q-page padding>
-    <q-tabs v-model="selected_group" class="text-grey" active-color="secondary" indicator-color="secondary" mobile-arrows
-      align="justify">
+    <q-tabs
+      v-model="selected_group"
+      class="text-grey"
+      active-color="secondary"
+      indicator-color="secondary"
+      mobile-arrows
+      align="justify"
+    >
       <q-tab v-for="tab in main_groups" :key="tab" :label="tab" :name="tab" />
     </q-tabs>
 
     <q-separator />
-
 
     <div class="q-mt-md row justify-center">
       <div class="col-12 col-md-8 q-mb-xl">
@@ -14,20 +19,33 @@
         <p>{{ group_description }}</p>
       </div>
 
-      <div class="col-12 col-md-8 q-mb-xl"><!--some empty space for sticky not to overlay last element-->
-        <BlitzForm v-model="serverConfig[selected_group]" :key="selected_group" :schema="schema_blitzar"
-          :internalLabels="false" label-position="left" v-if="renderBlitzForm" class="blitzar-form" />
+      <div class="col-12 col-md-8 q-mb-xl">
+        <!--some empty space for sticky not to overlay last element-->
+        <BlitzForm
+          v-model="serverConfig[selected_group]"
+          :key="selected_group"
+          :schema="schema_blitzar"
+          :internalLabels="false"
+          label-position="left"
+          v-if="renderBlitzForm"
+          class="blitzar-form"
+        />
       </div>
-
     </div>
     <q-page-sticky position="bottom-right" :offset="[25, 25]">
       <div class="q-gutter-sm">
-        <q-btn label="reset" @click="remoteProcedureCall('/admin/config/reset')" />
+        <q-btn
+          label="reset"
+          @click="remoteProcedureCall('/admin/config/reset')"
+        />
         <q-btn label="restore" @click="getConfig('current')" />
-        <q-btn color="primary" label="persist" @click="uploadConfigAndPersist()" />
+        <q-btn
+          color="primary"
+          label="persist"
+          @click="uploadConfigAndPersist()"
+        />
       </div>
     </q-page-sticky>
-
   </q-page>
 </template>
 
@@ -39,7 +57,7 @@
 .blitz-field .blitz-field__sub-label {
   font-weight: normal;
   opacity: initial;
-  color: $grey
+  color: $grey;
 }
 
 .blitz-field--label-left {
@@ -58,15 +76,14 @@ import { remoteProcedureCall } from "boot/axios";
 import { BlitzForm, BlitzListForm } from "blitzar";
 import "blitzar/dist/style.css";
 
-
 export default {
   // name: 'PageName',
   // eslint-disable-next-line
   components: { BlitzForm, BlitzListForm },
 
-  setup () {
+  setup() {
     const $q = useQuasar();
-    const serverConfig = ref({})
+    const serverConfig = ref({});
 
     let schema_dereferenced = {};
     const main_groups = ref([]);
@@ -75,12 +92,9 @@ export default {
 
     const uiSettingsStore = useUiSettingsStore();
 
-
     const group_title = computed(() => {
       if (selected_group.value != "") {
-        return schema_dereferenced[selected_group.value]["allOf"][0][
-          "title"
-        ];
+        return schema_dereferenced[selected_group.value]["allOf"][0]["title"];
       } else {
         return "-";
       }
@@ -103,17 +117,20 @@ export default {
     });
 
     const mapBlitzarScheme = (schema) => {
-      const escapeHTML = str => str.replace(/[&<>'"]/g,
-        tag => ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          "'": '&#39;',
-          '"': '&quot;'
-        }[tag]));
+      const escapeHTML = (str) =>
+        str.replace(
+          /[&<>'"]/g,
+          (tag) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              "'": "&#39;",
+              '"': "&quot;",
+            })[tag],
+        );
 
       const createFormEntry = (id, property) => {
-
         let form_entry = {
           id: id,
           label: property["title"],
@@ -147,11 +164,17 @@ export default {
           form_entry["options"] = property["allOf"][0]["enum"];
         }
 
-        form_entry["subLabel"] = `${property["description"] || ""} (default=${escapeHTML((("default" in property) ? property["default"] : "undefined").toString())})`;
+        form_entry["subLabel"] = `${
+          property["description"] || ""
+        } (default=${escapeHTML(
+          ("default" in property
+            ? property["default"]
+            : "undefined"
+          ).toString(),
+        )})`;
 
-
-        return form_entry
-      }
+        return form_entry;
+      };
 
       console.log("creating blitzar schema");
       console.log(schema);
@@ -163,17 +186,28 @@ export default {
         Object.entries(schema["allOf"][0]["properties"]).forEach((entry) => {
           const [id, property] = entry;
 
-          let form_entry = createFormEntry(id, property)
+          let form_entry = createFormEntry(id, property);
 
-          if (property["type"] == "array" && property["items"] && property["items"]["type"] == "object") {
+          if (
+            property["type"] == "array" &&
+            property["items"] &&
+            property["items"]["type"] == "object"
+          ) {
             // pydantic list[Group(BaseModel)] render to BlitzListForms:
             form_entry["component"] = "BlitzListForm";
-            form_entry["schema"] = []
-            Object.entries(property["items"]["properties"]).forEach((item_property) => {
-              const [id, property] = item_property;
-              form_entry["schema"].push(createFormEntry(id, property))
-            })
-          } else if (property["type"] == "array" && property["items"] && property["items"]["enum"] && property["items"]["type"] == "string") {
+            form_entry["schema"] = [];
+            Object.entries(property["items"]["properties"]).forEach(
+              (item_property) => {
+                const [id, property] = item_property;
+                form_entry["schema"].push(createFormEntry(id, property));
+              },
+            );
+          } else if (
+            property["type"] == "array" &&
+            property["items"] &&
+            property["items"]["enum"] &&
+            property["items"]["type"] == "string"
+          ) {
             // pydantic list[Enum(str, Enum)] render to multiselect currently:
             form_entry["component"] = "QSelect";
             form_entry["multiple"] = true;
@@ -201,7 +235,6 @@ export default {
           schema_dereferenced = response.data.properties;
           main_groups.value = Object.keys(schema_dereferenced);
           selected_group.value = main_groups.value[0];
-
         })
         .catch((response) => {
           console.log(response);
@@ -213,7 +246,6 @@ export default {
           });
         });
     };
-
 
     const getConfig = (which = "current") => {
       //hide form, later will be displayed again - this forces the form to rerender and reflect the latest values from store.
@@ -227,7 +259,6 @@ export default {
 
           serverConfig.value = response.data;
           renderBlitzForm.value = true;
-
         })
         .catch((response) => {
           console.log(response);
@@ -240,10 +271,8 @@ export default {
         });
     };
 
-
     getSchema();
     getConfig("currentActive");
-
 
     // actions
     const uploadConfigAndPersist = () => {
@@ -257,10 +286,10 @@ export default {
           uiSettingsStore.initStore(true);
 
           $q.notify({
-            message: "Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!",
+            message:
+              "Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!",
             color: "green",
           });
-
         })
         .catch((error) => {
           if (error.response) {
@@ -281,7 +310,6 @@ export default {
               color: "red",
             });
             return;
-
           } else if (error.request) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -289,16 +317,13 @@ export default {
             console.error(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            console.error('Error', error.message);
+            console.error("Error", error.message);
           }
           $q.notify({
             message: "error saving config, check browser console and logs",
             color: "red",
           });
         });
-
-
-
     };
 
     onBeforeMount(() => console.log("Composition API beforemounted"));
