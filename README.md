@@ -1,4 +1,4 @@
-# imageserver frontend (imageserver_frontend)
+# Quasar App (quasar-project)
 
 A Quasar Project
 
@@ -38,4 +38,4 @@ quasar build
 ```
 
 ### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
+See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
