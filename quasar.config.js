@@ -27,7 +27,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ["axios", "blitzar", "see"],
+    boot: ["axios", "blitzar"],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ["app.scss"],
@@ -68,7 +68,7 @@ module.exports = configure(function (/* ctx */) {
       // minify: false,
       // polyfillModulePreload: true,
       // distDir
-      distDir: "../photobooth-app/photobooth/web_spa/",
+      //distDir: "../photobooth-app/photobooth/web_spa/",
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
@@ -108,9 +108,9 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
       config: {
-        notify: {
-          /* look at QuasarConfOptions from the API card */
-        },
+        // notify: {
+        //   /* look at QuasarConfOptions from the API card */
+        // },
       },
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -125,7 +125,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Notify"],
+      // plugins: ["Notify"],
     },
 
     // animations: 'all', // --- includes all animations

@@ -20,6 +20,7 @@
     "qrcode": "^1.5.3",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
+    "vue-qrcode": "^2.2.0",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {
