@@ -83,7 +83,7 @@ module.exports = configure(function (ctx) {
       proxy: {
         // proxy all requests starting with /api to jsonplaceholder
         "/": {
-          target: "http://127.0.0.1:80",
+          target: "http://127.0.0.1:8000",
           changeOrigin: true,
 
           // fix proxy not forwarding the disconnect since node 16
