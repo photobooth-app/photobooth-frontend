@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf" class="bg-image">
+  <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-secondary text-white">
       <q-toolbar>
         <q-tabs mobile-arrows shrink>
@@ -29,7 +29,7 @@
         <q-toolbar-title> Admin Center </q-toolbar-title>
         <a href="https://photobooth-app.org/" target="_new"
           ><img
-            src="icons/logo-text-white-transparent.png"
+            src="icons/logo-notext-white-transparent.png"
             style="max-height: 40px"
         /></a>
       </q-toolbar>

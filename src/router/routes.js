@@ -5,14 +5,22 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       { path: "", component: () => import("pages/IndexPage.vue") },
-      { path: "gallery", component: () => import("pages/GalleryPage.vue") },
       {
-        path: "itemviewer/:id",
-        component: () => import("pages/ItemViewerPage.vue"),
+        path: "itempresenter",
+        component: () => import("pages/ItemPresenterPage.vue"),
+      },
+      {
+        path: "itemapproval",
+        component: () => import("pages/ItemApprovalPage.vue"),
       },
     ],
   },
-
+  {
+    // gallery route
+    path: "/gallery",
+    component: () => import("layouts/GalleryLayout.vue"),
+    children: [{ path: "", component: () => import("pages/GalleryPage.vue") }],
+  },
   {
     // extended layout for admins
     path: "/admin",

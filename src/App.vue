@@ -70,7 +70,7 @@ export default defineComponent({
 
       // for now on app start we send an abort to the backend.
       // could be improved to actually handle the state the machine is in and send ui to according state
-      remoteProcedureCall("/processing/cmd/abort");
+      // remoteProcedureCall("/processing/cmd/abort");
     },
 
     until(conditionFunction) {
@@ -103,44 +103,24 @@ export default defineComponent({
         .on("LogRecord", (logrecord) => {
           this.store.logrecords = [
             JSON.parse(logrecord),
-            ...this.store.logrecords.slice(0, 99),
+            ...this.store.logrecords.slice(0, 199),
           ];
         })
         .on("ProcessStateinfo", (procinfo) => {
           const _procinfo = JSON.parse(procinfo);
-          console.log(_procinfo);
-          //this.stateStore = _procinfo; // not works :)
-          this.stateStore.state = _procinfo["state"];
-          this.stateStore.duration = _procinfo["duration"];
-          //this.stateStore.processing = _procinfo["processing"];  // TODO: currently derived by state. it's ok for now.
-
-          if (
-            this.stateStore.state == "counting" &&
-            this.$route.path != "/" &&
-            this.$route.path.indexOf("/admin") == -1
-          ) {
-            // quick fix: receive "counting" state but not on indexpage, push router to index
-            console.log(
-              "counting state received, pushing to index page to countdown",
-            );
-            this.$router.push("/");
-          }
+          console.log("ProcessStateinfo", _procinfo);
+          Object.assign(this.stateStore, JSON.parse(procinfo));
         })
         .on("DbInsert", (data) => {
           const _data = JSON.parse(data);
           console.log("received new item to add to collection:", _data);
-          this.mediacollectionStore.collection.unshift(_data["mediaitem"]);
-
-          // also to present? // or also to confirm/repeat?
-          if (this.$route.path.indexOf("/admin") >= 0)
-            // not display if on admin path
-            return;
-          if (_data["present"] || _data["to_confirm_or_reject"])
-            this.$router.push({
-              path: `/itemviewer/${_data["mediaitem"]["id"]}`,
-              query: { approval: _data["to_confirm_or_reject"] },
-            });
+          // this.mediacollectionStore.collection.unshift(_data["mediaitem"]);
+          this.mediacollectionStore.addMediaitem(_data["mediaitem"]);
         })
+        .on("DbRemove", (data) => {
+          //TODO: has to be implemented to keep in sync
+        })
+
         .on("InformationRecord", (information) => {
           Object.assign(this.store.information, JSON.parse(information));
         })
@@ -167,16 +147,6 @@ export default defineComponent({
     console.log("app created, waiting for stores to init first dataset");
     this.init();
     console.log("data initialization finished");
-
-    // setInterval(() => {
-    //   if (!this.lineEstablished) {
-    //     console.log(
-    //       "initial connection has not been made yet! retrying. Once connection was successful, sseclient auto reestablishes connection on loss."
-    //     );
-
-    //     this.init();
-    //   }
-    // }, 1500);
   },
 });
 </script>

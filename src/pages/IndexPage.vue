@@ -115,7 +115,7 @@ export default defineComponent({
   computed: {
     showProcessing: {
       get() {
-        return this.stateStore.state == "job_postprocess";
+        return this.stateStore.state == "captures_completed";
       },
     },
 

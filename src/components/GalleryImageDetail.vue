@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hhh Lpr ffr" @click="abortTimer">
+  <q-layout view="hhh Lpr ffr" @click="abortTimer" v-if="!emptyRepository">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar class="toolbar">
         <q-btn
@@ -180,6 +180,7 @@
       </q-page-sticky>
     </q-page-container>
   </q-layout>
+  <q-layout view="hhh Lpr ffr" v-else>EMPTY</q-layout>
 </template>
 
 <style lang="sass" scoped>
@@ -204,6 +205,7 @@ export default {
     },
     itemRepository: {
       //repo to display / array or single item
+      type: Array,
       required: true,
     },
     startTimerOnOpen: {
@@ -218,6 +220,9 @@ export default {
     },
   },
   computed: {
+    emptyRepository() {
+      return !this.itemRepository || this.itemRepository.length == 0;
+    },
     // a computed getter
     slicedImages() {
       // `this` points to the component instance

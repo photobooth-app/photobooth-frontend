@@ -60,6 +60,11 @@ export const useMediacollectionStore = defineStore("mediacollection-store", {
     getIndexOfItemId(id) {
       return this.collection.findIndex((item) => item.id === id);
     },
+
+    // add new item on first position to store
+    addMediaitem(mediaitem) {
+      this.collection.unshift(mediaitem);
+    },
   },
   getters: {
     isLoaded() {

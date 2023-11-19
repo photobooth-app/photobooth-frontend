@@ -1,60 +1,64 @@
 <template>
-  <q-page class="q-pa-none fullscreen">
-    <gallery-image-detail
-      @close-event="userCloseViewer()"
-      :itemRepository="this.mediacollectionStore.collection"
-      :indexSelected="0"
-      :singleItemView="true"
-      :startTimerOnOpen="!approval"
-      class="full-height"
-    ></gallery-image-detail>
+  <q-page class="flex flex-center">
+    <q-card style="height: 95vh">
+      <q-card-section align="center">
+        <div class="text-h6">Nice?</div>
+        <div class="text-subtitle1">
+          Got
+          {{ this.stateStore.number_captures_taken }}
+          of
+          {{ this.stateStore.total_captures_to_take }} captures total
+        </div>
+      </q-card-section>
 
-    <q-page-sticky position="bottom" :offset="[0, 25]" v-if="approval">
-      <div class="q-gutter-sm">
-        <q-btn color="secondary" no-caps @click="userReject()" class="q-mr-xl">
+      <q-card-section class="">
+        <q-img class="rounded-borders" :src="imgToApproveSrc" />
+      </q-card-section>
+
+      <q-card-actions align="around">
+        <q-btn color="negative" no-caps @click="userReject()" class="">
           <q-icon left size="7em" name="thumb_down" />
           <div>Try again!</div>
         </q-btn>
 
-        <q-btn color="primary" no-caps @click="userConfirm()">
+        <q-btn flat color="grey" no-caps @click="userAbort()" class="">
+          <q-icon left size="7em" name="cancel" />
+          <div>Abort</div>
+        </q-btn>
+
+        <q-btn color="positive" no-caps @click="userConfirm()">
           <q-icon left size="7em" name="thumb_up" />
           <div>
-            Awesome, next!<br />{{
-              this.mainStore.statemachine.current_capture_no
-            }}
-            / {{ this.mainStore.statemachine.total_captures_no }}
+            Awesome, next!
+            <br />
           </div>
         </q-btn>
-      </div>
-    </q-page-sticky>
+      </q-card-actions>
+    </q-card>
   </q-page>
 </template>
 
 <script>
 import { useMainStore } from "../stores/main-store.js";
 import { useMediacollectionStore } from "../stores/mediacollection-store.js";
+import { useStateStore } from "../stores/state-store.js";
 import { useUiSettingsStore } from "../stores/ui-settings-store.js";
-import { ref } from "vue";
 import GalleryImageDetail from "../components/GalleryImageDetail";
 import { remoteProcedureCall } from "boot/axios";
 
 export default {
   // name: 'PageName',
-  components: { GalleryImageDetail },
-  //props: (route) => ({ approval: (route.query.approval === 'true') }),
+
   data() {
-    return {
-      intervalTimerId: null,
-      remainingSeconds: 0,
-      remainingSecondsNormalized: 0,
-      displayLinearProgressBar: true,
-      showImageDetail: true,
-    };
+    return {};
   },
   computed: {
-    approval: {
+    imgToApproveSrc: {
       get() {
-        return this.$route.query.approval === "true";
+        return (
+          this.stateStore.last_captured_mediaitem &&
+          this.stateStore.last_captured_mediaitem["preview"]
+        );
       },
     },
   },
@@ -62,11 +66,13 @@ export default {
     const mainStore = useMainStore();
     const mediacollectionStore = useMediacollectionStore();
     const uiSettingsStore = useUiSettingsStore();
+    const stateStore = useStateStore();
 
     return {
       // you can return the whole store instance to use it in the template
       mainStore,
       mediacollectionStore,
+      stateStore,
       uiSettingsStore,
       GalleryImageDetail,
       remoteProcedureCall,
@@ -86,11 +92,10 @@ export default {
       remoteProcedureCall("/processing/cmd/reject");
       this.$router.push("/");
     },
-    userCloseViewer() {
+    userAbort() {
       // closing the window that was meant to use for approval
       // need to inform the statemachine to reset
-      if (this.approval) remoteProcedureCall("/processing/cmd/abort");
-
+      remoteProcedureCall("/processing/cmd/abort");
       this.$router.push("/");
     },
   },
