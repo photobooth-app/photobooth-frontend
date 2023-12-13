@@ -1,5 +1,16 @@
 <template>
   <q-page class="q-pa-none column full-height">
+    <!-- lowest layer: preview stream -->
+
+    <div
+      v-if="showPreview"
+      id="preview-stream"
+      style="background-image: url(&quot;/aquisition/stream.mjpg&quot;)"
+      class="full-width column justify-center content-center"
+      :class="{ mirroreffect: livestreamMirror }"
+    ></div>
+
+    <!-- layer display processing spinner grid to show user computer working hard -->
     <div
       class="full-height full-width column justify-center content-center"
       style="position: absolute"
@@ -8,72 +19,72 @@
       <q-spinner-grid size="20em" />
     </div>
 
+    <!-- layer display the countdown timer -->
     <div
-      v-if="showPreview"
-      id="preview-stream"
-      style="background-image: url(&quot;/aquisition/stream.mjpg&quot;)"
-      class="full-width column justify-center content-center"
+      class="full-height full-width column justify-center content-center"
+      style="position: absolute"
+      v-if="showCountdownCounting"
     >
       <countdown-timer
-        v-if="showCountdownCounting"
         ref="countdowntimer"
         :duration="this.stateStore.duration"
         :messageDuration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME"
       ></countdown-timer>
-
-      <div
-        v-if="showFrontpage"
-        id="frontpage_text"
-        v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"
-      ></div>
-
-      <q-page-sticky position="bottom" :offset="[0, 25]">
-        <div v-if="showFrontpage">
-          <div class="q-gutter-sm">
-            <q-btn
-              v-if="uiSettingsStore.uiSettings.show_takepic_on_frontpage"
-              color="primary"
-              no-caps
-              @click="takePicture()"
-              class="action-button"
-            >
-              <q-icon left name="photo_camera" />
-              <div>Take<br />Picture!</div>
-            </q-btn>
-            <q-btn
-              v-if="uiSettingsStore.uiSettings.show_collage_on_frontpage"
-              color="primary"
-              no-caps
-              @click="takeCollage()"
-              class="action-button"
-            >
-              <q-icon left name="auto_awesome_mosaic" />
-              <div>Create<br />Collage!</div>
-            </q-btn>
-            <q-btn
-              v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage"
-              color="primary"
-              no-caps
-              to="/gallery"
-              class="action-button"
-            >
-              <q-icon left name="photo_library" />
-              <div>Gallery</div>
-            </q-btn>
-            <q-btn
-              v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage"
-              color="secondary"
-              no-caps
-              to="/admin"
-              class="action-button"
-            >
-              <q-icon left name="admin_panel_settings" />
-              <div>Admin</div>
-            </q-btn>
-          </div>
-        </div>
-      </q-page-sticky>
     </div>
+
+    <!-- layer display the front page text -->
+    <div
+      v-if="showFrontpage"
+      id="frontpage_text"
+      v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"
+    ></div>
+
+    <q-page-sticky position="bottom" :offset="[0, 25]">
+      <div v-if="showFrontpage">
+        <div class="q-gutter-sm">
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_takepic_on_frontpage"
+            color="primary"
+            no-caps
+            @click="takePicture()"
+            class="action-button"
+          >
+            <q-icon left name="photo_camera" />
+            <div>Take<br />Picture!</div>
+          </q-btn>
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_collage_on_frontpage"
+            color="primary"
+            no-caps
+            @click="takeCollage()"
+            class="action-button"
+          >
+            <q-icon left name="auto_awesome_mosaic" />
+            <div>Create<br />Collage!</div>
+          </q-btn>
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage"
+            color="primary"
+            no-caps
+            to="/gallery"
+            class="action-button"
+          >
+            <q-icon left name="photo_library" />
+            <div>Gallery</div>
+          </q-btn>
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage"
+            color="secondary"
+            no-caps
+            to="/admin"
+            class="action-button"
+          >
+            <q-icon left name="admin_panel_settings" />
+            <div>Admin</div>
+          </q-btn>
+        </div>
+      </div>
+    </q-page-sticky>
   </q-page>
 </template>
 
@@ -116,6 +127,11 @@ export default defineComponent({
     showProcessing: {
       get() {
         return this.stateStore.state == "captures_completed";
+      },
+    },
+    livestreamMirror: {
+      get() {
+        return this.uiSettingsStore.uiSettings.livestream_mirror_effect;
       },
     },
 

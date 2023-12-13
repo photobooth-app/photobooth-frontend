@@ -18,6 +18,7 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       show_gallery_on_frontpage: null,
       show_admin_on_frontpage: null,
 
+      livestream_mirror_effect: null,
       FRONTPAGE_TEXT: null,
       TAKEPIC_MSG_TIME: null,
       AUTOCLOSE_NEW_ITEM_ARRIVED: null,
