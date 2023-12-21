@@ -4,13 +4,6 @@ import { ref } from "vue";
 import { Notify } from "quasar";
 
 export const useMainStore = defineStore("main-store", () => {
-  //session data only (graph history, ...)
-  const stats = ref({
-    sharpness: [],
-    geolocation: {},
-    metadata: {},
-  });
-
   const logrecords = ref([]);
 
   const information = ref({
@@ -33,9 +26,9 @@ export const useMainStore = defineStore("main-store", () => {
       free: null,
       percent: null,
     },
-    imageserver_stats: {
-      primary: null,
-      secondary: null,
+    backends: {
+      primary: {},
+      secondary: {},
     },
     version: null,
     platform_system: null,
@@ -51,7 +44,6 @@ export const useMainStore = defineStore("main-store", () => {
   const lastHeartbeat = ref(null);
 
   return {
-    stats,
     information,
     lastHeartbeat,
     logrecords,

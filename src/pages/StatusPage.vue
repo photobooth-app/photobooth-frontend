@@ -72,13 +72,15 @@
         </q-card-section>
       </q-card>
 
-      <!-- # currently disabled since not working -->
-      <!-- <q-card style="" class="q-mr-md q-mb-md">
+      <q-card style="" class="q-mr-md q-mb-md">
         <q-card-section>
           <div class="text-h5">Primary Backend Stats</div>
           <div class="text-subtitle2">only avail stats displayed</div>
           <table>
-            <tr v-for="(value, key, index) in store.information['imageserver_stats']['primary']" v-bind:key="index">
+            <tr
+              v-for="(value, key, index) in store.information.backends.primary"
+              v-bind:key="index"
+            >
               <td align="right">
                 {{ key }}
               </td>
@@ -92,7 +94,11 @@
           <div class="text-h5">Secondary Backend Stats</div>
           <div class="text-subtitle2">only avail stats displayed</div>
           <table>
-            <tr v-for="(value, key, index) in store.information['imageserver_stats']['secondary']" v-bind:key="index">
+            <tr
+              v-for="(value, key, index) in store.information.backends
+                .secondary"
+              v-bind:key="index"
+            >
               <td align="right">
                 {{ key }}
               </td>
@@ -100,7 +106,7 @@
             </tr>
           </table>
         </q-card-section>
-      </q-card> -->
+      </q-card>
     </div>
 
     <q-card class="q-pa-md q-mt-md">
