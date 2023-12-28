@@ -16,7 +16,12 @@
             icon="photo_library"
             label="Gallery"
           />
-          <q-route-tab to="/admin/config" icon="settings" label="Config" />
+          <!-- name based so even if children are active, the config tab is highlighted -->
+          <q-route-tab
+            :to="{ name: 'config' }"
+            icon="settings"
+            label="Config"
+          />
           <q-route-tab to="/admin/files" icon="folder_shared" label="Files" />
           <q-route-tab to="/admin/status" icon="insights" label="Status" />
 
