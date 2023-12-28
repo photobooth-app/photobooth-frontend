@@ -14,6 +14,7 @@ import { useMediacollectionStore } from "stores/mediacollection-store.js";
 import { useRouter } from "vue-router";
 import ConnectionOverlay from "./components/ConnectionOverlay";
 import { remoteProcedureCall } from "boot/axios";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "App",
@@ -36,6 +37,7 @@ export default defineComponent({
     let sseClient = null;
     const connected = ref(false);
     const lineEstablished = ref(false);
+    const $q = useQuasar();
 
     //TODO: need to make app wait until fully init?
     console.log(uiSettingsStore.isLoaded);
@@ -95,10 +97,26 @@ export default defineComponent({
           // Info there is general "message" "" and null events avail. Photobooth doesnt use the generic ones as not specific enough
           // "message" and "" and null equal!
         )
-        .on("FrontendNotification", (message, lastEventId) => {
+        .on("FrontendNotification", (notification) => {
           // linked to SseEventFrontendNotification, event: FrontendNotification
-          // TODO: make this a notifier ...
-          console.warn(message, lastEventId);
+          const _notification = JSON.parse(notification);
+          console.warn(_notification);
+
+          this.$q.notify({
+            caption: _notification["caption"] || "Notification",
+            message: _notification["message"],
+            color: _notification["color"] || "info",
+            icon: _notification["icon"] || "info",
+            spinner: _notification["spinner"] || false,
+            actions: [
+              {
+                icon: "close",
+                color: "white",
+                round: true,
+                handler: () => {},
+              },
+            ],
+          });
         })
         .on("LogRecord", (logrecord) => {
           this.store.logrecords = [
