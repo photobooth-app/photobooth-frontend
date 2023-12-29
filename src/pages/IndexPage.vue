@@ -50,10 +50,10 @@
             class="action-button"
           >
             <q-icon left name="photo_camera" />
-            <div>Take<br />Picture!</div>
+            <div>Take a<br />Picture!</div>
           </q-btn>
           <q-btn
-            v-if="uiSettingsStore.uiSettings.show_collage_on_frontpage"
+            v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
             color="primary"
             no-caps
             @click="takeCollage()"
@@ -62,6 +62,23 @@
             <q-icon left name="auto_awesome_mosaic" />
             <div>Create<br />Collage!</div>
           </q-btn>
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
+            color="primary"
+            no-caps
+            @click="takeAnimation()"
+            class="action-button"
+          >
+            <q-icon left name="gif_box" />
+            <div>Create<br />Animation!</div>
+          </q-btn>
+        </div>
+      </div>
+    </q-page-sticky>
+
+    <q-page-sticky position="top-left" :offset="[25, 25]">
+      <div v-if="showFrontpage">
+        <div class="q-gutter-sm">
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage"
             color="primary"
@@ -120,6 +137,9 @@ export default defineComponent({
     },
     takeCollage() {
       remoteProcedureCall("/processing/chose/collage");
+    },
+    takeAnimation() {
+      remoteProcedureCall("/processing/chose/animation");
     },
   },
   watch: {},
