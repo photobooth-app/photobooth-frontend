@@ -42,6 +42,12 @@ const routes = [
         path: "config/:section?",
         component: () => import("pages/ConfigPage.vue"),
       },
+
+      {
+        name: "confignew",
+        path: "confignew/:section?",
+        component: () => import("pages/ConfigPageNew.vue"),
+      },
     ],
   },
 

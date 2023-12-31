@@ -22,6 +22,11 @@
             icon="settings"
             label="Config"
           />
+          <q-route-tab
+            :to="{ name: 'confignew' }"
+            icon="settings"
+            label="ConfigNew"
+          />
           <q-route-tab to="/admin/files" icon="folder_shared" label="Files" />
           <q-route-tab to="/admin/status" icon="insights" label="Status" />
 
