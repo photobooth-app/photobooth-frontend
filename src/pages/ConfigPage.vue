@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <q-header>
+    <q-header style="z-index: 0">
       <q-toolbar>
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>{{ group_title }}</q-toolbar-title>
