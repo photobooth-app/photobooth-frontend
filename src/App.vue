@@ -44,8 +44,7 @@ export default defineComponent({
 
     setInterval(function () {
       const timeoutConnected = 2000;
-      if (Date.now() - store.lastHeartbeat > timeoutConnected)
-        connected.value = false;
+      if (Date.now() - store.lastHeartbeat > timeoutConnected) connected.value = false;
     }, 200);
 
     return {
@@ -119,10 +118,7 @@ export default defineComponent({
           });
         })
         .on("LogRecord", (logrecord) => {
-          this.store.logrecords = [
-            JSON.parse(logrecord),
-            ...this.store.logrecords.slice(0, 199),
-          ];
+          this.store.logrecords = [JSON.parse(logrecord), ...this.store.logrecords.slice(0, 199)];
         })
         .on("ProcessStateinfo", (procinfo) => {
           const _procinfo = JSON.parse(procinfo);
@@ -135,8 +131,10 @@ export default defineComponent({
           // this.mediacollectionStore.collection.unshift(_data["mediaitem"]);
           this.mediacollectionStore.addMediaitem(_data["mediaitem"]);
         })
-        .on("DbRemove", (data) => {
-          //TODO: has to be implemented to keep in sync
+        .on("DbRemove", (mediaitem) => {
+          const _mediaitem = JSON.parse(mediaitem);
+          console.log("received request to remove item from collection:", _mediaitem);
+          this.mediacollectionStore.removeMediaitem(_mediaitem);
         })
 
         .on("InformationRecord", (information) => {

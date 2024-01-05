@@ -65,6 +65,13 @@ export const useMediacollectionStore = defineStore("mediacollection-store", {
     addMediaitem(mediaitem) {
       this.collection.unshift(mediaitem);
     },
+
+    // remove mediaitem from store
+    removeMediaitem(mediaitem) {
+      const removed_mediaitem = this.collection.splice(this.getIndexOfItemId(mediaitem.id), 1);
+      if (removed_mediaitem.length == 0) console.log("no item removed from collection, maybe it was deleted by UI earlier already");
+      else console.log(`${removed_mediaitem.length} mediaitem deleted`);
+    },
   },
   getters: {
     isLoaded() {
