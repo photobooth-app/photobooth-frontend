@@ -2,13 +2,7 @@
   <q-layout view="hhh Lpr ffr" @click="abortTimer" v-if="!emptyRepository">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar class="toolbar">
-        <q-btn
-          dense
-          flat
-          icon="close"
-          size="1.5rem"
-          @click="$emit('closeEvent')"
-        />
+        <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
 
         <q-space />
 
@@ -44,10 +38,7 @@
           @click="printItem(currentSlideId)"
         />
         <q-btn
-          v-if="
-            uiSettingsStore.uiSettings.gallery_show_filter &&
-            uiSettingsStore.uiSettings.gallery_filter_userselectable.length > 0
-          "
+          v-if="uiSettingsStore.uiSettings.gallery_show_filter && uiSettingsStore.uiSettings.gallery_filter_userselectable.length > 0"
           flat
           class="q-mr-sm"
           icon="filter"
@@ -59,10 +50,7 @@
 
         <div class="q-mr-sm" v-if="!singleItemView">
           <q-icon name="tag" />
-          <span
-            >{{ currentSlideIndex + 1 }} of
-            {{ itemRepository.length }} total</span
-          >
+          <span>{{ currentSlideIndex + 1 }} of {{ itemRepository.length }} total</span>
         </div>
         <q-space />
         <div class="q-mr-sm">
@@ -80,28 +68,15 @@
         v-if="displayLinearProgressBar && remainingSeconds > 0"
       />
       <!-- progress bar to show waiting to load filter, ... -->
-      <q-linear-progress
-        class="absolute"
-        indeterminate
-        animation-speed="2100"
-        color="primary"
-        v-if="displayLoadingSpinner"
-      />
+      <q-linear-progress class="absolute" indeterminate animation-speed="2100" color="primary" v-if="displayLoadingSpinner" />
     </q-header>
 
-    <q-drawer
-      v-if="uiSettingsStore.uiSettings.gallery_show_filter"
-      v-model="rightDrawerOpen"
-      side="right"
-      elevated
-      overlay
-    >
+    <q-drawer v-if="uiSettingsStore.uiSettings.gallery_show_filter" v-model="rightDrawerOpen" side="right" elevated overlay>
       <q-img
         v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`"
         :key="filter"
         @click="applyFilter(currentSlideId, filter)"
-        v-for="filter in uiSettingsStore.uiSettings
-          .gallery_filter_userselectable"
+        v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable"
       >
         <div class="absolute-bottom-left text-subtitle2">
           {{ filter }}
@@ -138,19 +113,12 @@
           transition-next="slide-left"
           @transition="
             (newVal, oldVal) => {
-              currentSlideIndex = itemRepository.findIndex(
-                (item) => item.id === newVal,
-              );
+              currentSlideIndex = itemRepository.findIndex((item) => item.id === newVal);
               abortTimer();
             }
           "
         >
-          <q-carousel-slide
-            v-for="slide in slicedImages"
-            :key="slide.id"
-            :name="slide.id"
-            class="column no-wrap flex-center full-height q-pa-sm"
-          >
+          <q-carousel-slide v-for="slide in slicedImages" :key="slide.id" :name="slide.id" class="column no-wrap flex-center full-height q-pa-sm">
             <img
               :draggable="false"
               class="rounded-borders full-height"
@@ -161,11 +129,7 @@
         </q-carousel>
       </div>
 
-      <q-page-sticky
-        v-if="uiSettingsStore.uiSettings.gallery_show_qrcode"
-        position="top-right"
-        :offset="[30, 30]"
-      >
+      <q-page-sticky v-if="uiSettingsStore.uiSettings.gallery_show_qrcode" position="top-right" :offset="[30, 30]">
         <div class="q-gutter-sm">
           <vue-qrcode
             type="image/png"
@@ -318,10 +282,7 @@ export default {
         .get("/mediacollection/delete", { params: { image_id: id } })
         .then((response) => {
           console.log(response);
-          //remove from local store also:
-          // TODO:
-          // eslint-disable-next-line vue/no-mutating-props
-          this.itemRepository.splice(this.currentSlideIndex, 1);
+          // no need to delete here - we get SSE notification once deleted
         })
         .catch((err) => console.log(err));
     },
@@ -378,8 +339,7 @@ export default {
       this.remainingSecondsNormalized = 0;
     },
     startTimer() {
-      var duration =
-        this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
+      var duration = this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
       console.log(`starting newitemarrived timer, duration=${duration}`);
       this.remainingSeconds = duration;
 
