@@ -43,6 +43,7 @@
           class="q-mr-sm"
           icon="filter"
           label="Filter"
+          :disabled="!getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
           @click="toggleRightDrawer"
         />
 
@@ -71,17 +72,28 @@
       <q-linear-progress class="absolute" indeterminate animation-speed="2100" color="primary" v-if="displayLoadingSpinner" />
     </q-header>
 
-    <q-drawer v-if="uiSettingsStore.uiSettings.gallery_show_filter" v-model="rightDrawerOpen" side="right" elevated overlay>
-      <q-img
-        v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`"
-        :key="filter"
-        @click="applyFilter(currentSlideId, filter)"
-        v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable"
-      >
-        <div class="absolute-bottom-left text-subtitle2">
-          {{ filter }}
-        </div>
-      </q-img>
+    <q-drawer
+      class="q-pa-sm"
+      v-if="uiSettingsStore.uiSettings.gallery_show_filter && getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
+      v-model="rightDrawerOpen"
+      side="right"
+      overlay
+    >
+      <q-card class="q-mb-sm" :key="filter" v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable">
+        <q-card-section class="q-pa-sm">
+          <q-img
+            class="rounded-borders"
+            loading="lazy"
+            @click="applyFilter(currentSlideId, filter)"
+            v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`"
+          >
+          </q-img>
+        </q-card-section>
+
+        <q-card-section class="q-pa-none q-pb-sm" align="center">
+          <div class="text-subtitle2">{{ filter }}</div>
+        </q-card-section>
+      </q-card>
     </q-drawer>
 
     <q-page-container class="q-pa-none galleryimagedetail full-height">
@@ -130,7 +142,7 @@
       </div>
 
       <q-page-sticky v-if="uiSettingsStore.uiSettings.gallery_show_qrcode" position="top-right" :offset="[30, 30]">
-        <div class="q-gutter-sm">
+        <div>
           <vue-qrcode
             type="image/png"
             tag="svg"
@@ -147,10 +159,16 @@
   <q-layout view="hhh Lpr ffr" v-else>EMPTY</q-layout>
 </template>
 
-<style lang="sass" scoped>
-.q-carousel__slide
-  background-size: contain
-  background-repeat: no-repeat
+<style lang="scss">
+.q-carousel,
+.q-drawer {
+  background: linear-gradient(120deg, rgba(245, 245, 245, 1) 0%, rgb(227, 229, 240) 50%, rgb(245, 245, 245) 100%);
+}
+
+.q-carousel__slide {
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 </style>
 
 <script>
@@ -235,6 +253,7 @@ export default {
       },
       handleSwipeDown({ evt }) {
         console.log("TODO: add method to close dialog programmatically");
+        // $emit("closeEvent");
       },
     };
   },
@@ -329,7 +348,9 @@ export default {
           //console.error(error.config);
         });
     },
-
+    getFilterAvailable(media_type) {
+      return ["image", "collageimage", "animationimage"].includes(media_type);
+    },
     getImageQrData() {
       return this.itemRepository[this.currentSlideIndex]["share_url"];
     },
