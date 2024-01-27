@@ -1,12 +1,7 @@
 // app global css in SCSS form
 body {
   background: $grey-2;
-  background: linear-gradient(
-    120deg,
-    rgba(245, 245, 245, 1) 0%,
-    rgb(227, 229, 240) 50%,
-    rgb(245, 245, 245) 100%
-  );
+  background: linear-gradient(120deg, rgba(245, 245, 245, 1) 0%, rgb(227, 229, 240) 50%, rgb(245, 245, 245) 100%);
 }
 
 #preview-stream {
@@ -36,7 +31,7 @@ body {
 }
 
 .action-button {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 
   * > .q-icon {
     font-size: 6.5rem;
