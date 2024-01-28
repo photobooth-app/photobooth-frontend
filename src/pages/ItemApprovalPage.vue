@@ -13,6 +13,7 @@
 
       <q-card-section class="">
         <q-img class="rounded-borders" :src="imgToApproveSrc" />
+        <!-- video approval not yet supported -->
       </q-card-section>
 
       <q-card-actions align="around">
@@ -55,10 +56,7 @@ export default {
   computed: {
     imgToApproveSrc: {
       get() {
-        return (
-          this.stateStore.last_captured_mediaitem &&
-          this.stateStore.last_captured_mediaitem["preview"]
-        );
+        return this.stateStore.last_captured_mediaitem && this.stateStore.last_captured_mediaitem["preview"];
       },
     },
   },

@@ -16,6 +16,7 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       show_takepic_on_frontpage: null,
       show_takecollage_on_frontpage: null,
       show_takeanimation_on_frontpage: null,
+      show_takevideo_on_frontpage: null,
       show_gallery_on_frontpage: null,
       show_admin_on_frontpage: null,
 

@@ -38,8 +38,8 @@
             @click="takePicture(/**/)"
             class="action-button col-auto"
           >
-            <q-icon name="photo_camera" />
-            <div style="white-space: nowrap" class="gt-sm">Take a Picture!</div>
+            <q-icon name="o_photo_camera" />
+            <div style="white-space: nowrap" class="gt-sm">Take a Picture</div>
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
@@ -49,8 +49,8 @@
             @click="takeCollage()"
             class="action-button col-auto"
           >
-            <q-icon name="auto_awesome_mosaic" />
-            <div style="white-space: nowrap" class="gt-sm">Create Collage!</div>
+            <q-icon name="o_auto_awesome_mosaic" />
+            <div style="white-space: nowrap" class="gt-sm">Create Collage</div>
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
@@ -60,8 +60,20 @@
             @click="takeAnimation()"
             class="action-button col-auto"
           >
-            <q-icon name="gif_box" />
-            <div style="white-space: nowrap" class="gt-sm">Create Animation!</div>
+            <q-icon name="o_gif_box" />
+            <div style="white-space: nowrap" class="gt-sm">Create Animation</div>
+          </q-btn>
+
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_takevideo_on_frontpage"
+            stack
+            color="primary"
+            no-caps
+            @click="takeVideo()"
+            class="action-button col-auto"
+          >
+            <q-icon name="o_movie" />
+            <div style="white-space: nowrap" class="gt-sm">Capture Video</div>
           </q-btn>
         </div>
       </div>
@@ -80,6 +92,13 @@
           </q-btn>
         </div>
       </div>
+    </q-page-sticky>
+
+    <!-- video state controls -->
+    <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center">
+      <q-spinner-puff color="red" size="7em" />
+      <br />
+      <q-btn flat color="red" label="Stop recording (not yet implemented)" />
     </q-page-sticky>
   </q-page>
 </template>
@@ -120,12 +139,20 @@ export default defineComponent({
     takeAnimation() {
       remoteProcedureCall("/processing/chose/animation");
     },
+    takeVideo() {
+      remoteProcedureCall("/processing/chose/video");
+    },
   },
   watch: {},
   computed: {
     showProcessing: {
       get() {
         return this.stateStore.state == "captures_completed";
+      },
+    },
+    showRecording: {
+      get() {
+        return this.stateStore.state == "record";
       },
     },
     livestreamMirror: {
@@ -145,9 +172,10 @@ export default defineComponent({
       get() {
         const enabled = true;
         const machineIdle = this.stateStore.state == "idle";
+        const machineRecord = this.stateStore.state == "record";
         const machineCounting = this.stateStore.state == "counting";
 
-        return enabled && (machineIdle || machineCounting);
+        return enabled && (machineIdle || machineCounting || machineRecord);
       },
     },
     showFrontpage: {

@@ -1,35 +1,32 @@
 <template>
   <q-page padding>
     <div v-if="!isGalleryEmpty" class="row justify-center q-gutter-sm">
-      <q-intersection
-        :key="item.id"
-        once
-        v-for="(item, index) in this.mediacollectionStore.collection"
-        class="preview-item"
-      >
+      <q-intersection :key="item.id" once v-for="(item, index) in this.mediacollectionStore.collection" class="preview-item">
         <q-card class="q-ma-sm" @click="openPic(index)">
-          <q-img
-            :src="getImageDetail(index)"
-            loading="eager"
-            no-transition
-            no-spinner
-            :ratio="1"
-          >
-            <div class="absolute-bottom text-subtitle2">
-              {{ this.mediacollectionStore.collection[index].caption }}
+          <div v-if="item.media_type != 'video'">
+            <q-img :src="getImageDetail(index)" loading="eager" no-transition no-spinner :ratio="1" class="rounded-borders"> </q-img>
+          </div>
+          <div v-else>
+            <!-- mimic the q-img for video-elements to make it look same as images but display mp4 gif-like-->
+            <div style="padding-bottom: 100%"></div>
+            <div class="absolute-full">
+              <video
+                style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%"
+                autoplay
+                loop
+                muted
+                playsinline
+                :src="getImageDetail(index)"
+                class="rounded-borders"
+              ></video>
             </div>
-          </q-img>
+          </div>
         </q-card>
       </q-intersection>
     </div>
     <div v-else v-html="uiSettingsStore.uiSettings.GALLERY_EMPTY_MSG"></div>
 
-    <q-dialog
-      transition-show="jump-up"
-      transition-hide="jump-down"
-      v-model="showImageDetail"
-      maximized
-    >
+    <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
       <gallery-image-detail
         @close-event="showImageDetail = false"
         :itemRepository="this.mediacollectionStore.collection"

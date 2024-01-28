@@ -99,12 +99,25 @@
     <q-page-container class="q-pa-none galleryimagedetail full-height">
       <div v-if="singleItemView" class="full-height">
         <q-card class="column no-wrap flex-center full-height q-pa-sm">
-          <img
-            :draggable="false"
-            class="rounded-borders full-height"
-            style="object-fit: contain; max-width: 100%; max-height: 100%"
-            :src="this.itemRepository[0].preview"
-          />
+          <div v-if="this.itemRepository[0].media_type != 'video'" class="full-height">
+            <img
+              :draggable="false"
+              class="rounded-borders full-height"
+              style="object-fit: contain; max-width: 100%; max-height: 100%"
+              :src="this.itemRepository[0].preview"
+            />
+          </div>
+          <div v-else class="full-height">
+            <video
+              :draggable="false"
+              :src="this.itemRepository[0].preview"
+              class="rounded-borders full-height"
+              muted
+              autoplay
+              style="object-fit: contain; max-width: 100%; max-height: 100%"
+              controls="controls"
+            ></video>
+          </div>
         </q-card>
       </div>
 
@@ -131,12 +144,23 @@
           "
         >
           <q-carousel-slide v-for="slide in slicedImages" :key="slide.id" :name="slide.id" class="column no-wrap flex-center full-height q-pa-sm">
-            <img
-              :draggable="false"
-              class="rounded-borders full-height"
-              style="object-fit: contain; max-width: 100%; max-height: 100%"
-              :src="slide.preview"
-            />
+            <div v-if="slide.media_type != 'video'" class="full-height">
+              <img
+                :draggable="false"
+                class="rounded-borders full-height"
+                style="object-fit: contain; max-width: 100%; max-height: 100%"
+                :src="slide.preview"
+              />
+            </div>
+            <div v-else class="full-height">
+              <video
+                :draggable="false"
+                :src="slide.preview"
+                class="rounded-borders full-height"
+                style="object-fit: contain; max-width: 100%; max-height: 100%"
+                controls="controls"
+              ></video>
+            </div>
           </q-carousel-slide>
         </q-carousel>
       </div>
