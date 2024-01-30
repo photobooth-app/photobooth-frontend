@@ -21,6 +21,7 @@
         ref="countdowntimer"
         :duration="this.stateStore.duration"
         :messageDuration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME"
+        :icon="uiSettingsStore.uiSettings['TAKEPIC_MSG_TEXT']"
       ></countdown-timer>
     </div>
 
@@ -73,7 +74,7 @@
             class="action-button col-auto"
           >
             <q-icon name="o_movie" />
-            <div style="white-space: nowrap" class="gt-sm">Capture Video</div>
+            <div style="white-space: nowrap" class="gt-sm" v-html="uiSettingsStore.uiSettings['TAKEVIDEO_BUTTON_TEXT']"></div>
           </q-btn>
         </div>
       </div>
@@ -84,7 +85,7 @@
         <div class="q-gutter-sm">
           <q-btn v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage" color="primary" no-caps to="/gallery" class="action-button">
             <q-icon left name="photo_library" />
-            <div class="gt-sm">Gallerie</div>
+            <div class="gt-sm" v-html="uiSettingsStore.uiSettings['GALLERY_BUTTON_TEXT']"></div>
           </q-btn>
           <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" color="secondary" no-caps to="/admin" class="action-button">
             <q-icon left name="admin_panel_settings" />

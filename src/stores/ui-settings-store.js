@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
-
-import { setCssVar } from "quasar"; // doesn't work for some reason
+import { setCssVar } from "quasar";
 
 //https://stackoverflow.com/a/75060220
 
@@ -35,7 +34,6 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       gallery_show_download: null,
       gallery_show_delete: null,
       gallery_show_print: null,
-      theme_primary_color: null,
     },
 
     storeState: STATES.INIT,

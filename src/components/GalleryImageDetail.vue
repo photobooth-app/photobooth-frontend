@@ -11,7 +11,7 @@
           flat
           class="q-mr-sm"
           icon="delete"
-          label="Löschen"
+          :label="deleteButtonLabel"
           @click="
             deleteItem(currentSlideId);
             $emit('closeEvent');
@@ -22,7 +22,7 @@
           flat
           class="q-mr-sm"
           icon="download"
-          label="Download"
+          :label="downloadButtonLabel"
           @click="
             (evt) => {
               openURL(itemRepository[currentSlideIndex]['full']);
@@ -34,7 +34,7 @@
           flat
           class="q-mr-sm"
           icon="print"
-          label="Drucken"
+          :label="printButtonLabel"
           @click="printItem(currentSlideId)"
         />
         <q-btn
@@ -42,7 +42,7 @@
           flat
           class="q-mr-sm"
           icon="filter"
-          label="Filter"
+          :label="filterButtonLabel"
           :disabled="!getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
           @click="toggleRightDrawer"
         />
@@ -51,7 +51,7 @@
 
         <div class="q-mr-sm" v-if="!singleItemView">
           <q-icon name="tag" />
-          <span>{{ currentSlideIndex + 1 }} von {{ itemRepository.length }} </span>
+          <span>{{ currentSlideIndex + 1 }} / {{ itemRepository.length }} </span>
         </div>
         <q-space />
         <div class="q-mr-sm">
@@ -224,6 +224,23 @@ export default {
     singleItemView: {
       type: Boolean,
       default: false,
+    },
+    // button labels
+    downloadButtonLabel: {
+      type: String,
+      default: "Download",
+    },
+    printButtonLabel: {
+      type: String,
+      default: "Print",
+    },
+    deleteButtonLabel: {
+      type: String,
+      default: "Delete",
+    },
+    filterButtonLabel: {
+      type: String,
+      default: "Filter",
     },
   },
   computed: {

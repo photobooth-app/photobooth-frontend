@@ -31,6 +31,10 @@
         @close-event="showImageDetail = false"
         :itemRepository="this.mediacollectionStore.collection"
         :indexSelected="indexSelected"
+        :deleteButtonLabel="uiSettingsStore.uiSettings.DELETE_BUTTON_TEXT"
+        :downloadButtonLabel="uiSettingsStore.uiSettings.DOWNLOAD_BUTTON_TEXT"
+        :filterButtonLabel="uiSettingsStore.uiSettings.FILTER_BUTTON_TEXT"
+        :printButtonLabel="uiSettingsStore.uiSettings.PRINT_BUTTON_TEXT"
         class="full-height"
       ></gallery-image-detail>
     </q-dialog>

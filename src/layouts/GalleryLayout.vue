@@ -7,7 +7,7 @@
         <div class="q-gutter-sm">
           <q-btn color="primary" no-caps to="/" class="action-button">
             <q-icon left name="arrow_back_ios_new" />
-            <div>Start</div>
+            <div v-html="uiSettingsStore.uiSettings['BACK_BUTTON_TEXT']"></div>
           </q-btn>
         </div>
       </q-page-sticky>
@@ -17,12 +17,19 @@
 
 <script>
 import { defineComponent } from "vue";
+import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 
 export default defineComponent({
   name: "GalleryLayout",
 
   components: {},
   computed: {},
-  setup() {},
+  setup() {
+    const uiSettingsStore = useUiSettingsStore();
+
+    return {
+      uiSettingsStore,
+    };
+  },
 });
 </script>
