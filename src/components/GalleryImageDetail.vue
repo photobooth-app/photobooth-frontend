@@ -11,7 +11,7 @@
           flat
           class="q-mr-sm"
           icon="delete"
-          label="Delete"
+          label="Löschen"
           @click="
             deleteItem(currentSlideId);
             $emit('closeEvent');
@@ -34,7 +34,7 @@
           flat
           class="q-mr-sm"
           icon="print"
-          label="Print"
+          label="Drucken"
           @click="printItem(currentSlideId)"
         />
         <q-btn
@@ -51,7 +51,7 @@
 
         <div class="q-mr-sm" v-if="!singleItemView">
           <q-icon name="tag" />
-          <span>{{ currentSlideIndex + 1 }} of {{ itemRepository.length }} total</span>
+          <span>{{ currentSlideIndex + 1 }} von {{ itemRepository.length }} </span>
         </div>
         <q-space />
         <div class="q-mr-sm">
@@ -134,6 +134,7 @@
           :autoplay="autoplay"
           draggable="false"
           arrows
+          infinite
           transition-prev="slide-right"
           transition-next="slide-left"
           @transition="

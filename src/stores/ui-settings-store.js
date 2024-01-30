@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
 
+// import { setCssVar } from "quasar"; // doesn't work for some reason
+
 //https://stackoverflow.com/a/75060220
 
 const STATES = {
@@ -22,6 +24,7 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
 
       livestream_mirror_effect: null,
       FRONTPAGE_TEXT: null,
+      TAKEPIC_TEXT: null,
       TAKEPIC_MSG_TIME: null,
       AUTOCLOSE_NEW_ITEM_ARRIVED: null,
 
@@ -32,6 +35,7 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       gallery_show_download: null,
       gallery_show_delete: null,
       gallery_show_print: null,
+      theme_primary_color: null,
     },
 
     storeState: STATES.INIT,
@@ -51,6 +55,13 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
         .then((res) => {
           console.log("loadUiSettings finished successfully");
           console.log(res.data);
+
+          // apply theme settings
+          document.body.style.setProperty("--q-primary", res.data["theme_primary_color"]);
+
+          // TODO:
+          // - button style (rounding and alike, maybe pure css here?)
+
           this.uiSettings = res.data;
           this.storeState = STATES.DONE;
         })

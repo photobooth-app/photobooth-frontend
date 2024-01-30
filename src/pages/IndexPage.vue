@@ -39,7 +39,7 @@
             class="action-button col-auto"
           >
             <q-icon name="o_photo_camera" />
-            <div style="white-space: nowrap" class="gt-sm">Take a Picture</div>
+            <div style="white-space: nowrap" class="gt-sm" v-html="uiSettingsStore.uiSettings['TAKEPIC_BUTTON_TEXT']"></div>
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
@@ -50,7 +50,7 @@
             class="action-button col-auto"
           >
             <q-icon name="o_auto_awesome_mosaic" />
-            <div style="white-space: nowrap" class="gt-sm">Create Collage</div>
+            <div style="white-space: nowrap" class="gt-sm" v-html="uiSettingsStore.uiSettings['TAKECOLLAGE_BUTTON_TEXT']"></div>
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
@@ -61,7 +61,7 @@
             class="action-button col-auto"
           >
             <q-icon name="o_gif_box" />
-            <div style="white-space: nowrap" class="gt-sm">Create Animation</div>
+            <div style="white-space: nowrap" class="gt-sm" v-html="uiSettingsStore.uiSettings['TAKEANIMATION_BUTTON_TEXT']"></div>
           </q-btn>
 
           <q-btn
@@ -84,7 +84,7 @@
         <div class="q-gutter-sm">
           <q-btn v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage" color="primary" no-caps to="/gallery" class="action-button">
             <q-icon left name="photo_library" />
-            <div class="gt-sm">Gallery</div>
+            <div class="gt-sm">Gallerie</div>
           </q-btn>
           <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" color="secondary" no-caps to="/admin" class="action-button">
             <q-icon left name="admin_panel_settings" />
