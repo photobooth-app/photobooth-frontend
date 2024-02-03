@@ -5,9 +5,9 @@
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>{{ group_title }}</q-toolbar-title>
         <div class="q-gutter-sm">
-          <q-btn label="reset" @click="remoteProcedureCall('/admin/config/reset')" />
-          <q-btn label="restore" @click="getConfig('current')" />
-          <q-btn color="primary" label="Save" @click="uploadConfigAndPersist()" />
+          <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="remoteProcedureCall('/admin/config/reset')" />
+          <q-btn :label="$t('BTN_LABEL_RESTORE_CONFIG')" @click="getConfig('current')" />
+          <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="uploadConfigAndPersist()" />
         </div>
       </q-toolbar>
     </q-header>

@@ -11,7 +11,7 @@
           flat
           class="q-mr-sm"
           icon="delete"
-          :label="deleteButtonLabel"
+          :label="$t('BTN_LABEL_GALLERY_DELETE')"
           @click="
             deleteItem(currentSlideId);
             $emit('closeEvent');
@@ -22,7 +22,7 @@
           flat
           class="q-mr-sm"
           icon="download"
-          :label="downloadButtonLabel"
+          :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
           @click="
             (evt) => {
               openURL(itemRepository[currentSlideIndex]['full']);
@@ -34,7 +34,7 @@
           flat
           class="q-mr-sm"
           icon="print"
-          :label="printButtonLabel"
+          :label="$t('BTN_LABEL_GALLERY_PRINT')"
           @click="printItem(currentSlideId)"
         />
         <q-btn
@@ -42,7 +42,7 @@
           flat
           class="q-mr-sm"
           icon="filter"
-          :label="filterButtonLabel"
+          :label="$t('BTN_LABEL_GALLERY_FILTER')"
           :disabled="!getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
           @click="toggleRightDrawer"
         />
@@ -224,23 +224,6 @@ export default {
     singleItemView: {
       type: Boolean,
       default: false,
-    },
-    // button labels
-    downloadButtonLabel: {
-      type: String,
-      default: "Download",
-    },
-    printButtonLabel: {
-      type: String,
-      default: "Print",
-    },
-    deleteButtonLabel: {
-      type: String,
-      default: "Delete",
-    },
-    filterButtonLabel: {
-      type: String,
-      default: "Filter",
     },
   },
   computed: {

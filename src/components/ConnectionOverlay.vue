@@ -2,9 +2,7 @@
   <q-card class="q-pa-sm">
     <q-card-section class="row items-center">
       <q-spinner color="negative" size="2em" />
-      <span class="q-ml-sm">
-        Connecting to server. Please wait for autoconnect or try reload.
-      </span>
+      <span class="q-ml-sm"> Connecting to server. Please wait for autoconnect or try reload. </span>
     </q-card-section>
 
     <q-card-actions align="right">

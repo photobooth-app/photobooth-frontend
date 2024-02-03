@@ -7,7 +7,7 @@
         <div class="q-gutter-sm">
           <q-btn color="primary" no-caps to="/" class="action-button">
             <q-icon left name="arrow_back_ios_new" />
-            <div v-html="uiSettingsStore.uiSettings['BACK_BUTTON_TEXT']"></div>
+            <div v-html="$t('BTN_LABEL_BACK')"></div>
           </q-btn>
         </div>
       </q-page-sticky>

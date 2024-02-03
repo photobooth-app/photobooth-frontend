@@ -2,16 +2,8 @@
   <q-page padding>
     <div class="q-pa-md">
       <q-breadcrumbs gutter="sm" style="cursor: pointer">
-        <q-breadcrumbs-el
-          label="Working Directory"
-          icon="home"
-          @click="onBreadcrumbClick(-1)"
-        />
-        <q-breadcrumbs-el
-          v-for="(value, key) in breadcrumbs"
-          v-bind:key="key"
-          @click="onBreadcrumbClick(key)"
-        >
+        <q-breadcrumbs-el :label="$t('TITLE_FILES_WORKING_DIR')" icon="home" @click="onBreadcrumbClick(-1)" />
+        <q-breadcrumbs-el v-for="(value, key) in breadcrumbs" v-bind:key="key" @click="onBreadcrumbClick(key)">
           {{ value }}
         </q-breadcrumbs-el>
       </q-breadcrumbs>
@@ -19,7 +11,7 @@
       <q-dialog v-model="dialog_create_new_folder">
         <q-card style="min-width: 350px">
           <q-card-section>
-            <div class="text-h6">New folder name</div>
+            <div class="text-h6" v-html="$t('TITLE_FILES_NEW_FOLDER_DIALOG')"></div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -35,13 +27,8 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" v-close-popup />
-            <q-btn
-              flat
-              label="Create folder"
-              v-close-popup
-              @click="createNewFolder(new_folder_name)"
-            />
+            <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+            <q-btn flat :label="$t('BTN_LABEL_FILES_CREATE_NEW_FOLDER')" v-close-popup @click="createNewFolder(new_folder_name)" />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -49,16 +36,14 @@
       <q-dialog v-model="dialog_upload_files">
         <q-card style="min-width: 350px">
           <q-card-section>
-            <div class="text-h6">Upload files to current folder</div>
+            <div class="text-h6" v-html="$t('TITLE_FILES_UPLOAD_FILES_DIALOG')"></div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
             <q-uploader
               label="Upload Files"
               url="/admin/files/file/upload"
-              :form-fields="[
-                { name: 'upload_target_folder', value: folder_current },
-              ]"
+              :form-fields="[{ name: 'upload_target_folder', value: folder_current }]"
               field-name="uploaded_files"
               batch
               multiple
@@ -106,41 +91,21 @@
 
         <template v-slot:top-left>
           <div>
-            <q-btn
-              :disable="folder_loading"
-              @click="dialog_create_new_folder = true"
-              label="New Folder"
-            />
-            <q-btn
-              class="q-ml-sm"
-              :disable="folder_loading"
-              @click="dialog_upload_files = true"
-              label="Upload file"
-            />
-            <q-btn
-              class="q-ml-sm"
-              :disable="selected.length == 0"
-              @click="getZip(selected)"
-              label="download zip"
-            />
+            <q-btn :disable="folder_loading" @click="dialog_create_new_folder = true" :label="$t('BTN_LABEL_FILES_NEW_FOLDER')" />
+            <q-btn class="q-ml-sm" :disable="folder_loading" @click="dialog_upload_files = true" :label="$t('BTN_LABEL_FILES_UPLOAD_FILE')" />
+            <q-btn class="q-ml-sm" :disable="selected.length == 0" @click="getZip(selected)" :label="$t('BTN_LABEL_FILES_DOWNLOAD_ZIP')" />
             <q-btn
               class="q-ml-sm"
               color="negative"
               :disable="selected.length == 0"
               @click="deleteItems(selected)"
-              label="delete selected"
+              :label="$t('BTN_LABEL_FILES_DELETE_SELECTED')"
             />
           </div>
         </template>
 
         <template v-slot:top-right>
-          <q-input
-            borderless
-            dense
-            debounce="300"
-            v-model="filter"
-            placeholder="Search"
-          >
+          <q-input borderless dense debounce="300" v-model="filter" :placeholder="$t('TEXT_PLACEHOLDER_SEARCH')">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -243,9 +208,7 @@ export default {
 
     const onBreadcrumbClick = (navigate_to_level = -1) => {
       // level=-1->root folder, >=0 subfolders
-      folder_current.value = breadcrumbs.value
-        .slice(0, navigate_to_level + 1)
-        .join("/");
+      folder_current.value = breadcrumbs.value.slice(0, navigate_to_level + 1).join("/");
     };
 
     async function getFolderContent(folder = "") {
