@@ -274,6 +274,8 @@ export default {
           uiSettingsStore.initStore(true);
 
           $q.notify({
+            // TODO: How to access the translated strings here??
+            // message: $t("MSG_CONFIG_PERSIST_OK"),
             message: "Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!",
             color: "green",
           });

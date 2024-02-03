@@ -12,11 +12,31 @@
           class="q-mr-sm"
           icon="delete"
           :label="$t('BTN_LABEL_GALLERY_DELETE')"
-          @click="
-            deleteItem(currentSlideId);
-            $emit('closeEvent');
-          "
+          @click="confirmDeleteFile = true"
         />
+
+        <q-dialog v-model="confirmDeleteFile">
+          <q-card class="q-pa-sm">
+            <q-card-section class="row items-center">
+              <q-avatar icon="delete" color="primary" text-color="white" />
+              <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_DELETE_IMAGE')"></span>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+              <q-btn
+                :label="$t('BTN_LABEL_DELETE_IMAGE')"
+                color="primary"
+                v-close-popup
+                @click="
+                  deleteItem(currentSlideId);
+                  $emit('closeEvent');
+                "
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+
         <q-btn
           v-if="uiSettingsStore.uiSettings.gallery_show_download"
           flat
@@ -272,6 +292,7 @@ export default {
       autoplay: ref(false),
       showFilterDialog: ref(false),
       displayLoadingSpinner: ref(false),
+      confirmDeleteFile: ref(false),
       rightDrawerOpen,
       toggleRightDrawer() {
         rightDrawerOpen.value = !rightDrawerOpen.value;

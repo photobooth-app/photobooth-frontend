@@ -2,6 +2,7 @@ export default {
   /* Button labels */
   BTN_LABEL_BACK: "Zurück",
   BTN_LABEL_CANCEL: "Abbrechen",
+  BTN_LABEL_DELETE_IMAGE: "Löschen",
   BTN_LABEL_DELETE_ALL_MEDIA_FILES: "Alle Medien-Dateien löschen",
   BTN_LABEL_FILES_CREATE_NEW_FOLDER: "Ordner erstellen",
   BTN_LABEL_FILES_DELETE_SELECTED: "Ausgewählte löschen",
@@ -40,12 +41,13 @@ export default {
   MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE: "Abbrechen",
   MSG_APPROVE_COLLAGE_ITEM_RETRY: "Nochmal versuchen!",
   MSG_CONFIRM_DELETE_ALL_MEDIA_FILES: "Wirklich alle Medien-Dateien aus der Gallerie löschen?",
+  MSG_CONFIRM_DELETE_IMAGE: "Bild wirklich löschen?",
   MSG_CONFIRM_INSTALL_SERVICE: "Service wirklich installieren?",
   MSG_CONFIRM_SHUTDOWN: "System wirklich herunterfahren?",
   MSG_CONFIRM_REBOOT: "System wirklich neu starten?",
   MSG_CONFIRM_RESTART_SERVICE: "Service wirklich neu starten?",
   MSG_CONFIRM_UNINSTALL_SERVICE: "Service wirklich deinstallieren?",
-  MSG_CONNECTING_TO_BACKEND: "Verbindung zum Server wird hergestellt...",
+  MSG_CONNECTING_TO_BACKEND: "Verbindung zum Server wird hergestellt. Bitte auf automatische Verbindung warten oder neu laden.",
   MSG_ERROR_NOT_FOUND: "Huch, hier gibt es nichts zu sehen...",
 
   /* Admin panel tab labels */

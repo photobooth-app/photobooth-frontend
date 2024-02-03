@@ -2,6 +2,7 @@ export default {
   /* Button labels */
   BTN_LABEL_BACK: "Back",
   BTN_LABEL_CANCEL: "Cancel",
+  BTN_LABEL_DELETE_IMAGE: "Delete",
   BTN_LABEL_DELETE_ALL_MEDIA_FILES: "Delete all media files",
   BTN_LABEL_FILES_CREATE_NEW_FOLDER: "Create folder",
   BTN_LABEL_FILES_DELETE_SELECTED: "Delete selected",
@@ -39,13 +40,15 @@ export default {
   MSG_APPROVE_COLLAGE_ITEM_APPROVE: "Awesome, next!",
   MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE: "Abort",
   MSG_APPROVE_COLLAGE_ITEM_RETRY: "Try again!",
+  MSG_CONFIG_PERSIST_OK: "Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!",
   MSG_CONFIRM_DELETE_ALL_MEDIA_FILES: "Are you sure to delete all media items from gallery?",
+  MSG_CONFIRM_DELETE_IMAGE: "Are you sure to delete the image?",
   MSG_CONFIRM_INSTALL_SERVICE: "You sure to install the service?",
   MSG_CONFIRM_SHUTDOWN: "You sure to shutdown the system?",
   MSG_CONFIRM_REBOOT: "You sure to reboot the system?",
   MSG_CONFIRM_RESTART_SERVICE: "You sure to restart the service?",
   MSG_CONFIRM_UNINSTALL_SERVICE: "You sure to uninstall the service?",
-  MSG_CONNECTING_TO_BACKEND: "...",
+  MSG_CONNECTING_TO_BACKEND: "Connecting to server. Please wait for autoconnect or try reload.",
   MSG_ERROR_NOT_FOUND: "Oops. Nothing here...",
 
   /* Admin panel tab labels */

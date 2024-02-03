@@ -1,5 +1,6 @@
 <template>
   <!-- ...... -->
+  <q-icon style="font-size: 24px" name="language"> </q-icon>
   <q-select
     v-model="locale"
     :options="localeOptions"
