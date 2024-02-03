@@ -11,6 +11,7 @@
     map-options
     options-dense
     style="min-width: 80px"
+    @update:model-value="(locale) => storeLocale(locale)"
   />
   <!-- ...... -->
 </template>
@@ -29,6 +30,12 @@ export default {
         { value: "de-DE", label: "German" },
       ],
     };
+  },
+  methods: {
+    storeLocale(locale) {
+      localStorage.setItem("locale", locale);
+      console.log("Stored locale: ", locale);
+    },
   },
 };
 </script>
