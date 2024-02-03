@@ -1,7 +1,5 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
+  /* Button labels */
   BTN_LABEL_BACK: "Back",
   BTN_LABEL_CANCEL: "Cancel",
   BTN_LABEL_DELETE_ALL_MEDIA_FILES: "Delete all media files",
@@ -10,7 +8,7 @@ export default {
   BTN_LABEL_FILES_DOWNLOAD_ZIP: "Download ZIP",
   BTN_LABEL_FILES_NEW_FOLDER: "New folder",
   BTN_LABEL_FILES_UPLOAD_FILE: "Upload file",
-  BTN_LABEL_GALLERY_DELETE: "Admin",
+  BTN_LABEL_GALLERY_DELETE: "Delete",
   BTN_LABEL_GALLERY_DOWNLOAD: "Download",
   BTN_LABEL_GALLERY_FILTER: "Filter",
   BTN_LABEL_GALLERY_PRINT: "Print",
@@ -33,6 +31,7 @@ export default {
   BTN_LABEL_SHUTDOWN_HOST: "Shutdown host",
   BTN_LABEL_UNINSTALL_SERVICE: "Uninstall service",
 
+  /* User feedback messages */
   MSG_APP_READY: "...",
   MSG_APPROVE_COLLAGE_ITEM_XXX_COUNT_TOTAL: "Got",
   MSG_APPROVE_COLLAGE_ITEM_COUNT_XXX_TOTAL: "of",
@@ -49,6 +48,7 @@ export default {
   MSG_CONNECTING_TO_BACKEND: "...",
   MSG_ERROR_NOT_FOUND: "Oops. Nothing here...",
 
+  /* Admin panel tab labels */
   TAB_LABEL_DASHBOARD: "Dashboard",
   TAB_LABEL_GALLERY: "Gallery",
   TAB_LABEL_CONFIG: "Config",
@@ -56,12 +56,9 @@ export default {
   TAB_LABEL_STATUS: "Status",
   TAB_LABEL_HELP: "Help",
 
-  TEXT_GALLERY_TOTAL_BEFORE: "#",
-  TEXT_GALLERY_TOTAL_BETWEEN: "/",
-  TEXT_GALLERY_TOTAL_BEHIND: "#",
-  TEXT_HELP_MSG: " Getting started? ... ",
   TEXT_PLACEHOLDER_SEARCH: "Search",
 
+  /* Page / component titles */
   TITLE_ADMIN_CENTER: "Admin center",
   TITLE_FILES_NEW_FOLDER_DIALOG: "New folder name",
   TITLE_FILES_UPLOAD_FILES_DIALOG: "Upload files to current folder",
