@@ -17,19 +17,12 @@
 
 <script>
 import { defineComponent } from "vue";
-import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 
 export default defineComponent({
   name: "GalleryLayout",
 
   components: {},
   computed: {},
-  setup() {
-    const uiSettingsStore = useUiSettingsStore();
-
-    return {
-      uiSettingsStore,
-    };
-  },
+  setup() {},
 });
 </script>

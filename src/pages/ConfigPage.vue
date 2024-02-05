@@ -160,6 +160,10 @@ export default {
           if (property["maximum"]) form_entry["max"] = property["maximum"];
         }
 
+        if (property["type"] == "string") {
+          if (property["ui_component"]) form_entry["component"] = property["ui_component"];
+        }
+
         // check whether an enum
         if (property["allOf"] && Object.keys(property["allOf"][0]).includes("enum")) {
           form_entry["component"] = "QSelect";
