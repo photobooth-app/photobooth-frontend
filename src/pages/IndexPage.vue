@@ -171,7 +171,7 @@ export default defineComponent({
     showPreview: {
       get() {
         const enabled = true;
-        const machineIdle = this.stateStore.state == "idle";
+        const machineIdle = !this.stateStore.state || this.stateStore.state == "finished";
         const machineRecord = this.stateStore.state == "record";
         const machineCounting = this.stateStore.state == "counting";
 
@@ -180,7 +180,8 @@ export default defineComponent({
     },
     showFrontpage: {
       get() {
-        return this.stateStore.state == "idle";
+        // show if state not defined (no job ongoing or finished)
+        return !this.stateStore.state || this.stateStore.state == "finished";
       },
     },
   },

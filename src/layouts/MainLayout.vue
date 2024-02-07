@@ -24,9 +24,7 @@ export default defineComponent({
     stateStore.$subscribe((mutation, state) => {
       if (state.state == "counting" && router.path != "/") {
         // quick fix: receive "counting" state but not on indexpage, push router to index
-        console.log(
-          "counting state received, pushing to index page to countdown",
-        );
+        console.log("counting state received, pushing to index page to countdown");
 
         router.push("/");
       }
