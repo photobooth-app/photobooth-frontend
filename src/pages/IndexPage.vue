@@ -83,7 +83,15 @@
     <q-page-sticky position="top-left" :offset="[25, 25]">
       <div v-if="showFrontpage">
         <div class="q-gutter-sm">
-          <q-btn v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage" color="primary" no-caps to="/gallery" class="action-button">
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage"
+            color="primary"
+            no-caps
+            to="/gallery"
+            class="action-button"
+            id="frontage-gallery-button"
+            :style="uiSettingsStore.uiSettings.gallery_button_style"
+          >
             <q-icon left name="photo_library" />
             <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_GALLERY')"></div>
           </q-btn>
@@ -148,7 +156,9 @@ export default defineComponent({
   computed: {
     showProcessing: {
       get() {
-        return this.stateStore.state == "captures_completed";
+        const capturesCompleted = this.stateStore.state == "captures_completed";
+        const capture = this.stateStore.state == "capture";
+        return capturesCompleted || capture;
       },
     },
     showRecording: {
