@@ -21,7 +21,7 @@
         ref="countdowntimer"
         :duration="this.stateStore.duration"
         :messageDuration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME"
-        :icon="uiSettingsStore.uiSettings['TAKEPIC_MSG_TEXT']"
+        :messageText="uiSettingsStore.uiSettings.TAKEPIC_MSG_TEXT"
       ></countdown-timer>
     </div>
 
