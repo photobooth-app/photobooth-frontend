@@ -7,7 +7,7 @@
         <q-space />
 
         <q-btn
-          v-if="uiSettingsStore.uiSettings.gallery_show_delete"
+          v-if="uiSettingsStore.uiSettings.gallery_show_delete || singleItemView"
           flat
           class="q-mr-sm"
           icon="delete"
@@ -236,12 +236,13 @@ export default {
       required: true,
     },
     startTimerOnOpen: {
-      //repo to display
+      //start timer to auto-close
       type: Boolean,
       required: false,
       default: false,
     },
     singleItemView: {
+      // viewing single captured file -> user is always allowed to delete, don't allow scrolling to other images
       type: Boolean,
       default: false,
     },
