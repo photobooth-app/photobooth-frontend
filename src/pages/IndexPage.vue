@@ -40,7 +40,7 @@
             class="action-button col-auto"
             :style="uiSettingsStore.uiSettings.action_button_style"
           >
-            <q-icon name="o_photo_camera" />
+            <q-icon name="o_photo_camera" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_PHOTO')"></div>
           </q-btn>
           <q-btn
@@ -52,7 +52,7 @@
             class="action-button col-auto"
             :style="uiSettingsStore.uiSettings.action_button_style"
           >
-            <q-icon name="o_auto_awesome_mosaic" />
+            <q-icon name="o_auto_awesome_mosaic" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_COLLAGE')"></div>
           </q-btn>
           <q-btn
@@ -64,7 +64,7 @@
             class="action-button col-auto"
             :style="uiSettingsStore.uiSettings.action_button_style"
           >
-            <q-icon name="o_gif_box" />
+            <q-icon name="o_gif_box" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_ANIMATION')"></div>
           </q-btn>
 
@@ -77,7 +77,7 @@
             class="action-button col-auto"
             :style="uiSettingsStore.uiSettings.action_button_style"
           >
-            <q-icon name="o_movie" />
+            <q-icon name="o_movie" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_VIDEO')"></div>
           </q-btn>
         </div>
@@ -96,7 +96,7 @@
             id="frontage-gallery-button"
             :style="uiSettingsStore.uiSettings.gallery_button_style"
           >
-            <q-icon left name="photo_library" />
+            <q-icon left name="photo_library" :style="uiSettingsStore.uiSettings.gallery_button_icon_style" />
             <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_GALLERY')"></div>
           </q-btn>
           <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" color="secondary" no-caps to="/admin" class="action-button">
