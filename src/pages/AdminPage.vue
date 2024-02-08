@@ -141,6 +141,13 @@
         </div>
       </div>
     </q-card>
+
+    <q-card class="q-pa-md q-mt-md">
+      <div class="text-h5" v-html="$t('TITLE_LOCAL_UI_SETTINGS')"></div>
+      <div class="row">
+        <language-switcher />
+      </div>
+    </q-card>
   </q-page>
 </template>
 
@@ -148,10 +155,11 @@
 import { defineComponent, ref } from "vue";
 import { useMainStore } from "../stores/main-store.js";
 import { remoteProcedureCall } from "boot/axios";
+import LanguageSwitcher from "../components/LanguageSwitcher.vue";
 
 export default defineComponent({
   name: "MainLayout",
-
+  components: { LanguageSwitcher },
   setup() {
     const store = useMainStore();
 

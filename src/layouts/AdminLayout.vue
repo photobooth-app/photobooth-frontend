@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-secondary text-white">
-      <q-toolbar>
+      <q-toolbar class="q-pa-none">
         <q-tabs mobile-arrows shrink>
           <q-route-tab class="bg-primary" to="/" icon="arrow_back_ios_new" :label="$t('BTN_LABEL_BACK')" />
           <q-route-tab to="/admin" icon="dashboard" :label="$t('TAB_LABEL_DASHBOARD')" />
@@ -19,8 +19,12 @@
         <q-space />
 
         <q-toolbar-title><span v-html="$t('TITLE_ADMIN_CENTER')"></span></q-toolbar-title>
-        <language-switcher></language-switcher>
-        <a href="https://photobooth-app.org/" target="_new"><img src="icons/logo-notext-white-transparent.png" style="max-height: 40px" /></a>
+
+        <q-space />
+
+        <a href="https://photobooth-app.org/" target="_new" class="q-mr-lg"
+          ><img src="icons/logo-notext-white-transparent.png" style="max-height: 40px"
+        /></a>
       </q-toolbar>
     </q-header>
 
@@ -32,11 +36,9 @@
 
 <script>
 import { ref } from "vue";
-import LanguageSwitcher from "../components/LanguageSwitcher.vue";
 
 export default {
   // name: 'LayoutName',
-  components: { LanguageSwitcher },
   setup() {},
 };
 </script>
