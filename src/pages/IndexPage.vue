@@ -30,12 +30,13 @@
 
     <q-page-sticky position="bottom" :offset="[0, 25]">
       <div v-if="showFrontpage">
-        <div class="row q-gutter-sm">
+        <div class="row q-gutter-md">
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takepic_on_frontpage"
             stack
             color="primary"
             no-caps
+            rounded
             @click="takePicture(/**/)"
             class="action-button col-auto"
           >
@@ -47,6 +48,7 @@
             stack
             color="primary"
             no-caps
+            rounded
             @click="takeCollage()"
             class="action-button col-auto"
           >
@@ -58,6 +60,7 @@
             stack
             color="primary"
             no-caps
+            rounded
             @click="takeAnimation()"
             class="action-button col-auto"
           >
@@ -70,6 +73,7 @@
             stack
             color="primary"
             no-caps
+            rounded
             @click="takeVideo()"
             class="action-button col-auto"
           >
@@ -82,11 +86,12 @@
 
     <q-page-sticky position="top-left" :offset="[25, 25]">
       <div v-if="showFrontpage">
-        <div class="q-gutter-sm">
+        <div class="q-gutter-md">
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage"
             color="primary"
             no-caps
+            rounded
             to="/gallery"
             class="action-button"
             id="frontage-gallery-button"
@@ -95,7 +100,7 @@
             <q-icon left name="photo_library" />
             <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_GALLERY')"></div>
           </q-btn>
-          <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" color="secondary" no-caps to="/admin" class="action-button">
+          <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" rounded color="secondary" no-caps to="/admin" class="action-button">
             <q-icon left name="admin_panel_settings" />
             <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_ADMIN')"></div>
           </q-btn>
