@@ -7,7 +7,7 @@
         <q-space />
 
         <q-btn
-          v-if="uiSettingsStore.uiSettings.gallery_show_delete || singleItemView"
+          v-if="uiSettingsStore.uiSettings.gallery_show_delete"
           flat
           class="q-mr-sm"
           icon="delete"
