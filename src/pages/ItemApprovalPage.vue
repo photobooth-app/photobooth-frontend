@@ -1,6 +1,6 @@
 <template>
-  <q-page class="flex flex-center" style="min-height: 100vh">
-    <q-card style="height: 95vh">
+  <q-page class="flex flex-center">
+    <q-card style="height: 95vh; width: -webkit-fill-available; margin: 2.5vh 2.5vw">
       <q-card-section align="center" style="height: 11vh; padding: 2vh 1vw 0px 1vw">
         <div style="font-size: 4vh" v-html="$t('TITLE_ITEM_APPROVAL')"></div>
         <div style="font-size: 2vh">
@@ -12,13 +12,12 @@
         </div>
       </q-card-section>
 
-      <!--79vh remaining for this card, set width according to image aspect ratio-->
-      <q-card-section class="" style="padding: 2vh 1vw 2vh 1vw; width: calc(79vh * 4 / 3)">
-        <q-img class="rounded-borders" :src="imgToApproveSrc" />
+      <q-card-section style="padding: 2vh 1vw 2vh 1vw; max-height: 72vh">
+        <q-img class="rounded-borders" :src="imgToApproveSrc" fit="contain" spinner-color="primary" style="max-height: 68vh" />
         <!-- video approval not yet supported -->
       </q-card-section>
 
-      <q-card-actions align="around" style="height: 12vh; padding: 0 1vw 2vh 1vw">
+      <q-card-actions align="center" style="height: 12vh; padding: 0 1vw 2vh 1vw">
         <q-btn color="negative" no-caps @click="userReject()" class="">
           <q-icon left size="10vh" name="thumb_down" />
           <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_RETRY')"></div>
