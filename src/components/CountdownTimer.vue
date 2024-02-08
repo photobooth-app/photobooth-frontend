@@ -9,7 +9,7 @@
       :min="0"
       :max="this.duration"
       reverse
-      size="100%"
+      size="70vh"
       color="primary"
       class="text-secondary"
     >
