@@ -38,6 +38,7 @@
             no-caps
             @click="takePicture(/**/)"
             class="action-button col-auto"
+            :style="uiSettingsStore.uiSettings.action_button_style"
           >
             <q-icon name="o_photo_camera" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_PHOTO')"></div>
@@ -49,6 +50,7 @@
             no-caps
             @click="takeCollage()"
             class="action-button col-auto"
+            :style="uiSettingsStore.uiSettings.action_button_style"
           >
             <q-icon name="o_auto_awesome_mosaic" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_COLLAGE')"></div>
@@ -60,6 +62,7 @@
             no-caps
             @click="takeAnimation()"
             class="action-button col-auto"
+            :style="uiSettingsStore.uiSettings.action_button_style"
           >
             <q-icon name="o_gif_box" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_ANIMATION')"></div>
@@ -72,6 +75,7 @@
             no-caps
             @click="takeVideo()"
             class="action-button col-auto"
+            :style="uiSettingsStore.uiSettings.action_button_style"
           >
             <q-icon name="o_movie" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_VIDEO')"></div>
