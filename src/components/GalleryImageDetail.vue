@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hhh Lpr ffr" @click="abortTimer" v-if="!emptyRepository">
     <q-header elevated class="bg-primary text-white">
-      <q-toolbar class="toolbar">
+      <q-toolbar class="toolbar" :style="uiSettingsStore.uiSettings.toolbar_style">
         <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
 
         <q-space />
@@ -11,11 +11,12 @@
           flat
           class="q-mr-sm"
           icon="delete"
+          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_DELETE')"
           @click="confirmDeleteFile = true"
         />
 
-        <q-dialog v-model="confirmDeleteFile">
+        <q-dialog :style="uiSettingsStore.uiSettings.dialog_style" v-model="confirmDeleteFile">
           <q-card class="q-pa-sm">
             <q-card-section class="row items-center">
               <q-avatar icon="delete" color="primary" text-color="white" />
@@ -42,6 +43,7 @@
           flat
           class="q-mr-sm"
           icon="download"
+          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
           @click="
             (evt) => {
@@ -54,6 +56,7 @@
           flat
           class="q-mr-sm"
           icon="print"
+          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_PRINT')"
           @click="printItem(currentSlideId)"
         />
@@ -62,6 +65,7 @@
           flat
           class="q-mr-sm"
           icon="filter"
+          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_FILTER')"
           :disabled="!getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
           @click="toggleRightDrawer"
@@ -69,12 +73,14 @@
 
         <q-space />
 
-        <div class="q-mr-sm" v-if="!singleItemView">
+        <div class="q-mr-sm" v-if="!singleItemView && uiSettingsStore.uiSettings.gallery_show_image_number">
           <q-icon name="tag" />
           <span>{{ currentSlideIndex + 1 }} / {{ itemRepository.length }} </span>
         </div>
-        <q-space />
-        <div class="q-mr-sm">
+
+        <q-space v-if="uiSettingsStore.uiSettings.gallery_show_file_name" />
+
+        <div class="q-mr-sm" v-if="uiSettingsStore.uiSettings.gallery_show_file_name">
           <q-icon name="image" />
           {{ itemRepository[currentSlideIndex]["caption"] }}
         </div>
