@@ -1,20 +1,20 @@
 <template>
-  <div style="width: 40%; height: 40%" v-show="showBox">
+  <div class="flex flex-center" style="width: 70vw; height: 70vh" v-show="showBox">
+    <div style="position: absolute; font-size: 150px" v-show="showMessage" v-html="messageText"></div>
     <q-circular-progress
       v-show="showCountdown"
       show-value
-      class="text-light-blue"
       style="width: 100%; height: 100%"
-      :value="parseFloat(remainingSeconds.toFixed(1))"
+      :value="remainingSeconds"
       :min="0"
       :max="this.duration"
       reverse
-      size="150px"
-      color="light-blue"
-    />
-    <div v-show="showMessage">
-      <q-icon :name="icon" size="200px" style="width: 100%; height: 100%" />
-    </div>
+      size="70vh"
+      color="primary"
+      class="text-secondary"
+    >
+      {{ parseFloat(remainingSeconds.toFixed(0)) }}
+    </q-circular-progress>
   </div>
 </template>
 
@@ -77,7 +77,7 @@ export default defineComponent({
       default: 0.5,
     },
 
-    icon: {
+    messageText: {
       type: String,
       default: "😃",
     },

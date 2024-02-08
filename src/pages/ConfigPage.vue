@@ -5,37 +5,18 @@
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>{{ group_title }}</q-toolbar-title>
         <div class="q-gutter-sm">
-          <q-btn
-            label="reset"
-            @click="remoteProcedureCall('/admin/config/reset')"
-          />
-          <q-btn label="restore" @click="getConfig('current')" />
-          <q-btn
-            color="primary"
-            label="persist"
-            @click="uploadConfigAndPersist()"
-          />
+          <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="remoteProcedureCall('/admin/config/reset')" />
+          <q-btn :label="$t('BTN_LABEL_RESTORE_CONFIG')" @click="getConfig('current')" />
+          <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="uploadConfigAndPersist()" />
         </div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="drawer"
-      :width="300"
-      :breakpoint="500"
-      bordered
-      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
-    >
+    <q-drawer v-model="drawer" :width="300" :breakpoint="500" bordered :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'">
       <q-scroll-area class="fit">
         <q-list>
           <template v-for="(group, index) in main_groups" :key="index">
-            <q-item
-              clickable
-              :active="group === $route.params.section"
-              :to="`/admin/config/${group}`"
-              replace
-              v-ripple
-            >
+            <q-item clickable :active="group === $route.params.section" :to="`/admin/config/${group}`" replace v-ripple>
               <q-item-section>
                 {{ group }}
               </q-item-section>
@@ -130,9 +111,7 @@ export default {
     });
     const group_description = computed(() => {
       if (selected_group.value != "") {
-        return schema_dereferenced[selected_group.value]["allOf"][0][
-          "description"
-        ];
+        return schema_dereferenced[selected_group.value]["allOf"][0]["description"];
       } else {
         return "-";
       }
@@ -172,34 +151,27 @@ export default {
         }
         if (property["type"] == "integer" || property["type"] == "float") {
           form_entry["component"] = "QInput";
-          if (property["ui_component"])
-            form_entry["component"] = property["ui_component"];
+          if (property["ui_component"]) form_entry["component"] = property["ui_component"];
           form_entry["type"] = "number";
           form_entry["labelAlways"] = true;
-          if (property["exclusiveMinimum"])
-            form_entry["min"] = property["exclusiveMinimum"];
-          if (property["exclusiveMaximum"])
-            form_entry["max"] = property["exclusiveMaximum"];
+          if (property["exclusiveMinimum"]) form_entry["min"] = property["exclusiveMinimum"];
+          if (property["exclusiveMaximum"]) form_entry["max"] = property["exclusiveMaximum"];
           if (property["minimum"]) form_entry["min"] = property["minimum"];
           if (property["maximum"]) form_entry["max"] = property["maximum"];
         }
 
+        if (property["type"] == "string") {
+          if (property["ui_component"]) form_entry["component"] = property["ui_component"];
+        }
+
         // check whether an enum
-        if (
-          property["allOf"] &&
-          Object.keys(property["allOf"][0]).includes("enum")
-        ) {
+        if (property["allOf"] && Object.keys(property["allOf"][0]).includes("enum")) {
           form_entry["component"] = "QSelect";
           form_entry["options"] = property["allOf"][0]["enum"];
         }
 
-        form_entry["subLabel"] = `${
-          property["description"] || ""
-        } (default=${escapeHTML(
-          ("default" in property
-            ? property["default"]
-            : "undefined"
-          ).toString(),
+        form_entry["subLabel"] = `${property["description"] || ""} (default=${escapeHTML(
+          ("default" in property ? property["default"] : "undefined").toString(),
         )})`;
 
         return form_entry;
@@ -217,26 +189,15 @@ export default {
 
           let form_entry = createFormEntry(id, property);
 
-          if (
-            property["type"] == "array" &&
-            property["items"] &&
-            property["items"]["type"] == "object"
-          ) {
+          if (property["type"] == "array" && property["items"] && property["items"]["type"] == "object") {
             // pydantic list[Group(BaseModel)] render to BlitzListForms:
             form_entry["component"] = "BlitzListForm";
             form_entry["schema"] = [];
-            Object.entries(property["items"]["properties"]).forEach(
-              (item_property) => {
-                const [id, property] = item_property;
-                form_entry["schema"].push(createFormEntry(id, property));
-              },
-            );
-          } else if (
-            property["type"] == "array" &&
-            property["items"] &&
-            property["items"]["enum"] &&
-            property["items"]["type"] == "string"
-          ) {
+            Object.entries(property["items"]["properties"]).forEach((item_property) => {
+              const [id, property] = item_property;
+              form_entry["schema"].push(createFormEntry(id, property));
+            });
+          } else if (property["type"] == "array" && property["items"] && property["items"]["enum"] && property["items"]["type"] == "string") {
             // pydantic list[Enum(str, Enum)] render to multiselect currently:
             form_entry["component"] = "QSelect";
             form_entry["multiple"] = true;
@@ -317,8 +278,9 @@ export default {
           uiSettingsStore.initStore(true);
 
           $q.notify({
-            message:
-              "Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!",
+            // TODO: How to access the translated strings here??
+            // message: $t("MSG_CONFIG_PERSIST_OK"),
+            message: "Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!",
             color: "green",
           });
         })

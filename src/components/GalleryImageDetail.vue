@@ -7,22 +7,42 @@
         <q-space />
 
         <q-btn
-          v-if="uiSettingsStore.uiSettings.gallery_show_delete"
+          v-if="uiSettingsStore.uiSettings.gallery_show_delete || singleItemView"
           flat
           class="q-mr-sm"
           icon="delete"
-          label="Delete"
-          @click="
-            deleteItem(currentSlideId);
-            $emit('closeEvent');
-          "
+          :label="$t('BTN_LABEL_GALLERY_DELETE')"
+          @click="confirmDeleteFile = true"
         />
+
+        <q-dialog v-model="confirmDeleteFile">
+          <q-card class="q-pa-sm" style="min-width: 350px">
+            <q-card-section class="row items-center">
+              <q-avatar icon="delete" color="primary" text-color="white" />
+              <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_DELETE_IMAGE')"></span>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+              <q-btn
+                :label="$t('BTN_LABEL_DELETE_IMAGE')"
+                color="primary"
+                v-close-popup
+                @click="
+                  deleteItem(currentSlideId);
+                  $emit('closeEvent');
+                "
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+
         <q-btn
           v-if="uiSettingsStore.uiSettings.gallery_show_download"
           flat
           class="q-mr-sm"
           icon="download"
-          label="Download"
+          :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
           @click="
             (evt) => {
               openURL(itemRepository[currentSlideIndex]['full']);
@@ -34,7 +54,7 @@
           flat
           class="q-mr-sm"
           icon="print"
-          label="Print"
+          :label="$t('BTN_LABEL_GALLERY_PRINT')"
           @click="printItem(currentSlideId)"
         />
         <q-btn
@@ -42,7 +62,7 @@
           flat
           class="q-mr-sm"
           icon="filter"
-          label="Filter"
+          :label="$t('BTN_LABEL_GALLERY_FILTER')"
           :disabled="!getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
           @click="toggleRightDrawer"
         />
@@ -51,7 +71,7 @@
 
         <div class="q-mr-sm" v-if="!singleItemView">
           <q-icon name="tag" />
-          <span>{{ currentSlideIndex + 1 }} of {{ itemRepository.length }} total</span>
+          <span>{{ currentSlideIndex + 1 }} / {{ itemRepository.length }} </span>
         </div>
         <q-space />
         <div class="q-mr-sm">
@@ -134,6 +154,7 @@
           :autoplay="autoplay"
           draggable="false"
           arrows
+          infinite
           transition-prev="slide-right"
           transition-next="slide-left"
           @transition="
@@ -215,12 +236,13 @@ export default {
       required: true,
     },
     startTimerOnOpen: {
-      //repo to display
+      //start timer to auto-close
       type: Boolean,
       required: false,
       default: false,
     },
     singleItemView: {
+      // viewing single captured file, dont load carousel. used for itempresenter on approval during job processing.
       type: Boolean,
       default: false,
     },
@@ -271,6 +293,7 @@ export default {
       autoplay: ref(false),
       showFilterDialog: ref(false),
       displayLoadingSpinner: ref(false),
+      confirmDeleteFile: ref(false),
       rightDrawerOpen,
       toggleRightDrawer() {
         rightDrawerOpen.value = !rightDrawerOpen.value;

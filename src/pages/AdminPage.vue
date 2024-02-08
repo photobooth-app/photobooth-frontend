@@ -1,71 +1,49 @@
 <template>
   <q-page padding>
     <q-card class="q-pa-md">
-      <div class="text-h5">Server Control</div>
+      <div class="text-h5" v-html="$t('TITLE_SERVER_CONTROL')"></div>
       <div class="row">
         <div class="q-ma-sm">
           <div class="text-no-wrap">
             <q-dialog v-model="confirm_reboot">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
-                  <q-avatar
-                    icon="restart_alt"
-                    color="primary"
-                    text-color="white"
-                  />
-                  <span class="q-ml-sm">You sure to reboot the system?</span>
+                  <q-avatar icon="restart_alt" color="primary" text-color="white" />
+                  <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_REBOOT')"></span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat label="Cancel" color="primary" v-close-popup />
-                  <q-btn
-                    label="Reboot"
-                    color="primary"
-                    @click="remoteProcedureCall('/system/server/reboot')"
-                    v-close-popup
-                  />
+                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" color="primary" v-close-popup />
+                  <q-btn :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/system/server/reboot')" v-close-popup />
                 </q-card-actions>
               </q-card>
             </q-dialog>
 
             <q-dialog v-model="confirm_shutdown">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
-                  <q-avatar
-                    icon="power_settings_new"
-                    color="primary"
-                    text-color="white"
-                  />
-                  <span class="q-ml-sm">You sure to shutdown the system?</span>
+                  <q-avatar icon="power_settings_new" color="primary" text-color="white" />
+                  <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_SHUTDOWN')"></span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat label="Cancel" v-close-popup />
-                  <q-btn
-                    label="Shutdown"
-                    color="primary"
-                    v-close-popup
-                    @click="remoteProcedureCall('/system/server/shutdown')"
-                  />
+                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+                  <q-btn :label="$t('BTN_LABEL_SHUTDOWN')" color="primary" v-close-popup @click="remoteProcedureCall('/system/server/shutdown')" />
                 </q-card-actions>
               </q-card>
             </q-dialog>
 
             <q-dialog v-model="confirm_restart_service">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
-                  <q-avatar
-                    icon="restart_alt"
-                    color="primary"
-                    text-color="white"
-                  />
-                  <span class="q-ml-sm">You sure to restart the service?</span>
+                  <q-avatar icon="restart_alt" color="primary" text-color="white" />
+                  <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_RESTART_SERVICE')"></span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat label="Cancel" v-close-popup />
+                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
                   <q-btn
-                    label="Restart"
+                    :label="$t('BTN_LABEL_RESTART_SERVICE')"
                     color="primary"
                     v-close-popup
                     @click="remoteProcedureCall('/system/service/restart')"
@@ -75,20 +53,16 @@
             </q-dialog>
 
             <q-dialog v-model="confirm_reload_service">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
-                  <q-avatar
-                    icon="restart_alt"
-                    color="primary"
-                    text-color="white"
-                  />
-                  <span class="q-ml-sm">You sure to reload the service?</span>
+                  <q-avatar icon="restart_alt" color="primary" text-color="white" />
+                  <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_RELOAD_SERVICE')"></span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat label="Cancel" v-close-popup />
+                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
                   <q-btn
-                    label="Reload"
+                    :label="$t('BTN_LABEL_RELOAD_SERVICE')"
                     color="primary"
                     v-close-popup
                     @click="remoteProcedureCall('/system/service/reload')"
@@ -98,20 +72,16 @@
             </q-dialog>
 
             <q-dialog v-model="confirm_install_service">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
-                  <q-avatar
-                    icon="add_circle"
-                    color="primary"
-                    text-color="white"
-                  />
-                  <span class="q-ml-sm">You sure to install the service?</span>
+                  <q-avatar icon="add_circle" color="primary" text-color="white" />
+                  <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_INSTALL_SERVICE')"></span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat label="Cancel" v-close-popup />
+                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
                   <q-btn
-                    label="Install"
+                    :label="$t('BTN_LABEL_INSTALL_SERVICE')"
                     color="primary"
                     v-close-popup
                     @click="remoteProcedureCall('/system/service/install')"
@@ -121,18 +91,16 @@
             </q-dialog>
 
             <q-dialog v-model="confirm_uninstall_service">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="cancel" color="primary" text-color="white" />
-                  <span class="q-ml-sm"
-                    >You sure to uninstall the service?</span
-                  >
+                  <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_UNINSTALL_SERVICE')"></span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat label="Cancel" v-close-popup />
+                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
                   <q-btn
-                    label="Uninstall"
+                    :label="$t('BTN_LABEL_UNINSTALL_SERVICE')"
                     color="primary"
                     v-close-popup
                     @click="remoteProcedureCall('/system/service/uninstall')"
@@ -140,38 +108,17 @@
                 </q-card-actions>
               </q-card>
             </q-dialog>
-            <q-btn
-              class="q-mr-sm"
-              label="Reboot Host"
-              @click="confirm_reboot = true"
-            />
-            <q-btn
-              class="q-mr-sm"
-              label="Shutdown Host"
-              @click="confirm_shutdown = true"
-            />
-            <q-btn
-              class="q-mr-sm"
-              label="Restart Service"
-              @click="confirm_restart_service = true"
-            />
-            <!--TODO: does not work reliable. may be removed <q-btn class="q-mr-sm" label="Reload Service" @click="confirm_reload_service = true" /> -->
-            <q-btn
-              class="q-mr-sm"
-              label="Install Service"
-              @click="confirm_install_service = true"
-            />
-            <q-btn
-              class="q-mr-sm"
-              label="Uninstall Service"
-              @click="confirm_uninstall_service = true"
-            />
+            <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_REBOOT_HOST')" @click="confirm_reboot = true" />
+            <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_SHUTDOWN_HOST')" @click="confirm_shutdown = true" />
+            <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_RESTART_SERVICE')" @click="confirm_restart_service = true" />
+            <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_INSTALL_SERVICE')" @click="confirm_install_service = true" />
+            <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_UNINSTALL_SERVICE')" @click="confirm_uninstall_service = true" />
           </div>
         </div>
       </div>
     </q-card>
     <q-card class="q-pa-md q-mt-md">
-      <div class="text-h5">Maintain Gallery</div>
+      <div class="text-h5" v-html="$t('TITLE_MAINTAIN_GALLERY')"></div>
       <div class="row">
         <div class="q-ma-sm">
           <div class="text-no-wrap">
@@ -179,30 +126,26 @@
               <q-card class="q-pa-sm">
                 <q-card-section class="row items-center">
                   <q-avatar icon="delete" color="primary" text-color="white" />
-                  <span class="q-ml-sm"
-                    >Are you sure to delete all media items from gallery?</span
-                  >
+                  <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_DELETE_ALL_MEDIA_FILES')"></span>
                 </q-card-section>
 
                 <q-card-actions align="right">
                   <q-btn flat label="Cancel" color="primary" v-close-popup />
-                  <q-btn
-                    label="Delete all"
-                    color="primary"
-                    @click="remoteProcedureCall('/mediacollection/delete_all')"
-                    v-close-popup
-                  />
+                  <q-btn label="Delete all" color="primary" @click="remoteProcedureCall('/mediacollection/delete_all')" v-close-popup />
                 </q-card-actions>
               </q-card>
             </q-dialog>
 
-            <q-btn
-              class="q-mr-sm"
-              label="Delete all media files"
-              @click="confirm_delete_all = true"
-            />
+            <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_DELETE_ALL_MEDIA_FILES')" @click="confirm_delete_all = true" />
           </div>
         </div>
+      </div>
+    </q-card>
+
+    <q-card class="q-pa-md q-mt-md">
+      <div class="text-h5" v-html="$t('TITLE_LOCAL_UI_SETTINGS')"></div>
+      <div class="row">
+        <language-switcher />
       </div>
     </q-card>
   </q-page>
@@ -212,10 +155,11 @@
 import { defineComponent, ref } from "vue";
 import { useMainStore } from "../stores/main-store.js";
 import { remoteProcedureCall } from "boot/axios";
+import LanguageSwitcher from "../components/LanguageSwitcher.vue";
 
 export default defineComponent({
   name: "MainLayout",
-
+  components: { LanguageSwitcher },
   setup() {
     const store = useMainStore();
 

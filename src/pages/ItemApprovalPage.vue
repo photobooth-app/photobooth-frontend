@@ -2,12 +2,13 @@
   <q-page class="flex flex-center">
     <q-card style="height: 95vh">
       <q-card-section align="center">
-        <div class="text-h6">Nice?</div>
+        <div class="text-h6" v-html="$t('TITLE_ITEM_APPROVAL')"></div>
         <div class="text-subtitle1">
-          Got
+          <span v-html="$t('MSG_APPROVE_COLLAGE_ITEM_XXX_COUNT_TOTAL')"></span>
           {{ this.stateStore.number_captures_taken }}
-          of
-          {{ this.stateStore.total_captures_to_take }} captures total
+          <span v-html="$t('MSG_APPROVE_COLLAGE_ITEM_COUNT_XXX_TOTAL')"></span>
+          {{ this.stateStore.total_captures_to_take }}
+          <span v-html="$t('MSG_APPROVE_COLLAGE_ITEM_COUNT_TOTAL_XXX')"></span>
         </div>
       </q-card-section>
 
@@ -19,19 +20,18 @@
       <q-card-actions align="around">
         <q-btn color="negative" no-caps @click="userReject()" class="">
           <q-icon left size="7em" name="thumb_down" />
-          <div>Try again!</div>
+          <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_RETRY')"></div>
         </q-btn>
 
         <q-btn flat color="grey" no-caps @click="userAbort()" class="">
           <q-icon left size="7em" name="cancel" />
-          <div>Abort</div>
+          <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE')"></div>
         </q-btn>
 
         <q-btn color="positive" no-caps @click="userConfirm()">
           <q-icon left size="7em" name="thumb_up" />
           <div>
-            Awesome, next!
-            <br />
+            <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_APPROVE')"></div>
           </div>
         </q-btn>
       </q-card-actions>

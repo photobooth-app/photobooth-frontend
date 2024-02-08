@@ -16,6 +16,14 @@ npm install
 quasar dev
 ```
 
+You may have to use
+
+```bash
+npx quasar dev
+```
+
+if quasar is not found.
+
 ### Lint the files
 
 ```bash

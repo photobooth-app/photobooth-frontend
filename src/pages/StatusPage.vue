@@ -11,39 +11,23 @@
             </div>
             <div>App version: {{ store.information.version }}</div>
             <div>
-              CPU: {{ store.information["cpu1_5_15"][0] }}% /
-              {{ store.information["cpu1_5_15"][1] }}% /
-              {{ store.information["cpu1_5_15"][2] }}%
+              CPU: {{ store.information["cpu1_5_15"][0] }}% / {{ store.information["cpu1_5_15"][1] }}% / {{ store.information["cpu1_5_15"][2] }}%
             </div>
-            <div>
-              No. active threads: {{ store.information["active_threads"] }}
-            </div>
+            <div>No. active threads: {{ store.information["active_threads"] }}</div>
             <div>
               Free disk:
               {{ (store.information["disk"]["free"] / 1024 ** 3).toFixed(1) }}GB
             </div>
             <div>
               Memory:
-              {{
-                (store.information["memory"]["total"] / 1024 ** 3).toFixed(1)
-              }}GB total
-              {{
-                (store.information["memory"]["free"] / 1024 ** 3).toFixed(1)
-              }}GB free
-              {{
-                (store.information["memory"]["available"] / 1024 ** 3).toFixed(
-                  1,
-                )
-              }}GB available
+              {{ (store.information["memory"]["total"] / 1024 ** 3).toFixed(1) }}GB total
+              {{ (store.information["memory"]["free"] / 1024 ** 3).toFixed(1) }}GB free
+              {{ (store.information["memory"]["available"] / 1024 ** 3).toFixed(1) }}GB available
             </div>
             <div>
               Cma:
-              {{
-                (store.information["cma"]["CmaTotal"] / 1024 ** 1).toFixed(1)
-              }}MB total /
-              {{
-                (store.information["cma"]["CmaFree"] / 1024 ** 1).toFixed(1)
-              }}MB free
+              {{ (store.information["cma"]["CmaTotal"] / 1024 ** 1).toFixed(1) }}MB total /
+              {{ (store.information["cma"]["CmaFree"] / 1024 ** 1).toFixed(1) }}MB free
             </div>
           </div>
         </q-card-section>
@@ -54,20 +38,13 @@
           <div class="text-h5">Platform</div>
           <div class="q-gutter-sm q-mt-sm">
             <div>Hostname: {{ store.information.platform_node }}</div>
-            <div>
-              Machine: {{ store.information.platform_machine }},
-              {{ store.information.platform_cpu_count }} cores
-            </div>
+            <div>Machine: {{ store.information.platform_machine }}, {{ store.information.platform_cpu_count }} cores</div>
             <div>
               Platform: {{ store.information.platform_system }}
               {{ store.information.platform_release }}
             </div>
-            <div>
-              Python executable: {{ store.information.python_executable }}
-            </div>
-            <div>
-              Python version: {{ store.information.platform_python_version }}
-            </div>
+            <div>Python executable: {{ store.information.python_executable }}</div>
+            <div>Python version: {{ store.information.platform_python_version }}</div>
           </div>
         </q-card-section>
       </q-card>
@@ -77,10 +54,7 @@
           <div class="text-h5">Primary Backend Stats</div>
           <div class="text-subtitle2">only avail stats displayed</div>
           <table>
-            <tr
-              v-for="(value, key, index) in store.information.backends.primary"
-              v-bind:key="index"
-            >
+            <tr v-for="(value, key, index) in store.information.backends.primary" v-bind:key="index">
               <td align="right">
                 {{ key }}
               </td>
@@ -94,11 +68,7 @@
           <div class="text-h5">Secondary Backend Stats</div>
           <div class="text-subtitle2">only avail stats displayed</div>
           <table>
-            <tr
-              v-for="(value, key, index) in store.information.backends
-                .secondary"
-              v-bind:key="index"
-            >
+            <tr v-for="(value, key, index) in store.information.backends.secondary" v-bind:key="index">
               <td align="right">
                 {{ key }}
               </td>

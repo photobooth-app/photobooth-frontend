@@ -15,18 +15,7 @@
           content-class="bg-amber-3"
           toolbar-bg="primary"
           :toolbar="[
-            [
-              'left',
-              'center',
-              'right',
-              'justify',
-              'bold',
-              'italic',
-              'underline',
-              'strike',
-              'undo',
-              'redo',
-            ],
+            ['left', 'center', 'right', 'justify', 'bold', 'italic', 'underline', 'strike', 'undo', 'redo'],
             [
               {
                 label: $q.lang.editor.formatting,

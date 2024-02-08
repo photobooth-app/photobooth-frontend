@@ -21,6 +21,7 @@
         ref="countdowntimer"
         :duration="this.stateStore.duration"
         :messageDuration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME"
+        :messageText="uiSettingsStore.uiSettings.TAKEPIC_MSG_TEXT"
       ></countdown-timer>
     </div>
 
@@ -29,39 +30,42 @@
 
     <q-page-sticky position="bottom" :offset="[0, 25]">
       <div v-if="showFrontpage">
-        <div class="row q-gutter-sm">
+        <div class="row q-gutter-md">
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takepic_on_frontpage"
             stack
             color="primary"
             no-caps
+            rounded
             @click="takePicture(/**/)"
             class="action-button col-auto"
           >
             <q-icon name="o_photo_camera" />
-            <div style="white-space: nowrap" class="gt-sm">Take a Picture</div>
+            <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_PHOTO')"></div>
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
             stack
             color="primary"
             no-caps
+            rounded
             @click="takeCollage()"
             class="action-button col-auto"
           >
             <q-icon name="o_auto_awesome_mosaic" />
-            <div style="white-space: nowrap" class="gt-sm">Create Collage</div>
+            <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_COLLAGE')"></div>
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
             stack
             color="primary"
             no-caps
+            rounded
             @click="takeAnimation()"
             class="action-button col-auto"
           >
             <q-icon name="o_gif_box" />
-            <div style="white-space: nowrap" class="gt-sm">Create Animation</div>
+            <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_ANIMATION')"></div>
           </q-btn>
 
           <q-btn
@@ -69,11 +73,12 @@
             stack
             color="primary"
             no-caps
+            rounded
             @click="takeVideo()"
             class="action-button col-auto"
           >
             <q-icon name="o_movie" />
-            <div style="white-space: nowrap" class="gt-sm">Capture Video</div>
+            <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_VIDEO')"></div>
           </q-btn>
         </div>
       </div>
@@ -81,14 +86,23 @@
 
     <q-page-sticky position="top-left" :offset="[25, 25]">
       <div v-if="showFrontpage">
-        <div class="q-gutter-sm">
-          <q-btn v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage" color="primary" no-caps to="/gallery" class="action-button">
+        <div class="q-gutter-md">
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage"
+            color="primary"
+            no-caps
+            rounded
+            to="/gallery"
+            class="action-button"
+            id="frontage-gallery-button"
+            :style="uiSettingsStore.uiSettings.gallery_button_style"
+          >
             <q-icon left name="photo_library" />
-            <div class="gt-sm">Gallery</div>
+            <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_GALLERY')"></div>
           </q-btn>
-          <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" color="secondary" no-caps to="/admin" class="action-button">
+          <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" rounded color="secondary" no-caps to="/admin" class="action-button">
             <q-icon left name="admin_panel_settings" />
-            <div class="gt-sm">Admin</div>
+            <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_ADMIN')"></div>
           </q-btn>
         </div>
       </div>
@@ -147,7 +161,9 @@ export default defineComponent({
   computed: {
     showProcessing: {
       get() {
-        return this.stateStore.state == "captures_completed";
+        const capturesCompleted = this.stateStore.state == "captures_completed";
+        const capture = this.stateStore.state == "capture";
+        return capturesCompleted || capture;
       },
     },
     showRecording: {
