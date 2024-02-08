@@ -242,7 +242,7 @@ export default {
       default: false,
     },
     singleItemView: {
-      // viewing single captured file -> user is always allowed to delete, don't allow scrolling to other images
+      // viewing single captured file, dont load carousel. used for itempresenter on approval during job processing.
       type: Boolean,
       default: false,
     },
