@@ -1,9 +1,9 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex flex-center" style="min-height: 100vh">
     <q-card style="height: 95vh">
-      <q-card-section align="center">
-        <div class="text-h6" v-html="$t('TITLE_ITEM_APPROVAL')"></div>
-        <div class="text-subtitle1">
+      <q-card-section align="center" style="height: 11vh; padding: 2vh 1vw 0px 1vw">
+        <div style="font-size: 4vh" v-html="$t('TITLE_ITEM_APPROVAL')"></div>
+        <div style="font-size: 2vh">
           <span v-html="$t('MSG_APPROVE_COLLAGE_ITEM_XXX_COUNT_TOTAL')"></span>
           {{ this.stateStore.number_captures_taken }}
           <span v-html="$t('MSG_APPROVE_COLLAGE_ITEM_COUNT_XXX_TOTAL')"></span>
@@ -12,24 +12,25 @@
         </div>
       </q-card-section>
 
-      <q-card-section class="">
+      <!--79vh remaining for this card, set width according to image aspect ratio-->
+      <q-card-section class="" style="padding: 2vh 1vw 2vh 1vw; width: calc(79vh * 4 / 3)">
         <q-img class="rounded-borders" :src="imgToApproveSrc" />
         <!-- video approval not yet supported -->
       </q-card-section>
 
-      <q-card-actions align="around">
+      <q-card-actions align="around" style="height: 12vh; padding: 0 1vw 2vh 1vw">
         <q-btn color="negative" no-caps @click="userReject()" class="">
-          <q-icon left size="7em" name="thumb_down" />
+          <q-icon left size="10vh" name="thumb_down" />
           <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_RETRY')"></div>
         </q-btn>
 
         <q-btn flat color="grey" no-caps @click="userAbort()" class="">
-          <q-icon left size="7em" name="cancel" />
+          <q-icon left size="10vh" name="cancel" />
           <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE')"></div>
         </q-btn>
 
         <q-btn color="positive" no-caps @click="userConfirm()">
-          <q-icon left size="7em" name="thumb_up" />
+          <q-icon left size="10vh" name="thumb_up" />
           <div>
             <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_APPROVE')"></div>
           </div>
