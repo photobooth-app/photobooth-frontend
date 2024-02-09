@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hhh Lpr ffr" @click="abortTimer" v-if="!emptyRepository">
     <q-header elevated class="bg-primary text-white">
-      <q-toolbar class="toolbar" :style="uiSettingsStore.uiSettings.toolbar_style">
+      <q-toolbar class="toolbar" :style="uiSettingsStore.uiSettings.toolbar_style" v-if="showToolbar">
         <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
 
         <q-space />
@@ -100,7 +100,7 @@
 
     <q-drawer
       class="q-pa-sm"
-      v-if="uiSettingsStore.uiSettings.gallery_show_filter && getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
+      v-if="uiSettingsStore.uiSettings.gallery_show_filter && getFilterAvailable(itemRepository[currentSlideIndex]['media_type']) && showToolbar"
       v-model="rightDrawerOpen"
       side="right"
       overlay
@@ -157,12 +157,12 @@
           v-touch-swipe.mouse.down="handleSwipeDown"
           animated
           v-model="currentSlideId"
-          :autoplay="autoplay"
+          :autoplay="slideshowTimeout"
           draggable="false"
           arrows
           infinite
-          transition-prev="slide-right"
-          transition-next="slide-left"
+          :transition-prev="slideshowUseFade ? 'fade' : 'slide-right'"
+          :transition-next="slideshowUseFade ? 'fade' : 'slide-left'"
           @transition="
             (newVal, oldVal) => {
               currentSlideIndex = itemRepository.findIndex((item) => item.id === newVal);
@@ -192,7 +192,7 @@
         </q-carousel>
       </div>
 
-      <q-page-sticky v-if="uiSettingsStore.uiSettings.gallery_show_qrcode" position="top-right" :offset="[30, 30]">
+      <q-page-sticky v-if="uiSettingsStore.uiSettings.gallery_show_qrcode && showToolbar" position="top-right" :offset="[30, 30]">
         <div>
           <vue-qrcode
             type="image/png"
@@ -249,6 +249,21 @@ export default {
     },
     singleItemView: {
       // viewing single captured file -> user is always allowed to delete, don't allow scrolling to other images
+      type: Boolean,
+      default: false,
+    },
+    showToolbar: {
+      // whether to display the toolbar on top
+      type: Boolean,
+      default: true,
+    },
+    slideshowTimeout: {
+      // ms between automatically displaying next slide
+      type: Number,
+      default: 0,
+    },
+    slideshowUseFade: {
+      // whether to use 'fade' transition used in automatic slideshow
       type: Boolean,
       default: false,
     },

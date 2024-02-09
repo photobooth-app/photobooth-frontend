@@ -92,6 +92,7 @@
             color="primary"
             no-caps
             to="/gallery"
+            @click="abortTimer()"
             class="action-button"
             id="frontage-gallery-button"
             :style="uiSettingsStore.uiSettings.gallery_button_style"
@@ -139,21 +140,57 @@ export default defineComponent({
       stateStore,
       uiSettingsStore,
       remoteProcedureCall,
+      /* timer stuff */
+      intervalTimerId: null,
+      remainingSeconds: 0,
+      remainingSecondsNormalized: 0,
     };
+  },
+  mounted() {
+    this.startTimer();
+  },
+
+  beforeUnmount() {
+    this.abortTimer();
   },
 
   methods: {
     takePicture() {
+      this.abortTimer();
       remoteProcedureCall("/processing/chose/1pic");
     },
     takeCollage() {
+      this.abortTimer();
       remoteProcedureCall("/processing/chose/collage");
     },
     takeAnimation() {
+      this.abortTimer();
       remoteProcedureCall("/processing/chose/animation");
     },
     takeVideo() {
+      this.abortTimer();
       remoteProcedureCall("/processing/chose/video");
+    },
+    abortTimer() {
+      clearInterval(this.intervalTimerId);
+      this.remainingSeconds = 0;
+      this.remainingSecondsNormalized = 0;
+    },
+    startTimer() {
+      var duration = this.uiSettingsStore.uiSettings["TIMEOUT_TO_SLIDESHOW"];
+      console.log(`starting newitemarrived timer, duration=${duration}`);
+      this.remainingSeconds = duration;
+
+      this.intervalTimerId = setInterval(() => {
+        this.remainingSecondsNormalized = this.remainingSeconds / duration;
+
+        this.remainingSeconds -= 0.05;
+
+        if (this.remainingSeconds <= 0) {
+          clearInterval(this.intervalTimerId);
+          this.$router.push({ path: "/slideshow/gallery" });
+        }
+      }, 50);
     },
   },
   watch: {},
