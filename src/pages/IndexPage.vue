@@ -110,9 +110,9 @@
 
     <!-- video state controls -->
     <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center">
-      <q-spinner-puff color="red" size="7em" />
+      <q-spinner-puff color="red" size="10em" />
       <br />
-      <q-btn flat color="red" label="Stop recording (not yet implemented)" />
+      <q-btn flat color="red" label="Stop recording" @click="stopRecordingVideo()" />
     </q-page-sticky>
   </q-page>
 </template>
@@ -155,6 +155,9 @@ export default defineComponent({
     },
     takeVideo() {
       remoteProcedureCall("/processing/chose/video");
+    },
+    stopRecordingVideo() {
+      remoteProcedureCall("/processing/cmd/stop");
     },
   },
   watch: {},
