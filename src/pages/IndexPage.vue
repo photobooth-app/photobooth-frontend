@@ -16,7 +16,12 @@
     </div>
 
     <!-- layer display the countdown timer -->
-    <div class="full-height full-width column justify-center content-center" style="position: absolute" v-if="showCountdownCounting">
+    <div
+      class="full-height full-width column justify-center content-center"
+      style="position: absolute"
+      v-if="showCountdownCounting"
+      id="frontage-countdown"
+    >
       <countdown-timer
         ref="countdowntimer"
         :duration="this.stateStore.duration"
@@ -39,7 +44,9 @@
             rounded
             @click="takePicture(/**/)"
             class="action-button col-auto"
-            :style="uiSettingsStore.uiSettings.action_button_style"
+
+            id="frontpage-button-take-pic"
+
           >
             <q-icon name="o_photo_camera" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_PHOTO')"></div>
@@ -52,7 +59,9 @@
             rounded
             @click="takeCollage()"
             class="action-button col-auto"
-            :style="uiSettingsStore.uiSettings.action_button_style"
+
+            id="frontpage-button-take-collage"
+
           >
             <q-icon name="o_auto_awesome_mosaic" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_COLLAGE')"></div>
@@ -65,7 +74,9 @@
             rounded
             @click="takeAnimation()"
             class="action-button col-auto"
-            :style="uiSettingsStore.uiSettings.action_button_style"
+
+            id="frontpage-button-take-animation"
+
           >
             <q-icon name="o_gif_box" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_ANIMATION')"></div>
@@ -79,7 +90,9 @@
             rounded
             @click="takeVideo()"
             class="action-button col-auto"
-            :style="uiSettingsStore.uiSettings.action_button_style"
+
+            id="frontpage-button-take-video"
+
           >
             <q-icon name="o_movie" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
             <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_VIDEO')"></div>
@@ -99,13 +112,21 @@
             to="/gallery"
             @click="abortTimer()"
             class="action-button"
-            id="frontage-gallery-button"
+            id="frontage-button-to-gallery"
             :style="uiSettingsStore.uiSettings.gallery_button_style"
           >
             <q-icon left name="photo_library" :style="uiSettingsStore.uiSettings.gallery_button_icon_style" />
             <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_GALLERY')"></div>
           </q-btn>
-          <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" rounded color="secondary" no-caps to="/admin" class="action-button">
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage"
+            rounded
+            color="secondary"
+            no-caps
+            to="/admin"
+            class="action-button"
+            id="frontage-button-to-admin"
+          >
             <q-icon left name="admin_panel_settings" />
             <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_ADMIN')"></div>
           </q-btn>
@@ -114,7 +135,7 @@
     </q-page-sticky>
 
     <!-- video state controls -->
-    <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center">
+    <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center" id="frontage-indicator-recording">
       <q-spinner-puff color="red" size="10em" />
       <br />
       <q-btn flat color="red" label="Stop recording" @click="stopRecordingVideo()" />

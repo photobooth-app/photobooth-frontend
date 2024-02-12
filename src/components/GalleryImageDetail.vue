@@ -1,7 +1,9 @@
 <template>
   <q-layout view="hhh Lpr ffr" @click="abortTimer" v-if="!emptyRepository">
     <q-header elevated class="bg-primary text-white">
-      <q-toolbar class="toolbar" :style="uiSettingsStore.uiSettings.toolbar_style" v-if="showToolbar">
+
+      <q-toolbar class="toolbar" id="gallery-toolbar">
+
         <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
 
         <q-space />
@@ -17,7 +19,7 @@
         />
 
         <q-dialog v-model="confirmDeleteFile">
-          <q-card class="q-pa-sm" style="min-width: 350px">
+          <q-card class="q-pa-sm" style="min-width: 350px" id="gallery-confirm-delete-dialog">
             <q-card-section class="row items-center">
               <q-avatar icon="delete" color="primary" text-color="white" />
               <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_DELETE_IMAGE')"></span>
@@ -34,7 +36,7 @@
                   $emit('closeEvent');
                 "
               />
-            </q-card-actions>
+            </q-card-actions
           </q-card>
         </q-dialog>
 
@@ -92,6 +94,7 @@
         :value="remainingSecondsNormalized"
         animation-speed="200"
         color="grey"
+        id="gallery-linear-progress-bar"
         v-if="displayLinearProgressBar && remainingSeconds > 0"
       />
       <!-- progress bar to show waiting to load filter, ... -->
@@ -104,6 +107,7 @@
       v-model="rightDrawerOpen"
       side="right"
       overlay
+      id="gallery-drawer-filters"
     >
       <q-card class="q-mb-sm" :key="filter" v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable">
         <q-card-section class="q-pa-sm">
