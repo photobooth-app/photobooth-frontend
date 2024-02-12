@@ -1,9 +1,7 @@
 <template>
   <q-layout view="hhh Lpr ffr" @click="abortTimer" v-if="!emptyRepository">
     <q-header elevated class="bg-primary text-white">
-
-      <q-toolbar class="toolbar" id="gallery-toolbar">
-
+      <q-toolbar class="toolbar" id="gallery-toolbar" v-if="showToolbar">
         <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
 
         <q-space />
@@ -13,7 +11,6 @@
           flat
           class="q-mr-sm"
           icon="delete"
-          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_DELETE')"
           @click="confirmDeleteFile = true"
         />
@@ -36,7 +33,7 @@
                   $emit('closeEvent');
                 "
               />
-            </q-card-actions
+            </q-card-actions>
           </q-card>
         </q-dialog>
 
@@ -45,7 +42,6 @@
           flat
           class="q-mr-sm"
           icon="download"
-          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
           @click="
             (evt) => {
@@ -58,7 +54,6 @@
           flat
           class="q-mr-sm"
           icon="print"
-          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_PRINT')"
           @click="printItem(currentSlideId)"
         />
@@ -67,7 +62,6 @@
           flat
           class="q-mr-sm"
           icon="filter"
-          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_FILTER')"
           :disabled="!getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
           @click="toggleRightDrawer"

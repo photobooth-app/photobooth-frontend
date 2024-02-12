@@ -1,9 +1,7 @@
 <template>
   <q-page class="flex flex-center">
-
     <q-card style="height: 95vh" id="item-approval-container">
       <q-card-section align="center">
-
         <div class="text-h6">{{ $t("TITLE_ITEM_APPROVAL") }}</div>
         <div class="text-subtitle1">
           <span>{{ $t("MSG_APPROVE_COLLAGE_ITEM_XXX_COUNT_TOTAL") }}</span>
@@ -19,7 +17,6 @@
         <q-img class="rounded-borders" :src="imgToApproveSrc" fit="contain" spinner-color="primary" style="max-height: 68vh" />
         <!-- video approval not yet supported -->
       </q-card-section>
-
 
       <q-card-actions align="around" id="item-approval-actions">
         <q-btn color="negative" no-caps @click="userReject()" class="" id="item-approval-button-reject">
@@ -41,6 +38,12 @@
         </q-btn>
       </q-card-actions>
     </q-card>
+    <!-- auto-start slideshow after timeout -->
+    <RouteAfterTimeout
+      v-if="this.uiSettingsStore.uiSettings.TIMEOUT_TO_SLIDESHOW > 0"
+      route="/slideshow/gallery"
+      :timeout_ms="this.uiSettingsStore.uiSettings.TIMEOUT_TO_SLIDESHOW * 1000"
+    ></RouteAfterTimeout>
   </q-page>
 </template>
 
@@ -50,11 +53,12 @@ import { useMediacollectionStore } from "../stores/mediacollection-store.js";
 import { useStateStore } from "../stores/state-store.js";
 import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import GalleryImageDetail from "../components/GalleryImageDetail";
+import RouteAfterTimeout from "src/components/RouteAfterTimeout.vue";
 import { remoteProcedureCall } from "boot/axios";
 
 export default {
   // name: 'PageName',
-
+  components: { RouteAfterTimeout },
   data() {
     return {};
   },
