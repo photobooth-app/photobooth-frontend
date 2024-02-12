@@ -1,10 +1,12 @@
 <template>
-  <q-card class="q-pa-sm" v-if="timeBeforeRoute < warning_time_ms" id="router-warn-auto-route-dialog">
-    <q-card-section class="row items-center">
-      <q-avatar icon="warning" color="primary" />
-      <span class="q-ml-sm">{{ warning_message }}</span>
-    </q-card-section>
-  </q-card>
+  <q-page-sticky v-if="showWarning" position="center" align="center">
+    <q-card class="q-pa-sm" id="router-warn-auto-route-dialog">
+      <q-card-section class="row items-center">
+        <q-avatar icon="warning" color="primary" />
+        <span class="q-ml-sm">{{ warning_message }}</span>
+      </q-card-section>
+    </q-card>
+  </q-page-sticky>
 </template>
 
 <script setup>
@@ -36,7 +38,7 @@ const props = defineProps({
 
 const { idle, lastActive, reset } = useIdle(props.timeout_ms);
 const now = useTimestamp({ interval: 1000 });
-const timeBeforeRoute = computed(() => props.timeout_ms - (now.value - lastActive.value));
+const showWarning = computed(() => props.warning_time_ms > props.timeout_ms - (now.value - lastActive.value));
 
 watch(idle, (idleValue) => {
   if (idleValue) {

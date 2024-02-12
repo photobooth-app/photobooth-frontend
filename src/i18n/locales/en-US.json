@@ -48,6 +48,7 @@
   "MSG_CONFIRM_UNINSTALL_SERVICE": "You sure to uninstall the service?",
   "MSG_CONNECTING_TO_BACKEND": "Connecting to server. Please wait for autoconnect or try reload.",
   "MSG_ERROR_NOT_FOUND": "Oops. Nothing here...",
+  "MSG_WARN_BEFORE_AUTO_SLIDESHOW": "Auto-starting slideshow... Click anywhere to stay on this page.",
   "TAB_LABEL_DASHBOARD": "Dashboard",
   "TAB_LABEL_GALLERY": "Gallery",
   "TAB_LABEL_CONFIG": "Config",

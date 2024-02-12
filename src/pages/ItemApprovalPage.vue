@@ -43,6 +43,7 @@
       v-if="this.uiSettingsStore.uiSettings.TIMEOUT_TO_SLIDESHOW > 0"
       route="/slideshow/gallery"
       :timeout_ms="this.uiSettingsStore.uiSettings.TIMEOUT_TO_SLIDESHOW * 1000"
+      :warning_message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
     ></RouteAfterTimeout>
   </q-page>
 </template>
