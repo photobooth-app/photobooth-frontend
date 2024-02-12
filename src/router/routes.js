@@ -51,12 +51,6 @@ const routes = [
     component: () => import("layouts/StandaloneLayout.vue"),
     children: [{ path: "gallery", component: () => import("pages/GalleryPage.vue") }],
   },
-  {
-    // slideshow layout
-    path: "/slideshow",
-    component: () => import("layouts/GalleryLayout.vue"),
-    children: [{ path: "gallery", component: () => import("pages/SlideshowPage.vue") }],
-  },
 
   // Always leave this as last one,
   // but you can also remove it

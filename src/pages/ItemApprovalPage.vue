@@ -1,13 +1,10 @@
 <template>
   <q-page class="flex flex-center">
-
-    <q-card style="height: 95vh" id="item-approval-container">
+    <q-card style="height: 95vh">
       <q-card-section align="center">
-
         <div class="text-h6">{{ $t("TITLE_ITEM_APPROVAL") }}</div>
         <div class="text-subtitle1">
           <span>{{ $t("MSG_APPROVE_COLLAGE_ITEM_XXX_COUNT_TOTAL") }}</span>
-
           {{ this.stateStore.number_captures_taken }}
           <span>{{ $t("MSG_APPROVE_COLLAGE_ITEM_COUNT_XXX_TOTAL") }}</span>
           {{ this.stateStore.total_captures_to_take }}
@@ -15,26 +12,24 @@
         </div>
       </q-card-section>
 
-      <q-card-section style="padding: 2vh 1vw 2vh 1vw; max-height: 72vh">
-        <q-img class="rounded-borders" :src="imgToApproveSrc" fit="contain" spinner-color="primary" style="max-height: 68vh" />
+      <q-card-section class="">
+        <q-img class="rounded-borders" :src="imgToApproveSrc" />
         <!-- video approval not yet supported -->
       </q-card-section>
 
-
-      <q-card-actions align="around" id="item-approval-actions">
-        <q-btn color="negative" no-caps @click="userReject()" class="" id="item-approval-button-reject">
+      <q-card-actions align="around">
+        <q-btn color="negative" no-caps @click="userReject()" class="">
           <q-icon left size="7em" name="thumb_down" />
           <div>{{ $t("MSG_APPROVE_COLLAGE_ITEM_RETRY") }}</div>
         </q-btn>
 
-        <q-btn flat color="grey" no-caps @click="userAbort()" class="" id="item-approval-button-abort">
+        <q-btn flat color="grey" no-caps @click="userAbort()" class="">
           <q-icon left size="7em" name="cancel" />
           <div>{{ $t("MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE") }}</div>
         </q-btn>
 
-        <q-btn color="positive" no-caps @click="userConfirm()" id="item-approval-button-approve">
+        <q-btn color="positive" no-caps @click="userConfirm()">
           <q-icon left size="7em" name="thumb_up" />
-
           <div>
             <div>{{ $t("MSG_APPROVE_COLLAGE_ITEM_APPROVE") }}</div>
           </div>
