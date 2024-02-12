@@ -67,7 +67,7 @@ module.exports = {
 
   settings: {
     "vue-i18n": {
-      localeDir: "/src/i18n/locales/*.json",
+      localeDir: "./src/i18n/locales/*.json",
     },
   },
 };

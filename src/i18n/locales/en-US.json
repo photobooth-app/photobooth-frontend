@@ -43,6 +43,7 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "You sure to install the service?",
   "MSG_CONFIRM_SHUTDOWN": "You sure to shutdown the system?",
   "MSG_CONFIRM_REBOOT": "You sure to reboot the system?",
+  "MSG_CONFIRM_RELOAD_SERVICE": "You sure to reload the service?",
   "MSG_CONFIRM_RESTART_SERVICE": "You sure to restart the service?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "You sure to uninstall the service?",
   "MSG_CONNECTING_TO_BACKEND": "Connecting to server. Please wait for autoconnect or try reload.",

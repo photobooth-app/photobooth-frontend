@@ -42,6 +42,7 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Service wirklich installieren?",
   "MSG_CONFIRM_SHUTDOWN": "System wirklich herunterfahren?",
   "MSG_CONFIRM_REBOOT": "System wirklich neu starten?",
+  "MSG_CONFIRM_RELOAD_SERVICE": "Service wirklich neu laden?",
   "MSG_CONFIRM_RESTART_SERVICE": "Service wirklich neu starten?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Service wirklich deinstallieren?",
   "MSG_CONNECTING_TO_BACKEND": "Verbindung zum Server wird hergestellt. Bitte auf automatische Verbindung warten oder neu laden.",
