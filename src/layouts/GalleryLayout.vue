@@ -9,7 +9,8 @@
           <q-btn color="primary" no-caps to="/" class="action-button" id="gallery-button-to-frontpage">
             <q-icon left name="arrow_back_ios_new" />
 
-            <div v-html="$t('BTN_LABEL_BACK')"></div>
+            <div>{{ $t("BTN_LABEL_BACK") }}</div>
+
           </q-btn>
         </div>
       </q-page-sticky>

@@ -48,8 +48,9 @@
             id="frontpage-button-take-pic"
 
           >
-            <q-icon name="o_photo_camera" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
-            <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_PHOTO')"></div>
+            <q-icon name="o_photo_camera" />
+            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_PHOTO") }}</div>
+
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
@@ -63,8 +64,10 @@
             id="frontpage-button-take-collage"
 
           >
-            <q-icon name="o_auto_awesome_mosaic" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
-            <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_COLLAGE')"></div>
+
+            <q-icon name="o_auto_awesome_mosaic" />
+            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_COLLAGE") }}</div>
+
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
@@ -78,8 +81,10 @@
             id="frontpage-button-take-animation"
 
           >
-            <q-icon name="o_gif_box" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
-            <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_ANIMATION')"></div>
+
+            <q-icon name="o_gif_box" />
+            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_ANIMATION") }}</div>
+
           </q-btn>
 
           <q-btn
@@ -94,8 +99,10 @@
             id="frontpage-button-take-video"
 
           >
-            <q-icon name="o_movie" :style="uiSettingsStore.uiSettings.action_button_icon_style" />
-            <div style="white-space: nowrap" class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TAKE_VIDEO')"></div>
+
+            <q-icon name="o_movie" />
+            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_VIDEO") }}</div>
+
           </q-btn>
         </div>
       </div>
@@ -115,8 +122,10 @@
             id="frontage-button-to-gallery"
             :style="uiSettingsStore.uiSettings.gallery_button_style"
           >
-            <q-icon left name="photo_library" :style="uiSettingsStore.uiSettings.gallery_button_icon_style" />
-            <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_GALLERY')"></div>
+
+            <q-icon left name="photo_library" />
+            <div class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TO_GALLERY") }}</div>
+
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage"
@@ -128,7 +137,7 @@
             id="frontage-button-to-admin"
           >
             <q-icon left name="admin_panel_settings" />
-            <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_ADMIN')"></div>
+            <div class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TO_ADMIN") }}</div>
           </q-btn>
         </div>
       </div>
