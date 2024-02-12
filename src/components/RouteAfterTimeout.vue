@@ -1,12 +1,23 @@
 <template>
-  <q-page-sticky v-if="showWarning" position="center" align="center">
-    <q-card class="q-pa-sm" id="router-warn-auto-route-dialog">
-      <q-card-section class="row items-center">
-        <q-avatar icon="warning" color="primary" />
-        <span class="q-ml-sm">{{ warning_message }}</span>
+  <div v-if="showWarning">
+    <div class="fullscreen bg-secondary" style="z-index: 98; opacity: 0.5"></div>
+    <q-card class="q-pa-sm fixed-center text-h3" style="border-radius: 10px; z-index: 99" id="router-warn-auto-route-dialog">
+      <q-card-section horizontal>
+        <q-avatar icon="warning" color="primary" style="font-size: 7vh" />
+        <div class="q-ml-sm">{{ warning_message }}</div>
+      </q-card-section>
+      <q-card-section>
+        <q-linear-progress
+          class="absolute"
+          :value="remainingTime / warning_time_ms"
+          animation-speed="200"
+          color="secondary"
+          id="router-linear-progress-bar"
+          size="1vh"
+        />
       </q-card-section>
     </q-card>
-  </q-page-sticky>
+  </div>
 </template>
 
 <script setup>
@@ -38,7 +49,8 @@ const props = defineProps({
 
 const { idle, lastActive, reset } = useIdle(props.timeout_ms);
 const now = useTimestamp({ interval: 1000 });
-const showWarning = computed(() => props.warning_time_ms > props.timeout_ms - (now.value - lastActive.value));
+const remainingTime = computed(() => props.timeout_ms - (now.value - lastActive.value));
+const showWarning = computed(() => props.warning_time_ms > remainingTime.value);
 
 watch(idle, (idleValue) => {
   if (idleValue) {
