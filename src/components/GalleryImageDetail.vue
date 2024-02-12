@@ -1,7 +1,9 @@
 <template>
   <q-layout view="hhh Lpr ffr" @click="abortTimer" v-if="!emptyRepository">
     <q-header elevated class="bg-primary text-white">
-      <q-toolbar class="toolbar">
+
+      <q-toolbar class="toolbar" id="gallery-toolbar">
+
         <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
 
         <q-space />
@@ -11,12 +13,13 @@
           flat
           class="q-mr-sm"
           icon="delete"
+          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_DELETE')"
           @click="confirmDeleteFile = true"
         />
 
         <q-dialog v-model="confirmDeleteFile">
-          <q-card class="q-pa-sm" style="min-width: 350px">
+          <q-card class="q-pa-sm" style="min-width: 350px" id="gallery-confirm-delete-dialog">
             <q-card-section class="row items-center">
               <q-avatar icon="delete" color="primary" text-color="white" />
               <span class="q-ml-sm">{{ $t("MSG_CONFIRM_DELETE_IMAGE") }}</span>
@@ -33,7 +36,7 @@
                   $emit('closeEvent');
                 "
               />
-            </q-card-actions>
+            </q-card-actions
           </q-card>
         </q-dialog>
 
@@ -42,6 +45,7 @@
           flat
           class="q-mr-sm"
           icon="download"
+          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
           @click="
             (evt) => {
@@ -54,6 +58,7 @@
           flat
           class="q-mr-sm"
           icon="print"
+          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_PRINT')"
           @click="printItem(currentSlideId)"
         />
@@ -62,6 +67,7 @@
           flat
           class="q-mr-sm"
           icon="filter"
+          :style="uiSettingsStore.uiSettings.toolbar_icon_style"
           :label="$t('BTN_LABEL_GALLERY_FILTER')"
           :disabled="!getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
           @click="toggleRightDrawer"
@@ -69,13 +75,15 @@
 
         <q-space />
 
-        <div class="q-mr-sm" v-if="!singleItemView">
+        <div class="q-mr-sm" v-if="!singleItemView && uiSettingsStore.uiSettings.gallery_show_image_number">
           <q-icon name="tag" />
           <!-- eslint-disable-next-line -->
           <span>{{ currentSlideIndex + 1 }} / {{ itemRepository.length }} </span>
         </div>
-        <q-space />
-        <div class="q-mr-sm">
+
+        <q-space v-if="uiSettingsStore.uiSettings.gallery_show_file_name" />
+
+        <div class="q-mr-sm" v-if="uiSettingsStore.uiSettings.gallery_show_file_name">
           <q-icon name="image" />
           {{ itemRepository[currentSlideIndex]["caption"] }}
         </div>
@@ -87,6 +95,7 @@
         :value="remainingSecondsNormalized"
         animation-speed="200"
         color="grey"
+        id="gallery-linear-progress-bar"
         v-if="displayLinearProgressBar && remainingSeconds > 0"
       />
       <!-- progress bar to show waiting to load filter, ... -->
@@ -95,10 +104,11 @@
 
     <q-drawer
       class="q-pa-sm"
-      v-if="uiSettingsStore.uiSettings.gallery_show_filter && getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
+      v-if="uiSettingsStore.uiSettings.gallery_show_filter && getFilterAvailable(itemRepository[currentSlideIndex]['media_type']) && showToolbar"
       v-model="rightDrawerOpen"
       side="right"
       overlay
+      id="gallery-drawer-filters"
     >
       <q-card class="q-mb-sm" :key="filter" v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable">
         <q-card-section class="q-pa-sm">
@@ -152,12 +162,12 @@
           v-touch-swipe.mouse.down="handleSwipeDown"
           animated
           v-model="currentSlideId"
-          :autoplay="autoplay"
+          :autoplay="slideshowTimeout"
           draggable="false"
           arrows
           infinite
-          transition-prev="slide-right"
-          transition-next="slide-left"
+          :transition-prev="slideshowUseFade ? 'fade' : 'slide-right'"
+          :transition-next="slideshowUseFade ? 'fade' : 'slide-left'"
           @transition="
             (newVal, oldVal) => {
               currentSlideIndex = itemRepository.findIndex((item) => item.id === newVal);
@@ -187,7 +197,7 @@
         </q-carousel>
       </div>
 
-      <q-page-sticky v-if="uiSettingsStore.uiSettings.gallery_show_qrcode" position="top-right" :offset="[30, 30]">
+      <q-page-sticky v-if="uiSettingsStore.uiSettings.gallery_show_qrcode && showToolbar" position="top-right" :offset="[30, 30]">
         <div>
           <vue-qrcode
             type="image/png"
@@ -245,6 +255,21 @@ export default {
     },
     singleItemView: {
       // viewing single captured file, dont load carousel. used for itempresenter on approval during job processing.
+      type: Boolean,
+      default: false,
+    },
+    showToolbar: {
+      // whether to display the toolbar on top
+      type: Boolean,
+      default: true,
+    },
+    slideshowTimeout: {
+      // ms between automatically displaying next slide
+      type: Number,
+      default: 0,
+    },
+    slideshowUseFade: {
+      // whether to use 'fade' transition used in automatic slideshow
       type: Boolean,
       default: false,
     },

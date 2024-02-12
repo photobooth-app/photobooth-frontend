@@ -16,7 +16,12 @@
     </div>
 
     <!-- layer display the countdown timer -->
-    <div class="full-height full-width column justify-center content-center" style="position: absolute" v-if="showCountdownCounting">
+    <div
+      class="full-height full-width column justify-center content-center"
+      style="position: absolute"
+      v-if="showCountdownCounting"
+      id="frontage-countdown"
+    >
       <countdown-timer
         ref="countdowntimer"
         :duration="this.stateStore.duration"
@@ -39,9 +44,13 @@
             rounded
             @click="takePicture(/**/)"
             class="action-button col-auto"
+
+            id="frontpage-button-take-pic"
+
           >
             <q-icon name="o_photo_camera" />
             <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_PHOTO") }}</div>
+
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
@@ -51,9 +60,14 @@
             rounded
             @click="takeCollage()"
             class="action-button col-auto"
+
+            id="frontpage-button-take-collage"
+
           >
+
             <q-icon name="o_auto_awesome_mosaic" />
             <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_COLLAGE") }}</div>
+
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
@@ -63,9 +77,14 @@
             rounded
             @click="takeAnimation()"
             class="action-button col-auto"
+
+            id="frontpage-button-take-animation"
+
           >
+
             <q-icon name="o_gif_box" />
             <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_ANIMATION") }}</div>
+
           </q-btn>
 
           <q-btn
@@ -76,9 +95,14 @@
             rounded
             @click="takeVideo()"
             class="action-button col-auto"
+
+            id="frontpage-button-take-video"
+
           >
+
             <q-icon name="o_movie" />
             <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_VIDEO") }}</div>
+
           </q-btn>
         </div>
       </div>
@@ -93,14 +117,25 @@
             no-caps
             rounded
             to="/gallery"
+            @click="abortTimer()"
             class="action-button"
-            id="frontage-gallery-button"
+            id="frontage-button-to-gallery"
             :style="uiSettingsStore.uiSettings.gallery_button_style"
           >
+
             <q-icon left name="photo_library" />
             <div class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TO_GALLERY") }}</div>
+
           </q-btn>
-          <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" rounded color="secondary" no-caps to="/admin" class="action-button">
+          <q-btn
+            v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage"
+            rounded
+            color="secondary"
+            no-caps
+            to="/admin"
+            class="action-button"
+            id="frontage-button-to-admin"
+          >
             <q-icon left name="admin_panel_settings" />
             <div class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TO_ADMIN") }}</div>
           </q-btn>
@@ -109,7 +144,7 @@
     </q-page-sticky>
 
     <!-- video state controls -->
-    <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center">
+    <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center" id="frontage-indicator-recording">
       <q-spinner-puff color="red" size="10em" />
       <br />
       <q-btn flat color="red" label="Stop recording" @click="stopRecordingVideo()" />
@@ -140,22 +175,57 @@ export default defineComponent({
       stateStore,
       uiSettingsStore,
       remoteProcedureCall,
+      /* timer stuff */
+      intervalTimerId: null,
+      remainingSeconds: 0,
+      remainingSecondsNormalized: 0,
     };
+  },
+  mounted() {
+    this.startTimer();
+  },
+
+  beforeUnmount() {
+    this.abortTimer();
   },
 
   methods: {
     takePicture() {
+      this.abortTimer();
       remoteProcedureCall("/processing/chose/1pic");
     },
     takeCollage() {
+      this.abortTimer();
       remoteProcedureCall("/processing/chose/collage");
     },
     takeAnimation() {
+      this.abortTimer();
       remoteProcedureCall("/processing/chose/animation");
     },
     takeVideo() {
+      this.abortTimer();
       remoteProcedureCall("/processing/chose/video");
     },
+    abortTimer() {
+      clearInterval(this.intervalTimerId);
+      this.remainingSeconds = 0;
+      this.remainingSecondsNormalized = 0;
+    },
+    startTimer() {
+      var duration = this.uiSettingsStore.uiSettings["TIMEOUT_TO_SLIDESHOW"];
+      console.log(`starting newitemarrived timer, duration=${duration}`);
+      this.remainingSeconds = duration;
+
+      this.intervalTimerId = setInterval(() => {
+        this.remainingSecondsNormalized = this.remainingSeconds / duration;
+
+        this.remainingSeconds -= 0.05;
+
+        if (this.remainingSeconds <= 0) {
+          clearInterval(this.intervalTimerId);
+          this.$router.push({ path: "/slideshow/gallery" });
+        }
+      }, 50);
     stopRecordingVideo() {
       remoteProcedureCall("/processing/cmd/stop");
     },
