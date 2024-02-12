@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-center" style="width: 70vw; height: 70vh" v-show="showBox">
-    <div style="position: absolute; font-size: 150px" v-show="showMessage" v-html="messageText"></div>
+  <div class="flex flex-center" style="width: 70vw; height: 70vh" v-show="showBox" id="countdown-timer-container">
+    <div style="position: absolute; font-size: 150px" v-show="showMessage" v-html="messageText" id="countdown-timer-message"></div>
     <q-circular-progress
       v-show="showCountdown"
       show-value

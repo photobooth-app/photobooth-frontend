@@ -1,9 +1,9 @@
 <template>
   <q-page class="flex flex-center">
-    <q-card style="height: 95vh">
+    <q-card style="height: 95vh" id="item-approval-container">
       <q-card-section align="center">
-        <div class="text-h6" v-html="$t('TITLE_ITEM_APPROVAL')"></div>
-        <div class="text-subtitle1">
+        <div class="text-h6" v-html="$t('TITLE_ITEM_APPROVAL')" id="item-approval-title"></div>
+        <div class="text-subtitle1" id="item-approval-subtitle">
           <span v-html="$t('MSG_APPROVE_COLLAGE_ITEM_XXX_COUNT_TOTAL')"></span>
           {{ this.stateStore.number_captures_taken }}
           <span v-html="$t('MSG_APPROVE_COLLAGE_ITEM_COUNT_XXX_TOTAL')"></span>
@@ -17,18 +17,18 @@
         <!-- video approval not yet supported -->
       </q-card-section>
 
-      <q-card-actions align="around">
-        <q-btn color="negative" no-caps @click="userReject()" class="">
+      <q-card-actions align="around" id="item-approval-actions">
+        <q-btn color="negative" no-caps @click="userReject()" class="" id="item-approval-button-reject">
           <q-icon left size="7em" name="thumb_down" />
           <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_RETRY')"></div>
         </q-btn>
 
-        <q-btn flat color="grey" no-caps @click="userAbort()" class="">
+        <q-btn flat color="grey" no-caps @click="userAbort()" class="" id="item-approval-button-abort">
           <q-icon left size="7em" name="cancel" />
           <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE')"></div>
         </q-btn>
 
-        <q-btn color="positive" no-caps @click="userConfirm()">
+        <q-btn color="positive" no-caps @click="userConfirm()" id="item-approval-button-approve">
           <q-icon left size="7em" name="thumb_up" />
           <div>
             <div v-html="$t('MSG_APPROVE_COLLAGE_ITEM_APPROVE')"></div>
