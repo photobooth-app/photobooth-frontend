@@ -30,12 +30,13 @@
 
     <q-page-sticky position="bottom" :offset="[0, 25]">
       <div v-if="showFrontpage">
-        <div class="row q-gutter-sm">
+        <div class="row q-gutter-md">
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takepic_on_frontpage"
             stack
             color="primary"
             no-caps
+            rounded
             @click="takePicture(/**/)"
             class="action-button col-auto"
             :style="uiSettingsStore.uiSettings.action_button_style"
@@ -48,6 +49,7 @@
             stack
             color="primary"
             no-caps
+            rounded
             @click="takeCollage()"
             class="action-button col-auto"
             :style="uiSettingsStore.uiSettings.action_button_style"
@@ -60,6 +62,7 @@
             stack
             color="primary"
             no-caps
+            rounded
             @click="takeAnimation()"
             class="action-button col-auto"
             :style="uiSettingsStore.uiSettings.action_button_style"
@@ -73,6 +76,7 @@
             stack
             color="primary"
             no-caps
+            rounded
             @click="takeVideo()"
             class="action-button col-auto"
             :style="uiSettingsStore.uiSettings.action_button_style"
@@ -86,11 +90,12 @@
 
     <q-page-sticky position="top-left" :offset="[25, 25]">
       <div v-if="showFrontpage">
-        <div class="q-gutter-sm">
+        <div class="q-gutter-md">
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage"
             color="primary"
             no-caps
+            rounded
             to="/gallery"
             @click="abortTimer()"
             class="action-button"
@@ -100,7 +105,7 @@
             <q-icon left name="photo_library" :style="uiSettingsStore.uiSettings.gallery_button_icon_style" />
             <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_GALLERY')"></div>
           </q-btn>
-          <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" color="secondary" no-caps to="/admin" class="action-button">
+          <q-btn v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage" rounded color="secondary" no-caps to="/admin" class="action-button">
             <q-icon left name="admin_panel_settings" />
             <div class="gt-sm" v-html="$t('BTN_LABEL_MAINPAGE_TO_ADMIN')"></div>
           </q-btn>
@@ -110,9 +115,9 @@
 
     <!-- video state controls -->
     <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center">
-      <q-spinner-puff color="red" size="7em" />
+      <q-spinner-puff color="red" size="10em" />
       <br />
-      <q-btn flat color="red" label="Stop recording (not yet implemented)" />
+      <q-btn flat color="red" label="Stop recording" @click="stopRecordingVideo()" />
     </q-page-sticky>
   </q-page>
 </template>
@@ -191,6 +196,8 @@ export default defineComponent({
           this.$router.push({ path: "/slideshow/gallery" });
         }
       }, 50);
+    stopRecordingVideo() {
+      remoteProcedureCall("/processing/cmd/stop");
     },
   },
   watch: {},
@@ -223,7 +230,7 @@ export default defineComponent({
     showPreview: {
       get() {
         const enabled = true;
-        const machineIdle = this.stateStore.state == "idle";
+        const machineIdle = !this.stateStore.state || this.stateStore.state == "finished";
         const machineRecord = this.stateStore.state == "record";
         const machineCounting = this.stateStore.state == "counting";
 
@@ -232,7 +239,8 @@ export default defineComponent({
     },
     showFrontpage: {
       get() {
-        return this.stateStore.state == "idle";
+        // show if state not defined (no job ongoing or finished)
+        return !this.stateStore.state || this.stateStore.state == "finished";
       },
     },
   },

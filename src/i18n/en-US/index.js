@@ -69,4 +69,5 @@ export default {
   TITLE_ITEM_APPROVAL: "Nice?",
   TITLE_MAINTAIN_GALLERY: "Maintain gallery",
   TITLE_SERVER_CONTROL: "Server control",
+  TITLE_LOCAL_UI_SETTINGS: "Local UI Settings",
 };

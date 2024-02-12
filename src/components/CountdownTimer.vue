@@ -1,5 +1,6 @@
 <template>
-  <div style="width: 70vw; height: 70vh" v-show="showBox">
+  <div class="flex flex-center" style="width: 70vw; height: 70vh" v-show="showBox">
+    <div style="position: absolute; font-size: 150px" v-show="showMessage" v-html="messageText"></div>
     <q-circular-progress
       v-show="showCountdown"
       show-value
@@ -14,7 +15,6 @@
     >
       {{ parseFloat(remainingSeconds.toFixed(0)) }}
     </q-circular-progress>
-    <div v-show="showMessage" v-html="messageText"></div>
   </div>
 </template>
 

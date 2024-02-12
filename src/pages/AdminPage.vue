@@ -6,7 +6,7 @@
         <div class="q-ma-sm">
           <div class="text-no-wrap">
             <q-dialog v-model="confirm_reboot">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="restart_alt" color="primary" text-color="white" />
                   <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_REBOOT')"></span>
@@ -20,7 +20,7 @@
             </q-dialog>
 
             <q-dialog v-model="confirm_shutdown">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="power_settings_new" color="primary" text-color="white" />
                   <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_SHUTDOWN')"></span>
@@ -34,7 +34,7 @@
             </q-dialog>
 
             <q-dialog v-model="confirm_restart_service">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="restart_alt" color="primary" text-color="white" />
                   <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_RESTART_SERVICE')"></span>
@@ -53,7 +53,7 @@
             </q-dialog>
 
             <q-dialog v-model="confirm_reload_service">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="restart_alt" color="primary" text-color="white" />
                   <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_RELOAD_SERVICE')"></span>
@@ -72,7 +72,7 @@
             </q-dialog>
 
             <q-dialog v-model="confirm_install_service">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="add_circle" color="primary" text-color="white" />
                   <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_INSTALL_SERVICE')"></span>
@@ -91,7 +91,7 @@
             </q-dialog>
 
             <q-dialog v-model="confirm_uninstall_service">
-              <q-card class="q-pa-sm">
+              <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="cancel" color="primary" text-color="white" />
                   <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_UNINSTALL_SERVICE')"></span>
@@ -111,7 +111,6 @@
             <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_REBOOT_HOST')" @click="confirm_reboot = true" />
             <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_SHUTDOWN_HOST')" @click="confirm_shutdown = true" />
             <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_RESTART_SERVICE')" @click="confirm_restart_service = true" />
-            <!--TODO: does not work reliable. may be removed <q-btn class="q-mr-sm" label="Reload Service" @click="confirm_reload_service = true" /> -->
             <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_INSTALL_SERVICE')" @click="confirm_install_service = true" />
             <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_UNINSTALL_SERVICE')" @click="confirm_uninstall_service = true" />
           </div>
@@ -142,6 +141,13 @@
         </div>
       </div>
     </q-card>
+
+    <q-card class="q-pa-md q-mt-md">
+      <div class="text-h5" v-html="$t('TITLE_LOCAL_UI_SETTINGS')"></div>
+      <div class="row">
+        <language-switcher />
+      </div>
+    </q-card>
   </q-page>
 </template>
 
@@ -149,10 +155,11 @@
 import { defineComponent, ref } from "vue";
 import { useMainStore } from "../stores/main-store.js";
 import { remoteProcedureCall } from "boot/axios";
+import LanguageSwitcher from "../components/LanguageSwitcher.vue";
 
 export default defineComponent({
   name: "MainLayout",
-
+  components: { LanguageSwitcher },
   setup() {
     const store = useMainStore();
 

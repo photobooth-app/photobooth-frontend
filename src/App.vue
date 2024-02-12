@@ -123,7 +123,11 @@ export default defineComponent({
         .on("ProcessStateinfo", (procinfo) => {
           const _procinfo = JSON.parse(procinfo);
           console.log("ProcessStateinfo", _procinfo);
-          Object.assign(this.stateStore, JSON.parse(procinfo));
+          if (Object.keys(_procinfo).length === 0 && _procinfo.constructor === Object) {
+            this.stateStore.$reset();
+          } else {
+            Object.assign(this.stateStore, _procinfo);
+          }
         })
         .on("DbInsert", (data) => {
           const _data = JSON.parse(data);

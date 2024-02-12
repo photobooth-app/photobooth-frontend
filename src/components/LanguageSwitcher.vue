@@ -1,19 +1,9 @@
 <template>
-  <!-- ...... -->
-  <q-icon style="font-size: 24px" name="language"> </q-icon>
-  <q-select
-    v-model="locale"
-    :options="localeOptions"
-    label="Language"
-    dense
-    borderless
-    emit-value
-    map-options
-    options-dense
-    style="min-width: 80px"
-    @update:model-value="(locale) => storeLocale(locale)"
-  />
-  <!-- ...... -->
+  <q-select v-model="locale" :options="localeOptions" label="Language" emit-value map-options @update:model-value="(locale) => storeLocale(locale)">
+    <template v-slot:prepend>
+      <q-icon name="language" />
+    </template>
+  </q-select>
 </template>
 
 <script>

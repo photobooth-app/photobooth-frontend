@@ -16,8 +16,8 @@
           @click="confirmDeleteFile = true"
         />
 
-        <q-dialog :style="uiSettingsStore.uiSettings.dialog_style" v-model="confirmDeleteFile">
-          <q-card class="q-pa-sm">
+        <q-dialog v-model="confirmDeleteFile">
+          <q-card class="q-pa-sm" style="min-width: 350px">
             <q-card-section class="row items-center">
               <q-avatar icon="delete" color="primary" text-color="white" />
               <span class="q-ml-sm" v-html="$t('MSG_CONFIRM_DELETE_IMAGE')"></span>
@@ -248,7 +248,7 @@ export default {
       default: false,
     },
     singleItemView: {
-      // viewing single captured file -> user is always allowed to delete, don't allow scrolling to other images
+      // viewing single captured file, dont load carousel. used for itempresenter on approval during job processing.
       type: Boolean,
       default: false,
     },

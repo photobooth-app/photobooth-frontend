@@ -14,6 +14,8 @@ const STATES = {
 export const useUiSettingsStore = defineStore("ui-settings-store", {
   state: () => ({
     uiSettings: {
+      PRIMARY_COLOR: "#196cb0",
+      SECONDARY_COLOR: "#b8124f",
       show_takepic_on_frontpage: null,
       show_takecollage_on_frontpage: null,
       show_takeanimation_on_frontpage: null,
@@ -25,6 +27,7 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       FRONTPAGE_TEXT: null,
       TAKEPIC_TEXT: null,
       TAKEPIC_MSG_TIME: null,
+      TAKEPIC_MSG_TEXT: null,
       AUTOCLOSE_NEW_ITEM_ARRIVED: null,
 
       GALLERY_EMPTY_MSG: null,
@@ -57,9 +60,6 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
           // apply theme settings
           setCssVar("primary", res.data["PRIMARY_COLOR"]);
           setCssVar("secondary", res.data["SECONDARY_COLOR"]);
-
-          // TODO:
-          // - button style (rounding and alike, maybe pure css here?)
 
           this.uiSettings = res.data;
           this.storeState = STATES.DONE;

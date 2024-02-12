@@ -68,4 +68,5 @@ export default {
   TITLE_ITEM_APPROVAL: "Zufrieden?",
   TITLE_MAINTAIN_GALLERY: "Wartung der Gallerie",
   TITLE_SERVER_CONTROL: "Server Steuerung",
+  TITLE_LOCAL_UI_SETTINGS: "Lokale Einstellungen der Oberfläche",
 };
