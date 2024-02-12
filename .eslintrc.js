@@ -30,6 +30,8 @@ module.exports = {
     // https://github.com/prettier/eslint-config-prettier#installation
     // usage with Prettier, provided by 'eslint-config-prettier'.
     "prettier",
+
+    "plugin:@intlify/vue-i18n/recommended",
   ],
 
   plugins: [
@@ -61,5 +63,11 @@ module.exports = {
 
     // allow debugger during development only
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+  },
+
+  settings: {
+    "vue-i18n": {
+      localeDir: "/src/i18n/locales/*.json",
+    },
   },
 };

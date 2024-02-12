@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <q-page padding>
     <h4>Getting started?</h4>

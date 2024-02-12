@@ -11,7 +11,7 @@
       <q-dialog v-model="dialog_create_new_folder">
         <q-card style="min-width: 350px">
           <q-card-section>
-            <div class="text-h6" v-html="$t('TITLE_FILES_NEW_FOLDER_DIALOG')"></div>
+            <div class="text-h6">{{ $t("TITLE_FILES_NEW_FOLDER_DIALOG") }}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -36,7 +36,7 @@
       <q-dialog v-model="dialog_upload_files">
         <q-card style="min-width: 350px">
           <q-card-section>
-            <div class="text-h6" v-html="$t('TITLE_FILES_UPLOAD_FILES_DIALOG')"></div>
+            <div class="text-h6">{{ $t("TITLE_FILES_UPLOAD_FILES_DIALOG") }}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">

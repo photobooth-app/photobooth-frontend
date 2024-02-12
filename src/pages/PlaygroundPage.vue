@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <q-page padding>
     <div class="q-pa-md">

@@ -18,7 +18,9 @@
 
         <q-space />
 
-        <q-toolbar-title><span v-html="$t('TITLE_ADMIN_CENTER')"></span></q-toolbar-title>
+        <q-toolbar-title
+          ><span>{{ $t("TITLE_ADMIN_CENTER") }}</span></q-toolbar-title
+        >
 
         <q-space />
 
