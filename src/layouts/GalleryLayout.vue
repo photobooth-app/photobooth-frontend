@@ -7,7 +7,6 @@
         <div class="q-gutter-sm">
           <q-btn color="primary" no-caps to="/" class="action-button" id="gallery-button-to-frontpage">
             <q-icon left name="arrow_back_ios_new" />
-
             <div>{{ $t("BTN_LABEL_BACK") }}</div>
           </q-btn>
         </div>
@@ -18,18 +17,12 @@
 
 <script>
 import { defineComponent } from "vue";
-import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 
 export default defineComponent({
   name: "GalleryLayout",
 
   components: {},
   computed: {},
-  setup() {
-    const uiSettingsStore = useUiSettingsStore();
-    return {
-      uiSettingsStore,
-    };
-  },
+  setup() {},
 });
 </script>

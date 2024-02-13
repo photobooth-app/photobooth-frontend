@@ -12,7 +12,7 @@
         </div>
       </q-card-section>
 
-      <q-card-section style="padding: 2vh 1vw 2vh 1vw; max-height: 72vh">
+      <q-card-section class="">
         <q-img class="rounded-borders" :src="imgToApproveSrc" fit="contain" spinner-color="primary" style="max-height: 68vh" />
         <!-- video approval not yet supported -->
       </q-card-section>
@@ -30,7 +30,6 @@
 
         <q-btn color="positive" no-caps @click="userConfirm()" id="item-approval-button-approve">
           <q-icon left size="7em" name="thumb_up" />
-
           <div>
             <div>{{ $t("MSG_APPROVE_COLLAGE_ITEM_APPROVE") }}</div>
           </div>

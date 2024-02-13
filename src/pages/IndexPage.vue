@@ -102,7 +102,6 @@
             no-caps
             rounded
             to="/gallery"
-            @click="abortTimer()"
             class="action-button"
             id="frontpage-button-to-gallery"
             :style="uiSettingsStore.uiSettings.gallery_button_style"
@@ -167,10 +166,6 @@ export default defineComponent({
       stateStore,
       uiSettingsStore,
       remoteProcedureCall,
-      /* timer stuff */
-      intervalTimerId: null,
-      remainingSeconds: 0,
-      remainingSecondsNormalized: 0,
     };
   },
   methods: {
