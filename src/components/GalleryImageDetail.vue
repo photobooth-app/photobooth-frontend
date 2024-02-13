@@ -158,13 +158,29 @@
           v-model="currentSlideId"
           :autoplay="slideshowTimeout"
           draggable="false"
-          arrows
-          infinite
+          :arrows="showToolbar"
+          :infinite="true"
           :transition-prev="slideshowUseFade ? 'fade' : 'slide-right'"
           :transition-next="slideshowUseFade ? 'fade' : 'slide-left'"
           @transition="
             (newVal, oldVal) => {
-              currentSlideIndex = itemRepository.findIndex((item) => item.id === newVal);
+              if (randomOrder) {
+                let arrayIndex = slicedImages.findIndex((item) => item.id == newVal);
+                currentSlideIndex = rndIncides[arrayIndex];
+                // Rotate array to stay in the center
+                if (arrayIndex > 2) {
+                  // transition to 'next' slide, i.e. one up in array
+                  rndIncides = rndIncides.slice(1, 5);
+                  rndIncides.push(Math.floor(Math.random() * itemRepository.length));
+                } else {
+                  // transition to 'prev' slide, i.e. one down in array
+                  rndIncides = rndIncides.slice(0, 4);
+                  rndIncides.unshift(Math.floor(Math.random() * itemRepository.length));
+                }
+              } else {
+                currentSlideIndex = itemRepository.findIndex((item) => item.id === newVal);
+              }
+              console.log('Showing slide ', currentSlideIndex);
               abortTimer();
             }
           "
@@ -267,6 +283,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    randomOrder: {
+      // display images in a random order
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     emptyRepository() {
@@ -275,20 +296,30 @@ export default {
     // a computed getter
     slicedImages() {
       // `this` points to the component instance
-      console.log("changed");
-      const window = 5;
-      var totalItems = this.itemRepository.length;
-      var lowerBound = Math.max(0, this.currentSlideIndex - 2);
-      var upperBound = Math.max(0, this.currentSlideIndex + 3);
-      console.log(this.itemRepository.slice(lowerBound, upperBound));
-      return this.itemRepository.slice(lowerBound, upperBound);
+      if (!this.randomOrder) {
+        var lowerBound = Math.max(0, this.currentSlideIndex - 2);
+        var upperBound = Math.max(0, this.currentSlideIndex + 3);
+        console.log(this.itemRepository.slice(lowerBound, upperBound));
+        return this.itemRepository.slice(lowerBound, upperBound);
+      } else {
+        this.currentSlideIndex; // force "computed" update
+        console.log(this.rndIncides.map((i) => this.itemRepository[i]));
+        return this.rndIncides.map((i) => this.itemRepository[i]);
+      }
     },
   },
   beforeCreate() {
-    console.log(this.indexSelected);
-    this.currentSlideIndex = this.indexSelected;
-    this.currentSlideId = this.itemRepository[this.indexSelected].id;
-    //this.currentId = this.index;
+    if (!this.emptyRepository) {
+      if (this.randomOrder) {
+        this.rndIncides = Array.from({ length: 5 }, () => Math.floor(Math.random() * this.itemRepository.length));
+        this.currentSlideIndex = this.rndIncides[2];
+      } else {
+        this.currentSlideIndex = this.indexSelected;
+      }
+      console.log("currentSlideIndex:", this.currentSlideIndex);
+      this.currentSlideId = this.itemRepository[this.currentSlideIndex].id;
+      //this.currentId = this.index;
+    }
   },
   data() {
     return {

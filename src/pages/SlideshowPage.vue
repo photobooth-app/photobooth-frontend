@@ -7,6 +7,7 @@
       :slideshowUseFade="true"
       :itemRepository="this.mediacollectionStore.collection"
       :indexSelected="indexSelected"
+      :randomOrder="true"
       class="full-height"
     ></gallery-image-detail>
   </q-page>
