@@ -69,15 +69,15 @@
 
         <q-space />
 
-        <div class="q-mr-sm" v-if="!singleItemView && uiSettingsStore.uiSettings.gallery_show_image_number">
+        <div class="q-mr-sm" v-if="!singleItemView">
           <q-icon name="tag" />
           <!-- eslint-disable-next-line -->
           <span>{{ currentSlideIndex + 1 }} / {{ itemRepository.length }} </span>
         </div>
 
-        <q-space v-if="uiSettingsStore.uiSettings.gallery_show_file_name" />
+        <q-space />
 
-        <div class="q-mr-sm" v-if="uiSettingsStore.uiSettings.gallery_show_file_name">
+        <div class="q-mr-sm">
           <q-icon name="image" />
           {{ itemRepository[currentSlideIndex]["caption"] }}
         </div>
