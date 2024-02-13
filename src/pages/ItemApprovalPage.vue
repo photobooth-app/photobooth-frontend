@@ -13,7 +13,7 @@
       </q-card-section>
 
       <q-card-section class="">
-        <q-img class="rounded-borders" :src="imgToApproveSrc" fit="contain" spinner-color="primary" style="max-height: 68vh" />
+        <q-img class="rounded-borders" :src="imgToApproveSrc" />
         <!-- video approval not yet supported -->
       </q-card-section>
 
