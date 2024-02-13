@@ -18,15 +18,15 @@
 
         <q-space />
 
-        <q-toolbar-title
-          ><span>{{ $t("TITLE_ADMIN_CENTER") }}</span></q-toolbar-title
-        >
+        <q-toolbar-title>
+          <span>{{ $t("TITLE_ADMIN_CENTER") }}</span>
+        </q-toolbar-title>
 
         <q-space />
 
-        <a href="https://photobooth-app.org/" target="_new" class="q-mr-lg"
-          ><img src="icons/logo-notext-white-transparent.png" style="max-height: 40px"
-        /></a>
+        <a href="https://photobooth-app.org/" target="_new" class="q-mr-lg">
+          <img src="icons/logo-notext-white-transparent.png" style="max-height: 40px" />
+        </a>
       </q-toolbar>
     </q-header>
 

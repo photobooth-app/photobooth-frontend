@@ -20,7 +20,7 @@
       class="full-height full-width column justify-center content-center"
       style="position: absolute"
       v-if="showCountdownCounting"
-      id="frontage-countdown"
+      id="frontpage-countdown"
     >
       <countdown-timer
         ref="countdowntimer"
@@ -104,7 +104,7 @@
             to="/gallery"
             @click="abortTimer()"
             class="action-button"
-            id="frontage-button-to-gallery"
+            id="frontpage-button-to-gallery"
             :style="uiSettingsStore.uiSettings.gallery_button_style"
           >
             <q-icon left name="photo_library" />
@@ -117,7 +117,7 @@
             no-caps
             to="/admin"
             class="action-button"
-            id="frontage-button-to-admin"
+            id="frontpage-button-to-admin"
           >
             <q-icon left name="admin_panel_settings" />
             <div class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TO_ADMIN") }}</div>
@@ -127,7 +127,7 @@
     </q-page-sticky>
 
     <!-- video state controls -->
-    <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center" id="frontage-indicator-recording">
+    <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center" id="frontpage-indicator-recording">
       <q-spinner-puff color="red" size="10em" />
       <br />
       <q-btn flat color="red" label="Stop recording" @click="stopRecordingVideo()" />
