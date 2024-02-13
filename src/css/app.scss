@@ -31,8 +31,16 @@ body {
 }
 
 .action-button {
+
   font-size: 1.6rem;
   * > .q-icon {
     font-size: 6.5rem;
+  }
+}
+
+.toolbar {
+  //font-size: 2rem;
+  .q-btn {
+    font-size: 1.1rem;
   }
 }
