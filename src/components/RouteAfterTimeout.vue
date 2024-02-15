@@ -1,30 +1,14 @@
 <template>
-  <div v-if="showWarning">
-    <div class="fullscreen bg-secondary" style="z-index: 98; opacity: 0.5"></div>
-    <q-card class="q-pa-sm fixed-center text-h3" style="border-radius: 10px; z-index: 99" id="router-warn-auto-route-dialog">
-      <q-card-section horizontal>
-        <q-avatar icon="warning" color="primary" style="font-size: 7vh" />
-        <div class="q-ml-sm">{{ warning_message }}</div>
-      </q-card-section>
-      <q-card-section>
-        <q-linear-progress
-          class="absolute"
-          :value="remainingTime / warning_time_ms"
-          animation-speed="200"
-          color="secondary"
-          id="router-linear-progress-bar"
-          size="1vh"
-        />
-      </q-card-section>
-    </q-card>
-  </div>
+  <div style="display: none" @beforeUnmount="hideNotification"></div>
 </template>
 
 <script setup>
 import { useIdle, useTimestamp } from "@vueuse/core";
 import { computed, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const router = useRouter();
 const props = defineProps({
   route: {
@@ -51,10 +35,37 @@ const { idle, lastActive, reset } = useIdle(props.timeout_ms);
 const now = useTimestamp({ interval: 1000 });
 const remainingTime = computed(() => props.timeout_ms - (now.value - lastActive.value));
 const showWarning = computed(() => props.warning_time_ms > remainingTime.value);
+let warningPopup = null;
+
+function showNotification() {
+  warningPopup = $q.notify({
+    progress: true,
+    message: props.warning_message,
+    color: "primary",
+    multiline: true,
+    timeout: remainingTime.value,
+    position: "center",
+    icon: "warning",
+  });
+}
+
+function hideNotification() {
+  if (warningPopup) {
+    warningPopup(); // this will close the notification
+  }
+}
+
+watch(showWarning, (showWarningValue) => {
+  if (showWarningValue) {
+    showNotification();
+  } else {
+    hideNotification();
+  }
+});
 
 watch(idle, (idleValue) => {
   if (idleValue) {
-    reset(); // restarts the idle timer. Does not change lastActive value
+    hideNotification();
     router.push({ path: props.route });
   }
 });
