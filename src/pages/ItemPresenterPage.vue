@@ -11,9 +11,9 @@
 
     <!-- auto-start slideshow after timeout -->
     <RouteAfterTimeout
-      v-if="this.uiSettingsStore.uiSettings.TIMEOUT_TO_SLIDESHOW > 0"
+      v-if="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout > 0"
       route="/slideshow/gallery"
-      :timeout_ms="this.uiSettingsStore.uiSettings.TIMEOUT_TO_SLIDESHOW * 1000"
+      :timeout_ms="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout * 1000"
       :warning_message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
     ></RouteAfterTimeout>
   </q-page>
