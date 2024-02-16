@@ -17,8 +17,8 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       PRIMARY_COLOR: "#196cb0",
       SECONDARY_COLOR: "#b8124f",
       show_takepic_on_frontpage: null,
-      show_takecollage_on_frontpage: null,
-      show_takeanimation_on_frontpage: null,
+      number_of_collage_configurations: null,
+      number_of_animation_configurations: null,
       show_takevideo_on_frontpage: null,
       show_gallery_on_frontpage: null,
       show_admin_on_frontpage: null,
@@ -29,7 +29,6 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       TAKEPIC_MSG_TIME: null,
       TAKEPIC_MSG_TEXT: null,
       AUTOCLOSE_NEW_ITEM_ARRIVED: null,
-      TIMEOUT_TO_SLIDESHOW: null,
 
       GALLERY_EMPTY_MSG: null,
       gallery_show_qrcode: null,
@@ -38,6 +37,20 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       gallery_show_download: null,
       gallery_show_delete: null,
       gallery_show_print: null,
+    },
+    appconfig: {
+      mediaprocessing_pipelines_collage: [
+        {
+          display_on_frontpage: null,
+          configuration_name: null,
+        },
+      ],
+      mediaprocessing_pipelines_animation: [
+        {
+          display_on_frontpage: null,
+          configuration_name: null,
+        },
+      ],
     },
 
     storeState: STATES.INIT,
@@ -53,16 +66,17 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       this.storeState = STATES.WIP;
 
       api
-        .get("/config/ui")
+        .get("/admin/config/currentActive")
         .then((res) => {
           console.log("loadUiSettings finished successfully");
           console.log(res.data);
 
-          // apply theme settings
-          setCssVar("primary", res.data["PRIMARY_COLOR"]);
-          setCssVar("secondary", res.data["SECONDARY_COLOR"]);
+          this.appconfig = res.data;
+          this.uiSettings = this.appconfig.uisettings;
 
-          this.uiSettings = res.data;
+          // apply theme settings
+          setCssVar("primary", this.uiSettings["PRIMARY_COLOR"]);
+          setCssVar("secondary", this.uiSettings["SECONDARY_COLOR"]);
           this.storeState = STATES.DONE;
         })
         .catch((e) => {

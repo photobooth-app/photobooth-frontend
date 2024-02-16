@@ -39,7 +39,7 @@ const routes = [
       },
       {
         name: "config",
-        path: "config/:section?",
+        path: "config/:section?/:subSection?",
         component: () => import("pages/ConfigPage.vue"),
       },
     ],

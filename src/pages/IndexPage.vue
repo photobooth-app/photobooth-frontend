@@ -49,33 +49,56 @@
             <q-icon name="o_photo_camera" />
             <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_PHOTO") }}</div>
           </q-btn>
-          <q-btn
-            v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
-            stack
-            color="primary"
-            no-caps
-            rounded
-            @click="takeCollage()"
-            class="action-button col-auto"
-            id="frontpage-button-take-collage"
-          >
-            <q-icon name="o_auto_awesome_mosaic" />
-            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_COLLAGE") }}</div>
-          </q-btn>
-          <q-btn
-            v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
-            stack
-            color="primary"
-            no-caps
-            rounded
-            @click="takeAnimation()"
-            class="action-button col-auto"
-            id="frontpage-button-take-animation"
-          >
-            <q-icon name="o_gif_box" />
-            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_ANIMATION") }}</div>
-          </q-btn>
-
+          <template v-for="collageId in uiSettingsStore.uiSettings.number_of_collage_configurations" :key="collageId">
+            <q-btn
+              v-if="uiSettingsStore.appconfig.mediaprocessing_pipelines_collage[collageId - 1].display_on_frontpage"
+              stack
+              color="primary"
+              no-caps
+              rounded
+              @click="takeCollage(collageId)"
+              class="action-button col-auto"
+              :id="`frontpage-button-take-collage-${collageId}`"
+            >
+              <q-icon name="o_auto_awesome_mosaic" />
+              <div
+                style="white-space: nowrap"
+                class="gt-sm"
+                v-if="uiSettingsStore.appconfig.mediaprocessing_pipelines_collage[collageId - 1].configuration_name == ''"
+              >
+                <!-- eslint-disable-next-line -->
+                {{ $t("BTN_LABEL_MAINPAGE_TAKE_COLLAGE") }}-{{ collageId }}
+              </div>
+              <div style="white-space: nowrap" class="gt-sm" v-else>
+                {{ uiSettingsStore.appconfig.mediaprocessing_pipelines_collage[collageId - 1].configuration_name }}
+              </div>
+            </q-btn>
+          </template>
+          <template v-for="animationId in uiSettingsStore.uiSettings.number_of_animation_configurations" :key="animationId">
+            <q-btn
+              v-if="uiSettingsStore.appconfig.mediaprocessing_pipelines_animation[animationId - 1].display_on_frontpage"
+              stack
+              color="primary"
+              no-caps
+              rounded
+              @click="takeAnimation(animationId)"
+              class="action-button col-auto"
+              id="frontpage-button-take-animation"
+            >
+              <q-icon name="o_gif_box" />
+              <div
+                style="white-space: nowrap"
+                class="gt-sm"
+                v-if="uiSettingsStore.appconfig.mediaprocessing_pipelines_animation[animationId - 1].configuration_name == ''"
+              >
+                <!-- eslint-disable-next-line -->
+                {{ $t("BTN_LABEL_MAINPAGE_TAKE_ANIMATION") }}-{{ animationId }}
+              </div>
+              <div style="white-space: nowrap" class="gt-sm" v-else>
+                {{ uiSettingsStore.appconfig.mediaprocessing_pipelines_animation[animationId - 1].configuration_name }}
+              </div>
+            </q-btn>
+          </template>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takevideo_on_frontpage"
             stack
@@ -172,11 +195,11 @@ export default defineComponent({
     takePicture() {
       remoteProcedureCall("/processing/chose/1pic");
     },
-    takeCollage() {
-      remoteProcedureCall("/processing/chose/collage");
+    takeCollage(idx) {
+      remoteProcedureCall("/processing/chose/collage/" + idx);
     },
-    takeAnimation() {
-      remoteProcedureCall("/processing/chose/animation");
+    takeAnimation(idx) {
+      remoteProcedureCall("/processing/chose/animation/" + idx);
     },
     takeVideo() {
       remoteProcedureCall("/processing/chose/video");
