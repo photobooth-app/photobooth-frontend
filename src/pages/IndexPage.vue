@@ -60,7 +60,7 @@
               class="action-button col-auto"
               :id="`frontpage-button-take-collage-${collageId}`"
             >
-              <q-icon name="o_auto_awesome_mosaic" />
+              <q-icon :name="uiSettingsStore.appconfig.mediaprocessing_pipelines_collage[collageId - 1].icon_name" />
               <div
                 style="white-space: nowrap"
                 class="gt-sm"
@@ -83,9 +83,9 @@
               rounded
               @click="takeAnimation(animationId)"
               class="action-button col-auto"
-              id="frontpage-button-take-animation"
+              :id="`frontpage-button-take-animation-${animationId}`"
             >
-              <q-icon name="o_gif_box" />
+              <q-icon :name="uiSettingsStore.appconfig.mediaprocessing_pipelines_animation[animationId - 1].icon_name" />
               <div
                 style="white-space: nowrap"
                 class="gt-sm"
