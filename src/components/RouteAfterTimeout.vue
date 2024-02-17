@@ -1,10 +1,10 @@
 <template>
-  <div style="display: none" @beforeUnmount="hideNotification"></div>
+  <div><!-- empty --></div>
 </template>
 
 <script setup>
 import { useIdle, useTimestamp } from "@vueuse/core";
-import { computed, watch } from "vue";
+import { computed, watch, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 
@@ -41,19 +41,23 @@ function showNotification() {
   warningPopup = $q.notify({
     progress: true,
     message: props.warning_message,
-    color: "primary",
+    type: "info",
     multiline: true,
     timeout: remainingTime.value,
-    position: "center",
-    icon: "warning",
+    icon: "slideshow",
   });
 }
 
 function hideNotification() {
   if (warningPopup) {
+    //programatically close: https://quasar.dev/quasar-plugins/notify/#programmatically-closing
     warningPopup(); // this will close the notification
   }
 }
+
+onBeforeUnmount(() => {
+  hideNotification();
+});
 
 watch(showWarning, (showWarningValue) => {
   if (showWarningValue) {
