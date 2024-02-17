@@ -36,13 +36,6 @@
         </q-btn>
       </q-card-actions>
     </q-card>
-    <!-- auto-start slideshow after timeout -->
-    <RouteAfterTimeout
-      v-if="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout > 0"
-      route="/slideshow/gallery"
-      :timeout_ms="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout * 1000"
-      :warning_message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
-    ></RouteAfterTimeout>
   </q-page>
 </template>
 
@@ -52,12 +45,11 @@ import { useMediacollectionStore } from "../stores/mediacollection-store.js";
 import { useStateStore } from "../stores/state-store.js";
 import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import GalleryImageDetail from "../components/GalleryImageDetail";
-import RouteAfterTimeout from "src/components/RouteAfterTimeout.vue";
 import { remoteProcedureCall } from "boot/axios";
 
 export default {
   // name: 'PageName',
-  components: { RouteAfterTimeout },
+  components: {},
   data() {
     return {};
   },
