@@ -1,15 +1,14 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-page-container>
+    <q-page-container class="fullscreen">
       <router-view />
 
-      <!-- auto-start slideshow after timeout -->
-      <RouteAfterTimeout
-        v-if="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout > 0"
-        route="/slideshow/random"
-        :timeout_ms="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout * 1000"
-        :warning_message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
-      ></RouteAfterTimeout>
+      <q-page-sticky position="top-left" :offset="[25, 25]" style="/*z-index: 10000*/">
+        <q-btn color="primary" rounded no-caps to="/" class="action-button" id="slideshow-button-to-frontpage">
+          <q-icon left name="arrow_back_ios_new" />
+          <div>{{ $t("BTN_LABEL_BACK") }}</div>
+        </q-btn>
+      </q-page-sticky>
     </q-page-container>
   </q-layout>
 </template>
@@ -17,18 +16,15 @@
 <script>
 import { defineComponent } from "vue";
 import { useStateStore } from "../stores/state-store.js";
-import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import { useRouter } from "vue-router";
-import RouteAfterTimeout from "src/components/RouteAfterTimeout.vue";
 
 export default defineComponent({
-  name: "MainLayout",
+  name: "SlideshowLayout",
 
-  components: { RouteAfterTimeout },
+  components: {},
   computed: {},
   setup() {
     const stateStore = useStateStore();
-    const uiSettingsStore = useUiSettingsStore();
     const router = useRouter();
 
     // watch state to force router to "/" if a capture is triggered
@@ -46,11 +42,6 @@ export default defineComponent({
         router.push({ path: `/itemapproval` });
       }
     });
-
-    return {
-      // you can return the whole store instance to use it in the template
-      uiSettingsStore,
-    };
   },
 });
 </script>

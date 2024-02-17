@@ -54,8 +54,8 @@ const routes = [
   {
     // slideshow layout
     path: "/slideshow",
-    component: () => import("layouts/GalleryLayout.vue"),
-    children: [{ path: "gallery", component: () => import("pages/SlideshowPage.vue") }],
+    component: () => import("layouts/SlideshowLayout.vue"),
+    children: [{ path: "random", component: () => import("pages/SlideshowPage.vue") }],
   },
 
   // Always leave this as last one,

@@ -34,13 +34,6 @@
         class="full-height"
       ></gallery-image-detail>
     </q-dialog>
-
-    <!-- auto-start slideshow after timeout -->
-    <RouteAfterTimeout
-      v-if="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout > 0"
-      route="/slideshow/gallery"
-      :timeout_ms="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout * 1000"
-    ></RouteAfterTimeout>
   </q-page>
 </template>
 <style lang="sass" scoped>
@@ -55,11 +48,10 @@ import { useUiSettingsStore } from "../stores/ui-settings-store.js";
 import { useMediacollectionStore } from "../stores/mediacollection-store.js";
 import { ref } from "vue";
 import GalleryImageDetail from "../components/GalleryImageDetail";
-import RouteAfterTimeout from "src/components/RouteAfterTimeout.vue";
 
 export default {
   // name: 'PageName',
-  components: { GalleryImageDetail, RouteAfterTimeout },
+  components: { GalleryImageDetail },
   setup() {
     const store = useMainStore();
     const uiSettingsStore = useUiSettingsStore();
