@@ -16,11 +16,25 @@
       <q-scroll-area class="fit">
         <q-list>
           <template v-for="(group, index) in main_groups" :key="index">
-            <q-item clickable :active="group === $route.params.section" :to="`/admin/config/${group}`" replace v-ripple>
-              <q-item-section>
-                {{ group }}
-              </q-item-section>
-            </q-item>
+            <template v-if="group.numChildren > 0">
+              <template v-for="childIdx in group.numChildren" :key="childIdx">
+                <q-item
+                  clickable
+                  :active="group.path === $route.params.section && childIdx == $route.params.subSection"
+                  :to="`/admin/config/${group.path}/${childIdx}`"
+                  replace
+                  v-ripple
+                >
+                  <!-- eslint-disable-next-line -->
+                  <q-item-section> {{ group.title }} ({{ childIdx }}) </q-item-section>
+                </q-item>
+              </template>
+            </template>
+            <template v-else>
+              <q-item clickable :active="group.path === $route.params.section" :to="`/admin/config/${group.path}`" replace v-ripple>
+                <q-item-section> {{ group.title }} </q-item-section>
+              </q-item>
+            </template>
           </template>
         </q-list>
       </q-scroll-area>
@@ -35,15 +49,29 @@
 
           <div class="col-12 col-md-8 q-mb-xl">
             <!--some empty space for sticky not to overlay last element-->
-            <BlitzForm
-              v-model="serverConfig[selected_group]"
-              :key="selected_group"
-              :schema="schema_blitzar"
-              :internalLabels="false"
-              label-position="left"
-              v-if="renderBlitzForm"
-              class="blitzar-form"
-            />
+            <template v-if="selected_group_section">
+              <!-- v-model is zero-indexed; groups start at 1 though -->
+              <BlitzForm
+                v-model="serverConfig[selected_group][selected_group_section - 1]"
+                :key="`${selected_group}-${selected_group_section}`"
+                :schema="schema_blitzar"
+                :internalLabels="false"
+                label-position="left"
+                v-if="renderBlitzForm"
+                class="blitzar-form"
+              />
+            </template>
+            <template v-else>
+              <BlitzForm
+                v-model="serverConfig[selected_group]"
+                :key="selected_group"
+                :schema="schema_blitzar"
+                :internalLabels="false"
+                label-position="left"
+                v-if="renderBlitzForm"
+                class="blitzar-form"
+              />
+            </template>
           </div>
         </div>
       </q-page>
@@ -88,6 +116,7 @@ export default {
       () => this.$route.params,
       (toParams, fromParams) => {
         this.selected_group = toParams.section;
+        this.selected_group_section = toParams.subSection;
       },
     );
   },
@@ -99,11 +128,15 @@ export default {
     const main_groups = ref([]);
     const renderBlitzForm = ref(false);
     const selected_group = ref("");
+    const selected_group_section = ref("");
 
     const uiSettingsStore = useUiSettingsStore();
 
     const group_title = computed(() => {
       if (selected_group.value != "") {
+        if (selected_group_section.value != "") {
+          return `${schema_dereferenced[selected_group.value]["allOf"][0]["title"]} (Config ${selected_group_section.value})`;
+        }
         return schema_dereferenced[selected_group.value]["allOf"][0]["title"];
       } else {
         return "-";
@@ -117,6 +150,7 @@ export default {
       }
     });
     const schema_blitzar = computed(() => {
+      selected_group_section; // force watch group section
       if (selected_group.value != "") {
         return mapBlitzarScheme(schema_dereferenced[selected_group.value]);
       } else {
@@ -177,37 +211,41 @@ export default {
         return form_entry;
       };
 
+      const parseEntry = (entry) => {
+        const [id, property] = entry;
+
+        let form_entry = createFormEntry(id, property);
+
+        if (property["type"] == "array" && property["items"] && property["items"]["type"] == "object") {
+          // pydantic list[Group(BaseModel)] render to BlitzListForms:
+          form_entry["component"] = "BlitzListForm";
+          form_entry["schema"] = [];
+          Object.entries(property["items"]["properties"]).forEach((item_property) => {
+            const [id, property] = item_property;
+            form_entry["schema"].push(createFormEntry(id, property));
+          });
+        } else if (property["type"] == "array" && property["items"] && property["items"]["enum"] && property["items"]["type"] == "string") {
+          // pydantic list[Enum(str, Enum)] render to multiselect currently:
+          form_entry["component"] = "QSelect";
+          form_entry["multiple"] = true;
+          form_entry["use-chips"] = true;
+          form_entry["stack-label"] = true;
+          form_entry["options"] = property["items"]["enum"];
+        }
+
+        blitzar_schema.push(form_entry);
+      };
+
       console.log("creating blitzar schema");
       console.log(schema);
       let blitzar_schema = [];
 
-      if ("allOf" in schema) {
+      if ("allOf" in schema && "properties" in schema["allOf"][0]) {
         // group that needs to be parsed
-
-        Object.entries(schema["allOf"][0]["properties"]).forEach((entry) => {
-          const [id, property] = entry;
-
-          let form_entry = createFormEntry(id, property);
-
-          if (property["type"] == "array" && property["items"] && property["items"]["type"] == "object") {
-            // pydantic list[Group(BaseModel)] render to BlitzListForms:
-            form_entry["component"] = "BlitzListForm";
-            form_entry["schema"] = [];
-            Object.entries(property["items"]["properties"]).forEach((item_property) => {
-              const [id, property] = item_property;
-              form_entry["schema"].push(createFormEntry(id, property));
-            });
-          } else if (property["type"] == "array" && property["items"] && property["items"]["enum"] && property["items"]["type"] == "string") {
-            // pydantic list[Enum(str, Enum)] render to multiselect currently:
-            form_entry["component"] = "QSelect";
-            form_entry["multiple"] = true;
-            form_entry["use-chips"] = true;
-            form_entry["stack-label"] = true;
-            form_entry["options"] = property["items"]["enum"];
-          }
-
-          blitzar_schema.push(form_entry);
-        });
+        Object.entries(schema["allOf"][0]["properties"]).forEach((entry) => parseEntry(entry));
+      } else if ("allOf" in schema && "items" in schema["allOf"][0]) {
+        // group that needs to be parsed
+        Object.entries(schema["allOf"][0]["items"]["properties"]).forEach((entry) => parseEntry(entry));
       } else {
         // we should have properties here to assign to output scheme:
         console.log("error, wrong format!, no direct props on main level");
@@ -218,15 +256,20 @@ export default {
 
     const getSchema = () => {
       api
-        .get("/admin/config/schema?schema_type=dereferenced") // dereferenced input
+        .get("/admin/config/schema?schema_type=dereferenced")
         .then(async (response) => {
-          console.log(response.data);
+          console.log("Response data:", response.data);
 
           schema_dereferenced = response.data.properties;
-          main_groups.value = Object.keys(schema_dereferenced);
-
+          console.log("Schema dereferenced:", schema_dereferenced);
+          main_groups.value = [];
+          for (const [key, value] of Object.entries(schema_dereferenced)) {
+            let numChildren = "items" in value["allOf"][0] ? value["default"].length : 0;
+            let grp = { path: key, title: value["allOf"][0]["title"], numChildren: numChildren };
+            main_groups.value.push(grp);
+          }
           // after loading set to first group (should be common usually)
-          selected_group.value = main_groups.value[0];
+          selected_group.value = main_groups.value[0].path;
         })
         .catch((response) => {
           console.log(response);
@@ -246,10 +289,10 @@ export default {
       api
         .get(`/admin/config/${which}`)
         .then(async (response) => {
-          console.log(response.data);
-          console.log(serverConfig.value);
+          console.log("Response data for ", which, ": ", response.data);
+          console.log("Server config for ", which, ": ", serverConfig.value);
 
-          serverConfig.value = response.data;
+          serverConfig.value = response.data; //.settings;
           renderBlitzForm.value = true;
         })
         .catch((response) => {
@@ -330,6 +373,7 @@ export default {
       group_title,
       group_description,
       selected_group,
+      selected_group_section,
       serverConfig,
       remoteProcedureCall,
       getConfig,
