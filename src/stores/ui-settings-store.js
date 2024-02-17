@@ -29,7 +29,7 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
       TAKEPIC_MSG_TIME: null,
       TAKEPIC_MSG_TEXT: null,
       AUTOCLOSE_NEW_ITEM_ARRIVED: null,
-      TIMEOUT_TO_SLIDESHOW: null,
+      show_automatic_slideshow_timeout: null,
 
       GALLERY_EMPTY_MSG: null,
       gallery_show_qrcode: null,
