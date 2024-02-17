@@ -49,7 +49,7 @@ import { remoteProcedureCall } from "boot/axios";
 
 export default {
   // name: 'PageName',
-
+  components: {},
   data() {
     return {};
   },

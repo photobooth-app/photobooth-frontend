@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.6",
+    "@vueuse/core": "^10.7.2",
     "axios": "^1.4.0",
     "blitzar": "^1.2.2",
     "core-js": "^3.6.5",

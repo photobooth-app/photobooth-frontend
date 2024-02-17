@@ -47,6 +47,7 @@
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Service wirklich deinstallieren?",
   "MSG_CONNECTING_TO_BACKEND": "Verbindung zum Server wird hergestellt. Bitte auf automatische Verbindung warten oder neu laden.",
   "MSG_ERROR_NOT_FOUND": "Huch, hier gibt es nichts zu sehen...",
+  "MSG_WARN_BEFORE_AUTO_SLIDESHOW": "Starte automatische Dia-Show... Irgendwo klicken um auf der Seite zu bleiben.",
   "TAB_LABEL_DASHBOARD": "Übersicht",
   "TAB_LABEL_GALLERY": "Gallerie",
   "TAB_LABEL_CONFIG": "Einstellungen",

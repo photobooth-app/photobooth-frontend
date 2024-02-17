@@ -159,7 +159,6 @@ export default defineComponent({
       remoteProcedureCall,
     };
   },
-
   methods: {
     takePicture() {
       remoteProcedureCall("/processing/chose/1pic");
