@@ -1,8 +1,10 @@
 <template>
-  <router-view />
-  <q-dialog v-model="showConnectionOverlay" persistent>
-    <connection-overlay />
-  </q-dialog>
+  <div>
+    <router-view />
+    <q-dialog v-model="showConnectionOverlay" persistent>
+      <connection-overlay />
+    </q-dialog>
+  </div>
 </template>
 
 <script>
