@@ -15,13 +15,19 @@
     <q-drawer v-model="drawer" :width="300" :breakpoint="500" bordered :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'">
       <q-scroll-area class="fit">
         <q-list>
-          <template v-for="(group, index) in main_groups" :key="index">
-            <q-item clickable :active="group === $route.params.section" :to="`/admin/config/${group}`" replace v-ripple>
-              <q-item-section>
-                {{ group }}
-              </q-item-section>
-            </q-item>
-          </template>
+          <q-item
+            v-for="group in main_groups"
+            :key="group"
+            clickable
+            :active="group === $route.params.section"
+            :to="`/admin/config/${group}`"
+            replace
+            v-ripple
+          >
+            <q-item-section>
+              {{ group }}
+            </q-item-section>
+          </q-item>
         </q-list>
       </q-scroll-area>
     </q-drawer>
