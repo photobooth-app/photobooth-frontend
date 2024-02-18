@@ -72,7 +72,7 @@
         dense
         :loading="folder_loading"
         selection="multiple"
-        v-model:selected="selected"
+        v-model="selected"
         virtual-scroll
         :rows-per-page-options="[0]"
       >
@@ -240,7 +240,7 @@ export default {
     }
 
     async function getZip(selected = []) {
-      let response = await fetch(`/admin/files/zip`, {
+      let response = await fetch("/admin/files/zip", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(selected),
@@ -250,7 +250,7 @@ export default {
         // if HTTP-status is 200-299
         // get the response body (the method explained below)
         $q.notify({
-          message: `Downloading ZIP file`,
+          message: "Downloading ZIP file",
           caption: "Files",
           type: "positive",
         });
@@ -271,7 +271,7 @@ export default {
     }
 
     async function deleteItems(selected = []) {
-      let response = await fetch(`/admin/files/delete`, {
+      let response = await fetch("/admin/files/delete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(selected),
@@ -281,7 +281,7 @@ export default {
         // if HTTP-status is 200-299
         // get the response body (the method explained below)
         $q.notify({
-          message: `Selected items deleted.`,
+          message: "Selected items deleted.",
           caption: "Files",
           type: "positive",
         });
@@ -311,7 +311,7 @@ export default {
 
       console.log(newfolder_fullpath);
 
-      let response = await fetch(`/admin/files/folder/new`, {
+      let response = await fetch("/admin/files/folder/new", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newfolder_fullpath),

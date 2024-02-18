@@ -1,7 +1,6 @@
 <!-- eslint-disable -->
 <template>
   <q-page padding>
-    <h1>JSON Forms Vue 3</h1>
     <div>{{ JSON.stringify(this.data) }}</div>
     <div class="myform">
       <json-forms :data="data" :renderers="renderers" :schema="schema" @change="onChange" />
@@ -11,12 +10,10 @@
 
 <script>
 import { ref } from "vue";
-import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useMainStore } from "../stores/main-store.js";
-import { JsonForms, JsonFormsChangeEvent } from "@jsonforms/vue";
+import { JsonForms } from "@jsonforms/vue";
 import { defaultStyles, mergeStyles, vanillaRenderers } from "@jsonforms/vue-vanilla";
-import { entry as renderersText } from "../components/form/controls/StringControlRendererQuasarSimple.vue";
 import { quasarRenderers } from "../components/form/renderers";
 
 // mergeStyles combines all classes from both styles definitions into one
@@ -77,9 +74,6 @@ const schema = {
         },
       },
       required: ["age", "height"],
-    },
-    occupation: {
-      type: "string",
     },
     postalCode: {
       type: "string",

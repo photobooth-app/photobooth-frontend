@@ -9,6 +9,7 @@
           <q-route-tab to="/admin/gallery" icon="photo_library" :label="$t('TAB_LABEL_GALLERY')" />
           <!-- name based so even if children are active, the config tab is highlighted -->
           <q-route-tab :to="{ name: 'config' }" icon="settings" :label="$t('TAB_LABEL_CONFIG')" />
+          <q-route-tab :to="{ name: 'confignew' }" icon="settings" label="new config" />
           <q-route-tab to="/admin/files" icon="folder_shared" :label="$t('TAB_LABEL_FILES')" />
           <q-route-tab to="/admin/status" icon="insights" :label="$t('TAB_LABEL_STATUS')" />
 
