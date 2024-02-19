@@ -16,7 +16,6 @@ import { useQuasar } from "quasar";
 import { useMainStore } from "../stores/main-store.js";
 import { JsonForms, JsonFormsChangeEvent } from "@jsonforms/vue";
 import { defaultStyles, mergeStyles, vanillaRenderers } from "@jsonforms/vue-vanilla";
-import { entry as renderersText } from "../components/form/controls/StringControlRendererQuasarSimple.vue";
 import { quasarRenderers } from "../components/form/renderers";
 
 // mergeStyles combines all classes from both styles definitions into one

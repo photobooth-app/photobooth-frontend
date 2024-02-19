@@ -27,190 +27,90 @@ const renderers = [
 ];
 
 const schema = {
+  description: "Common config for photobooth.",
   properties: {
-    occupation: {
-      type: "string",
+    countdown_capture_first: {
+      default: 2,
+      description: "Countdown in seconds, started when user start a capture process",
+      maximum: 20,
+      minimum: 0,
+      step: 0.25,
+      title: "Countdown Capture First",
+      type: "number",
     },
-    comments: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          name: {
-            type: "string",
-          },
-          message: {
-            type: "string",
-          },
-        },
-      },
+    countdown_capture_second_following: {
+      default: 1,
+      description: "Countdown in seconds, used for second and following captures for collages",
+      maximum: 20,
+      minimum: 0,
+      title: "Countdown Capture Second Following",
+      type: "number",
     },
-    vegetarian: {
+    countdown_camera_capture_offset: {
+      default: 0.25,
+      description:
+        "Trigger camera capture by offset earlier (in seconds). 0 trigger exactly when countdown is 0. Use to compensate for delay in camera processing for better UX.",
+      maximum: 20,
+      minimum: 0,
+      title: "Countdown Camera Capture Offset",
+      type: "number",
+    },
+    collage_automatic_capture_continue: {
+      default: true,
+      description: "Automatically continue with second and following images to capture for collage. No user interaction in between.",
+      title: "Collage Automatic Capture Continue",
       type: "boolean",
     },
-    birthDate: {
-      type: "string",
-      format: "date",
+    collage_approve_autoconfirm_timeout: {
+      default: 15,
+      description: "If user is required to approve collage captures, after this timeout, the job continues and user confirmation is assumed.",
+      title: "Collage Approve Autoconfirm Timeout",
+      type: "number",
     },
-    nationality: {
-      type: "string",
-      enum: ["DE", "IT", "JP", "US", "RU", "Other"],
-    },
-    personalData: {
-      type: "object",
-      properties: {
-        age: {
-          type: "integer",
-          description: "Please enter your age.",
-        },
-        height: {
-          type: "number",
-        },
-        drivingSkill: {
-          type: "number",
-          maximum: 10,
-          minimum: 1,
-          default: 7,
-        },
-      },
-      required: ["age", "height"],
-    },
-    postalCode: {
-      type: "string",
-      maxLength: 5,
-    },
-
-    name: {
-      type: "string",
-      minLength: 1,
-      description: "The task's name",
-    },
-    description: {
-      title: "Long Description",
-      type: "string",
-    },
-    done: {
+    gallery_show_individual_images: {
+      default: false,
+      description:
+        "Show individual images of collages/animations in the gallery. Hidden images are still stored in the data folder. (Note: changing this setting will not change visibility of already captured images).",
+      title: "Gallery Show Individual Images",
       type: "boolean",
     },
-    dueDate: {
+    DEBUG_LEVEL: {
+      allOf: [
+        {
+          description: "enum for debuglevel",
+          enum: ["DEBUG", "INFO", "WARNING", "ERROR"],
+          title: "EnumDebugLevel",
+          type: "string",
+        },
+      ],
+      default: "DEBUG",
+      description: "Log verbosity. File is writte to disc, and latest log is displayed also in UI.",
+      title: "Debug Level",
+    },
+    webserver_bind_ip: {
+      default: "0.0.0.0",
+      description: "IP/Hostname to bind the webserver to. 0.0.0.0 means bind to all IP adresses of host.",
+      title: "Webserver Bind Ip",
       type: "string",
-      format: "date",
-      description: "The task's due date",
     },
-    rating: {
+    webserver_port: {
+      default: 8000,
+      description: "Port to serve the photobooth website. Ensure the port is available. Ports below 1024 need root!",
+      title: "Webserver Port",
       type: "integer",
-      maximum: 5,
-    },
-    recurrence: {
-      type: "string",
-      enum: ["Never", "Daily", "Weekly", "Monthly"],
-    },
-    recurrenceInterval: {
-      type: "integer",
-      description: "Days until recurrence",
     },
   },
+  title: "Common Config",
+  type: "object",
 };
 
 const uischema = {
-  type: "VerticalLayout",
-  elements: [
-    {
-      type: "HorizontalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/name",
-        },
-        {
-          type: "Control",
-          scope: "#/properties/personalData/properties/age",
-        },
-        {
-          type: "Control",
-          scope: "#/properties/birthDate",
-        },
-      ],
-    },
-    {
-      type: "Label",
-      text: "Additional Information",
-    },
-    {
-      type: "HorizontalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/personalData/properties/height",
-        },
-        {
-          type: "Control",
-          scope: "#/properties/nationality",
-        },
-        {
-          type: "Control",
-          scope: "#/properties/occupation",
-          suggestion: ["Accountant", "Engineer", "Freelancer", "Journalism", "Physician", "Student", "Teacher", "Other"],
-        },
-      ],
-    },
-  ],
-  type: "HorizontalLayout",
-  elements: [
-    {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/comments",
-          options: {
-            showSortButtons: false,
-          },
-        },
-      ],
-    },
-    {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/name",
-        },
-        {
-          type: "Control",
-          scope: "#/properties/description",
-          options: {
-            multi: true,
-          },
-        },
-        {
-          type: "Control",
-          scope: "#/properties/done",
-        },
-      ],
-    },
-    {
-      type: "VerticalLayout",
-      elements: [
-        {
-          type: "Control",
-          scope: "#/properties/dueDate",
-        },
-        {
-          type: "Control",
-          scope: "#/properties/rating",
-        },
-        {
-          type: "Control",
-          scope: "#/properties/recurrence",
-        },
-        {
-          type: "Control",
-          scope: "#/properties/recurrenceInterval",
-        },
-      ],
-    },
-  ],
+  type: "Control",
+  scope: "#/properties/countdown_capture_first",
+  options: {
+    format: "radio",
+    step: 0.25,
+  },
 };
 
 export default {
@@ -226,12 +126,7 @@ export default {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
       data: {
-        occupation: "none",
-        name: "Send email to Adrian",
-        description: "Confirm if you have passed the subject\nHereby ...",
-        done: true,
-        recurrence: "Daily",
-        rating: 3,
+        /* data store */
       },
       schema,
       uischema,
@@ -239,8 +134,6 @@ export default {
   },
   methods: {
     onChange(event) {
-      console.log(event);
-      console.log(event.data);
       this.data = event.data;
     },
   },
