@@ -3,8 +3,6 @@
     <q-input
       :model-value="control.data"
       type="number"
-      min="0"
-      max="20"
       :step="step"
       :id="control.id + '-input'"
       :class="styles.control.input"
@@ -17,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isNumberControl } from "@jsonforms/core";
+import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isNumberControl, or, isIntegerControl } from "@jsonforms/core";
 import { defineComponent } from "vue";
 import { rendererProps, useJsonFormsControl, RendererProps } from "@jsonforms/vue";
 import { default as ControlWrapper } from "./ControlWrapper.vue";
@@ -31,14 +29,12 @@ const controlRenderer = defineComponent({
   },
   computed: {
     step(): number {
-      console.log(this.appliedOptions);
       const options: any = this.appliedOptions;
-      console.log(options.step);
-      return options.step ?? 1;
+      return options.step ?? 1; // TODO: how to forward steps here? not working currently!
     },
   },
   setup(props: RendererProps<ControlElement>) {
-    return useQuasarControl(useJsonFormsControl(props), (value: any) => value || undefined);
+    return useQuasarControl(useJsonFormsControl(props), (value: any) => (value === "" ? undefined : Number(value)));
   },
 });
 
@@ -46,6 +42,6 @@ export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(2, isNumberControl),
+  tester: rankWith(2, or(isNumberControl, isIntegerControl)),
 };
 </script>

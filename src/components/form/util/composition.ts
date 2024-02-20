@@ -13,7 +13,6 @@ export const useQuasarControl = <I extends { control: any; handleChange: any }>(
 
   const isFocused = ref(false);
   const onChange = (value: any) => {
-    console.log(value);
     input.handleChange(input.control.value.path, adaptValue(value));
   };
 

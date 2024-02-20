@@ -1,0 +1,1531 @@
+{
+  "$defs": {
+    "AnimationMergeDefinition": {
+      "properties": {
+        "duration": { "default": 2000, "minimum": 0, "title": "Duration", "type": "integer" },
+        "predefined_image": { "default": "", "title": "Predefined Image", "type": "string" },
+        "filter": { "allOf": [{ "$ref": "#/$defs/EnumPilgramFilter" }], "default": "original" }
+      },
+      "title": "AnimationMergeDefinition",
+      "type": "object"
+    },
+    "CollageMergeDefinition": {
+      "properties": {
+        "pos_x": { "default": 50, "minimum": 0, "title": "Pos X", "type": "integer" },
+        "pos_y": { "default": 50, "minimum": 0, "title": "Pos Y", "type": "integer" },
+        "width": { "default": 600, "minimum": 0, "title": "Width", "type": "integer" },
+        "height": { "default": 600, "minimum": 0, "title": "Height", "type": "integer" },
+        "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+        "predefined_image": { "default": "", "title": "Predefined Image", "type": "string" },
+        "filter": { "allOf": [{ "$ref": "#/$defs/EnumPilgramFilter" }], "default": "original" }
+      },
+      "title": "CollageMergeDefinition",
+      "type": "object"
+    },
+    "EnumDebugLevel": {
+      "description": "enum for debuglevel",
+      "enum": ["DEBUG", "INFO", "WARNING", "ERROR"],
+      "title": "EnumDebugLevel",
+      "type": "string"
+    },
+    "EnumImageBackendsLive": {
+      "description": "enum to choose image backend LIVE from",
+      "enum": ["Disabled", "VirtualCamera", "WebcamCv2"],
+      "title": "EnumImageBackendsLive",
+      "type": "string"
+    },
+    "EnumImageBackendsMain": {
+      "description": "enum to choose image backend MAIN from",
+      "enum": ["VirtualCamera", "WebcamCv2", "Digicamcontrol"],
+      "title": "EnumImageBackendsMain",
+      "type": "string"
+    },
+    "EnumPicamStreamQuality": {
+      "description": "Enum type to describe the quality wanted from an encoder.\nThis may be passed if a specific value (such as bitrate) has not been set.",
+      "enum": ["very low", "low", "medium", "high", "very high"],
+      "title": "EnumPicamStreamQuality",
+      "type": "string"
+    },
+    "EnumPilgramFilter": {
+      "description": "enum to choose image filter from, pilgram filter",
+      "enum": [
+        "original",
+        "_1977",
+        "aden",
+        "ashby",
+        "amaro",
+        "brannan",
+        "brooklyn",
+        "charmes",
+        "clarendon",
+        "crema",
+        "dogpatch",
+        "earlybird",
+        "gingham",
+        "ginza",
+        "hefe",
+        "helena",
+        "hudson",
+        "inkwell",
+        "juno",
+        "kelvin",
+        "lark",
+        "lofi",
+        "ludwig",
+        "maven",
+        "mayfair",
+        "moon",
+        "nashville",
+        "perpetua",
+        "poprocket",
+        "reyes",
+        "rise",
+        "sierra",
+        "skyline",
+        "slumber",
+        "stinson",
+        "sutro",
+        "toaster",
+        "valencia",
+        "walden",
+        "willow",
+        "xpro2"
+      ],
+      "title": "EnumPilgramFilter",
+      "type": "string"
+    },
+    "GroupBackends": {
+      "description": "Choose backends for still images/high quality images captured on main backend.\nIf the livepreview is enabled, the video is captured from live backend (if configured)\nor main backend.",
+      "properties": {
+        "MAIN_BACKEND": {
+          "allOf": [{ "$ref": "#/$defs/EnumImageBackendsMain" }],
+          "default": "VirtualCamera",
+          "description": "Main backend to use for high quality still captures. Also used for livepreview if backend is capable of.",
+          "title": "Main Backend"
+        },
+        "LIVE_BACKEND": {
+          "allOf": [{ "$ref": "#/$defs/EnumImageBackendsLive" }],
+          "default": "Disabled",
+          "description": "Secondary backend used for live streaming only. Useful to stream from webcam if DSLR camera has no livestream capability.",
+          "title": "Live Backend"
+        },
+        "LIVEPREVIEW_ENABLED": {
+          "default": true,
+          "description": "Enable livestream (if possible)",
+          "title": "Livepreview Enabled",
+          "type": "boolean"
+        },
+        "LIVEPREVIEW_FRAMERATE": {
+          "default": 15,
+          "description": "Reduce the framerate to save cpu/gpu on device displaying the live preview",
+          "maximum": 30,
+          "minimum": 5,
+          "title": "Livepreview Framerate",
+          "type": "integer",
+          "ui_component": "QSlider"
+        },
+        "retry_capture": {
+          "default": 3,
+          "description": "Number of attempts to gather a picture from backend.",
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Retry Capture",
+          "type": "integer"
+        },
+        "gphoto2_capture_target": {
+          "default": "",
+          "description": "Set capture target (examples: 'Internal RAM', 'Memory card'). To keep images, capture to a disk target. Empty means default of camera (mostly RAM).",
+          "title": "Gphoto2 Capture Target",
+          "type": "string"
+        },
+        "gphoto2_disable_viewfinder_before_capture": {
+          "default": true,
+          "description": "Disable viewfinder before capture might speed up following capture autofocus. Might not work with every camera.",
+          "title": "Gphoto2 Disable Viewfinder Before Capture",
+          "type": "boolean"
+        },
+        "gphoto2_iso_liveview": {
+          "default": "",
+          "description": "Sets the ISO for when the photobooth is in live preview modus. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. Only works when the camera is in manual. (Example Values: Auto, 100, 200, ...)",
+          "title": "Gphoto2 Iso Liveview",
+          "type": "string"
+        },
+        "gphoto2_iso_capture": {
+          "default": "",
+          "description": "Sets the ISO for when the photobooth captures a photo. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. Only works when the camera is in manual. (Example Values: Auto, 100, 200, ...)",
+          "title": "Gphoto2 Iso Capture",
+          "type": "string"
+        },
+        "gphoto2_shutter_speed_liveview": {
+          "default": "",
+          "description": "Sets the shutter speed for the camera during the photobooth's live preview mode. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. This setting is effective only when the camera is in manual mode. (Example Values: 1, 1/5, 1/20, 1/30, 1/60, 1/1000, 1/4000, ...) Choose a very high default shutter speed in combination with Auto iso to emulate auto exposure. ",
+          "title": "Gphoto2 Shutter Speed Liveview",
+          "type": "string"
+        },
+        "gphoto2_shutter_speed_capture": {
+          "default": "",
+          "description": "Configures the shutter speed for the camera at the time of capturing a photo in the photobooth. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. Operational only in manual mode. (Example Values: 1/60, 1/320, 1/1000, 1/2000, 1/4000, ...)",
+          "title": "Gphoto2 Shutter Speed Capture",
+          "type": "string"
+        },
+        "cv2_CAM_RESOLUTION_WIDTH": {
+          "default": 10000,
+          "description": "still photo camera resolution width to opencv2 backend",
+          "title": "Cv2 Cam Resolution Width",
+          "type": "integer"
+        },
+        "cv2_CAM_RESOLUTION_HEIGHT": {
+          "default": 10000,
+          "description": "still photo camera resolution height to opencv2 backend",
+          "title": "Cv2 Cam Resolution Height",
+          "type": "integer"
+        },
+        "cv2_device_index": {
+          "default": 0,
+          "description": "Device index of webcam opened in cv2 backend",
+          "title": "Cv2 Device Index",
+          "type": "integer"
+        },
+        "cv2_CAMERA_TRANSFORM_HFLIP": {
+          "default": false,
+          "description": "Apply horizontal flip to image source to opencv2 backend",
+          "title": "Cv2 Camera Transform Hflip",
+          "type": "boolean"
+        },
+        "cv2_CAMERA_TRANSFORM_VFLIP": {
+          "default": false,
+          "description": "Apply vertical flip to image source to opencv2 backend",
+          "title": "Cv2 Camera Transform Vflip",
+          "type": "boolean"
+        },
+        "v4l_CAM_RESOLUTION_WIDTH": {
+          "default": 10000,
+          "description": "still photo camera resolution width on supported backends",
+          "title": "V4L Cam Resolution Width",
+          "type": "integer"
+        },
+        "v4l_CAM_RESOLUTION_HEIGHT": {
+          "default": 10000,
+          "description": "still photo camera resolution height on supported backends",
+          "title": "V4L Cam Resolution Height",
+          "type": "integer"
+        },
+        "v4l_device_index": {
+          "default": 0,
+          "description": "Device index of webcam opened in v4l backend",
+          "title": "V4L Device Index",
+          "type": "integer"
+        },
+        "digicamcontrol_base_url": {
+          "default": "http://127.0.0.1:5513",
+          "description": "Base URL used to connect to the host running the digicamcontrol software. Usually photobooth-app and digicamcontrol are on the same computer and no adjustmend needed.",
+          "title": "Digicamcontrol Base Url",
+          "type": "string"
+        },
+        "picamera2_CAPTURE_CAM_RESOLUTION_WIDTH": {
+          "default": 1280,
+          "description": "camera resolution width to capture high resolution photo",
+          "title": "Picamera2 Capture Cam Resolution Width",
+          "type": "integer"
+        },
+        "picamera2_CAPTURE_CAM_RESOLUTION_HEIGHT": {
+          "default": 720,
+          "description": "camera resolution height to capture high resolution photo",
+          "title": "Picamera2 Capture Cam Resolution Height",
+          "type": "integer"
+        },
+        "picamera2_PREVIEW_CAM_RESOLUTION_WIDTH": {
+          "default": 1280,
+          "description": "camera resolution width to capture live video",
+          "maximum": 3500,
+          "minimum": 500,
+          "title": "Picamera2 Preview Cam Resolution Width",
+          "type": "integer"
+        },
+        "picamera2_PREVIEW_CAM_RESOLUTION_HEIGHT": {
+          "default": 720,
+          "description": "camera resolution height to capture live video",
+          "maximum": 2500,
+          "minimum": 500,
+          "title": "Picamera2 Preview Cam Resolution Height",
+          "type": "integer"
+        },
+        "picamera2_LIVEVIEW_RESOLUTION_WIDTH": {
+          "default": 1280,
+          "description": "actual resolution width for liveview stream",
+          "maximum": 3500,
+          "minimum": 500,
+          "title": "Picamera2 Liveview Resolution Width",
+          "type": "integer"
+        },
+        "picamera2_LIVEVIEW_RESOLUTION_HEIGHT": {
+          "default": 720,
+          "description": "actual resolution height for liveview stream",
+          "maximum": 2500,
+          "minimum": 500,
+          "title": "Picamera2 Liveview Resolution Height",
+          "type": "integer"
+        },
+        "picamera2_CAMERA_TRANSFORM_HFLIP": {
+          "default": false,
+          "description": "Apply horizontal flip to image source to picamera2 backend",
+          "title": "Picamera2 Camera Transform Hflip",
+          "type": "boolean"
+        },
+        "picamera2_CAMERA_TRANSFORM_VFLIP": {
+          "default": false,
+          "description": "Apply vertical flip to image source to picamera2 backend",
+          "title": "Picamera2 Camera Transform Vflip",
+          "type": "boolean"
+        },
+        "picamera2_AE_EXPOSURE_MODE": {
+          "default": 1,
+          "description": "Usually 0=normal exposure, 1=short, 2=long, 3=custom. Not all necessarily supported by camera!",
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Picamera2 Ae Exposure Mode",
+          "type": "integer"
+        },
+        "picamera2_stream_quality": {
+          "allOf": [{ "$ref": "#/$defs/EnumPicamStreamQuality" }],
+          "default": "medium",
+          "description": "Lower quality results in less data to be transferred and may reduce load on display device.",
+          "title": "Picamera2 Stream Quality (for livepreview)"
+        }
+      },
+      "title": "Camera Backend Config",
+      "type": "object"
+    },
+    "GroupCollageProcess": {
+      "description": "Configure stages how to process collage after capture.",
+      "properties": {
+        "other_general_settings": {
+          "default": 900,
+          "description": "Height (Y) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.",
+          "title": "Other General Settings",
+          "type": "integer"
+        },
+        "collage_pipeline_sets": {
+          "default": [
+            {
+              "capture_fill_background_enable": false,
+              "capture_fill_background_color": "blue",
+              "capture_img_background_enable": false,
+              "capture_img_background_file": "backgrounds/pink-7761356_1920.jpg",
+              "canvas_width": 1920,
+              "canvas_height": 1280,
+              "canvas_merge_definition": [
+                { "filter": "earlybird", "height": 725, "pos_x": 160, "pos_y": 220, "predefined_image": "", "rotate": 0, "width": 510 },
+                {
+                  "filter": "original",
+                  "height": 725,
+                  "pos_x": 705,
+                  "pos_y": 66,
+                  "predefined_image": "predefined_images/photobooth-collage-predefined-image.png",
+                  "rotate": 0,
+                  "width": 510
+                },
+                { "filter": "reyes", "height": 725, "pos_x": 1245, "pos_y": 220, "predefined_image": "", "rotate": 0, "width": 510 }
+              ],
+              "canvas_fill_background_enable": false,
+              "canvas_fill_background_color": "green",
+              "canvas_img_background_enable": false,
+              "canvas_img_background_file": "backgrounds/pink-7761356_1920.jpg",
+              "canvas_img_front_enable": true,
+              "canvas_img_front_file": "frames/pixabay-poster-2871536_1920.png",
+              "canvas_texts_enable": true,
+              "canvas_texts": [
+                {
+                  "color": "#333",
+                  "font": "fonts/Roboto-Bold.ttf",
+                  "font_size": 40,
+                  "pos_x": 200,
+                  "pos_y": 1100,
+                  "rotate": 1,
+                  "text": "Have a nice day :)"
+                }
+              ]
+            }
+          ],
+          "description": "yes, this is another level, maybe expandable?",
+          "items": { "$ref": "#/$defs/photobooth__services__config__groups__mediaprocessing_collagenew__GroupMediaprocessingPipelineCollage" },
+          "title": "Collage Pipeline Sets",
+          "type": "array"
+        }
+      },
+      "title": "New Test!",
+      "type": "object"
+    },
+    "GroupCommon": {
+      "description": "Common config for photobooth.",
+      "properties": {
+        "countdown_capture_first": {
+          "default": 2.0,
+          "description": "Countdown in seconds, started when user start a capture process",
+          "maximum": 20.0,
+          "minimum": 0.0,
+          "title": "Countdown Capture First",
+          "type": "number"
+        },
+        "countdown_capture_second_following": {
+          "default": 1.0,
+          "description": "Countdown in seconds, used for second and following captures for collages",
+          "maximum": 20.0,
+          "minimum": 0.0,
+          "title": "Countdown Capture Second Following",
+          "type": "number"
+        },
+        "countdown_camera_capture_offset": {
+          "default": 0.25,
+          "description": "Trigger camera capture by offset earlier (in seconds). 0 trigger exactly when countdown is 0. Use to compensate for delay in camera processing for better UX.",
+          "maximum": 20.0,
+          "minimum": 0.0,
+          "title": "Countdown Camera Capture Offset",
+          "type": "number"
+        },
+        "collage_automatic_capture_continue": {
+          "default": true,
+          "description": "Automatically continue with second and following images to capture for collage. No user interaction in between.",
+          "title": "Collage Automatic Capture Continue",
+          "type": "boolean"
+        },
+        "collage_approve_autoconfirm_timeout": {
+          "default": 15.0,
+          "description": "If user is required to approve collage captures, after this timeout, the job continues and user confirmation is assumed.",
+          "title": "Collage Approve Autoconfirm Timeout",
+          "type": "number"
+        },
+        "gallery_show_individual_images": {
+          "default": false,
+          "description": "Show individual images of collages/animations in the gallery. Hidden images are still stored in the data folder. (Note: changing this setting will not change visibility of already captured images).",
+          "title": "Gallery Show Individual Images",
+          "type": "boolean"
+        },
+        "DEBUG_LEVEL": {
+          "allOf": [{ "$ref": "#/$defs/EnumDebugLevel" }],
+          "default": "DEBUG",
+          "description": "Log verbosity. File is writte to disc, and latest log is displayed also in UI.",
+          "title": "Debug Level"
+        },
+        "webserver_bind_ip": {
+          "default": "0.0.0.0",
+          "description": "IP/Hostname to bind the webserver to. 0.0.0.0 means bind to all IP adresses of host.",
+          "title": "Webserver Bind Ip",
+          "type": "string"
+        },
+        "webserver_port": {
+          "default": 8000,
+          "description": "Port to serve the photobooth website. Ensure the port is available. Ports below 1024 need root!",
+          "title": "Webserver Port",
+          "type": "integer"
+        }
+      },
+      "title": "Common Config",
+      "type": "object"
+    },
+    "GroupFileTransfer": {
+      "description": "Configuration for USB File Transfer Service.",
+      "properties": {
+        "enabled": {
+          "default": false,
+          "description": "Enable the automatic file transfer to USB service. Files are copied when the USB drive is inserted.",
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "target_folder_name": {
+          "default": "photobooth",
+          "description": "Name of the top-level folder on the USB drive where files will be copied to.",
+          "title": "Target Folder Name",
+          "type": "string"
+        }
+      },
+      "title": "USB File Transfer Service Config",
+      "type": "object"
+    },
+    "GroupHardwareInputOutput": {
+      "description": "Configure hardware GPIO, keyboard and more. Find integration information in the documentation.",
+      "properties": {
+        "keyboard_input_enabled": {
+          "default": false,
+          "description": "Enable keyboard input globally",
+          "title": "Keyboard Input Enabled",
+          "type": "boolean"
+        },
+        "keyboard_input_keycode_takepic": {
+          "default": "i",
+          "description": "Keycode triggers capture of one image",
+          "title": "Keyboard Input Keycode Takepic",
+          "type": "string"
+        },
+        "keyboard_input_keycode_takecollage": {
+          "default": "c",
+          "description": "Keycode triggers capture of collage",
+          "title": "Keyboard Input Keycode Takecollage",
+          "type": "string"
+        },
+        "keyboard_input_keycode_takeanimation": {
+          "default": "g",
+          "description": "Keycode triggers capture of animation (GIF)",
+          "title": "Keyboard Input Keycode Takeanimation",
+          "type": "string"
+        },
+        "keyboard_input_keycode_takevideo": {
+          "default": "v",
+          "description": "Keycode triggers start and stop of video (MP4)",
+          "title": "Keyboard Input Keycode Takevideo",
+          "type": "string"
+        },
+        "keyboard_input_keycode_print_recent_item": {
+          "default": "p",
+          "description": "Keycode triggers printing most recent image captured",
+          "title": "Keyboard Input Keycode Print Recent Item",
+          "type": "string"
+        },
+        "wled_enabled": {
+          "default": false,
+          "description": "Enable WLED integration for user feedback during countdown and capture by LEDs.",
+          "title": "Wled Enabled",
+          "type": "boolean"
+        },
+        "wled_serial_port": {
+          "default": "",
+          "description": "Serial port the WLED device is connected to.",
+          "title": "Wled Serial Port",
+          "type": "string"
+        },
+        "gpio_enabled": { "default": false, "description": "Enable Raspberry Pi GPIOzero integration.", "title": "Gpio Enabled", "type": "boolean" },
+        "gpio_pin_shutdown": {
+          "default": 17,
+          "description": "GPIO pin to shutdown after holding it for 2 seconds.",
+          "title": "Gpio Pin Shutdown",
+          "type": "integer"
+        },
+        "gpio_pin_reboot": {
+          "default": 18,
+          "description": "GPIO pin to reboot after holding it for 2 seconds.",
+          "title": "Gpio Pin Reboot",
+          "type": "integer"
+        },
+        "gpio_pin_take1pic": { "default": 27, "description": "GPIO pin to take one picture.", "title": "Gpio Pin Take1Pic", "type": "integer" },
+        "gpio_pin_collage": { "default": 22, "description": "GPIO pin to take a collage.", "title": "Gpio Pin Collage", "type": "integer" },
+        "gpio_pin_animation": {
+          "default": 24,
+          "description": "GPIO pin to take an animation (GIF).",
+          "title": "Gpio Pin Animation",
+          "type": "integer"
+        },
+        "gpio_pin_video": {
+          "default": 26,
+          "description": "GPIO pin to start recording / stop recording a video (MP4).",
+          "title": "Gpio Pin Video",
+          "type": "integer"
+        },
+        "gpio_pin_print_recent_item": {
+          "default": 23,
+          "description": "GPIO pin to print last captured item.",
+          "title": "Gpio Pin Print Recent Item",
+          "type": "integer"
+        },
+        "printing_enabled": { "default": false, "description": "Enable printing in general.", "title": "Printing Enabled", "type": "boolean" },
+        "printing_command": {
+          "default": "mspaint /p {filename}",
+          "description": "Command issued to print. Use {filename} as placeholder for the JPEG image to be printed.",
+          "title": "Printing Command",
+          "type": "string"
+        },
+        "printing_blocked_time": {
+          "default": 20,
+          "description": "Block queue print until time is passed. Time in seconds.",
+          "title": "Printing Blocked Time",
+          "type": "integer"
+        }
+      },
+      "title": "Hardware Input/Output Config",
+      "type": "object"
+    },
+    "GroupMediaprocessing": {
+      "description": "Configure stages how to process images after capture.",
+      "properties": {
+        "HIRES_STILL_QUALITY": {
+          "default": 90,
+          "description": "Still JPEG full resolution quality, applied to download images and images with filter",
+          "maximum": 100,
+          "minimum": 10,
+          "title": "Hires Still Quality",
+          "type": "integer",
+          "ui_component": "QSlider"
+        },
+        "LIVEPREVIEW_QUALITY": {
+          "default": 80,
+          "description": "Livepreview stream JPEG image quality on supported backends",
+          "maximum": 100,
+          "minimum": 10,
+          "title": "Livepreview Quality",
+          "type": "integer",
+          "ui_component": "QSlider"
+        },
+        "THUMBNAIL_STILL_QUALITY": {
+          "default": 60,
+          "description": "Still JPEG thumbnail quality, thumbs used in gallery list",
+          "maximum": 100,
+          "minimum": 10,
+          "title": "Thumbnail Still Quality",
+          "type": "integer",
+          "ui_component": "QSlider"
+        },
+        "PREVIEW_STILL_QUALITY": {
+          "default": 75,
+          "description": "Still JPEG preview quality, preview still shown in gallery detail",
+          "maximum": 100,
+          "minimum": 10,
+          "title": "Preview Still Quality",
+          "type": "integer",
+          "ui_component": "QSlider"
+        },
+        "FULL_STILL_WIDTH": {
+          "default": 1500,
+          "description": "Width of resized full image with filters applied. For performance choose as low as possible but still gives decent print quality. Example: 1500/6inch=250dpi",
+          "maximum": 5000,
+          "minimum": 800,
+          "title": "Full Still Width",
+          "type": "integer"
+        },
+        "PREVIEW_STILL_WIDTH": {
+          "default": 1200,
+          "description": "Width of resized preview image, height is automatically calculated to keep aspect ratio",
+          "maximum": 2500,
+          "minimum": 200,
+          "title": "Preview Still Width",
+          "type": "integer"
+        },
+        "THUMBNAIL_STILL_WIDTH": {
+          "default": 400,
+          "description": "Width of resized thumbnail image, height is automatically calculated to keep aspect ratio",
+          "maximum": 1000,
+          "minimum": 100,
+          "title": "Thumbnail Still Width",
+          "type": "integer"
+        },
+        "removechromakey_enable": {
+          "default": false,
+          "description": "Apply chromakey greenscreen removal from captured images",
+          "title": "Removechromakey Enable",
+          "type": "boolean"
+        },
+        "removechromakey_keycolor": {
+          "default": 110,
+          "description": "Color (H) in HSV colorspace to remove on 360° scale.",
+          "maximum": 360,
+          "minimum": 0,
+          "title": "Removechromakey Keycolor",
+          "type": "integer"
+        },
+        "removechromakey_tolerance": {
+          "default": 10,
+          "description": "Tolerance for color (H) on chromakey color removal.",
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Removechromakey Tolerance",
+          "type": "integer"
+        }
+      },
+      "title": "Process media after capture",
+      "type": "object"
+    },
+    "GroupMediaprocessingPipelineAnimation": {
+      "description": "Configure stages how to process collage after capture.",
+      "properties": {
+        "canvas_width": {
+          "default": 1500,
+          "description": "Width (X) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.",
+          "title": "Canvas Width",
+          "type": "integer"
+        },
+        "canvas_height": {
+          "default": 900,
+          "description": "Height (Y) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.",
+          "title": "Canvas Height",
+          "type": "integer"
+        },
+        "sequence_merge_definition": {
+          "default": [
+            { "duration": 2000, "predefined_image": "", "filter": "crema" },
+            { "duration": 2000, "predefined_image": "", "filter": "inkwell" },
+            { "duration": 4000, "predefined_image": "predefined_images/photobooth-gif-animation-predefined-image.png", "filter": "original" }
+          ],
+          "description": "Sequence images in an animated GIF. Predefined image files are used instead a camera capture. File needs to be located in DATA_DIR/*",
+          "items": { "$ref": "#/$defs/AnimationMergeDefinition" },
+          "title": "Sequence Merge Definition",
+          "type": "array"
+        }
+      },
+      "title": "Process Animation (GIF) after capture",
+      "type": "object"
+    },
+    "GroupMediaprocessingPipelinePrint": {
+      "description": "Configure stages how to process mediaitem before printing on paper.",
+      "properties": {},
+      "title": "Process mediaitem before printing on paper",
+      "type": "object"
+    },
+    "GroupMediaprocessingPipelineSingleImage": {
+      "description": "Configure stages how to process images after capture.",
+      "properties": {
+        "filter": {
+          "allOf": [{ "$ref": "#/$defs/EnumPilgramFilter" }],
+          "default": "original",
+          "description": "Instagram-like filter to apply per default. 'original' applies no filter.",
+          "title": "Pic1 Filter"
+        },
+        "fill_background_enable": {
+          "default": false,
+          "description": "Apply solid color background to captured image (useful only if image is extended or background removed)",
+          "title": "Fill Background Enable",
+          "type": "boolean"
+        },
+        "fill_background_color": {
+          "default": "blue",
+          "description": "Solid color used to fill background.",
+          "format": "color",
+          "title": "Fill Background Color",
+          "type": "string"
+        },
+        "img_background_enable": {
+          "default": false,
+          "description": "Add image from file to background (useful only if image is extended or background removed)",
+          "title": "Img Background Enable",
+          "type": "boolean"
+        },
+        "img_background_file": {
+          "default": "backgrounds/pink-7761356_1920.jpg",
+          "description": "Image file to use as background filling transparent area. File needs to be located in DATA_DIR/*",
+          "title": "Img Background File",
+          "type": "string"
+        },
+        "img_frame_enable": { "default": true, "description": "Mount captured image to frame.", "title": "Img Frame Enable", "type": "boolean" },
+        "img_frame_file": {
+          "default": "frames/pixabay-holidays-1798208_1920.png",
+          "description": "Image file to which the captured image is mounted to. Frame determines the output image size! Photos are visible through transparant parts. Image needs to be transparent (PNG). File needs to be located in userdata/*",
+          "title": "Img Frame File",
+          "type": "string"
+        },
+        "texts_enable": { "default": true, "description": "General enable apply texts below.", "title": "Texts Enable", "type": "boolean" },
+        "texts": {
+          "default": [
+            {
+              "text": "Made with the python photobooth-app",
+              "pos_x": 100,
+              "pos_y": 1300,
+              "rotate": 0,
+              "font_size": 40,
+              "font": "fonts/Roboto-Bold.ttf",
+              "color": "#ccc"
+            }
+          ],
+          "description": "Text to overlay on images after capture. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
+          "items": { "$ref": "#/$defs/TextsConfig" },
+          "title": "Texts",
+          "type": "array"
+        }
+      },
+      "title": "Postprocess single captures",
+      "type": "object"
+    },
+    "GroupMisc": {
+      "description": "Quite advanced or experimental, usually not necessary to touch. Can change any time.",
+      "properties": {
+        "video_duration": {
+          "default": 5,
+          "description": "Duration of a video in seconds. The user can stop recording earlier but cannot take longer videos.",
+          "maximum": 30,
+          "minimum": 1,
+          "title": "Video Duration",
+          "type": "integer"
+        },
+        "video_bitrate": {
+          "default": 3000,
+          "description": "Video quality bitrate in k.",
+          "maximum": 10000,
+          "minimum": 1000,
+          "title": "Video Bitrate",
+          "type": "integer"
+        }
+      },
+      "title": "Miscellaneous Config",
+      "type": "object"
+    },
+    "GroupSharing": {
+      "description": "Settings about shareing media",
+      "properties": {
+        "shareservice_enabled": {
+          "default": false,
+          "description": "Enable share service. To enable URL needs to be configured and dl.php script setup properly.",
+          "title": "Shareservice Enabled",
+          "type": "boolean"
+        },
+        "shareservice_url": {
+          "default": "https://photobooth-app.org/extras/shareservice-landing/",
+          "description": "URL of php script that is used to serve files and share via QR code. The default is a landingpage with further instructions how to setup.",
+          "title": "Shareservice Url",
+          "type": "string"
+        },
+        "shareservice_apikey": {
+          "default": "changedefault!",
+          "description": "Key to secure the download php script. Set the key in dl.php script to same value. Only if correct key is provided the shareservice works properly.",
+          "title": "Shareservice Apikey",
+          "type": "string"
+        },
+        "shareservice_share_original": {
+          "default": false,
+          "description": "Upload original image as received from camera. If unchecked, the full processed version is uploaded with filter and texts applied.",
+          "title": "Shareservice Share Original",
+          "type": "boolean"
+        },
+        "share_custom_qr_url": {
+          "default": "http://localhost/media/processed/full/{filename}",
+          "description": "URL displayed as QR code to image for download. Need you to sync the files on your own or allow the user to access via hotspot. {filename} is replaced by actual filename in QR code.",
+          "title": "Share Custom Qr Url",
+          "type": "string"
+        }
+      },
+      "title": "🫶 Share Config",
+      "type": "object"
+    },
+    "GroupUiSettings": {
+      "description": "Personalize the booth's UI.",
+      "properties": {
+        "PRIMARY_COLOR": {
+          "default": "#196cb0",
+          "description": "Primary color (e.g. buttons, title bar).",
+          "title": "Primary Color",
+          "type": "string",
+          "ui_component": "ColorPicker"
+        },
+        "SECONDARY_COLOR": {
+          "default": "#b8124f",
+          "description": "Secondary color (admin interface, accents).",
+          "title": "Secondary Color",
+          "type": "string",
+          "ui_component": "ColorPicker"
+        },
+        "show_takepic_on_frontpage": {
+          "default": true,
+          "description": "Show button to capture single picture on frontpage.",
+          "title": "Show Takepic On Frontpage",
+          "type": "boolean"
+        },
+        "show_takecollage_on_frontpage": {
+          "default": true,
+          "description": "Show button to capture collage on frontpage.",
+          "title": "Show Takecollage On Frontpage",
+          "type": "boolean"
+        },
+        "show_takeanimation_on_frontpage": {
+          "default": true,
+          "description": "Show button to capture animated GIF on frontpage.",
+          "title": "Show Takeanimation On Frontpage",
+          "type": "boolean"
+        },
+        "show_takevideo_on_frontpage": {
+          "default": true,
+          "description": "Show button to capture video on frontpage.",
+          "title": "Show Takevideo On Frontpage",
+          "type": "boolean"
+        },
+        "show_gallery_on_frontpage": {
+          "default": true,
+          "description": "Show button to gallery on frontpage.",
+          "title": "Show Gallery On Frontpage",
+          "type": "boolean"
+        },
+        "show_admin_on_frontpage": {
+          "default": true,
+          "description": "Show button to admin center, usually only during setup.",
+          "title": "Show Admin On Frontpage",
+          "type": "boolean"
+        },
+        "show_automatic_slideshow_timeout": {
+          "default": 300,
+          "description": "Timeout (seconds) after which a random order slideshow of all images is started. Set to 0 to disable.",
+          "title": "Show Automatic Slideshow Timeout",
+          "type": "integer"
+        },
+        "livestream_mirror_effect": {
+          "default": true,
+          "description": "Flip livestream horizontally to create a mirror effect feeling more natural to users.",
+          "title": "Livestream Mirror Effect",
+          "type": "boolean"
+        },
+        "FRONTPAGE_TEXT": {
+          "default": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Hey!<br>Let's take some pictures! <br>📷💕</div>",
+          "description": "Text/HTML displayed on frontpage.",
+          "title": "Frontpage Text",
+          "type": "string"
+        },
+        "TAKEPIC_MSG_TIME": {
+          "default": 0.5,
+          "description": "Offset in seconds, the smile-icon shall be shown.",
+          "title": "Takepic Msg Time",
+          "type": "number"
+        },
+        "TAKEPIC_MSG_TEXT": {
+          "default": "😃",
+          "description": "Message to display at the end of the capture countdown.",
+          "title": "Takepic Msg Text",
+          "type": "string"
+        },
+        "AUTOCLOSE_NEW_ITEM_ARRIVED": {
+          "default": 30,
+          "description": "Timeout in seconds a new item popup closes automatically.",
+          "title": "Autoclose New Item Arrived",
+          "type": "integer"
+        },
+        "GALLERY_EMPTY_MSG": {
+          "default": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Empty, Zero, Nada! 🤷‍♂️<br>Let's take some pictures! <br>📷💕</div>",
+          "description": "Message displayed if gallery is empty.",
+          "title": "Gallery Empty Msg",
+          "type": "string"
+        },
+        "gallery_show_qrcode": {
+          "default": true,
+          "description": "Show QR code in gallery. If shareservice is enabled the URL is automatically generated, if not go to share config and provide URL.",
+          "title": "Gallery Show Qrcode",
+          "type": "boolean"
+        },
+        "gallery_show_filter": {
+          "default": true,
+          "description": "Show instagramlike filter (pilgram2).",
+          "title": "Gallery Show Filter",
+          "type": "boolean"
+        },
+        "gallery_filter_userselectable": {
+          "default": [
+            "original",
+            "_1977",
+            "aden",
+            "ashby",
+            "amaro",
+            "brannan",
+            "brooklyn",
+            "charmes",
+            "clarendon",
+            "crema",
+            "dogpatch",
+            "earlybird",
+            "gingham",
+            "ginza",
+            "hefe",
+            "helena",
+            "hudson",
+            "inkwell",
+            "juno",
+            "kelvin",
+            "lark",
+            "lofi",
+            "ludwig",
+            "maven",
+            "mayfair",
+            "moon",
+            "nashville",
+            "perpetua",
+            "poprocket",
+            "reyes",
+            "rise",
+            "sierra",
+            "skyline",
+            "slumber",
+            "stinson",
+            "sutro",
+            "toaster",
+            "valencia",
+            "walden",
+            "willow",
+            "xpro2"
+          ],
+          "description": "Filter the user may choose from in the gallery. 'original' applies no filter.",
+          "items": { "$ref": "#/$defs/EnumPilgramFilter" },
+          "title": "Pic1 Filter Userselectable",
+          "type": "array"
+        },
+        "gallery_show_download": {
+          "default": true,
+          "description": "Show download button in gallery.",
+          "title": "Gallery Show Download",
+          "type": "boolean"
+        },
+        "gallery_show_delete": {
+          "default": true,
+          "description": "Show delete button for items in gallery.",
+          "title": "Gallery Show Delete",
+          "type": "boolean"
+        },
+        "gallery_show_print": {
+          "default": true,
+          "description": "Show print button for items in gallery.",
+          "title": "Gallery Show Print",
+          "type": "boolean"
+        }
+      },
+      "title": "Personalize the User Interface",
+      "type": "object"
+    },
+    "TextsConfig": {
+      "properties": {
+        "text": { "default": "", "title": "Text", "type": "string" },
+        "pos_x": { "default": 50, "minimum": 0, "title": "Pos X", "type": "integer" },
+        "pos_y": { "default": 50, "minimum": 0, "title": "Pos Y", "type": "integer" },
+        "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+        "font_size": { "default": 40, "exclusiveMinimum": 0, "title": "Font Size", "type": "integer" },
+        "font": { "default": "fonts/Roboto-Bold.ttf", "title": "Font", "type": "string" },
+        "color": { "default": "red", "format": "color", "title": "Color", "type": "string" }
+      },
+      "title": "TextsConfig",
+      "type": "object"
+    },
+    "photobooth__services__config__groups__mediaprocessing__GroupMediaprocessingPipelineCollage": {
+      "description": "Configure stages how to process collage after capture.",
+      "properties": {
+        "capture_fill_background_enable": {
+          "default": false,
+          "description": "Apply solid color background to captured image (useful only if image is extended or background removed)",
+          "title": "Capture Fill Background Enable",
+          "type": "boolean"
+        },
+        "capture_fill_background_color": {
+          "default": "blue",
+          "description": "Solid color used to fill background.",
+          "format": "color",
+          "title": "Capture Fill Background Color",
+          "type": "string"
+        },
+        "capture_img_background_enable": {
+          "default": false,
+          "description": "Add image from file to background (useful only if image is extended or background removed)",
+          "title": "Capture Img Background Enable",
+          "type": "boolean"
+        },
+        "capture_img_background_file": {
+          "default": "backgrounds/pink-7761356_1920.jpg",
+          "description": "Image file to use as background filling transparent area. File needs to be located in DATA_DIR/*",
+          "title": "Capture Img Background File",
+          "type": "string"
+        },
+        "canvas_width": {
+          "default": 1920,
+          "description": "Width (X) in pixel of collage image. The higher the better the quality but also longer time to process. All processes keep aspect ratio.",
+          "title": "Canvas Width",
+          "type": "integer"
+        },
+        "canvas_height": {
+          "default": 1280,
+          "description": "Height (Y) in pixel of collage image. The higher the better the quality but also longer time to process. All processes keep aspect ratio.",
+          "title": "Canvas Height",
+          "type": "integer"
+        },
+        "canvas_merge_definition": {
+          "default": [
+            { "pos_x": 160, "pos_y": 220, "width": 510, "height": 725, "rotate": 0, "predefined_image": "", "filter": "earlybird" },
+            {
+              "pos_x": 705,
+              "pos_y": 66,
+              "width": 510,
+              "height": 725,
+              "rotate": 0,
+              "predefined_image": "predefined_images/photobooth-collage-predefined-image.png",
+              "filter": "original"
+            },
+            { "pos_x": 1245, "pos_y": 220, "width": 510, "height": 725, "rotate": 0, "predefined_image": "", "filter": "reyes" }
+          ],
+          "description": "How to arrange single images in the collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Width/Height in pixels. Aspect ratio is kept always. Predefined image files are used instead a camera capture. File needs to be located in DATA_DIR/*",
+          "items": { "$ref": "#/$defs/CollageMergeDefinition" },
+          "title": "Canvas Merge Definition",
+          "type": "array"
+        },
+        "canvas_fill_background_enable": {
+          "default": false,
+          "description": "Apply solid color background to collage",
+          "title": "Canvas Fill Background Enable",
+          "type": "boolean"
+        },
+        "canvas_fill_background_color": {
+          "default": "green",
+          "description": "Solid color used to fill background.",
+          "format": "color",
+          "title": "Canvas Fill Background Color",
+          "type": "string"
+        },
+        "canvas_img_background_enable": {
+          "default": false,
+          "description": "Add image from file to background.",
+          "title": "Canvas Img Background Enable",
+          "type": "boolean"
+        },
+        "canvas_img_background_file": {
+          "default": "backgrounds/pink-7761356_1920.jpg",
+          "description": "Image file to use as background filling transparent area. File needs to be located in userdata/*",
+          "title": "Canvas Img Background File",
+          "type": "string"
+        },
+        "canvas_img_front_enable": {
+          "default": true,
+          "description": "Overlay image on canvas image.",
+          "title": "Canvas Img Front Enable",
+          "type": "boolean"
+        },
+        "canvas_img_front_file": {
+          "default": "frames/pixabay-poster-2871536_1920.png",
+          "description": "Image file to paste on top over photos and backgrounds. Photos are visible only through transparant parts. Image needs to be transparent (PNG). File needs to be located in DATA_DIR/*",
+          "title": "Canvas Img Front File",
+          "type": "string"
+        },
+        "canvas_texts_enable": {
+          "default": true,
+          "description": "General enable apply texts below.",
+          "title": "Canvas Texts Enable",
+          "type": "boolean"
+        },
+        "canvas_texts": {
+          "default": [
+            {
+              "text": "Have a nice day :)",
+              "pos_x": 200,
+              "pos_y": 1100,
+              "rotate": 1,
+              "font_size": 40,
+              "font": "fonts/Roboto-Bold.ttf",
+              "color": "#333"
+            }
+          ],
+          "description": "Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
+          "items": { "$ref": "#/$defs/TextsConfig" },
+          "title": "Canvas Texts",
+          "type": "array"
+        }
+      },
+      "title": "Process collage after capture",
+      "type": "object"
+    },
+    "photobooth__services__config__groups__mediaprocessing_collagenew__GroupMediaprocessingPipelineCollage": {
+      "description": "Configure stages how to process collage after capture.",
+      "properties": {
+        "capture_fill_background_enable": {
+          "default": false,
+          "description": "Apply solid color background to captured image (useful only if image is extended or background removed)",
+          "title": "Capture Fill Background Enable",
+          "type": "boolean"
+        },
+        "capture_fill_background_color": {
+          "default": "blue",
+          "description": "Solid color used to fill background.",
+          "format": "color",
+          "title": "Capture Fill Background Color",
+          "type": "string"
+        },
+        "capture_img_background_enable": {
+          "default": false,
+          "description": "Add image from file to background (useful only if image is extended or background removed)",
+          "title": "Capture Img Background Enable",
+          "type": "boolean"
+        },
+        "capture_img_background_file": {
+          "default": "backgrounds/pink-7761356_1920.jpg",
+          "description": "Image file to use as background filling transparent area. File needs to be located in DATA_DIR/*",
+          "title": "Capture Img Background File",
+          "type": "string"
+        },
+        "canvas_width": {
+          "default": 1920,
+          "description": "Width (X) in pixel of collage image. The higher the better the quality but also longer time to process. All processes keep aspect ratio.",
+          "title": "Canvas Width",
+          "type": "integer"
+        },
+        "canvas_height": {
+          "default": 1280,
+          "description": "Height (Y) in pixel of collage image. The higher the better the quality but also longer time to process. All processes keep aspect ratio.",
+          "title": "Canvas Height",
+          "type": "integer"
+        },
+        "canvas_merge_definition": {
+          "default": [
+            { "pos_x": 160, "pos_y": 220, "width": 510, "height": 725, "rotate": 0, "predefined_image": "", "filter": "earlybird" },
+            {
+              "pos_x": 705,
+              "pos_y": 66,
+              "width": 510,
+              "height": 725,
+              "rotate": 0,
+              "predefined_image": "predefined_images/photobooth-collage-predefined-image.png",
+              "filter": "original"
+            },
+            { "pos_x": 1245, "pos_y": 220, "width": 510, "height": 725, "rotate": 0, "predefined_image": "", "filter": "reyes" }
+          ],
+          "description": "How to arrange single images in the collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Width/Height in pixels. Aspect ratio is kept always. Predefined image files are used instead a camera capture. File needs to be located in DATA_DIR/*",
+          "items": { "$ref": "#/$defs/CollageMergeDefinition" },
+          "title": "Canvas Merge Definition",
+          "type": "array"
+        },
+        "canvas_fill_background_enable": {
+          "default": false,
+          "description": "Apply solid color background to collage",
+          "title": "Canvas Fill Background Enable",
+          "type": "boolean"
+        },
+        "canvas_fill_background_color": {
+          "default": "green",
+          "description": "Solid color used to fill background.",
+          "format": "color",
+          "title": "Canvas Fill Background Color",
+          "type": "string"
+        },
+        "canvas_img_background_enable": {
+          "default": false,
+          "description": "Add image from file to background.",
+          "title": "Canvas Img Background Enable",
+          "type": "boolean"
+        },
+        "canvas_img_background_file": {
+          "default": "backgrounds/pink-7761356_1920.jpg",
+          "description": "Image file to use as background filling transparent area. File needs to be located in userdata/*",
+          "title": "Canvas Img Background File",
+          "type": "string"
+        },
+        "canvas_img_front_enable": {
+          "default": true,
+          "description": "Overlay image on canvas image.",
+          "title": "Canvas Img Front Enable",
+          "type": "boolean"
+        },
+        "canvas_img_front_file": {
+          "default": "frames/pixabay-poster-2871536_1920.png",
+          "description": "Image file to paste on top over photos and backgrounds. Photos are visible only through transparant parts. Image needs to be transparent (PNG). File needs to be located in DATA_DIR/*",
+          "title": "Canvas Img Front File",
+          "type": "string"
+        },
+        "canvas_texts_enable": {
+          "default": true,
+          "description": "General enable apply texts below.",
+          "title": "Canvas Texts Enable",
+          "type": "boolean"
+        },
+        "canvas_texts": {
+          "default": [
+            {
+              "text": "Have a nice day :)",
+              "pos_x": 200,
+              "pos_y": 1100,
+              "rotate": 1,
+              "font_size": 40,
+              "font": "fonts/Roboto-Bold.ttf",
+              "color": "#333"
+            }
+          ],
+          "description": "Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
+          "items": { "$ref": "#/$defs/TextsConfig" },
+          "title": "Canvas Texts",
+          "type": "array"
+        }
+      },
+      "title": "Process collage after capture",
+      "type": "object"
+    }
+  },
+  "description": "AppConfig class glueing all together\n\nIn the case where a value is specified for the same Settings field in multiple ways, the selected value is determined as follows\n(in descending order of priority):\n\n1 Arguments passed to the Settings class initialiser.\n2 Environment variables, e.g. my_prefix_special_function as described above.\n3 Variables loaded from a dotenv (.env) file.\n4 Variables loaded from the secrets directory.\n5 The default field values for the Settings model.",
+  "properties": {
+    "common": {
+      "allOf": [{ "$ref": "#/$defs/GroupCommon" }],
+      "default": {
+        "countdown_capture_first": 2.0,
+        "countdown_capture_second_following": 1.0,
+        "countdown_camera_capture_offset": 0.25,
+        "collage_automatic_capture_continue": true,
+        "collage_approve_autoconfirm_timeout": 15.0,
+        "gallery_show_individual_images": false,
+        "DEBUG_LEVEL": "DEBUG",
+        "webserver_bind_ip": "0.0.0.0",
+        "webserver_port": 8000
+      }
+    },
+    "sharing": {
+      "allOf": [{ "$ref": "#/$defs/GroupSharing" }],
+      "default": {
+        "shareservice_enabled": false,
+        "shareservice_url": "https://photobooth-app.org/extras/shareservice-landing/",
+        "shareservice_apikey": "changedefault!",
+        "shareservice_share_original": false,
+        "share_custom_qr_url": "http://localhost/media/processed/full/{filename}"
+      }
+    },
+    "filetransfer": { "allOf": [{ "$ref": "#/$defs/GroupFileTransfer" }], "default": { "enabled": false, "target_folder_name": "photobooth" } },
+    "mediaprocessing": {
+      "allOf": [{ "$ref": "#/$defs/GroupMediaprocessing" }],
+      "default": {
+        "HIRES_STILL_QUALITY": 90,
+        "LIVEPREVIEW_QUALITY": 80,
+        "THUMBNAIL_STILL_QUALITY": 60,
+        "PREVIEW_STILL_QUALITY": 75,
+        "FULL_STILL_WIDTH": 1500,
+        "PREVIEW_STILL_WIDTH": 1200,
+        "THUMBNAIL_STILL_WIDTH": 400,
+        "removechromakey_enable": false,
+        "removechromakey_keycolor": 110,
+        "removechromakey_tolerance": 10
+      }
+    },
+    "mediaprocessing_pipeline_singleimage": {
+      "allOf": [{ "$ref": "#/$defs/GroupMediaprocessingPipelineSingleImage" }],
+      "default": {
+        "filter": "original",
+        "fill_background_enable": false,
+        "fill_background_color": "blue",
+        "img_background_enable": false,
+        "img_background_file": "backgrounds/pink-7761356_1920.jpg",
+        "img_frame_enable": true,
+        "img_frame_file": "frames/pixabay-holidays-1798208_1920.png",
+        "texts_enable": true,
+        "texts": [
+          {
+            "color": "#ccc",
+            "font": "fonts/Roboto-Bold.ttf",
+            "font_size": 40,
+            "pos_x": 100,
+            "pos_y": 1300,
+            "rotate": 0,
+            "text": "Made with the python photobooth-app"
+          }
+        ]
+      }
+    },
+    "mediaprocessing_pipeline_collage": {
+      "allOf": [{ "$ref": "#/$defs/photobooth__services__config__groups__mediaprocessing__GroupMediaprocessingPipelineCollage" }],
+      "default": {
+        "capture_fill_background_enable": false,
+        "capture_fill_background_color": "blue",
+        "capture_img_background_enable": false,
+        "capture_img_background_file": "backgrounds/pink-7761356_1920.jpg",
+        "canvas_width": 1920,
+        "canvas_height": 1280,
+        "canvas_merge_definition": [
+          { "filter": "earlybird", "height": 725, "pos_x": 160, "pos_y": 220, "predefined_image": "", "rotate": 0, "width": 510 },
+          {
+            "filter": "original",
+            "height": 725,
+            "pos_x": 705,
+            "pos_y": 66,
+            "predefined_image": "predefined_images/photobooth-collage-predefined-image.png",
+            "rotate": 0,
+            "width": 510
+          },
+          { "filter": "reyes", "height": 725, "pos_x": 1245, "pos_y": 220, "predefined_image": "", "rotate": 0, "width": 510 }
+        ],
+        "canvas_fill_background_enable": false,
+        "canvas_fill_background_color": "green",
+        "canvas_img_background_enable": false,
+        "canvas_img_background_file": "backgrounds/pink-7761356_1920.jpg",
+        "canvas_img_front_enable": true,
+        "canvas_img_front_file": "frames/pixabay-poster-2871536_1920.png",
+        "canvas_texts_enable": true,
+        "canvas_texts": [
+          {
+            "color": "#333",
+            "font": "fonts/Roboto-Bold.ttf",
+            "font_size": 40,
+            "pos_x": 200,
+            "pos_y": 1100,
+            "rotate": 1,
+            "text": "Have a nice day :)"
+          }
+        ]
+      }
+    },
+    "mediaprocessing_pipeline_animation": {
+      "allOf": [{ "$ref": "#/$defs/GroupMediaprocessingPipelineAnimation" }],
+      "default": {
+        "canvas_width": 1500,
+        "canvas_height": 900,
+        "sequence_merge_definition": [
+          { "duration": 2000, "filter": "crema", "predefined_image": "" },
+          { "duration": 2000, "filter": "inkwell", "predefined_image": "" },
+          { "duration": 4000, "filter": "original", "predefined_image": "predefined_images/photobooth-gif-animation-predefined-image.png" }
+        ]
+      }
+    },
+    "mediaprocessing_pipeline_printing": { "allOf": [{ "$ref": "#/$defs/GroupMediaprocessingPipelinePrint" }], "default": {} },
+    "uisettings": {
+      "allOf": [{ "$ref": "#/$defs/GroupUiSettings" }],
+      "default": {
+        "PRIMARY_COLOR": "#196cb0",
+        "SECONDARY_COLOR": "#b8124f",
+        "show_takepic_on_frontpage": true,
+        "show_takecollage_on_frontpage": true,
+        "show_takeanimation_on_frontpage": true,
+        "show_takevideo_on_frontpage": true,
+        "show_gallery_on_frontpage": true,
+        "show_admin_on_frontpage": true,
+        "show_automatic_slideshow_timeout": 300,
+        "livestream_mirror_effect": true,
+        "FRONTPAGE_TEXT": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Hey!<br>Let's take some pictures! <br>📷💕</div>",
+        "TAKEPIC_MSG_TIME": 0.5,
+        "TAKEPIC_MSG_TEXT": "😃",
+        "AUTOCLOSE_NEW_ITEM_ARRIVED": 30,
+        "GALLERY_EMPTY_MSG": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Empty, Zero, Nada! 🤷‍♂️<br>Let's take some pictures! <br>📷💕</div>",
+        "gallery_show_qrcode": true,
+        "gallery_show_filter": true,
+        "gallery_filter_userselectable": [
+          "original",
+          "_1977",
+          "aden",
+          "ashby",
+          "amaro",
+          "brannan",
+          "brooklyn",
+          "charmes",
+          "clarendon",
+          "crema",
+          "dogpatch",
+          "earlybird",
+          "gingham",
+          "ginza",
+          "hefe",
+          "helena",
+          "hudson",
+          "inkwell",
+          "juno",
+          "kelvin",
+          "lark",
+          "lofi",
+          "ludwig",
+          "maven",
+          "mayfair",
+          "moon",
+          "nashville",
+          "perpetua",
+          "poprocket",
+          "reyes",
+          "rise",
+          "sierra",
+          "skyline",
+          "slumber",
+          "stinson",
+          "sutro",
+          "toaster",
+          "valencia",
+          "walden",
+          "willow",
+          "xpro2"
+        ],
+        "gallery_show_download": true,
+        "gallery_show_delete": true,
+        "gallery_show_print": true
+      }
+    },
+    "backends": {
+      "allOf": [{ "$ref": "#/$defs/GroupBackends" }],
+      "default": {
+        "MAIN_BACKEND": "VirtualCamera",
+        "LIVE_BACKEND": "Disabled",
+        "LIVEPREVIEW_ENABLED": true,
+        "LIVEPREVIEW_FRAMERATE": 15,
+        "retry_capture": 3,
+        "gphoto2_capture_target": "",
+        "gphoto2_disable_viewfinder_before_capture": true,
+        "gphoto2_iso_liveview": "",
+        "gphoto2_iso_capture": "",
+        "gphoto2_shutter_speed_liveview": "",
+        "gphoto2_shutter_speed_capture": "",
+        "cv2_CAM_RESOLUTION_WIDTH": 10000,
+        "cv2_CAM_RESOLUTION_HEIGHT": 10000,
+        "cv2_device_index": 0,
+        "cv2_CAMERA_TRANSFORM_HFLIP": false,
+        "cv2_CAMERA_TRANSFORM_VFLIP": false,
+        "v4l_CAM_RESOLUTION_WIDTH": 10000,
+        "v4l_CAM_RESOLUTION_HEIGHT": 10000,
+        "v4l_device_index": 0,
+        "digicamcontrol_base_url": "http://127.0.0.1:5513",
+        "picamera2_CAPTURE_CAM_RESOLUTION_WIDTH": 1280,
+        "picamera2_CAPTURE_CAM_RESOLUTION_HEIGHT": 720,
+        "picamera2_PREVIEW_CAM_RESOLUTION_WIDTH": 1280,
+        "picamera2_PREVIEW_CAM_RESOLUTION_HEIGHT": 720,
+        "picamera2_LIVEVIEW_RESOLUTION_WIDTH": 1280,
+        "picamera2_LIVEVIEW_RESOLUTION_HEIGHT": 720,
+        "picamera2_CAMERA_TRANSFORM_HFLIP": false,
+        "picamera2_CAMERA_TRANSFORM_VFLIP": false,
+        "picamera2_AE_EXPOSURE_MODE": 1,
+        "picamera2_stream_quality": "medium"
+      }
+    },
+    "hardwareinputoutput": {
+      "allOf": [{ "$ref": "#/$defs/GroupHardwareInputOutput" }],
+      "default": {
+        "keyboard_input_enabled": false,
+        "keyboard_input_keycode_takepic": "i",
+        "keyboard_input_keycode_takecollage": "c",
+        "keyboard_input_keycode_takeanimation": "g",
+        "keyboard_input_keycode_takevideo": "v",
+        "keyboard_input_keycode_print_recent_item": "p",
+        "wled_enabled": false,
+        "wled_serial_port": "",
+        "gpio_enabled": false,
+        "gpio_pin_shutdown": 17,
+        "gpio_pin_reboot": 18,
+        "gpio_pin_take1pic": 27,
+        "gpio_pin_collage": 22,
+        "gpio_pin_animation": 24,
+        "gpio_pin_video": 26,
+        "gpio_pin_print_recent_item": 23,
+        "printing_enabled": false,
+        "printing_command": "mspaint /p {filename}",
+        "printing_blocked_time": 20
+      }
+    },
+    "misc": { "allOf": [{ "$ref": "#/$defs/GroupMisc" }], "default": { "video_duration": 5, "video_bitrate": 3000 } },
+    "mediaprocessing_pipeline_collage_list2": {
+      "allOf": [{ "$ref": "#/$defs/GroupCollageProcess" }],
+      "default": {
+        "other_general_settings": 900,
+        "collage_pipeline_sets": [
+          {
+            "canvas_fill_background_color": "green",
+            "canvas_fill_background_enable": false,
+            "canvas_height": 1280,
+            "canvas_img_background_enable": false,
+            "canvas_img_background_file": "backgrounds/pink-7761356_1920.jpg",
+            "canvas_img_front_enable": true,
+            "canvas_img_front_file": "frames/pixabay-poster-2871536_1920.png",
+            "canvas_merge_definition": [
+              { "filter": "earlybird", "height": 725, "pos_x": 160, "pos_y": 220, "predefined_image": "", "rotate": 0, "width": 510 },
+              {
+                "filter": "original",
+                "height": 725,
+                "pos_x": 705,
+                "pos_y": 66,
+                "predefined_image": "predefined_images/photobooth-collage-predefined-image.png",
+                "rotate": 0,
+                "width": 510
+              },
+              { "filter": "reyes", "height": 725, "pos_x": 1245, "pos_y": 220, "predefined_image": "", "rotate": 0, "width": 510 }
+            ],
+            "canvas_texts": [
+              {
+                "color": "#333",
+                "font": "fonts/Roboto-Bold.ttf",
+                "font_size": 40,
+                "pos_x": 200,
+                "pos_y": 1100,
+                "rotate": 1,
+                "text": "Have a nice day :)"
+              }
+            ],
+            "canvas_texts_enable": true,
+            "canvas_width": 1920,
+            "capture_fill_background_color": "blue",
+            "capture_fill_background_enable": false,
+            "capture_img_background_enable": false,
+            "capture_img_background_file": "backgrounds/pink-7761356_1920.jpg"
+          }
+        ]
+      }
+    }
+  },
+  "title": "AppConfig",
+  "type": "object"
+}
