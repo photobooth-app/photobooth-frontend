@@ -1,14 +1,24 @@
 <template>
   <div v-if="visible" :id="id" :class="styles.control.root">
-    <label :for="id + '-input'" :class="[styles.control.label, required ? styles.control.required : '']">
-      {{ label }}
-    </label>
-    <div :class="styles.control.wrapper">
-      <slot></slot>
+    <div class="control-wrapper row">
+      <div class="col">
+        <div class="control-label-wrapper">
+          <label :for="id + '-input'" :class="[styles.control.label, required ? styles.control.required : '']">
+            {{ label }}
+          </label>
+        </div>
+        <div class="control-description-wrapper">
+          <!--div :class="styles.control.description">{{ showDescription ? description : "" }}</div-->
+          <div :class="styles.control.description">{{ description }}</div>
+        </div>
+      </div>
+      <div class="control-field col">
+        <div :class="styles.control.wrapper">
+          <slot></slot>
+        </div>
+      </div>
     </div>
-    <div :class="errors ? styles.control.error : styles.control.description">
-      {{ errors ? errors : showDescription ? description : null }}
-    </div>
+    <div :class="styles.control.description"></div>
   </div>
 </template>
 

@@ -57,4 +57,7 @@ export const defaultStyles: Styles = {
   oneOf: {
     root: "one-of",
   },
+  allOf: {
+    root: "all-of",
+  },
 };

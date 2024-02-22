@@ -2,14 +2,18 @@
   <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
     <q-input
       :model-value="control.data"
+      filled
       type="number"
       :step="step"
       :id="control.id + '-input'"
       :class="styles.control.input"
       :disable="!control.enabled"
       :autofocus="appliedOptions.focus"
-      :placeholder="appliedOptions.placeholder"
       @update:model-value="onChange"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
+      :error-message="control.errors"
+      :error="control.errors != ''"
     ></q-input>
   </control-wrapper>
 </template>
@@ -34,7 +38,7 @@ const controlRenderer = defineComponent({
     },
   },
   setup(props: RendererProps<ControlElement>) {
-    return useQuasarControl(useJsonFormsControl(props), (value: any) => (value === "" ? undefined : Number(value)));
+    return useQuasarControl(useJsonFormsControl(props), (value: any) => (value === "" ? undefined : Number(value)), 300);
   },
 });
 
@@ -42,6 +46,6 @@ export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  tester: rankWith(2, or(isNumberControl, isIntegerControl)),
+  tester: rankWith(1.1, or(isNumberControl, isIntegerControl)),
 };
 </script>

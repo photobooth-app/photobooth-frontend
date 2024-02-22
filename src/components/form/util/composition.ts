@@ -1,33 +1,76 @@
 import { useStyles } from "../styles";
-import { computed, ref } from "vue";
-import merge from "lodash/merge";
+import { computed, ref, ComputedRef } from "vue";
 import cloneDeep from "lodash/cloneDeep";
-import { composePaths, findUISchema, getFirstPrimitiveProp, Resolve } from "@jsonforms/core";
+import debounce from "lodash/debounce";
+import merge from "lodash/merge";
+import get from "lodash/get";
+import { composePaths, computeLabel, getFirstPrimitiveProp, isDescriptionHidden, JsonFormsSubStates, Resolve, findUISchema } from "@jsonforms/core";
+import isPlainObject from "lodash/isPlainObject";
+import Ajv from "ajv";
+
+export const useControlAppliedOptions = <I extends { control: any }>(input: I) => {
+  return computed(() => merge({}, cloneDeep(input.control.value.config), cloneDeep(input.control.value.uischema.options)));
+};
+
+export const useComputedLabel = <I extends { control: any }>(input: I, appliedOptions: ComputedRef<any>) => {
+  return computed((): string => {
+    return computeLabel(input.control.value.label, input.control.value.required, !!appliedOptions.value?.hideRequiredAsterisk);
+  });
+};
 
 /**
  * Adds styles, isFocused, appliedOptions and onChange
  */
 
-export const useQuasarControl = <I extends { control: any; handleChange: any }>(input: I, adaptValue: (target: any) => any = (v) => v) => {
-  const appliedOptions = computed(() => merge({}, cloneDeep(input.control.value.config), cloneDeep(input.control.value.uischema.options)));
+export const useQuasarControl = <I extends { control: any; handleChange: any }>(
+  input: I,
+  adaptValue: (target: any) => any = (v) => v,
+  debounceWait?: number,
+) => {
+  const changeEmitter = typeof debounceWait === "number" ? debounce(input.handleChange, debounceWait) : input.handleChange;
 
-  const isFocused = ref(false);
   const onChange = (value: any) => {
-    input.handleChange(input.control.value.path, adaptValue(value));
+    changeEmitter(input.control.value.path, adaptValue(value));
   };
+
+  const appliedOptions = useControlAppliedOptions(input);
+  const isFocused = ref(false);
+
+  const persistentHint = (): boolean => {
+    return !isDescriptionHidden(
+      input.control.value.visible,
+      input.control.value.description,
+      isFocused.value,
+      !!appliedOptions.value?.showUnfocusedDescription,
+    );
+  };
+
+  const computedLabel = useComputedLabel(input, appliedOptions);
 
   const controlWrapper = computed(() => {
     const { id, description, errors, label, visible, required } = input.control.value;
     return { id, description, errors, label, visible, required };
   });
 
+  const styles = useStyles(input.control.value.uischema);
+  console.log("styles", styles);
+
+  const vuetifyProps = (path: string) => {
+    const props = get(appliedOptions.value?.vuetify, path);
+
+    return props && isPlainObject(props) ? props : {};
+  };
+
   return {
     ...input,
-    styles: useStyles(input.control.value.uischema),
+    styles,
     isFocused,
     appliedOptions,
     controlWrapper,
     onChange,
+    vuetifyProps,
+    persistentHint,
+    computedLabel,
   };
 };
 

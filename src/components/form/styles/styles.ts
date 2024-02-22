@@ -12,6 +12,7 @@ const createEmptyStyles = (): Styles => ({
   label: {},
   dialog: {},
   oneOf: {},
+  allOf: {},
 });
 
 export interface Styles {
@@ -69,6 +70,9 @@ export interface Styles {
     root?: string;
   };
   oneOf: {
+    root?: string;
+  };
+  allOf: {
     root?: string;
   };
 }
