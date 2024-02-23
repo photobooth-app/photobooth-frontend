@@ -39,7 +39,7 @@
         <!--div>{{ JSON.stringify(this.serverConfig) }}</div-->
         <div class="config-form q-mt-md row justify-center">
           <div class="col-12 col-md-8 q-mb-xl">
-            <p>Group: {{ group_description }} _____name would be here _____</p>
+            <p>Group: {{ group_description }}</p>
           </div>
           <div class="col-12 col-md-8 q-mb-xl">
             <json-forms :data="serverConfig" :renderers="renderers" :schema="schema" :uischema="uischema" @change="onChange" />
@@ -88,6 +88,30 @@ const uischema = null; //{
 //   step: 0.25,
 // },
 // };
+// const uischema = {
+//   type: "Categorization",
+//   elements: [
+//     {
+//       type: "Category",
+//       label: "categoryLabelKey",
+//       elements: [
+//         {
+//           type: "HorizontalLayout",
+//           elements: [
+//             {
+//               type: "Control",
+//               scope: "#/properties/firstName",
+//             },
+//             {
+//               type: "Control",
+//               scope: "#/properties/secondName",
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//   ],
+// };
 
 export default {
   // name: 'PageName',
@@ -103,6 +127,11 @@ export default {
       renderers: Object.freeze(renderers),
       schema,
       uischema,
+
+      //placeholder:
+      main_groups: ["one", "two"],
+      group_title: "one",
+      group_description: "_____name would be here _____",
     };
   },
   methods: {

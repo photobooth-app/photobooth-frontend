@@ -12,6 +12,7 @@
     </template>
     <template v-else-if="allOfRenderInfos">
       <div>
+        <h4>Group: {{ control.path }}</h4>
         <combinator-properties :schema="control.schema" combinatorKeyword="allOf" :path="path" />
         <dispatch-renderer
           v-for="(allOfRenderInfo, allOfIndex) in allOfRenderInfos"
