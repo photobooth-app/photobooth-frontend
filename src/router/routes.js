@@ -42,11 +42,6 @@ const routes = [
         path: "config/:section?",
         component: () => import("pages/ConfigPage.vue"),
       },
-      {
-        name: "confignew", //temporary for dev
-        path: "confignew/:section?",
-        component: () => import("pages/ConfigPageJsonForms.vue"),
-      },
     ],
   },
 

@@ -24,7 +24,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["blitzar", "axios", "sse", "i18n"],
+    boot: ["axios", "sse", "i18n"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -116,7 +116,7 @@ module.exports = configure(function (ctx) {
       // (like functional components as one of the examples),
       // you can manually specify Quasar components/directives to be available everywhere:
       //
-      components: ["QInput", "QSlider", "QToggle", "QSelect", "QTooltip"], // added components here that are used by Blitzar to autogenerate config form inputs
+      components: [],
       // directives: [],
 
       // Quasar plugins
