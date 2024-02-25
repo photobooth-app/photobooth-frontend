@@ -23,13 +23,13 @@
 </template>
 
 <script lang="ts">
-import { isDescriptionHidden } from "@jsonforms/core";
-import { defineComponent, PropType } from "vue";
-import { Styles } from "../styles";
-import { Options } from "../util";
+import { isDescriptionHidden } from '@jsonforms/core';
+import { defineComponent, PropType } from 'vue';
+import { Styles } from '../styles';
+import { Options } from '../util';
 
 export default defineComponent({
-  name: "ControlWrapper",
+  name: 'ControlWrapper',
   props: {
     id: {
       required: true,

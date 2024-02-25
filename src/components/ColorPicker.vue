@@ -11,10 +11,10 @@
 </template>
 
 <script setup>
-const props = defineProps(["model-value"]);
-const emit = defineEmits(["update:model-value"]);
+// const props = defineProps(['model-value']);
+const emit = defineEmits(['update:model-value']);
 
 function onInput(e) {
-  emit("update:model-value", e);
+  emit('update:model-value', e);
 }
 </script>

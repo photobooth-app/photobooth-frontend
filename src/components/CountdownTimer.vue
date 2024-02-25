@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "CountdownTimer",
+  name: 'CountdownTimer',
 
   data() {
     return {
@@ -79,7 +79,7 @@ export default defineComponent({
 
     messageText: {
       type: String,
-      default: "😃",
+      default: '😃',
     },
   },
 });

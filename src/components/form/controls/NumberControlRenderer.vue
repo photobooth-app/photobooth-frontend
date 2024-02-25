@@ -19,14 +19,14 @@
 </template>
 
 <script lang="ts">
-import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isNumberControl, or, isIntegerControl } from "@jsonforms/core";
-import { defineComponent } from "vue";
-import { rendererProps, useJsonFormsControl, RendererProps } from "@jsonforms/vue";
-import { default as ControlWrapper } from "./ControlWrapper.vue";
-import { useQuasarControl } from "../util";
+import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isNumberControl, or, isIntegerControl } from '@jsonforms/core';
+import { defineComponent } from 'vue';
+import { rendererProps, useJsonFormsControl, RendererProps } from '@jsonforms/vue';
+import { default as ControlWrapper } from './ControlWrapper.vue';
+import { useQuasarControl } from '../util';
 
 const controlRenderer = defineComponent({
-  name: "NumberControlRenderer",
+  name: 'NumberControlRenderer',
   components: { ControlWrapper },
   props: {
     ...rendererProps<ControlElement>(),
@@ -38,7 +38,7 @@ const controlRenderer = defineComponent({
     },
   },
   setup(props: RendererProps<ControlElement>) {
-    return useQuasarControl(useJsonFormsControl(props), (value: any) => (value === "" ? undefined : Number(value)), 300);
+    return useQuasarControl(useJsonFormsControl(props), (value: any) => (value === '' ? undefined : Number(value)), 300);
   },
 });
 

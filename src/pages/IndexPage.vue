@@ -5,7 +5,7 @@
     <div
       v-if="showPreview"
       id="preview-stream"
-      style="background-image: url(&quot;/aquisition/stream.mjpg&quot;)"
+      style="background-image: url('/api/aquisition/stream.mjpg')"
       class="full-width column justify-center content-center"
       :class="{ mirroreffect: livestreamMirror }"
     ></div>
@@ -47,7 +47,9 @@
             id="frontpage-button-take-pic"
           >
             <q-icon name="o_photo_camera" />
-            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_PHOTO") }}</div>
+            <div style="white-space: nowrap" class="gt-sm">
+              {{ $t('BTN_LABEL_MAINPAGE_TAKE_PHOTO') }}
+            </div>
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
@@ -60,7 +62,9 @@
             id="frontpage-button-take-collage"
           >
             <q-icon name="o_auto_awesome_mosaic" />
-            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_COLLAGE") }}</div>
+            <div style="white-space: nowrap" class="gt-sm">
+              {{ $t('BTN_LABEL_MAINPAGE_TAKE_COLLAGE') }}
+            </div>
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
@@ -73,7 +77,9 @@
             id="frontpage-button-take-animation"
           >
             <q-icon name="o_gif_box" />
-            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_ANIMATION") }}</div>
+            <div style="white-space: nowrap" class="gt-sm">
+              {{ $t('BTN_LABEL_MAINPAGE_TAKE_ANIMATION') }}
+            </div>
           </q-btn>
 
           <q-btn
@@ -87,7 +93,9 @@
             id="frontpage-button-take-video"
           >
             <q-icon name="o_movie" />
-            <div style="white-space: nowrap" class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TAKE_VIDEO") }}</div>
+            <div style="white-space: nowrap" class="gt-sm">
+              {{ $t('BTN_LABEL_MAINPAGE_TAKE_VIDEO') }}
+            </div>
           </q-btn>
         </div>
       </div>
@@ -107,7 +115,7 @@
             :style="uiSettingsStore.uiSettings.gallery_button_style"
           >
             <q-icon left name="photo_library" />
-            <div class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TO_GALLERY") }}</div>
+            <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_GALLERY') }}</div>
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage"
@@ -119,7 +127,7 @@
             id="frontpage-button-to-admin"
           >
             <q-icon left name="admin_panel_settings" />
-            <div class="gt-sm">{{ $t("BTN_LABEL_MAINPAGE_TO_ADMIN") }}</div>
+            <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_ADMIN') }}</div>
           </q-btn>
         </div>
       </div>
@@ -135,19 +143,17 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { remoteProcedureCall } from "boot/axios";
-import { useQuasar } from "quasar";
-import { useMainStore } from "../stores/main-store.js";
-import { useStateStore } from "../stores/state-store.js";
-import { useUiSettingsStore } from "../stores/ui-settings-store.js";
-import CountdownTimer from "../components/CountdownTimer";
+import { defineComponent } from 'vue';
+import { remoteProcedureCall } from 'boot/axios';
+import { useMainStore } from '../stores/main-store.js';
+import { useStateStore } from '../stores/state-store.js';
+import { useUiSettingsStore } from '../stores/ui-settings-store.js';
+import CountdownTimer from '../components/CountdownTimer.vue';
 
 export default defineComponent({
   components: { CountdownTimer },
 
   setup() {
-    const $q = useQuasar();
     const store = useMainStore();
     const stateStore = useStateStore();
     const uiSettingsStore = useUiSettingsStore();
@@ -161,33 +167,33 @@ export default defineComponent({
   },
   methods: {
     takePicture() {
-      remoteProcedureCall("/processing/chose/1pic");
+      remoteProcedureCall('/processing/chose/1pic');
     },
     takeCollage() {
-      remoteProcedureCall("/processing/chose/collage");
+      remoteProcedureCall('/processing/chose/collage');
     },
     takeAnimation() {
-      remoteProcedureCall("/processing/chose/animation");
+      remoteProcedureCall('/processing/chose/animation');
     },
     takeVideo() {
-      remoteProcedureCall("/processing/chose/video");
+      remoteProcedureCall('/processing/chose/video');
     },
     stopRecordingVideo() {
-      remoteProcedureCall("/processing/cmd/stop");
+      remoteProcedureCall('/processing/cmd/stop');
     },
   },
   watch: {},
   computed: {
     showProcessing: {
       get() {
-        const capturesCompleted = this.stateStore.state == "captures_completed";
-        const capture = this.stateStore.state == "capture";
+        const capturesCompleted = this.stateStore.state == 'captures_completed';
+        const capture = this.stateStore.state == 'capture';
         return capturesCompleted || capture;
       },
     },
     showRecording: {
       get() {
-        return this.stateStore.state == "record";
+        return this.stateStore.state == 'record';
       },
     },
     livestreamMirror: {
@@ -198,7 +204,7 @@ export default defineComponent({
 
     showCountdownCounting: {
       get() {
-        const machineCounting = this.stateStore.state == "counting";
+        const machineCounting = this.stateStore.state == 'counting';
 
         return this.stateStore.duration > 0 && machineCounting;
       },
@@ -206,9 +212,9 @@ export default defineComponent({
     showPreview: {
       get() {
         const enabled = true;
-        const machineIdle = !this.stateStore.state || this.stateStore.state == "finished";
-        const machineRecord = this.stateStore.state == "record";
-        const machineCounting = this.stateStore.state == "counting";
+        const machineIdle = !this.stateStore.state || this.stateStore.state == 'finished';
+        const machineRecord = this.stateStore.state == 'record';
+        const machineCounting = this.stateStore.state == 'counting';
 
         return enabled && (machineIdle || machineCounting || machineRecord);
       },
@@ -216,7 +222,7 @@ export default defineComponent({
     showFrontpage: {
       get() {
         // show if state not defined (no job ongoing or finished)
-        return !this.stateStore.state || this.stateStore.state == "finished";
+        return !this.stateStore.state || this.stateStore.state == 'finished';
       },
     },
   },

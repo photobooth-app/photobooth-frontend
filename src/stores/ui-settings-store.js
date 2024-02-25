@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
-import { api } from "src/boot/axios";
-import { setCssVar } from "quasar";
+import { defineStore } from 'pinia';
+import { api } from 'src/boot/axios';
+import { setCssVar } from 'quasar';
 
 //https://stackoverflow.com/a/75060220
 
@@ -11,11 +11,11 @@ const STATES = {
   ERROR: 3,
 };
 
-export const useUiSettingsStore = defineStore("ui-settings-store", {
+export const useUiSettingsStore = defineStore('ui-settings-store', {
   state: () => ({
     uiSettings: {
-      PRIMARY_COLOR: "#196cb0",
-      SECONDARY_COLOR: "#b8124f",
+      PRIMARY_COLOR: '#196cb0',
+      SECONDARY_COLOR: '#b8124f',
       show_takepic_on_frontpage: null,
       show_takecollage_on_frontpage: null,
       show_takeanimation_on_frontpage: null,
@@ -44,29 +44,30 @@ export const useUiSettingsStore = defineStore("ui-settings-store", {
   }),
   actions: {
     initStore(forceReload = false) {
-      console.log("loadUiSettings");
+      console.log('loadUiSettings');
       if (this.isLoaded && forceReload == false) {
-        console.log("settings loaded once already, skipping");
+        console.log('settings loaded once already, skipping');
         return;
       }
 
       this.storeState = STATES.WIP;
 
       api
-        .get("/config/ui")
+        .get('/config/ui')
         .then((res) => {
-          console.log("loadUiSettings finished successfully");
+          console.log('loadUiSettings finished successfully');
           console.log(res.data);
 
           // apply theme settings
-          setCssVar("primary", res.data["PRIMARY_COLOR"]);
-          setCssVar("secondary", res.data["SECONDARY_COLOR"]);
+          setCssVar('primary', res.data['PRIMARY_COLOR']);
+          setCssVar('secondary', res.data['SECONDARY_COLOR']);
 
           this.uiSettings = res.data;
           this.storeState = STATES.DONE;
         })
         .catch((e) => {
-          console.log("loadUiSettings failed");
+          console.log('loadUiSettings failed', e);
+          console.log(e);
           this.storeState = STATES.ERROR;
         });
     },

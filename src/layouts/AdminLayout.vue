@@ -19,7 +19,7 @@
         <q-space />
 
         <q-toolbar-title>
-          <span>{{ $t("TITLE_ADMIN_CENTER") }}</span>
+          <span>{{ $t('TITLE_ADMIN_CENTER') }}</span>
         </q-toolbar-title>
 
         <q-space />
@@ -37,10 +37,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
-
 export default {
   // name: 'LayoutName',
-  setup() {},
 };
 </script>

@@ -4,7 +4,9 @@
       <!-- eslint-disable-next-line -->
       <div style="font-size: 30vh">404</div>
 
-      <div class="text-h2" style="opacity: 0.4">{{ $t("MSG_ERROR_NOT_FOUND") }}</div>
+      <div class="text-h2" style="opacity: 0.4">
+        {{ $t('MSG_ERROR_NOT_FOUND') }}
+      </div>
 
       <q-btn class="q-mt-xl" color="white" text-color="blue" unelevated to="/" label="Go Home" no-caps />
     </div>
@@ -12,9 +14,9 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "ErrorNotFound",
+  name: 'ErrorNotFound',
 });
 </script>

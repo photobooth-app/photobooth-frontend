@@ -59,17 +59,17 @@
 }
 </style>
 <script>
-import { ref } from "vue";
-import { useQuasar } from "quasar";
-import { api } from "boot/axios";
-import { useMainStore } from "../stores/main-store.js";
-import { JsonForms } from "@jsonforms/vue";
-import { defaultStyles, mergeStyles, vanillaRenderers } from "@jsonforms/vue-vanilla";
-import { quasarRenderers } from "../components/form/renderers";
-import json from "./schemapydanticdereferenced.json";
+import { ref } from 'vue';
+import { useQuasar } from 'quasar';
+import { api } from 'boot/axios';
+import { useMainStore } from '../stores/main-store.js';
+import { JsonForms } from '@jsonforms/vue';
+import { defaultStyles, mergeStyles, vanillaRenderers } from '@jsonforms/vue-vanilla';
+import { quasarRenderers } from '../components/form/renderers';
+import json from './schemapydanticdereferenced.json';
 
 // mergeStyles combines all classes from both styles definitions into one
-const myStyles = mergeStyles(defaultStyles, { control: { label: "q-label" } });
+const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } });
 
 const renderers = [
   ...vanillaRenderers,
@@ -129,9 +129,9 @@ export default {
       uischema,
 
       //placeholder:
-      main_groups: ["one", "two"],
-      group_title: "one",
-      group_description: "_____name would be here _____",
+      main_groups: ['one', 'two'],
+      group_title: 'one',
+      group_description: '_____name would be here _____',
     };
   },
   methods: {
@@ -149,7 +149,7 @@ export default {
     const store = useMainStore();
     const serverConfig = ref({});
 
-    const getConfig = (which = "current") => {
+    const getConfig = (which = 'current') => {
       //hide form, later will be displayed again - this forces the form to rerender and reflect the latest values from store.
       //renderBlitzForm.value = false;
 
@@ -164,16 +164,16 @@ export default {
         })
         .catch((response) => {
           console.log(response);
-          console.log("error");
+          console.log('error');
 
           $q.notify({
-            message: "error getting config!",
-            color: "red",
+            message: 'error getting config!',
+            color: 'red',
           });
         });
     };
 
-    getConfig("currentActive");
+    getConfig('currentActive');
 
     return {
       drawer: ref(true),

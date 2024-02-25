@@ -7,7 +7,7 @@
         <div class="q-gutter-sm">
           <q-btn color="primary" rounded no-caps to="/" class="action-button" id="gallery-button-to-frontpage">
             <q-icon left name="arrow_back_ios_new" />
-            <div>{{ $t("BTN_LABEL_BACK") }}</div>
+            <div>{{ $t('BTN_LABEL_BACK') }}</div>
           </q-btn>
         </div>
       </q-page-sticky>
@@ -16,13 +16,12 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "GalleryLayout",
+  name: 'GalleryLayout',
 
   components: {},
   computed: {},
-  setup() {},
 });
 </script>

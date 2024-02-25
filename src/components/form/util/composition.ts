@@ -1,12 +1,11 @@
-import { useStyles } from "../styles";
-import { computed, ref, ComputedRef } from "vue";
-import cloneDeep from "lodash/cloneDeep";
-import debounce from "lodash/debounce";
-import merge from "lodash/merge";
-import get from "lodash/get";
-import { composePaths, computeLabel, getFirstPrimitiveProp, isDescriptionHidden, JsonFormsSubStates, Resolve, findUISchema } from "@jsonforms/core";
-import isPlainObject from "lodash/isPlainObject";
-import Ajv from "ajv";
+import { useStyles } from '../styles';
+import { computed, ref, ComputedRef } from 'vue';
+import cloneDeep from 'lodash/cloneDeep';
+import debounce from 'lodash/debounce';
+import merge from 'lodash/merge';
+import get from 'lodash/get';
+import { composePaths, computeLabel, getFirstPrimitiveProp, isDescriptionHidden, Resolve, findUISchema } from '@jsonforms/core';
+import isPlainObject from 'lodash/isPlainObject';
 
 export const useControlAppliedOptions = <I extends { control: any }>(input: I) => {
   return computed(() => merge({}, cloneDeep(input.control.value.config), cloneDeep(input.control.value.uischema.options)));
@@ -25,9 +24,9 @@ export const useComputedLabel = <I extends { control: any }>(input: I, appliedOp
 export const useQuasarControl = <I extends { control: any; handleChange: any }>(
   input: I,
   adaptValue: (target: any) => any = (v) => v,
-  debounceWait?: number,
+  debounceWait?: number
 ) => {
-  const changeEmitter = typeof debounceWait === "number" ? debounce(input.handleChange, debounceWait) : input.handleChange;
+  const changeEmitter = typeof debounceWait === 'number' ? debounce(input.handleChange, debounceWait) : input.handleChange;
 
   const onChange = (value: any) => {
     changeEmitter(input.control.value.path, adaptValue(value));
@@ -41,7 +40,7 @@ export const useQuasarControl = <I extends { control: any; handleChange: any }>(
       input.control.value.visible,
       input.control.value.description,
       isFocused.value,
-      !!appliedOptions.value?.showUnfocusedDescription,
+      !!appliedOptions.value?.showUnfocusedDescription
     );
   };
 
@@ -53,7 +52,7 @@ export const useQuasarControl = <I extends { control: any; handleChange: any }>(
   });
 
   const styles = useStyles(input.control.value.uischema);
-  console.log("styles", styles);
+  console.log('styles', styles);
 
   const vuetifyProps = (path: string) => {
     const props = get(appliedOptions.value?.vuetify, path);
@@ -112,8 +111,8 @@ export const useQuasarArrayControl = <I extends { control: any }>(input: I) => {
       input.control.value.path,
       undefined,
       input.control.value.uischema,
-      input.control.value.rootSchema,
-    ),
+      input.control.value.rootSchema
+    )
   );
 
   const childLabelForIndex = (index: number) => {
@@ -123,7 +122,7 @@ export const useQuasarArrayControl = <I extends { control: any }>(input: I) => {
     }
     const labelValue = Resolve.data(input.control.value.data, composePaths(`${index}`, childLabelProp));
     if (labelValue === undefined || labelValue === null || Number.isNaN(labelValue)) {
-      return "";
+      return '';
     }
     return `${labelValue}`;
   };

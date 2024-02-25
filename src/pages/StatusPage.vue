@@ -12,23 +12,23 @@
             </div>
             <div>App version: {{ store.information.version }}</div>
             <div>
-              CPU: {{ store.information["cpu1_5_15"][0] }}% / {{ store.information["cpu1_5_15"][1] }}% / {{ store.information["cpu1_5_15"][2] }}%
+              CPU: {{ store.information['cpu1_5_15'][0] }}% / {{ store.information['cpu1_5_15'][1] }}% / {{ store.information['cpu1_5_15'][2] }}%
             </div>
-            <div>No. active threads: {{ store.information["active_threads"] }}</div>
+            <div>No. active threads: {{ store.information['active_threads'] }}</div>
             <div>
               Free disk:
-              {{ (store.information["disk"]["free"] / 1024 ** 3).toFixed(1) }}GB
+              {{ (store.information['disk']['free'] / 1024 ** 3).toFixed(1) }}GB
             </div>
             <div>
               Memory:
-              {{ (store.information["memory"]["total"] / 1024 ** 3).toFixed(1) }}GB total
-              {{ (store.information["memory"]["free"] / 1024 ** 3).toFixed(1) }}GB free
-              {{ (store.information["memory"]["available"] / 1024 ** 3).toFixed(1) }}GB available
+              {{ (store.information['memory']['total'] / 1024 ** 3).toFixed(1) }}GB total
+              {{ (store.information['memory']['free'] / 1024 ** 3).toFixed(1) }}GB free
+              {{ (store.information['memory']['available'] / 1024 ** 3).toFixed(1) }}GB available
             </div>
             <div>
               Cma:
-              {{ (store.information["cma"]["CmaTotal"] / 1024 ** 1).toFixed(1) }}MB total /
-              {{ (store.information["cma"]["CmaFree"] / 1024 ** 1).toFixed(1) }}MB free
+              {{ (store.information['cma']['CmaTotal'] / 1024 ** 1).toFixed(1) }}MB total /
+              {{ (store.information['cma']['CmaFree'] / 1024 ** 1).toFixed(1) }}MB free
             </div>
           </div>
         </q-card-section>
@@ -115,13 +115,13 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-import { useMainStore } from "../stores/main-store.js";
-import { remoteProcedureCall } from "boot/axios";
-import { QBtn } from "quasar";
+import { defineComponent } from 'vue';
+import { useMainStore } from '../stores/main-store.js';
+import { remoteProcedureCall } from 'boot/axios';
+import { QBtn } from 'quasar';
 
 export default defineComponent({
-  name: "MainLayout",
+  name: 'MainLayout',
 
   components: { QBtn },
   setup() {

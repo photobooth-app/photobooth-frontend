@@ -2,7 +2,7 @@
   <q-card class="q-pa-sm">
     <q-card-section class="row items-center">
       <q-spinner color="negative" size="2em" />
-      <span class="q-ml-sm">{{ $t("MSG_CONNECTING_TO_BACKEND") }}</span>
+      <span class="q-ml-sm">{{ $t('MSG_CONNECTING_TO_BACKEND') }}</span>
     </q-card-section>
 
     <q-card-actions align="right">

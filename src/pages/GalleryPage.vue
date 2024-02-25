@@ -43,11 +43,11 @@
 </style>
 
 <script>
-import { useMainStore } from "../stores/main-store.js";
-import { useUiSettingsStore } from "../stores/ui-settings-store.js";
-import { useMediacollectionStore } from "../stores/mediacollection-store.js";
-import { ref } from "vue";
-import GalleryImageDetail from "../components/GalleryImageDetail";
+import { useMainStore } from '../stores/main-store.js';
+import { useUiSettingsStore } from '../stores/ui-settings-store.js';
+import { useMediacollectionStore } from '../stores/mediacollection-store.js';
+import { ref } from 'vue';
+import GalleryImageDetail from '../components/GalleryImageDetail.vue';
 
 export default {
   // name: 'PageName',
@@ -81,14 +81,14 @@ export default {
   },
   watch: {
     // whenever question changes, this function will run
-    itemId(newItemId, oldItemId) {
+    itemId(newItemId) {
       const index = this.mediacollectionStore.getIndexOfItemId(newItemId);
       if (index == -1) console.error(`image id not found ${newItemId}`);
       else this.openPic(index);
     },
   },
   methods: {
-    getImageDetail(index, detail = "thumbnail") {
+    getImageDetail(index, detail = 'thumbnail') {
       return this.mediacollectionStore.collection[index][detail];
     },
 

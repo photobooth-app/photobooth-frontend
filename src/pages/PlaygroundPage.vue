@@ -10,16 +10,16 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import { api } from "boot/axios";
-import { useQuasar } from "quasar";
-import { useMainStore } from "../stores/main-store.js";
-import { JsonForms, JsonFormsChangeEvent } from "@jsonforms/vue";
-import { defaultStyles, mergeStyles, vanillaRenderers } from "@jsonforms/vue-vanilla";
-import { quasarRenderers } from "../components/form/renderers";
+import { ref } from 'vue';
+
+import { useQuasar } from 'quasar';
+import { useMainStore } from '../stores/main-store.js';
+import { JsonForms } from '@jsonforms/vue';
+import { defaultStyles, mergeStyles, vanillaRenderers } from '@jsonforms/vue-vanilla';
+import { quasarRenderers } from '../components/form/renderers';
 
 // mergeStyles combines all classes from both styles definitions into one
-const myStyles = mergeStyles(defaultStyles, { control: { label: "q-label" } });
+const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } });
 
 const renderers = [
   ...vanillaRenderers,
@@ -31,143 +31,143 @@ const renderers = [
 const schema = {
   properties: {
     occupation: {
-      type: "string",
+      type: 'string',
     },
     comments: {
-      type: "array",
+      type: 'array',
       items: {
-        type: "object",
+        type: 'object',
         properties: {
           name: {
-            type: "string",
+            type: 'string',
           },
           message: {
-            type: "string",
+            type: 'string',
           },
         },
       },
     },
     vegetarian: {
-      type: "boolean",
+      type: 'boolean',
     },
     birthDate: {
-      type: "string",
-      format: "date",
+      type: 'string',
+      format: 'date',
     },
     nationality: {
-      type: "string",
-      enum: ["DE", "IT", "JP", "US", "RU", "Other"],
+      type: 'string',
+      enum: ['DE', 'IT', 'JP', 'US', 'RU', 'Other'],
     },
     personalData: {
-      type: "object",
+      type: 'object',
       properties: {
         age: {
-          type: "integer",
-          description: "Please enter your age.",
+          type: 'integer',
+          description: 'Please enter your age.',
         },
         height: {
-          type: "number",
+          type: 'number',
         },
         drivingSkill: {
-          type: "number",
+          type: 'number',
           maximum: 10,
           minimum: 1,
           default: 7,
         },
       },
-      required: ["age", "height"],
+      required: ['age', 'height'],
     },
     occupation: {
-      type: "string",
+      type: 'string',
     },
     postalCode: {
-      type: "string",
+      type: 'string',
       maxLength: 5,
     },
 
     name: {
-      type: "string",
+      type: 'string',
       minLength: 1,
       description: "The task's name",
     },
     description: {
-      title: "Long Description",
-      type: "string",
+      title: 'Long Description',
+      type: 'string',
     },
     done: {
-      type: "boolean",
+      type: 'boolean',
     },
     dueDate: {
-      type: "string",
-      format: "date",
+      type: 'string',
+      format: 'date',
       description: "The task's due date",
     },
     rating: {
-      type: "integer",
+      type: 'integer',
       maximum: 5,
     },
     recurrence: {
-      type: "string",
-      enum: ["Never", "Daily", "Weekly", "Monthly"],
+      type: 'string',
+      enum: ['Never', 'Daily', 'Weekly', 'Monthly'],
     },
     recurrenceInterval: {
-      type: "integer",
-      description: "Days until recurrence",
+      type: 'integer',
+      description: 'Days until recurrence',
     },
   },
 };
 
 const uischema = {
-  type: "VerticalLayout",
+  type: 'VerticalLayout',
   elements: [
     {
-      type: "HorizontalLayout",
+      type: 'HorizontalLayout',
       elements: [
         {
-          type: "Control",
-          scope: "#/properties/name",
+          type: 'Control',
+          scope: '#/properties/name',
         },
         {
-          type: "Control",
-          scope: "#/properties/personalData/properties/age",
+          type: 'Control',
+          scope: '#/properties/personalData/properties/age',
         },
         {
-          type: "Control",
-          scope: "#/properties/birthDate",
+          type: 'Control',
+          scope: '#/properties/birthDate',
         },
       ],
     },
     {
-      type: "Label",
-      text: "Additional Information",
+      type: 'Label',
+      text: 'Additional Information',
     },
     {
-      type: "HorizontalLayout",
+      type: 'HorizontalLayout',
       elements: [
         {
-          type: "Control",
-          scope: "#/properties/personalData/properties/height",
+          type: 'Control',
+          scope: '#/properties/personalData/properties/height',
         },
         {
-          type: "Control",
-          scope: "#/properties/nationality",
+          type: 'Control',
+          scope: '#/properties/nationality',
         },
         {
-          type: "Control",
-          scope: "#/properties/occupation",
-          suggestion: ["Accountant", "Engineer", "Freelancer", "Journalism", "Physician", "Student", "Teacher", "Other"],
+          type: 'Control',
+          scope: '#/properties/occupation',
+          suggestion: ['Accountant', 'Engineer', 'Freelancer', 'Journalism', 'Physician', 'Student', 'Teacher', 'Other'],
         },
       ],
     },
   ],
-  type: "HorizontalLayout",
+  type: 'HorizontalLayout',
   elements: [
     {
-      type: "VerticalLayout",
+      type: 'VerticalLayout',
       elements: [
         {
-          type: "Control",
-          scope: "#/properties/comments",
+          type: 'Control',
+          scope: '#/properties/comments',
           options: {
             showSortButtons: false,
           },
@@ -175,43 +175,43 @@ const uischema = {
       ],
     },
     {
-      type: "VerticalLayout",
+      type: 'VerticalLayout',
       elements: [
         {
-          type: "Control",
-          scope: "#/properties/name",
+          type: 'Control',
+          scope: '#/properties/name',
         },
         {
-          type: "Control",
-          scope: "#/properties/description",
+          type: 'Control',
+          scope: '#/properties/description',
           options: {
             multi: true,
           },
         },
         {
-          type: "Control",
-          scope: "#/properties/done",
+          type: 'Control',
+          scope: '#/properties/done',
         },
       ],
     },
     {
-      type: "VerticalLayout",
+      type: 'VerticalLayout',
       elements: [
         {
-          type: "Control",
-          scope: "#/properties/dueDate",
+          type: 'Control',
+          scope: '#/properties/dueDate',
         },
         {
-          type: "Control",
-          scope: "#/properties/rating",
+          type: 'Control',
+          scope: '#/properties/rating',
         },
         {
-          type: "Control",
-          scope: "#/properties/recurrence",
+          type: 'Control',
+          scope: '#/properties/recurrence',
         },
         {
-          type: "Control",
-          scope: "#/properties/recurrenceInterval",
+          type: 'Control',
+          scope: '#/properties/recurrenceInterval',
         },
       ],
     },
@@ -231,11 +231,11 @@ export default {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
       data: {
-        occupation: "none",
-        name: "Send email to Adrian",
-        description: "Confirm if you have passed the subject\nHereby ...",
+        occupation: 'none',
+        name: 'Send email to Adrian',
+        description: 'Confirm if you have passed the subject\nHereby ...',
         done: true,
-        recurrence: "Daily",
+        recurrence: 'Daily',
         rating: 3,
       },
       schema,
@@ -261,12 +261,12 @@ export default {
     return {
       store,
 
-      text: ref(""),
+      text: ref(''),
 
       showNotif() {
         $q.notify({
-          message: "Jim pinged you.",
-          color: "purple",
+          message: 'Jim pinged you.',
+          color: 'purple',
         });
       },
     };

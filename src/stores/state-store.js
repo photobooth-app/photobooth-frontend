@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-export const useStateStore = defineStore("state-store", {
+export const useStateStore = defineStore('state-store', {
   state: () => ({
     state: null,
     typ: null,

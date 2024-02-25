@@ -8,18 +8,17 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from "vue";
-import { useMainStore } from "stores/main-store.js";
-import { useStateStore } from "stores/state-store.js";
-import { useUiSettingsStore } from "stores/ui-settings-store.js";
-import { useMediacollectionStore } from "stores/mediacollection-store.js";
-import { useRouter } from "vue-router";
-import ConnectionOverlay from "./components/ConnectionOverlay";
-import { remoteProcedureCall } from "boot/axios";
-import { useQuasar } from "quasar";
+import { defineComponent, ref } from 'vue';
+import { useMainStore } from 'stores/main-store.js';
+import { useStateStore } from 'stores/state-store.js';
+import { useUiSettingsStore } from 'stores/ui-settings-store.js';
+import { useMediacollectionStore } from 'stores/mediacollection-store.js';
+import { useRouter } from 'vue-router';
+import ConnectionOverlay from './components/ConnectionOverlay.vue';
+import { remoteProcedureCall } from 'boot/axios';
 
 export default defineComponent({
-  name: "App",
+  name: 'App',
   components: { ConnectionOverlay },
   data() {
     return {};
@@ -36,10 +35,8 @@ export default defineComponent({
     const uiSettingsStore = useUiSettingsStore();
     const mediacollectionStore = useMediacollectionStore();
     const router = useRouter();
-    let sseClient = null;
     const connected = ref(false);
     const lineEstablished = ref(false);
-    const $q = useQuasar();
 
     //TODO: need to make app wait until fully init?
     console.log(uiSettingsStore.isLoaded);
@@ -66,8 +63,8 @@ export default defineComponent({
       this.uiSettingsStore.initStore();
       this.mediacollectionStore.initStore();
 
-      await this.until((_) => this.uiSettingsStore.isLoaded == true);
-      await this.until((_) => this.mediacollectionStore.isLoaded == true);
+      await this.until(() => this.uiSettingsStore.isLoaded == true);
+      await this.until(() => this.mediacollectionStore.isLoaded == true);
 
       this.initSseClient();
 
@@ -79,7 +76,7 @@ export default defineComponent({
     until(conditionFunction) {
       const poll = (resolve) => {
         if (conditionFunction()) resolve();
-        else setTimeout((_) => poll(resolve), 400);
+        else setTimeout(() => poll(resolve), 400);
       };
 
       return new Promise(poll);
@@ -87,66 +84,65 @@ export default defineComponent({
 
     initSseClient() {
       this.sseClient = this.$sse
-        .create("/sse")
+        .create('/api/sse')
 
         .on(
-          "error",
-          (err) => console.error("Failed to parse or lost connection:", err),
+          'error',
+          (err) => console.error('Failed to parse or lost connection:', err)
           // If this error is due to an unexpected disconnection, EventSource will
           // automatically attempt to reconnect indefinitely. You will _not_ need to
           // re-add your handlers.
           // Info there is general "message" "" and null events avail. Photobooth doesnt use the generic ones as not specific enough
           // "message" and "" and null equal!
         )
-        .on("FrontendNotification", (notification) => {
+        .on('FrontendNotification', (notification) => {
           // linked to SseEventFrontendNotification, event: FrontendNotification
           const _notification = JSON.parse(notification);
           console.warn(_notification);
 
           this.$q.notify({
-            caption: _notification["caption"] || "Notification",
-            message: _notification["message"],
-            color: _notification["color"] || "info",
-            icon: _notification["icon"] || "info",
-            spinner: _notification["spinner"] || false,
+            caption: _notification['caption'] || 'Notification',
+            message: _notification['message'],
+            color: _notification['color'] || 'info',
+            icon: _notification['icon'] || 'info',
+            spinner: _notification['spinner'] || false,
             actions: [
               {
-                icon: "close",
-                color: "white",
+                icon: 'close',
+                color: 'white',
                 round: true,
-                handler: () => {},
               },
             ],
           });
         })
-        .on("LogRecord", (logrecord) => {
+        .on('LogRecord', (logrecord) => {
           this.store.logrecords = [JSON.parse(logrecord), ...this.store.logrecords.slice(0, 199)];
         })
-        .on("ProcessStateinfo", (procinfo) => {
+        .on('ProcessStateinfo', (procinfo) => {
           const _procinfo = JSON.parse(procinfo);
-          console.log("ProcessStateinfo", _procinfo);
+          console.log('ProcessStateinfo', _procinfo);
           if (Object.keys(_procinfo).length === 0 && _procinfo.constructor === Object) {
             this.stateStore.$reset();
           } else {
             Object.assign(this.stateStore, _procinfo);
           }
         })
-        .on("DbInsert", (data) => {
+        .on('DbInsert', (data) => {
           const _data = JSON.parse(data);
-          console.log("received new item to add to collection:", _data);
+          console.log('received new item to add to collection:', _data);
           // this.mediacollectionStore.collection.unshift(_data["mediaitem"]);
-          this.mediacollectionStore.addMediaitem(_data["mediaitem"]);
+          this.mediacollectionStore.addMediaitem(_data['mediaitem']);
         })
-        .on("DbRemove", (mediaitem) => {
+        .on('DbRemove', (mediaitem) => {
           const _mediaitem = JSON.parse(mediaitem);
-          console.log("received request to remove item from collection:", _mediaitem);
+          console.log('received request to remove item from collection:', _mediaitem);
           this.mediacollectionStore.removeMediaitem(_mediaitem);
         })
 
-        .on("InformationRecord", (information) => {
+        .on('InformationRecord', (information) => {
           Object.assign(this.store.information, JSON.parse(information));
         })
-        .on("ping", () => {
+        .on('ping', () => {
           //last SSE ping, used to detect connection health
           this.store.lastHeartbeat = Date.now();
           this.connected = true;
@@ -154,21 +150,21 @@ export default defineComponent({
         .connect()
         .then((sse) => {
           console.log(sse);
-          console.log("SSE connected!");
+          console.log('SSE connected!');
           this.lineEstablished = true;
         })
         .catch((err) => {
           // When this error is caught, it means the initial connection to the
           // events server failed.  No automatic attempts to reconnect will be made.
-          console.error("Failed make initial SSE connection!", err);
+          console.error('Failed make initial SSE connection!', err);
         });
     },
   },
 
   async created() {
-    console.log("app created, waiting for stores to init first dataset");
+    console.log('app created, waiting for stores to init first dataset');
     this.init();
-    console.log("data initialization finished");
+    console.log('data initialization finished');
   },
 });
 </script>

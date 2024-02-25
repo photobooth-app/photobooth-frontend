@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import { useMainStore } from "../stores/main-store.js";
-import { useMediacollectionStore } from "../stores/mediacollection-store.js";
-import { useStateStore } from "../stores/state-store.js";
-import { useUiSettingsStore } from "../stores/ui-settings-store.js";
-import GalleryImageDetail from "../components/GalleryImageDetail";
-import { remoteProcedureCall } from "boot/axios";
+import { useMainStore } from '../stores/main-store.js';
+import { useMediacollectionStore } from '../stores/mediacollection-store.js';
+import { useStateStore } from '../stores/state-store.js';
+import { useUiSettingsStore } from '../stores/ui-settings-store.js';
+import GalleryImageDetail from '../components/GalleryImageDetail.vue';
+import { remoteProcedureCall } from 'boot/axios';
 
 export default {
   // name: 'PageName',
@@ -42,11 +42,9 @@ export default {
       remoteProcedureCall,
     };
   },
-  mounted() {},
-  beforeUnmount() {},
   methods: {
     userCloseViewer() {
-      this.$router.push("/");
+      this.$router.push('/');
     },
   },
 };

@@ -11,7 +11,7 @@
       <q-dialog v-model="dialog_create_new_folder">
         <q-card style="min-width: 350px">
           <q-card-section>
-            <div class="text-h6">{{ $t("TITLE_FILES_NEW_FOLDER_DIALOG") }}</div>
+            <div class="text-h6">{{ $t('TITLE_FILES_NEW_FOLDER_DIALOG') }}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -36,7 +36,9 @@
       <q-dialog v-model="dialog_upload_files">
         <q-card style="min-width: 350px">
           <q-card-section>
-            <div class="text-h6">{{ $t("TITLE_FILES_UPLOAD_FILES_DIALOG") }}</div>
+            <div class="text-h6">
+              {{ $t('TITLE_FILES_UPLOAD_FILES_DIALOG') }}
+            </div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -117,16 +119,15 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from "vue";
-import { api } from "boot/axios";
-import { openURL, useQuasar } from "quasar";
+import { ref, onMounted, computed } from 'vue';
+import { openURL, useQuasar } from 'quasar';
 
 function formatBytes(bytes, decimals = 2) {
-  if (!+bytes) return "0 Bytes";
+  if (!+bytes) return '0 Bytes';
 
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
@@ -137,7 +138,7 @@ export default {
   // name: 'PageName',
   watch: {
     // whenever folder changes, load new content.
-    folder_current(newFolder, oldFolder) {
+    folder_current(newFolder) {
       // console.log("change directory: ", newFolder);
       this.getFolderContent(newFolder);
     },
@@ -146,39 +147,39 @@ export default {
   setup() {
     const $q = useQuasar();
 
-    const folder_current = ref("");
+    const folder_current = ref('');
     const folder_loading = ref(false);
     const folder_rows = ref([]);
     const folder_columns = [
       {
-        label: "Type",
-        name: "type",
+        label: 'Type',
+        name: 'type',
         required: true,
-        align: "left",
-        field: "is_dir",
-        style: "width: 25px",
+        align: 'left',
+        field: 'is_dir',
+        style: 'width: 25px',
       },
       {
-        label: "Name",
-        name: "name",
+        label: 'Name',
+        name: 'name',
         required: true,
-        align: "left",
-        field: "name",
+        align: 'left',
+        field: 'name',
       },
       {
-        label: "Size",
-        name: "size",
+        label: 'Size',
+        name: 'size',
         required: true,
-        align: "left",
-        field: "size",
+        align: 'left',
+        field: 'size',
         format: (val) => formatBytes(val, 0),
       },
     ];
     const selected = ref([]);
-    const filter = ref("");
+    const filter = ref('');
 
     const dialog_create_new_folder = ref(false);
-    const new_folder_name = ref("");
+    const new_folder_name = ref('');
 
     const dialog_upload_files = ref(false);
 
@@ -188,13 +189,13 @@ export default {
 
     const trimSlashes = (str) =>
       str
-        .split("/")
-        .filter((v) => v !== "")
-        .join("/");
+        .split('/')
+        .filter((v) => v !== '')
+        .join('/');
     const breadcrumbs = computed(() => {
       if (!folder_current.value) return []; // return empty array if no value.
 
-      let breadcrumbs = trimSlashes(folder_current.value).split("/");
+      let breadcrumbs = trimSlashes(folder_current.value).split('/');
       return breadcrumbs;
     });
 
@@ -208,16 +209,16 @@ export default {
 
     const onBreadcrumbClick = (navigate_to_level = -1) => {
       // level=-1->root folder, >=0 subfolders
-      folder_current.value = breadcrumbs.value.slice(0, navigate_to_level + 1).join("/");
+      folder_current.value = breadcrumbs.value.slice(0, navigate_to_level + 1).join('/');
     };
 
-    async function getFolderContent(folder = "") {
+    async function getFolderContent(folder = '') {
       folder_loading.value = true;
       selected.value = [];
 
       let response = await fetch(`/admin/files/list/${folder}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
       });
 
       let json = await response.json();
@@ -231,8 +232,8 @@ export default {
 
         $q.notify({
           message: `Error ${response.status} getting listing. Please check logs.`,
-          caption: "Files",
-          type: "negative",
+          caption: 'Files',
+          type: 'negative',
         });
       }
 
@@ -240,9 +241,9 @@ export default {
     }
 
     async function getZip(selected = []) {
-      let response = await fetch("/admin/files/zip", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      let response = await fetch('/admin/files/zip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(selected),
       });
 
@@ -250,9 +251,9 @@ export default {
         // if HTTP-status is 200-299
         // get the response body (the method explained below)
         $q.notify({
-          message: "Downloading ZIP file",
-          caption: "Files",
-          type: "positive",
+          message: 'Downloading ZIP file',
+          caption: 'Files',
+          type: 'positive',
         });
 
         let blob = await response.blob();
@@ -264,16 +265,16 @@ export default {
         console.error(json);
         $q.notify({
           message: `Error ${response.status} creating zip. Please check logs.`,
-          caption: "Files",
-          type: "negative",
+          caption: 'Files',
+          type: 'negative',
         });
       }
     }
 
     async function deleteItems(selected = []) {
-      let response = await fetch("/admin/files/delete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      let response = await fetch('/admin/files/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(selected),
       });
 
@@ -281,17 +282,17 @@ export default {
         // if HTTP-status is 200-299
         // get the response body (the method explained below)
         $q.notify({
-          message: "Selected items deleted.",
-          caption: "Files",
-          type: "positive",
+          message: 'Selected items deleted.',
+          caption: 'Files',
+          type: 'positive',
         });
       } else {
         let json = await response.json();
         console.error(json);
         $q.notify({
           message: `Error ${response.status} deleting items. Please check logs.`,
-          caption: "Files",
-          type: "negative",
+          caption: 'Files',
+          type: 'negative',
         });
       }
 
@@ -306,14 +307,14 @@ export default {
 
       if (folder_current.value) {
         // add current folder if not empty (avoid to appear like an absolute path)
-        newfolder_fullpath = folder_current.value + "/" + newfolder_fullpath;
+        newfolder_fullpath = folder_current.value + '/' + newfolder_fullpath;
       }
 
       console.log(newfolder_fullpath);
 
-      let response = await fetch("/admin/files/folder/new", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      let response = await fetch('/admin/files/folder/new', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newfolder_fullpath),
       });
 
@@ -324,8 +325,8 @@ export default {
         // get the response body (the method explained below)
         $q.notify({
           message: `Folder "${folder_name}" created.`,
-          caption: "Files",
-          type: "positive",
+          caption: 'Files',
+          type: 'positive',
         });
 
         // reload
@@ -334,8 +335,8 @@ export default {
         console.error(json);
         $q.notify({
           message: `Error ${response.status} while creating folder. Please check logs.`,
-          caption: "Files",
-          type: "negative",
+          caption: 'Files',
+          type: 'negative',
         });
       }
     }

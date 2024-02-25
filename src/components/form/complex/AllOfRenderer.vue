@@ -12,6 +12,7 @@
     </template>
     <template v-else-if="allOfRenderInfos">
       <div>
+        <!-- eslint-disable-next-line -->
         <h4>Group: {{ control.path }}</h4>
         <combinator-properties :schema="control.schema" combinatorKeyword="allOf" :path="path" />
         <dispatch-renderer
@@ -39,14 +40,14 @@ import {
   JsonFormsRendererRegistryEntry,
   rankWith,
   UISchemaElement,
-} from "@jsonforms/core";
-import { DispatchRenderer, rendererProps, RendererProps, useJsonFormsAllOfControl } from "@jsonforms/vue";
-import { defineComponent } from "vue";
-import { useQuasarControl } from "../util";
-import { CombinatorProperties } from "./components";
+} from '@jsonforms/core';
+import { DispatchRenderer, rendererProps, RendererProps, useJsonFormsAllOfControl } from '@jsonforms/vue';
+import { defineComponent } from 'vue';
+import { useQuasarControl } from '../util';
+import { CombinatorProperties } from './components';
 
 const controlRenderer = defineComponent({
-  name: "all-of-renderer",
+  name: 'all-of-renderer',
   components: {
     DispatchRenderer,
     CombinatorProperties,
@@ -66,10 +67,10 @@ const controlRenderer = defineComponent({
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.control.schema.allOf!,
         this.control.rootSchema,
-        "allOf",
+        'allOf',
         this.control.uischema,
         this.control.path,
-        this.control.uischemas,
+        this.control.uischemas
       );
 
       return result.filter((info) => info.uischema);

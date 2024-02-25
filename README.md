@@ -1,4 +1,4 @@
-# imageserver frontend (imageserver_frontend)
+# Photobooth-App Frontend
 
 A Quasar Project
 
@@ -15,14 +15,6 @@ npm install
 ```bash
 quasar dev
 ```
-
-You may have to use
-
-```bash
-npx quasar dev
-```
-
-if quasar is not found.
 
 ### Lint the files
 
@@ -48,4 +40,4 @@ quasar build
 
 ### Customize the configuration
 
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
+See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).

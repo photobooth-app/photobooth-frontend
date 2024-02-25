@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import { useMediacollectionStore } from "../stores/mediacollection-store.js";
-import GalleryImageDetail from "../components/GalleryImageDetail";
+import { useMediacollectionStore } from '../stores/mediacollection-store.js';
+import GalleryImageDetail from '../components/GalleryImageDetail.vue';
 
 export default {
   components: { GalleryImageDetail },

@@ -1,9 +1,7 @@
-import { defineStore } from "pinia";
-import { api } from "src/boot/axios";
-import { ref } from "vue";
-import { Notify } from "quasar";
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-export const useMainStore = defineStore("main-store", () => {
+export const useMainStore = defineStore('main-store', () => {
   const logrecords = ref([]);
 
   const information = ref({

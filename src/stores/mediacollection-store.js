@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
-import { api } from "src/boot/axios";
+import { defineStore } from 'pinia';
+import { api } from 'src/boot/axios';
 //https://stackoverflow.com/a/75060220
 
 const STATES = {
@@ -9,7 +9,7 @@ const STATES = {
   ERROR: 3,
 };
 
-export const useMediacollectionStore = defineStore("mediacollection-store", {
+export const useMediacollectionStore = defineStore('mediacollection-store', {
   state: () => ({
     collection: [],
 
@@ -19,16 +19,16 @@ export const useMediacollectionStore = defineStore("mediacollection-store", {
   }),
   actions: {
     initStore(forceReload = false) {
-      console.log("loading store");
+      console.log('loading store');
       if (this.isLoaded && forceReload == false) {
-        console.log("items loaded once already, skipping");
+        console.log('items loaded once already, skipping');
         return;
       }
 
       this.storeState = STATES.WIP;
 
       api
-        .get("/mediacollection/getitems")
+        .get('/mediacollection/getitems')
         .then((response) => {
           console.log(response);
           this.collection = response.data;
@@ -69,7 +69,7 @@ export const useMediacollectionStore = defineStore("mediacollection-store", {
     // remove mediaitem from store
     removeMediaitem(mediaitem) {
       const removed_mediaitem = this.collection.splice(this.getIndexOfItemId(mediaitem.id), 1);
-      if (removed_mediaitem.length == 0) console.log("no item removed from collection, maybe it was deleted by UI earlier already");
+      if (removed_mediaitem.length == 0) console.log('no item removed from collection, maybe it was deleted by UI earlier already');
       else console.log(`${removed_mediaitem.length} mediaitem deleted`);
     },
   },

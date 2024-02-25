@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <q-card class="q-pa-md">
-      <div class="text-h5">{{ $t("TITLE_SERVER_CONTROL") }}</div>
+      <div class="text-h5">{{ $t('TITLE_SERVER_CONTROL') }}</div>
       <div class="row">
         <div class="q-ma-sm">
           <div class="text-no-wrap">
@@ -9,7 +9,7 @@
               <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="restart_alt" color="primary" text-color="white" />
-                  <span class="q-ml-sm">{{ $t("MSG_CONFIRM_REBOOT") }}</span>
+                  <span class="q-ml-sm">{{ $t('MSG_CONFIRM_REBOOT') }}</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
@@ -23,7 +23,7 @@
               <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="power_settings_new" color="primary" text-color="white" />
-                  <span class="q-ml-sm">{{ $t("MSG_CONFIRM_SHUTDOWN") }}</span>
+                  <span class="q-ml-sm">{{ $t('MSG_CONFIRM_SHUTDOWN') }}</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
@@ -37,7 +37,7 @@
               <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="restart_alt" color="primary" text-color="white" />
-                  <span class="q-ml-sm">{{ $t("MSG_CONFIRM_RESTART_SERVICE") }}</span>
+                  <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RESTART_SERVICE') }}</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
@@ -56,7 +56,7 @@
               <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="restart_alt" color="primary" text-color="white" />
-                  <span class="q-ml-sm">{{ $t("MSG_CONFIRM_RELOAD_SERVICE") }}</span>
+                  <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RELOAD_SERVICE') }}</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
@@ -75,7 +75,7 @@
               <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="add_circle" color="primary" text-color="white" />
-                  <span class="q-ml-sm">{{ $t("MSG_CONFIRM_INSTALL_SERVICE") }}</span>
+                  <span class="q-ml-sm">{{ $t('MSG_CONFIRM_INSTALL_SERVICE') }}</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
@@ -94,7 +94,7 @@
               <q-card class="q-pa-sm" style="min-width: 350px">
                 <q-card-section class="row items-center">
                   <q-avatar icon="cancel" color="primary" text-color="white" />
-                  <span class="q-ml-sm">{{ $t("MSG_CONFIRM_UNINSTALL_SERVICE") }}</span>
+                  <span class="q-ml-sm">{{ $t('MSG_CONFIRM_UNINSTALL_SERVICE') }}</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
@@ -118,7 +118,7 @@
       </div>
     </q-card>
     <q-card class="q-pa-md q-mt-md">
-      <div class="text-h5">{{ $t("TITLE_MAINTAIN_GALLERY") }}</div>
+      <div class="text-h5">{{ $t('TITLE_MAINTAIN_GALLERY') }}</div>
       <div class="row">
         <div class="q-ma-sm">
           <div class="text-no-wrap">
@@ -126,7 +126,7 @@
               <q-card class="q-pa-sm">
                 <q-card-section class="row items-center">
                   <q-avatar icon="delete" color="primary" text-color="white" />
-                  <span class="q-ml-sm">{{ $t("MSG_CONFIRM_DELETE_ALL_MEDIA_FILES") }}</span>
+                  <span class="q-ml-sm">{{ $t('MSG_CONFIRM_DELETE_ALL_MEDIA_FILES') }}</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
@@ -143,7 +143,7 @@
     </q-card>
 
     <q-card class="q-pa-md q-mt-md">
-      <div class="text-h5">{{ $t("TITLE_LOCAL_UI_SETTINGS") }}</div>
+      <div class="text-h5">{{ $t('TITLE_LOCAL_UI_SETTINGS') }}</div>
       <div class="row">
         <language-switcher />
       </div>
@@ -152,13 +152,13 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-import { useMainStore } from "../stores/main-store.js";
-import { remoteProcedureCall } from "boot/axios";
-import LanguageSwitcher from "../components/LanguageSwitcher.vue";
+import { defineComponent, ref } from 'vue';
+import { useMainStore } from '../stores/main-store.js';
+import { remoteProcedureCall } from 'boot/axios';
+import LanguageSwitcher from '../components/LanguageSwitcher.vue';
 
 export default defineComponent({
-  name: "MainLayout",
+  name: 'MainLayout',
   components: { LanguageSwitcher },
   setup() {
     const store = useMainStore();

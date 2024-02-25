@@ -19,7 +19,7 @@
           <q-card class="q-pa-sm" style="min-width: 350px" id="gallery-confirm-delete-dialog">
             <q-card-section class="row items-center">
               <q-avatar icon="delete" color="primary" text-color="white" />
-              <span class="q-ml-sm">{{ $t("MSG_CONFIRM_DELETE_IMAGE") }}</span>
+              <span class="q-ml-sm">{{ $t('MSG_CONFIRM_DELETE_IMAGE') }}</span>
             </q-card-section>
 
             <q-card-actions align="right">
@@ -71,15 +71,17 @@
 
         <div class="q-mr-sm" v-if="!singleItemView">
           <q-icon name="tag" />
-          <!-- eslint-disable-next-line -->
-          <span>{{ currentSlideIndex + 1 }} / {{ itemRepository.length }} </span>
+          <span>
+            <!-- eslint-disable-next-line -->
+            {{ currentSlideIndex + 1 }} / {{ itemRepository.length }}
+          </span>
         </div>
 
         <q-space />
 
         <div class="q-mr-sm">
           <q-icon name="image" />
-          {{ itemRepository[currentSlideIndex]["caption"] }}
+          {{ itemRepository[currentSlideIndex]['caption'] }}
         </div>
       </q-toolbar>
 
@@ -239,10 +241,10 @@
 </style>
 
 <script>
-import VueQrcode from "vue-qrcode";
-import { ref } from "vue";
-import { useUiSettingsStore } from "../stores/ui-settings-store.js";
-import { openURL, useQuasar } from "quasar";
+import VueQrcode from 'vue-qrcode';
+import { ref } from 'vue';
+import { useUiSettingsStore } from '../stores/ui-settings-store.js';
+import { openURL } from 'quasar';
 
 export default {
   // name: 'ComponentName',
@@ -316,7 +318,7 @@ export default {
       } else {
         this.currentSlideIndex = this.indexSelected;
       }
-      console.log("currentSlideIndex:", this.currentSlideIndex);
+      console.log('currentSlideIndex:', this.currentSlideIndex);
       this.currentSlideId = this.itemRepository[this.currentSlideIndex].id;
       //this.currentId = this.index;
     }
@@ -333,14 +335,13 @@ export default {
   setup() {
     const uiSettingsStore = useUiSettingsStore();
     const rightDrawerOpen = ref(false);
-    const $q = useQuasar();
 
     return {
       // you can return the whole store instance to use it in the template
       uiSettingsStore,
       openURL,
       fabRight: ref(false),
-      currentSlideId: ref(""),
+      currentSlideId: ref(''),
       currentSlideIndex: ref(0),
       autoplay: ref(false),
       showFilterDialog: ref(false),
@@ -350,8 +351,8 @@ export default {
       toggleRightDrawer() {
         rightDrawerOpen.value = !rightDrawerOpen.value;
       },
-      handleSwipeDown({ evt }) {
-        console.log("TODO: add method to close dialog programmatically");
+      handleSwipeDown({}) {
+        console.log('TODO: add method to close dialog programmatically');
         // $emit("closeEvent");
       },
     };
@@ -370,20 +371,20 @@ export default {
     //https://stackoverflow.com/questions/1077041/refresh-image-with-a-new-one-at-the-same-url/66312176#66312176
     async reloadImg(url) {
       // fetch to update cache on regular images, if we do not fetch, on next gallery visit old images are displayed
-      await fetch(url, { cache: "reload", mode: "no-cors" });
+      await fetch(url, { cache: 'reload', mode: 'no-cors' });
 
       //now update also current displayed images (some are images, some are in background)
       // drawback: due to ?time file is transferred twice from server. but without there is no good way to force the browser to render new pic
       const time = new Date().getTime();
       document.body.querySelectorAll(`img[src*='${url}']`).forEach((img) => {
-        img.src = url + "#" + time;
+        img.src = url + '#' + time;
       });
     },
     applyFilter(id, filter) {
       this.displayLoadingSpinner = true;
       this.$api
         .get(`/mediaprocessing/applyfilter/${id}/${filter}`)
-        .then((response) => {
+        .then(() => {
           const index = this.itemRepository.findIndex((item) => item.id === id);
           this.reloadImg(this.itemRepository[index].full);
           this.reloadImg(this.itemRepository[index].preview);
@@ -397,7 +398,7 @@ export default {
     },
     deleteItem(id) {
       this.$api
-        .get("/mediacollection/delete", { params: { image_id: id } })
+        .get('/mediacollection/delete', { params: { image_id: id } })
         .then((response) => {
           console.log(response);
           // no need to delete here - we get SSE notification once deleted
@@ -410,8 +411,8 @@ export default {
         .then((response) => {
           console.log(response);
           this.$q.notify({
-            message: "Started printing...",
-            type: "positive",
+            message: 'Started printing...',
+            type: 'positive',
             spinner: true,
             //timeout: 2000
           });
@@ -424,15 +425,15 @@ export default {
 
             if (error.response.status == 425) {
               this.$q.notify({
-                message: error.response.data["detail"],
-                caption: "Print Service",
-                type: "info",
+                message: error.response.data['detail'],
+                caption: 'Print Service',
+                type: 'info',
               });
             } else {
               this.$q.notify({
-                message: error.response.data["detail"],
-                caption: "Print Service",
-                type: "negative",
+                message: error.response.data['detail'],
+                caption: 'Print Service',
+                type: 'negative',
               });
             }
           } else if (error.request) {
@@ -442,16 +443,16 @@ export default {
             console.error(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            console.error("Error", error.message);
+            console.error('Error', error.message);
           }
           //console.error(error.config);
         });
     },
     getFilterAvailable(media_type) {
-      return ["image", "collageimage", "animationimage"].includes(media_type);
+      return ['image', 'collageimage', 'animationimage'].includes(media_type);
     },
     getImageQrData() {
-      return this.itemRepository[this.currentSlideIndex]["share_url"];
+      return this.itemRepository[this.currentSlideIndex]['share_url'];
     },
     abortTimer() {
       clearInterval(this.intervalTimerId);
@@ -459,7 +460,7 @@ export default {
       this.remainingSecondsNormalized = 0;
     },
     startTimer() {
-      var duration = this.uiSettingsStore.uiSettings["AUTOCLOSE_NEW_ITEM_ARRIVED"];
+      var duration = this.uiSettingsStore.uiSettings['AUTOCLOSE_NEW_ITEM_ARRIVED'];
       console.log(`starting newitemarrived timer, duration=${duration}`);
       this.remainingSeconds = duration;
 
@@ -470,7 +471,7 @@ export default {
 
         if (this.remainingSeconds <= 0) {
           clearInterval(this.intervalTimerId);
-          this.$router.push({ path: "/" });
+          this.$router.push({ path: '/' });
         }
       }, 50);
     },

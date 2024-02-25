@@ -19,14 +19,14 @@
 </template>
 
 <script lang="ts">
-import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isStringControl, and, or, formatIs, optionIs } from "@jsonforms/core";
-import { defineComponent } from "vue";
-import { rendererProps, useJsonFormsControl, RendererProps } from "@jsonforms/vue";
-import { default as ControlWrapper } from "./ControlWrapper.vue";
-import { useQuasarControl } from "../util";
+import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isStringControl, and, or, formatIs, optionIs } from '@jsonforms/core';
+import { defineComponent } from 'vue';
+import { rendererProps, useJsonFormsControl, RendererProps } from '@jsonforms/vue';
+import { default as ControlWrapper } from './ControlWrapper.vue';
+import { useQuasarControl } from '../util';
 
 const controlRenderer = defineComponent({
-  name: "StringControlRenderer",
+  name: 'StringControlRenderer',
   components: { ControlWrapper },
   props: {
     ...rendererProps<ControlElement>(),
@@ -41,6 +41,6 @@ export default controlRenderer;
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
   // https://jsonforms.discourse.group/t/how-to-register-a-new-field-type/426/2 , TODO: there is a warning about non-standard "color" format, but still works.
-  tester: rankWith(1.1, and(isStringControl, or(formatIs("color"), optionIs("format", "color")))),
+  tester: rankWith(1.1, and(isStringControl, or(formatIs('color'), optionIs('format', 'color')))),
 };
 </script>

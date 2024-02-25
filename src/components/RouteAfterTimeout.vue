@@ -3,10 +3,10 @@
 </template>
 
 <script setup>
-import { useIdle, useTimestamp } from "@vueuse/core";
-import { computed, watch, onBeforeUnmount } from "vue";
-import { useRouter } from "vue-router";
-import { useQuasar } from "quasar";
+import { useIdle, useTimestamp } from '@vueuse/core';
+import { computed, watch, onBeforeUnmount } from 'vue';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
 
 const $q = useQuasar();
 const router = useRouter();
@@ -23,7 +23,7 @@ const props = defineProps({
   },
   warning_message: {
     type: String,
-    default: "Auto-starting slideshow... Click anywhere to stay on this page.",
+    default: 'Auto-starting slideshow... Click anywhere to stay on this page.',
   },
   warning_time_ms: {
     type: Number,
@@ -31,7 +31,7 @@ const props = defineProps({
   },
 });
 
-const { idle, lastActive, reset } = useIdle(props.timeout_ms);
+const { idle, lastActive } = useIdle(props.timeout_ms);
 const now = useTimestamp({ interval: 1000 });
 const remainingTime = computed(() => props.timeout_ms - (now.value - lastActive.value));
 const showWarning = computed(() => props.warning_time_ms > remainingTime.value);
@@ -41,10 +41,10 @@ function showNotification() {
   warningPopup = $q.notify({
     progress: true,
     message: props.warning_message,
-    type: "info",
+    type: 'info',
     multiline: true,
     timeout: remainingTime.value,
-    icon: "slideshow",
+    icon: 'slideshow',
   });
 }
 

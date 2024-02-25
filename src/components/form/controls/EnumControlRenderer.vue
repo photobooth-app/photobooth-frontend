@@ -17,14 +17,14 @@
 </template>
 
 <script lang="ts">
-import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isEnumControl } from "@jsonforms/core";
-import { defineComponent } from "vue";
-import { rendererProps, useJsonFormsEnumControl, RendererProps } from "@jsonforms/vue";
-import { default as ControlWrapper } from "./ControlWrapper.vue";
-import { useQuasarControl } from "../util";
+import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isEnumControl } from '@jsonforms/core';
+import { defineComponent } from 'vue';
+import { rendererProps, useJsonFormsEnumControl, RendererProps } from '@jsonforms/vue';
+import { default as ControlWrapper } from './ControlWrapper.vue';
+import { useQuasarControl } from '../util';
 
 const controlRenderer = defineComponent({
-  name: "EnumControlRenderer",
+  name: 'EnumControlRenderer',
   components: {
     ControlWrapper,
   },

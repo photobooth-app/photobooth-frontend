@@ -14,14 +14,14 @@
 </template>
 
 <script lang="ts">
-import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isBooleanControl } from "@jsonforms/core";
-import { defineComponent } from "vue";
-import { rendererProps, useJsonFormsControl, RendererProps } from "@jsonforms/vue";
-import { default as ControlWrapper } from "./ControlWrapper.vue";
-import { useQuasarControl } from "../util";
+import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isBooleanControl } from '@jsonforms/core';
+import { defineComponent } from 'vue';
+import { rendererProps, useJsonFormsControl, RendererProps } from '@jsonforms/vue';
+import { default as ControlWrapper } from './ControlWrapper.vue';
+import { useQuasarControl } from '../util';
 
 const controlRenderer = defineComponent({
-  name: "BooleanControlRenderer",
+  name: 'BooleanControlRenderer',
   components: { ControlWrapper },
   props: {
     ...rendererProps<ControlElement>(),

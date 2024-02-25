@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { useStateStore } from "../stores/state-store.js";
-import { useUiSettingsStore } from "../stores/ui-settings-store.js";
-import { useRouter } from "vue-router";
-import RouteAfterTimeout from "src/components/RouteAfterTimeout.vue";
+import { defineComponent } from 'vue';
+import { useStateStore } from '../stores/state-store.js';
+import { useUiSettingsStore } from '../stores/ui-settings-store.js';
+import { useRouter } from 'vue-router';
+import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue';
 
 export default defineComponent({
-  name: "MainLayout",
+  name: 'MainLayout',
 
   components: { RouteAfterTimeout },
   computed: {},
@@ -33,17 +33,17 @@ export default defineComponent({
 
     // watch state to force router to "/" if a capture is triggered
     stateStore.$subscribe((mutation, state) => {
-      if (state.state == "counting" && router.path != "/") {
+      if (state.state == 'counting' && router.path != '/') {
         // quick fix: receive "counting" state but not on indexpage, push router to index
-        console.log("counting state received, pushing to index page to countdown");
+        console.log('counting state received, pushing to index page to countdown');
 
-        router.push("/");
+        router.push('/');
       }
-      if (state.state == "present_capture") {
-        router.push({ path: `/itempresenter` });
+      if (state.state == 'present_capture') {
+        router.push({ path: '/itempresenter' });
       }
-      if (state.state == "approve_capture" && state.ask_user_for_approval) {
-        router.push({ path: `/itemapproval` });
+      if (state.state == 'approve_capture' && state.ask_user_for_approval) {
+        router.push({ path: '/itemapproval' });
       }
     });
 

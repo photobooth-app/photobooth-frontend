@@ -7,24 +7,24 @@
 </template>
 
 <script>
-import { useI18n } from "vue-i18n";
+import { useI18n } from 'vue-i18n';
 
 export default {
   setup() {
-    const { locale } = useI18n({ useScope: "global" });
+    const { locale } = useI18n({ useScope: 'global' });
 
     return {
       locale,
       localeOptions: [
-        { value: "en-US", label: "English" },
-        { value: "de-DE", label: "German" },
+        { value: 'en-US', label: 'English' },
+        { value: 'de-DE', label: 'German' },
       ],
     };
   },
   methods: {
     storeLocale(locale) {
-      localStorage.setItem("locale", locale);
-      console.log("Stored locale: ", locale);
+      localStorage.setItem('locale', locale);
+      console.log('Stored locale: ', locale);
     },
   },
 };
