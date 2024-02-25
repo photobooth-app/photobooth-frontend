@@ -14,7 +14,11 @@
           "type": "string"
         },
         "filter": {
-          "allOf": [{ "$ref": "#/$defs/EnumPilgramFilter" }],
+          "allOf": [
+            {
+              "$ref": "#/$defs/EnumPilgramFilter"
+            }
+          ],
           "default": "original"
         }
       },
@@ -47,14 +51,22 @@
           "title": "Height",
           "type": "integer"
         },
-        "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+        "rotate": {
+          "default": 0,
+          "title": "Rotate",
+          "type": "integer"
+        },
         "predefined_image": {
           "default": "",
           "title": "Predefined Image",
           "type": "string"
         },
         "filter": {
-          "allOf": [{ "$ref": "#/$defs/EnumPilgramFilter" }],
+          "allOf": [
+            {
+              "$ref": "#/$defs/EnumPilgramFilter"
+            }
+          ],
           "default": "original"
         }
       },
@@ -137,13 +149,21 @@
       "description": "Choose backends for still images/high quality images captured on main backend.\nIf the livepreview is enabled, the video is captured from live backend (if configured)\nor main backend.",
       "properties": {
         "MAIN_BACKEND": {
-          "allOf": [{ "$ref": "#/$defs/EnumImageBackendsMain" }],
+          "allOf": [
+            {
+              "$ref": "#/$defs/EnumImageBackendsMain"
+            }
+          ],
           "default": "VirtualCamera",
           "description": "Main backend to use for high quality still captures. Also used for livepreview if backend is capable of.",
           "title": "Main Backend"
         },
         "LIVE_BACKEND": {
-          "allOf": [{ "$ref": "#/$defs/EnumImageBackendsLive" }],
+          "allOf": [
+            {
+              "$ref": "#/$defs/EnumImageBackendsLive"
+            }
+          ],
           "default": "Disabled",
           "description": "Secondary backend used for live streaming only. Useful to stream from webcam if DSLR camera has no livestream capability.",
           "title": "Live Backend"
@@ -326,7 +346,11 @@
           "type": "integer"
         },
         "picamera2_stream_quality": {
-          "allOf": [{ "$ref": "#/$defs/EnumPicamStreamQuality" }],
+          "allOf": [
+            {
+              "$ref": "#/$defs/EnumPicamStreamQuality"
+            }
+          ],
           "default": "medium",
           "description": "Lower quality results in less data to be transferred and may reduce load on display device.",
           "title": "Picamera2 Stream Quality (for livepreview)"
@@ -417,26 +441,26 @@
       "description": "Common config for photobooth.",
       "properties": {
         "countdown_capture_first": {
-          "default": 2.0,
+          "default": 2,
           "description": "Countdown in seconds, started when user start a capture process",
-          "maximum": 20.0,
-          "minimum": 0.0,
+          "maximum": 20,
+          "minimum": 0,
           "title": "Countdown Capture First",
           "type": "number"
         },
         "countdown_capture_second_following": {
-          "default": 1.0,
+          "default": 1,
           "description": "Countdown in seconds, used for second and following captures for collages",
-          "maximum": 20.0,
-          "minimum": 0.0,
+          "maximum": 20,
+          "minimum": 0,
           "title": "Countdown Capture Second Following",
           "type": "number"
         },
         "countdown_camera_capture_offset": {
           "default": 0.25,
           "description": "Trigger camera capture by offset earlier (in seconds). 0 trigger exactly when countdown is 0. Use to compensate for delay in camera processing for better UX.",
-          "maximum": 20.0,
-          "minimum": 0.0,
+          "maximum": 20,
+          "minimum": 0,
           "title": "Countdown Camera Capture Offset",
           "type": "number"
         },
@@ -447,7 +471,7 @@
           "type": "boolean"
         },
         "collage_approve_autoconfirm_timeout": {
-          "default": 15.0,
+          "default": 15,
           "description": "If user is required to approve collage captures, after this timeout, the job continues and user confirmation is assumed.",
           "title": "Collage Approve Autoconfirm Timeout",
           "type": "number"
@@ -459,7 +483,11 @@
           "type": "boolean"
         },
         "DEBUG_LEVEL": {
-          "allOf": [{ "$ref": "#/$defs/EnumDebugLevel" }],
+          "allOf": [
+            {
+              "$ref": "#/$defs/EnumDebugLevel"
+            }
+          ],
           "default": "DEBUG",
           "description": "Log verbosity. File is writte to disc, and latest log is displayed also in UI.",
           "title": "Debug Level"
@@ -726,8 +754,16 @@
         },
         "sequence_merge_definition": {
           "default": [
-            { "duration": 2000, "predefined_image": "", "filter": "crema" },
-            { "duration": 2000, "predefined_image": "", "filter": "inkwell" },
+            {
+              "duration": 2000,
+              "predefined_image": "",
+              "filter": "crema"
+            },
+            {
+              "duration": 2000,
+              "predefined_image": "",
+              "filter": "inkwell"
+            },
             {
               "duration": 4000,
               "predefined_image": "predefined_images/photobooth-gif-animation-predefined-image.png",
@@ -735,7 +771,9 @@
             }
           ],
           "description": "Sequence images in an animated GIF. Predefined image files are used instead a camera capture. File needs to be located in DATA_DIR/*",
-          "items": { "$ref": "#/$defs/AnimationMergeDefinition" },
+          "items": {
+            "$ref": "#/$defs/AnimationMergeDefinition"
+          },
           "title": "Sequence Merge Definition",
           "type": "array"
         }
@@ -753,7 +791,11 @@
       "description": "Configure stages how to process images after capture.",
       "properties": {
         "filter": {
-          "allOf": [{ "$ref": "#/$defs/EnumPilgramFilter" }],
+          "allOf": [
+            {
+              "$ref": "#/$defs/EnumPilgramFilter"
+            }
+          ],
           "default": "original",
           "description": "Instagram-like filter to apply per default. 'original' applies no filter.",
           "title": "Pic1 Filter"
@@ -814,7 +856,9 @@
             }
           ],
           "description": "Text to overlay on images after capture. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
-          "items": { "$ref": "#/$defs/TextsConfig" },
+          "items": {
+            "$ref": "#/$defs/TextsConfig"
+          },
           "title": "Texts",
           "type": "array"
         }
@@ -1034,7 +1078,9 @@
             "xpro2"
           ],
           "description": "Filter the user may choose from in the gallery. 'original' applies no filter.",
-          "items": { "$ref": "#/$defs/EnumPilgramFilter" },
+          "items": {
+            "$ref": "#/$defs/EnumPilgramFilter"
+          },
           "title": "Pic1 Filter Userselectable",
           "type": "array"
         },
@@ -1062,7 +1108,11 @@
     },
     "TextsConfig": {
       "properties": {
-        "text": { "default": "", "title": "Text", "type": "string" },
+        "text": {
+          "default": "",
+          "title": "Text",
+          "type": "string"
+        },
         "pos_x": {
           "default": 50,
           "minimum": 0,
@@ -1075,7 +1125,11 @@
           "title": "Pos Y",
           "type": "integer"
         },
-        "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+        "rotate": {
+          "default": 0,
+          "title": "Rotate",
+          "type": "integer"
+        },
         "font_size": {
           "default": 40,
           "exclusiveMinimum": 0,
@@ -1168,7 +1222,9 @@
             }
           ],
           "description": "How to arrange single images in the collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Width/Height in pixels. Aspect ratio is kept always. Predefined image files are used instead a camera capture. File needs to be located in DATA_DIR/*",
-          "items": { "$ref": "#/$defs/CollageMergeDefinition" },
+          "items": {
+            "$ref": "#/$defs/CollageMergeDefinition"
+          },
           "title": "Canvas Merge Definition",
           "type": "array"
         },
@@ -1228,7 +1284,9 @@
             }
           ],
           "description": "Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
-          "items": { "$ref": "#/$defs/TextsConfig" },
+          "items": {
+            "$ref": "#/$defs/TextsConfig"
+          },
           "title": "Canvas Texts",
           "type": "array"
         }
@@ -1307,7 +1365,9 @@
             }
           ],
           "description": "How to arrange single images in the collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Width/Height in pixels. Aspect ratio is kept always. Predefined image files are used instead a camera capture. File needs to be located in DATA_DIR/*",
-          "items": { "$ref": "#/$defs/CollageMergeDefinition" },
+          "items": {
+            "$ref": "#/$defs/CollageMergeDefinition"
+          },
           "title": "Canvas Merge Definition",
           "type": "array"
         },
@@ -1367,7 +1427,9 @@
             }
           ],
           "description": "Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
-          "items": { "$ref": "#/$defs/TextsConfig" },
+          "items": {
+            "$ref": "#/$defs/TextsConfig"
+          },
           "title": "Canvas Texts",
           "type": "array"
         }
@@ -1379,13 +1441,17 @@
   "description": "AppConfig class glueing all together\n\nIn the case where a value is specified for the same Settings field in multiple ways, the selected value is determined as follows\n(in descending order of priority):\n\n1 Arguments passed to the Settings class initialiser.\n2 Environment variables, e.g. my_prefix_special_function as described above.\n3 Variables loaded from a dotenv (.env) file.\n4 Variables loaded from the secrets directory.\n5 The default field values for the Settings model.",
   "properties": {
     "common": {
-      "allOf": [{ "$ref": "#/$defs/GroupCommon" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupCommon"
+        }
+      ],
       "default": {
-        "countdown_capture_first": 2.0,
-        "countdown_capture_second_following": 1.0,
+        "countdown_capture_first": 2,
+        "countdown_capture_second_following": 1,
         "countdown_camera_capture_offset": 0.25,
         "collage_automatic_capture_continue": true,
-        "collage_approve_autoconfirm_timeout": 15.0,
+        "collage_approve_autoconfirm_timeout": 15,
         "gallery_show_individual_images": false,
         "DEBUG_LEVEL": "DEBUG",
         "webserver_bind_ip": "0.0.0.0",
@@ -1393,7 +1459,11 @@
       }
     },
     "sharing": {
-      "allOf": [{ "$ref": "#/$defs/GroupSharing" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupSharing"
+        }
+      ],
       "default": {
         "shareservice_enabled": false,
         "shareservice_url": "https://photobooth-app.org/extras/shareservice-landing/",
@@ -1403,11 +1473,22 @@
       }
     },
     "filetransfer": {
-      "allOf": [{ "$ref": "#/$defs/GroupFileTransfer" }],
-      "default": { "enabled": false, "target_folder_name": "photobooth" }
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupFileTransfer"
+        }
+      ],
+      "default": {
+        "enabled": false,
+        "target_folder_name": "photobooth"
+      }
     },
     "mediaprocessing": {
-      "allOf": [{ "$ref": "#/$defs/GroupMediaprocessing" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupMediaprocessing"
+        }
+      ],
       "default": {
         "HIRES_STILL_QUALITY": 90,
         "LIVEPREVIEW_QUALITY": 80,
@@ -1422,7 +1503,11 @@
       }
     },
     "mediaprocessing_pipeline_singleimage": {
-      "allOf": [{ "$ref": "#/$defs/GroupMediaprocessingPipelineSingleImage" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupMediaprocessingPipelineSingleImage"
+        }
+      ],
       "default": {
         "filter": "original",
         "fill_background_enable": false,
@@ -1508,13 +1593,25 @@
       }
     },
     "mediaprocessing_pipeline_animation": {
-      "allOf": [{ "$ref": "#/$defs/GroupMediaprocessingPipelineAnimation" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupMediaprocessingPipelineAnimation"
+        }
+      ],
       "default": {
         "canvas_width": 1500,
         "canvas_height": 900,
         "sequence_merge_definition": [
-          { "duration": 2000, "filter": "crema", "predefined_image": "" },
-          { "duration": 2000, "filter": "inkwell", "predefined_image": "" },
+          {
+            "duration": 2000,
+            "filter": "crema",
+            "predefined_image": ""
+          },
+          {
+            "duration": 2000,
+            "filter": "inkwell",
+            "predefined_image": ""
+          },
           {
             "duration": 4000,
             "filter": "original",
@@ -1524,11 +1621,19 @@
       }
     },
     "mediaprocessing_pipeline_printing": {
-      "allOf": [{ "$ref": "#/$defs/GroupMediaprocessingPipelinePrint" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupMediaprocessingPipelinePrint"
+        }
+      ],
       "default": {}
     },
     "uisettings": {
-      "allOf": [{ "$ref": "#/$defs/GroupUiSettings" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupUiSettings"
+        }
+      ],
       "default": {
         "PRIMARY_COLOR": "#196cb0",
         "SECONDARY_COLOR": "#b8124f",
@@ -1596,7 +1701,11 @@
       }
     },
     "backends": {
-      "allOf": [{ "$ref": "#/$defs/GroupBackends" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupBackends"
+        }
+      ],
       "default": {
         "MAIN_BACKEND": "VirtualCamera",
         "LIVE_BACKEND": "Disabled",
@@ -1631,7 +1740,11 @@
       }
     },
     "hardwareinputoutput": {
-      "allOf": [{ "$ref": "#/$defs/GroupHardwareInputOutput" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupHardwareInputOutput"
+        }
+      ],
       "default": {
         "keyboard_input_enabled": false,
         "keyboard_input_keycode_takepic": "i",
@@ -1655,11 +1768,22 @@
       }
     },
     "misc": {
-      "allOf": [{ "$ref": "#/$defs/GroupMisc" }],
-      "default": { "video_duration": 5, "video_bitrate": 3000 }
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupMisc"
+        }
+      ],
+      "default": {
+        "video_duration": 5,
+        "video_bitrate": 3000
+      }
     },
     "mediaprocessing_pipeline_collage_list2": {
-      "allOf": [{ "$ref": "#/$defs/GroupCollageProcess" }],
+      "allOf": [
+        {
+          "$ref": "#/$defs/GroupCollageProcess"
+        }
+      ],
       "default": {
         "other_general_settings": 900,
         "collage_pipeline_sets": [

@@ -52,7 +52,6 @@ export const useQuasarControl = <I extends { control: any; handleChange: any }>(
   });
 
   const styles = useStyles(input.control.value.uischema);
-  console.log('styles', styles);
 
   const vuetifyProps = (path: string) => {
     const props = get(appliedOptions.value?.vuetify, path);
@@ -132,5 +131,21 @@ export const useQuasarArrayControl = <I extends { control: any }>(input: I) => {
     appliedOptions,
     childUiSchema,
     childLabelForIndex,
+  };
+};
+export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
+  const appliedOptions = useControlAppliedOptions(input);
+
+  const vuetifyProps = (path: string) => {
+    const props = get(appliedOptions.value?.vuetify, path);
+
+    return props && isPlainObject(props) ? props : {};
+  };
+
+  return {
+    ...input,
+    styles: useStyles(input.control.value.uischema),
+    appliedOptions,
+    vuetifyProps,
   };
 };

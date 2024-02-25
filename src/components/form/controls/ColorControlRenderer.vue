@@ -1,5 +1,7 @@
 <template>
   <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
+    {{ control.uischema }}
+    {{ control.schema }}
     <q-color
       :model-value="control.data"
       no-header-tabs

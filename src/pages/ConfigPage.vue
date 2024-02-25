@@ -42,7 +42,7 @@
             <p>Group: {{ group_description }}</p>
           </div>
           <div class="col-12 col-md-8 q-mb-xl">
-            <json-forms :data="serverConfig" :renderers="renderers" :schema="schema" :uischema="uischema" @change="onChange" />
+            <json-forms :data="serverConfig" :renderers="renderers" :schema="schema" @change="onChange" />
           </div>
         </div>
       </q-page>
@@ -79,39 +79,6 @@ const renderers = [
 ];
 
 const schema = json;
-console.log(schema);
-const uischema = null; //{
-// type: "Control",
-// scope: "#/properties/DEBUG_LEVEL",
-// options: {
-//   format: "radio",
-//   step: 0.25,
-// },
-// };
-// const uischema = {
-//   type: "Categorization",
-//   elements: [
-//     {
-//       type: "Category",
-//       label: "categoryLabelKey",
-//       elements: [
-//         {
-//           type: "HorizontalLayout",
-//           elements: [
-//             {
-//               type: "Control",
-//               scope: "#/properties/firstName",
-//             },
-//             {
-//               type: "Control",
-//               scope: "#/properties/secondName",
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//   ],
-// };
 
 export default {
   // name: 'PageName',
@@ -126,7 +93,6 @@ export default {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
       schema,
-      uischema,
 
       //placeholder:
       main_groups: ['one', 'two'],

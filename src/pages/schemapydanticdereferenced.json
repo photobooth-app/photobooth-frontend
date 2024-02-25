@@ -96,7 +96,11 @@
           "title": "Height",
           "type": "integer"
         },
-        "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+        "rotate": {
+          "default": 0,
+          "title": "Rotate",
+          "type": "integer"
+        },
         "predefined_image": {
           "default": "",
           "title": "Predefined Image",
@@ -808,26 +812,26 @@
       "description": "Common config for photobooth.",
       "properties": {
         "countdown_capture_first": {
-          "default": 2.0,
+          "default": 2,
           "description": "Countdown in seconds, started when user start a capture process",
-          "maximum": 20.0,
-          "minimum": 0.0,
+          "maximum": 20,
+          "minimum": 0,
           "title": "Countdown Capture First",
           "type": "number"
         },
         "countdown_capture_second_following": {
-          "default": 1.0,
+          "default": 1,
           "description": "Countdown in seconds, used for second and following captures for collages",
-          "maximum": 20.0,
-          "minimum": 0.0,
+          "maximum": 20,
+          "minimum": 0,
           "title": "Countdown Capture Second Following",
           "type": "number"
         },
         "countdown_camera_capture_offset": {
           "default": 0.25,
           "description": "Trigger camera capture by offset earlier (in seconds). 0 trigger exactly when countdown is 0. Use to compensate for delay in camera processing for better UX.",
-          "maximum": 20.0,
-          "minimum": 0.0,
+          "maximum": 20,
+          "minimum": 0,
           "title": "Countdown Camera Capture Offset",
           "type": "number"
         },
@@ -838,7 +842,7 @@
           "type": "boolean"
         },
         "collage_approve_autoconfirm_timeout": {
-          "default": 15.0,
+          "default": 15,
           "description": "If user is required to approve collage captures, after this timeout, the job continues and user confirmation is assumed.",
           "title": "Collage Approve Autoconfirm Timeout",
           "type": "number"
@@ -1124,8 +1128,16 @@
         },
         "sequence_merge_definition": {
           "default": [
-            { "duration": 2000, "predefined_image": "", "filter": "crema" },
-            { "duration": 2000, "predefined_image": "", "filter": "inkwell" },
+            {
+              "duration": 2000,
+              "predefined_image": "",
+              "filter": "crema"
+            },
+            {
+              "duration": 2000,
+              "predefined_image": "",
+              "filter": "inkwell"
+            },
             {
               "duration": 4000,
               "predefined_image": "predefined_images/photobooth-gif-animation-predefined-image.png",
@@ -1332,7 +1344,11 @@
           "description": "Text to overlay on images after capture. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
           "items": {
             "properties": {
-              "text": { "default": "", "title": "Text", "type": "string" },
+              "text": {
+                "default": "",
+                "title": "Text",
+                "type": "string"
+              },
               "pos_x": {
                 "default": 50,
                 "minimum": 0,
@@ -1345,7 +1361,11 @@
                 "title": "Pos Y",
                 "type": "integer"
               },
-              "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+              "rotate": {
+                "default": 0,
+                "title": "Rotate",
+                "type": "integer"
+              },
               "font_size": {
                 "default": 40,
                 "exclusiveMinimum": 0,
@@ -1661,7 +1681,11 @@
     },
     "TextsConfig": {
       "properties": {
-        "text": { "default": "", "title": "Text", "type": "string" },
+        "text": {
+          "default": "",
+          "title": "Text",
+          "type": "string"
+        },
         "pos_x": {
           "default": 50,
           "minimum": 0,
@@ -1674,7 +1698,11 @@
           "title": "Pos Y",
           "type": "integer"
         },
-        "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+        "rotate": {
+          "default": 0,
+          "title": "Rotate",
+          "type": "integer"
+        },
         "font_size": {
           "default": 40,
           "exclusiveMinimum": 0,
@@ -1793,7 +1821,11 @@
                 "title": "Height",
                 "type": "integer"
               },
-              "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+              "rotate": {
+                "default": 0,
+                "title": "Rotate",
+                "type": "integer"
+              },
               "predefined_image": {
                 "default": "",
                 "title": "Predefined Image",
@@ -1917,7 +1949,11 @@
           "description": "Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
           "items": {
             "properties": {
-              "text": { "default": "", "title": "Text", "type": "string" },
+              "text": {
+                "default": "",
+                "title": "Text",
+                "type": "string"
+              },
               "pos_x": {
                 "default": 50,
                 "minimum": 0,
@@ -1930,7 +1966,11 @@
                 "title": "Pos Y",
                 "type": "integer"
               },
-              "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+              "rotate": {
+                "default": 0,
+                "title": "Rotate",
+                "type": "integer"
+              },
               "font_size": {
                 "default": 40,
                 "exclusiveMinimum": 0,
@@ -2056,7 +2096,11 @@
                 "title": "Height",
                 "type": "integer"
               },
-              "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+              "rotate": {
+                "default": 0,
+                "title": "Rotate",
+                "type": "integer"
+              },
               "predefined_image": {
                 "default": "",
                 "title": "Predefined Image",
@@ -2180,7 +2224,11 @@
           "description": "Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
           "items": {
             "properties": {
-              "text": { "default": "", "title": "Text", "type": "string" },
+              "text": {
+                "default": "",
+                "title": "Text",
+                "type": "string"
+              },
               "pos_x": {
                 "default": 50,
                 "minimum": 0,
@@ -2193,7 +2241,11 @@
                 "title": "Pos Y",
                 "type": "integer"
               },
-              "rotate": { "default": 0, "title": "Rotate", "type": "integer" },
+              "rotate": {
+                "default": 0,
+                "title": "Rotate",
+                "type": "integer"
+              },
               "font_size": {
                 "default": 40,
                 "exclusiveMinimum": 0,
@@ -2230,27 +2282,133 @@
         {
           "description": "Common config for photobooth.",
           "properties": {
+            "gallery_filter_userselectable12": {
+              "default": [
+                "original",
+                "_1977",
+                "aden",
+                "ashby",
+                "amaro",
+                "brannan",
+                "brooklyn",
+                "charmes",
+                "clarendon",
+                "crema",
+                "dogpatch",
+                "earlybird",
+                "gingham",
+                "ginza",
+                "hefe",
+                "helena",
+                "hudson",
+                "inkwell",
+                "juno",
+                "kelvin",
+                "lark",
+                "lofi",
+                "ludwig",
+                "maven",
+                "mayfair",
+                "moon",
+                "nashville",
+                "perpetua",
+                "poprocket",
+                "reyes",
+                "rise",
+                "sierra",
+                "skyline",
+                "slumber",
+                "stinson",
+                "sutro",
+                "toaster",
+                "valencia",
+                "walden",
+                "willow",
+                "xpro2"
+              ],
+              "description": "Filter the user may choose from in the gallery. 'original' applies no filter.",
+              "items": {
+                "description": "enum to choose image filter from, pilgram filter",
+                "enum": [
+                  "original",
+                  "_1977",
+                  "aden",
+                  "ashby",
+                  "amaro",
+                  "brannan",
+                  "brooklyn",
+                  "charmes",
+                  "clarendon",
+                  "crema",
+                  "dogpatch",
+                  "earlybird",
+                  "gingham",
+                  "ginza",
+                  "hefe",
+                  "helena",
+                  "hudson",
+                  "inkwell",
+                  "juno",
+                  "kelvin",
+                  "lark",
+                  "lofi",
+                  "ludwig",
+                  "maven",
+                  "mayfair",
+                  "moon",
+                  "nashville",
+                  "perpetua",
+                  "poprocket",
+                  "reyes",
+                  "rise",
+                  "sierra",
+                  "skyline",
+                  "slumber",
+                  "stinson",
+                  "sutro",
+                  "toaster",
+                  "valencia",
+                  "walden",
+                  "willow",
+                  "xpro2"
+                ],
+                "title": "EnumPilgramFilter",
+                "type": "string"
+              },
+              "title": "Pic1 Filter Userselectable",
+              "type": "array"
+            },
             "countdown_capture_first": {
-              "default": 2.0,
+              "default": 2,
               "description": "Countdown in seconds, started when user start a capture process",
-              "maximum": 20.0,
-              "minimum": 0.0,
+              "maximum": 20,
+              "minimum": 0,
               "title": "Countdown Capture First",
-              "type": "number"
+              "type": "number",
+              "variant": "slider",
+              "format": "slider",
+              "options": {
+                "slider": true,
+                "variant": "slider"
+              }
             },
             "countdown_capture_second_following": {
-              "default": 1.0,
+              "default": 1,
               "description": "Countdown in seconds, used for second and following captures for collages",
-              "maximum": 20.0,
-              "minimum": 0.0,
+              "maximum": 20,
+              "minimum": 0,
               "title": "Countdown Capture Second Following",
-              "type": "number"
+              "type": "number",
+              "options": {
+                "slider": true
+              }
             },
             "countdown_camera_capture_offset": {
               "default": 0.25,
+              "multipleOf": 0.25,
               "description": "Trigger camera capture by offset earlier (in seconds). 0 trigger exactly when countdown is 0. Use to compensate for delay in camera processing for better UX.",
-              "maximum": 20.0,
-              "minimum": 0.0,
+              "maximum": 20,
+              "minimum": 0,
               "title": "Countdown Camera Capture Offset",
               "type": "number"
             },
@@ -2261,7 +2419,7 @@
               "type": "boolean"
             },
             "collage_approve_autoconfirm_timeout": {
-              "default": 15.0,
+              "default": 15,
               "description": "If user is required to approve collage captures, after this timeout, the job continues and user confirmation is assumed.",
               "title": "Collage Approve Autoconfirm Timeout",
               "type": "number"
@@ -2303,11 +2461,11 @@
         }
       ],
       "default": {
-        "countdown_capture_first": 2.0,
-        "countdown_capture_second_following": 1.0,
+        "countdown_capture_first": 2,
+        "countdown_capture_second_following": 1,
         "countdown_camera_capture_offset": 0.25,
         "collage_automatic_capture_continue": true,
-        "collage_approve_autoconfirm_timeout": 15.0,
+        "collage_approve_autoconfirm_timeout": 15,
         "gallery_show_individual_images": false,
         "DEBUG_LEVEL": "DEBUG",
         "webserver_bind_ip": "0.0.0.0",
@@ -2384,7 +2542,10 @@
           "type": "object"
         }
       ],
-      "default": { "enabled": false, "target_folder_name": "photobooth" }
+      "default": {
+        "enabled": false,
+        "target_folder_name": "photobooth"
+      }
     },
     "mediaprocessing": {
       "allOf": [
@@ -2609,7 +2770,11 @@
               "description": "Text to overlay on images after capture. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
               "items": {
                 "properties": {
-                  "text": { "default": "", "title": "Text", "type": "string" },
+                  "text": {
+                    "default": "",
+                    "title": "Text",
+                    "type": "string"
+                  },
                   "pos_x": {
                     "default": 50,
                     "minimum": 0,
@@ -2905,7 +3070,11 @@
               "description": "Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*",
               "items": {
                 "properties": {
-                  "text": { "default": "", "title": "Text", "type": "string" },
+                  "text": {
+                    "default": "",
+                    "title": "Text",
+                    "type": "string"
+                  },
                   "pos_x": {
                     "default": 50,
                     "minimum": 0,
@@ -3027,7 +3196,11 @@
             },
             "sequence_merge_definition": {
               "default": [
-                { "duration": 2000, "predefined_image": "", "filter": "crema" },
+                {
+                  "duration": 2000,
+                  "predefined_image": "",
+                  "filter": "crema"
+                },
                 {
                   "duration": 2000,
                   "predefined_image": "",
@@ -3122,8 +3295,16 @@
         "canvas_width": 1500,
         "canvas_height": 900,
         "sequence_merge_definition": [
-          { "duration": 2000, "filter": "crema", "predefined_image": "" },
-          { "duration": 2000, "filter": "inkwell", "predefined_image": "" },
+          {
+            "duration": 2000,
+            "filter": "crema",
+            "predefined_image": ""
+          },
+          {
+            "duration": 2000,
+            "filter": "inkwell",
+            "predefined_image": ""
+          },
           {
             "duration": 4000,
             "filter": "original",
@@ -3868,7 +4049,10 @@
           "type": "object"
         }
       ],
-      "default": { "video_duration": 5, "video_bitrate": 3000 }
+      "default": {
+        "video_duration": 5,
+        "video_bitrate": 3000
+      }
     },
     "mediaprocessing_pipeline_collage_list2": {
       "allOf": [
