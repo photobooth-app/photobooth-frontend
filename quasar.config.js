@@ -99,16 +99,21 @@ module.exports = configure(function (/* ctx */) {
       server: {
         type: 'http',
       },
-      port: 8080,
+      // port: 8080,
       open: true, // opens browser window automatically
       proxy: {
-        // proxy all requests starting with /api to jsonplaceholder
+        '/private.css': 'http://127.0.0.1:8000/',
+        '/media': 'http://127.0.0.1:8000/',
+        '/api/sse': {
+          target: 'http://127.0.0.1:8000/',
+          changeOrigin: true,
+          ws: true,
+        },
         '/api': {
           target: 'http://127.0.0.1:8000/',
           changeOrigin: true,
         },
       },
-      compress: false, //workaround for /events SSE make to work
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework

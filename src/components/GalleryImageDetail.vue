@@ -112,7 +112,7 @@
             class="rounded-borders"
             loading="lazy"
             @click="applyFilter(currentSlideId, filter)"
-            v-bind:src="`/mediaprocessing/preview/${currentSlideId}/${filter}`"
+            v-bind:src="`/api/mediaprocessing/preview/${currentSlideId}/${filter}`"
           >
           </q-img>
         </q-card-section>

@@ -216,7 +216,7 @@ export default {
       folder_loading.value = true;
       selected.value = [];
 
-      let response = await fetch(`/admin/files/list/${folder}`, {
+      let response = await fetch(`/api/admin/files/list/${folder}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -241,7 +241,7 @@ export default {
     }
 
     async function getZip(selected = []) {
-      let response = await fetch('/admin/files/zip', {
+      let response = await fetch('/api/admin/files/zip', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(selected),
@@ -272,7 +272,7 @@ export default {
     }
 
     async function deleteItems(selected = []) {
-      let response = await fetch('/admin/files/delete', {
+      let response = await fetch('/api/admin/files/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(selected),
@@ -312,7 +312,7 @@ export default {
 
       console.log(newfolder_fullpath);
 
-      let response = await fetch('/admin/files/folder/new', {
+      let response = await fetch('/api/admin/files/folder/new', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newfolder_fullpath),
