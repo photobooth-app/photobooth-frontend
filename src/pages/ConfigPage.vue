@@ -15,7 +15,6 @@
 
     <q-drawer v-model="drawer" :width="300" :breakpoint="500" bordered :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'">
       <q-scroll-area class="fit">
-        <div>here is the menu! TODO</div>
         <q-list>
           <q-item
             v-for="group in main_groups"
@@ -42,7 +41,7 @@
             <p>Group: {{ group_description }}</p>
           </div>
           <div class="col-12 col-md-8 q-mb-xl">
-            <json-forms :data="serverConfig" :renderers="renderers" :schema="schema" @change="onChange" />
+            <json-forms :data="serverConfig" :renderers="renderers" :schema="schema" :uischema="uischema" @change="onChange" />
           </div>
         </div>
       </q-page>
@@ -72,13 +71,75 @@ import json from './schemapydanticdereferenced.json';
 const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } });
 
 const renderers = [
-  ...vanillaRenderers,
+  //...vanillaRenderers,
   ...quasarRenderers,
   // renderersText,
   // here you can add custom renderers
 ];
 
 const schema = json;
+const uischema = {
+  type: 'Categorization',
+
+  elements: [
+    {
+      type: 'Category',
+      label: 'first category',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/common',
+            },
+
+            {
+              type: 'Control',
+              scope: '#/properties/sharing',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/mediaprocessing',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/backends',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'Category',
+      label: 'secondcategory',
+      elements: [
+        {
+          type: 'HorizontalLayout',
+          elements: [
+            {
+              type: 'Control',
+              scope: '#/properties/common',
+            },
+
+            {
+              type: 'Control',
+              scope: '#/properties/sharing',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/mediaprocessing',
+            },
+            {
+              type: 'Control',
+              scope: '#/properties/backends',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
 
 export default {
   // name: 'PageName',
@@ -93,10 +154,11 @@ export default {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
       schema,
+      uischema,
 
       //placeholder:
-      main_groups: ['one', 'two'],
-      group_title: 'one',
+      main_groups: ['common', 'sharing', 'mediaprocessing', 'backends'],
+      group_title: 'common',
       group_description: '_____name would be here _____',
     };
   },
@@ -116,9 +178,6 @@ export default {
     const serverConfig = ref({});
 
     const getConfig = (which = 'current') => {
-      //hide form, later will be displayed again - this forces the form to rerender and reflect the latest values from store.
-      //renderBlitzForm.value = false;
-
       api
         .get(`/admin/config/${which}`)
         .then(async (response) => {
@@ -126,7 +185,6 @@ export default {
           console.log(serverConfig.value);
 
           serverConfig.value = response.data;
-          // renderBlitzForm.value = true;
         })
         .catch((response) => {
           console.log(response);

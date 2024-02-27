@@ -52,15 +52,6 @@ const controlRenderer = defineComponent({
 
 export default controlRenderer;
 
-// export const entry: JsonFormsRendererRegistryEntry = {
-//   renderer: controlRenderer,
-//   tester: rankWith(2.1, isEnumControl),
-// };
-// export const entry: JsonFormsRendererRegistryEntry = {
-//   renderer: controlRenderer,
-//   tester: rankWith(3.1, or(isObjectArrayControl, isPrimitiveArrayControl)),
-// };
-
 const hasOneOfItems = (schema: JsonSchema): boolean =>
   schema.oneOf !== undefined &&
   schema.oneOf.length > 0 &&
