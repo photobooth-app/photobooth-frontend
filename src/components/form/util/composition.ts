@@ -1,11 +1,12 @@
 import { useStyles } from '../styles';
-import { computed, ref, ComputedRef } from 'vue';
+import { computed, ref, ComputedRef, inject } from 'vue';
 import cloneDeep from 'lodash/cloneDeep';
 import debounce from 'lodash/debounce';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
-import { composePaths, computeLabel, getFirstPrimitiveProp, isDescriptionHidden, Resolve, findUISchema } from '@jsonforms/core';
+import { composePaths, computeLabel, getFirstPrimitiveProp, isDescriptionHidden, Resolve, findUISchema, JsonFormsSubStates } from '@jsonforms/core';
 import isPlainObject from 'lodash/isPlainObject';
+import { Ajv } from 'ajv';
 
 export const useControlAppliedOptions = <I extends { control: any }>(input: I) => {
   return computed(() => merge({}, cloneDeep(input.control.value.config), cloneDeep(input.control.value.uischema.options)));
@@ -18,20 +19,9 @@ export const useComputedLabel = <I extends { control: any }>(input: I, appliedOp
 };
 
 /**
- * Adds styles, isFocused, appliedOptions and onChange
+ * Adds styles, isFocused, appliedOptions
  */
-
-export const useQuasarControl = <I extends { control: any; handleChange: any }>(
-  input: I,
-  adaptValue: (target: any) => any = (v) => v,
-  debounceWait?: number
-) => {
-  const changeEmitter = typeof debounceWait === 'number' ? debounce(input.handleChange, debounceWait) : input.handleChange;
-
-  const onChange = (value: any) => {
-    changeEmitter(input.control.value.path, adaptValue(value));
-  };
-
+export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
   const appliedOptions = useControlAppliedOptions(input);
   const isFocused = ref(false);
 
@@ -65,10 +55,32 @@ export const useQuasarControl = <I extends { control: any; handleChange: any }>(
     isFocused,
     appliedOptions,
     controlWrapper,
-    onChange,
     vuetifyProps,
     persistentHint,
     computedLabel,
+  };
+};
+
+/**
+ * Adds adds onchange
+ */
+export const useQuasarControl = <I extends { control: any; handleChange: any }>(
+  input: I,
+  adaptValue: (target: any) => any = (v) => v,
+  debounceWait?: number
+) => {
+  const changeEmitter = typeof debounceWait === 'number' ? debounce(input.handleChange, debounceWait) : input.handleChange;
+
+  const onChange = (value: any) => {
+    changeEmitter(input.control.value.path, adaptValue(value));
+  };
+
+  const quasarBasicControl = useQuasarBasicControl(input);
+
+  return {
+    ...input,
+    ...quasarBasicControl,
+    onChange,
   };
 };
 
@@ -133,19 +145,16 @@ export const useQuasarArrayControl = <I extends { control: any }>(input: I) => {
     childLabelForIndex,
   };
 };
-export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
-  const appliedOptions = useControlAppliedOptions(input);
+/**
+ * Extracts Ajv from JSON Forms
+ */
+export const useAjv = () => {
+  const jsonforms = inject<JsonFormsSubStates>('jsonforms');
 
-  const vuetifyProps = (path: string) => {
-    const props = get(appliedOptions.value?.vuetify, path);
+  if (!jsonforms) {
+    throw new Error("'jsonforms' couldn't be injected. Are you within JSON Forms?");
+  }
 
-    return props && isPlainObject(props) ? props : {};
-  };
-
-  return {
-    ...input,
-    styles: useStyles(input.control.value.uischema),
-    appliedOptions,
-    vuetifyProps,
-  };
+  // should always exist
+  return jsonforms.core?.ajv as Ajv;
 };

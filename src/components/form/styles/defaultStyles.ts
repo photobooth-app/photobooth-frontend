@@ -32,6 +32,7 @@ export const defaultStyles: Styles = {
     legend: 'array-list-legend',
     addButton: 'array-list-add',
     label: 'array-list-label',
+    description: 'array-list-description',
     itemWrapper: 'array-list-item-wrapper',
     noData: 'array-list-no-data',
     item: 'array-list-item',
@@ -59,5 +60,17 @@ export const defaultStyles: Styles = {
   },
   allOf: {
     root: 'all-of',
+  },
+  categorization: {
+    root: 'categorization',
+    category: 'categorization-category',
+    selected: 'categorization-selected',
+    panel: 'categorization-panel',
+    stepper: 'categorization-stepper',
+    stepperBadge: 'categorization-stepper-badge',
+    stepperLine: 'categorization-stepper-line',
+    stepperFooter: 'categorization-stepper-footer',
+    stepperButtonBack: 'categorization-stepper-button-back',
+    stepperButtonNext: 'categorization-stepper-button-next',
   },
 };

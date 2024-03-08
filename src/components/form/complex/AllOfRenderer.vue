@@ -12,11 +12,6 @@
     </template>
     <template v-else-if="allOfRenderInfos">
       <div>
-        <!-- eslint-disable-next-line -->
-        <span style="font-size: 10px">
-          allof-group: {{ control.path
-          }}<!--delete later-->
-        </span>
         <combinator-properties :schema="control.schema" combinatorKeyword="allOf" :path="path" />
         <dispatch-renderer
           v-for="(allOfRenderInfo, allOfIndex) in allOfRenderInfos"

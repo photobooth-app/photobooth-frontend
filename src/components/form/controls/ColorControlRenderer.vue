@@ -40,7 +40,6 @@ export default controlRenderer;
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
-  // https://jsonforms.discourse.group/t/how-to-register-a-new-field-type/426/2 , TODO: there is a warning about non-standard "color" format, but still works.
   tester: rankWith(1.1, and(isStringControl, or(formatIs('color'), optionIs('format', 'color')))),
 };
 </script>

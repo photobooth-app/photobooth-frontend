@@ -1,18 +1,20 @@
 <template>
-  <q-select
-    :model-value="control.data"
-    :id="control.id + '-input'"
-    :class="styles.control.select"
-    :disable="!control.enabled"
-    :options="control.options"
-    :error-message="control.errors"
-    :error="control.errors != ''"
-    multiple
-    use-chips
-    @add="(details) => addSelected(details.value)"
-    @remove="(details) => removeSelected(details.value)"
-  >
-  </q-select>
+  <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
+    <q-select
+      :model-value="control.data"
+      :id="control.id + '-input'"
+      :class="styles.control.select"
+      :disable="!control.enabled"
+      :options="control.options"
+      :error-message="control.errors"
+      :error="control.errors != ''"
+      multiple
+      use-chips
+      @add="(details) => addSelected(details.value)"
+      @remove="(details) => removeSelected(details.value)"
+    >
+    </q-select>
+  </control-wrapper>
 </template>
 
 <script lang="ts">
@@ -30,10 +32,11 @@ import {
 import { defineComponent } from 'vue';
 import { rendererProps, useJsonFormsMultiEnumControl, RendererProps } from '@jsonforms/vue';
 import { useQuasarBasicControl } from '../util';
+import { default as ControlWrapper } from './ControlWrapper.vue';
 
 const controlRenderer = defineComponent({
-  name: 'EnumArrayRenderer',
-  components: {},
+  name: 'EnumArrayControlRenderer',
+  components: { ControlWrapper },
   props: {
     ...rendererProps<ControlElement>(),
   },
@@ -64,7 +67,7 @@ const hasEnumItems = (schema: JsonSchema): boolean => schema.type === 'string' &
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: controlRenderer,
   tester: rankWith(
-    5.1,
+    5.2,
     and(
       uiTypeIs('Control'),
       and(
