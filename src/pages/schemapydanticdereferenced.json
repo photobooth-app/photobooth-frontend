@@ -2384,13 +2384,7 @@
               "maximum": 20,
               "minimum": 0,
               "title": "Countdown Capture First",
-              "type": "number",
-              "variant": "slider",
-              "format": "slider",
-              "options": {
-                "slider": true,
-                "variant": "slider"
-              }
+              "type": "number"
             },
             "countdown_capture_second_following": {
               "default": 1,
@@ -2398,14 +2392,10 @@
               "maximum": 20,
               "minimum": 0,
               "title": "Countdown Capture Second Following",
-              "type": "number",
-              "options": {
-                "slider": true
-              }
+              "type": "number"
             },
             "countdown_camera_capture_offset": {
               "default": 0.25,
-              "multipleOf": 0.25,
               "description": "Trigger camera capture by offset earlier (in seconds). 0 trigger exactly when countdown is 0. Use to compensate for delay in camera processing for better UX.",
               "maximum": 20,
               "minimum": 0,
