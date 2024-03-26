@@ -46,10 +46,13 @@ const routes = [
   },
 
   {
-    // extended layout for admins
+    // standalone layouts
     path: '/standalone',
     component: () => import('layouts/StandaloneLayout.vue'),
-    children: [{ path: 'gallery', component: () => import('pages/GalleryPage.vue') }],
+    children: [
+      { path: 'gallery', component: () => import('pages/GalleryPage.vue') },
+      { path: 'slideshow', component: () => import('pages/SlideshowPage.vue') },
+    ],
   },
   {
     // slideshow layout

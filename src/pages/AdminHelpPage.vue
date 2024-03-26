@@ -22,6 +22,12 @@
       </li>
     </ul>
 
+    <h4>Links to landingpages, standalone gallery, ...</h4>
+    <ul>
+      <li><a href="#/standalone/gallery" target="_blank">Standalone Gallery</a></li>
+      <li><a href="#/standalone/slideshow" target="_blank">Standalone Slideshow Random</a></li>
+      <li><a href="#/slideshow/random" target="_blank">Slideshow Random (opens after timeout automatically)</a></li>
+    </ul>
     <h4>Photobooth REST-API</h4>
     <p>
       The photobooth apps frontend is using the backends rest api. It's well documented and can be used to integrate further with your systems. Check
