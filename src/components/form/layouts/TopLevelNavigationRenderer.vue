@@ -16,7 +16,6 @@
             :key="`${layout.path}-${index}`"
             clickable
             :active="activeCategory == index"
-            :to="`/admin/config/${index}`"
             @click="activeCategory = index"
             replace
             v-ripple
