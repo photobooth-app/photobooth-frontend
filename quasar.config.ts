@@ -1,27 +1,13 @@
 /* eslint-env node */
 
-/*
- * This file runs in a Node context (it's NOT transpiled by Babel), so use only
- * the ES6 features that are supported by your Node version. https://node.green/
- */
-
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-const { configure } = require('quasar/wrappers');
-const path = require('path');
+import { configure } from 'quasar/wrappers';
+import { fileURLToPath } from 'node:url';
 
-module.exports = configure(function (/* ctx */) {
+export default configure((ctx) => {
   return {
-    eslint: {
-      // fix: true,
-      // include: [],
-      // exclude: [],
-      // rawOptions: {},
-      warnings: true,
-      errors: true,
-    },
-
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,
 
@@ -51,8 +37,8 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
       target: {
-        browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
-        node: 'node16',
+        browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
+        node: 'node20',
       },
 
       vueRouterMode: 'hash', // available values: 'hash', 'history'
@@ -77,7 +63,7 @@ module.exports = configure(function (/* ctx */) {
 
       vitePlugins: [
         [
-          '@intlify/vite-plugin-vue-i18n',
+          '@intlify/unplugin-vue-i18n/vite',
           {
             // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
             // compositionOnly: false,
@@ -86,9 +72,24 @@ module.exports = configure(function (/* ctx */) {
             // you need to set `runtimeOnly: false`
             // runtimeOnly: false,
 
+            ssr: ctx.modeName === 'ssr',
+
             // you need to set i18n resource including paths !
-            include: path.resolve(__dirname, './src/i18n/**'),
+            include: [fileURLToPath(new URL('./src/i18n', import.meta.url))],
           },
+        ],
+
+        [
+          'vite-plugin-checker',
+          {
+            vueTsc: {
+              tsconfigPath: 'tsconfig.vue-tsc.json',
+            },
+            eslint: {
+              lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
+            },
+          },
+          { server: false },
         ],
       ],
     },
@@ -177,11 +178,11 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
-      workboxMode: 'generateSW', // or 'injectManifest'
-      injectPwaMetaTags: true,
-      swFilename: 'sw.js',
-      manifestFilename: 'manifest.json',
-      useCredentialsForManifestTag: false,
+      workboxMode: 'GenerateSW', // or 'injectManifest'
+      // injectPwaMetaTags: true,
+      // swFilename: 'sw.js',
+      // manifestFilename: 'manifest.json',
+      // useCredentialsForManifestTag: false,
       // useFilenameHashes: true,
       // extendGenerateSWOptions (cfg) {}
       // extendInjectManifestOptions (cfg) {},
