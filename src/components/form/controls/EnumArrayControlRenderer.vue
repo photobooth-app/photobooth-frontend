@@ -35,10 +35,10 @@ const controlRenderer = defineComponent({
   },
   methods: {
     addSelected(value: any) {
-      this.addItem(this.control.path, value.value);
+      this.addItem(this.control.path, value);
     },
     removeSelected(value: any) {
-      this.removeItem?.(this.control.path, value.value);
+      this.removeItem?.(this.control.path, value);
     },
   },
 });

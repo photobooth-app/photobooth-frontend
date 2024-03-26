@@ -1,6 +1,0 @@
-
-vuejs computed is still dirty after getter:
-new issue in 3.4.19
-- https://github.com/vuejs/core/issues/10341
-- https://github.com/vuejs/core/commit/f7ba97f9754a9882c1f6b1c07ca1a4040479dd13
-- https://github.com/vuejs/core/pull/10299
