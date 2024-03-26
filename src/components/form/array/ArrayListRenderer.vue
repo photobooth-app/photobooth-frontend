@@ -40,16 +40,7 @@
 </template>
 
 <script lang="ts">
-import {
-  composePaths,
-  createDefaultValue,
-  JsonFormsRendererRegistryEntry,
-  rankWith,
-  ControlElement,
-  schemaTypeIs,
-  Resolve,
-  JsonSchema,
-} from '@jsonforms/core';
+import { composePaths, createDefaultValue, ControlElement, Resolve, JsonSchema } from '@jsonforms/core';
 import { defineComponent } from 'vue';
 import { DispatchRenderer, rendererProps, useJsonFormsArrayControl, RendererProps } from '@jsonforms/vue';
 import { useQuasarArrayControl } from '../util';
@@ -101,9 +92,4 @@ const controlRenderer = defineComponent({
 });
 
 export default controlRenderer;
-
-export const entry: JsonFormsRendererRegistryEntry = {
-  renderer: controlRenderer,
-  tester: rankWith(2.1, schemaTypeIs('array')),
-};
 </script>

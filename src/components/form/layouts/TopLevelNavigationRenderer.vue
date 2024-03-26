@@ -3,7 +3,8 @@
     <q-header style="z-index: 0">
       <q-toolbar>
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-        <q-toolbar-title>{{ activeCategory }}_{{ visibleCategoryLabels[activeCategory] }}</q-toolbar-title>
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+        <q-toolbar-title>{{ visibleCategoryLabels[activeCategory] }} ({{ activeCategory }})</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -33,7 +34,6 @@
           <div class="col-12 col-md-8 q-mb-xl">
             <div v-for="(element, index) in visibleCategories" :key="`${layout.path}-${index}`">
               <!--div class="col-12 col-md-8 q-mb-xl">{{ layout.schema.description }} TODO: maybe find out later how to read description</div-->
-              {{ layout.label }}
               <dispatch-renderer
                 v-if="index == activeCategory"
                 :schema="layout.schema"
@@ -52,12 +52,12 @@
 </template>
 
 <script lang="ts">
-import { JsonFormsRendererRegistryEntry, Layout, rankWith, uiTypeIs, Categorization, Category, isVisible } from '@jsonforms/core';
+import { Layout, Categorization, Category, isVisible, Scoped } from '@jsonforms/core';
 import { defineComponent, ref } from 'vue';
-import { DispatchRenderer, rendererProps, useJsonFormsLayout, RendererProps, JsonForms } from '@jsonforms/vue';
+import { DispatchRenderer, rendererProps, useJsonFormsLayout, RendererProps } from '@jsonforms/vue';
 import { useQuasarLayout, useAjv } from '../util';
 
-const layoutRenderer = defineComponent({
+const TopLevelNavigationRenderer = defineComponent({
   name: 'TopLevelNavigation',
   components: {
     DispatchRenderer,
@@ -81,21 +81,21 @@ const layoutRenderer = defineComponent({
   computed: {
     visibleCategories(): (Category | Categorization)[] {
       return (this.layout.uischema as Categorization).elements.filter((category: Category | Categorization) =>
-        isVisible(category, this.layout.data, this.layout.path, this.ajv)
+        isVisible(category, this.layout.data, this.layout.path, this.ajv),
       );
     },
     visibleCategoryLabels(): string[] {
-      return this.visibleCategories.map((element, index) => {
-        return element.label ?? `idx ${index}`;
+      return this.visibleCategories.map((element) => {
+        return element.label ?? `${(element as Category & Scoped).scope.split('/').pop()}`; //TODO: this is a workaround until categorization is well implemented.
       });
     },
   },
 });
 
-export default layoutRenderer;
+export default TopLevelNavigationRenderer;
 
-export const entry: JsonFormsRendererRegistryEntry = {
-  renderer: layoutRenderer,
-  tester: rankWith(2, uiTypeIs('TopLevelNavigation')),
-};
+// export const entry: JsonFormsRendererRegistryEntry = {
+//   renderer: TopLevelNavigationRenderer,
+//   tester: rankWith(2, uiTypeIs('TopLevelNavigation')),
+// };
 </script>

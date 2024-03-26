@@ -29,16 +29,7 @@
 </template>
 
 <script lang="ts">
-import {
-  CombinatorSubSchemaRenderInfo,
-  ControlElement,
-  createCombinatorRenderInfos,
-  findMatchingUISchema,
-  isAllOfControl,
-  JsonFormsRendererRegistryEntry,
-  rankWith,
-  UISchemaElement,
-} from '@jsonforms/core';
+import { CombinatorSubSchemaRenderInfo, ControlElement, createCombinatorRenderInfos, findMatchingUISchema, UISchemaElement } from '@jsonforms/core';
 import { DispatchRenderer, rendererProps, RendererProps, useJsonFormsAllOfControl } from '@jsonforms/vue';
 import { defineComponent } from 'vue';
 import { useQuasarControl } from '../util';
@@ -68,7 +59,7 @@ const controlRenderer = defineComponent({
         'allOf',
         this.control.uischema,
         this.control.path,
-        this.control.uischemas
+        this.control.uischemas,
       );
 
       return result.filter((info) => info.uischema);
@@ -77,9 +68,4 @@ const controlRenderer = defineComponent({
 });
 
 export default controlRenderer;
-
-export const entry: JsonFormsRendererRegistryEntry = {
-  renderer: controlRenderer,
-  tester: rankWith(3, isAllOfControl),
-};
 </script>

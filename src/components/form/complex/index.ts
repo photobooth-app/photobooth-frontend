@@ -1,24 +1,58 @@
-export { default as AllOfRenderer } from './AllOfRenderer.vue';
+import {
+  isAllOfControl,
+  JsonFormsRendererRegistryEntry,
+  rankWith,
+  and,
+  hasType,
+  JsonSchema,
+  schemaMatches,
+  schemaSubPathMatches,
+  uiTypeIs,
+} from '@jsonforms/core';
+
+import { default as AllOfRenderer } from './AllOfRenderer.vue';
 // export { default as AnyOfRenderer } from "./AnyOfRenderer.vue";
 // export { default as ArrayControlRenderer } from "./ArrayControlRenderer.vue";
-export { default as EnumArrayRenderer } from './EnumArrayRenderer.vue';
+import { default as EnumArrayRenderer } from './EnumArrayRenderer.vue';
 // export { default as ObjectRenderer } from "./ObjectRenderer.vue";
 // export { default as OneOfRenderer } from "./OneOfRenderer.vue";
 // export { default as OneOfTabRenderer } from "./OneOfTabRenderer.vue";
 
-import { entry as allOfRendererEntry } from './AllOfRenderer.vue';
-// import { entry as anyOfRendererEntry } from "./AnyOfRenderer.vue";
-// import { entry as arrayControlRendererEntry } from "./ArrayControlRenderer.vue";
-import { entry as enumArrayRendererEntry } from './EnumArrayRenderer.vue';
-// import { entry as objectRendererEntry } from "./ObjectRenderer.vue";
-// import { entry as oneOfRendererEntry } from "./OneOfRenderer.vue";
-// import { entry as oneOfTabRendererEntry } from "./OneOfTabRenderer.vue";
+export const AllOfRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: AllOfRenderer,
+  tester: rankWith(3, isAllOfControl),
+};
+
+const hasOneOfItems = (schema: JsonSchema): boolean =>
+  schema.oneOf !== undefined &&
+  schema.oneOf.length > 0 &&
+  (schema.oneOf as JsonSchema[]).every((entry: JsonSchema) => {
+    return entry.const !== undefined;
+  });
+
+const hasEnumItems = (schema: JsonSchema): boolean => schema.type === 'string' && schema.enum !== undefined;
+
+export const EnumArrayRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: EnumArrayRenderer,
+  tester: rankWith(
+    5.1,
+    and(
+      uiTypeIs('Control'),
+      and(
+        schemaMatches((schema) => hasType(schema, 'array') && !Array.isArray(schema.items)),
+        schemaSubPathMatches('items', (schema) => {
+          return hasOneOfItems(schema) || hasEnumItems(schema);
+        }),
+      ),
+    ),
+  ),
+};
 
 export const complexRenderers = [
-  allOfRendererEntry,
+  AllOfRendererEntry,
   // anyOfRendererEntry,
   // arrayControlRendererEntry,
-  enumArrayRendererEntry,
+  EnumArrayRendererEntry,
   // objectRendererEntry,
   // oneOfRendererEntry,
   // oneOfTabRendererEntry,

@@ -1,17 +1,9 @@
-<!-- eslint-disable -->
 <template>
-  <json-forms
-    v-if="!isLoadingState"
-    :data="serverConfig"
-    :ajv="ajv"
-    :renderers="renderers"
-    :schema="cschema"
-    :uischema="cuischema"
-    @change="onChange"
-  />
+  <div v-if="!isLoadingState">
+    <json-forms :data="serverConfig" :ajv="ajv" :renderers="renderers" :schema="schema" :uischema="cuischema" @change="onChange" />
+  </div>
   <div v-else class="q-pa-md flex flex-center">
     <div>
-      <div>Please wait while loading config...</div>
       <q-spinner-gears size="xl" color="primary" />
     </div>
   </div>
@@ -40,7 +32,7 @@ import { ref, computed } from 'vue';
 import { api } from 'boot/axios';
 import { useMainStore } from '../stores/main-store.js';
 import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue';
-import { vanillaRenderers } from '@jsonforms/vue-vanilla';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { generateDefaultUISchema } from '@jsonforms/core';
 import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form';
 import { remoteProcedureCall } from 'boot/axios';
@@ -53,17 +45,17 @@ const serverConfig = ref({});
 const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } });
 const renderers = [...quasarRenderers];
 const isLoadingState = ref(true);
-let schema = null;
+const schema = ref({});
 
 const updateFormSchema = async () => {
   //loadscreen on
   isLoadingState.value = true;
 
-  console.log(1);
+  // console.log(1);
   await getSchema();
-  console.log(2);
+  // console.log(2);
   await getConfig('currentActive');
-  console.log(3);
+  // console.log(3);
 
   //loadscreen off
   console.log('disable loadscreen');
@@ -75,7 +67,7 @@ const getSchema = async () => {
     const response = await fetch('/api/admin/config/schema?schema_type=dereferenced');
     console.log(response);
 
-    schema = await response.json();
+    schema.value = await response.json();
     console.log('updated schema!');
   } catch (error) {
     console.warn(error);
@@ -114,7 +106,7 @@ const uploadConfigAndPersist = () => {
 
   api
     .post('/admin/config/current', serverConfig.value)
-    .then((response) => {
+    .then((/*response*/) => {
       // reload ui settings into store as on app startup.
       uiSettingsStore.initStore(true);
 
@@ -130,7 +122,7 @@ const uploadConfigAndPersist = () => {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         let notify_msg = 'check following fields:<br/>';
-        Object.values(error.response.data.detail).forEach((detail) => {
+        Object.values(error.response.data.detail).forEach((detail: any) => {
           notify_msg += detail['loc'].join(' -> ');
           notify_msg += `: ${detail['msg']}`;
           notify_msg += '<br/>';
@@ -160,12 +152,8 @@ const uploadConfigAndPersist = () => {
     });
 };
 
-const cschema = computed(() => {
-  return !isLoadingState.value ? schema : null;
-});
-
 const cuischema = computed(() => {
-  return !isLoadingState.value ? generateDefaultUISchema(schema, 'TopLevelNavigation') : null;
+  return !isLoadingState.value ? generateDefaultUISchema(schema.value, 'TopLevelNavigation') : undefined;
 });
 export default {
   // name: 'PageName',
@@ -177,12 +165,12 @@ export default {
   },
   data() {
     // non-reactive ajv
-    this.ajv = createAjv(); // https://github.com/eclipsesource/jsonforms/issues/1832#issuecomment-966209856
+
     // reactive data below
     return {
       // freeze renderers for performance gains
       renderers: Object.freeze(renderers),
-      cschema,
+      schema,
       cuischema,
 
       serverConfig,
@@ -201,14 +189,17 @@ export default {
   },
   setup() {
     const store = useMainStore();
+    const ajv = createAjv({ multipleOfPrecision: 2 }); // https://github.com/eclipsesource/jsonforms/issues/1832#issuecomment-966209856
 
     updateFormSchema();
 
     return {
       store,
+      ajv,
       uploadConfigAndPersist,
       remoteProcedureCall,
       getConfig,
+      updateFormSchema,
     };
   },
 };

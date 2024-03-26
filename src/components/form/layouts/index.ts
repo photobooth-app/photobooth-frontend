@@ -1,9 +1,15 @@
-export { default as LayoutRenderer } from './LayoutRenderer.vue';
-// export { default as GroupRenderer } from './GroupRenderer.vue';
-export { default as TopLevelNavigationRenderer } from '../layouts/TopLevelNavigationRenderer.vue';
+import { JsonFormsRendererRegistryEntry, rankWith, uiTypeIs, isLayout } from '@jsonforms/core';
 
-import { entry as layoutRendererEntry } from './LayoutRenderer.vue';
-// import { entry as groupRendererEntry } from './GroupRenderer.vue';
-import { entry as TopLevelNavigationRendererEntry } from '../layouts/TopLevelNavigationRenderer.vue';
+import { default as LayoutRenderer } from './LayoutRenderer.vue';
+import { default as TopLevelNavigationRenderer } from './TopLevelNavigationRenderer.vue';
 
-export const layoutRenderers = [layoutRendererEntry, TopLevelNavigationRendererEntry];
+export const LayoutRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: LayoutRenderer,
+  tester: rankWith(1, isLayout),
+};
+export const TopLevelNavigationRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: TopLevelNavigationRenderer,
+  tester: rankWith(2, uiTypeIs('TopLevelNavigation')),
+};
+
+export const layoutRenderers = [LayoutRendererEntry, TopLevelNavigationRendererEntry];

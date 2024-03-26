@@ -14,13 +14,13 @@
 </template>
 
 <script lang="ts">
-import { isLayout, JsonFormsRendererRegistryEntry, Layout, rankWith } from '@jsonforms/core';
+import { Layout } from '@jsonforms/core';
 import { defineComponent } from 'vue';
 import { DispatchRenderer, rendererProps, useJsonFormsLayout, RendererProps } from '@jsonforms/vue';
 import { useQuasarLayout } from '../util';
 
 const layoutRenderer = defineComponent({
-  name: 'LayoutRenderer',
+  name: 'layoutRenderer',
   components: {
     DispatchRenderer,
   },
@@ -38,9 +38,4 @@ const layoutRenderer = defineComponent({
 });
 
 export default layoutRenderer;
-
-export const entry: JsonFormsRendererRegistryEntry = {
-  renderer: layoutRenderer,
-  tester: rankWith(1, isLayout),
-};
 </script>

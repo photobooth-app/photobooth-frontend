@@ -4,9 +4,17 @@ import cloneDeep from 'lodash/cloneDeep';
 import debounce from 'lodash/debounce';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
-import { composePaths, computeLabel, getFirstPrimitiveProp, isDescriptionHidden, Resolve, findUISchema, JsonFormsSubStates } from '@jsonforms/core';
+import {
+  composePaths,
+  computeLabel,
+  getFirstPrimitiveProp,
+  isDescriptionHidden,
+  Resolve,
+  findUISchema,
+  JsonFormsSubStates,
+  extractAjv,
+} from '@jsonforms/core';
 import isPlainObject from 'lodash/isPlainObject';
-import { Ajv } from 'ajv';
 
 export const useControlAppliedOptions = <I extends { control: any }>(input: I) => {
   return computed(() => merge({}, cloneDeep(input.control.value.config), cloneDeep(input.control.value.uischema.options)));
@@ -30,7 +38,7 @@ export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
       input.control.value.visible,
       input.control.value.description,
       isFocused.value,
-      !!appliedOptions.value?.showUnfocusedDescription
+      !!appliedOptions.value?.showUnfocusedDescription,
     );
   };
 
@@ -67,7 +75,7 @@ export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
 export const useQuasarControl = <I extends { control: any; handleChange: any }>(
   input: I,
   adaptValue: (target: any) => any = (v) => v,
-  debounceWait?: number
+  debounceWait?: number,
 ) => {
   const changeEmitter = typeof debounceWait === 'number' ? debounce(input.handleChange, debounceWait) : input.handleChange;
 
@@ -122,8 +130,8 @@ export const useQuasarArrayControl = <I extends { control: any }>(input: I) => {
       input.control.value.path,
       undefined,
       input.control.value.uischema,
-      input.control.value.rootSchema
-    )
+      input.control.value.rootSchema,
+    ),
   );
 
   const childLabelForIndex = (index: number) => {
@@ -154,7 +162,9 @@ export const useAjv = () => {
   if (!jsonforms) {
     throw new Error("'jsonforms' couldn't be injected. Are you within JSON Forms?");
   }
+  if (jsonforms.core === undefined) {
+    throw new Error("'jsonforms.core undefined'. Are you within JSON Forms?");
+  }
 
-  // should always exist
-  return jsonforms.core?.ajv as Ajv;
+  return extractAjv(jsonforms.core);
 };

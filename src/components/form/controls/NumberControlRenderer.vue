@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { ControlElement, JsonFormsRendererRegistryEntry, rankWith, isNumberControl, or, isIntegerControl } from '@jsonforms/core';
+import { ControlElement } from '@jsonforms/core';
 import { defineComponent } from 'vue';
 import { rendererProps, useJsonFormsControl, RendererProps } from '@jsonforms/vue';
 import { default as ControlWrapper } from './ControlWrapper.vue';
@@ -38,9 +38,4 @@ const controlRenderer = defineComponent({
 });
 
 export default controlRenderer;
-
-export const entry: JsonFormsRendererRegistryEntry = {
-  renderer: controlRenderer,
-  tester: rankWith(1.1, or(isNumberControl, isIntegerControl)),
-};
 </script>

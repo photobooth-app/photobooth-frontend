@@ -4,6 +4,7 @@
     <h1>JSON Forms Vue 3</h1>
     <div>{{ JSON.stringify(this.data) }}</div>
     <div class="myform">
+      following form:
       <json-forms :data="data" :renderers="renderers" :schema="schema" @change="onChange" />
     </div>
   </q-page>
@@ -15,14 +16,12 @@ import { ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useMainStore } from '../stores/main-store.js';
 import { JsonForms } from '@jsonforms/vue';
-import { defaultStyles, mergeStyles, vanillaRenderers } from '@jsonforms/vue-vanilla';
-import { quasarRenderers } from '../components/form/renderers';
+import { defaultStyles, mergeStyles, quasarRenderers } from '../components/form';
 
 // mergeStyles combines all classes from both styles definitions into one
 const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } });
 
 const renderers = [
-  ...vanillaRenderers,
   ...quasarRenderers,
   // renderersText,
   // here you can add custom renderers
