@@ -1,7 +1,7 @@
 <template>
   <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
     <q-color
-      :model-value="control.data"
+      :model-value="standardized_color"
       no-header-tabs
       no-footer
       :rules="['anyColor']"
@@ -26,13 +26,21 @@ import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useQuasarControl } from '../util';
 
 const controlRenderer = defineComponent({
-  name: 'StringControlRenderer',
+  name: 'ColorControlRenderer',
   components: { ControlWrapper },
   props: {
     ...rendererProps<ControlElement>(),
   },
+  computed: {
+    standardized_color(): string {
+      const ctx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d')!;
+      ctx.fillStyle = this.control.data;
+      return ctx.fillStyle.toString();
+    },
+  },
+  methods: {},
   setup(props: RendererProps<ControlElement>) {
-    return useQuasarControl(useJsonFormsControl(props), (value: any) => value || undefined, 300);
+    return useQuasarControl(useJsonFormsControl(props), (value: string) => value || undefined, 300);
   },
 });
 
