@@ -167,6 +167,13 @@ export default {
         field: 'name',
       },
       {
+        label: 'Path',
+        name: 'filepath',
+        required: true,
+        align: 'left',
+        field: 'filepath',
+      },
+      {
         label: 'Size',
         name: 'size',
         required: true,
