@@ -83,8 +83,6 @@
     <q-card class="q-pa-md q-mt-md">
       <div class="row">
         <div class="text-h5">Log Records</div>
-
-        <!--<q-badge align="top" :label="store.serverConfig['common']['debug_level']" />-->
         <QBtn href="/debug/log/latest" target="_blank">download log</QBtn>
       </div>
 
