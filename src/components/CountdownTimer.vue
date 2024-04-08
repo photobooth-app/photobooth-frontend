@@ -3,12 +3,13 @@
     <div style="position: absolute; font-size: 150px" v-show="showMessage" v-html="messageText" id="countdown-timer-message"></div>
     <q-circular-progress
       v-show="showCountdown"
-      show-value
+      :show-value="!showMessage"
       style="width: 100%; height: 100%"
       :value="remainingSeconds"
       :min="0"
       :max="this.duration"
       reverse
+      animation-speed="100"
       size="70vh"
       color="primary"
       class="text-secondary"
@@ -42,10 +43,10 @@ export default defineComponent({
       return this.remainingSeconds > 0;
     },
     showCountdown() {
-      return +this.remainingSeconds >= this.messageDuration;
+      return this.remainingSeconds > 0;
     },
-    showMessage() {
-      return !this.showCountdown;
+    showMessage () {
+      return +this.remainingSeconds <= this.messageDuration;
     },
   },
   methods: {
