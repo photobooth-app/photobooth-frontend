@@ -44,7 +44,7 @@
           <q-card-section class="q-pt-none">
             <q-uploader
               label="Upload Files"
-              url="/admin/files/file/upload"
+              url="/api/admin/files/file/upload"
               :form-fields="[{ name: 'upload_target_folder', value: folder_current }]"
               field-name="uploaded_files"
               batch
@@ -210,7 +210,7 @@ export default {
       if (row.is_dir) {
         folder_current.value = row.filepath;
       } else {
-        openURL(`/admin/files/file/${row.filepath}`);
+        openURL(`/api/admin/files/file/${row.filepath}`);
       }
     };
 
