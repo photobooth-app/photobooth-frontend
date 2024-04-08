@@ -55,6 +55,7 @@
           class="q-mr-sm"
           icon="print"
           :label="$t('BTN_LABEL_GALLERY_PRINT')"
+          :disabled="!getPrintAvailable(itemRepository[currentSlideIndex]['media_type'])"
           @click="printItem(currentSlideId)"
         />
         <q-btn
@@ -447,6 +448,9 @@ export default {
           }
           //console.error(error.config);
         });
+    },
+    getPrintAvailable(media_type) {
+      return ['image', 'collageimage', 'animationimage'].includes(media_type);
     },
     getFilterAvailable(media_type) {
       return ['image', 'collageimage', 'animationimage'].includes(media_type);
