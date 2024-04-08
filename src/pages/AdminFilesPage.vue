@@ -74,7 +74,7 @@
         dense
         :loading="folder_loading"
         selection="multiple"
-        v-model="selected"
+        v-model:selected="selected"
         virtual-scroll
         :rows-per-page-options="[0]"
       >
