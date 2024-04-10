@@ -11,14 +11,19 @@ import { useI18n } from 'vue-i18n';
 
 export default {
   setup() {
-    const { locale } = useI18n({ useScope: 'global' });
+    const { locale, availableLocales } = useI18n({ useScope: 'global' });
+    const languageNames = new Intl.DisplayNames(['en'], {
+      type: 'language',
+      languageDisplay: 'standard',
+    });
+
+    const localeOptions = availableLocales.map(function (locale) {
+      return { value: locale, label: languageNames.of(locale) };
+    });
 
     return {
       locale,
-      localeOptions: [
-        { value: 'en-US', label: 'English' },
-        { value: 'de-DE', label: 'German' },
-      ],
+      localeOptions,
     };
   },
   methods: {
