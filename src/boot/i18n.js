@@ -1,5 +1,5 @@
 import { createI18n } from 'vue-i18n';
-import messages from 'src/i18n';
+import { default as messages } from 'src/i18n';
 
 export default ({ app }) => {
   // Create I18n instance
