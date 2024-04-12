@@ -2,13 +2,14 @@
   <q-page class="q-pa-none column full-height">
     <!-- lowest layer: preview stream -->
 
-    <div
-      v-if="showPreview"
-      id="preview-stream"
-      style="background-image: url('/api/aquisition/stream.mjpg')"
-      class="full-width column justify-center content-center"
-      :class="{ mirroreffect: livestreamMirror }"
-    ></div>
+    <div id="preview-stream-wrapper" :class="{ mirroreffect: livestreamMirror }">
+      <div
+        v-if="showPreview"
+        id="preview-stream"
+        style="background-image: url('/api/aquisition/stream.mjpg')"
+        class="full-width column justify-center content-center"
+      ></div>
+    </div>
 
     <!-- layer display processing spinner grid to show user computer working hard -->
     <div class="full-height full-width column justify-center content-center" style="position: absolute" v-if="showProcessing">

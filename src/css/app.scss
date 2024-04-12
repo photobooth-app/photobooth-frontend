@@ -4,30 +4,22 @@ body {
   background: linear-gradient(120deg, rgba(245, 245, 245, 1) 0%, rgb(227, 229, 240) 50%, rgb(245, 245, 245) 100%);
 }
 
+#preview-stream-wrapper.mirroreffect {
+  transform: scale(-1, 1);
+}
+#preview-stream-wrapper,
 #preview-stream {
-  /*
-      chromium on rpi4 seems to lag on mjpg streaming.
-      this fixed it: https://mention.com/en/blog/chrome-performance-rendering-issues/ and
-      https://github.com/arnaudbreton/background-fixed-chrome-rendering-issue
-      https://stackoverflow.com/questions/10814178/css-performance-relative-to-translatez0
-      actually it seems only position:fixed does make the difference (linked blog is quite old already)
-  */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
   position: fixed;
   top: 0px;
   bottom: 0px;
   left: 0px;
   right: 0px;
   pointer-events: none;
-  transform: rotateZ(360deg);
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: rotateZ(360deg);
-  -webkit-transform: translate3d(0, 0, 0);
 }
-#preview-stream.mirroreffect {
-  transform: scale(-1, 1);
+#preview-stream {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .action-button {
