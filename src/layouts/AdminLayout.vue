@@ -12,7 +12,7 @@
           <q-route-tab to="/admin/files" icon="folder_shared" :label="$t('TAB_LABEL_FILES')" />
           <q-route-tab to="/admin/status" icon="insights" :label="$t('TAB_LABEL_STATUS')" />
 
-          <!--<q-route-tab to="/admin/playground" icon="quiz" label="Playground" />-->
+          <q-route-tab to="/admin/utils" icon="build" label="Utils" />
           <q-route-tab to="/admin/help" icon="help" :label="$t('TAB_LABEL_HELP')" />
         </q-tabs>
 
