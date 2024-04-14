@@ -450,7 +450,7 @@ export default {
         });
     },
     getPrintAvailable(media_type) {
-      return ['image', 'collageimage', 'animationimage'].includes(media_type);
+      return ['image', 'collage', 'collageimage', 'animationimage'].includes(media_type);
     },
     getFilterAvailable(media_type) {
       return ['image', 'collageimage', 'animationimage'].includes(media_type);
