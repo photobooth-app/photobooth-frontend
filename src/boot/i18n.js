@@ -16,6 +16,8 @@ export default ({ app }) => {
     locale: useLocale,
     fallbackLocale: 'en-US',
     legacy: false, // comment this out if not using Composition API
+    fallbackWarn: false,
+    missingWarn: false,
     messages,
   });
 
