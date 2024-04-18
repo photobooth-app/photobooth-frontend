@@ -88,7 +88,7 @@ export default defineComponent({
 
         .on(
           'error',
-          (err) => console.error('Failed to parse or lost connection:', err)
+          (err) => console.error('Failed to parse or lost connection:', err),
           // If this error is due to an unexpected disconnection, EventSource will
           // automatically attempt to reconnect indefinitely. You will _not_ need to
           // re-add your handlers.
@@ -98,7 +98,7 @@ export default defineComponent({
         .on('FrontendNotification', (notification) => {
           // linked to SseEventFrontendNotification, event: FrontendNotification
           const _notification = JSON.parse(notification);
-          console.warn(_notification);
+          console.log(_notification);
 
           this.$q.notify({
             caption: _notification['caption'] || 'Notification',
