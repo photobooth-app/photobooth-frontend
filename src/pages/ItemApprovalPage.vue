@@ -4,11 +4,9 @@
       <q-card-section align="center">
         <div class="text-h6">{{ $t('TITLE_ITEM_APPROVAL') }}</div>
         <div class="text-subtitle1">
-          <span>{{ $t('MSG_APPROVE_COLLAGE_ITEM_XXX_COUNT_TOTAL') }}</span>
-          {{ this.stateStore.number_captures_taken }}
-          <span>{{ $t('MSG_APPROVE_COLLAGE_ITEM_COUNT_XXX_TOTAL') }}</span>
-          {{ this.stateStore.total_captures_to_take }}
-          <span>{{ $t('MSG_APPROVE_COLLAGE_ITEM_COUNT_TOTAL_XXX') }}</span>
+          {{
+            $t('MSG_APPROVE_COLLAGE_ITEM_NO_OF_TOTAL', { no: this.stateStore.number_captures_taken, total: this.stateStore.total_captures_to_take })
+          }}
         </div>
       </q-card-section>
 

@@ -1,110 +1,164 @@
-<!-- eslint-disable -->
 <template>
   <q-page padding>
     <div class="row col-xs-12 col-sm-4 col-md-3 col-lg-3">
       <q-card class="q-mr-md q-mb-md">
         <q-card-section>
-          <div class="text-h5">System Information</div>
-          <div class="q-gutter-sm q-mt-sm">
-            <div>
-              Data directory: {{ store.information.data_directory }}
-              <q-btn no-caps to="/admin/files">browse</q-btn>
-            </div>
-            <div>App version: {{ store.information.version }}</div>
-            <div>
-              CPU: {{ store.information['cpu1_5_15'][0] }}% / {{ store.information['cpu1_5_15'][1] }}% / {{ store.information['cpu1_5_15'][2] }}%
-            </div>
-            <div>No. active threads: {{ store.information['active_threads'] }}</div>
-            <div>
-              Free disk:
-              {{ (store.information['disk']['free'] / 1024 ** 3).toFixed(1) }}GB
-            </div>
-            <div>
-              Memory:
-              {{ (store.information['memory']['total'] / 1024 ** 3).toFixed(1) }}GB total
-              {{ (store.information['memory']['free'] / 1024 ** 3).toFixed(1) }}GB free
-              {{ (store.information['memory']['available'] / 1024 ** 3).toFixed(1) }}GB available
-            </div>
-            <div>
-              Cma:
-              {{ (store.information['cma']['CmaTotal'] / 1024 ** 1).toFixed(1) }}MB total /
-              {{ (store.information['cma']['CmaFree'] / 1024 ** 1).toFixed(1) }}MB free
-            </div>
-          </div>
+          <q-list separator>
+            <q-item-label header>{{ $t('system information') }}</q-item-label>
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('data directory') }}</q-item-label>
+                <q-item-label>{{ store.information.data_directory }} </q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-btn flat round color="primary" icon="folder_shared" to="/admin/files" />
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('app version') }} </q-item-label>
+                <q-item-label>{{ store.information.version }}</q-item-label>
+              </q-item-section>
+
+              <q-item-section side>
+                <q-btn flat round color="primary" icon="upgrade" href="https://pypi.org/project/photobooth-app/" target="_blank" />
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('cpu load') }} </q-item-label>
+                <q-item-label>
+                  <q-linear-progress size="lg" :value="store.information['cpu1_5_15'][0] / 100"> </q-linear-progress>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('disk space') }} </q-item-label>
+                <q-item-label>
+                  <q-linear-progress size="lg" :value="store.information['disk']['used'] / store.information['disk']['total']" />
+                </q-item-label>
+                <q-item-label> {{ (store.information['disk']['free'] / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('memory') }} </q-item-label>
+                <q-item-label>
+                  <q-linear-progress size="lg" :value="store.information['memory']['used'] / store.information['memory']['total']" />
+                </q-item-label>
+                <q-item-label> {{ (store.information['memory']['available'] / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-card-section>
       </q-card>
 
-      <q-card style="" class="q-mr-md q-mb-md">
+      <q-card class="q-mr-md q-mb-md">
         <q-card-section>
-          <div class="text-h5">Platform</div>
-          <div class="q-gutter-sm q-mt-sm">
-            <div>Hostname: {{ store.information.platform_node }}</div>
-            <div>Machine: {{ store.information.platform_machine }}, {{ store.information.platform_cpu_count }} cores</div>
-            <div>
-              Platform: {{ store.information.platform_system }}
-              {{ store.information.platform_release }}
-            </div>
-            <div>Python executable: {{ store.information.python_executable }}</div>
-            <div>Python version: {{ store.information.platform_python_version }}</div>
-          </div>
+          <q-list separator>
+            <q-item-label header>{{ $t('platform') }}</q-item-label>
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('hostname') }}</q-item-label>
+                <q-item-label>{{ store.information.platform_node }}</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('machine') }} </q-item-label>
+                <q-item-label>{{ store.information.platform_machine }}, {{ store.information.platform_cpu_count }} cores</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('platform system') }} </q-item-label>
+                <q-item-label>{{ store.information.platform_system }} {{ store.information.platform_release }} </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('python executable') }} </q-item-label>
+                <q-item-label>{{ store.information.python_executable }}</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('python version') }} </q-item-label>
+                <q-item-label>
+                  {{ store.information.platform_python_version }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-card-section>
       </q-card>
 
-      <q-card style="" class="q-mr-md q-mb-md">
+      <q-card class="q-mr-md q-mb-md">
         <q-card-section>
-          <div class="text-h5">Primary Backend Stats</div>
-          <div class="text-subtitle2">only avail stats displayed</div>
-          <table>
-            <tr v-for="(value, key, index) in store.information.backends.primary" v-bind:key="index">
-              <td align="right">
-                {{ key }}
-              </td>
-              <td>{{ value }}</td>
-            </tr>
-          </table>
+          <q-list separator>
+            <q-item-label header>{{ $t('primary backend') }}</q-item-label>
+            <q-item v-for="(value, key, index) in store.information.backends.primary" v-bind:key="index">
+              <q-item-section>
+                <q-item-label caption>{{ key }}</q-item-label>
+                <q-item-label>{{ value }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-card-section>
       </q-card>
-      <q-card style="" class="q-mr-md q-mb-md">
+      <q-card class="q-mr-md q-mb-md" v-if="Object.keys(store.information.backends.secondary).length > 0">
         <q-card-section>
-          <div class="text-h5">Secondary Backend Stats</div>
-          <div class="text-subtitle2">only avail stats displayed</div>
-          <table>
-            <tr v-for="(value, key, index) in store.information.backends.secondary" v-bind:key="index">
-              <td align="right">
-                {{ key }}
-              </td>
-              <td>{{ value }}</td>
-            </tr>
-          </table>
+          <q-list separator>
+            <q-item-label header>{{ $t('secondary backend') }}</q-item-label>
+            <q-item v-for="(value, key, index) in store.information.backends.secondary" v-bind:key="index">
+              <q-item-section>
+                <q-item-label caption>{{ key }}</q-item-label>
+                <q-item-label>{{ value }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-card-section>
       </q-card>
     </div>
 
     <q-card class="q-pa-md q-mt-md">
-      <div class="row">
-        <div class="text-h5">Log Records</div>
-        <QBtn href="/debug/log/latest" target="_blank">download log</QBtn>
+      <div class="row q-gutter-sm">
+        <div class="text-h5">{{ $t('log messages') }}</div>
+        <QBtn href="/debug/log/latest" target="_blank">{{ $t('download logs') }}</QBtn>
       </div>
 
       <q-markup-table>
         <thead>
           <tr class="text-left">
-            <th>Level</th>
-            <th>Time</th>
-            <th>Name</th>
-            <th>Function Name</th>
-            <th>LineNo</th>
-            <th style="width: 100%">Message</th>
+            <th>{{ $t('log level') }}</th>
+            <th>{{ $t('time') }}</th>
+            <th style="width: 100%">{{ $t('log message') }}</th>
+            <th>{{ $t('module name') }}</th>
+            <th>{{ $t('function name') }}</th>
+            <th>{{ $t('line') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(record, idx) in this.store.logrecords" :key="idx">
-            <td>{{ record.level }}</td>
+            <td>
+              <q-badge :color="debugLevelColor(record.level)">
+                {{ record.level }}
+              </q-badge>
+            </td>
             <td>{{ record.time }}</td>
+            <td>{{ record.message }}</td>
             <td>{{ record.name }}</td>
             <td>{{ record.funcName }}</td>
             <td>{{ record.lineno }}</td>
-            <td>{{ record.message }}</td>
           </tr>
         </tbody>
       </q-markup-table>
@@ -122,6 +176,17 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: { QBtn },
+  methods: {
+    debugLevelColor(level) {
+      if (level == 'DEBUG') return 'info';
+      if (level == 'INFO') return 'info';
+      if (level == 'WARNING') return 'warning';
+      if (level == 'ERROR') return 'negative';
+      if (level == 'CRITICAL') return 'negative';
+
+      return 'grey';
+    },
+  },
   setup() {
     const store = useMainStore();
 
