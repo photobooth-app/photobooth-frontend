@@ -73,8 +73,7 @@
         <div class="q-mr-sm" v-if="!singleItemView">
           <q-icon name="tag" />
           <span>
-            <!-- eslint-disable-next-line -->
-            {{ currentSlideIndex + 1 }} / {{ itemRepository.length }}
+            {{ $t('LABEL_ELEMENT_X_OF_Y', { no: currentSlideIndex + 1, total: itemRepository.length }) }}
           </span>
         </div>
 
@@ -225,7 +224,7 @@
       </q-page-sticky>
     </q-page-container>
   </q-layout>
-  <!-- eslint-disable-next-line -->
+  <!-- eslint-disable-next-line --><!-- this should never be seen actually -->
   <q-layout view="hhh Lpr ffr" v-else>EMPTY</q-layout>
 </template>
 
