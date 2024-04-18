@@ -20,6 +20,7 @@ import svSE from './locales/sv-SE.json';
 import trTR from './locales/tr-TR.json';
 import ukUA from './locales/uk-UA.json';
 import zhCN from './locales/zh-CN.json';
+import lolUS from './locales/lol-US.json';
 
 export default {
   'cs-CZ': csCZ,
@@ -44,4 +45,5 @@ export default {
   'tr-TR': trTR,
   'uk-UA': ukUA,
   'zh-CN': zhCN,
+  'lol-US': lolUS,
 };
