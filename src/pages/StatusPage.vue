@@ -72,7 +72,12 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('machine') }} </q-item-label>
-                <q-item-label>{{ store.information.platform_machine }}, {{ store.information.platform_cpu_count }} cores</q-item-label>
+                <q-item-label>{{
+                  $t('{platform_machine}, {cpu_count} cores', {
+                    platform_machine: store.information.platform_machine,
+                    cpu_count: store.information.platform_cpu_count,
+                  })
+                }}</q-item-label>
               </q-item-section>
             </q-item>
 
