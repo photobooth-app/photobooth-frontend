@@ -45,7 +45,7 @@ export default defineComponent({
     showCountdown() {
       return this.remainingSeconds > 0;
     },
-    showMessage () {
+    showMessage() {
       return +this.remainingSeconds <= this.messageDuration;
     },
   },
