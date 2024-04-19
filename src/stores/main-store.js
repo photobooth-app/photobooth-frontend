@@ -28,6 +28,10 @@ export const useMainStore = defineStore('main-store', () => {
       primary: {},
       secondary: {},
     },
+    printer: {
+      is_blocked: null,
+      waiting_time: null,
+    },
     version: null,
     platform_system: null,
     platform_release: null,
