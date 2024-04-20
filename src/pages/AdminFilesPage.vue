@@ -92,6 +92,19 @@
         </template>
 
         <template #top-left>
+          <q-dialog v-model="confirm_delete">
+            <q-card class="q-pa-sm" style="min-width: 350px">
+              <q-card-section class="row items-center">
+                <q-avatar icon="delete" color="negative" text-color="white" />
+                <span class="q-ml-sm">{{ $t('Are you sure you want to delete the selected files and subfolders?') }}</span>
+              </q-card-section>
+
+              <q-card-actions align="right">
+                <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
+                <q-btn v-close-popup :label="$t('yes, delete')" color="negative" @click="deleteItems(selected)" />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
           <div>
             <q-btn :disable="folder_loading" :label="$t('BTN_LABEL_FILES_NEW_FOLDER')" @click="dialog_create_new_folder = true" />
             <q-btn class="q-ml-sm" :disable="folder_loading" :label="$t('BTN_LABEL_FILES_UPLOAD_FILE')" @click="dialog_upload_files = true" />
@@ -101,7 +114,7 @@
               color="negative"
               :disable="selected.length == 0"
               :label="$t('BTN_LABEL_FILES_DELETE_SELECTED')"
-              @click="deleteItems(selected)"
+              @click="confirm_delete = true"
             />
           </div>
         </template>
@@ -135,7 +148,6 @@ function formatBytes(bytes, decimals = 2) {
 }
 
 export default {
-
   setup() {
     const $q = useQuasar();
 
@@ -179,6 +191,7 @@ export default {
 
     const dialog_create_new_folder = ref(false);
     const new_folder_name = ref('');
+    const confirm_delete = ref(false);
 
     const dialog_upload_files = ref(false);
 
@@ -357,6 +370,8 @@ export default {
 
       dialog_create_new_folder,
       new_folder_name,
+
+      confirm_delete,
 
       dialog_upload_files,
 
