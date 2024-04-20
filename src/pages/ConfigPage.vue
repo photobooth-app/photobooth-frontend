@@ -29,7 +29,6 @@
 </style>
 <script lang="ts">
 import { ref, computed } from 'vue';
-import { api } from 'boot/axios';
 import { useMainStore } from '../stores/main-store.js';
 import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -39,6 +38,8 @@ import { remoteProcedureCall } from 'boot/axios';
 
 import { useUiSettingsStore } from 'stores/ui-settings-store.js';
 import { Notify } from 'quasar';
+// import { useI18n } from 'vue-i18n';
+// const { t } = useI18n();
 
 const uiSettingsStore = useUiSettingsStore();
 const serverConfig = ref({});
@@ -100,56 +101,62 @@ const getConfig = async (which = 'current') => {
 };
 
 // actions
-const uploadConfigAndPersist = () => {
+const uploadConfigAndPersist = async () => {
   console.log('sync config to server');
   console.log(serverConfig.value);
 
-  api
-    .post('/admin/config/current', serverConfig.value)
-    .then((/*response*/) => {
+  try {
+    let response = await fetch('/api/admin/config/current', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(serverConfig.value),
+    });
+
+    if (response.ok) {
+      // if HTTP-status is 200-299
       // reload ui settings into store as on app startup.
       uiSettingsStore.initStore(true);
-
       Notify.create({
         // TODO: How to access the translated strings here??
         // message: $t("MSG_CONFIG_PERSIST_OK"),
         message: 'Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!',
-        color: 'green',
+        color: 'positive',
       });
-    })
-    .catch((error) => {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        let notify_msg = 'check following fields:<br/>';
-        Object.values(error.response.data.detail).forEach((detail: any) => {
-          notify_msg += detail['loc'].join(' -> ');
-          notify_msg += `: ${detail['msg']}`;
-          notify_msg += '<br/>';
-        });
+    } else {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      type ResponseErrorData = {
+        detail: Array<{
+          loc: Array<string>;
+          msg: string;
+        }>;
+      };
+      // https://kentcdodds.com/blog/using-fetch-with-type-script
+      let json: ResponseErrorData = await response.json();
 
-        Notify.create({
-          caption: 'validation error',
-          icon: 'error',
-          html: true,
-          message: `${notify_msg}`,
-          color: 'red',
-        });
-        return;
-      } else if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        console.error(error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Error', error.message);
-      }
-      Notify.create({
-        message: 'error saving config, check browser console and logs',
-        color: 'red',
+      let notify_msg = 'check following fields:<br/>';
+      Object.values(json.detail).forEach((detail) => {
+        notify_msg += detail['loc'].join(' -> ');
+        notify_msg += `: ${detail['msg']}`;
+        notify_msg += '<br/>';
       });
+
+      Notify.create({
+        caption: 'configuration validation error',
+        icon: 'error',
+        html: true,
+        message: `${notify_msg}`,
+        color: 'negative',
+      });
+      return;
+    }
+  } catch (error) {
+    console.error('There has been a problem with your fetch operation:', error);
+    Notify.create({
+      message: 'error saving config, check browser console and logs',
+      color: 'negative',
     });
+  }
 };
 
 const cuischema = computed(() => {
