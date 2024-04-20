@@ -230,4 +230,3 @@ export default defineComponent({
   },
 });
 </script>
-src/boot/fetch_api.js

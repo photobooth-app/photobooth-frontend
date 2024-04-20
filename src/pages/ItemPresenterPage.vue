@@ -49,4 +49,3 @@ export default {
   },
 };
 </script>
-src/boot/fetch_api.js

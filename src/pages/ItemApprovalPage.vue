@@ -1,39 +1,37 @@
 <template>
-  <q-page class="flex flex-center">
-    <q-card id="item-approval-container" style="height: 95vh">
-      <q-card-section align="center">
-        <div class="text-h6">{{ $t('TITLE_ITEM_APPROVAL') }}</div>
-        <div class="text-subtitle1">
-          {{
-            $t('MSG_APPROVE_COLLAGE_ITEM_NO_OF_TOTAL', { no: stateStore.number_captures_taken, total: stateStore.total_captures_to_take })
-          }}
-        </div>
-      </q-card-section>
+  <q-page class="fullscreen flex flex-center">
+    <q-img :src="imgToApproveSrc" fit="contain" style="height: 95%" />
+    <!-- video approval not yet supported -->
 
-      <q-card-section class="">
-        <q-img class="rounded-borders" :src="imgToApproveSrc" />
-        <!-- video approval not yet supported -->
-      </q-card-section>
-
-      <q-card-actions id="item-approval-actions" align="around">
-        <q-btn id="item-approval-button-reject" color="negative" no-caps class="" @click="userReject()">
-          <q-icon left size="7em" name="thumb_down" />
-          <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_RETRY') }}</div>
-        </q-btn>
-
-        <q-btn id="item-approval-button-abort" flat color="grey" no-caps class="" @click="userAbort()">
-          <q-icon left size="7em" name="cancel" />
-          <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE') }}</div>
-        </q-btn>
-
-        <q-btn id="item-approval-button-approve" color="positive" no-caps @click="userConfirm()">
-          <q-icon left size="7em" name="thumb_up" />
-          <div>
-            <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_APPROVE') }}</div>
+    <q-page-sticky position="bottom" :offset="[0, 25]">
+      <q-banner rounded inline-actions>
+        <div>
+          <div class="text-h5">{{ $t('TITLE_ITEM_APPROVAL') }}</div>
+          <div class="text-subtitle2">
+            {{ $t('MSG_APPROVE_COLLAGE_ITEM_NO_OF_TOTAL', { no: stateStore.number_captures_taken, total: stateStore.total_captures_to_take }) }}
           </div>
-        </q-btn>
-      </q-card-actions>
-    </q-card>
+        </div>
+
+        <template #action>
+          <q-btn id="item-approval-button-reject" color="negative" no-caps class="" @click="userReject()">
+            <q-icon left size="xl" name="thumb_down" />
+            <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_RETRY') }}</div>
+          </q-btn>
+
+          <q-btn id="item-approval-button-abort" flat color="grey" no-caps class="" @click="userAbort()">
+            <q-icon left size="xl" name="cancel" />
+            <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE') }}</div>
+          </q-btn>
+
+          <q-btn id="item-approval-button-approve" color="positive" no-caps @click="userConfirm()">
+            <q-icon left size="xl" name="thumb_up" />
+            <div>
+              <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_APPROVE') }}</div>
+            </div>
+          </q-btn>
+        </template>
+      </q-banner>
+    </q-page-sticky>
   </q-page>
 </template>
 
@@ -97,4 +95,3 @@ export default {
   },
 };
 </script>
-src/boot/fetch_api.js
