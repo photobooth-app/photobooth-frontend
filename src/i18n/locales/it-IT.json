@@ -86,5 +86,7 @@
   "app version": "Versione app",
   "data directory": "Cartella dati",
   "system information": "Informazioni di sistema",
-  "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores"
+  "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
+  "yes, delete": "Sì, elimina",
+  "Are you sure you want to delete the selected files and subfolders?": "Sei sicuro di voler eliminare i file e le sottocartelle selezionate?"
 }
