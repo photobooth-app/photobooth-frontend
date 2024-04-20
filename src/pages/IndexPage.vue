@@ -145,7 +145,7 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { remoteProcedureCall } from 'boot/axios';
+import { remoteProcedureCall } from 'boot/fetch_api';
 import { useMainStore } from '../stores/main-store.js';
 import { useStateStore } from '../stores/state-store.js';
 import { useUiSettingsStore } from '../stores/ui-settings-store.js';
@@ -168,19 +168,19 @@ export default defineComponent({
   },
   methods: {
     takePicture() {
-      remoteProcedureCall('/processing/chose/1pic');
+      remoteProcedureCall('/api/processing/chose/1pic');
     },
     takeCollage() {
-      remoteProcedureCall('/processing/chose/collage');
+      remoteProcedureCall('/api/processing/chose/collage');
     },
     takeAnimation() {
-      remoteProcedureCall('/processing/chose/animation');
+      remoteProcedureCall('/api/processing/chose/animation');
     },
     takeVideo() {
-      remoteProcedureCall('/processing/chose/video');
+      remoteProcedureCall('/api/processing/chose/video');
     },
     stopRecordingVideo() {
-      remoteProcedureCall('/processing/cmd/stop');
+      remoteProcedureCall('/api/processing/cmd/stop');
     },
   },
   watch: {},
@@ -229,3 +229,4 @@ export default defineComponent({
   },
 });
 </script>
+src/boot/fetch_api.js

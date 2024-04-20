@@ -11,7 +11,7 @@
   <q-page-sticky position="bottom-right" :offset="[18, 18]">
     <div class="q-gutter-sm">
       <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
-      <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="remoteProcedureCall('/admin/config/reset')" />
+      <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="remoteProcedureCall('/api/admin/config/reset')" />
       <q-btn :label="$t('BTN_LABEL_RESTORE_CONFIG')" @click="getConfig('current')" />
       <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="uploadConfigAndPersist()" />
     </div>
@@ -34,8 +34,7 @@ import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { generateDefaultUISchema } from '@jsonforms/core';
 import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form';
-import { remoteProcedureCall } from 'boot/axios';
-
+import { remoteProcedureCall } from 'boot/fetch_api';
 import { useUiSettingsStore } from 'stores/ui-settings-store.js';
 import { Notify } from 'quasar';
 // import { useI18n } from 'vue-i18n';
@@ -203,8 +202,8 @@ export default {
     return {
       store,
       ajv,
-      uploadConfigAndPersist,
       remoteProcedureCall,
+      uploadConfigAndPersist,
       getConfig,
       updateFormSchema,
     };

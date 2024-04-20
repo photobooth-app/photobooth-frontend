@@ -174,7 +174,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useMainStore } from '../stores/main-store.js';
-import { remoteProcedureCall } from 'boot/axios';
+import { remoteProcedureCall } from 'boot/fetch_api';
 import { QBtn } from 'quasar';
 
 export default defineComponent({
@@ -203,3 +203,4 @@ export default defineComponent({
   },
 });
 </script>
+src/boot/fetch_api.js

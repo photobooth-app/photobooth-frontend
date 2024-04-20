@@ -17,7 +17,7 @@ import { useMediacollectionStore } from '../stores/mediacollection-store.js';
 import { useStateStore } from '../stores/state-store.js';
 import { useUiSettingsStore } from '../stores/ui-settings-store.js';
 import GalleryImageDetail from '../components/GalleryImageDetail.vue';
-import { remoteProcedureCall } from 'boot/axios';
+import { remoteProcedureCall } from 'boot/fetch_api';
 
 export default {
   // name: 'PageName',
@@ -49,3 +49,4 @@ export default {
   },
 };
 </script>
+src/boot/fetch_api.js

@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { api } from 'src/boot/axios';
 //https://stackoverflow.com/a/75060220
 
 const STATES = {
@@ -27,33 +26,19 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
 
       this.storeState = STATES.WIP;
 
-      api
-        .get('/mediacollection/getitems')
-        .then((response) => {
-          console.log(response);
-          this.collection = response.data;
+      fetch('/api/mediacollection/getitems')
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('loadMediacollection finished successfully');
+          console.log(data);
+
+          this.collection = data;
 
           this.storeState = STATES.DONE;
-
-          // if (this.itemId) {
-          //   console.log(
-          //     `initial id given, try loading image id: ${this.itemId}`
-          //   );
-
-          //   //try find it in the index:
-          //   const imageIndex = this.store.gallery.images.findIndex(
-          //     (item) => item.id === this.itemId
-          //   );
-          //   if (imageIndex != -1) {
-          //     console.log(`found image at index no: ${imageIndex}`);
-          //     this.openPic(imageIndex);
-          //   } else {
-          //     console.error(`initial id given not found: ${this.itemId}`);
-          //   }
-          // }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((e) => {
+          console.log('loadMediacollection failed', e);
+          console.log(e);
           this.storeState = STATES.ERROR;
         });
     },

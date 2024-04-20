@@ -14,7 +14,7 @@
 
                 <q-card-actions align="right">
                   <q-btn flat :label="$t('BTN_LABEL_CANCEL')" color="primary" v-close-popup />
-                  <q-btn :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/system/server/reboot')" v-close-popup />
+                  <q-btn :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/api/system/server/reboot')" v-close-popup />
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -28,7 +28,12 @@
 
                 <q-card-actions align="right">
                   <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
-                  <q-btn :label="$t('BTN_LABEL_SHUTDOWN')" color="primary" v-close-popup @click="remoteProcedureCall('/system/server/shutdown')" />
+                  <q-btn
+                    :label="$t('BTN_LABEL_SHUTDOWN')"
+                    color="primary"
+                    v-close-popup
+                    @click="remoteProcedureCall('/api/system/server/shutdown')"
+                  />
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -46,7 +51,7 @@
                     :label="$t('BTN_LABEL_RESTART_SERVICE')"
                     color="primary"
                     v-close-popup
-                    @click="remoteProcedureCall('/system/service/restart')"
+                    @click="remoteProcedureCall('/api/system/service/restart')"
                   />
                 </q-card-actions>
               </q-card>
@@ -65,7 +70,7 @@
                     :label="$t('BTN_LABEL_RELOAD_SERVICE')"
                     color="primary"
                     v-close-popup
-                    @click="remoteProcedureCall('/system/service/reload')"
+                    @click="remoteProcedureCall('/api/system/service/reload')"
                   />
                 </q-card-actions>
               </q-card>
@@ -84,7 +89,7 @@
                     :label="$t('BTN_LABEL_INSTALL_SERVICE')"
                     color="primary"
                     v-close-popup
-                    @click="remoteProcedureCall('/system/service/install')"
+                    @click="remoteProcedureCall('/api/system/service/install')"
                   />
                 </q-card-actions>
               </q-card>
@@ -103,7 +108,7 @@
                     :label="$t('BTN_LABEL_UNINSTALL_SERVICE')"
                     color="primary"
                     v-close-popup
-                    @click="remoteProcedureCall('/system/service/uninstall')"
+                    @click="remoteProcedureCall('/api/system/service/uninstall')"
                   />
                 </q-card-actions>
               </q-card>
@@ -131,7 +136,7 @@
 
                 <q-card-actions align="right">
                   <q-btn flat label="Cancel" color="primary" v-close-popup />
-                  <q-btn label="Delete all" color="primary" @click="remoteProcedureCall('/mediacollection/delete_all')" v-close-popup />
+                  <q-btn label="Delete all" color="primary" @click="remoteProcedureCall('/api/mediacollection/delete_all')" v-close-popup />
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -154,7 +159,7 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import { useMainStore } from '../stores/main-store.js';
-import { remoteProcedureCall } from 'boot/axios';
+import { remoteProcedureCall } from 'boot/fetch_api';
 import LanguageSwitcher from '../components/LanguageSwitcher.vue';
 
 export default defineComponent({
@@ -178,3 +183,4 @@ export default defineComponent({
   },
 });
 </script>
+src/boot/fetch_api.js

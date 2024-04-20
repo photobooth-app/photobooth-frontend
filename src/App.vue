@@ -15,7 +15,7 @@ import { useUiSettingsStore } from 'stores/ui-settings-store.js';
 import { useMediacollectionStore } from 'stores/mediacollection-store.js';
 import { useRouter } from 'vue-router';
 import ConnectionOverlay from './components/ConnectionOverlay.vue';
-import { remoteProcedureCall } from 'boot/axios';
+import { remoteProcedureCall } from 'boot/fetch_api';
 
 export default defineComponent({
   name: 'App',
@@ -70,7 +70,7 @@ export default defineComponent({
 
       // for now on app start we send an abort to the backend.
       // could be improved to actually handle the state the machine is in and send ui to according state
-      // remoteProcedureCall("/processing/cmd/abort");
+      // remoteProcedureCall("/api/processing/cmd/abort");
     },
 
     until(conditionFunction) {

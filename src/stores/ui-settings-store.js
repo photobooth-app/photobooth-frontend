@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { api } from 'src/boot/axios';
 import { setCssVar } from 'quasar';
 
 //https://stackoverflow.com/a/75060220
@@ -52,17 +51,17 @@ export const useUiSettingsStore = defineStore('ui-settings-store', {
 
       this.storeState = STATES.WIP;
 
-      api
-        .get('/config/ui')
-        .then((res) => {
+      fetch('/api/config/ui')
+        .then((response) => response.json())
+        .then((data) => {
           console.log('loadUiSettings finished successfully');
-          console.log(res.data);
+          console.log(data);
 
           // apply theme settings
-          setCssVar('primary', res.data['PRIMARY_COLOR']);
-          setCssVar('secondary', res.data['SECONDARY_COLOR']);
+          setCssVar('primary', data['PRIMARY_COLOR']);
+          setCssVar('secondary', data['SECONDARY_COLOR']);
 
-          this.uiSettings = res.data;
+          this.uiSettings = data;
           this.storeState = STATES.DONE;
         })
         .catch((e) => {
