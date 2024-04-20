@@ -12,7 +12,7 @@
     </template>
     <template v-else-if="allOfRenderInfos">
       <div>
-        <combinator-properties :schema="control.schema" combinatorKeyword="allOf" :path="path" />
+        <combinator-properties :schema="control.schema" combinator-keyword="allOf" :path="path" />
         <dispatch-renderer
           v-for="(allOfRenderInfo, allOfIndex) in allOfRenderInfos"
           :key="`${control.path}-${allOfIndex}`"
@@ -36,7 +36,7 @@ import { useQuasarControl } from '../util';
 import { CombinatorProperties } from './components';
 
 const controlRenderer = defineComponent({
-  name: 'all-of-renderer',
+  name: 'AllOfRenderer',
   components: {
     DispatchRenderer,
     CombinatorProperties,

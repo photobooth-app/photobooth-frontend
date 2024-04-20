@@ -1,6 +1,6 @@
 <template>
   <q-expansion-item expand-separator>
-    <template v-slot:header>
+    <template #header>
       <q-item-section>
         <div class="">{{ label }}</div>
         <!--<div class="">sublabel</div>-->

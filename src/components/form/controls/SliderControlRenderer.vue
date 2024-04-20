@@ -1,10 +1,10 @@
 <template>
-  <control-wrapper v-bind="controlWrapper" :styles="styles" :isFocused="isFocused" :appliedOptions="appliedOptions">
+  <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
     <q-slider
+      :id="control.id + '-input'"
       :step="control.schema.multipleOf || 1"
       :min="control.schema.minimum"
       :max="control.schema.maximum"
-      :id="control.id + '-input'"
       :class="styles.control.input"
       :disable="!control.enabled"
       :autofocus="appliedOptions.focus"
@@ -27,7 +27,7 @@ import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useQuasarControl } from '../util';
 
 const controlRenderer = defineComponent({
-  name: 'slider-control-renderer',
+  name: 'SliderControlRenderer',
   components: {
     ControlWrapper,
   },

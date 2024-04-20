@@ -1,6 +1,6 @@
 <template>
-  <q-input :model-value="modelValue" @update:model-value="onInput" :rules="['anyColor']">
-    <template v-slot:append>
+  <q-input :model-value="modelValue" :rules="['anyColor']" @update:model-value="onInput">
+    <template #append>
       <q-icon name="colorize" class="cursor-pointer">
         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
           <q-color :model-value="modelValue" @update:model-value="onInput"></q-color>

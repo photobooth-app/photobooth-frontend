@@ -1,19 +1,19 @@
 <template>
   <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
     <q-input
+      :id="control.id + '-input'"
       :model-value="control.data"
       filled
       type="number"
       :step="control.schema.multipleOf || 1"
-      :id="control.id + '-input'"
       :class="styles.control.input"
       :disable="!control.enabled"
       :autofocus="appliedOptions.focus"
+      :error-message="control.errors"
+      :error="control.errors != ''"
       @update:model-value="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
-      :error-message="control.errors"
-      :error="control.errors != ''"
     ></q-input>
   </control-wrapper>
 </template>
@@ -31,10 +31,10 @@ const controlRenderer = defineComponent({
   props: {
     ...rendererProps<ControlElement>(),
   },
-  computed: {},
   setup(props: RendererProps<ControlElement>) {
     return useQuasarControl(useJsonFormsControl(props), (value: any) => (value === '' ? undefined : Number(value)), 300);
   },
+  computed: {},
 });
 
 export default controlRenderer;

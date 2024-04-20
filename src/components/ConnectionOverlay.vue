@@ -6,7 +6,7 @@
     </q-card-section>
 
     <q-card-actions align="right">
-      <q-btn :label="$t('BTN_LABEL_RELOAD_PAGE')" color="primary" v-close-popup @click="reloadPage" />
+      <q-btn v-close-popup :label="$t('BTN_LABEL_RELOAD_PAGE')" color="primary" @click="reloadPage" />
     </q-card-actions>
   </q-card>
 </template>

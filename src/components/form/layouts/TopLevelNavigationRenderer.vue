@@ -2,7 +2,7 @@
   <q-layout v-if="layout.visible">
     <q-header style="z-index: 0">
       <q-toolbar>
-        <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
+        <q-btn flat round dense icon="menu" @click="drawer = !drawer" />
         <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <q-toolbar-title>{{ visibleCategoryLabels[activeCategory] }} ({{ activeCategory }})</q-toolbar-title>
       </q-toolbar>
@@ -14,11 +14,11 @@
           <q-item
             v-for="(_, index) in visibleCategories"
             :key="`${layout.path}-${index}`"
+            v-ripple
             clickable
             :active="activeCategory == index"
-            @click="activeCategory = index"
             replace
-            v-ripple
+            @click="activeCategory = index"
           >
             <q-item-section> {{ visibleCategoryLabels[index] }}</q-item-section>
           </q-item>

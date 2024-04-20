@@ -1,12 +1,12 @@
 <template>
   <q-page class="q-pa-none fullscreen">
     <gallery-image-detail
-      @close-event="userCloseViewer()"
-      :itemRepository="[this.stateStore.last_captured_mediaitem]"
-      :indexSelected="0"
-      :singleItemView="true"
-      :startTimerOnOpen="true"
+      :item-repository="[stateStore.last_captured_mediaitem]"
+      :index-selected="0"
+      :single-item-view="true"
+      :start-timer-on-open="true"
       class="full-height"
+      @close-event="userCloseViewer()"
     ></gallery-image-detail>
   </q-page>
 </template>
@@ -22,10 +22,6 @@ import { remoteProcedureCall } from 'boot/fetch_api';
 export default {
   // name: 'PageName',
   components: { GalleryImageDetail },
-  data() {
-    return {};
-  },
-  computed: {},
   setup() {
     const mainStore = useMainStore();
     const mediacollectionStore = useMediacollectionStore();
@@ -42,6 +38,10 @@ export default {
       remoteProcedureCall,
     };
   },
+  data() {
+    return {};
+  },
+  computed: {},
   methods: {
     userCloseViewer() {
       this.$router.push('/');

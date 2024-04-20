@@ -3,7 +3,7 @@
     <div class="q-pa-md">
       <q-breadcrumbs gutter="sm" style="cursor: pointer">
         <q-breadcrumbs-el :label="$t('TITLE_FILES_WORKING_DIR')" icon="home" @click="onBreadcrumbClick(-1)" />
-        <q-breadcrumbs-el v-for="(value, key) in breadcrumbs" v-bind:key="key" @click="onBreadcrumbClick(key)">
+        <q-breadcrumbs-el v-for="(value, key) in breadcrumbs" :key="key" @click="onBreadcrumbClick(key)">
           {{ value }}
         </q-breadcrumbs-el>
       </q-breadcrumbs>
@@ -16,8 +16,8 @@
 
           <q-card-section class="q-pt-none">
             <q-input
-              dense
               v-model="new_folder_name"
+              dense
               autofocus
               @keyup.enter="
                 createNewFolder(new_folder_name);
@@ -27,8 +27,8 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
-            <q-btn flat :label="$t('BTN_LABEL_FILES_CREATE_NEW_FOLDER')" v-close-popup @click="createNewFolder(new_folder_name)" />
+            <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+            <q-btn v-close-popup flat :label="$t('BTN_LABEL_FILES_CREATE_NEW_FOLDER')" @click="createNewFolder(new_folder_name)" />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -55,12 +55,13 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" v-close-popup />
+            <q-btn v-close-popup flat label="Cancel" />
           </q-card-actions>
         </q-card>
       </q-dialog>
 
       <q-table
+        v-model:selected="selected"
         class="full-height"
         flat
         bordered
@@ -74,41 +75,40 @@
         dense
         :loading="folder_loading"
         selection="multiple"
-        v-model:selected="selected"
         virtual-scroll
         :rows-per-page-options="[0]"
       >
-        <template v-slot:body-cell-type="props">
+        <template #body-cell-type="props">
           <q-td :props="props">
             <q-icon v-if="props.value" name="folder" />
             <q-icon v-else name="description" />
           </q-td>
         </template>
 
-        <template v-slot:body-cell-name="props">
+        <template #body-cell-name="props">
           <q-td :props="props" style="cursor: pointer">
             <div @click="onNameClick(props.row)">{{ props.value }}</div>
           </q-td>
         </template>
 
-        <template v-slot:top-left>
+        <template #top-left>
           <div>
-            <q-btn :disable="folder_loading" @click="dialog_create_new_folder = true" :label="$t('BTN_LABEL_FILES_NEW_FOLDER')" />
-            <q-btn class="q-ml-sm" :disable="folder_loading" @click="dialog_upload_files = true" :label="$t('BTN_LABEL_FILES_UPLOAD_FILE')" />
-            <q-btn class="q-ml-sm" :disable="selected.length == 0" @click="getZip(selected)" :label="$t('BTN_LABEL_FILES_DOWNLOAD_ZIP')" />
+            <q-btn :disable="folder_loading" :label="$t('BTN_LABEL_FILES_NEW_FOLDER')" @click="dialog_create_new_folder = true" />
+            <q-btn class="q-ml-sm" :disable="folder_loading" :label="$t('BTN_LABEL_FILES_UPLOAD_FILE')" @click="dialog_upload_files = true" />
+            <q-btn class="q-ml-sm" :disable="selected.length == 0" :label="$t('BTN_LABEL_FILES_DOWNLOAD_ZIP')" @click="getZip(selected)" />
             <q-btn
               class="q-ml-sm"
               color="negative"
               :disable="selected.length == 0"
-              @click="deleteItems(selected)"
               :label="$t('BTN_LABEL_FILES_DELETE_SELECTED')"
+              @click="deleteItems(selected)"
             />
           </div>
         </template>
 
-        <template v-slot:top-right>
-          <q-input borderless dense debounce="300" v-model="filter" :placeholder="$t('TEXT_PLACEHOLDER_SEARCH')">
-            <template v-slot:append>
+        <template #top-right>
+          <q-input v-model="filter" borderless dense debounce="300" :placeholder="$t('TEXT_PLACEHOLDER_SEARCH')">
+            <template #append>
               <q-icon name="search" />
             </template>
           </q-input>
@@ -135,14 +135,6 @@ function formatBytes(bytes, decimals = 2) {
 }
 
 export default {
-  // name: 'PageName',
-  watch: {
-    // whenever folder changes, load new content.
-    folder_current(newFolder) {
-      // console.log("change directory: ", newFolder);
-      this.getFolderContent(newFolder);
-    },
-  },
 
   setup() {
     const $q = useQuasar();
@@ -375,6 +367,14 @@ export default {
       deleteItems,
       createNewFolder,
     };
+  },
+  // name: 'PageName',
+  watch: {
+    // whenever folder changes, load new content.
+    folder_current(newFolder) {
+      // console.log("change directory: ", newFolder);
+      this.getFolderContent(newFolder);
+    },
   },
 };
 </script>

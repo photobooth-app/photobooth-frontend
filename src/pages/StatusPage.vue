@@ -111,7 +111,7 @@
         <q-card-section>
           <q-list separator>
             <q-item-label header>{{ $t('primary backend') }}</q-item-label>
-            <q-item v-for="(value, key, index) in store.information.backends.primary" v-bind:key="index">
+            <q-item v-for="(value, key, index) in store.information.backends.primary" :key="index">
               <q-item-section>
                 <q-item-label caption>{{ key }}</q-item-label>
                 <q-item-label>{{ value }}</q-item-label>
@@ -120,11 +120,11 @@
           </q-list>
         </q-card-section>
       </q-card>
-      <q-card class="q-mr-md q-mb-md" v-if="Object.keys(store.information.backends.secondary).length > 0">
+      <q-card v-if="Object.keys(store.information.backends.secondary).length > 0" class="q-mr-md q-mb-md">
         <q-card-section>
           <q-list separator>
             <q-item-label header>{{ $t('secondary backend') }}</q-item-label>
-            <q-item v-for="(value, key, index) in store.information.backends.secondary" v-bind:key="index">
+            <q-item v-for="(value, key, index) in store.information.backends.secondary" :key="index">
               <q-item-section>
                 <q-item-label caption>{{ key }}</q-item-label>
                 <q-item-label>{{ value }}</q-item-label>
@@ -153,7 +153,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(record, idx) in this.store.logrecords" :key="idx">
+          <tr v-for="(record, idx) in store.logrecords" :key="idx">
             <td>
               <q-badge :color="debugLevelColor(record.level)">
                 {{ record.level }}
@@ -181,6 +181,15 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: { QBtn },
+  setup() {
+    const store = useMainStore();
+
+    return {
+      // you can return the whole store instance to use it in the template
+      store,
+      remoteProcedureCall,
+    };
+  },
   methods: {
     debugLevelColor(level) {
       if (level == 'DEBUG') return 'info';
@@ -191,15 +200,6 @@ export default defineComponent({
 
       return 'grey';
     },
-  },
-  setup() {
-    const store = useMainStore();
-
-    return {
-      // you can return the whole store instance to use it in the template
-      store,
-      remoteProcedureCall,
-    };
   },
 });
 </script>

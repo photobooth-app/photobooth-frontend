@@ -22,6 +22,6 @@ async function remoteProcedureCall(url) {
   }
 }
 
-export default boot(({}) => {});
+export default boot(() => {});
 
 export { remoteProcedureCall };

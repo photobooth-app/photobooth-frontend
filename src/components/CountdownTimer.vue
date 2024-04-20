@@ -1,13 +1,14 @@
 <template>
-  <div class="flex flex-center" style="width: 70vw; height: 70vh" v-show="showBox" id="countdown-timer-container">
-    <div style="position: absolute; font-size: 150px" v-show="showMessage" v-html="messageText" id="countdown-timer-message"></div>
+  <div v-show="showBox" id="countdown-timer-container" class="flex flex-center" style="width: 70vw; height: 70vh">
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div v-show="showMessage" id="countdown-timer-message" style="position: absolute; font-size: 150px" v-html="messageText"></div>
     <q-circular-progress
       v-show="showCountdown"
       :show-value="!showMessage"
       style="width: 100%; height: 100%"
       :value="remainingSeconds"
       :min="0"
-      :max="this.duration"
+      :max="duration"
       reverse
       animation-speed="100"
       size="70vh"
@@ -24,19 +25,28 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'CountdownTimer',
+  props: {
+    duration: {
+      type: Number,
+      required: true,
+    },
+
+    messageDuration: {
+      type: Number,
+      default: 0.5,
+    },
+
+    messageText: {
+      type: String,
+      default: '😃',
+    },
+  },
 
   data() {
     return {
       intervalTimerId: null,
       remainingSeconds: 0,
     };
-  },
-
-  mounted() {
-    this.startTimer();
-  },
-  beforeUnmount() {
-    clearInterval(this.intervalTimerId);
   },
   computed: {
     showBox() {
@@ -48,6 +58,13 @@ export default defineComponent({
     showMessage() {
       return +this.remainingSeconds <= this.messageDuration;
     },
+  },
+
+  mounted() {
+    this.startTimer();
+  },
+  beforeUnmount() {
+    clearInterval(this.intervalTimerId);
   },
   methods: {
     abortTimer() {
@@ -65,22 +82,6 @@ export default defineComponent({
           clearInterval(this.intervalTimerId);
         }
       }, 50);
-    },
-  },
-  props: {
-    duration: {
-      type: Number,
-      required: true,
-    },
-
-    messageDuration: {
-      type: Number,
-      default: 0.5,
-    },
-
-    messageText: {
-      type: String,
-      default: '😃',
     },
   },
 });

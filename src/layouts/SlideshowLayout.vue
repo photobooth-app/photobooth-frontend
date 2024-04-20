@@ -4,7 +4,7 @@
       <router-view />
 
       <q-page-sticky position="top-left" :offset="[25, 25]" style="/*z-index: 10000*/">
-        <q-btn color="primary" rounded no-caps to="/" class="action-button" id="slideshow-button-to-frontpage">
+        <q-btn id="slideshow-button-to-frontpage" color="primary" rounded no-caps to="/" class="action-button">
           <q-icon left name="arrow_back_ios_new" />
           <div>{{ $t('BTN_LABEL_BACK') }}</div>
         </q-btn>
@@ -22,7 +22,6 @@ export default defineComponent({
   name: 'SlideshowLayout',
 
   components: {},
-  computed: {},
   setup() {
     const stateStore = useStateStore();
     const router = useRouter();
@@ -43,5 +42,6 @@ export default defineComponent({
       }
     });
   },
+  computed: {},
 });
 </script>

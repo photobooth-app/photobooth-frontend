@@ -17,16 +17,6 @@
     </div>
   </q-page-sticky>
 </template>
-<style lang="scss">
-.control-wrapper {
-  margin-bottom: 10px;
-}
-
-.control-wrapper .control-description-wrapper,
-.array-list-description {
-  color: $grey;
-}
-</style>
 <script lang="ts">
 import { ref, computed } from 'vue';
 import { useMainStore } from '../stores/main-store.js';
@@ -162,31 +152,8 @@ const cuischema = computed(() => {
   return !isLoadingState.value ? generateDefaultUISchema(schema.value, 'TopLevelNavigation') : undefined;
 });
 export default {
-  // name: 'PageName',
-  computed: {
-    // a computed getter
-  },
   components: {
     JsonForms,
-  },
-  data() {
-    // non-reactive ajv
-
-    // reactive data below
-    return {
-      // freeze renderers for performance gains
-      renderers: Object.freeze(renderers),
-      schema,
-      cuischema,
-
-      serverConfig,
-      isLoadingState,
-    };
-  },
-  methods: {
-    onChange(event: JsonFormsChangeEvent) {
-      this.serverConfig = event.data;
-    },
   },
   provide() {
     return {
@@ -208,5 +175,38 @@ export default {
       updateFormSchema,
     };
   },
+  data() {
+    // non-reactive ajv
+
+    // reactive data below
+    return {
+      // freeze renderers for performance gains
+      renderers: Object.freeze(renderers),
+      schema,
+      cuischema,
+
+      serverConfig,
+      isLoadingState,
+    };
+  },
+  // name: 'PageName',
+  computed: {
+    // a computed getter
+  },
+  methods: {
+    onChange(event: JsonFormsChangeEvent) {
+      this.serverConfig = event.data;
+    },
+  },
 };
 </script>
+<style lang="scss">
+.control-wrapper {
+  margin-bottom: 10px;
+}
+
+.control-wrapper .control-description-wrapper,
+.array-list-description {
+  color: $grey;
+}
+</style>

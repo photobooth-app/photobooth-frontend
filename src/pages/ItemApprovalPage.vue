@@ -1,11 +1,11 @@
 <template>
   <q-page class="flex flex-center">
-    <q-card style="height: 95vh" id="item-approval-container">
+    <q-card id="item-approval-container" style="height: 95vh">
       <q-card-section align="center">
         <div class="text-h6">{{ $t('TITLE_ITEM_APPROVAL') }}</div>
         <div class="text-subtitle1">
           {{
-            $t('MSG_APPROVE_COLLAGE_ITEM_NO_OF_TOTAL', { no: this.stateStore.number_captures_taken, total: this.stateStore.total_captures_to_take })
+            $t('MSG_APPROVE_COLLAGE_ITEM_NO_OF_TOTAL', { no: stateStore.number_captures_taken, total: stateStore.total_captures_to_take })
           }}
         </div>
       </q-card-section>
@@ -15,18 +15,18 @@
         <!-- video approval not yet supported -->
       </q-card-section>
 
-      <q-card-actions align="around" id="item-approval-actions">
-        <q-btn color="negative" no-caps @click="userReject()" class="" id="item-approval-button-reject">
+      <q-card-actions id="item-approval-actions" align="around">
+        <q-btn id="item-approval-button-reject" color="negative" no-caps class="" @click="userReject()">
           <q-icon left size="7em" name="thumb_down" />
           <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_RETRY') }}</div>
         </q-btn>
 
-        <q-btn flat color="grey" no-caps @click="userAbort()" class="" id="item-approval-button-abort">
+        <q-btn id="item-approval-button-abort" flat color="grey" no-caps class="" @click="userAbort()">
           <q-icon left size="7em" name="cancel" />
           <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE') }}</div>
         </q-btn>
 
-        <q-btn color="positive" no-caps @click="userConfirm()" id="item-approval-button-approve">
+        <q-btn id="item-approval-button-approve" color="positive" no-caps @click="userConfirm()">
           <q-icon left size="7em" name="thumb_up" />
           <div>
             <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_APPROVE') }}</div>
@@ -48,16 +48,6 @@ import { remoteProcedureCall } from 'boot/fetch_api';
 export default {
   // name: 'PageName',
   components: {},
-  data() {
-    return {};
-  },
-  computed: {
-    imgToApproveSrc: {
-      get() {
-        return this.stateStore.last_captured_mediaitem && this.stateStore.last_captured_mediaitem['preview'];
-      },
-    },
-  },
   setup() {
     const mainStore = useMainStore();
     const mediacollectionStore = useMediacollectionStore();
@@ -73,6 +63,16 @@ export default {
       GalleryImageDetail,
       remoteProcedureCall,
     };
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    imgToApproveSrc: {
+      get() {
+        return this.stateStore.last_captured_mediaitem && this.stateStore.last_captured_mediaitem['preview'];
+      },
+    },
   },
   mounted() {
     // string representation: console.log((this.$route.query.approval));

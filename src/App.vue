@@ -20,15 +20,6 @@ import { remoteProcedureCall } from 'boot/fetch_api';
 export default defineComponent({
   name: 'App',
   components: { ConnectionOverlay },
-  data() {
-    return {};
-  },
-  computed: {
-    // a computed getter
-    showConnectionOverlay() {
-      return !this.connected;
-    },
-  },
   setup() {
     const store = useMainStore();
     const stateStore = useStateStore();
@@ -57,6 +48,21 @@ export default defineComponent({
       ConnectionOverlay,
       remoteProcedureCall,
     };
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    // a computed getter
+    showConnectionOverlay() {
+      return !this.connected;
+    },
+  },
+
+  async created() {
+    console.log('app created, waiting for stores to init first dataset');
+    this.init();
+    console.log('data initialization finished');
   },
   methods: {
     async init() {
@@ -159,12 +165,6 @@ export default defineComponent({
           console.error('Failed make initial SSE connection!', err);
         });
     },
-  },
-
-  async created() {
-    console.log('app created, waiting for stores to init first dataset');
-    this.init();
-    console.log('data initialization finished');
   },
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="hhh Lpr ffr" @click="abortTimer" v-if="!emptyRepository">
+  <q-layout v-if="!emptyRepository" view="hhh Lpr ffr" @click="abortTimer">
     <q-header elevated class="bg-primary text-white">
-      <q-toolbar class="toolbar" id="gallery-toolbar" v-if="showToolbar">
+      <q-toolbar v-if="showToolbar" id="gallery-toolbar" class="toolbar">
         <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
 
         <q-space />
@@ -16,18 +16,18 @@
         />
 
         <q-dialog v-model="confirmDeleteFile">
-          <q-card class="q-pa-sm" style="min-width: 350px" id="gallery-confirm-delete-dialog">
+          <q-card id="gallery-confirm-delete-dialog" class="q-pa-sm" style="min-width: 350px">
             <q-card-section class="row items-center">
               <q-avatar icon="delete" color="primary" text-color="white" />
               <span class="q-ml-sm">{{ $t('MSG_CONFIRM_DELETE_IMAGE') }}</span>
             </q-card-section>
 
             <q-card-actions align="right">
-              <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+              <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
               <q-btn
+                v-close-popup
                 :label="$t('BTN_LABEL_DELETE_IMAGE')"
                 color="primary"
-                v-close-popup
                 @click="
                   deleteItem(currentSlideId);
                   $emit('closeEvent');
@@ -70,7 +70,7 @@
 
         <q-space />
 
-        <div class="q-mr-sm" v-if="!singleItemView">
+        <div v-if="!singleItemView" class="q-mr-sm">
           <q-icon name="tag" />
           <span>
             {{ $t('LABEL_ELEMENT_X_OF_Y', { no: currentSlideIndex + 1, total: itemRepository.length }) }}
@@ -87,32 +87,32 @@
 
       <!-- progress bar to timeout and close -->
       <q-linear-progress
+        v-if="displayLinearProgressBar && remainingSeconds > 0"
+        id="gallery-linear-progress-bar"
         class="absolute"
         :value="remainingSecondsNormalized"
         animation-speed="200"
         color="grey"
-        id="gallery-linear-progress-bar"
-        v-if="displayLinearProgressBar && remainingSeconds > 0"
       />
       <!-- progress bar to show waiting to load filter, ... -->
-      <q-linear-progress class="absolute" indeterminate animation-speed="2100" color="primary" v-if="displayLoadingSpinner" />
+      <q-linear-progress v-if="displayLoadingSpinner" class="absolute" indeterminate animation-speed="2100" color="primary" />
     </q-header>
 
     <q-drawer
-      class="q-pa-sm"
       v-if="uiSettingsStore.uiSettings.gallery_show_filter && getFilterAvailable(itemRepository[currentSlideIndex]['media_type']) && showToolbar"
+      id="gallery-drawer-filters"
       v-model="rightDrawerOpen"
+      class="q-pa-sm"
       side="right"
       overlay
-      id="gallery-drawer-filters"
     >
-      <q-card class="q-mb-sm" :key="filter" v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable">
+      <q-card v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable" :key="filter" class="q-mb-sm">
         <q-card-section class="q-pa-sm">
           <q-img
             class="rounded-borders"
             loading="lazy"
+            :src="`/api/mediaprocessing/preview/${currentSlideId}/${filter}`"
             @click="applyFilter(currentSlideId, filter)"
-            v-bind:src="`/api/mediaprocessing/preview/${currentSlideId}/${filter}`"
           >
           </q-img>
         </q-card-section>
@@ -126,18 +126,18 @@
     <q-page-container class="q-pa-none galleryimagedetail full-height">
       <div v-if="singleItemView" class="full-height">
         <q-card class="column no-wrap flex-center full-height q-pa-sm">
-          <div v-if="this.itemRepository[0].media_type != 'video'" class="full-height">
+          <div v-if="itemRepository[0].media_type != 'video'" class="full-height">
             <img
               :draggable="false"
               class="rounded-borders full-height"
               style="object-fit: contain; max-width: 100%; max-height: 100%"
-              :src="this.itemRepository[0].preview"
+              :src="itemRepository[0].preview"
             />
           </div>
           <div v-else class="full-height">
             <video
               :draggable="false"
-              :src="this.itemRepository[0].preview"
+              :src="itemRepository[0].preview"
               class="rounded-borders full-height"
               muted
               autoplay
@@ -150,14 +150,14 @@
 
       <div v-else class="full-height">
         <q-carousel
+          v-model="currentSlideId"
+          v-touch-swipe.mouse.down="handleSwipeDown"
           class=" "
           style="width: 100%; height: 100%"
           control-type="flat"
           control-color="primary"
           swipeable
-          v-touch-swipe.mouse.down="handleSwipeDown"
           animated
-          v-model="currentSlideId"
           :autoplay="slideshowTimeout"
           draggable="false"
           :arrows="showToolbar"
@@ -228,18 +228,6 @@
   <q-layout view="hhh Lpr ffr" v-else>EMPTY</q-layout>
 </template>
 
-<style lang="scss">
-.q-carousel,
-.q-drawer {
-  background: linear-gradient(120deg, rgba(245, 245, 245, 1) 0%, rgb(227, 229, 240) 50%, rgb(245, 245, 245) 100%);
-}
-
-.q-carousel__slide {
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-</style>
-
 <script>
 import VueQrcode from 'vue-qrcode';
 import { ref } from 'vue';
@@ -247,6 +235,9 @@ import { useUiSettingsStore } from '../stores/ui-settings-store.js';
 import { openURL } from 'quasar';
 
 export default {
+  components: {
+    VueQrcode,
+  },
   // name: 'ComponentName',
   props: {
     indexSelected: {
@@ -291,6 +282,41 @@ export default {
       default: false,
     },
   },
+  emits: ['closeEvent'],
+  setup() {
+    const uiSettingsStore = useUiSettingsStore();
+    const rightDrawerOpen = ref(false);
+
+    return {
+      // you can return the whole store instance to use it in the template
+      uiSettingsStore,
+      openURL,
+      fabRight: ref(false),
+      currentSlideId: ref(''),
+      currentSlideIndex: ref(0),
+      autoplay: ref(false),
+      showFilterDialog: ref(false),
+      displayLoadingSpinner: ref(false),
+      confirmDeleteFile: ref(false),
+      rightDrawerOpen,
+      toggleRightDrawer() {
+        rightDrawerOpen.value = !rightDrawerOpen.value;
+      },
+      handleSwipeDown() {
+        console.log('TODO: add method to close dialog programmatically');
+        // $emit("closeEvent");
+      },
+    };
+  },
+  data() {
+    return {
+      //currentId: "",
+      intervalTimerId: null,
+      remainingSeconds: 0,
+      remainingSecondsNormalized: 0,
+      displayLinearProgressBar: true,
+    };
+  },
   computed: {
     emptyRepository() {
       return !this.itemRepository || this.itemRepository.length == 0;
@@ -322,43 +348,6 @@ export default {
       this.currentSlideId = this.itemRepository[this.currentSlideIndex].id;
       //this.currentId = this.index;
     }
-  },
-  data() {
-    return {
-      //currentId: "",
-      intervalTimerId: null,
-      remainingSeconds: 0,
-      remainingSecondsNormalized: 0,
-      displayLinearProgressBar: true,
-    };
-  },
-  setup() {
-    const uiSettingsStore = useUiSettingsStore();
-    const rightDrawerOpen = ref(false);
-
-    return {
-      // you can return the whole store instance to use it in the template
-      uiSettingsStore,
-      openURL,
-      fabRight: ref(false),
-      currentSlideId: ref(''),
-      currentSlideIndex: ref(0),
-      autoplay: ref(false),
-      showFilterDialog: ref(false),
-      displayLoadingSpinner: ref(false),
-      confirmDeleteFile: ref(false),
-      rightDrawerOpen,
-      toggleRightDrawer() {
-        rightDrawerOpen.value = !rightDrawerOpen.value;
-      },
-      handleSwipeDown({}) {
-        console.log('TODO: add method to close dialog programmatically');
-        // $emit("closeEvent");
-      },
-    };
-  },
-  components: {
-    VueQrcode,
   },
   mounted() {
     if (this.startTimerOnOpen) this.startTimer();
@@ -481,3 +470,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.q-carousel,
+.q-drawer {
+  background: linear-gradient(120deg, rgba(245, 245, 245, 1) 0%, rgb(227, 229, 240) 50%, rgb(245, 245, 245) 100%);
+}
+
+.q-carousel__slide {
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+</style>

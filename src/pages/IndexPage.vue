@@ -12,26 +12,27 @@
     </div>
 
     <!-- layer display processing spinner grid to show user computer working hard -->
-    <div class="full-height full-width column justify-center content-center" style="position: absolute" v-if="showProcessing">
+    <div v-if="showProcessing" class="full-height full-width column justify-center content-center" style="position: absolute">
       <q-spinner-grid size="20em" />
     </div>
 
     <!-- layer display the countdown timer -->
     <div
-      class="full-height full-width column justify-center content-center"
-      style="position: absolute"
       v-if="showCountdownCounting"
       id="frontpage-countdown"
+      class="full-height full-width column justify-center content-center"
+      style="position: absolute"
     >
       <countdown-timer
         ref="countdowntimer"
-        :duration="this.stateStore.duration"
-        :messageDuration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME"
-        :messageText="uiSettingsStore.uiSettings.TAKEPIC_MSG_TEXT"
+        :duration="stateStore.duration"
+        :message-duration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME"
+        :message-text="uiSettingsStore.uiSettings.TAKEPIC_MSG_TEXT"
       ></countdown-timer>
     </div>
 
     <!-- layer display the front page text -->
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="showFrontpage" id="frontpage_text" v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
 
     <q-page-sticky position="bottom" :offset="[0, 25]">
@@ -39,13 +40,13 @@
         <div class="row q-gutter-md">
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takepic_on_frontpage"
+            id="frontpage-button-take-pic"
             stack
             color="primary"
             no-caps
             rounded
-            @click="takePicture(/**/)"
             class="action-button col-auto"
-            id="frontpage-button-take-pic"
+            @click="takePicture(/**/)"
           >
             <q-icon name="o_photo_camera" />
             <div style="white-space: nowrap" class="gt-sm">
@@ -54,13 +55,13 @@
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
+            id="frontpage-button-take-collage"
             stack
             color="primary"
             no-caps
             rounded
-            @click="takeCollage()"
             class="action-button col-auto"
-            id="frontpage-button-take-collage"
+            @click="takeCollage()"
           >
             <q-icon name="o_auto_awesome_mosaic" />
             <div style="white-space: nowrap" class="gt-sm">
@@ -69,13 +70,13 @@
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
+            id="frontpage-button-take-animation"
             stack
             color="primary"
             no-caps
             rounded
-            @click="takeAnimation()"
             class="action-button col-auto"
-            id="frontpage-button-take-animation"
+            @click="takeAnimation()"
           >
             <q-icon name="o_gif_box" />
             <div style="white-space: nowrap" class="gt-sm">
@@ -85,13 +86,13 @@
 
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_takevideo_on_frontpage"
+            id="frontpage-button-take-video"
             stack
             color="primary"
             no-caps
             rounded
-            @click="takeVideo()"
             class="action-button col-auto"
-            id="frontpage-button-take-video"
+            @click="takeVideo()"
           >
             <q-icon name="o_movie" />
             <div style="white-space: nowrap" class="gt-sm">
@@ -107,12 +108,12 @@
         <div class="q-gutter-md">
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage"
+            id="frontpage-button-to-gallery"
             color="primary"
             no-caps
             rounded
             to="/gallery"
             class="action-button"
-            id="frontpage-button-to-gallery"
             :style="uiSettingsStore.uiSettings.gallery_button_style"
           >
             <q-icon left name="photo_library" />
@@ -120,12 +121,12 @@
           </q-btn>
           <q-btn
             v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage"
+            id="frontpage-button-to-admin"
             rounded
             color="secondary"
             no-caps
             to="/admin"
             class="action-button"
-            id="frontpage-button-to-admin"
           >
             <q-icon left name="admin_panel_settings" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_ADMIN') }}</div>
@@ -135,7 +136,7 @@
     </q-page-sticky>
 
     <!-- video state controls -->
-    <q-page-sticky v-if="showRecording" position="top" :offset="[0, 25]" align="center" id="frontpage-indicator-recording">
+    <q-page-sticky v-if="showRecording" id="frontpage-indicator-recording" position="top" :offset="[0, 25]" align="center">
       <q-spinner-puff color="red" size="10em" />
       <br />
       <q-btn flat color="red" label="Stop recording" @click="stopRecordingVideo()" />
@@ -166,24 +167,6 @@ export default defineComponent({
       remoteProcedureCall,
     };
   },
-  methods: {
-    takePicture() {
-      remoteProcedureCall('/api/processing/chose/1pic');
-    },
-    takeCollage() {
-      remoteProcedureCall('/api/processing/chose/collage');
-    },
-    takeAnimation() {
-      remoteProcedureCall('/api/processing/chose/animation');
-    },
-    takeVideo() {
-      remoteProcedureCall('/api/processing/chose/video');
-    },
-    stopRecordingVideo() {
-      remoteProcedureCall('/api/processing/cmd/stop');
-    },
-  },
-  watch: {},
   computed: {
     showProcessing: {
       get() {
@@ -225,6 +208,24 @@ export default defineComponent({
         // show if state not defined (no job ongoing or finished)
         return !this.stateStore.state || this.stateStore.state == 'finished';
       },
+    },
+  },
+  watch: {},
+  methods: {
+    takePicture() {
+      remoteProcedureCall('/api/processing/chose/1pic');
+    },
+    takeCollage() {
+      remoteProcedureCall('/api/processing/chose/collage');
+    },
+    takeAnimation() {
+      remoteProcedureCall('/api/processing/chose/animation');
+    },
+    takeVideo() {
+      remoteProcedureCall('/api/processing/chose/video');
+    },
+    stopRecordingVideo() {
+      remoteProcedureCall('/api/processing/cmd/stop');
     },
   },
 });

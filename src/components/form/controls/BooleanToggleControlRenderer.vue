@@ -1,8 +1,8 @@
 <template>
   <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
     <q-toggle
-      :model-value="control.data"
       :id="control.id + '-input'"
+      :model-value="control.data"
       :class="styles.control.input"
       :disable="!control.enabled"
       :autofocus="appliedOptions.focus"

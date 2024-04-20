@@ -5,10 +5,10 @@
 
       <!-- auto-start slideshow after timeout -->
       <RouteAfterTimeout
-        v-if="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout > 0"
+        v-if="uiSettingsStore.uiSettings.show_automatic_slideshow_timeout > 0"
         route="/slideshow/random"
-        :timeout_ms="this.uiSettingsStore.uiSettings.show_automatic_slideshow_timeout * 1000"
-        :warning_message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
+        :timeout-ms="uiSettingsStore.uiSettings.show_automatic_slideshow_timeout * 1000"
+        :warning-message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
       ></RouteAfterTimeout>
     </q-page-container>
   </q-layout>
@@ -25,7 +25,6 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: { RouteAfterTimeout },
-  computed: {},
   setup() {
     const stateStore = useStateStore();
     const uiSettingsStore = useUiSettingsStore();
@@ -52,5 +51,6 @@ export default defineComponent({
       uiSettingsStore,
     };
   },
+  computed: {},
 });
 </script>

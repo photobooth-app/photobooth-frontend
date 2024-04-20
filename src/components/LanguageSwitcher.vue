@@ -1,6 +1,6 @@
 <template>
   <q-select v-model="locale" :options="localeOptions" label="Language" emit-value map-options @update:model-value="(locale) => storeLocale(locale)">
-    <template v-slot:prepend>
+    <template #prepend>
       <q-icon name="language" />
     </template>
   </q-select>

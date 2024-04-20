@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div v-if="!isGalleryEmpty" class="row justify-center q-gutter-sm">
-      <q-intersection :key="item.id" once v-for="(item, index) in this.mediacollectionStore.collection" class="preview-item">
+      <q-intersection v-for="(item, index) in mediacollectionStore.collection" :key="item.id" once class="preview-item">
         <q-card class="q-ma-sm" @click="openPic(index)">
           <div v-if="item.media_type != 'video'">
             <q-img :src="getImageDetail(index)" loading="eager" no-transition no-spinner :ratio="1" class="rounded-borders"> </q-img>
@@ -24,24 +24,19 @@
         </q-card>
       </q-intersection>
     </div>
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-else v-html="uiSettingsStore.uiSettings.GALLERY_EMPTY_MSG"></div>
 
-    <q-dialog transition-show="jump-up" transition-hide="jump-down" v-model="showImageDetail" maximized>
+    <q-dialog v-model="showImageDetail" transition-show="jump-up" transition-hide="jump-down" maximized>
       <gallery-image-detail
-        @close-event="showImageDetail = false"
-        :itemRepository="this.mediacollectionStore.collection"
-        :indexSelected="indexSelected"
+        :item-repository="mediacollectionStore.collection"
+        :index-selected="indexSelected"
         class="full-height"
+        @close-event="showImageDetail = false"
       ></gallery-image-detail>
     </q-dialog>
   </q-page>
 </template>
-<style lang="sass" scoped>
-.preview-item
-  height: 400px
-  width: 400px
-</style>
-
 <script>
 import { useMainStore } from '../stores/main-store.js';
 import { useUiSettingsStore } from '../stores/ui-settings-store.js';
@@ -76,9 +71,6 @@ export default {
       return this.mediacollectionStore.collection_number_of_items == 0;
     },
   },
-  mounted() {
-    //initially get all images, later use eventstream?
-  },
   watch: {
     // whenever question changes, this function will run
     itemId(newItemId) {
@@ -86,6 +78,9 @@ export default {
       if (index == -1) console.error(`image id not found ${newItemId}`);
       else this.openPic(index);
     },
+  },
+  mounted() {
+    //initially get all images, later use eventstream?
   },
   methods: {
     getImageDetail(index, detail = 'thumbnail') {
@@ -99,3 +94,9 @@ export default {
   },
 };
 </script>
+
+<style lang="sass" scoped>
+.preview-item
+  height: 400px
+  width: 400px
+</style>

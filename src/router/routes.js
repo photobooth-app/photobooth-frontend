@@ -34,10 +34,6 @@ const routes = [
       { path: 'status', component: () => import('pages/StatusPage.vue') },
       { path: 'help', component: () => import('pages/AdminHelpPage.vue') },
       {
-        path: 'playground',
-        component: () => import('pages/PlaygroundPage.vue'),
-      },
-      {
         name: 'config',
         path: 'config/:section?',
         component: () => import('pages/ConfigPage.vue'),

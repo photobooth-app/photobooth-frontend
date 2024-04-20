@@ -1,17 +1,17 @@
 <template>
   <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
     <q-input
+      :id="control.id + '-input'"
       :model-value="control.data"
       filled
-      :id="control.id + '-input'"
       :class="styles.control.input"
       :disable="!control.enabled"
       :autofocus="appliedOptions.focus"
+      :error-message="control.errors"
+      :error="control.errors != ''"
       @update:model-value="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
-      :error-message="control.errors"
-      :error="control.errors != ''"
     ></q-input>
   </control-wrapper>
 </template>

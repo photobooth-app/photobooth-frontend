@@ -1,7 +1,7 @@
 <template>
   <q-select
-    :model-value="control.data"
     :id="control.id + '-input'"
+    :model-value="control.data"
     :class="styles.control.select"
     :disable="!control.enabled"
     :options="control.options"

@@ -17,7 +17,7 @@ interface CombinatorProps {
 }
 
 export default defineComponent({
-  name: 'combinator-properties',
+  name: 'CombinatorProperties',
   components: {
     DispatchRenderer,
   },

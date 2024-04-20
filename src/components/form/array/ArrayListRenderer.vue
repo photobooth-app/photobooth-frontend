@@ -2,7 +2,7 @@
   <div :class="styles.arrayList.label">{{ control.label }}</div>
   <div :class="styles.arrayList.description">{{ control.description }}</div>
 
-  <q-card flat v-if="control.visible" :class="styles.arrayList.root">
+  <q-card v-if="control.visible" flat :class="styles.arrayList.root">
     <div v-for="(element, index) in control.data" :key="`${control.path}-${index}`" :class="styles.arrayList.itemWrapper">
       <array-list-element
         :move-up="moveUp?.(control.path, index)"
@@ -33,9 +33,9 @@
     round
     color="primary"
     icon="add"
-    @click="addButtonClick"
     :class="styles.arrayList.addButton"
     :disabled="!control.enabled || (appliedOptions.restrict && maxItemsReached)"
+    @click="addButtonClick"
   />
 </template>
 

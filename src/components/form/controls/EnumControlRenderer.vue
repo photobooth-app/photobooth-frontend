@@ -1,16 +1,16 @@
 <template>
   <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
     <q-select
-      :model-value="control.data"
       :id="control.id + '-input'"
+      :model-value="control.data"
       :class="styles.control.select"
       :disable="!control.enabled"
       :options="control.options"
+      :error-message="control.errors"
+      :error="control.errors != ''"
       @update:model-value="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
-      :error-message="control.errors"
-      :error="control.errors != ''"
     >
     </q-select>
   </control-wrapper>

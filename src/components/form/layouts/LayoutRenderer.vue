@@ -20,7 +20,7 @@ import { DispatchRenderer, rendererProps, useJsonFormsLayout, RendererProps } fr
 import { useQuasarLayout } from '../util';
 
 const layoutRenderer = defineComponent({
-  name: 'layoutRenderer',
+  name: 'LayoutRenderer',
   components: {
     DispatchRenderer,
   },

@@ -1,12 +1,12 @@
 <template>
   <q-page class="full-height">
     <gallery-image-detail
-      :showToolbar="false"
-      :slideshowTimeout="5000"
-      :slideshowUseFade="true"
-      :itemRepository="this.mediacollectionStore.collection"
-      :indexSelected="0"
-      :randomOrder="true"
+      :show-toolbar="false"
+      :slideshow-timeout="5000"
+      :slideshow-use-fade="true"
+      :item-repository="mediacollectionStore.collection"
+      :index-selected="0"
+      :random-order="true"
       class="full-height"
     ></gallery-image-detail>
   </q-page>

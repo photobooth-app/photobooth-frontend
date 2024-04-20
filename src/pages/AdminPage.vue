@@ -13,8 +13,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" color="primary" v-close-popup />
-                  <q-btn :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/api/system/server/reboot')" v-close-popup />
+                  <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
+                  <q-btn v-close-popup :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/api/system/server/reboot')" />
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -27,11 +27,11 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+                  <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
                   <q-btn
+                    v-close-popup
                     :label="$t('BTN_LABEL_SHUTDOWN')"
                     color="primary"
-                    v-close-popup
                     @click="remoteProcedureCall('/api/system/server/shutdown')"
                   />
                 </q-card-actions>
@@ -46,11 +46,11 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+                  <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
                   <q-btn
+                    v-close-popup
                     :label="$t('BTN_LABEL_RESTART_SERVICE')"
                     color="primary"
-                    v-close-popup
                     @click="remoteProcedureCall('/api/system/service/restart')"
                   />
                 </q-card-actions>
@@ -65,11 +65,11 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+                  <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
                   <q-btn
+                    v-close-popup
                     :label="$t('BTN_LABEL_RELOAD_SERVICE')"
                     color="primary"
-                    v-close-popup
                     @click="remoteProcedureCall('/api/system/service/reload')"
                   />
                 </q-card-actions>
@@ -84,11 +84,11 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+                  <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
                   <q-btn
+                    v-close-popup
                     :label="$t('BTN_LABEL_INSTALL_SERVICE')"
                     color="primary"
-                    v-close-popup
                     @click="remoteProcedureCall('/api/system/service/install')"
                   />
                 </q-card-actions>
@@ -103,11 +103,11 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat :label="$t('BTN_LABEL_CANCEL')" v-close-popup />
+                  <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
                   <q-btn
+                    v-close-popup
                     :label="$t('BTN_LABEL_UNINSTALL_SERVICE')"
                     color="primary"
-                    v-close-popup
                     @click="remoteProcedureCall('/api/system/service/uninstall')"
                   />
                 </q-card-actions>
@@ -135,8 +135,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat label="Cancel" color="primary" v-close-popup />
-                  <q-btn label="Delete all" color="primary" @click="remoteProcedureCall('/api/mediacollection/delete_all')" v-close-popup />
+                  <q-btn v-close-popup flat label="Cancel" color="primary" />
+                  <q-btn v-close-popup label="Delete all" color="primary" @click="remoteProcedureCall('/api/mediacollection/delete_all')" />
                 </q-card-actions>
               </q-card>
             </q-dialog>
