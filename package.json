@@ -18,7 +18,6 @@
     "@jsonforms/vue": "^3.2.1",
     "@quasar/extras": "^1.16.11",
     "@vueuse/core": "^10.7.2",
-    "axios": "^1.4.0",
     "pinia": "^2.0.11",
     "qrcode": "^1.5.1",
     "quasar": "^2.15.3",
