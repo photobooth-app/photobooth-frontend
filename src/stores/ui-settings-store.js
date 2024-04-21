@@ -37,6 +37,13 @@ export const useUiSettingsStore = defineStore('ui-settings-store', {
       gallery_show_download: null,
       gallery_show_delete: null,
       gallery_show_print: null,
+
+      keyboard_input_enabled: null,
+      keyboard_input_keycode_takepic: null,
+      keyboard_input_keycode_takecollage: null,
+      keyboard_input_keycode_takeanimation: null,
+      keyboard_input_keycode_takevideo: null,
+      keyboard_input_keycode_print_recent_item: null,
     },
 
     storeState: STATES.INIT,

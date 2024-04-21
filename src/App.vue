@@ -63,6 +63,11 @@ export default defineComponent({
     console.log('app created, waiting for stores to init first dataset');
     this.init();
     console.log('data initialization finished');
+
+    window.addEventListener('keyup', this.keyUpHandler);
+  },
+  unmounted() {
+    window.removeEventListener('keyup', this.keyUpHandler);
   },
   methods: {
     async init() {
@@ -164,6 +169,42 @@ export default defineComponent({
           // events server failed.  No automatic attempts to reconnect will be made.
           console.error('Failed make initial SSE connection!', err);
         });
+    },
+    keyUpHandler(e) {
+      // Your handler code here
+      if (this.uiSettingsStore.uiSettings.keyboard_input_enabled) {
+        switch (e.key) {
+          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_takepic: {
+            console.log('browser keyboard trigger 1pic');
+            remoteProcedureCall('/api/processing/chose/1pic');
+            break;
+          }
+          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_takecollage: {
+            console.log('browser keyboard trigger 1pic');
+            remoteProcedureCall('/api/processing/chose/collage');
+            break;
+          }
+          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_takeanimation: {
+            console.log('browser keyboard trigger 1pic');
+            remoteProcedureCall('/api/processing/chose/animation');
+            break;
+          }
+          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_takevideo: {
+            console.log('browser keyboard trigger 1pic');
+            remoteProcedureCall('/api/processing/chose/video');
+            break;
+          }
+          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_print_recent_item: {
+            console.log('browser keyboard trigger print latest');
+            remoteProcedureCall('/api/print/latest');
+            break;
+          }
+
+          default: {
+            console.info(`key "${e.key}" not assigned`);
+          }
+        }
+      }
     },
   },
 });
