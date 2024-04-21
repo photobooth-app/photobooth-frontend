@@ -21,6 +21,9 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
 }
+#preview-stream.countdowncounting {
+  background-size: contain;
+}
 
 .action-button {
   font-size: 1.6rem;

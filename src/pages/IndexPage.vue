@@ -8,6 +8,7 @@
         id="preview-stream"
         style="background-image: url('/api/aquisition/stream.mjpg')"
         class="full-width column justify-center content-center"
+        :class="{ countdowncounting: showCountdownCounting }"
       ></div>
     </div>
 
