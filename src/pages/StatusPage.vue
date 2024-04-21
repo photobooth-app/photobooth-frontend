@@ -174,7 +174,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useMainStore } from '../stores/main-store.js';
-import { remoteProcedureCall } from 'boot/fetch_api';
+import { remoteProcedureCall } from '../util/fetch_api.js';
 import { QBtn } from 'quasar';
 
 export default defineComponent({

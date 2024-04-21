@@ -1,4 +1,3 @@
-import { boot } from 'quasar/wrappers';
 import { Notify } from 'quasar';
 
 async function remoteProcedureCall(url) {
@@ -21,7 +20,5 @@ async function remoteProcedureCall(url) {
     });
   }
 }
-
-export default boot(() => {});
 
 export { remoteProcedureCall };

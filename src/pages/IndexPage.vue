@@ -146,7 +146,7 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { remoteProcedureCall } from 'boot/fetch_api';
+import { remoteProcedureCall } from '../util/fetch_api.js';
 import { useMainStore } from '../stores/main-store.js';
 import { useStateStore } from '../stores/state-store.js';
 import { useUiSettingsStore } from '../stores/ui-settings-store.js';

@@ -15,7 +15,7 @@ import { useUiSettingsStore } from 'stores/ui-settings-store.js';
 import { useMediacollectionStore } from 'stores/mediacollection-store.js';
 import { useRouter } from 'vue-router';
 import ConnectionOverlay from './components/ConnectionOverlay.vue';
-import { remoteProcedureCall } from 'boot/fetch_api';
+import { remoteProcedureCall } from './util/fetch_api.js';
 
 export default defineComponent({
   name: 'App',

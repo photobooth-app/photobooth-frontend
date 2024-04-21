@@ -24,7 +24,7 @@ import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { generateDefaultUISchema } from '@jsonforms/core';
 import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form';
-import { remoteProcedureCall } from 'boot/fetch_api';
+import { remoteProcedureCall } from '../util/fetch_api.js';
 import { useUiSettingsStore } from 'stores/ui-settings-store.js';
 import { Notify } from 'quasar';
 // import { useI18n } from 'vue-i18n';
