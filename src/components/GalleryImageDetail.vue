@@ -371,9 +371,11 @@ export default {
     },
     applyFilter(id, filter) {
       this.displayLoadingSpinner = true;
-      this.$api
-        .get(`/mediaprocessing/applyfilter/${id}/${filter}`)
-        .then(() => {
+      fetch(`/api/mediaprocessing/applyfilter/${id}/${filter}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Server returned ' + response.status);
+          }
           const index = this.itemRepository.findIndex((item) => item.id === id);
           this.reloadImg(this.itemRepository[index].full);
           this.reloadImg(this.itemRepository[index].preview);
@@ -381,60 +383,51 @@ export default {
           this.displayLoadingSpinner = false;
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
           this.displayLoadingSpinner = false;
         });
     },
     deleteItem(id) {
-      this.$api
-        .get('/mediacollection/delete', { params: { image_id: id } })
+      fetch('/api/mediacollection/delete', {
+        method: 'POST',
+        body: JSON.stringify({ image_id: id }),
+        headers: { 'Content-Type': 'application/json' },
+      })
         .then((response) => {
-          console.log(response);
-          // no need to delete here - we get SSE notification once deleted
+          if (!response.ok) {
+            throw new Error('Server returned ' + response.status);
+          }
         })
-        .catch((err) => console.log(err));
-    },
-    printItem(id) {
-      this.$api
-        .get(`/print/item/${id}`)
         .then((response) => {
           console.log(response);
-          this.$q.notify({
-            message: 'Started printing...',
-            type: 'positive',
-            spinner: true,
-            //timeout: 2000
-          });
         })
         .catch((error) => {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response);
+          console.error('There was a problem with the Fetch operation:', error);
 
-            if (error.response.status == 425) {
-              this.$q.notify({
-                message: error.response.data['detail'],
-                caption: 'Print Service',
-                type: 'info',
-              });
-            } else {
-              this.$q.notify({
-                message: error.response.data['detail'],
-                caption: 'Print Service',
-                type: 'negative',
-              });
-            }
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.error(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.error('Error', error.message);
+          this.$q.notify({
+            message: 'Error deleting file! Please check logs and browser console.',
+            type: 'negative',
+          });
+        });
+    },
+    printItem(id) {
+      fetch(`/api/print/item/${id}`, {})
+        .then((response) => {
+          if (!response.ok && !(response.status == 425 || response.status == 405)) {
+            // throw if not blocked or not disabled because notification events are sent separately for this err.
+            throw new Error('Server returned ' + response.status);
           }
-          //console.error(error.config);
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error('There was a problem with the Fetch operation:', error);
+
+          this.$q.notify({
+            message: 'Error printing file! Please check logs and browser console.',
+            type: 'negative',
+          });
         });
     },
     getPrintAvailable(media_type) {
