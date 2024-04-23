@@ -476,11 +476,6 @@ export default {
 </script>
 
 <style lang="scss">
-.q-carousel,
-.q-drawer {
-  background: linear-gradient(120deg, rgba(245, 245, 245, 1) 0%, rgb(227, 229, 240) 50%, rgb(245, 245, 245) 100%);
-}
-
 .q-carousel__slide {
   background-size: contain;
   background-repeat: no-repeat;
