@@ -31,7 +31,7 @@ import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue';
 import { generateDefaultUISchema } from '@jsonforms/core';
 import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form';
 import { remoteProcedureCall } from '../util/fetch_api';
-import { useConfigurationStore } from 'stores/configuration-store';
+import { useConfigurationStore } from '../stores/configuration-store';
 import { Notify } from 'quasar';
 
 const configurationStore = useConfigurationStore();
