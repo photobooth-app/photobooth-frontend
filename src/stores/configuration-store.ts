@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { setCssVar } from 'quasar';
 import { Notify } from 'quasar';
-import _ = require('lodash');
+import { get } from 'lodash';
 //https://stackoverflow.com/a/75060220
 
 const STATES = {
@@ -139,6 +139,6 @@ export const useConfigurationStore = defineStore('configuration-store', {
       (state) =>
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (path: string, defaultValue?: any) =>
-        _.get(state.configuration, path, defaultValue),
+        get(state.configuration, path, defaultValue),
   },
 });
