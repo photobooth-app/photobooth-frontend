@@ -7,7 +7,7 @@
         <q-space />
 
         <q-btn
-          v-if="uiSettingsStore.uiSettings.gallery_show_delete || singleItemView"
+          v-if="configurationStore.getConfigElement('uisettings.gallery_show_delete', false) || singleItemView"
           flat
           class="q-mr-sm"
           icon="delete"
@@ -38,7 +38,7 @@
         </q-dialog>
 
         <q-btn
-          v-if="uiSettingsStore.uiSettings.gallery_show_download"
+          v-if="configurationStore.getConfigElement('uisettings.gallery_show_download', false)"
           flat
           class="q-mr-sm"
           icon="download"
@@ -50,7 +50,7 @@
           "
         />
         <q-btn
-          v-if="uiSettingsStore.uiSettings.gallery_show_print"
+          v-if="configurationStore.getConfigElement('uisettings.gallery_show_print', false)"
           flat
           class="q-mr-sm"
           icon="print"
@@ -59,7 +59,10 @@
           @click="printItem(currentSlideId)"
         />
         <q-btn
-          v-if="uiSettingsStore.uiSettings.gallery_show_filter && uiSettingsStore.uiSettings.gallery_filter_userselectable.length > 0"
+          v-if="
+            configurationStore.getConfigElement('uisettings.gallery_show_filter', false) &&
+            configurationStore.getConfigElement('uisettings.gallery_filter_userselectable', []).length > 0
+          "
           flat
           class="q-mr-sm"
           icon="filter"
@@ -99,14 +102,18 @@
     </q-header>
 
     <q-drawer
-      v-if="uiSettingsStore.uiSettings.gallery_show_filter && getFilterAvailable(itemRepository[currentSlideIndex]['media_type']) && showToolbar"
+      v-if="
+        configurationStore.getConfigElement('uisettings.gallery_show_filter', false) &&
+        getFilterAvailable(itemRepository[currentSlideIndex]['media_type']) &&
+        showToolbar
+      "
       id="gallery-drawer-filters"
       v-model="rightDrawerOpen"
       class="q-pa-sm"
       side="right"
       overlay
     >
-      <q-card v-for="filter in uiSettingsStore.uiSettings.gallery_filter_userselectable" :key="filter" class="q-mb-sm">
+      <q-card v-for="filter in configurationStore.getConfigElement('uisettings.gallery_filter_userselectable', [])" :key="filter" class="q-mb-sm">
         <q-card-section class="q-pa-sm">
           <q-img
             class="rounded-borders"
@@ -209,7 +216,11 @@
         </q-carousel>
       </div>
 
-      <q-page-sticky v-if="uiSettingsStore.uiSettings.gallery_show_qrcode && showToolbar" position="top-right" :offset="[30, 30]">
+      <q-page-sticky
+        v-if="configurationStore.getConfigElement('uisettings.gallery_show_qrcode', false) && showToolbar"
+        position="top-right"
+        :offset="[30, 30]"
+      >
         <div>
           <vue-qrcode
             type="image/png"
@@ -231,7 +242,7 @@
 <script>
 import VueQrcode from 'vue-qrcode';
 import { ref } from 'vue';
-import { useUiSettingsStore } from '../stores/ui-settings-store.js';
+import { useConfigurationStore } from '../stores/configuration-store.ts';
 import { openURL } from 'quasar';
 
 export default {
@@ -284,12 +295,12 @@ export default {
   },
   emits: ['closeEvent'],
   setup() {
-    const uiSettingsStore = useUiSettingsStore();
+    const configurationStore = useConfigurationStore();
     const rightDrawerOpen = ref(false);
 
     return {
       // you can return the whole store instance to use it in the template
-      uiSettingsStore,
+      configurationStore,
       openURL,
       fabRight: ref(false),
       currentSlideId: ref(''),
@@ -445,7 +456,7 @@ export default {
       this.remainingSecondsNormalized = 0;
     },
     startTimer() {
-      var duration = this.uiSettingsStore.uiSettings['AUTOCLOSE_NEW_ITEM_ARRIVED'];
+      var duration = this.configurationStore.getConfigElement('uisettings.AUTOCLOSE_NEW_ITEM_ARRIVED', 0);
       console.log(`starting newitemarrived timer, duration=${duration}`);
       this.remainingSeconds = duration;
 

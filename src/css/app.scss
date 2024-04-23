@@ -17,12 +17,9 @@ body {
   pointer-events: none;
 }
 #preview-stream {
-  background-size: cover;
+  background-size: contain; //cover
   background-repeat: no-repeat;
   background-position: center center;
-}
-#preview-stream.countdowncounting {
-  background-size: contain;
 }
 
 .action-button {

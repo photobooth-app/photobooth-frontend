@@ -158,19 +158,14 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-import { useMainStore } from '../stores/main-store.js';
-import { remoteProcedureCall } from '../util/fetch_api.js';
+import { remoteProcedureCall } from '../util/fetch_api';
 import LanguageSwitcher from '../components/LanguageSwitcher.vue';
 
 export default defineComponent({
   name: 'MainLayout',
   components: { LanguageSwitcher },
   setup() {
-    const store = useMainStore();
-
     return {
-      // you can return the whole store instance to use it in the template
-      store,
       remoteProcedureCall,
       confirm_reboot: ref(false),
       confirm_shutdown: ref(false),

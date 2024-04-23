@@ -25,7 +25,7 @@
       </q-intersection>
     </div>
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-else v-html="uiSettingsStore.uiSettings.GALLERY_EMPTY_MSG"></div>
+    <div v-else v-html="configurationStore.getConfigElement('uisettings.GALLERY_EMPTY_MSG')"></div>
 
     <q-dialog v-model="showImageDetail" transition-show="jump-up" transition-hide="jump-down" maximized>
       <gallery-image-detail
@@ -39,7 +39,7 @@
 </template>
 <script>
 import { useMainStore } from '../stores/main-store.js';
-import { useUiSettingsStore } from '../stores/ui-settings-store.js';
+import { useConfigurationStore } from '../stores/configuration-store.ts';
 import { useMediacollectionStore } from '../stores/mediacollection-store.js';
 import { ref } from 'vue';
 import GalleryImageDetail from '../components/GalleryImageDetail.vue';
@@ -49,13 +49,13 @@ export default {
   components: { GalleryImageDetail },
   setup() {
     const store = useMainStore();
-    const uiSettingsStore = useUiSettingsStore();
+    const configurationStore = useConfigurationStore();
     const mediacollectionStore = useMediacollectionStore();
 
     return {
       // you can return the whole store instance to use it in the template
       store,
-      uiSettingsStore,
+      configurationStore,
       mediacollectionStore,
       GalleryImageDetail,
       indexSelected: ref(null),

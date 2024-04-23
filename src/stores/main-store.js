@@ -1,53 +1,50 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
 
-export const useMainStore = defineStore('main-store', () => {
-  const logrecords = ref([]);
+export const useMainStore = defineStore('main-store', {
+  state: () => ({
+    logrecords: [],
 
-  const information = ref({
-    cpu1_5_15: [null, null, null],
-    active_threads: null,
-    memory: {
-      total: null,
-      available: null,
-      percent: null,
-      used: null,
-      free: null,
+    information: {
+      cpu1_5_15: [null, null, null],
+      active_threads: null,
+      memory: {
+        total: null,
+        available: null,
+        percent: null,
+        used: null,
+        free: null,
+      },
+      cma: {
+        CmaTotal: null,
+        CmaFree: null,
+      },
+      disk: {
+        total: null,
+        used: null,
+        free: null,
+        percent: null,
+      },
+      backends: {
+        primary: {},
+        secondary: {},
+      },
+      printer: {
+        is_blocked: null,
+        waiting_time: null,
+      },
+      version: null,
+      platform_system: null,
+      platform_release: null,
+      platform_machine: null,
+      platform_python_version: null,
+      platform_node: null,
+      platform_cpu_count: null,
+      data_directory: null,
+      python_executable: null,
     },
-    cma: {
-      CmaTotal: null,
-      CmaFree: null,
-    },
-    disk: {
-      total: null,
-      used: null,
-      free: null,
-      percent: null,
-    },
-    backends: {
-      primary: {},
-      secondary: {},
-    },
-    printer: {
-      is_blocked: null,
-      waiting_time: null,
-    },
-    version: null,
-    platform_system: null,
-    platform_release: null,
-    platform_machine: null,
-    platform_python_version: null,
-    platform_node: null,
-    platform_cpu_count: null,
-    data_directory: null,
-    python_executable: null,
-  });
 
-  const lastHeartbeat = ref(null);
-
-  return {
-    information,
-    lastHeartbeat,
-    logrecords,
-  };
+    lastHeartbeat: null,
+  }),
+  actions: {},
+  getters: {},
 });

@@ -11,7 +11,7 @@
 import { defineComponent, ref } from 'vue';
 import { useMainStore } from 'stores/main-store.js';
 import { useStateStore } from 'stores/state-store.js';
-import { useUiSettingsStore } from 'stores/ui-settings-store.js';
+import { useConfigurationStore } from 'stores/configuration-store.ts';
 import { useMediacollectionStore } from 'stores/mediacollection-store.js';
 import { useRouter } from 'vue-router';
 import ConnectionOverlay from './components/ConnectionOverlay.vue';
@@ -23,14 +23,14 @@ export default defineComponent({
   setup() {
     const store = useMainStore();
     const stateStore = useStateStore();
-    const uiSettingsStore = useUiSettingsStore();
+    const configurationStore = useConfigurationStore();
     const mediacollectionStore = useMediacollectionStore();
     const router = useRouter();
     const connected = ref(false);
     const lineEstablished = ref(false);
 
     //TODO: need to make app wait until fully init?
-    console.log(uiSettingsStore.isLoaded);
+    console.log(configurationStore.isLoaded);
 
     setInterval(function () {
       const timeoutConnected = 2000;
@@ -43,7 +43,7 @@ export default defineComponent({
       router,
       store,
       stateStore,
-      uiSettingsStore,
+      configurationStore,
       mediacollectionStore,
       ConnectionOverlay,
       remoteProcedureCall,
@@ -61,20 +61,18 @@ export default defineComponent({
 
   async created() {
     console.log('app created, waiting for stores to init first dataset');
-    this.init();
+    await this.init();
     console.log('data initialization finished');
-
-    window.addEventListener('keyup', this.keyUpHandler);
   },
   unmounted() {
     window.removeEventListener('keyup', this.keyUpHandler);
   },
   methods: {
     async init() {
-      this.uiSettingsStore.initStore();
+      this.configurationStore.initStore();
       this.mediacollectionStore.initStore();
 
-      await this.until(() => this.uiSettingsStore.isLoaded == true);
+      await this.until(() => this.configurationStore.isLoaded == true);
       await this.until(() => this.mediacollectionStore.isLoaded == true);
 
       this.initSseClient();
@@ -82,6 +80,9 @@ export default defineComponent({
       // for now on app start we send an abort to the backend.
       // could be improved to actually handle the state the machine is in and send ui to according state
       // remoteProcedureCall("/api/processing/cmd/abort");
+
+      console.log('installing listener for keyboard input');
+      window.addEventListener('keyup', this.keyUpHandler);
     },
 
     until(conditionFunction) {
@@ -171,38 +172,40 @@ export default defineComponent({
         });
     },
     keyUpHandler(e) {
-      // Your handler code here
-      if (this.uiSettingsStore.uiSettings.keyboard_input_enabled) {
-        switch (e.key) {
-          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_takepic: {
-            console.log('browser keyboard trigger 1pic');
-            remoteProcedureCall('/api/processing/chose/1pic');
-            break;
-          }
-          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_takecollage: {
-            console.log('browser keyboard trigger 1pic');
-            remoteProcedureCall('/api/processing/chose/collage');
-            break;
-          }
-          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_takeanimation: {
-            console.log('browser keyboard trigger 1pic');
-            remoteProcedureCall('/api/processing/chose/animation');
-            break;
-          }
-          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_takevideo: {
-            console.log('browser keyboard trigger 1pic');
-            remoteProcedureCall('/api/processing/chose/video');
-            break;
-          }
-          case this.uiSettingsStore.uiSettings.keyboard_input_keycode_print_recent_item: {
-            console.log('browser keyboard trigger print latest');
-            remoteProcedureCall('/api/print/latest');
-            break;
-          }
+      if (!this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_enabled', false)) {
+        console.log('keyboard input is disabled, to use keyboard input enable it in the configuration and reload the page.');
+        return;
+      }
 
-          default: {
-            console.info(`key "${e.key}" not assigned`);
-          }
+      switch (e.key) {
+        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_takepic'): {
+          console.log('browser keyboard trigger keyboard_input_keycode_takepic');
+          remoteProcedureCall('/api/processing/chose/1pic');
+          break;
+        }
+        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_takecollage'): {
+          console.log('browser keyboard trigger keyboard_input_keycode_takecollage');
+          remoteProcedureCall('/api/processing/chose/collage');
+          break;
+        }
+        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_takeanimation'): {
+          console.log('browser keyboard trigger keyboard_input_keycode_takeanimation');
+          remoteProcedureCall('/api/processing/chose/animation');
+          break;
+        }
+        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_takevideo'): {
+          console.log('browser keyboard trigger keyboard_input_keycode_takevideo');
+          remoteProcedureCall('/api/processing/chose/video');
+          break;
+        }
+        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_print_recent_item'): {
+          console.log('browser keyboard trigger keyboard_input_keycode_print_recent_item');
+          remoteProcedureCall('/api/print/latest');
+          break;
+        }
+
+        default: {
+          console.info(`key "${e.key}" not assigned`);
         }
       }
     },

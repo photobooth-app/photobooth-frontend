@@ -27,20 +27,20 @@
       <countdown-timer
         ref="countdowntimer"
         :duration="stateStore.duration"
-        :message-duration="uiSettingsStore.uiSettings.TAKEPIC_MSG_TIME"
-        :message-text="uiSettingsStore.uiSettings.TAKEPIC_MSG_TEXT"
+        :message-duration="configurationStore.getConfigElement('uisettings.TAKEPIC_MSG_TIME')"
+        :message-text="configurationStore.getConfigElement('uisettings.TAKEPIC_MSG_TEXT')"
       ></countdown-timer>
     </div>
 
     <!-- layer display the front page text -->
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="showFrontpage" id="frontpage_text" v-html="uiSettingsStore.uiSettings['FRONTPAGE_TEXT']"></div>
+    <div v-if="showFrontpage" id="frontpage_text" v-html="configurationStore.getConfigElement('uisettings.FRONTPAGE_TEXT')"></div>
 
     <q-page-sticky position="bottom" :offset="[0, 25]">
       <div v-if="showFrontpage">
         <div class="row q-gutter-md">
           <q-btn
-            v-if="uiSettingsStore.uiSettings.show_takepic_on_frontpage"
+            v-if="configurationStore.getConfigElement('uisettings.show_takepic_on_frontpage')"
             id="frontpage-button-take-pic"
             stack
             color="primary"
@@ -55,7 +55,7 @@
             </div>
           </q-btn>
           <q-btn
-            v-if="uiSettingsStore.uiSettings.show_takecollage_on_frontpage"
+            v-if="configurationStore.getConfigElement('uisettings.show_takecollage_on_frontpage')"
             id="frontpage-button-take-collage"
             stack
             color="primary"
@@ -70,7 +70,7 @@
             </div>
           </q-btn>
           <q-btn
-            v-if="uiSettingsStore.uiSettings.show_takeanimation_on_frontpage"
+            v-if="configurationStore.getConfigElement('uisettings.show_takeanimation_on_frontpage')"
             id="frontpage-button-take-animation"
             stack
             color="primary"
@@ -86,7 +86,7 @@
           </q-btn>
 
           <q-btn
-            v-if="uiSettingsStore.uiSettings.show_takevideo_on_frontpage"
+            v-if="configurationStore.getConfigElement('uisettings.show_takevideo_on_frontpage')"
             id="frontpage-button-take-video"
             stack
             color="primary"
@@ -108,20 +108,20 @@
       <div v-if="showFrontpage">
         <div class="q-gutter-md">
           <q-btn
-            v-if="uiSettingsStore.uiSettings.show_gallery_on_frontpage"
+            v-if="configurationStore.getConfigElement('uisettings.show_gallery_on_frontpage')"
             id="frontpage-button-to-gallery"
             color="primary"
             no-caps
             rounded
             to="/gallery"
             class="action-button"
-            :style="uiSettingsStore.uiSettings.gallery_button_style"
+            :style="configurationStore.getConfigElement('uisettings.gallery_button_style')"
           >
             <q-icon left name="photo_library" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_GALLERY') }}</div>
           </q-btn>
           <q-btn
-            v-if="uiSettingsStore.uiSettings.show_admin_on_frontpage"
+            v-if="configurationStore.getConfigElement('uisettings.show_admin_on_frontpage')"
             id="frontpage-button-to-admin"
             rounded
             color="secondary"
@@ -150,7 +150,7 @@ import { defineComponent } from 'vue';
 import { remoteProcedureCall } from '../util/fetch_api.js';
 import { useMainStore } from '../stores/main-store.js';
 import { useStateStore } from '../stores/state-store.js';
-import { useUiSettingsStore } from '../stores/ui-settings-store.js';
+import { useConfigurationStore } from '../stores/configuration-store.ts';
 import CountdownTimer from '../components/CountdownTimer.vue';
 
 export default defineComponent({
@@ -159,12 +159,12 @@ export default defineComponent({
   setup() {
     const store = useMainStore();
     const stateStore = useStateStore();
-    const uiSettingsStore = useUiSettingsStore();
+    const configurationStore = useConfigurationStore();
 
     return {
       store,
       stateStore,
-      uiSettingsStore,
+      configurationStore,
       remoteProcedureCall,
     };
   },
@@ -183,7 +183,7 @@ export default defineComponent({
     },
     livestreamMirror: {
       get() {
-        return this.uiSettingsStore.uiSettings.livestream_mirror_effect;
+        return this.configurationStore.getConfigElement('uisettings.livestream_mirror_effect');
       },
     },
 

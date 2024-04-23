@@ -39,7 +39,7 @@
 import { useMainStore } from '../stores/main-store.js';
 import { useMediacollectionStore } from '../stores/mediacollection-store.js';
 import { useStateStore } from '../stores/state-store.js';
-import { useUiSettingsStore } from '../stores/ui-settings-store.js';
+import { useConfigurationStore } from '../stores/configuration-store.ts';
 import GalleryImageDetail from '../components/GalleryImageDetail.vue';
 import { remoteProcedureCall } from '../util/fetch_api.js';
 
@@ -49,7 +49,7 @@ export default {
   setup() {
     const mainStore = useMainStore();
     const mediacollectionStore = useMediacollectionStore();
-    const uiSettingsStore = useUiSettingsStore();
+    const configurationStore = useConfigurationStore();
     const stateStore = useStateStore();
 
     return {
@@ -57,7 +57,7 @@ export default {
       mainStore,
       mediacollectionStore,
       stateStore,
-      uiSettingsStore,
+      configurationStore,
       GalleryImageDetail,
       remoteProcedureCall,
     };
