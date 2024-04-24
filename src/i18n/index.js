@@ -10,6 +10,7 @@ import huHU from './locales/hu-HU.json';
 import itIT from './locales/it-IT.json';
 import jaJP from './locales/ja-JP.json';
 import koKR from './locales/ko-KR.json';
+import lolUS from './locales/lol-US.json'; //crowdin in context locale
 import nlNL from './locales/nl-NL.json';
 import noNO from './locales/no-NO.json';
 import plPL from './locales/pl-PL.json';
@@ -34,6 +35,7 @@ export default {
   'it-IT': itIT,
   'ja-JP': jaJP,
   'ko-KR': koKR,
+  'lol-US': lolUS, //crowdin in context locale
   'nl-NL': nlNL,
   'no-NO': noNO,
   'pl-PL': plPL,
