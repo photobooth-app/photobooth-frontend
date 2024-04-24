@@ -88,5 +88,7 @@
   "system information": "System information",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, delete": "Ja, slet",
-  "Are you sure you want to delete the selected files and subfolders?": "Er du sikker på, at du vil slette de valgte filer og undermapper?"
+  "Are you sure you want to delete the selected files and subfolders?": "Er du sikker på, at du vil slette de valgte filer og undermapper?",
+  "Edit translation": "Rediger oversættelse",
+  "Help to translate": "Hjælp til at oversætte"
 }

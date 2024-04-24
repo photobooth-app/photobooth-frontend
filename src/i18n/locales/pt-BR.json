@@ -88,5 +88,7 @@
   "system information": "Informação Adicional",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, delete": "Sim, excluir",
-  "Are you sure you want to delete the selected files and subfolders?": "Você tem certeza que deseja excluir os arquivos e subpastas selecionados?"
+  "Are you sure you want to delete the selected files and subfolders?": "Você tem certeza que deseja excluir os arquivos e subpastas selecionados?",
+  "Edit translation": "Editar tradução",
+  "Help to translate": "Ajude a traduzir"
 }

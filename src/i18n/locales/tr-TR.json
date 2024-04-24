@@ -88,5 +88,7 @@
   "system information": "Sistem bilgileri",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} çekirdek",
   "yes, delete": "Evet, silin",
-  "Are you sure you want to delete the selected files and subfolders?": "Seçili dosyaları ve alt klasörleri silmek istediğinizden emin misiniz?"
+  "Are you sure you want to delete the selected files and subfolders?": "Seçili dosyaları ve alt klasörleri silmek istediğinizden emin misiniz?",
+  "Edit translation": "Çeviriyi düzenle",
+  "Help to translate": "Çeviri için yardım"
 }

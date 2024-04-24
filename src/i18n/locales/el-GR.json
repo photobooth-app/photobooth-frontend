@@ -88,5 +88,7 @@
   "system information": "Πληροφορίες συστήματος",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, delete": "Ναι, διαγραφή",
-  "Are you sure you want to delete the selected files and subfolders?": "Είστε βέβαιοι ότι θέλετε να διαγράψετε τα επιλεγμένα αρχεία και υποφακέλους?"
+  "Are you sure you want to delete the selected files and subfolders?": "Είστε βέβαιοι ότι θέλετε να διαγράψετε τα επιλεγμένα αρχεία και υποφακέλους?",
+  "Edit translation": "Επεξεργασία μετάφρασης",
+  "Help to translate": "Βοηθήστε στη μετάφραση"
 }

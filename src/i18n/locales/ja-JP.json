@@ -88,5 +88,7 @@
   "system information": "システム情報",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, delete": "はい、削除します",
-  "Are you sure you want to delete the selected files and subfolders?": "選択したファイルとサブフォルダを削除してもよろしいですか？"
+  "Are you sure you want to delete the selected files and subfolders?": "選択したファイルとサブフォルダを削除してもよろしいですか？",
+  "Edit translation": "翻訳を編集",
+  "Help to translate": "翻訳を支援する"
 }

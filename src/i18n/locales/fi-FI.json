@@ -88,5 +88,7 @@
   "system information": "Järjestelmän tiedot",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, delete": "Kyllä, poista",
-  "Are you sure you want to delete the selected files and subfolders?": "Oletko varma, että haluat poistaa valitut tiedostot ja alikansiot?"
+  "Are you sure you want to delete the selected files and subfolders?": "Oletko varma, että haluat poistaa valitut tiedostot ja alikansiot?",
+  "Edit translation": "Muokkaa käännöstä",
+  "Help to translate": "Auta kääntämään"
 }

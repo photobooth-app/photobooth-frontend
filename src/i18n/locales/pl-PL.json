@@ -88,5 +88,7 @@
   "system information": "Informacje systemowe",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, delete": "Tak, usuń",
-  "Are you sure you want to delete the selected files and subfolders?": "Czy na pewno chcesz usunąć wybrane pliki i podfoldery?"
+  "Are you sure you want to delete the selected files and subfolders?": "Czy na pewno chcesz usunąć wybrane pliki i podfoldery?",
+  "Edit translation": "Edytuj tłumaczenie",
+  "Help to translate": "Pomoc w tłumaczeniu"
 }
