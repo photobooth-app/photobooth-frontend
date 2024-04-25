@@ -1,5 +1,5 @@
 <template>
-  <q-page class="fullscreen flex flex-center">
+  <q-page id="itemapproval-page" class="fullscreen flex flex-center">
     <q-img :src="imgToApproveSrc" fit="contain" style="height: 95%" />
     <!-- video approval not yet supported -->
 

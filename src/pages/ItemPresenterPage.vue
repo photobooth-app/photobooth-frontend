@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-none fullscreen">
+  <q-page id="itempresenter-page" class="q-pa-none fullscreen">
     <gallery-image-detail
       :item-repository="[stateStore.last_captured_mediaitem]"
       :index-selected="0"

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout id="admin-layout" view="hHh lpR fFf">
     <q-header elevated class="bg-secondary text-white">
       <q-toolbar class="q-pa-none">
         <q-tabs mobile-arrows shrink>

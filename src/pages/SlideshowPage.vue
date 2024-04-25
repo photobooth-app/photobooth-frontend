@@ -1,5 +1,5 @@
 <template>
-  <q-page class="full-height">
+  <q-page id="slideshow-page" class="full-height">
     <gallery-image-detail
       :show-toolbar="false"
       :slideshow-timeout="5000"

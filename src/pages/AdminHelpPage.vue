@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-  <q-page padding>
+  <q-page id="admin-help-page" padding>
     <h4>Getting started?</h4>
     <p>You made it here, so congrats: You got the app work on your computer 🎉. How to continue?</p>
     <ul>

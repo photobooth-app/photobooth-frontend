@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page id="admin-page" padding>
     <q-card class="q-pa-md">
       <div class="text-h5">{{ $t('TITLE_SERVER_CONTROL') }}</div>
       <div class="row">

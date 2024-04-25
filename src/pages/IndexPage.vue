@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-none column full-height">
+  <q-page id="index-page" class="q-pa-none column full-height">
     <!-- lowest layer: preview stream -->
 
     <div id="preview-stream-wrapper" :class="{ mirroreffect: livestreamMirror }">

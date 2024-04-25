@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page id="admin-files-page" padding>
     <div class="q-pa-md">
       <q-breadcrumbs gutter="sm" style="cursor: pointer">
         <q-breadcrumbs-el :label="$t('TITLE_FILES_WORKING_DIR')" icon="home" @click="onBreadcrumbClick(-1)" />

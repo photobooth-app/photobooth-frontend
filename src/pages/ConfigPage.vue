@@ -1,28 +1,30 @@
 <template>
-  <div v-if="!isLoadingState">
-    <json-forms
-      :data="configurationStore.configuration"
-      :ajv="ajv"
-      :renderers="renderers"
-      :schema="schema"
-      :uischema="cuischema"
-      @change="onChange"
-    />
-  </div>
-  <div v-else class="q-pa-md flex flex-center">
-    <div>
-      <q-spinner-gears size="xl" color="primary" />
+  <q-page id="config-page">
+    <div v-if="!isLoadingState">
+      <json-forms
+        :data="configurationStore.configuration"
+        :ajv="ajv"
+        :renderers="renderers"
+        :schema="schema"
+        :uischema="cuischema"
+        @change="onChange"
+      />
     </div>
-  </div>
+    <div v-else class="q-pa-md flex flex-center">
+      <div>
+        <q-spinner-gears size="xl" color="primary" />
+      </div>
+    </div>
 
-  <q-page-sticky position="bottom-right" :offset="[18, 18]">
-    <div class="q-gutter-sm">
-      <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
-      <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="remoteProcedureCall('/api/admin/config/reset')" />
-      <q-btn :label="$t('BTN_LABEL_RESTORE_CONFIG')" @click="configurationStore.getConfig('current')" />
-      <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="configurationStore.saveConfig()" />
-    </div>
-  </q-page-sticky>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <div class="q-gutter-sm">
+        <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
+        <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="remoteProcedureCall('/api/admin/config/reset')" />
+        <q-btn :label="$t('BTN_LABEL_RESTORE_CONFIG')" @click="configurationStore.getConfig('current')" />
+        <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="configurationStore.saveConfig()" />
+      </div>
+    </q-page-sticky>
+  </q-page>
 </template>
 <script lang="ts">
 import { ref, computed } from 'vue';

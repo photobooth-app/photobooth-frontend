@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page id="gallery-page" padding>
     <div v-if="!isGalleryEmpty" class="row justify-center q-gutter-sm">
       <q-intersection v-for="(item, index) in mediacollectionStore.collection" :key="item.id" once class="preview-item">
         <q-card class="q-ma-sm" @click="openPic(index)">

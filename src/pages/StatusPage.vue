@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page id="status-page" padding>
     <div class="row col-xs-12 col-sm-4 col-md-3 col-lg-3">
       <q-card class="q-mr-md q-mb-md">
         <q-card-section>

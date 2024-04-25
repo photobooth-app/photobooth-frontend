@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout id="slideshow-layout" view="hHh lpR fFf">
     <q-page-container class="fullscreen">
       <router-view />
 
