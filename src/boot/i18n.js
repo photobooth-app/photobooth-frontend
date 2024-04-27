@@ -1,6 +1,27 @@
 import { createI18n } from 'vue-i18n';
 import { default as messages } from 'src/i18n';
 
+const incontextLanguageCodeSpecial = 'lol-US';
+const script = '//cdn.crowdin.com/jipt/jipt.js';
+function enableInContextTranslation() {
+  let el = document.head.querySelector(`[src="${script}"`);
+  if (!el) {
+    el = document.createElement('script');
+    el.setAttribute('src', script);
+    el.setAttribute('type', 'text/javascript');
+    document.head.appendChild(el);
+  }
+}
+function disableInContextTranslation() {
+  let el = document.head.querySelector(`[src="${script}"`);
+  if (el) {
+    el.remove();
+    // removing does not exit the incontext translation unfortunately.
+    // chose the hard way, just reload the page, next time without translator because locale stored is changed
+    location.reload();
+  }
+}
+
 export default ({ app }) => {
   // Create I18n instance
 
@@ -21,6 +42,10 @@ export default ({ app }) => {
     messages,
   });
 
+  if (useLocale == 'lol-US') enableInContextTranslation();
+  else disableInContextTranslation();
+
   // Tell app to use the I18n instance
   app.use(i18n);
 };
+export { enableInContextTranslation, disableInContextTranslation, incontextLanguageCodeSpecial };

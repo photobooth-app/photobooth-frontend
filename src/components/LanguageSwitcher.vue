@@ -21,7 +21,7 @@
 
 <script>
 import { useI18n } from 'vue-i18n';
-const script = '//cdn.crowdin.com/jipt/jipt.js';
+import { enableInContextTranslation, disableInContextTranslation, incontextLanguageCodeSpecial } from 'boot/i18n';
 
 export default {
   setup() {
@@ -33,7 +33,7 @@ export default {
 
     const localeOptions = availableLocales
       .map(function (locale) {
-        return { value: locale, label: locale != 'lol-US' ? languageNames.of(locale) : 'Edit translation (Crowdin)' };
+        return { value: locale, label: locale != incontextLanguageCodeSpecial ? languageNames.of(locale) : 'Edit translation (Crowdin)' };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
 
@@ -45,33 +45,18 @@ export default {
   methods: {
     switchLocale(locale) {
       this.locale = locale;
-      if (locale == 'lol-US') {
+      if (locale == incontextLanguageCodeSpecial) {
         //in context translation special locale -> load incontext translation
         console.log('enable crowdin in context translation');
-        this.enableInContextTranslation();
+        enableInContextTranslation();
       } else {
         console.log('disable crowdin in context translation');
-        this.disableInContextTranslation();
+        disableInContextTranslation();
       }
 
       localStorage.setItem('locale', locale);
 
       console.log('Stored locale: ', locale);
-    },
-    enableInContextTranslation() {
-      let el = document.head.querySelector(`[src="${script}"`);
-      if (!el) {
-        el = document.createElement('script');
-        el.setAttribute('src', script);
-        el.setAttribute('type', 'text/javascript');
-        document.head.appendChild(el);
-      }
-    },
-    disableInContextTranslation() {
-      let el = document.head.querySelector(`[src="${script}"`);
-      if (el) {
-        el.remove();
-      }
     },
   },
 };
