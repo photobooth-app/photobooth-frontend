@@ -31,8 +31,10 @@ const routes = [
       { path: '', component: () => import('pages/AdminPage.vue') },
       { path: 'gallery', component: () => import('pages/GalleryPage.vue') },
       { path: 'files', component: () => import('pages/AdminFilesPage.vue') },
-      { path: 'status', component: () => import('pages/StatusPage.vue') },
+      { path: 'status', component: () => import('pages/AdminStatusPage.vue') },
+      { path: 'logs', component: () => import('pages/AdminLogsPage.vue') },
       { path: 'help', component: () => import('pages/AdminHelpPage.vue') },
+      { path: '1ststart', component: () => import('pages/Admin1stStartPage.vue') },
       {
         name: 'config',
         path: 'config/:section?',
