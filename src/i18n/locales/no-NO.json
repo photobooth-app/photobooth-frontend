@@ -90,5 +90,8 @@
   "yes, delete": "Ja, slett",
   "Are you sure you want to delete the selected files and subfolders?": "Er du sikker på at du vil slette de valgte filene og undermapper?",
   "Edit translation": "Rediger oversettelse",
-  "Help to translate": "Hjelp oss med oversettelsen"
+  "Help to translate": "Hjelp oss med oversettelsen",
+  "Rest-API documentation": "Gjen-API dokumentasjon",
+  "Logs": "Logger",
+  "1st Start": "Første start"
 }

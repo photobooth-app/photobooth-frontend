@@ -90,5 +90,8 @@
   "yes, delete": "예, 삭제",
   "Are you sure you want to delete the selected files and subfolders?": "선택한 파일과 하위 폴더를 삭제하시겠습니까?",
   "Edit translation": "번역 수정",
-  "Help to translate": "번역 도움말"
+  "Help to translate": "번역 도움말",
+  "Rest-API documentation": "Rest-API 문서",
+  "Logs": "로그",
+  "1st Start": "첫 시작"
 }

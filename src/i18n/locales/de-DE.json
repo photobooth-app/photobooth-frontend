@@ -90,5 +90,8 @@
   "yes, delete": "Ja, löschen",
   "Are you sure you want to delete the selected files and subfolders?": "Sind Sie sicher, dass Sie die ausgewählten Dateien und Unterordner löschen möchten?",
   "Edit translation": "Übersetzung bearbeiten",
-  "Help to translate": "Hilf bei der Übersetzung"
+  "Help to translate": "Hilf bei der Übersetzung",
+  "Rest-API documentation": "Rest-API-Dokumentation",
+  "Logs": "Logs",
+  "1st Start": "1. Start"
 }

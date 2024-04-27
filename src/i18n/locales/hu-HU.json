@@ -90,5 +90,8 @@
   "yes, delete": "Igen, törölni",
   "Are you sure you want to delete the selected files and subfolders?": "Biztos, hogy törölni szeretné a kiválasztott fájlokat és almappákat?",
   "Edit translation": "Fordítás szerkesztése",
-  "Help to translate": "Segítség a fordításhoz"
+  "Help to translate": "Segítség a fordításhoz",
+  "Rest-API documentation": "Rest-API dokumentáció",
+  "Logs": "Naplók",
+  "1st Start": "1. Start"
 }
