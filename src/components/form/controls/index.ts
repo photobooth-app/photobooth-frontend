@@ -1,3 +1,6 @@
+// export * from './components';
+// export * from './directives';
+
 import {
   JsonFormsRendererRegistryEntry,
   rankWith,

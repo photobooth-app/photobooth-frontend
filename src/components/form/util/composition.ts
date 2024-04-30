@@ -1,5 +1,5 @@
 import { useStyles } from '../styles';
-import { computed, ref, ComputedRef, inject } from 'vue';
+import { computed, ref, ComputedRef, inject, provide } from 'vue';
 import cloneDeep from 'lodash/cloneDeep';
 import debounce from 'lodash/debounce';
 import merge from 'lodash/merge';
@@ -51,7 +51,7 @@ export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
 
   const styles = useStyles(input.control.value.uischema);
 
-  const vuetifyProps = (path: string) => {
+  const quasarProps = (path: string) => {
     const props = get(appliedOptions.value?.vuetify, path);
 
     return props && isPlainObject(props) ? props : {};
@@ -63,7 +63,7 @@ export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
     isFocused,
     appliedOptions,
     controlWrapper,
-    vuetifyProps,
+    quasarProps,
     persistentHint,
     computedLabel,
   };
@@ -97,10 +97,18 @@ export const useQuasarControl = <I extends { control: any; handleChange: any }>(
  */
 export const useQuasarLayout = <I extends { layout: any }>(input: I) => {
   const appliedOptions = computed(() => merge({}, cloneDeep(input.layout.value.config), cloneDeep(input.layout.value.uischema.options)));
+
+  const quasarProps = (path: string) => {
+    const props = get(appliedOptions.value?.quasar, path);
+
+    return props && isPlainObject(props) ? props : {};
+  };
+
   return {
     ...input,
     styles: useStyles(input.layout.value.uischema),
     appliedOptions,
+    quasarProps,
   };
 };
 
@@ -167,4 +175,37 @@ export const useAjv = () => {
   }
 
   return extractAjv(jsonforms.core);
+};
+
+export interface NestedInfo {
+  level: number;
+  parentElement?: 'array' | 'object';
+}
+export const useNested = (element: false | 'array' | 'object'): NestedInfo => {
+  const nestedInfo = inject<NestedInfo>('jsonforms.nestedInfo', { level: 0 });
+  if (element) {
+    provide('jsonforms.nestedInfo', {
+      level: nestedInfo.level + 1,
+      parentElement: element,
+    });
+  }
+  return nestedInfo;
+};
+export const useTranslator = () => {
+  const jsonforms = inject<JsonFormsSubStates>('jsonforms');
+
+  if (!jsonforms) {
+    throw new Error("'jsonforms couldn't be injected. Are you within JSON Forms?");
+  }
+
+  if (!jsonforms.i18n || !jsonforms.i18n.translate) {
+    throw new Error("'jsonforms i18n couldn't be injected. Are you within JSON Forms?");
+  }
+
+  const translate = computed(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return jsonforms.i18n!.translate!;
+  });
+
+  return translate;
 };

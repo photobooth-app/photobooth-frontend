@@ -1,5 +1,6 @@
 import {
   isAllOfControl,
+  isAnyOfControl,
   JsonFormsRendererRegistryEntry,
   rankWith,
   and,
@@ -8,15 +9,16 @@ import {
   schemaMatches,
   schemaSubPathMatches,
   uiTypeIs,
+  isObjectControl,
 } from '@jsonforms/core';
 
 import { default as AllOfRenderer } from './AllOfRenderer.vue';
-// export { default as AnyOfRenderer } from "./AnyOfRenderer.vue";
-// export { default as ArrayControlRenderer } from "./ArrayControlRenderer.vue";
+import { default as AnyOfRenderer } from './AnyOfRenderer.vue';
+// import { default as ArrayControlRenderer } from "./ArrayControlRenderer.vue";
 import { default as EnumArrayRenderer } from './EnumArrayRenderer.vue';
-// export { default as ObjectRenderer } from "./ObjectRenderer.vue";
-// export { default as OneOfRenderer } from "./OneOfRenderer.vue";
-// export { default as OneOfTabRenderer } from "./OneOfTabRenderer.vue";
+import { default as ObjectRenderer } from './ObjectRenderer.vue';
+// import { default as OneOfRenderer } from "./OneOfRenderer.vue";
+// import { default as OneOfTabRenderer } from "./OneOfTabRenderer.vue";
 
 export const AllOfRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: AllOfRenderer,
@@ -31,6 +33,11 @@ const hasOneOfItems = (schema: JsonSchema): boolean =>
   });
 
 const hasEnumItems = (schema: JsonSchema): boolean => schema.type === 'string' && schema.enum !== undefined;
+
+export const AnyOfRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: AnyOfRenderer,
+  tester: rankWith(3, isAnyOfControl),
+};
 
 export const EnumArrayRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: EnumArrayRenderer,
@@ -48,12 +55,17 @@ export const EnumArrayRendererEntry: JsonFormsRendererRegistryEntry = {
   ),
 };
 
+export const ObjectRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: ObjectRenderer,
+  tester: rankWith(2, isObjectControl),
+};
+
 export const complexRenderers = [
   AllOfRendererEntry,
-  // anyOfRendererEntry,
+  AnyOfRendererEntry,
   // arrayControlRendererEntry,
   EnumArrayRendererEntry,
-  // objectRendererEntry,
+  ObjectRendererEntry,
   // oneOfRendererEntry,
   // oneOfTabRendererEntry,
 ];
