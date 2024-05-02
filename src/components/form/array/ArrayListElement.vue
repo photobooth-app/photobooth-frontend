@@ -3,7 +3,7 @@
     <template #header>
       <q-item-section>
         <div class="">{{ label }}</div>
-        <!--<div class="">sublabel</div>-->
+        <div class="">{{ description }}</div>
       </q-item-section>
 
       <q-item-section side>

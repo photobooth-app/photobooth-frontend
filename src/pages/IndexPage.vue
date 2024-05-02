@@ -214,19 +214,19 @@ export default defineComponent({
   watch: {},
   methods: {
     takePicture() {
-      remoteProcedureCall('/api/processing/chose/1pic');
+      remoteProcedureCall('/api/actions/image/0');
     },
     takeCollage() {
-      remoteProcedureCall('/api/processing/chose/collage');
+      remoteProcedureCall('/api/actions/collage/0');
     },
     takeAnimation() {
-      remoteProcedureCall('/api/processing/chose/animation');
+      remoteProcedureCall('/api/actions/animation/0');
     },
     takeVideo() {
-      remoteProcedureCall('/api/processing/chose/video');
+      remoteProcedureCall('/api/actions/video/0');
     },
     stopRecordingVideo() {
-      remoteProcedureCall('/api/processing/cmd/stop');
+      remoteProcedureCall('/api/actions/stop');
     },
   },
 });

@@ -16,7 +16,7 @@ import { useMediacollectionStore } from 'stores/mediacollection-store.js';
 import { useRouter } from 'vue-router';
 import ConnectionOverlay from './components/ConnectionOverlay.vue';
 import { remoteProcedureCall } from './util/fetch_api.js';
-
+import { get } from 'lodash';
 export default defineComponent({
   name: 'App',
   components: { ConnectionOverlay },
@@ -79,8 +79,7 @@ export default defineComponent({
 
       // for now on app start we send an abort to the backend.
       // could be improved to actually handle the state the machine is in and send ui to according state
-      // remoteProcedureCall("/api/processing/cmd/abort");
-
+      // remoteProcedureCall("/api/actions/abort");
       console.log('installing listener for keyboard input');
       window.addEventListener('keyup', this.keyUpHandler);
     },
@@ -177,37 +176,19 @@ export default defineComponent({
         return;
       }
 
-      switch (e.key) {
-        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_takepic'): {
-          console.log('browser keyboard trigger keyboard_input_keycode_takepic');
-          remoteProcedureCall('/api/processing/chose/1pic');
-          break;
-        }
-        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_takecollage'): {
-          console.log('browser keyboard trigger keyboard_input_keycode_takecollage');
-          remoteProcedureCall('/api/processing/chose/collage');
-          break;
-        }
-        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_takeanimation'): {
-          console.log('browser keyboard trigger keyboard_input_keycode_takeanimation');
-          remoteProcedureCall('/api/processing/chose/animation');
-          break;
-        }
-        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_takevideo'): {
-          console.log('browser keyboard trigger keyboard_input_keycode_takevideo');
-          remoteProcedureCall('/api/processing/chose/video');
-          break;
-        }
-        case this.configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_keycode_print_recent_item'): {
-          console.log('browser keyboard trigger keyboard_input_keycode_print_recent_item');
-          remoteProcedureCall('/api/print/latest');
-          break;
-        }
+      const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'print.print'];
+      action_collections.forEach((action_collection) => {
+        const action_config = this.configurationStore.getConfigElement(action_collection, []);
+        action_config.forEach((action, index) => {
+          const keycode = get(action, 'trigger.keyboard_trigger_actions.keycode');
+          if (keycode == e.key) {
+            remoteProcedureCall(`/api/${action_collection.replace('.', '/')}/${index}`);
+            return;
+          }
+        });
+      });
 
-        default: {
-          console.info(`key "${e.key}" not assigned`);
-        }
-      }
+      console.warn(`key "${e.key}" not assigned`);
     },
   },
 });

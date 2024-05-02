@@ -79,17 +79,17 @@ export default {
 
   methods: {
     userConfirm() {
-      remoteProcedureCall('/api/processing/cmd/confirm');
+      remoteProcedureCall('/api/actions/confirm');
       this.$router.push('/');
     },
     userReject() {
-      remoteProcedureCall('/api/processing/cmd/reject');
+      remoteProcedureCall('/api/actions/reject');
       this.$router.push('/');
     },
     userAbort() {
       // closing the window that was meant to use for approval
       // need to inform the statemachine to reset
-      remoteProcedureCall('/api/processing/cmd/abort');
+      remoteProcedureCall('/api/actions/abort');
       this.$router.push('/');
     },
   },

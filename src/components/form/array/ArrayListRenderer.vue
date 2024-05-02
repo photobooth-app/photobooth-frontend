@@ -29,14 +29,18 @@
       {{ control.translations.noDataMessage }}
     </div>
   </q-card>
-  <q-btn
-    round
-    color="primary"
-    icon="add"
-    :class="styles.arrayList.addButton"
-    :disabled="!control.enabled || (appliedOptions.restrict && maxItemsReached)"
-    @click="addButtonClick"
-  />
+  <div align="right">
+    <q-btn
+      rounded
+      unelevated
+      color="grey"
+      icon-right="add"
+      label="Add"
+      :class="styles.arrayList.addButton"
+      :disabled="!control.enabled || (appliedOptions.restrict && maxItemsReached)"
+      @click="addButtonClick"
+    />
+  </div>
 </template>
 
 <script lang="ts">
