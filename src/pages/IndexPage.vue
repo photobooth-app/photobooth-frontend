@@ -38,69 +38,7 @@
 
     <q-page-sticky position="bottom" :offset="[0, 25]">
       <div v-if="showFrontpage">
-        <div class="row q-gutter-md">
-          <q-btn
-            v-if="configurationStore.getConfigElement('uisettings.show_takepic_on_frontpage')"
-            id="frontpage-button-take-pic"
-            stack
-            color="primary"
-            no-caps
-            rounded
-            class="action-button col-auto"
-            @click="takePicture(/**/)"
-          >
-            <q-icon name="o_photo_camera" />
-            <div style="white-space: nowrap" class="gt-sm">
-              {{ $t('BTN_LABEL_MAINPAGE_TAKE_PHOTO') }}
-            </div>
-          </q-btn>
-          <q-btn
-            v-if="configurationStore.getConfigElement('uisettings.show_takecollage_on_frontpage')"
-            id="frontpage-button-take-collage"
-            stack
-            color="primary"
-            no-caps
-            rounded
-            class="action-button col-auto"
-            @click="takeCollage()"
-          >
-            <q-icon name="o_auto_awesome_mosaic" />
-            <div style="white-space: nowrap" class="gt-sm">
-              {{ $t('BTN_LABEL_MAINPAGE_TAKE_COLLAGE') }}
-            </div>
-          </q-btn>
-          <q-btn
-            v-if="configurationStore.getConfigElement('uisettings.show_takeanimation_on_frontpage')"
-            id="frontpage-button-take-animation"
-            stack
-            color="primary"
-            no-caps
-            rounded
-            class="action-button col-auto"
-            @click="takeAnimation()"
-          >
-            <q-icon name="o_gif_box" />
-            <div style="white-space: nowrap" class="gt-sm">
-              {{ $t('BTN_LABEL_MAINPAGE_TAKE_ANIMATION') }}
-            </div>
-          </q-btn>
-
-          <q-btn
-            v-if="configurationStore.getConfigElement('uisettings.show_takevideo_on_frontpage')"
-            id="frontpage-button-take-video"
-            stack
-            color="primary"
-            no-caps
-            rounded
-            class="action-button col-auto"
-            @click="takeVideo()"
-          >
-            <q-icon name="o_movie" />
-            <div style="white-space: nowrap" class="gt-sm">
-              {{ $t('BTN_LABEL_MAINPAGE_TAKE_VIDEO') }}
-            </div>
-          </q-btn>
-        </div>
+        <FrontpageTriggerButtons :triggers="triggerButtons" @trigger-action="invokeAction"></FrontpageTriggerButtons>
       </div>
     </q-page-sticky>
 
@@ -152,9 +90,10 @@ import { useMainStore } from '../stores/main-store.js';
 import { useStateStore } from '../stores/state-store.js';
 import { useConfigurationStore } from '../stores/configuration-store.ts';
 import CountdownTimer from '../components/CountdownTimer.vue';
-
+import { default as FrontpageTriggerButtons } from '../components/FrontpageTriggerButtons.vue';
+import { get } from 'lodash';
 export default defineComponent({
-  components: { CountdownTimer },
+  components: { CountdownTimer, FrontpageTriggerButtons },
 
   setup() {
     const store = useMainStore();
@@ -169,6 +108,23 @@ export default defineComponent({
     };
   },
   computed: {
+    triggerButtons: {
+      get() {
+        const result = [];
+
+        const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'printer.print'];
+        action_collections.forEach((action_collection) => {
+          const action_config = this.configurationStore.getConfigElement(action_collection, []);
+          action_config.forEach((action, index) => {
+            const frontpage_trigger_backend = get(action, 'trigger.frontpage_trigger');
+            result.push({ ...{ action: action_collection.replace('.', '/'), config_index: index }, ...frontpage_trigger_backend });
+          });
+        });
+        console.log(result);
+
+        return result;
+      },
+    },
     showProcessing: {
       get() {
         const capturesCompleted = this.stateStore.state == 'captures_completed';
@@ -213,17 +169,8 @@ export default defineComponent({
   },
   watch: {},
   methods: {
-    takePicture() {
-      remoteProcedureCall('/api/actions/image/0');
-    },
-    takeCollage() {
-      remoteProcedureCall('/api/actions/collage/0');
-    },
-    takeAnimation() {
-      remoteProcedureCall('/api/actions/animation/0');
-    },
-    takeVideo() {
-      remoteProcedureCall('/api/actions/video/0');
+    invokeAction(action, config_index) {
+      remoteProcedureCall(`/api/${action}/${config_index}`);
     },
     stopRecordingVideo() {
       remoteProcedureCall('/api/actions/stop');

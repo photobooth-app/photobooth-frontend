@@ -29,7 +29,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
         console.warn(error);
 
         Notify.create({
-          message: 'error getting config!',
+          message: 'Error getting config!',
           color: 'red',
         });
       } finally {
@@ -56,7 +56,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
           Notify.create({
             // TODO: How to access the translated strings here??
             // message: $t("MSG_CONFIG_PERSIST_OK"),
-            message: 'Config persisted and reloaded from server. If changed hardware settings, pls reload/restart services!',
+            message: 'Configuration successfully persisted. To apply hardware settings changed, restart the app!',
             color: 'positive',
           });
         } else {
@@ -71,18 +71,16 @@ export const useConfigurationStore = defineStore('configuration-store', {
           // https://kentcdodds.com/blog/using-fetch-with-type-script
           const json: ResponseErrorData = await response.json();
 
-          let notify_msg = 'check following fields:<br/>';
+          let notify_msg = '';
           Object.values(json.detail).forEach((detail) => {
-            notify_msg += detail['loc'].join(' -> ');
-            notify_msg += `: ${detail['msg']}`;
-            notify_msg += '<br/>';
+            notify_msg += `${detail['msg']}: ${detail['loc'].join('→')}<br/>`;
           });
 
           Notify.create({
-            caption: 'configuration validation error',
+            caption: 'Configuration Validation Error',
             icon: 'error',
             html: true,
-            message: `${notify_msg}`,
+            message: notify_msg,
             color: 'negative',
           });
           return;

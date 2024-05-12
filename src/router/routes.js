@@ -38,7 +38,7 @@ const routes = [
       {
         name: 'config',
         path: 'config/:section?',
-        component: () => import('pages/ConfigPage.vue'),
+        component: () => import('pages/AdminConfigPage.vue'),
       },
     ],
   },

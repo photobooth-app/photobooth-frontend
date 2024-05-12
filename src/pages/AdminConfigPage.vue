@@ -84,6 +84,7 @@ export default {
   setup() {
     const store = useMainStore();
     const ajv = createAjv({ multipleOfPrecision: 2 }); // https://github.com/eclipsesource/jsonforms/issues/1832#issuecomment-966209856
+    // init with defaults not working properly yet on array lists. revisit later # useDefaults: 'empty' https://ajv.js.org/options.html#usedefaults
 
     updateFormSchema();
 
