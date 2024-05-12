@@ -82,6 +82,9 @@ export default configure((ctx) => {
         [
           'vite-plugin-checker',
           {
+            overlay: {
+              initialIsOpen: false,
+            },
             vueTsc: {
               tsconfigPath: 'tsconfig.vue-tsc.json',
             },
