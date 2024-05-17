@@ -10,8 +10,9 @@
       :error="control.errors != ''"
       multiple
       use-chips
-      @add="(details) => addSelected(details.value)"
-      @remove="(details) => removeSelected(details.value)"
+      emit-value
+      @add="(details) => addSelected(details)"
+      @remove="(details) => removeSelected(details)"
     >
     </q-select>
   </control-wrapper>
@@ -35,10 +36,10 @@ const controlRenderer = defineComponent({
   },
   methods: {
     addSelected(value: any) {
-      this.addItem(this.control.path, value);
+      this.addItem(this.control.path, value.value);
     },
     removeSelected(value: any) {
-      this.removeItem?.(this.control.path, value);
+      this.removeItem?.(this.control.path, value.value);
     },
   },
 });
