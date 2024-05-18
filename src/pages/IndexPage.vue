@@ -127,9 +127,10 @@ export default defineComponent({
     },
     showProcessing: {
       get() {
-        const capturesCompleted = this.stateStore.state == 'captures_completed';
         const capture = this.stateStore.state == 'capture';
-        return capturesCompleted || capture;
+        const capturesCompleted = this.stateStore.state == 'captures_completed';
+
+        return capturesCompleted || (capture && !this.showCountdownCounting);
       },
     },
     showRecording: {
@@ -146,8 +147,9 @@ export default defineComponent({
     showCountdownCounting: {
       get() {
         const machineCounting = this.stateStore.state == 'counting';
+        const capture = this.stateStore.state == 'capture';
 
-        return this.stateStore.duration > 0 && machineCounting;
+        return (this.stateStore.duration > 0 && machineCounting) || capture;
       },
     },
     showPreview: {
@@ -156,8 +158,9 @@ export default defineComponent({
         const machineIdle = !this.stateStore.state || this.stateStore.state == 'finished';
         const machineRecord = this.stateStore.state == 'record';
         const machineCounting = this.stateStore.state == 'counting';
+        const machineCapture = this.stateStore.state == 'capture';
 
-        return enabled && (machineIdle || machineCounting || machineRecord);
+        return enabled && (machineIdle || machineCounting || machineRecord || machineCapture);
       },
     },
     showFrontpage: {

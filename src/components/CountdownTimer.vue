@@ -8,7 +8,7 @@
       style="width: 100%; height: 100%"
       :value="remainingSeconds"
       :min="0"
-      :max="duration"
+      :max="startDuration"
       reverse
       animation-speed="100"
       size="70vh"
@@ -46,6 +46,7 @@ export default defineComponent({
     return {
       intervalTimerId: null,
       remainingSeconds: 0,
+      startDuration: 0,
     };
   },
   computed: {
@@ -72,8 +73,10 @@ export default defineComponent({
       this.remainingSeconds = 0;
     },
     startTimer() {
-      console.log(`starting timer, duration=${this.duration}`);
-      this.remainingSeconds = this.duration;
+      this.startDuration = this.duration;
+      this.remainingSeconds = this.startDuration;
+
+      console.log(`starting timer, duration=${this.startDuration}`);
 
       this.intervalTimerId = setInterval(() => {
         this.remainingSeconds -= 0.05;
