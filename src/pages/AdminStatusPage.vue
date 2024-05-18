@@ -90,6 +90,13 @@
 
             <q-item>
               <q-item-section>
+                <q-item-label caption>{{ $t('computer model') }}</q-item-label>
+                <q-item-label>{{ store.information.model }} </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
                 <q-item-label caption>{{ $t('python executable') }} </q-item-label>
                 <q-item-label>{{ store.information.python_executable }}</q-item-label>
               </q-item-section>
