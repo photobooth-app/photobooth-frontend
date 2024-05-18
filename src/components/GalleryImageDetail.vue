@@ -422,7 +422,7 @@ export default {
         });
     },
     printItem(id) {
-      fetch(`/api/print/${id}/0`, {}) // TODO: print 0 index hardcoded for now!
+      fetch(`/api/printer/print/${id}/0`, {}) // TODO: print 0 index hardcoded for now!
         .then((response) => {
           if (!response.ok && !(response.status == 425 || response.status == 405)) {
             // throw if not blocked or not disabled because notification events are sent separately for this err.
