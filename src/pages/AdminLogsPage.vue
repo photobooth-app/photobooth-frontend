@@ -3,7 +3,7 @@
     <q-card class="q-pa-md q-mt-md">
       <div class="row q-gutter-sm">
         <div class="text-h5">{{ $t('log messages') }}</div>
-        <QBtn href="/debug/log/latest" target="_blank">{{ $t('download logs') }}</QBtn>
+        <QBtn href="/api/debug/log/latest" target="_blank">{{ $t('download logs') }}</QBtn>
       </div>
 
       <q-markup-table>
