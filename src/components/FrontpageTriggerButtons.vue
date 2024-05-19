@@ -2,7 +2,7 @@
   <div class="row q-gutter-md">
     <div v-for="(trigger, index) in triggers" :key="index">
       <q-btn
-        v-if="!(isEmpty(trigger.title) && isEmpty(trigger.icon))"
+        v-if="trigger.show_button && !(isEmpty(trigger.title) && isEmpty(trigger.icon))"
         stack
         color="primary"
         no-caps
@@ -25,6 +25,7 @@ defineProps<{
 }>();
 
 export interface TriggerSchema {
+  show_button: boolean;
   title: string;
   icon?: string; // icon is optional
   action: string;
