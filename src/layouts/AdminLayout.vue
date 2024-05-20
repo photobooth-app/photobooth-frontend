@@ -39,6 +39,14 @@
                 </q-item-section>
                 <q-item-section side> <q-icon name="open_in_new" /> </q-item-section>
               </q-item>
+              <q-item href="https://photobooth-app.org/" target="_blank">
+                <q-item-section avatar> <q-icon name="link" /> </q-item-section>
+                <q-item-section>
+                  <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
+                  <q-item-label>photobooth-app.org</q-item-label>
+                </q-item-section>
+                <q-item-section side> <q-icon name="open_in_new" /> </q-item-section>
+              </q-item>
             </q-list>
           </q-btn-dropdown>
         </q-tabs>
