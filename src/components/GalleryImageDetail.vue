@@ -149,7 +149,11 @@
               muted
               autoplay
               style="object-fit: contain; max-width: 100%; max-height: 100%"
-              controls="controls"
+              loop
+              playsinline
+              controls
+              controlslist="nofullscreen nodownload noremoteplayback noplaybackrate"
+              disablepictureinpicture
             ></video>
           </div>
         </q-card>
@@ -205,11 +209,17 @@
             </div>
             <div v-else class="full-height">
               <video
+                autoplay
+                loop
+                muted
+                playsinline
                 :draggable="false"
                 :src="slide.preview"
                 class="rounded-borders full-height"
                 style="object-fit: contain; max-width: 100%; max-height: 100%"
-                controls="controls"
+                controls
+                controlslist="nofullscreen nodownload noremoteplayback noplaybackrate"
+                disablepictureinpicture
               ></video>
             </div>
           </q-carousel-slide>

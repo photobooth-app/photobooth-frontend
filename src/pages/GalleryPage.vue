@@ -2,7 +2,7 @@
   <q-page id="gallery-page" padding>
     <div v-if="!isGalleryEmpty" class="row justify-center q-gutter-sm">
       <q-intersection v-for="(item, index) in mediacollectionStore.collection" :key="item.id" once class="preview-item">
-        <q-card class="q-ma-sm" @click="openPic(index)">
+        <q-card class="q-ma-xs no-shadow" @click="openPic(index)">
           <div v-if="item.media_type != 'video'">
             <q-img :src="getImageDetail(index)" loading="eager" no-transition no-spinner :ratio="1" class="rounded-borders"> </q-img>
           </div>
