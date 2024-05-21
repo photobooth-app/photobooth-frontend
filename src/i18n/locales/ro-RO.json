@@ -97,5 +97,7 @@
   "computer model": "Modelul calculatorului",
   "Are you sure you want to reset the configuration and delete config.json?": "Sunteţi sigur că doriţi să resetaţi configuraţia şi să ştergeţi config.json?",
   "Clear recycle directory": "Curăță directorul Recycle",
-  "Are you sure to clear the recycle directory?": "Sunteţi sigur că doriţi să ştergeţi directorul de reciclare?"
+  "Are you sure to clear the recycle directory?": "Sunteţi sigur că doriţi să ştergeţi directorul de reciclare?",
+  "Stats counter": "Contor statistici",
+  "Are you sure to reset stats counter?": "Ești sigur că vrei să resetezi contorul de statistici?"
 }

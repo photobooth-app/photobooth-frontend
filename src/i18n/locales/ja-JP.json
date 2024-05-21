@@ -97,5 +97,7 @@
   "computer model": "コンピューターモデル",
   "Are you sure you want to reset the configuration and delete config.json?": "設定をリセットし、config.jsonを削除してもよろしいですか？",
   "Clear recycle directory": "ごみ箱のディレクトリをクリア",
-  "Are you sure to clear the recycle directory?": "ごみ箱のディレクトリをクリアしてもよろしいですか？"
+  "Are you sure to clear the recycle directory?": "ごみ箱のディレクトリをクリアしてもよろしいですか？",
+  "Stats counter": "Stats counter",
+  "Are you sure to reset stats counter?": "本当に統計カウンターをリセットしますか？"
 }

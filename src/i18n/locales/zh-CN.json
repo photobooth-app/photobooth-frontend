@@ -97,5 +97,7 @@
   "computer model": "计算机模型",
   "Are you sure you want to reset the configuration and delete config.json?": "您确定要重置配置并删除 config.json？",
   "Clear recycle directory": "清除回收目录",
-  "Are you sure to clear the recycle directory?": "您确定要清除回收目录吗？"
+  "Are you sure to clear the recycle directory?": "您确定要清除回收目录吗？",
+  "Stats counter": "统计计数器",
+  "Are you sure to reset stats counter?": "您确定要重置统计计数器？"
 }

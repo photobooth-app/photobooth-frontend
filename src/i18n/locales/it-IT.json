@@ -97,5 +97,7 @@
   "computer model": "Modello di computer",
   "Are you sure you want to reset the configuration and delete config.json?": "Sei sicuro di voler resettare la configurazione ed eliminare config.json?",
   "Clear recycle directory": "Cancella cartella riciclo",
-  "Are you sure to clear the recycle directory?": "Sei sicuro di voler cancellare la directory del riciclo?"
+  "Are you sure to clear the recycle directory?": "Sei sicuro di voler cancellare la directory del riciclo?",
+  "Stats counter": "Contatore statistiche",
+  "Are you sure to reset stats counter?": "Sei sicuro di voler reimpostare il contatore delle statistiche?"
 }

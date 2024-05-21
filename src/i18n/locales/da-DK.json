@@ -97,5 +97,7 @@
   "computer model": "Computer model",
   "Are you sure you want to reset the configuration and delete config.json?": "Er du sikker på, at du vil nulstille konfigurationen og slette config.json?",
   "Clear recycle directory": "Ryd genbrugsmappe",
-  "Are you sure to clear the recycle directory?": "Er du sikker på at rydde papirkurven?"
+  "Are you sure to clear the recycle directory?": "Er du sikker på at rydde papirkurven?",
+  "Stats counter": "Statistik tæller",
+  "Are you sure to reset stats counter?": "Er du sikker på at du vil nulstille statistik tæller?"
 }

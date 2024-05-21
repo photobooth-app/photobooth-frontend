@@ -97,5 +97,7 @@
   "computer model": "Μοντέλο υπολογιστή",
   "Are you sure you want to reset the configuration and delete config.json?": "Είστε βέβαιοι ότι θέλετε να επαναφέρετε τις ρυθμίσεις και να διαγράψετε το config.json?",
   "Clear recycle directory": "Καθαρισμός καταλόγου ανακύκλωσης",
-  "Are you sure to clear the recycle directory?": "Είστε βέβαιοι να καθαρίσετε τον κατάλογο ανακύκλωσης?"
+  "Are you sure to clear the recycle directory?": "Είστε βέβαιοι να καθαρίσετε τον κατάλογο ανακύκλωσης?",
+  "Stats counter": "Μετρητής στατιστικών",
+  "Are you sure to reset stats counter?": "Είστε βέβαιοι ότι θα επαναφέρετε μετρητή στατιστικών?"
 }

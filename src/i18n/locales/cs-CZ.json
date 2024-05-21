@@ -97,5 +97,7 @@
   "computer model": "Model počítačů",
   "Are you sure you want to reset the configuration and delete config.json?": "Jste si jisti, že chcete resetovat konfiguraci a smazat config.json?",
   "Clear recycle directory": "Vymazat adresář pro opakování",
-  "Are you sure to clear the recycle directory?": "Opravdu chcete vymazat adresář pro recyklaci?"
+  "Are you sure to clear the recycle directory?": "Opravdu chcete vymazat adresář pro recyklaci?",
+  "Stats counter": "Počítadlo statistik",
+  "Are you sure to reset stats counter?": "Opravdu chcete obnovit čítač statistik?"
 }
