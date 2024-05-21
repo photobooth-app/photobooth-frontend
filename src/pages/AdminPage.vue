@@ -141,7 +141,22 @@
               </q-card>
             </q-dialog>
 
+            <q-dialog v-model="confirm_clear_recycle_directory">
+              <q-card class="q-pa-sm">
+                <q-card-section class="row items-center" style="flex-wrap: nowrap">
+                  <q-avatar icon="delete" color="primary" text-color="white" />
+                  <span class="q-ml-sm">{{ $t('Are you sure to clear the recycle directory?') }}</span>
+                </q-card-section>
+
+                <q-card-actions align="right">
+                  <q-btn v-close-popup flat label="Cancel" color="primary" />
+                  <q-btn v-close-popup label="Yes, clear!" color="primary" @click="remoteProcedureCall('/api/admin/files/clear_recycle_dir')" />
+                </q-card-actions>
+              </q-card>
+            </q-dialog>
+
             <q-btn class="q-mr-sm" :label="$t('BTN_LABEL_DELETE_ALL_MEDIA_FILES')" @click="confirm_delete_all = true" />
+            <q-btn class="q-mr-sm" :label="$t('Clear recycle directory')" @click="confirm_clear_recycle_directory = true" />
           </div>
         </div>
       </div>
@@ -174,6 +189,7 @@ export default defineComponent({
       confirm_install_service: ref(false),
       confirm_uninstall_service: ref(false),
       confirm_delete_all: ref(false),
+      confirm_clear_recycle_directory: ref(false),
     };
   },
 });
