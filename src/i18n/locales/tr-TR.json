@@ -95,5 +95,7 @@
   "Logs": "Günlükler",
   "1st Start": "1. Başlangıç",
   "computer model": "Bilgisayar modeli",
-  "Are you sure you want to reset the configuration and delete config.json?": "Yapılandırmayı sıfırlamak ve config.json dosyasını silmek istediğinizden emin misiniz?"
+  "Are you sure you want to reset the configuration and delete config.json?": "Yapılandırmayı sıfırlamak ve config.json dosyasını silmek istediğinizden emin misiniz?",
+  "Clear recycle directory": "Geri dönüşüm dizinini temizleyin",
+  "Are you sure to clear the recycle directory?": "Geri dönüşüm dizinini temizlediğinizden emin misiniz?"
 }

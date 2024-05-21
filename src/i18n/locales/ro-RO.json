@@ -95,5 +95,7 @@
   "Logs": "Jurnale",
   "1st Start": "Începe primul",
   "computer model": "Modelul calculatorului",
-  "Are you sure you want to reset the configuration and delete config.json?": "Sunteţi sigur că doriţi să resetaţi configuraţia şi să ştergeţi config.json?"
+  "Are you sure you want to reset the configuration and delete config.json?": "Sunteţi sigur că doriţi să resetaţi configuraţia şi să ştergeţi config.json?",
+  "Clear recycle directory": "Curăță directorul Recycle",
+  "Are you sure to clear the recycle directory?": "Sunteţi sigur că doriţi să ştergeţi directorul de reciclare?"
 }

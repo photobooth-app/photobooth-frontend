@@ -95,5 +95,7 @@
   "Logs": "Registros",
   "1st Start": "1º inicio",
   "computer model": "Modelo de computadora",
-  "Are you sure you want to reset the configuration and delete config.json?": "¿Está seguro que desea restablecer la configuración y eliminar config.json?"
+  "Are you sure you want to reset the configuration and delete config.json?": "¿Está seguro que desea restablecer la configuración y eliminar config.json?",
+  "Clear recycle directory": "Borrar directorio de reciclado",
+  "Are you sure to clear the recycle directory?": "¿Está seguro de borrar el directorio de reciclaje?"
 }

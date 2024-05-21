@@ -95,5 +95,7 @@
   "Logs": "Naplók",
   "1st Start": "1. Start",
   "computer model": "Számítógépes modell",
-  "Are you sure you want to reset the configuration and delete config.json?": "Biztos, hogy vissza akarja állítani a konfigurációt és törölni a config.json fájlt?"
+  "Are you sure you want to reset the configuration and delete config.json?": "Biztos, hogy vissza akarja állítani a konfigurációt és törölni a config.json fájlt?",
+  "Clear recycle directory": "Újrahasznosítási könyvtár törlése",
+  "Are you sure to clear the recycle directory?": "Biztos, hogy kiürítette az újrahasznosítási könyvtárat?"
 }

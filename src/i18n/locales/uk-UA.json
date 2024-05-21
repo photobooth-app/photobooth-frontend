@@ -95,5 +95,7 @@
   "Logs": "Логи",
   "1st Start": "Перший старт",
   "computer model": "Комп'ютерна модель",
-  "Are you sure you want to reset the configuration and delete config.json?": "Ви впевнені, що хочете скинути конфігурацію та видалити config.json?"
+  "Are you sure you want to reset the configuration and delete config.json?": "Ви впевнені, що хочете скинути конфігурацію та видалити config.json?",
+  "Clear recycle directory": "Очистити каталог кошиків",
+  "Are you sure to clear the recycle directory?": "Ви впевнені, що хочете очистити каталог кошика?"
 }

@@ -95,5 +95,7 @@
   "Logs": "Logger",
   "1st Start": "Første start",
   "computer model": "Datamaskin modell",
-  "Are you sure you want to reset the configuration and delete config.json?": "Er du sikker på at du vil tilbakestille konfigurasjonen og slette config.json?"
+  "Are you sure you want to reset the configuration and delete config.json?": "Er du sikker på at du vil tilbakestille konfigurasjonen og slette config.json?",
+  "Clear recycle directory": "Tøm papirkurvmappen",
+  "Are you sure to clear the recycle directory?": "Er du sikker på at du vil tømme papirkurven?"
 }

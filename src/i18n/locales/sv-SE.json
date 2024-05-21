@@ -95,5 +95,7 @@
   "Logs": "Loggar",
   "1st Start": "1:a Start",
   "computer model": "Datormodell",
-  "Are you sure you want to reset the configuration and delete config.json?": "Är du säker på att du vill återställa konfigurationen och ta bort config.json?"
+  "Are you sure you want to reset the configuration and delete config.json?": "Är du säker på att du vill återställa konfigurationen och ta bort config.json?",
+  "Clear recycle directory": "Rensa papperskorgen",
+  "Are you sure to clear the recycle directory?": "Är du säker på att rensa papperskatalogen?"
 }

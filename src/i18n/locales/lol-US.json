@@ -95,5 +95,7 @@
   "Logs": "crwdns336:0crwdne336:0",
   "1st Start": "crwdns338:0crwdne338:0",
   "computer model": "crwdns340:0crwdne340:0",
-  "Are you sure you want to reset the configuration and delete config.json?": "crwdns342:0crwdne342:0"
+  "Are you sure you want to reset the configuration and delete config.json?": "crwdns342:0crwdne342:0",
+  "Clear recycle directory": "crwdns344:0crwdne344:0",
+  "Are you sure to clear the recycle directory?": "crwdns346:0crwdne346:0"
 }

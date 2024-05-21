@@ -95,5 +95,7 @@
   "Logs": "日志",
   "1st Start": "第一个开始",
   "computer model": "计算机模型",
-  "Are you sure you want to reset the configuration and delete config.json?": "您确定要重置配置并删除 config.json？"
+  "Are you sure you want to reset the configuration and delete config.json?": "您确定要重置配置并删除 config.json？",
+  "Clear recycle directory": "清除回收目录",
+  "Are you sure to clear the recycle directory?": "您确定要清除回收目录吗？"
 }
