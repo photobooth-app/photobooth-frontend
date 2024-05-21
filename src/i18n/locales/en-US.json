@@ -94,5 +94,6 @@
   "Rest-API documentation": "Rest-API documentation",
   "Logs": "Logs",
   "1st Start": "1st Start",
-  "computer model": "Computer model"
+  "computer model": "Computer model",
+  "Are you sure you want to reset the configuration and delete config.json?": "Are you sure you want to reset the configuration and delete config.json?"
 }

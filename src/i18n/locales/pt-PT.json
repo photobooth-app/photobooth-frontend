@@ -93,5 +93,7 @@
   "Help to translate": "Ajude a traduzir",
   "Rest-API documentation": "Documentação Rest-API",
   "Logs": "Registros",
-  "1st Start": "Primeiro Início"
+  "1st Start": "Primeiro Início",
+  "computer model": "Modelo do computador",
+  "Are you sure you want to reset the configuration and delete config.json?": "Tem certeza que deseja redefinir a configuração e excluir config.json?"
 }

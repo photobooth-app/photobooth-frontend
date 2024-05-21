@@ -93,5 +93,7 @@
   "Help to translate": "Help te vertalen",
   "Rest-API documentation": "Rest-API documentatie",
   "Logs": "Logboeken",
-  "1st Start": "1e start"
+  "1st Start": "1e start",
+  "computer model": "Computer model",
+  "Are you sure you want to reset the configuration and delete config.json?": "Weet u zeker dat u de configuratie wilt resetten en config.json wilt verwijderen?"
 }

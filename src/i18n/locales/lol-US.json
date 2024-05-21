@@ -93,5 +93,7 @@
   "Help to translate": "crwdns332:0crwdne332:0",
   "Rest-API documentation": "crwdns334:0crwdne334:0",
   "Logs": "crwdns336:0crwdne336:0",
-  "1st Start": "crwdns338:0crwdne338:0"
+  "1st Start": "crwdns338:0crwdne338:0",
+  "computer model": "crwdns340:0crwdne340:0",
+  "Are you sure you want to reset the configuration and delete config.json?": "crwdns342:0crwdne342:0"
 }

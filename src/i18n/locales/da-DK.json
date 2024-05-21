@@ -93,5 +93,7 @@
   "Help to translate": "Hjælp til at oversætte",
   "Rest-API documentation": "Gen-API dokumentation",
   "Logs": "Logfiler",
-  "1st Start": "1. Start"
+  "1st Start": "1. Start",
+  "computer model": "Computer model",
+  "Are you sure you want to reset the configuration and delete config.json?": "Er du sikker på, at du vil nulstille konfigurationen og slette config.json?"
 }

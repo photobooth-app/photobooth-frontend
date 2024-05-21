@@ -93,5 +93,7 @@
   "Help to translate": "번역 도움말",
   "Rest-API documentation": "Rest-API 문서",
   "Logs": "로그",
-  "1st Start": "첫 시작"
+  "1st Start": "첫 시작",
+  "computer model": "컴퓨터 모델",
+  "Are you sure you want to reset the configuration and delete config.json?": "구성을 재설정하고 config.json을 삭제하시겠습니까?"
 }

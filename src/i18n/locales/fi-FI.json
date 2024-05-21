@@ -93,5 +93,7 @@
   "Help to translate": "Auta kääntämään",
   "Rest-API documentation": "Rest-API dokumentaatio",
   "Logs": "Lokit",
-  "1st Start": "1. Aloitus"
+  "1st Start": "1. Aloitus",
+  "computer model": "Tietokonemalli",
+  "Are you sure you want to reset the configuration and delete config.json?": "Oletko varma, että haluat palauttaa konfiguraation ja poistaa config.json?"
 }

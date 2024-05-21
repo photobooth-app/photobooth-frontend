@@ -16,7 +16,7 @@
   "BTN_LABEL_MAINPAGE_TO_ADMIN": "Admin",
   "BTN_LABEL_MAINPAGE_TO_GALLERY": "Galería",
   "BTN_LABEL_MAINPAGE_TAKE_ANIMATION": "Animación",
-  "BTN_LABEL_MAINPAGE_TAKE_COLLAGE": "Collar",
+  "BTN_LABEL_MAINPAGE_TAKE_COLLAGE": "Collage",
   "BTN_LABEL_MAINPAGE_TAKE_PHOTO": "Foto",
   "BTN_LABEL_MAINPAGE_TAKE_VIDEO": "Vídeo",
   "BTN_LABEL_PERSIST_CONFIG": "Guarda",
@@ -93,5 +93,7 @@
   "Help to translate": "Ayuda a traducir",
   "Rest-API documentation": "Documentación de Rest-API",
   "Logs": "Registros",
-  "1st Start": "1º inicio"
+  "1st Start": "1º inicio",
+  "computer model": "Modelo de computadora",
+  "Are you sure you want to reset the configuration and delete config.json?": "¿Está seguro que desea restablecer la configuración y eliminar config.json?"
 }

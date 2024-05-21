@@ -93,5 +93,7 @@
   "Help to translate": "翻訳を支援する",
   "Rest-API documentation": "Rest-API ドキュメント",
   "Logs": "ログ",
-  "1st Start": "最初のスタート"
+  "1st Start": "最初のスタート",
+  "computer model": "コンピューターモデル",
+  "Are you sure you want to reset the configuration and delete config.json?": "設定をリセットし、config.jsonを削除してもよろしいですか？"
 }

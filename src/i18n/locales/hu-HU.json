@@ -93,5 +93,7 @@
   "Help to translate": "Segítség a fordításhoz",
   "Rest-API documentation": "Rest-API dokumentáció",
   "Logs": "Naplók",
-  "1st Start": "1. Start"
+  "1st Start": "1. Start",
+  "computer model": "Számítógépes modell",
+  "Are you sure you want to reset the configuration and delete config.json?": "Biztos, hogy vissza akarja állítani a konfigurációt és törölni a config.json fájlt?"
 }

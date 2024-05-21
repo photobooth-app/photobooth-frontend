@@ -93,5 +93,7 @@
   "Help to translate": "Pomoc s překladem",
   "Rest-API documentation": "Rest-API dokumentace",
   "Logs": "Logy",
-  "1st Start": "1. začátek"
+  "1st Start": "1. začátek",
+  "computer model": "Model počítačů",
+  "Are you sure you want to reset the configuration and delete config.json?": "Jste si jisti, že chcete resetovat konfiguraci a smazat config.json?"
 }
