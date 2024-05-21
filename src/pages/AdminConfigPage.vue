@@ -19,11 +19,25 @@
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <div class="q-gutter-sm">
         <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
-        <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="remoteProcedureCall('/api/admin/config/reset')" />
+        <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="confirm_reset_config = true" />
         <q-btn :label="$t('BTN_LABEL_RESTORE_CONFIG')" @click="configurationStore.getConfig('current')" />
         <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="configurationStore.saveConfig()" />
       </div>
     </q-page-sticky>
+
+    <q-dialog v-model="confirm_reset_config">
+      <q-card class="q-pa-sm" style="min-width: 350px">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="delete" color="negative" text-color="white" />
+          <span class="q-ml-sm">{{ $t('Are you sure you want to reset the configuration and delete config.json?') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
+          <q-btn v-close-popup :label="$t('yes, delete')" color="negative" @click="remoteProcedureCall('/api/admin/config/reset')" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 <script lang="ts">
@@ -41,6 +55,7 @@ const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } });
 const renderers = [...quasarRenderers];
 const isLoadingState = ref(true);
 const schema = ref({});
+const confirm_reset_config = ref(false);
 
 const getSchema = async () => {
   try {
@@ -106,6 +121,7 @@ export default {
       cuischema,
       isLoadingState,
       configurationStore,
+      confirm_reset_config,
     };
   },
   // name: 'PageName',

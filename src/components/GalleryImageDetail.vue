@@ -17,7 +17,7 @@
 
         <q-dialog v-model="confirmDeleteFile">
           <q-card id="gallery-confirm-delete-dialog" class="q-pa-sm" style="min-width: 350px">
-            <q-card-section class="row items-center">
+            <q-card-section class="row items-center" style="flex-wrap: nowrap">
               <q-avatar icon="delete" color="primary" text-color="white" />
               <span class="q-ml-sm">{{ $t('MSG_CONFIRM_DELETE_IMAGE') }}</span>
             </q-card-section>

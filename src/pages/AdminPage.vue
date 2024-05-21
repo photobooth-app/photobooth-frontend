@@ -7,7 +7,7 @@
           <div class="text-no-wrap">
             <q-dialog v-model="confirm_reboot">
               <q-card class="q-pa-sm" style="min-width: 350px">
-                <q-card-section class="row items-center">
+                <q-card-section class="row items-center" style="flex-wrap: nowrap">
                   <q-avatar icon="restart_alt" color="primary" text-color="white" />
                   <span class="q-ml-sm">{{ $t('MSG_CONFIRM_REBOOT') }}</span>
                 </q-card-section>
@@ -21,7 +21,7 @@
 
             <q-dialog v-model="confirm_shutdown">
               <q-card class="q-pa-sm" style="min-width: 350px">
-                <q-card-section class="row items-center">
+                <q-card-section class="row items-center" style="flex-wrap: nowrap">
                   <q-avatar icon="power_settings_new" color="primary" text-color="white" />
                   <span class="q-ml-sm">{{ $t('MSG_CONFIRM_SHUTDOWN') }}</span>
                 </q-card-section>
@@ -40,7 +40,7 @@
 
             <q-dialog v-model="confirm_restart_service">
               <q-card class="q-pa-sm" style="min-width: 350px">
-                <q-card-section class="row items-center">
+                <q-card-section class="row items-center" style="flex-wrap: nowrap">
                   <q-avatar icon="restart_alt" color="primary" text-color="white" />
                   <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RESTART_SERVICE') }}</span>
                 </q-card-section>
@@ -59,7 +59,7 @@
 
             <q-dialog v-model="confirm_reload_service">
               <q-card class="q-pa-sm" style="min-width: 350px">
-                <q-card-section class="row items-center">
+                <q-card-section class="row items-center" style="flex-wrap: nowrap">
                   <q-avatar icon="restart_alt" color="primary" text-color="white" />
                   <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RELOAD_SERVICE') }}</span>
                 </q-card-section>
@@ -78,7 +78,7 @@
 
             <q-dialog v-model="confirm_install_service">
               <q-card class="q-pa-sm" style="min-width: 350px">
-                <q-card-section class="row items-center">
+                <q-card-section class="row items-center" style="flex-wrap: nowrap">
                   <q-avatar icon="add_circle" color="primary" text-color="white" />
                   <span class="q-ml-sm">{{ $t('MSG_CONFIRM_INSTALL_SERVICE') }}</span>
                 </q-card-section>
@@ -97,7 +97,7 @@
 
             <q-dialog v-model="confirm_uninstall_service">
               <q-card class="q-pa-sm" style="min-width: 350px">
-                <q-card-section class="row items-center">
+                <q-card-section class="row items-center" style="flex-wrap: nowrap">
                   <q-avatar icon="cancel" color="primary" text-color="white" />
                   <span class="q-ml-sm">{{ $t('MSG_CONFIRM_UNINSTALL_SERVICE') }}</span>
                 </q-card-section>
@@ -129,7 +129,7 @@
           <div class="text-no-wrap">
             <q-dialog v-model="confirm_delete_all">
               <q-card class="q-pa-sm">
-                <q-card-section class="row items-center">
+                <q-card-section class="row items-center" style="flex-wrap: nowrap">
                   <q-avatar icon="delete" color="primary" text-color="white" />
                   <span class="q-ml-sm">{{ $t('MSG_CONFIRM_DELETE_ALL_MEDIA_FILES') }}</span>
                 </q-card-section>
