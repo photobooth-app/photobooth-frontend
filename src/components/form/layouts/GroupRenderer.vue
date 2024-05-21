@@ -1,5 +1,5 @@
 <template>
-  <q-card v-if="layout.visible" :class="classes" :elevation="!bare ? 2 : undefined" :outlined="bare" v-bind="quasarProps('q-card')">
+  <q-card v-if="layout.visible" flat :class="classes" :elevation="!bare ? 2 : undefined" :outlined="bare" v-bind="quasarProps('q-card')">
     <q-card-section v-if="layout.label" :class="styles.group.label" v-bind="quasarProps('q-card-section')">
       <div class="text-h6">{{ layout.label }}</div>
     </q-card-section>

@@ -28,10 +28,6 @@ export const useMainStore = defineStore('main-store', {
         primary: {},
         secondary: {},
       },
-      printer: {
-        is_blocked: null,
-        waiting_time: null,
-      },
       version: null,
       platform_system: null,
       platform_release: null,
@@ -41,6 +37,7 @@ export const useMainStore = defineStore('main-store', {
       platform_cpu_count: null,
       data_directory: null,
       python_executable: null,
+      stats_counter: {},
     },
 
     lastHeartbeat: null,

@@ -1,9 +1,9 @@
 <template>
   <q-layout id="admin-layout" view="hHh lpR fFf">
-    <q-header elevated class="bg-secondary text-white">
+    <q-header class="bg-secondary text-white">
       <q-toolbar class="q-pa-none">
+        <q-btn class="q-mx-sm" stack to="/" icon="arrow_back_ios_new" :label="$t('BTN_LABEL_BACK')" />
         <q-tabs mobile-arrows shrink stretch>
-          <q-route-tab class="bg-primary" to="/" icon="arrow_back_ios_new" :label="$t('BTN_LABEL_BACK')" />
           <q-route-tab to="/admin" icon="dashboard" :label="$t('TAB_LABEL_DASHBOARD')" />
 
           <!--q-route-tab to="/admin/gallery" icon="photo_library" :label="$t('TAB_LABEL_GALLERY')" /-->

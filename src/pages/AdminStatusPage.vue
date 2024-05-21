@@ -1,7 +1,7 @@
 <template>
   <q-page id="status-page" padding>
     <div class="row col-xs-12 col-sm-4 col-md-3 col-lg-3">
-      <q-card class="q-mr-md q-mb-md">
+      <q-card flat class="q-mr-md q-mb-md">
         <q-card-section>
           <q-list separator>
             <q-item-label header>{{ $t('system information') }}</q-item-label>
@@ -58,7 +58,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card class="q-mr-md q-mb-md">
+      <q-card flat class="q-mr-md q-mb-md">
         <q-card-section>
           <q-list separator>
             <q-item-label header>{{ $t('platform') }}</q-item-label>
@@ -114,7 +114,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card class="q-mr-md q-mb-md">
+      <q-card flat class="q-mr-md q-mb-md">
         <q-card-section>
           <q-list separator>
             <q-item-label header>{{ $t('primary backend') }}</q-item-label>
@@ -127,7 +127,7 @@
           </q-list>
         </q-card-section>
       </q-card>
-      <q-card v-if="Object.keys(store.information.backends.secondary).length > 0" class="q-mr-md q-mb-md">
+      <q-card v-if="Object.keys(store.information.backends.secondary).length > 0" flat class="q-mr-md q-mb-md">
         <q-card-section>
           <q-list separator>
             <q-item-label header>{{ $t('secondary backend') }}</q-item-label>
@@ -140,12 +140,47 @@
           </q-list>
         </q-card-section>
       </q-card>
+
+      <q-card flat class="q-mr-md q-mb-md">
+        <q-card-section>
+          <q-list separator>
+            <q-item-label header>{{ $t('Stats counter') }}</q-item-label>
+
+            <q-item v-for="(value, key, index) in store.information.stats_counter" :key="index">
+              <q-item-section>
+                <q-item-label caption>{{ key }}</q-item-label>
+                <q-item-label>{{ value }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-actions align="right">
+          <q-btn flat color="primary" icon="history" label="reset" @click="confirm_reset_stats_counter = true" />
+        </q-card-actions>
+      </q-card>
     </div>
+
+    <q-dialog v-model="confirm_reset_stats_counter">
+      <q-card class="q-pa-sm">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="history" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('Are you sure to reset stats counter?') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat label="Cancel" color="primary" />
+          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="remoteProcedureCall('/api/admin/information/sttscntr/reset')" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useMainStore } from '../stores/main-store.js';
 import { remoteProcedureCall } from '../util/fetch_api.js';
 import { QBtn } from 'quasar';
@@ -156,11 +191,13 @@ export default defineComponent({
   components: { QBtn },
   setup() {
     const store = useMainStore();
+    const confirm_reset_stats_counter = ref(false);
 
     return {
       // you can return the whole store instance to use it in the template
       store,
       remoteProcedureCall,
+      confirm_reset_stats_counter,
     };
   },
   methods: {},

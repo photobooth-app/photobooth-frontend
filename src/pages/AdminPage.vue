@@ -1,6 +1,6 @@
 <template>
   <q-page id="admin-page" padding>
-    <q-card class="q-pa-md">
+    <q-card flat class="q-pa-md">
       <div class="text-h5">{{ $t('TITLE_SERVER_CONTROL') }}</div>
       <div class="row">
         <div class="q-ma-sm">
@@ -122,7 +122,7 @@
         </div>
       </div>
     </q-card>
-    <q-card class="q-pa-md q-mt-md">
+    <q-card flat class="q-pa-md q-mt-md">
       <div class="text-h5">{{ $t('TITLE_MAINTAIN_GALLERY') }}</div>
       <div class="row">
         <div class="q-ma-sm">
@@ -150,7 +150,7 @@
 
                 <q-card-actions align="right">
                   <q-btn v-close-popup flat label="Cancel" color="primary" />
-                  <q-btn v-close-popup label="Yes, clear!" color="primary" @click="remoteProcedureCall('/api/admin/files/clear_recycle_dir')" />
+                  <q-btn v-close-popup label="Yes, clear!" color="primary" @click="remoteProcedureCall('/api/admin/files/clearrecycledir')" />
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -162,7 +162,7 @@
       </div>
     </q-card>
 
-    <q-card class="q-pa-md q-mt-md">
+    <q-card flat class="q-pa-md q-mt-md">
       <div class="text-h5">{{ $t('TITLE_LOCAL_UI_SETTINGS') }}</div>
       <div class="row">
         <language-switcher />

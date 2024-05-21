@@ -1,6 +1,6 @@
 <template>
   <q-layout v-if="!emptyRepository" view="hhh Lpr ffr" @click="abortTimer">
-    <q-header elevated class="bg-primary text-white">
+    <q-header class="bg-primary text-white">
       <q-toolbar v-if="showToolbar" id="gallery-toolbar" class="toolbar">
         <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
 
