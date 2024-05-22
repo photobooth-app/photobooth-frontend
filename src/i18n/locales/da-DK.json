@@ -99,5 +99,8 @@
   "Clear recycle directory": "Ryd genbrugsmappe",
   "Are you sure to clear the recycle directory?": "Er du sikker på at rydde papirkurven?",
   "Stats counter": "Statistik tæller",
-  "Are you sure to reset stats counter?": "Er du sikker på at du vil nulstille statistik tæller?"
+  "Are you sure to reset stats counter?": "Er du sikker på at du vil nulstille statistik tæller?",
+  "Choose your filter": "Vælg dit filter",
+  "Service (Linux only)": "Tjenesten (kun Linux)",
+  "Host": "Vært"
 }

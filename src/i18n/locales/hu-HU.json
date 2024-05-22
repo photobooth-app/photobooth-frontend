@@ -98,6 +98,9 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Biztos, hogy vissza akarja állítani a konfigurációt és törölni a config.json fájlt?",
   "Clear recycle directory": "Újrahasznosítási könyvtár törlése",
   "Are you sure to clear the recycle directory?": "Biztos, hogy kiürítette az újrahasznosítási könyvtárat?",
-  "Stats counter": "Stats counter",
-  "Are you sure to reset stats counter?": "Are you sure to reset stats counter?"
+  "Stats counter": "Statisztikai számláló",
+  "Are you sure to reset stats counter?": "Biztos, hogy visszaállítja a statisztikák számlálóját?",
+  "Choose your filter": "Válassza ki a szűrőt",
+  "Service (Linux only)": "Szolgáltatás (csak Linux)",
+  "Host": "Házigazda"
 }

@@ -99,5 +99,8 @@
   "Clear recycle directory": "Tyhjennä kierrätyskansio",
   "Are you sure to clear the recycle directory?": "Haluatko varmasti tyhjentää kierrätyshakemiston?",
   "Stats counter": "Tilastojen laskuri",
-  "Are you sure to reset stats counter?": "Haluatko varmasti nollata tilastot tiski?"
+  "Are you sure to reset stats counter?": "Haluatko varmasti nollata tilastot tiski?",
+  "Choose your filter": "Valitse suodatin",
+  "Service (Linux only)": "Palvelu (vain Linux)",
+  "Host": "Isäntä"
 }

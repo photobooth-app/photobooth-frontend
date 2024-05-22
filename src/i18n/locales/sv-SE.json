@@ -99,5 +99,8 @@
   "Clear recycle directory": "Rensa papperskorgen",
   "Are you sure to clear the recycle directory?": "Är du säker på att rensa papperskatalogen?",
   "Stats counter": "Statistik räknare",
-  "Are you sure to reset stats counter?": "Är du säker på att återställa statistikräknare?"
+  "Are you sure to reset stats counter?": "Är du säker på att återställa statistikräknare?",
+  "Choose your filter": "Välj ditt filter",
+  "Service (Linux only)": "Service (endast Linux)",
+  "Host": "Värd"
 }

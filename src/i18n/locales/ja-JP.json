@@ -99,5 +99,8 @@
   "Clear recycle directory": "ごみ箱のディレクトリをクリア",
   "Are you sure to clear the recycle directory?": "ごみ箱のディレクトリをクリアしてもよろしいですか？",
   "Stats counter": "Stats counter",
-  "Are you sure to reset stats counter?": "本当に統計カウンターをリセットしますか？"
+  "Are you sure to reset stats counter?": "本当に統計カウンターをリセットしますか？",
+  "Choose your filter": "フィルターを選択",
+  "Service (Linux only)": "サービス (Linux のみ)",
+  "Host": "ホスト"
 }

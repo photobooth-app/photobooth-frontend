@@ -98,6 +98,9 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Er du sikker på at du vil tilbakestille konfigurasjonen og slette config.json?",
   "Clear recycle directory": "Tøm papirkurvmappen",
   "Are you sure to clear the recycle directory?": "Er du sikker på at du vil tømme papirkurven?",
-  "Stats counter": "Stats counter",
-  "Are you sure to reset stats counter?": "Are you sure to reset stats counter?"
+  "Stats counter": "Statistikk teller",
+  "Are you sure to reset stats counter?": "Er du sikker på at du vil nullstille statistikk teller?",
+  "Choose your filter": "Velg ditt filter",
+  "Service (Linux only)": "Tjeneste (bare Linux-)",
+  "Host": "Vert"
 }

@@ -98,6 +98,9 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Yapılandırmayı sıfırlamak ve config.json dosyasını silmek istediğinizden emin misiniz?",
   "Clear recycle directory": "Geri dönüşüm dizinini temizleyin",
   "Are you sure to clear the recycle directory?": "Geri dönüşüm dizinini temizlediğinizden emin misiniz?",
-  "Stats counter": "Stats counter",
-  "Are you sure to reset stats counter?": "Are you sure to reset stats counter?"
+  "Stats counter": "İstatistik sayacı",
+  "Are you sure to reset stats counter?": "İstatistik sayacını sıfırladığınızdan emin misiniz?",
+  "Choose your filter": "Filtrenizi seçin",
+  "Service (Linux only)": "Servis (yalnızca Linux)",
+  "Host": "Ev sahibi"
 }

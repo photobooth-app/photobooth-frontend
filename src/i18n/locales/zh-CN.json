@@ -99,5 +99,8 @@
   "Clear recycle directory": "清除回收目录",
   "Are you sure to clear the recycle directory?": "您确定要清除回收目录吗？",
   "Stats counter": "统计计数器",
-  "Are you sure to reset stats counter?": "您确定要重置统计计数器？"
+  "Are you sure to reset stats counter?": "您确定要重置统计计数器？",
+  "Choose your filter": "选择您的过滤器",
+  "Service (Linux only)": "服务 (Linux)",
+  "Host": "主机"
 }

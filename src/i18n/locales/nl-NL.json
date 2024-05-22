@@ -99,5 +99,8 @@
   "Clear recycle directory": "Prullenbak wissen",
   "Are you sure to clear the recycle directory?": "Weet u zeker dat u de map voor recycling wilt wissen?",
   "Stats counter": "Statistieken teller",
-  "Are you sure to reset stats counter?": "Weet u zeker dat u de statistiekenteller wilt resetten?"
+  "Are you sure to reset stats counter?": "Weet u zeker dat u de statistiekenteller wilt resetten?",
+  "Choose your filter": "Kies uw filter",
+  "Service (Linux only)": "Service (alleen Linux)",
+  "Host": "Hostnaam"
 }

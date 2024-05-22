@@ -99,5 +99,8 @@
   "Clear recycle directory": "Cancella cartella riciclo",
   "Are you sure to clear the recycle directory?": "Sei sicuro di voler cancellare la directory del riciclo?",
   "Stats counter": "Contatore statistiche",
-  "Are you sure to reset stats counter?": "Sei sicuro di voler reimpostare il contatore delle statistiche?"
+  "Are you sure to reset stats counter?": "Sei sicuro di voler reimpostare il contatore delle statistiche?",
+  "Choose your filter": "Scegli il tuo filtro",
+  "Service (Linux only)": "Servizio (solo Linux)",
+  "Host": "Host"
 }
