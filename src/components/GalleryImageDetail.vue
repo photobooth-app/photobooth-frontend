@@ -112,20 +112,24 @@
       class="q-pa-sm"
       side="right"
       overlay
+      elevated
     >
-      <q-card v-for="filter in configurationStore.getConfigElement('uisettings.gallery_filter_userselectable', [])" :key="filter" class="q-mb-sm">
-        <q-card-section class="q-pa-sm">
+      <div class="text-center text-overline">{{ $t('Choose your filter') }}</div>
+      <q-card
+        v-for="filter in configurationStore.getConfigElement('uisettings.gallery_filter_userselectable', [])"
+        :key="filter"
+        bordered
+        class="q-mb-sm no-shadow"
+      >
+        <q-card-section class="q-pa-none">
           <q-img
             class="rounded-borders"
             loading="lazy"
             :src="`/api/mediaprocessing/preview/${currentSlideId}/${filter}`"
             @click="applyFilter(currentSlideId, filter)"
           >
+            <div class="absolute-bottom-right text-subtitle1 text-center" style="padding: 4px; pointer-events: none">{{ filter }}</div>
           </q-img>
-        </q-card-section>
-
-        <q-card-section class="q-pa-none q-pb-sm" align="center">
-          <div class="text-subtitle2">{{ filter }}</div>
         </q-card-section>
       </q-card>
     </q-drawer>

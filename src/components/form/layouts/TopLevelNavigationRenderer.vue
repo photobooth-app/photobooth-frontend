@@ -30,7 +30,7 @@
       <q-page padding>
         <!--div>{{ JSON.stringify(this.serverConfig) }}</div-->
         <div class="config-form q-mt-md row justify-center">
-          <div class="col-12 col-md-8 q-mb-xl">
+          <div class="col-12 col-md-10 q-mb-xl">
             <div v-for="(element, index) in visibleCategories" :key="`${layout.path}-${index}`">
               <!--div class="col-12 col-md-8 q-mb-xl">{{ layout.schema.description }} TODO: maybe find out later how to read description</div-->
               <dispatch-renderer

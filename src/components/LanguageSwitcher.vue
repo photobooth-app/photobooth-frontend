@@ -12,10 +12,6 @@
         <q-icon name="language" />
       </template>
     </q-select>
-    <q-btn @click="switchLocale('lol-US')">{{ $t('Edit translation') }}</q-btn>
-    <q-btn href="https://github.com/photobooth-app/photobooth-app/blob/main/CONTRIBUTING.md#help-translate-the-app" target="_blank">
-      {{ $t('Help to translate') }}
-    </q-btn>
   </div>
 </template>
 

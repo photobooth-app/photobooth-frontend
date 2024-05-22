@@ -28,7 +28,7 @@ const routes = [
     meta: { requiresAuth: true, requiresAdmin: true },
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/AdminPage.vue') },
+      { path: '', component: () => import('pages/AdminDashboardPage.vue') },
       { path: 'gallery', component: () => import('pages/GalleryPage.vue') },
       { path: 'files', component: () => import('pages/AdminFilesPage.vue') },
       { path: 'status', component: () => import('pages/AdminStatusPage.vue') },
