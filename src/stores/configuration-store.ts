@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { setCssVar } from 'quasar';
 import { Notify } from 'quasar';
 import { get } from 'lodash';
+import { _fetch } from 'src/util/fetch_api';
 //https://stackoverflow.com/a/75060220
 
 const STATES = {
@@ -21,7 +22,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
   actions: {
     async getConfig(which = 'current') {
       try {
-        const response = await fetch(`/api/admin/config/${which}`);
+        const response = await _fetch(`/api/admin/config/${which}`);
         console.log(response);
 
         this.configuration = await response.json();
@@ -29,7 +30,8 @@ export const useConfigurationStore = defineStore('configuration-store', {
         console.warn(error);
 
         Notify.create({
-          message: 'Error getting config!',
+          message: String(error),
+          caption: 'Error getting config!',
           color: 'red',
         });
       } finally {
@@ -43,7 +45,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
       console.log(this.configuration);
 
       try {
-        const response = await fetch('/api/admin/config/current', {
+        const response = await _fetch('/api/admin/config/current', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(this.configuration),
@@ -86,9 +88,10 @@ export const useConfigurationStore = defineStore('configuration-store', {
           return;
         }
       } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
+        console.error(error);
         Notify.create({
-          message: 'error saving config, check browser console and logs',
+          message: String(error),
+          caption: 'Error saving config',
           color: 'negative',
         });
       }
@@ -107,7 +110,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
 
       this.storeState = STATES.WIP;
 
-      fetch('/api/admin/config/currentActive')
+      fetch('/api/config/currentActive')
         .then((response) => response.json())
         .then((data) => {
           console.log('finished successfully');

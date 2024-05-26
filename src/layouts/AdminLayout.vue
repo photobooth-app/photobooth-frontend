@@ -55,9 +55,15 @@
           <span>{{ $t('TITLE_ADMIN_CENTER') }}</span>
         </q-toolbar-title>
 
-        <a href="https://photobooth-app.org/" target="_new" class="q-mr-lg">
-          <img src="icons/logo-notext-white-transparent.png" style="max-height: 40px" />
-        </a>
+        <div>
+          <a href="https://photobooth-app.org/" target="_new" class="q-mr-lg">
+            <img src="icons/logo-notext-white-transparent.png" style="max-height: 40px" />
+          </a>
+        </div>
+
+        <div>
+          <q-btn class="q-mx-sm" stack icon="logout" :label="$t('Sign out')" @click="click_logout" />
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -68,7 +74,18 @@
 </template>
 
 <script>
+import { logout } from '../util/auth';
+
 export default {
+  setup() {
+    return {};
+  },
   // name: 'LayoutName',
+  methods: {
+    click_logout() {
+      logout();
+      this.$router.push('/');
+    },
+  },
 };
 </script>

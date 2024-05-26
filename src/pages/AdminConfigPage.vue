@@ -46,7 +46,7 @@ import { useMainStore } from '../stores/main-store.js';
 import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue';
 import { generateDefaultUISchema } from '@jsonforms/core';
 import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form';
-import { remoteProcedureCall } from '../util/fetch_api';
+import { remoteProcedureCall, _fetch } from '../util/fetch_api';
 import { useConfigurationStore } from '../stores/configuration-store';
 import { Notify } from 'quasar';
 
@@ -59,15 +59,19 @@ const confirm_reset_config = ref(false);
 
 const getSchema = async () => {
   try {
-    const response = await fetch('/api/admin/config/schema?schema_type=dereferenced');
+    const response = await _fetch('/api/admin/config/schema?schema_type=dereferenced');
     console.log(response);
+    if (!response.ok) {
+      throw new Error('Server returned ' + response.status);
+    }
     return await response.json();
-  } catch (error) {
-    console.warn(error);
+  } catch (err: unknown) {
+    console.warn(err);
 
     Notify.create({
-      message: 'error getting scheme! check logs',
-      color: 'red',
+      message: String(err),
+      caption: 'Error getting configuration scheme',
+      color: 'negative',
     });
   } finally {
     // commit('setLoading', false);

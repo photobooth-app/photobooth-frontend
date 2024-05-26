@@ -21,10 +21,21 @@ const routes = [
     component: () => import('layouts/GalleryLayout.vue'),
     children: [{ path: '', component: () => import('pages/GalleryPage.vue') }],
   },
+
+  {
+    // auth layout
+    path: '/auth',
+    component: () => import('layouts/AuthLayout.vue'),
+    children: [
+      { path: '', redirect: '/auth/login' },
+      { path: '/', redirect: '/auth/login' },
+      { path: 'login', component: () => import('src/pages/LoginPage.vue') },
+    ],
+  },
+
   {
     // extended layout for admins
     path: '/admin',
-    //TODO: implement route guard: https://dev.to/rachel_cheuk/part-1-user-roles-and-management-quasar-8jp
     meta: { requiresAuth: true, requiresAdmin: true },
     component: () => import('layouts/AdminLayout.vue'),
     children: [

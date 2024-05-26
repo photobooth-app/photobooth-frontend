@@ -46,6 +46,7 @@
               label="Upload Files"
               url="/api/admin/files/file/upload"
               :form-fields="[{ name: 'upload_target_folder', value: folder_current }]"
+              :headers="[{ name: 'authorization', value: `Bearer ${getAccessToken()}` }]"
               field-name="uploaded_files"
               batch
               multiple
@@ -134,6 +135,8 @@
 <script>
 import { ref, onMounted, computed } from 'vue';
 import { openURL, useQuasar } from 'quasar';
+import { _fetch } from 'src/util/fetch_api';
+import { getAccessToken } from 'src/util/auth';
 
 function formatBytes(bytes, decimals = 2) {
   if (!+bytes) return '0 Bytes';
@@ -228,24 +231,28 @@ export default {
       folder_loading.value = true;
       selected.value = [];
 
-      let response = await fetch(`/api/admin/files/list/${folder}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
+      try {
+        let response = await _fetch(`/api/admin/files/list/${folder}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
 
-      let json = await response.json();
+        let json = await response.json();
 
-      if (response.ok) {
-        // if HTTP-status is 200-299
-        // get the response body (the method explained below)
-        folder_rows.value = json;
-      } else {
-        console.error(json);
-
+        if (response.ok) {
+          // if HTTP-status is 200-299
+          // get the response body (the method explained below)
+          folder_rows.value = json;
+        } else {
+          console.error(json);
+          throw `Error ${response.status} getting listing. Please check logs.`;
+        }
+      } catch (error) {
+        console.error(error);
         $q.notify({
-          message: `Error ${response.status} getting listing. Please check logs.`,
-          caption: 'Files',
-          type: 'negative',
+          message: String(error),
+          caption: 'Request Error!',
+          color: 'negative',
         });
       }
 
@@ -253,58 +260,66 @@ export default {
     }
 
     async function getZip(selected = []) {
-      let response = await fetch('/api/admin/files/zip', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(selected),
-      });
-
-      if (response.ok) {
-        // if HTTP-status is 200-299
-        // get the response body (the method explained below)
-        $q.notify({
-          message: 'Downloading ZIP file',
-          caption: 'Files',
-          type: 'positive',
+      try {
+        let response = await _fetch('/api/admin/files/zip', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(selected),
         });
 
-        let blob = await response.blob();
-        var file = window.URL.createObjectURL(blob);
-        window.location.assign(file);
-      } else {
-        let json = await response.json();
+        if (response.ok) {
+          // if HTTP-status is 200-299
+          // get the response body (the method explained below)
+          $q.notify({
+            message: 'Downloading ZIP file',
+            caption: 'Files',
+            type: 'positive',
+          });
 
-        console.error(json);
+          let blob = await response.blob();
+          var file = window.URL.createObjectURL(blob);
+          window.location.assign(file);
+        } else {
+          let json = await response.json();
+          console.error(json);
+          throw `Error ${response.status} creating zip. Please check logs.`;
+        }
+      } catch (error) {
+        console.error(error);
         $q.notify({
-          message: `Error ${response.status} creating zip. Please check logs.`,
-          caption: 'Files',
-          type: 'negative',
+          message: String(error),
+          caption: 'Request Error!',
+          color: 'negative',
         });
       }
     }
 
     async function deleteItems(selected = []) {
-      let response = await fetch('/api/admin/files/delete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(selected),
-      });
-
-      if (response.ok) {
-        // if HTTP-status is 200-299
-        // get the response body (the method explained below)
-        $q.notify({
-          message: 'Selected items deleted.',
-          caption: 'Files',
-          type: 'positive',
+      try {
+        let response = await _fetch('/api/admin/files/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(selected),
         });
-      } else {
-        let json = await response.json();
-        console.error(json);
+
+        if (response.ok) {
+          // if HTTP-status is 200-299
+          // get the response body (the method explained below)
+          $q.notify({
+            message: 'Selected items deleted.',
+            caption: 'Files',
+            type: 'positive',
+          });
+        } else {
+          console.error(response);
+          throw `Error ${response.status} deleting items. Please check logs.`;
+        }
+      } catch (error) {
+        console.error(error);
         $q.notify({
-          message: `Error ${response.status} deleting items. Please check logs.`,
-          caption: 'Files',
-          type: 'negative',
+          message: String(error),
+          caption: 'Request Error!',
+          color: 'negative',
         });
       }
 
@@ -323,32 +338,36 @@ export default {
       }
 
       console.log(newfolder_fullpath);
-
-      let response = await fetch('/api/admin/files/folder/new', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newfolder_fullpath),
-      });
-
-      let json = await response.json();
-
-      if (response.ok) {
-        // if HTTP-status is 200-299
-        // get the response body (the method explained below)
-        $q.notify({
-          message: `Folder "${folder_name}" created.`,
-          caption: 'Files',
-          type: 'positive',
+      try {
+        let response = await _fetch('/api/admin/files/folder/new', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newfolder_fullpath),
         });
 
-        // reload
-        getFolderContent(folder_current.value);
-      } else {
-        console.error(json);
+        let json = await response.json();
+
+        if (response.ok) {
+          // if HTTP-status is 200-299
+          // get the response body (the method explained below)
+          $q.notify({
+            message: `Folder "${folder_name}" created.`,
+            caption: 'Files',
+            type: 'positive',
+          });
+
+          // reload
+          getFolderContent(folder_current.value);
+        } else {
+          console.error(json);
+          throw `Error ${response.status} while creating folder. Please check logs.`;
+        }
+      } catch (error) {
+        console.error(error);
         $q.notify({
-          message: `Error ${response.status} while creating folder. Please check logs.`,
-          caption: 'Files',
-          type: 'negative',
+          message: String(error),
+          caption: 'Request Error!',
+          color: 'negative',
         });
       }
     }
@@ -381,6 +400,7 @@ export default {
       getZip,
       deleteItems,
       createNewFolder,
+      getAccessToken,
     };
   },
   // name: 'PageName',

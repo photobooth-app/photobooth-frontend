@@ -102,5 +102,10 @@
   "Are you sure to reset stats counter?": "Are you sure to reset stats counter?",
   "Choose your filter": "Choose your filter",
   "Service (Linux only)": "Service (Linux only)",
-  "Host": "Host"
+  "Host": "Host",
+  "Sign in": "Sign in",
+  "Sign out": "Sign out",
+  "Sign in below to access the admin dashboard.": "Sign in below to access the admin dashboard.",
+  "Looking for the default password or issues signing in?": "Looking for the default password or issues signing in?",
+  "Check the documentation.": "Check the documentation."
 }
