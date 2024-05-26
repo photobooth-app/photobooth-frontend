@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-gutter-md">
+  <div class="row q-gutter-md action-buttons">
     <div v-for="(trigger, index) in triggers" :key="index">
       <q-btn
         v-if="trigger.show_button && !(isEmpty(trigger.title) && isEmpty(trigger.icon))"
@@ -8,6 +8,7 @@
         no-caps
         rounded
         class="action-button col-auto"
+        :class="['action-button-' + index]"
         @click="triggerButtonClick(trigger.action, trigger.config_index)"
       >
         <q-icon v-if="!isEmpty(trigger.icon)" :name="trigger.icon" />
