@@ -102,5 +102,10 @@
   "Are you sure to reset stats counter?": "Ви дійсно бажаєте скинути лічильник статистики?",
   "Choose your filter": "Оберіть свій фільтр",
   "Service (Linux only)": "Сервіс (тільки Linux)",
-  "Host": "Хост"
+  "Host": "Хост",
+  "Sign in": "Увійти",
+  "Sign out": "Вийти",
+  "Sign in below to access the admin dashboard.": "Увійдіть нижче, щоб отримати доступ до адміністративної панелі.",
+  "Looking for the default password or issues signing in?": "Шукаєте логін за замовчуванням або проблеми заново?",
+  "Check the documentation.": "Перевірте документацію."
 }

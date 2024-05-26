@@ -102,5 +102,10 @@
   "Are you sure to reset stats counter?": "Sei sicuro di voler reimpostare il contatore delle statistiche?",
   "Choose your filter": "Scegli il tuo filtro",
   "Service (Linux only)": "Servizio (solo Linux)",
-  "Host": "Host"
+  "Host": "Host",
+  "Sign in": "Accedi",
+  "Sign out": "Esci",
+  "Sign in below to access the admin dashboard.": "Accedi qui sotto per accedere al cruscotto amministratore.",
+  "Looking for the default password or issues signing in?": "Cerchi la password predefinita o l'accesso ai problemi?",
+  "Check the documentation.": "Controllare la documentazione."
 }

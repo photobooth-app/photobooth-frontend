@@ -102,5 +102,10 @@
   "Are you sure to reset stats counter?": "Είστε βέβαιοι ότι θα επαναφέρετε μετρητή στατιστικών?",
   "Choose your filter": "Επιλέξτε το φίλτρο σας",
   "Service (Linux only)": "Υπηρεσία (μόνο για Linux)",
-  "Host": "Διακομιστής"
+  "Host": "Διακομιστής",
+  "Sign in": "Σύνδεση",
+  "Sign out": "Αποσύνδεση",
+  "Sign in below to access the admin dashboard.": "Συνδεθείτε παρακάτω για να αποκτήσετε πρόσβαση στον πίνακα διαχείρισης.",
+  "Looking for the default password or issues signing in?": "Ψάχνετε για τον προεπιλεγμένο κωδικό πρόσβασης ή τα προβλήματα σύνδεσης?",
+  "Check the documentation.": "Ελέγξτε την τεκμηρίωση."
 }

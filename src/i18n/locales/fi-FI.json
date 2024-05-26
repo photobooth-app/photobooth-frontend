@@ -102,5 +102,10 @@
   "Are you sure to reset stats counter?": "Haluatko varmasti nollata tilastot tiski?",
   "Choose your filter": "Valitse suodatin",
   "Service (Linux only)": "Palvelu (vain Linux)",
-  "Host": "Isäntä"
+  "Host": "Isäntä",
+  "Sign in": "Kirjaudu sisään",
+  "Sign out": "Kirjaudu ulos",
+  "Sign in below to access the admin dashboard.": "Kirjaudu alapuoleen päästäksesi hallintapaneeliin.",
+  "Looking for the default password or issues signing in?": "Etsitkö oletussalasanaa tai ongelmia kirjautuessa?",
+  "Check the documentation.": "Tarkista dokumentaatio."
 }

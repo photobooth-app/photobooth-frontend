@@ -102,5 +102,10 @@
   "Are you sure to reset stats counter?": "Är du säker på att återställa statistikräknare?",
   "Choose your filter": "Välj ditt filter",
   "Service (Linux only)": "Service (endast Linux)",
-  "Host": "Värd"
+  "Host": "Värd",
+  "Sign in": "Logga in",
+  "Sign out": "Logga ut",
+  "Sign in below to access the admin dashboard.": "Logga in nedan för att komma åt admin-instrumentbrädan.",
+  "Looking for the default password or issues signing in?": "Letar du efter standardlösenord eller problem med inloggning?",
+  "Check the documentation.": "Kontrollera dokumentationen."
 }

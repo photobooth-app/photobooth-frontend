@@ -102,5 +102,10 @@
   "Are you sure to reset stats counter?": "本当に統計カウンターをリセットしますか？",
   "Choose your filter": "フィルターを選択",
   "Service (Linux only)": "サービス (Linux のみ)",
-  "Host": "ホスト"
+  "Host": "ホスト",
+  "Sign in": "サインイン",
+  "Sign out": "サインアウト",
+  "Sign in below to access the admin dashboard.": "管理者ダッシュボードにアクセスするには、以下にサインインしてください。",
+  "Looking for the default password or issues signing in?": "デフォルトのパスワードまたはサインイン時の問題をお探しですか？",
+  "Check the documentation.": "ドキュメントを確認してください。"
 }

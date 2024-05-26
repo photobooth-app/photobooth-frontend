@@ -102,5 +102,10 @@
   "Are you sure to reset stats counter?": "Er du sikker på at du vil nullstille statistikk teller?",
   "Choose your filter": "Velg ditt filter",
   "Service (Linux only)": "Tjeneste (bare Linux-)",
-  "Host": "Vert"
+  "Host": "Vert",
+  "Sign in": "Logg inn",
+  "Sign out": "Logg ut",
+  "Sign in below to access the admin dashboard.": "Logg inn nedenfor for å få tilgang til admindashbordet.",
+  "Looking for the default password or issues signing in?": "Ser du etter standard passord eller problemer med å logge inn?",
+  "Check the documentation.": "Sjekk dokumentasjonen."
 }
