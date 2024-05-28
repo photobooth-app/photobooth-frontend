@@ -82,6 +82,7 @@ const updateFormSchema = async () => {
   isLoadingState.value = true;
 
   schema.value = await getSchema();
+  await configurationStore.getConfig('currentActive'); //reload because store could have all data but with usercontext so secrets hidden
 
   //loadscreen off
   console.log('disable loadscreen');
