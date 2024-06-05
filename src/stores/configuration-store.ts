@@ -53,8 +53,8 @@ export const useConfigurationStore = defineStore('configuration-store', {
 
         if (response.ok) {
           // if HTTP-status is 200-299
-          // reload ui settings into store as on app startup.
-          this.initStore(true);
+          // reload configuration again because some default values could be set by server during processing
+          await this.getConfig('currentActive');
           Notify.create({
             // TODO: How to access the translated strings here??
             // message: $t("MSG_CONFIG_PERSIST_OK"),
