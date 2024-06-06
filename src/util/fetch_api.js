@@ -35,13 +35,7 @@ async function remoteProcedureCall(url) {
       headers: headers,
     });
     console.log(response);
-    if (response.ok) {
-      Notify.create({
-        message: 'Sent successful',
-        caption: 'Request',
-        color: 'positive',
-      });
-    } else {
+    if (!response.ok) {
       throw `Error: ${response.status} ${response.statusText}`;
     }
   } catch (error) {
