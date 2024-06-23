@@ -38,27 +38,6 @@
         </q-dialog>
 
         <q-btn
-          v-if="configurationStore.getConfigElement('uisettings.gallery_show_download', false)"
-          flat
-          class="q-mr-sm"
-          icon="download"
-          :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
-          @click="
-            (evt) => {
-              openURL(itemRepository[currentSlideIndex]['full']);
-            }
-          "
-        />
-        <q-btn
-          v-if="configurationStore.getConfigElement('uisettings.gallery_show_print', false)"
-          flat
-          class="q-mr-sm"
-          icon="print"
-          :label="$t('BTN_LABEL_GALLERY_PRINT')"
-          :disabled="!getPrintAvailable(itemRepository[currentSlideIndex]['media_type'])"
-          @click="printItem(currentSlideId)"
-        />
-        <q-btn
           v-if="
             configurationStore.getConfigElement('uisettings.gallery_show_filter', false) &&
             configurationStore.getConfigElement('uisettings.gallery_filter_userselectable', []).length > 0
@@ -71,6 +50,18 @@
           @click="toggleRightDrawer"
         />
 
+        <q-btn-group rounded>
+          <q-btn rounded color="primary" label="Print Opt1" />
+          <q-btn rounded color="primary" label="Print Opt2" />
+          <q-btn-dropdown auto-close rounded color="primary" icon="fa-brands fa-telegram" split>
+            <!-- dropdown content goes here -->
+            <q-list padding style="width: 250px">
+              <q-item clickable> Other Options </q-item>
+              <q-item clickable> Other Options </q-item>
+              <q-item clickable> Other Options </q-item>
+            </q-list>
+          </q-btn-dropdown>
+        </q-btn-group>
         <q-space />
 
         <div v-if="!singleItemView" class="q-mr-sm">
