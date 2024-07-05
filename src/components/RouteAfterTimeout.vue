@@ -45,7 +45,7 @@ function showNotification() {
     type: 'info',
     multiline: true,
     timeout: remainingTime.value,
-    icon: 'slideshow',
+    icon: 'sym_o_slideshow',
   });
 }
 

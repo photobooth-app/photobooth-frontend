@@ -34,7 +34,7 @@
       rounded
       unelevated
       color="grey"
-      icon-right="add"
+      icon-right="sym_o_add"
       label="Add"
       :class="styles.arrayList.addButton"
       :disabled="!control.enabled || (appliedOptions.restrict && maxItemsReached)"

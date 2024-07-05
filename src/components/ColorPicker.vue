@@ -1,7 +1,7 @@
 <template>
   <q-input :model-value="modelValue" :rules="['anyColor']" @update:model-value="onInput">
     <template #append>
-      <q-icon name="colorize" class="cursor-pointer">
+      <q-icon name="sym_o_colorize" class="cursor-pointer">
         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
           <q-color :model-value="modelValue" @update:model-value="onInput"></q-color>
         </q-popup-proxy>

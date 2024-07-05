@@ -11,7 +11,7 @@
         :class="['action-button-' + index]"
         @click="triggerButtonClick(trigger.action, trigger.config_index)"
       >
-        <q-icon v-if="!isEmpty(trigger.icon)" :name="trigger.icon" />
+        <q-icon v-if="!isEmpty(trigger.icon)" :name="`sym_${trigger.icon}`" />
         <div style="white-space: nowrap" class="gt-sm">{{ trigger.title }}</div>
       </q-btn>
     </div>

@@ -55,7 +55,7 @@
             class="action-button"
             :style="configurationStore.getConfigElement('uisettings.gallery_button_style')"
           >
-            <q-icon left name="photo_library" />
+            <q-icon left name="sym_o_photo_library" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_GALLERY') }}</div>
           </q-btn>
           <q-btn
@@ -67,7 +67,7 @@
             to="/admin"
             class="action-button"
           >
-            <q-icon left name="admin_panel_settings" />
+            <q-icon left name="sym_o_admin_panel_settings" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_ADMIN') }}</div>
           </q-btn>
         </div>

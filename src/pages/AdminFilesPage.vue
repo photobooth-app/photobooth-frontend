@@ -2,7 +2,7 @@
   <q-page id="admin-files-page" padding>
     <div class="q-pa-md">
       <q-breadcrumbs gutter="sm" style="cursor: pointer">
-        <q-breadcrumbs-el :label="$t('TITLE_FILES_WORKING_DIR')" icon="home" @click="onBreadcrumbClick(-1)" />
+        <q-breadcrumbs-el :label="$t('TITLE_FILES_WORKING_DIR')" icon="sym_o_home" @click="onBreadcrumbClick(-1)" />
         <q-breadcrumbs-el v-for="(value, key) in breadcrumbs" :key="key" @click="onBreadcrumbClick(key)">
           {{ value }}
         </q-breadcrumbs-el>
@@ -81,8 +81,8 @@
       >
         <template #body-cell-type="props">
           <q-td :props="props">
-            <q-icon v-if="props.value" name="folder" />
-            <q-icon v-else name="description" />
+            <q-icon v-if="props.value" name="sym_o_folder" />
+            <q-icon v-else name="sym_o_description" />
           </q-td>
         </template>
 
@@ -96,7 +96,7 @@
           <q-dialog v-model="confirm_delete">
             <q-card class="q-pa-sm" style="min-width: 350px">
               <q-card-section class="row items-center" style="flex-wrap: nowrap">
-                <q-avatar icon="delete" color="negative" text-color="white" />
+                <q-avatar icon="sym_o_delete" color="negative" text-color="white" />
                 <span class="q-ml-sm">{{ $t('Are you sure you want to delete the selected files and subfolders?') }}</span>
               </q-card-section>
 
@@ -123,7 +123,7 @@
         <template #top-right>
           <q-input v-model="filter" borderless dense debounce="300" :placeholder="$t('TEXT_PLACEHOLDER_SEARCH')">
             <template #append>
-              <q-icon name="search" />
+              <q-icon name="sym_o_search" />
             </template>
           </q-input>
         </template>

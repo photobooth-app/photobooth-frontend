@@ -80,7 +80,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
 
           Notify.create({
             caption: 'Configuration Validation Error',
-            icon: 'error',
+            icon: 'sym_o_error',
             html: true,
             message: notify_msg,
             color: 'negative',
