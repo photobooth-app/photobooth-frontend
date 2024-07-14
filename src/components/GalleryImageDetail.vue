@@ -7,6 +7,19 @@
         <q-space />
 
         <q-btn
+          v-if="configurationStore.getConfigElement('uisettings.gallery_show_download', false)"
+          flat
+          class="q-mr-sm"
+          icon="download"
+          :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
+          @click="
+            (evt) => {
+              openURL(itemRepository[currentSlideIndex]['full']);
+            }
+          "
+        />
+
+        <q-btn
           v-if="configurationStore.getConfigElement('uisettings.gallery_show_delete', false) || singleItemView"
           flat
           class="q-mr-sm"
