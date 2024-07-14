@@ -50,18 +50,14 @@
           @click="toggleRightDrawer"
         />
 
-        <q-btn-group rounded>
-          <q-btn rounded color="primary" label="Print Opt1" />
-          <q-btn rounded color="primary" label="Print Opt2" />
-          <q-btn-dropdown auto-close rounded color="primary" icon="fa-brands fa-telegram" split>
-            <!-- dropdown content goes here -->
-            <q-list padding style="width: 250px">
-              <q-item clickable> Other Options </q-item>
-              <q-item clickable> Other Options </q-item>
-              <q-item clickable> Other Options </q-item>
-            </q-list>
-          </q-btn-dropdown>
-        </q-btn-group>
+        <ShareTriggerButtons
+          v-if="configurationStore.getConfigElement('share.sharing_enabled', false)"
+          :triggers="shareButtons"
+          :direct-access-number-of-buttons="configurationStore.getConfigElement('share.number_direct_access_buttons', 1)"
+          :current-item-is-image="['image', 'collage', 'collageimage', 'animationimage'].includes(itemRepository[currentSlideIndex]['media_type'])"
+          @trigger-action="invokeShareAction"
+        ></ShareTriggerButtons>
+
         <q-space />
 
         <div v-if="!singleItemView" class="q-mr-sm">
@@ -249,10 +245,13 @@ import VueQrcode from 'vue-qrcode';
 import { ref } from 'vue';
 import { useConfigurationStore } from '../stores/configuration-store.ts';
 import { openURL } from 'quasar';
-
+import { default as ShareTriggerButtons } from './ShareTriggerButtons.vue';
+import { remoteProcedureCall } from '../util/fetch_api.js';
+import { get } from 'lodash';
 export default {
   components: {
     VueQrcode,
+    ShareTriggerButtons,
   },
   // name: 'ComponentName',
   props: {
@@ -351,6 +350,19 @@ export default {
         return this.rndIncides.map((i) => this.itemRepository[i]);
       }
     },
+    shareButtons() {
+      const result = [];
+
+      const share_config = this.configurationStore.getConfigElement('share.actions', []);
+      share_config.forEach((action, index) => {
+        const frontpage_trigger_backend = get(action, 'trigger.ui_trigger');
+        result.push({ ...{ config_index: index, handles_images_only: action.handles_images_only }, ...frontpage_trigger_backend });
+      });
+
+      console.log(result);
+
+      return result;
+    },
   },
   beforeCreate() {
     if (!this.emptyRepository) {
@@ -426,28 +438,9 @@ export default {
           });
         });
     },
-    printItem(id) {
-      fetch(`/api/printer/print/${id}/0`, {}) // TODO: print 0 index hardcoded for now!
-        .then((response) => {
-          if (!response.ok && !(response.status == 425 || response.status == 405)) {
-            // throw if not blocked or not disabled because notification events are sent separately for this err.
-            throw new Error('Server returned ' + response.status);
-          }
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.error('There was a problem with the Fetch operation:', error);
-
-          this.$q.notify({
-            message: 'Error printing file! Please check logs and browser console.',
-            type: 'negative',
-          });
-        });
-    },
-    getPrintAvailable(media_type) {
-      return ['image', 'collage', 'collageimage', 'animationimage'].includes(media_type);
+    invokeShareAction(config_index) {
+      console.log(this.currentSlideId, config_index);
+      remoteProcedureCall(`/api/share/actions/${this.currentSlideId}/${config_index}`);
     },
     getFilterAvailable(media_type) {
       return ['image', 'collageimage', 'animationimage'].includes(media_type);

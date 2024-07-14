@@ -175,13 +175,13 @@ export default defineComponent({
         console.log('keyboard input is disabled, to use keyboard input enable it in the configuration and reload the page.');
         return;
       }
-      const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'printer.print'];
+      const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'share.actions'];
       action_collections.forEach((action_collection) => {
         const action_config = this.configurationStore.getConfigElement(action_collection, []);
         action_config.forEach((action, index) => {
           const keycode = get(action, 'trigger.keyboard_trigger.keycode');
           if (keycode == e.key) {
-            remoteProcedureCall(`/api/${action_collection.replace('.', '/')}/${index}`);
+            remoteProcedureCall(`/api/${action_collection.replaceAll('.', '/')}/${index}`);
             return;
           }
         });

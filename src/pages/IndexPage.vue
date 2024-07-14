@@ -116,7 +116,7 @@ export default defineComponent({
         action_collections.forEach((action_collection) => {
           const action_config = this.configurationStore.getConfigElement(action_collection, []);
           action_config.forEach((action, index) => {
-            const frontpage_trigger_backend = get(action, 'trigger.frontpage_trigger');
+            const frontpage_trigger_backend = get(action, 'trigger.ui_trigger');
             result.push({ ...{ action: action_collection.replace('.', '/'), config_index: index }, ...frontpage_trigger_backend });
           });
         });
