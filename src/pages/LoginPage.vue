@@ -1,6 +1,7 @@
 <template>
   <q-page id="login-page" class="flex flex-center">
     <q-card class="q-pa-md no-shadow login-card" bordered>
+      <q-btn flat color="grey" icon="arrow_back_ios_new" @click="$router.go(-1)" />
       <q-form ref="form" class="q-gutter-md" @submit="submit">
         <q-card-section class="text-center">
           <div class="text-h5 text-weight-bold">{{ $t('Sign in') }}</div>
@@ -10,7 +11,7 @@
           <q-input v-model="user.password" filled type="password" label="Password"></q-input>
         </q-card-section>
         <q-card-section>
-          <q-btn rounded color="dark" label="Sign in" class="full-width" type="submit"></q-btn>
+          <q-btn rounded color="primary" label="Sign in" class="full-width" type="submit"></q-btn>
         </q-card-section>
         <q-card-section class="text-center">
           <div class="">
