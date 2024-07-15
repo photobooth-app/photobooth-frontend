@@ -28,7 +28,7 @@
     <q-dialog v-model="confirm_reset_config">
       <q-card class="q-pa-sm" style="min-width: 350px">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
-          <q-avatar icon="delete" color="negative" text-color="white" />
+          <q-avatar icon="sym_o_delete" color="negative" text-color="white" />
           <span class="q-ml-sm">{{ $t('Are you sure you want to reset the configuration and delete config.json?') }}</span>
         </q-card-section>
 

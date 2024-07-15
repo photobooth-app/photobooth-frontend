@@ -9,7 +9,7 @@
       @update:model-value="(locale) => switchLocale(locale)"
     >
       <template #prepend>
-        <q-icon name="language" />
+        <q-icon name="sym_o_language" />
       </template>
     </q-select>
   </div>

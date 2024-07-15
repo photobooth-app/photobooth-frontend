@@ -2,7 +2,7 @@
   <q-layout v-if="!emptyRepository" view="hhh Lpr ffr" @click="abortTimer">
     <q-header class="bg-primary text-white">
       <q-toolbar v-if="showToolbar" id="gallery-toolbar" class="toolbar">
-        <q-btn dense flat icon="close" size="1.5rem" @click="$emit('closeEvent')" />
+        <q-btn dense flat icon="sym_o_close" size="1.5rem" @click="$emit('closeEvent')" />
 
         <q-space />
 
@@ -10,7 +10,7 @@
           v-if="configurationStore.getConfigElement('uisettings.gallery_show_download', false)"
           flat
           class="q-mr-sm"
-          icon="download"
+          icon="sym_o_download"
           :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
           @click="
             (evt) => {
@@ -23,7 +23,7 @@
           v-if="configurationStore.getConfigElement('uisettings.gallery_show_delete', false) || singleItemView"
           flat
           class="q-mr-sm"
-          icon="delete"
+          icon="sym_o_delete"
           :label="$t('BTN_LABEL_GALLERY_DELETE')"
           @click="confirmDeleteFile = true"
         />
@@ -31,7 +31,7 @@
         <q-dialog v-model="confirmDeleteFile">
           <q-card id="gallery-confirm-delete-dialog" class="q-pa-sm" style="min-width: 350px">
             <q-card-section class="row items-center" style="flex-wrap: nowrap">
-              <q-avatar icon="delete" color="primary" text-color="white" />
+              <q-avatar icon="sym_o_delete" color="primary" text-color="white" />
               <span class="q-ml-sm">{{ $t('MSG_CONFIRM_DELETE_IMAGE') }}</span>
             </q-card-section>
 
@@ -57,7 +57,7 @@
           "
           flat
           class="q-mr-sm"
-          icon="filter"
+          icon="sym_o_filter"
           :label="$t('BTN_LABEL_GALLERY_FILTER')"
           :disabled="!getFilterAvailable(itemRepository[currentSlideIndex]['media_type'])"
           @click="toggleRightDrawer"
@@ -74,7 +74,7 @@
         <q-space />
 
         <div v-if="!singleItemView" class="q-mr-sm">
-          <q-icon name="tag" />
+          <q-icon name="sym_o_tag" />
           <span>
             {{ $t('LABEL_ELEMENT_X_OF_Y', { no: currentSlideIndex + 1, total: itemRepository.length }) }}
           </span>
@@ -83,7 +83,7 @@
         <q-space />
 
         <div class="q-mr-sm">
-          <q-icon name="image" />
+          <q-icon name="sym_o_image" />
           {{ itemRepository[currentSlideIndex]['caption'] }}
         </div>
       </q-toolbar>

@@ -14,17 +14,17 @@
 
         <template #action>
           <q-btn id="item-approval-button-reject" color="negative" no-caps class="" @click="userReject()">
-            <q-icon left size="xl" name="thumb_down" />
+            <q-icon left size="xl" name="sym_o_thumb_down" />
             <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_RETRY') }}</div>
           </q-btn>
 
           <q-btn id="item-approval-button-abort" flat color="grey" no-caps class="" @click="userAbort()">
-            <q-icon left size="xl" name="cancel" />
+            <q-icon left size="xl" name="sym_o_cancel" />
             <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE') }}</div>
           </q-btn>
 
           <q-btn id="item-approval-button-approve" color="positive" no-caps @click="userConfirm()">
-            <q-icon left size="xl" name="thumb_up" />
+            <q-icon left size="xl" name="sym_o_thumb_up" />
             <div>
               <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_APPROVE') }}</div>
             </div>

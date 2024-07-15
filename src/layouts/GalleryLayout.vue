@@ -6,7 +6,7 @@
       <q-page-sticky position="top-left" :offset="[25, 25]">
         <div class="q-gutter-sm">
           <q-btn id="gallery-button-to-frontpage" color="primary" rounded no-caps to="/" class="action-button">
-            <q-icon left name="arrow_back_ios_new" />
+            <q-icon left name="sym_o_arrow_back_ios_new" />
             <div>{{ $t('BTN_LABEL_BACK') }}</div>
           </q-btn>
         </div>

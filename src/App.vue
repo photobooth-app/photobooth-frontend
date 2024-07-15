@@ -115,11 +115,11 @@ export default defineComponent({
             caption: _notification['caption'] || 'Notification',
             message: _notification['message'],
             color: _notification['color'] || 'info',
-            icon: _notification['icon'] || 'info',
+            icon: _notification['icon'] ? `sym_o_${_notification['icon']}` : 'sym_o_info',
             spinner: _notification['spinner'] || false,
             actions: [
               {
-                icon: 'close',
+                icon: 'sym_o_close',
                 color: 'white',
                 round: true,
               },

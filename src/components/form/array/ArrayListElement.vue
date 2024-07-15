@@ -8,9 +8,9 @@
 
       <q-item-section side>
         <div class="q-pa-xs q-gutter-xs">
-          <q-btn size="sm" icon="move_up" flat :disabled="!moveUpEnabled" :class="styles.arrayList.itemMoveUp" @click="moveUpClicked" />
-          <q-btn size="sm" icon="move_down" flat :disabled="!moveDownEnabled" :class="styles.arrayList.itemMoveDown" @click="moveDownClicked" />
-          <q-btn size="sm" icon="delete" flat :disabled="!deleteEnabled" :class="styles.arrayList.itemDelete" @click="deleteClicked" />
+          <q-btn size="sm" icon="sym_o_move_up" flat :disabled="!moveUpEnabled" :class="styles.arrayList.itemMoveUp" @click="moveUpClicked" />
+          <q-btn size="sm" icon="sym_o_move_down" flat :disabled="!moveDownEnabled" :class="styles.arrayList.itemMoveDown" @click="moveDownClicked" />
+          <q-btn size="sm" icon="sym_o_delete" flat :disabled="!deleteEnabled" :class="styles.arrayList.itemDelete" @click="deleteClicked" />
         </div>
       </q-item-section>
     </template>

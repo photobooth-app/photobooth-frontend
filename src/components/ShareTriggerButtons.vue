@@ -10,7 +10,7 @@
         :class="['share-button-' + index]"
         @click="triggerButtonClick(trigger.config_index)"
       >
-        <q-icon v-if="!isEmpty(trigger.icon)" class="q-mr-sm" :name="trigger.icon" />
+        <q-icon v-if="!isEmpty(trigger.icon)" class="q-mr-sm" :name="`sym_o_${trigger.icon}`" />
         <div>{{ trigger.title }}</div>
       </q-btn>
     </div>
@@ -25,7 +25,7 @@
           :class="['share-button-' + index]"
           @click="triggerButtonClick(trigger.config_index)"
         >
-          <q-icon v-if="!isEmpty(trigger.icon)" class="q-mr-sm" :name="trigger.icon" />
+          <q-icon v-if="!isEmpty(trigger.icon)" class="q-mr-sm" :name="`sym_o_${trigger.icon}`" />
           <div>{{ trigger.title }}</div>
         </q-btn>
       </div>

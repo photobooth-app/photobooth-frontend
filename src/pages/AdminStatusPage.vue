@@ -11,7 +11,7 @@
                 <q-item-label>{{ store.information.data_directory }} </q-item-label>
               </q-item-section>
               <q-item-section side>
-                <q-btn flat round color="primary" icon="folder_shared" to="/admin/files" />
+                <q-btn flat round color="primary" icon="sym_o_folder_shared" to="/admin/files" />
               </q-item-section>
             </q-item>
 
@@ -22,7 +22,7 @@
               </q-item-section>
 
               <q-item-section side>
-                <q-btn flat round color="primary" icon="upgrade" href="https://pypi.org/project/photobooth-app/" target="_blank" />
+                <q-btn flat round color="primary" icon="sym_o_upgrade" href="https://pypi.org/project/photobooth-app/" target="_blank" />
               </q-item-section>
             </q-item>
 
@@ -158,7 +158,7 @@
         <q-separator />
 
         <q-card-actions align="right">
-          <q-btn flat color="primary" icon="history" label="reset" @click="confirm_reset_stats_counter = true" />
+          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="confirm_reset_stats_counter = true" />
         </q-card-actions>
       </q-card>
     </div>
@@ -166,7 +166,7 @@
     <q-dialog v-model="confirm_reset_stats_counter">
       <q-card class="q-pa-sm">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
-          <q-avatar icon="history" color="primary" text-color="white" />
+          <q-avatar icon="sym_o_history" color="primary" text-color="white" />
           <span class="q-ml-sm">{{ $t('Are you sure to reset stats counter?') }}</span>
         </q-card-section>
 

@@ -2,7 +2,7 @@
   <q-layout v-if="layout.visible">
     <q-header style="z-index: 0">
       <q-toolbar>
-        <q-btn flat round dense icon="menu" @click="drawer = !drawer" />
+        <q-btn flat round dense icon="sym_o_menu" @click="drawer = !drawer" />
         <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         <q-toolbar-title>{{ visibleCategoryLabels[activeCategory] }} ({{ activeCategory }})</q-toolbar-title>
       </q-toolbar>
