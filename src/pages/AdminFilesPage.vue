@@ -134,7 +134,7 @@
 
 <script>
 import { ref, onMounted, computed } from 'vue';
-import { openURL, useQuasar } from 'quasar';
+import { useQuasar } from 'quasar';
 import { _fetch } from 'src/util/fetch_api';
 import { getAccessToken } from 'src/util/auth';
 
@@ -218,7 +218,9 @@ export default {
       if (row.is_dir) {
         folder_current.value = row.filepath;
       } else {
-        openURL(`/api/admin/files/file/${row.filepath}`);
+        _fetch(`/api/admin/files/file/${row.filepath}`, {})
+          .then((res) => res.blob())
+          .then((blob) => window.open(URL.createObjectURL(blob)));
       }
     };
 
