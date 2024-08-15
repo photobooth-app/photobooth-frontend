@@ -187,13 +187,12 @@
                 // Rotate array to stay in the center
                 if (arrayIndex > 2) {
                   // transition to 'next' slide, i.e. one up in array
-                  rndIncides = rndIncides.slice(1, 5);
-                  rndIncides.push(Math.floor(Math.random() * itemRepository.length));
+                  rndIncidesFull.push(rndIncidesFull.shift());
                 } else {
                   // transition to 'prev' slide, i.e. one down in array
-                  rndIncides = rndIncides.slice(0, 4);
-                  rndIncides.unshift(Math.floor(Math.random() * itemRepository.length));
+                  rndIncidesFull.unshift(rndIncidesFull.pop());
                 }
+                rndIncides = rndIncidesFull.slice(0, 5); // take begin of the array as new rndIndices
               } else {
                 currentSlideIndex = itemRepository.findIndex((item) => item.id === newVal);
               }
@@ -380,7 +379,21 @@ export default {
   beforeCreate() {
     if (!this.emptyRepository) {
       if (this.randomOrder) {
-        this.rndIncides = Array.from({ length: 5 }, () => Math.floor(Math.random() * this.itemRepository.length));
+        this.rndIncidesFull = Array.from(Array(this.itemRepository.length).keys()); // init array containing each repository item once
+        // permute arrays once, assuring that each element is shown once per iteration
+        for (let i = this.rndIncidesFull.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          let temp = this.rndIncidesFull[i];
+          this.rndIncidesFull[i] = this.rndIncidesFull[j];
+          this.rndIncidesFull[j] = temp;
+        }
+        // repeat the random order in case we dont have at least 5 elements available
+        while (this.rndIncidesFull.length < 5) {
+          this.rndIncidesFull.push(...this.rndIncidesFull);
+        }
+        // initialize buffer order to begin of permuted array
+        this.rndIncides = this.rndIncidesFull.slice(0, 5);
+        console.log("Initial random indices: ", this.rndIncides);
         this.currentSlideIndex = this.rndIncides[2];
       } else {
         this.currentSlideIndex = this.indexSelected;
