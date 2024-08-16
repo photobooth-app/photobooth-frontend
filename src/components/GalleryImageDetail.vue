@@ -393,7 +393,7 @@ export default {
         }
         // initialize buffer order to begin of permuted array
         this.rndIncides = this.rndIncidesFull.slice(0, 5);
-        console.log("Initial random indices: ", this.rndIncides);
+        console.log('Initial random indices: ', this.rndIncides);
         this.currentSlideIndex = this.rndIncides[2];
       } else {
         this.currentSlideIndex = this.indexSelected;
