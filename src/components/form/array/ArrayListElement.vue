@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { classes, Styles } from '../styles';
+import { Styles } from '../styles';
 
 const listItem = defineComponent({
   name: 'ArrayListElement',

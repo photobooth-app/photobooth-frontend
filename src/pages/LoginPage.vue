@@ -1,7 +1,7 @@
 <template>
   <q-page id="login-page" class="flex flex-center">
     <q-card class="q-pa-md no-shadow login-card" bordered>
-      <q-btn flat color="grey" icon="sym_o_arrow_back_ios_new" @click="$router.go(-1)" />
+      <q-btn flat color="grey" icon="sym_o_arrow_back_ios_new" @click="router.go(-1)" />
       <q-form ref="form" class="q-gutter-md" @submit="submit">
         <q-card-section class="text-center">
           <div class="text-h5 text-weight-bold">{{ $t('Sign in') }}</div>

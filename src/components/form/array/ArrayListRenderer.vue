@@ -3,7 +3,7 @@
   <div :class="styles.arrayList.description">{{ control.description }}</div>
 
   <q-card v-if="control.visible" flat :class="styles.arrayList.root">
-    <div v-for="(element, index) in control.data" :key="`${control.path}-${index}`" :class="styles.arrayList.itemWrapper">
+    <div v-for="(_, index) in control.data" :key="`${control.path}-${index}`" :class="styles.arrayList.itemWrapper">
       <array-list-element
         :move-up="moveUp?.(control.path, index)"
         :move-up-enabled="control.enabled && index > 0"
