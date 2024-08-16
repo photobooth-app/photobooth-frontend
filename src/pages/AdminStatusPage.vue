@@ -160,6 +160,12 @@
         <q-card-actions align="right">
           <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="confirm_reset_stats_counter = true" />
         </q-card-actions>
+
+        <q-separator />
+
+        <q-card-actions align="right">
+          <q-btn flat color="primary" icon="sym_o_history" label="reset limites" @click="confirm_reset_limites_counter = true" />
+        </q-card-actions>
       </q-card>
     </div>
 
@@ -173,6 +179,20 @@
         <q-card-actions align="right">
           <q-btn v-close-popup flat label="Cancel" color="primary" />
           <q-btn v-close-popup label="Yes, reset!" color="primary" @click="remoteProcedureCall('/api/admin/information/sttscntr/reset')" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="confirm_reset_limites_counter">
+      <q-card class="q-pa-sm">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="sym_o_history" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('Are you sure to reset limites counter?') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat label="Cancel" color="primary" />
+          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="remoteProcedureCall('/api/admin/information/sttscntr/reset/limites')" />
         </q-card-actions>
       </q-card>
     </q-dialog>
