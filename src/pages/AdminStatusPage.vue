@@ -148,28 +148,35 @@
 
             <q-item v-for="(value, key, index) in store.information.stats_counter" :key="index">
               <q-item-section>
+                <q-item-label v-if="!['last_reset'].includes(key)" class="btn right">
+                  <q-btn flat color="primary" icon="sym_o_delete" @click="confirm_reset_by_key({ key })" />
+                </q-item-label>
                 <q-item-label caption>{{ key }}</q-item-label>
-                <q-item-label>{{ value }}</q-item-label>
+                <q-item-label v-if="value && typeof value === 'object'">
+                  <q-item-label v-for="(val, obj, id) in value" :key="id">
+                    {{
+                      $t('{obj} : {val}', {
+                        obj: obj,
+                        val: val,
+                      })
+                    }}
+                  </q-item-label>
+                </q-item-label>
+                <q-item-label v-else>
+                  {{ value }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
         </q-card-section>
-
         <q-separator />
-
         <q-card-actions align="right">
-          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="confirm_reset_stats_counter = true" />
-        </q-card-actions>
-
-        <q-separator />
-
-        <q-card-actions align="right">
-          <q-btn flat color="primary" icon="sym_o_history" label="reset limites" @click="confirm_reset_limites_counter = true" />
+          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="confirm_reset()" />
         </q-card-actions>
       </q-card>
     </div>
 
-    <q-dialog v-model="confirm_reset_stats_counter">
+    <q-dialog v-model="confirm_reset_counter">
       <q-card class="q-pa-sm">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_history" color="primary" text-color="white" />
@@ -178,21 +185,7 @@
 
         <q-card-actions align="right">
           <q-btn v-close-popup flat label="Cancel" color="primary" />
-          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="remoteProcedureCall('/api/admin/information/sttscntr/reset')" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-
-    <q-dialog v-model="confirm_reset_limites_counter">
-      <q-card class="q-pa-sm">
-        <q-card-section class="row items-center" style="flex-wrap: nowrap">
-          <q-avatar icon="sym_o_history" color="primary" text-color="white" />
-          <span class="q-ml-sm">{{ $t('Are you sure to reset limites counter?') }}</span>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn v-close-popup flat label="Cancel" color="primary" />
-          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="remoteProcedureCall('/api/admin/information/sttscntr/reset/limites')" />
+          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="confirmAction('/api/admin/information/sttscntr/reset')" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -211,15 +204,31 @@ export default defineComponent({
   components: { QBtn },
   setup() {
     const store = useMainStore();
-    const confirm_reset_stats_counter = ref(false);
+    const confirm_reset_counter = ref(false);
 
     return {
       // you can return the whole store instance to use it in the template
       store,
       remoteProcedureCall,
-      confirm_reset_stats_counter,
+      confirm_reset_counter,
     };
   },
-  methods: {},
+  methods: {
+    confirm_reset_by_key(param) {
+      this.action_param = param.key;
+      this.confirm_reset_counter = true;
+    },
+    confirm_reset() {
+      this.action_param = null;
+      this.confirm_reset_counter = true;
+    },
+    confirmAction(action) {
+      if (this.action_param) {
+        action = action + '/' + this.action_param;
+      }
+      remoteProcedureCall(action);
+      this.confirm_reset_counter = false;
+    },
+  },
 });
 </script>
