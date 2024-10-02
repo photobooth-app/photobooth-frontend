@@ -99,7 +99,7 @@
   "Clear recycle directory": "ごみ箱のディレクトリをクリア",
   "Are you sure to clear the recycle directory?": "ごみ箱のディレクトリをクリアしてもよろしいですか？",
   "Stats counter": "Stats counter",
-  "Are you sure to reset stats counter?": "本当に統計カウンターをリセットしますか？",
+  "Are you sure to reset the counter?": "カウンターをリセットしてもよろしいですか？",
   "Choose your filter": "フィルターを選択",
   "Service (Linux only)": "サービス (Linux のみ)",
   "Host": "ホスト",
@@ -107,5 +107,7 @@
   "Sign out": "サインアウト",
   "Sign in below to access the admin dashboard.": "管理者ダッシュボードにアクセスするには、以下にサインインしてください。",
   "Looking for the default password or issues signing in?": "デフォルトのパスワードまたはサインイン時の問題をお探しですか？",
-  "Check the documentation.": "ドキュメントを確認してください。"
+  "Check the documentation.": "ドキュメントを確認してください。",
+  "Battery": "バッテリー",
+  "System Temperatures": "システム温度"
 }

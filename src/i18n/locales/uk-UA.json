@@ -99,7 +99,7 @@
   "Clear recycle directory": "Очистити каталог кошиків",
   "Are you sure to clear the recycle directory?": "Ви впевнені, що хочете очистити каталог кошика?",
   "Stats counter": "Лічильник статистики",
-  "Are you sure to reset stats counter?": "Ви дійсно бажаєте скинути лічильник статистики?",
+  "Are you sure to reset the counter?": "Справді скинути лічильник?",
   "Choose your filter": "Оберіть свій фільтр",
   "Service (Linux only)": "Сервіс (тільки Linux)",
   "Host": "Хост",
@@ -107,5 +107,7 @@
   "Sign out": "Вийти",
   "Sign in below to access the admin dashboard.": "Увійдіть нижче, щоб отримати доступ до адміністративної панелі.",
   "Looking for the default password or issues signing in?": "Шукаєте логін за замовчуванням або проблеми заново?",
-  "Check the documentation.": "Перевірте документацію."
+  "Check the documentation.": "Перевірте документацію.",
+  "Battery": "Батарея",
+  "System Temperatures": "Системні температури"
 }

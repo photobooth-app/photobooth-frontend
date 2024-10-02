@@ -99,7 +99,7 @@
   "Clear recycle directory": "Καθαρισμός καταλόγου ανακύκλωσης",
   "Are you sure to clear the recycle directory?": "Είστε βέβαιοι να καθαρίσετε τον κατάλογο ανακύκλωσης?",
   "Stats counter": "Μετρητής στατιστικών",
-  "Are you sure to reset stats counter?": "Είστε βέβαιοι ότι θα επαναφέρετε μετρητή στατιστικών?",
+  "Are you sure to reset the counter?": "Είστε βέβαιοι να επαναφέρετε το μετρητή?",
   "Choose your filter": "Επιλέξτε το φίλτρο σας",
   "Service (Linux only)": "Υπηρεσία (μόνο για Linux)",
   "Host": "Διακομιστής",
@@ -107,5 +107,7 @@
   "Sign out": "Αποσύνδεση",
   "Sign in below to access the admin dashboard.": "Συνδεθείτε παρακάτω για να αποκτήσετε πρόσβαση στον πίνακα διαχείρισης.",
   "Looking for the default password or issues signing in?": "Ψάχνετε για τον προεπιλεγμένο κωδικό πρόσβασης ή τα προβλήματα σύνδεσης?",
-  "Check the documentation.": "Ελέγξτε την τεκμηρίωση."
+  "Check the documentation.": "Ελέγξτε την τεκμηρίωση.",
+  "Battery": "Μπαταρία",
+  "System Temperatures": "Θερμοκρασίες Συστήματος"
 }

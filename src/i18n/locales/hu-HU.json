@@ -99,7 +99,7 @@
   "Clear recycle directory": "Újrahasznosítási könyvtár törlése",
   "Are you sure to clear the recycle directory?": "Biztos, hogy kiürítette az újrahasznosítási könyvtárat?",
   "Stats counter": "Statisztikai számláló",
-  "Are you sure to reset stats counter?": "Biztos, hogy visszaállítja a statisztikák számlálóját?",
+  "Are you sure to reset the counter?": "Biztos, hogy vissza kell állítani a számlálót?",
   "Choose your filter": "Válassza ki a szűrőt",
   "Service (Linux only)": "Szolgáltatás (csak Linux)",
   "Host": "Házigazda",
@@ -107,5 +107,7 @@
   "Sign out": "Kijelentkezés",
   "Sign in below to access the admin dashboard.": "Az adminisztrátori műszerfal eléréséhez jelentkezzen be az alábbiakban.",
   "Looking for the default password or issues signing in?": "Az alapértelmezett jelszót keresi, vagy problémái vannak a bejelentkezéssel?",
-  "Check the documentation.": "Ellenőrizze a dokumentációt."
+  "Check the documentation.": "Ellenőrizze a dokumentációt.",
+  "Battery": "Akkumulátor",
+  "System Temperatures": "Rendszerhőmérsékletek"
 }

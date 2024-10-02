@@ -99,7 +99,7 @@
   "Clear recycle directory": "Geri dönüşüm dizinini temizleyin",
   "Are you sure to clear the recycle directory?": "Geri dönüşüm dizinini temizlediğinizden emin misiniz?",
   "Stats counter": "İstatistik sayacı",
-  "Are you sure to reset stats counter?": "İstatistik sayacını sıfırladığınızdan emin misiniz?",
+  "Are you sure to reset the counter?": "Sayacı sıfırladığınızdan emin misiniz?",
   "Choose your filter": "Filtrenizi seçin",
   "Service (Linux only)": "Servis (yalnızca Linux)",
   "Host": "Ev sahibi",
@@ -107,5 +107,7 @@
   "Sign out": "Çıkış yapın",
   "Sign in below to access the admin dashboard.": "Yönetici kontrol paneline erişmek için aşağıdan oturum açın.",
   "Looking for the default password or issues signing in?": "Varsayılan şifreyi mi arıyorsunuz veya oturum açarken sorun mu yaşıyorsunuz?",
-  "Check the documentation.": "Belgeleri kontrol edin."
+  "Check the documentation.": "Belgeleri kontrol edin.",
+  "Battery": "Akü",
+  "System Temperatures": "Sistem Sıcaklıkları"
 }
