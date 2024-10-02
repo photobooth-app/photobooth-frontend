@@ -174,6 +174,7 @@
               <q-item-section>
                 <q-item-label caption>{{ field }}</q-item-label>
                 <q-item-label v-if="value && typeof value === 'object'">
+                  <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
                   <q-item-label v-for="(sub_val, sub_field, sub_index) in value" :key="sub_index"> {{ sub_field }}: {{ sub_val }} </q-item-label>
                 </q-item-label>
                 <q-item-label v-else>
