@@ -107,5 +107,7 @@
   "Sign out": "Sign out",
   "Sign in below to access the admin dashboard.": "Sign in below to access the admin dashboard.",
   "Looking for the default password or issues signing in?": "Looking for the default password or issues signing in?",
-  "Check the documentation.": "Check the documentation."
+  "Check the documentation.": "Check the documentation.",
+  "Battery": "Battery",
+  "System Temperatures": "System Temperatures"
 }

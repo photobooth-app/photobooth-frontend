@@ -5,8 +5,8 @@ export const useMainStore = defineStore('main-store', {
     logrecords: [],
 
     information: {
+      /* system */
       cpu1_5_15: [null, null, null],
-      active_threads: null,
       memory: {
         total: null,
         available: null,
@@ -28,6 +28,10 @@ export const useMainStore = defineStore('main-store', {
         primary: {},
         secondary: {},
       },
+      battery_percent: null,
+      temperatures: {},
+
+      /* platform */
       version: null,
       platform_system: null,
       platform_release: null,
@@ -37,6 +41,8 @@ export const useMainStore = defineStore('main-store', {
       platform_cpu_count: null,
       data_directory: null,
       python_executable: null,
+
+      /* stats */
       stats_counter: {},
     },
 

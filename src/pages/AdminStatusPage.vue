@@ -54,6 +54,30 @@
                 <q-item-label> {{ (store.information['memory']['available'] / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
               </q-item-section>
             </q-item>
+
+            <q-item v-if="store.information['battery_percent'] !== null">
+              <q-item-section>
+                <q-item-label caption>{{ $t('Battery') }} </q-item-label>
+                <q-item-label>
+                  <q-linear-progress size="lg" :value="store.information['battery_percent'] / 100" />
+                </q-item-label>
+                <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
+                <q-item-label> {{ store.information['battery_percent'].toFixed(0) }}% </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item v-if="Object.keys(store.information.temperatures).length > 0">
+              <q-item-section>
+                <q-item-label caption>{{ $t('System Temperatures') }} </q-item-label>
+
+                <q-item v-for="(value, key, index) in store.information.temperatures" :key="index">
+                  <q-item-section>
+                    <q-item-label caption>{{ key }}</q-item-label>
+                    <q-item-label>{{ value }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-item-section>
+            </q-item>
           </q-list>
         </q-card-section>
       </q-card>
