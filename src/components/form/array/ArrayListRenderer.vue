@@ -25,9 +25,8 @@
       </array-list-element>
     </div>
 
-    <div v-if="noData" :class="styles.arrayList.noData">
-      {{ control.translations.noDataMessage }}
-    </div>
+    <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
+    <div v-if="noData" :class="styles.arrayList.noData">no data</div>
   </q-card>
   <div align="right">
     <q-btn
