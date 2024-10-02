@@ -99,7 +99,7 @@
   "Clear recycle directory": "Tøm papirkurvmappen",
   "Are you sure to clear the recycle directory?": "Er du sikker på at du vil tømme papirkurven?",
   "Stats counter": "Statistikk teller",
-  "Are you sure to reset stats counter?": "Er du sikker på at du vil nullstille statistikk teller?",
+  "Are you sure to reset the counter?": "Er du sikker på at du vil tilbakestille telleren?",
   "Choose your filter": "Velg ditt filter",
   "Service (Linux only)": "Tjeneste (bare Linux-)",
   "Host": "Vert",
@@ -107,5 +107,7 @@
   "Sign out": "Logg ut",
   "Sign in below to access the admin dashboard.": "Logg inn nedenfor for å få tilgang til admindashbordet.",
   "Looking for the default password or issues signing in?": "Ser du etter standard passord eller problemer med å logge inn?",
-  "Check the documentation.": "Sjekk dokumentasjonen."
+  "Check the documentation.": "Sjekk dokumentasjonen.",
+  "Battery": "Batteri",
+  "System Temperatures": "Temperaturer i systemet"
 }

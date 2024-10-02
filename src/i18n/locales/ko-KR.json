@@ -99,7 +99,7 @@
   "Clear recycle directory": "휴지통 디렉터리 지우기",
   "Are you sure to clear the recycle directory?": "휴지통 디렉터리를 지우시겠습니까?",
   "Stats counter": "통계 카운터",
-  "Are you sure to reset stats counter?": "통계 카운터를 초기화하시겠습니까?",
+  "Are you sure to reset the counter?": "카운터를 재설정하시겠습니까?",
   "Choose your filter": "필터 선택",
   "Service (Linux only)": "서비스(Linux 전용)",
   "Host": "호스트",
@@ -107,5 +107,7 @@
   "Sign out": "로그아웃",
   "Sign in below to access the admin dashboard.": "아래에서 로그인하여 관리자 대시보드에 액세스합니다.",
   "Looking for the default password or issues signing in?": "기본 비밀번호를 찾지 못했거나 로그인에 문제가 있나요?",
-  "Check the documentation.": "문서를 확인하세요."
+  "Check the documentation.": "문서를 확인하세요.",
+  "Battery": "배터리",
+  "System Temperatures": "시스템 온도"
 }

@@ -99,7 +99,7 @@
   "Clear recycle directory": "Curăță directorul Recycle",
   "Are you sure to clear the recycle directory?": "Sunteţi sigur că doriţi să ştergeţi directorul de reciclare?",
   "Stats counter": "Contor statistici",
-  "Are you sure to reset stats counter?": "Ești sigur că vrei să resetezi contorul de statistici?",
+  "Are you sure to reset the counter?": "Ești sigur că vrei să resetezi contorul?",
   "Choose your filter": "Alege-ți filtrul",
   "Service (Linux only)": "Serviciu (doar Linux)",
   "Host": "Gazdă",
@@ -107,5 +107,7 @@
   "Sign out": "Deconectare",
   "Sign in below to access the admin dashboard.": "Conectați-vă mai jos pentru a accesa tabloul de bord al administratorului.",
   "Looking for the default password or issues signing in?": "Cauți parola implicită sau autentificarea cu probleme?",
-  "Check the documentation.": "Verificați documentația."
+  "Check the documentation.": "Verificați documentația.",
+  "Battery": "Baterie",
+  "System Temperatures": "Temperaturi sistem"
 }

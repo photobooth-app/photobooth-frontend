@@ -99,7 +99,7 @@
   "Clear recycle directory": "Borrar directorio de reciclado",
   "Are you sure to clear the recycle directory?": "¿Está seguro de borrar el directorio de reciclaje?",
   "Stats counter": "Contador de estadísticas",
-  "Are you sure to reset stats counter?": "¿Estás seguro de reiniciar el contador de estadísticas?",
+  "Are you sure to reset the counter?": "¿Estás seguro de reiniciar el contador?",
   "Choose your filter": "Elige tu filtro",
   "Service (Linux only)": "Servicio (sólo Linux)",
   "Host": "Anfitrión",
@@ -107,5 +107,7 @@
   "Sign out": "Cerrar sesión",
   "Sign in below to access the admin dashboard.": "Inicia sesión a continuación para acceder al panel de administración.",
   "Looking for the default password or issues signing in?": "¿Busca la contraseña por defecto o problemas al iniciar sesión?",
-  "Check the documentation.": "Revisa la documentación."
+  "Check the documentation.": "Revisa la documentación.",
+  "Battery": "Batería",
+  "System Temperatures": "Temperaturas del sistema"
 }

@@ -99,7 +99,7 @@
   "Clear recycle directory": "Ryd genbrugsmappe",
   "Are you sure to clear the recycle directory?": "Er du sikker på at rydde papirkurven?",
   "Stats counter": "Statistik tæller",
-  "Are you sure to reset stats counter?": "Er du sikker på at du vil nulstille statistik tæller?",
+  "Are you sure to reset the counter?": "Er du sikker på at du vil nulstille tælleren?",
   "Choose your filter": "Vælg dit filter",
   "Service (Linux only)": "Tjenesten (kun Linux)",
   "Host": "Vært",
@@ -107,5 +107,7 @@
   "Sign out": "Log ud",
   "Sign in below to access the admin dashboard.": "Log ind nedenfor for at få adgang til admin dashboard.",
   "Looking for the default password or issues signing in?": "Leder du efter standardadgangskoden eller problemer med at logge ind?",
-  "Check the documentation.": "Tjek dokumentationen."
+  "Check the documentation.": "Tjek dokumentationen.",
+  "Battery": "Batteri",
+  "System Temperatures": "System Temperaturer"
 }

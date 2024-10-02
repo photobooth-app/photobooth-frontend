@@ -99,7 +99,7 @@
   "Clear recycle directory": "清除回收目录",
   "Are you sure to clear the recycle directory?": "您确定要清除回收目录吗？",
   "Stats counter": "统计计数器",
-  "Are you sure to reset stats counter?": "您确定要重置统计计数器？",
+  "Are you sure to reset the counter?": "您确定要重置计数器吗？",
   "Choose your filter": "选择您的过滤器",
   "Service (Linux only)": "服务 (Linux)",
   "Host": "主机",
@@ -107,5 +107,7 @@
   "Sign out": "登出",
   "Sign in below to access the admin dashboard.": "登录下面以访问管理仪表板",
   "Looking for the default password or issues signing in?": "正在查找默认密码或登录问题？",
-  "Check the documentation.": "检查文档。"
+  "Check the documentation.": "检查文档。",
+  "Battery": "电量：",
+  "System Temperatures": "系统温度"
 }

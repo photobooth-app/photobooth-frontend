@@ -99,7 +99,7 @@
   "Clear recycle directory": "Rensa papperskorgen",
   "Are you sure to clear the recycle directory?": "Är du säker på att rensa papperskatalogen?",
   "Stats counter": "Statistik räknare",
-  "Are you sure to reset stats counter?": "Är du säker på att återställa statistikräknare?",
+  "Are you sure to reset the counter?": "Är du säker på att återställa disken?",
   "Choose your filter": "Välj ditt filter",
   "Service (Linux only)": "Service (endast Linux)",
   "Host": "Värd",
@@ -107,5 +107,7 @@
   "Sign out": "Logga ut",
   "Sign in below to access the admin dashboard.": "Logga in nedan för att komma åt admin-instrumentbrädan.",
   "Looking for the default password or issues signing in?": "Letar du efter standardlösenord eller problem med inloggning?",
-  "Check the documentation.": "Kontrollera dokumentationen."
+  "Check the documentation.": "Kontrollera dokumentationen.",
+  "Battery": "Batteri",
+  "System Temperatures": "System temperaturer"
 }
