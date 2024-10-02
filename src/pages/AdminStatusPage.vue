@@ -170,33 +170,39 @@
           <q-list separator>
             <q-item-label header>{{ $t('Stats counter') }}</q-item-label>
 
-            <q-item v-for="(value, key, index) in store.information.stats_counter" :key="index">
+            <q-item v-for="(value, field, index) in store.information.stats_counter" :key="index">
               <q-item-section>
-                <q-item-label caption>{{ key }}</q-item-label>
-                <q-item-label>{{ value }}</q-item-label>
+                <q-item-label caption>{{ field }}</q-item-label>
+                <q-item-label v-if="value && typeof value === 'object'">
+                  <q-item-label v-for="(sub_val, sub_field, sub_index) in value" :key="sub_index"> {{ sub_field }}: {{ sub_val }} </q-item-label>
+                </q-item-label>
+                <q-item-label v-else>
+                  {{ value }}
+                </q-item-label>
+              </q-item-section>
+              <q-item-section v-if="!['last_reset'].includes(field)" side>
+                <q-btn flat color="primary" icon="sym_o_history" @click="displayResetConfirm(field)" />
               </q-item-section>
             </q-item>
           </q-list>
         </q-card-section>
-
         <q-separator />
-
         <q-card-actions align="right">
-          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="confirm_reset_stats_counter = true" />
+          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="displayResetConfirm()" />
         </q-card-actions>
       </q-card>
     </div>
 
-    <q-dialog v-model="confirm_reset_stats_counter">
+    <q-dialog v-model="confirm_reset_counter">
       <q-card class="q-pa-sm">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_history" color="primary" text-color="white" />
-          <span class="q-ml-sm">{{ $t('Are you sure to reset stats counter?') }}</span>
+          <span class="q-ml-sm">{{ $t('Are you sure to reset the counter?') }}</span>
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn v-close-popup flat label="Cancel" color="primary" />
-          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="remoteProcedureCall('/api/admin/information/sttscntr/reset')" />
+          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="confirmAction()" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -215,15 +221,26 @@ export default defineComponent({
   components: { QBtn },
   setup() {
     const store = useMainStore();
-    const confirm_reset_stats_counter = ref(false);
+    const confirm_reset_counter = ref(false);
+    const selected_field = ref('');
 
     return {
       // you can return the whole store instance to use it in the template
       store,
       remoteProcedureCall,
-      confirm_reset_stats_counter,
+      confirm_reset_counter,
+      selected_field,
     };
   },
-  methods: {},
+  methods: {
+    displayResetConfirm(field) {
+      this.selected_field = field;
+      this.confirm_reset_counter = true;
+    },
+    confirmAction() {
+      remoteProcedureCall('/api/admin/information/sttscntr/reset/' + this.selected_field);
+      this.confirm_reset_counter = false;
+    },
+  },
 });
 </script>
