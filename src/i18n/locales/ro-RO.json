@@ -107,5 +107,7 @@
   "Sign out": "Deconectare",
   "Sign in below to access the admin dashboard.": "Conectați-vă mai jos pentru a accesa tabloul de bord al administratorului.",
   "Looking for the default password or issues signing in?": "Cauți parola implicită sau autentificarea cu probleme?",
-  "Check the documentation.": "Verificați documentația."
+  "Check the documentation.": "Verificați documentația.",
+  "Battery": "Baterie",
+  "System Temperatures": "Temperaturi sistem"
 }

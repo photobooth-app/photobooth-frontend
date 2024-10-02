@@ -107,5 +107,7 @@
   "Sign out": "Se déconnecter",
   "Sign in below to access the admin dashboard.": "Connectez-vous ci-dessous pour accéder au tableau de bord de l'administration.",
   "Looking for the default password or issues signing in?": "Vous recherchez le mot de passe par défaut ou les problèmes de connexion ?",
-  "Check the documentation.": "Consultez la documentation."
+  "Check the documentation.": "Consultez la documentation.",
+  "Battery": "Batterie",
+  "System Temperatures": "Températures du système"
 }

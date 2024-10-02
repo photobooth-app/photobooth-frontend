@@ -107,5 +107,7 @@
   "Sign out": "Logg ut",
   "Sign in below to access the admin dashboard.": "Logg inn nedenfor for å få tilgang til admindashbordet.",
   "Looking for the default password or issues signing in?": "Ser du etter standard passord eller problemer med å logge inn?",
-  "Check the documentation.": "Sjekk dokumentasjonen."
+  "Check the documentation.": "Sjekk dokumentasjonen.",
+  "Battery": "Batteri",
+  "System Temperatures": "Temperaturer i systemet"
 }
