@@ -357,6 +357,7 @@ export default {
         console.log(this.itemRepository.slice(lowerBound, upperBound));
         return this.itemRepository.slice(lowerBound, upperBound);
       } else {
+        /* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
         this.currentSlideIndex; // force "computed" update
         console.log(this.rndIncides.map((i) => this.itemRepository[i]));
         return this.rndIncides.map((i) => this.itemRepository[i]);

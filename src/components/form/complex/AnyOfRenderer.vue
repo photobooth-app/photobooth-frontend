@@ -57,7 +57,6 @@ const controlRenderer = defineComponent({
   computed: {
     anyOfRenderInfos(): CombinatorSubSchemaRenderInfo[] {
       const result = createCombinatorRenderInfos(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.control.schema.anyOf!,
         this.control.rootSchema,
         'anyOf',
