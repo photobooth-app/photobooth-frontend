@@ -189,7 +189,7 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
-          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="displayResetConfirm()" />
+          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="displayResetConfirm('')" />
         </q-card-actions>
       </q-card>
     </div>
