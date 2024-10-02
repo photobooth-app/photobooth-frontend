@@ -107,5 +107,7 @@
   "Sign out": "Kirjaudu ulos",
   "Sign in below to access the admin dashboard.": "Kirjaudu alapuoleen päästäksesi hallintapaneeliin.",
   "Looking for the default password or issues signing in?": "Etsitkö oletussalasanaa tai ongelmia kirjautuessa?",
-  "Check the documentation.": "Tarkista dokumentaatio."
+  "Check the documentation.": "Tarkista dokumentaatio.",
+  "Battery": "Akku",
+  "System Temperatures": "Järjestelmän Lämpötilat"
 }

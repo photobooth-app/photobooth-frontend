@@ -107,5 +107,7 @@
   "Sign out": "サインアウト",
   "Sign in below to access the admin dashboard.": "管理者ダッシュボードにアクセスするには、以下にサインインしてください。",
   "Looking for the default password or issues signing in?": "デフォルトのパスワードまたはサインイン時の問題をお探しですか？",
-  "Check the documentation.": "ドキュメントを確認してください。"
+  "Check the documentation.": "ドキュメントを確認してください。",
+  "Battery": "バッテリー",
+  "System Temperatures": "システム温度"
 }

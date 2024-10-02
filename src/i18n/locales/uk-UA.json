@@ -107,5 +107,7 @@
   "Sign out": "Вийти",
   "Sign in below to access the admin dashboard.": "Увійдіть нижче, щоб отримати доступ до адміністративної панелі.",
   "Looking for the default password or issues signing in?": "Шукаєте логін за замовчуванням або проблеми заново?",
-  "Check the documentation.": "Перевірте документацію."
+  "Check the documentation.": "Перевірте документацію.",
+  "Battery": "Батарея",
+  "System Temperatures": "Системні температури"
 }

@@ -107,5 +107,7 @@
   "Sign out": "Cerrar sesión",
   "Sign in below to access the admin dashboard.": "Inicia sesión a continuación para acceder al panel de administración.",
   "Looking for the default password or issues signing in?": "¿Busca la contraseña por defecto o problemas al iniciar sesión?",
-  "Check the documentation.": "Revisa la documentación."
+  "Check the documentation.": "Revisa la documentación.",
+  "Battery": "Batería",
+  "System Temperatures": "Temperaturas del sistema"
 }
