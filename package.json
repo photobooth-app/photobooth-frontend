@@ -39,7 +39,7 @@
     "autoprefixer": "^10.4.19",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-vue": "^9.26.0",
+    "eslint-plugin-vue": "^9.29.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
     "vite-plugin-checker": "^0.8.0",
