@@ -218,13 +218,5 @@ export default defineConfig((ctx) => {
         appId: 'quasar-project',
       },
     },
-
-    // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-browser-extensions/configuring-bex
-    bex: {
-      contentScripts: ['my-content-script'],
-
-      // extendBexScriptsConf (esbuildConf) {}
-      // extendBexManifestJson (json) {}
-    },
   };
 });
