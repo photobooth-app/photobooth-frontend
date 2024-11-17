@@ -24,9 +24,9 @@
 </template>
 
 <script lang="ts">
-import { JsonFormsRendererRegistryEntry, Layout, rankWith, and, isLayout, uiTypeIs } from '@jsonforms/core';
+import { type JsonFormsRendererRegistryEntry, type Layout, rankWith, and, isLayout, uiTypeIs } from '@jsonforms/core';
 import { defineComponent } from 'vue';
-import { DispatchRenderer, rendererProps, useJsonFormsLayout, RendererProps } from '@jsonforms/vue';
+import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue';
 import { useQuasarLayout } from '../util';
 
 const layoutRenderer = defineComponent({

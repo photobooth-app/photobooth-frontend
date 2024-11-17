@@ -51,9 +51,9 @@
 </template>
 
 <script lang="ts">
-import { Layout, Categorization, Category, isVisible, Scoped } from '@jsonforms/core';
+import { type Layout, type Categorization, type Category, isVisible, type Scoped } from '@jsonforms/core';
 import { defineComponent, ref } from 'vue';
-import { DispatchRenderer, rendererProps, useJsonFormsLayout, RendererProps } from '@jsonforms/vue';
+import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue';
 import { useQuasarLayout, useAjv } from '../util';
 
 const TopLevelNavigationRenderer = defineComponent({

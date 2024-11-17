@@ -26,8 +26,8 @@
 </template>
 
 <script lang="ts">
-import { CombinatorSubSchemaRenderInfo, ControlElement, createCombinatorRenderInfos } from '@jsonforms/core';
-import { DispatchRenderer, rendererProps, RendererProps, useJsonFormsAnyOfControl } from '@jsonforms/vue';
+import { type CombinatorSubSchemaRenderInfo, type ControlElement, createCombinatorRenderInfos } from '@jsonforms/core';
+import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsAnyOfControl } from '@jsonforms/vue';
 
 import { defineComponent, ref } from 'vue';
 

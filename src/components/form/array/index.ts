@@ -1,4 +1,4 @@
-import { JsonFormsRendererRegistryEntry, rankWith, schemaTypeIs } from '@jsonforms/core';
+import { type JsonFormsRendererRegistryEntry, rankWith, schemaTypeIs } from '@jsonforms/core';
 
 import { default as ArrayListRenderer } from './ArrayListRenderer.vue';
 

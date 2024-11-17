@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts">
-import { ControlElement, findUISchema, Generate, GroupLayout, UISchemaElement } from '@jsonforms/core';
-import { DispatchRenderer, rendererProps, RendererProps, useJsonFormsControlWithDetail } from '@jsonforms/vue';
+import { type ControlElement, findUISchema, Generate, type GroupLayout, type UISchemaElement } from '@jsonforms/core';
+import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsControlWithDetail } from '@jsonforms/vue';
 import cloneDeep from 'lodash/cloneDeep';
 import isEmpty from 'lodash/isEmpty';
 import { defineComponent } from 'vue';

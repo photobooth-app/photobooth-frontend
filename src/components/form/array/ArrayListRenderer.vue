@@ -43,9 +43,9 @@
 </template>
 
 <script lang="ts">
-import { composePaths, createDefaultValue, ControlElement, Resolve, JsonSchema } from '@jsonforms/core';
+import { composePaths, createDefaultValue, type ControlElement, Resolve, type JsonSchema } from '@jsonforms/core';
 import { defineComponent } from 'vue';
-import { DispatchRenderer, rendererProps, useJsonFormsArrayControl, RendererProps } from '@jsonforms/vue';
+import { DispatchRenderer, rendererProps, useJsonFormsArrayControl, type RendererProps } from '@jsonforms/vue';
 import { useQuasarArrayControl } from '../util';
 import ArrayListElement from './ArrayListElement.vue';
 

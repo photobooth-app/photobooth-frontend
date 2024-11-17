@@ -29,8 +29,14 @@
 </template>
 
 <script lang="ts">
-import { CombinatorSubSchemaRenderInfo, ControlElement, createCombinatorRenderInfos, findMatchingUISchema, UISchemaElement } from '@jsonforms/core';
-import { DispatchRenderer, rendererProps, RendererProps, useJsonFormsAllOfControl } from '@jsonforms/vue';
+import {
+  type CombinatorSubSchemaRenderInfo,
+  type ControlElement,
+  createCombinatorRenderInfos,
+  findMatchingUISchema,
+  type UISchemaElement,
+} from '@jsonforms/core';
+import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsAllOfControl } from '@jsonforms/vue';
 import { defineComponent } from 'vue';
 import { useQuasarControl } from '../util';
 import { CombinatorProperties } from './components';

@@ -68,7 +68,8 @@ export default {
   computed: {
     imgToApproveSrc: {
       get() {
-        return this.stateStore.last_captured_mediaitem && this.stateStore.last_captured_mediaitem['preview'];
+        // only check first index if multicapture in one pass currently.
+        return this.stateStore.last_captured_mediaitems[0] && this.stateStore.last_captured_mediaitems[0]['preview'];
       },
     },
   },

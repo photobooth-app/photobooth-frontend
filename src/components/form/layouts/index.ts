@@ -1,4 +1,4 @@
-import { JsonFormsRendererRegistryEntry, rankWith, uiTypeIs, isLayout, and } from '@jsonforms/core';
+import { type JsonFormsRendererRegistryEntry, rankWith, uiTypeIs, isLayout, and } from '@jsonforms/core';
 
 import { default as GroupRenderer } from './GroupRenderer.vue';
 import { default as LayoutRenderer } from './LayoutRenderer.vue';

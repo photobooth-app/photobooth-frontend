@@ -2,7 +2,7 @@
 // export * from './directives';
 
 import {
-  JsonFormsRendererRegistryEntry,
+  type JsonFormsRendererRegistryEntry,
   rankWith,
   isStringControl,
   isRangeControl,
@@ -11,7 +11,7 @@ import {
   or,
   and,
   hasType,
-  JsonSchema,
+  type JsonSchema,
   schemaMatches,
   schemaSubPathMatches,
   uiTypeIs,

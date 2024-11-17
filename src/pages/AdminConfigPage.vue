@@ -43,7 +43,7 @@
 <script lang="ts">
 import { ref, computed } from 'vue';
 import { useMainStore } from '../stores/main-store.js';
-import { JsonForms, JsonFormsChangeEvent } from '@jsonforms/vue';
+import { JsonForms, type JsonFormsChangeEvent } from '@jsonforms/vue';
 import { generateDefaultUISchema } from '@jsonforms/core';
 import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form';
 import { remoteProcedureCall, _fetch } from '../util/fetch_api';

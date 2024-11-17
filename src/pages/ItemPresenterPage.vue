@@ -1,7 +1,7 @@
 <template>
   <q-page id="itempresenter-page" class="q-pa-none fullscreen">
     <gallery-image-detail
-      :item-repository="[stateStore.last_captured_mediaitem]"
+      :item-repository="stateStore.last_captured_mediaitems"
       :index-selected="0"
       :single-item-view="true"
       :start-timer-on-open="true"

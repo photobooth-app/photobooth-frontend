@@ -1,11 +1,11 @@
 import {
   isAllOfControl,
   isAnyOfControl,
-  JsonFormsRendererRegistryEntry,
+  type JsonFormsRendererRegistryEntry,
   rankWith,
   and,
   hasType,
-  JsonSchema,
+  type JsonSchema,
   schemaMatches,
   schemaSubPathMatches,
   uiTypeIs,

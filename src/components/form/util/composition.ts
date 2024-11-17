@@ -1,5 +1,5 @@
 import { useStyles } from '../styles';
-import { computed, ref, ComputedRef, inject, provide } from 'vue';
+import { computed, ref, type ComputedRef, inject, provide } from 'vue';
 import cloneDeep from 'lodash/cloneDeep';
 import debounce from 'lodash/debounce';
 import merge from 'lodash/merge';
@@ -11,7 +11,7 @@ import {
   isDescriptionHidden,
   Resolve,
   findUISchema,
-  JsonFormsSubStates,
+  type JsonFormsSubStates,
   extractAjv,
 } from '@jsonforms/core';
 import isPlainObject from 'lodash/isPlainObject';

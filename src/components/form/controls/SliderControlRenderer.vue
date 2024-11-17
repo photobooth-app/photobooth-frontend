@@ -20,9 +20,9 @@
 </template>
 
 <script lang="ts">
-import { ControlElement } from '@jsonforms/core';
+import type { ControlElement } from '@jsonforms/core';
 import { defineComponent } from 'vue';
-import { rendererProps, useJsonFormsControl, RendererProps } from '@jsonforms/vue';
+import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonforms/vue';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useQuasarControl } from '../util';
 

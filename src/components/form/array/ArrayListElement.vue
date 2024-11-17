@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import { Styles } from '../styles';
+import { defineComponent, type PropType } from 'vue';
+import type { Styles } from '../styles';
 
 const listItem = defineComponent({
   name: 'ArrayListElement',

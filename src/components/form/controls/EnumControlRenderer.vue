@@ -17,9 +17,9 @@
 </template>
 
 <script lang="ts">
-import { ControlElement } from '@jsonforms/core';
+import type { ControlElement } from '@jsonforms/core';
 import { defineComponent } from 'vue';
-import { rendererProps, useJsonFormsEnumControl, RendererProps } from '@jsonforms/vue';
+import { rendererProps, useJsonFormsEnumControl, type RendererProps } from '@jsonforms/vue';
 import { default as ControlWrapper } from './ControlWrapper.vue';
 import { useQuasarControl } from '../util';
 

@@ -138,27 +138,14 @@
         </q-card-section>
       </q-card>
 
-      <q-card flat class="q-mr-md q-mb-md">
+      <q-card v-for="(backend_stats, _, index) in store.information.backends" :key="index" flat class="q-mr-md q-mb-md">
         <q-card-section>
           <q-list separator>
-            <q-item-label header>{{ $t('primary backend') }}</q-item-label>
-            <q-item v-for="(value, key, index) in store.information.backends.primary" :key="index">
+            <q-item-label header>{{ $t('Backend Index: ') }}{{ index }}</q-item-label>
+            <q-item v-for="(field_value, field_key, field_index) in backend_stats" :key="field_index">
               <q-item-section>
-                <q-item-label caption>{{ key }}</q-item-label>
-                <q-item-label>{{ value }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-card-section>
-      </q-card>
-      <q-card v-if="Object.keys(store.information.backends.secondary).length > 0" flat class="q-mr-md q-mb-md">
-        <q-card-section>
-          <q-list separator>
-            <q-item-label header>{{ $t('secondary backend') }}</q-item-label>
-            <q-item v-for="(value, key, index) in store.information.backends.secondary" :key="index">
-              <q-item-section>
-                <q-item-label caption>{{ key }}</q-item-label>
-                <q-item-label>{{ value }}</q-item-label>
+                <q-item-label caption>{{ field_key }}</q-item-label>
+                <q-item-label>{{ field_value }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
