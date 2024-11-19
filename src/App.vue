@@ -175,7 +175,7 @@ export default defineComponent({
         console.log('keyboard input is disabled, to use keyboard input enable it in the configuration and reload the page.');
         return;
       }
-      const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'share.actions'];
+      const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'actions.multicamera', 'share.actions'];
       action_collections.forEach((action_collection) => {
         const action_config = this.configurationStore.getConfigElement(action_collection, []);
         action_config.forEach((action, index) => {
