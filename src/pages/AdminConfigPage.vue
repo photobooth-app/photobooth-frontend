@@ -1,15 +1,15 @@
 <template>
   <q-page id="config-page">
-    <div v-if="!isLoadingState">
-      <json-forms
-        :data="configurationStore.configuration"
-        :ajv="ajv"
-        :renderers="renderers"
-        :schema="schema"
-        :uischema="cuischema"
-        @change="onChange"
-      />
-    </div>
+    <json-forms
+      v-if="!isLoadingState"
+      :data="configurationStore.configuration"
+      :ajv="ajv"
+      :renderers="renderers"
+      :schema="schema"
+      :uischema="cuischema"
+      @change="onChange"
+    />
+
     <div v-else class="q-pa-md flex flex-center">
       <div>
         <q-spinner-gears size="xl" color="primary" />
@@ -19,7 +19,7 @@
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <div class="q-gutter-sm">
         <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
-        <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="confirm_reset_config = true" />
+        <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="(confirm_reset_config = true)" />
         <q-btn :label="$t('BTN_LABEL_RESTORE_CONFIG')" @click="configurationStore.getConfig('current')" />
         <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="configurationStore.saveConfig()" />
       </div>
@@ -45,6 +45,7 @@ import { ref, computed } from 'vue';
 import { useMainStore } from '../stores/main-store.js';
 import { JsonForms, type JsonFormsChangeEvent } from '@jsonforms/vue';
 import { generateDefaultUISchema } from '@jsonforms/core';
+import { UISchemaElement } from '@jsonforms/core/lib/models';
 import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form';
 import { remoteProcedureCall, _fetch } from '../util/fetch_api';
 import { useConfigurationStore } from '../stores/configuration-store';
@@ -55,6 +56,7 @@ const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } });
 const renderers = [...quasarRenderers];
 const isLoadingState = ref(true);
 const schema = ref({});
+const cuischema = ref(generateDefaultUISchema({}));
 const confirm_reset_config = ref(false);
 
 const getSchema = async () => {
@@ -82,6 +84,8 @@ const updateFormSchema = async () => {
   isLoadingState.value = true;
 
   schema.value = await getSchema();
+  cuischema.value = generateDefaultUISchema(schema.value, 'TopLevelNavigation');
+
   await configurationStore.getConfig('currentActive'); //reload because store could have all data but with usercontext so secrets hidden
 
   //loadscreen off
@@ -89,9 +93,6 @@ const updateFormSchema = async () => {
   isLoadingState.value = false;
 };
 
-const cuischema = computed(() => {
-  return !isLoadingState.value ? generateDefaultUISchema(schema.value, 'TopLevelNavigation') : undefined;
-});
 export default {
   components: {
     JsonForms,

@@ -24,6 +24,14 @@ export default defineConfig((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
+      typescript: {
+        strict: true, // (recommended) enables strict settings for TypeScript
+        vueShim: true, // required when using ESLint with type-checked rules, will generate a shim file for `*.vue` files
+        extendTsConfig(tsConfig) {
+          // You can use this hook to extend tsConfig dynamically
+          // For basic use cases, you can still update the usual tsconfig.json file to override some settings
+        },
+      },
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
         node: 'node20',
@@ -73,11 +81,10 @@ export default defineConfig((ctx) => {
             overlay: {
               initialIsOpen: false,
             },
-            vueTsc: {
-              tsconfigPath: 'tsconfig.vue-tsc.json',
-            },
+            vueTsc: true,
             eslint: {
-              lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
+              lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{ts,js,mjs,cjs,vue}"',
+              useFlatConfig: true,
             },
           },
           { server: false },
