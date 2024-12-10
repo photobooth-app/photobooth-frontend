@@ -46,6 +46,7 @@ const routes = [
       { path: 'logs', component: () => import('pages/AdminLogsPage.vue') },
       { path: 'help', component: () => import('pages/AdminHelpPage.vue') },
       { path: '1ststart', component: () => import('pages/Admin1stStartPage.vue') },
+      { path: 'multicam', component: () => import('pages/AdminMulticamPage.vue') },
       {
         name: 'config',
         path: 'config/:section?',
