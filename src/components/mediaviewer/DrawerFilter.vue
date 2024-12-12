@@ -14,7 +14,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   id: string
-  availableFilter: string[] //
+  availableFilter: string[]
 }>()
 
 const emit = defineEmits<{

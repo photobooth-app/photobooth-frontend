@@ -6,7 +6,7 @@
         <HeaderToolbar
           :item="currentMediaitem"
           :show-filter="configurationStore.getConfigElement('uisettings.gallery_show_filter', false)"
-          :enable-filter="['image', 'collage', 'collageimage', 'animationimage'].includes(currentMediaitem.media_type)"
+          :enable-filter="getFilterAvailable(currentMediaitem.media_type)"
           :show-share="configurationStore.getConfigElement('share.sharing_enabled', false)"
           :share-direct-access-buttons="configurationStore.getConfigElement('share.number_direct_access_buttons', 1)"
           :share-buttons="shareButtons"
