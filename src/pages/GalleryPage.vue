@@ -1,10 +1,10 @@
 <template>
   <q-page id="gallery-page" padding>
     <div v-if="!isGalleryEmpty" class="row justify-center q-gutter-sm">
-      <q-intersection v-for="(item, index) in mediacollectionStore.collection" :key="item.id" once class="preview-item">
+      <q-intersection v-for="(item, index) in mediacollectionStore.collection as any[]" :key="item.id" once class="preview-item">
         <q-card class="q-ma-xs no-shadow" @click="openPic(index)">
           <div v-if="item.media_type != 'video'">
-            <q-img :src="getImageDetail(index)" loading="eager" no-transition no-spinner :ratio="1" class="rounded-borders"> </q-img>
+            <q-img :src="item.thumbnail" loading="eager" no-transition no-spinner :ratio="1" class="rounded-borders"> </q-img>
           </div>
           <div v-else>
             <!-- mimic the q-img for video-elements to make it look same as images but display mp4 gif-like-->
@@ -16,7 +16,7 @@
                 loop
                 muted
                 playsinline
-                :src="getImageDetail(index)"
+                :src="item.thumbnail"
                 class="rounded-borders"
               ></video>
             </div>
@@ -37,20 +37,20 @@
     </q-dialog>
   </q-page>
 </template>
-<script>
-import { useMainStore } from '../stores/main-store.js';
-import { useConfigurationStore } from '../stores/configuration-store.ts';
-import { useMediacollectionStore } from '../stores/mediacollection-store.js';
-import { ref } from 'vue';
-import GalleryImageDetail from '../components/GalleryImageDetail.vue';
+<script lang="ts">
+import { useMainStore } from '../stores/main-store'
+import { useConfigurationStore } from '../stores/configuration-store'
+import { useMediacollectionStore } from '../stores/mediacollection-store'
+import { ref } from 'vue'
+import GalleryImageDetail from '../components/GalleryImageDetail.vue'
 
 export default {
   // name: 'PageName',
   components: { GalleryImageDetail },
   setup() {
-    const store = useMainStore();
-    const configurationStore = useConfigurationStore();
-    const mediacollectionStore = useMediacollectionStore();
+    const store = useMainStore()
+    const configurationStore = useConfigurationStore()
+    const mediacollectionStore = useMediacollectionStore()
 
     return {
       // you can return the whole store instance to use it in the template
@@ -58,41 +58,37 @@ export default {
       configurationStore,
       mediacollectionStore,
       GalleryImageDetail,
-      indexSelected: ref(null),
+      indexSelected: ref(0),
       showImageDetail: ref(false),
-    };
+    }
   },
   computed: {
     itemId() {
-      return this.$route.params.id;
+      return this.$route.params.id
     },
 
     isGalleryEmpty() {
-      return this.mediacollectionStore.collection_number_of_items == 0;
+      return this.mediacollectionStore.collection_number_of_items == 0
     },
   },
   watch: {
     // whenever question changes, this function will run
     itemId(newItemId) {
-      const index = this.mediacollectionStore.getIndexOfItemId(newItemId);
-      if (index == -1) console.error(`image id not found ${newItemId}`);
-      else this.openPic(index);
+      const index = this.mediacollectionStore.getIndexOfItemId(newItemId)
+      if (index == -1) console.error(`image id not found ${newItemId}`)
+      else this.openPic(index)
     },
   },
   mounted() {
     //initially get all images, later use eventstream?
   },
   methods: {
-    getImageDetail(index, detail = 'thumbnail') {
-      return this.mediacollectionStore.collection[index][detail];
-    },
-
-    openPic(index) {
-      this.indexSelected = index;
-      this.showImageDetail = true;
+    openPic(index: number) {
+      this.indexSelected = index
+      this.showImageDetail = true
     },
   },
-};
+}
 </script>
 
 <style lang="sass" scoped>

@@ -1,11 +1,9 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import pluginVue from 'eslint-plugin-vue';
-import pluginQuasar from '@quasar/app-vite/eslint';
-import vueTsEslintConfig from '@vue/eslint-config-typescript';
-
-// the following is optional, if you want prettier too:
-import prettierSkipFormatting from '@vue/eslint-config-prettier/skip-formatting';
+import js from '@eslint/js'
+import globals from 'globals'
+import pluginVue from 'eslint-plugin-vue'
+import pluginQuasar from '@quasar/app-vite/eslint'
+import vueTsEslintConfig from '@vue/eslint-config-typescript'
+import prettierSkipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
 export default [
   {
@@ -17,7 +15,7 @@ export default [
      *
      * ESLint requires "ignores" key to be the only one in this object
      */
-    ignores: ['/node_modules'],
+    ignores: [],
   },
 
   ...pluginQuasar.configs.recommended(),
@@ -35,7 +33,24 @@ export default [
    * pluginVue.configs["flat/recommended"]
    *   -> Above, plus rules to enforce subjective community defaults to ensure consistency.
    */
-  ...pluginVue.configs['flat/recommended'],
+  ...pluginVue.configs['flat/essential'],
+
+  // https://github.com/vuejs/eslint-config-typescript
+  ...vueTsEslintConfig({
+    // Optional: extend additional configurations from typescript-eslint'.
+    // Supports all the configurations in
+    // https://typescript-eslint.io/users/configs#recommended-configurations
+    extends: [
+      // By default, only the recommended rules are enabled.
+      'recommended',
+      // 'recommendedTypeChecked',
+      // You can also manually enable the stylistic rules.
+      // 'stylistic',
+
+      // Other utility configurations, such as 'eslintRecommended', (note that it's in camelCase)
+      // are also extendable here. But we don't recommend using them directly.
+    ],
+  }),
 
   {
     languageOptions: {
@@ -52,41 +67,17 @@ export default [
         chrome: 'readonly', // BEX related
         browser: 'readonly', // BEX related
       },
-      // parserOptions: {
-      //   projectService: true,
-      //   tsconfigRootDir: import.meta.dirname,
-      // },
     },
 
     // add your custom rules here
     rules: {
-      // disable type linting for now until solution avail:
-      // https://github.com/quasarframework/quasar/discussions/16877#discussioncomment-11471186
-      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-
       'prefer-promise-reject-errors': 'off',
+      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
 
       // allow debugger during development only
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     },
   },
-
-  // https://github.com/vuejs/eslint-config-typescript
-  ...vueTsEslintConfig({
-    // Optional: extend additional configurations from typescript-eslint'.
-    // Supports all the configurations in
-    // https://typescript-eslint.io/users/configs#recommended-configurations
-    extends: [
-      // By default, only the recommended rules are enabled.
-      'recommended',
-      // 'recommendedTypeChecked',
-      // You can also manually enable the stylistic rules.
-      'stylistic',
-
-      // Other utility configurations, such as 'eslintRecommended', (note that it's in camelCase)
-      // are also extendable here. But we don't recommend using them directly.
-    ],
-  }),
 
   {
     files: ['src-pwa/custom-service-worker.ts'],
@@ -97,5 +88,14 @@ export default [
     },
   },
 
-  prettierSkipFormatting, // optional, if you want prettier
-];
+  // Align eslint to jsonforms, mainly to avoid type any errors.
+  // https://github.com/eclipsesource/jsonforms/blob/master/packages/vue-vanilla/.eslintrc.js
+  {
+    files: ['src/components/form/**'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+
+  prettierSkipFormatting,
+]

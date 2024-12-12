@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
-import type { Styles } from '../styles';
+import { defineComponent, type PropType } from 'vue'
+import type { Styles } from '../styles'
 
 const listItem = defineComponent({
   name: 'ArrayListElement',
@@ -74,24 +74,24 @@ const listItem = defineComponent({
     },
   },
   data() {
-    return {};
+    return {}
   },
   computed: {},
   methods: {
     moveUpClicked(event: Event): void {
-      event.stopPropagation();
-      this.moveUp?.();
+      event.stopPropagation()
+      this.moveUp?.()
     },
     moveDownClicked(event: Event): void {
-      event.stopPropagation();
-      this.moveDown?.();
+      event.stopPropagation()
+      this.moveDown?.()
     },
     deleteClicked(event: Event): void {
-      event.stopPropagation();
-      this.delete?.();
+      event.stopPropagation()
+      this.delete?.()
     },
   },
-});
+})
 
-export default listItem;
+export default listItem
 </script>

@@ -1,4 +1,6 @@
-import autoprefixer from 'autoprefixer';
+// https://github.com/michael-ciniawsky/postcss-load-config
+
+import autoprefixer from 'autoprefixer'
 // import rtlcss from 'postcss-rtlcss'
 
 export default {
@@ -24,4 +26,4 @@ export default {
     // 3. uncomment the following line (and its import statement above):
     // rtlcss()
   ],
-};
+}

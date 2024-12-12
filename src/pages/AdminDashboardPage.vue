@@ -174,10 +174,10 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue';
-import { remoteProcedureCall } from '../util/fetch_api';
-import LanguageSwitcher from '../components/LanguageSwitcher.vue';
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import { remoteProcedureCall } from '../util/fetch_api'
+import LanguageSwitcher from '../components/LanguageSwitcher.vue'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -193,7 +193,7 @@ export default defineComponent({
       confirm_uninstall_service: ref(false),
       confirm_delete_all: ref(false),
       confirm_clear_recycle_directory: ref(false),
-    };
+    }
   },
-});
+})
 </script>

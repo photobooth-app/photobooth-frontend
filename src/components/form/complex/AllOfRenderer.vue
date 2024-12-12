@@ -35,11 +35,11 @@ import {
   createCombinatorRenderInfos,
   findMatchingUISchema,
   type UISchemaElement,
-} from '@jsonforms/core';
-import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsAllOfControl } from '@jsonforms/vue';
-import { defineComponent } from 'vue';
-import { useQuasarControl } from '../util';
-import { CombinatorProperties } from './components';
+} from '@jsonforms/core'
+import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsAllOfControl } from '@jsonforms/vue'
+import { defineComponent } from 'vue'
+import { useQuasarControl } from '../util'
+import { CombinatorProperties } from './components'
 
 const controlRenderer = defineComponent({
   name: 'AllOfRenderer',
@@ -51,11 +51,11 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useQuasarControl(useJsonFormsAllOfControl(props));
+    return useQuasarControl(useJsonFormsAllOfControl(props))
   },
   computed: {
     delegateUISchema(): UISchemaElement {
-      return findMatchingUISchema(this.control.uischemas)(this.control.schema, this.control.uischema.scope, this.control.path);
+      return findMatchingUISchema(this.control.uischemas)(this.control.schema, this.control.uischema.scope, this.control.path)
     },
     allOfRenderInfos(): CombinatorSubSchemaRenderInfo[] {
       const result = createCombinatorRenderInfos(
@@ -65,12 +65,12 @@ const controlRenderer = defineComponent({
         this.control.uischema,
         this.control.path,
         this.control.uischemas,
-      );
+      )
 
-      return result.filter((info) => info.uischema);
+      return result.filter((info) => info.uischema)
     },
   },
-});
+})
 
-export default controlRenderer;
+export default controlRenderer
 </script>

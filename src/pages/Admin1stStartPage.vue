@@ -10,7 +10,9 @@
     <ul>
       <li><a href="#/standalone/gallery" target="_blank">Standalone Gallery</a></li>
       <li><a href="#/standalone/slideshow" target="_blank">Standalone Slideshow Random</a></li>
-      <li><a href="#/slideshow/random" target="_blank">Slideshow Random (opens after timeout automatically)</a></li>
+      <li>
+        <a href="#/slideshow/random" target="_blank">Slideshow Random (opens after timeout automatically)</a>
+      </li>
     </ul>
     <h4>REST-API</h4>
     <p>
@@ -21,8 +23,8 @@
   </q-page>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   // name: 'PageName',
-};
+}
 </script>

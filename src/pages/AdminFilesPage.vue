@@ -20,8 +20,8 @@
               dense
               autofocus
               @keyup.enter="
-                createNewFolder(new_folder_name);
-                dialog_create_new_folder = false;
+                createNewFolder(new_folder_name)
+                dialog_create_new_folder = false
               "
             />
           </q-card-section>
@@ -132,37 +132,42 @@
   </q-page>
 </template>
 
-<script>
-import { ref, onMounted, computed } from 'vue';
-import { useQuasar } from 'quasar';
-import { _fetch } from 'src/util/fetch_api';
-import { getAccessToken } from 'src/util/auth';
-
-function formatBytes(bytes, decimals = 2) {
-  if (!+bytes) return '0 Bytes';
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+<script lang="ts">
+import { ref, onMounted, computed } from 'vue'
+import { useQuasar } from 'quasar'
+import { _fetch } from 'src/util/fetch_api'
+import { getAccessToken } from 'src/util/auth'
+export declare type AlignType = 'left' | 'center' | 'right'
+export interface PathListItem {
+  name: string
+  filepath: string
+  is_dir: boolean
+  size: number
 }
+function formatBytes(bytes: number, decimals = 2) {
+  if (!+bytes) return '0 Bytes'
 
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
 export default {
   setup() {
-    const $q = useQuasar();
+    const $q = useQuasar()
 
-    const folder_current = ref('');
-    const folder_loading = ref(false);
-    const folder_rows = ref([]);
+    const folder_current = ref('')
+    const folder_loading = ref(false)
+    const folder_rows = ref([] as PathListItem[])
     const folder_columns = [
       {
         label: 'Type',
         name: 'type',
         required: true,
-        align: 'left',
+        align: 'left' as AlignType,
         field: 'is_dir',
         style: 'width: 25px',
       },
@@ -170,104 +175,104 @@ export default {
         label: 'Name',
         name: 'name',
         required: true,
-        align: 'left',
+        align: 'left' as AlignType,
         field: 'name',
       },
       {
         label: 'Path',
         name: 'filepath',
         required: true,
-        align: 'left',
+        align: 'left' as AlignType,
         field: 'filepath',
       },
       {
         label: 'Size',
         name: 'size',
         required: true,
-        align: 'left',
+        align: 'left' as AlignType,
         field: 'size',
-        format: (val) => formatBytes(val, 0),
+        format: (val: number) => formatBytes(val, 0),
       },
-    ];
-    const selected = ref([]);
-    const filter = ref('');
+    ]
+    const selected = ref([])
+    const filter = ref('')
 
-    const dialog_create_new_folder = ref(false);
-    const new_folder_name = ref('');
-    const confirm_delete = ref(false);
+    const dialog_create_new_folder = ref(false)
+    const new_folder_name = ref('')
+    const confirm_delete = ref(false)
 
-    const dialog_upload_files = ref(false);
+    const dialog_upload_files = ref(false)
 
     const pagination = ref({
       rowsPerPage: 0, // force display all so virtual scrolling works best
-    });
+    })
 
-    const trimSlashes = (str) =>
+    const trimSlashes = (str: string) =>
       str
         .split('/')
         .filter((v) => v !== '')
-        .join('/');
+        .join('/')
     const breadcrumbs = computed(() => {
-      if (!folder_current.value) return []; // return empty array if no value.
+      if (!folder_current.value) return [] // return empty array if no value.
 
-      let breadcrumbs = trimSlashes(folder_current.value).split('/');
-      return breadcrumbs;
-    });
+      const breadcrumbs = trimSlashes(folder_current.value).split('/')
+      return breadcrumbs
+    })
 
-    const onNameClick = (row) => {
+    const onNameClick = (row: PathListItem) => {
       if (row.is_dir) {
-        folder_current.value = row.filepath;
+        folder_current.value = row.filepath
       } else {
         _fetch(`/api/admin/files/file/${row.filepath}`, {})
           .then((res) => res.blob())
-          .then((blob) => window.open(URL.createObjectURL(blob)));
+          .then((blob) => window.open(URL.createObjectURL(blob)))
       }
-    };
+    }
 
     const onBreadcrumbClick = (navigate_to_level = -1) => {
       // level=-1->root folder, >=0 subfolders
-      folder_current.value = breadcrumbs.value.slice(0, navigate_to_level + 1).join('/');
-    };
+      folder_current.value = breadcrumbs.value.slice(0, navigate_to_level + 1).join('/')
+    }
 
     async function getFolderContent(folder = '') {
-      folder_loading.value = true;
-      selected.value = [];
+      folder_loading.value = true
+      selected.value = []
 
       try {
-        let response = await _fetch(`/api/admin/files/list/${folder}`, {
+        const response = await _fetch(`/api/admin/files/list/${folder}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
-        });
+        })
 
-        let json = await response.json();
+        const json = await response.json()
 
         if (response.ok) {
           // if HTTP-status is 200-299
           // get the response body (the method explained below)
-          folder_rows.value = json;
+          folder_rows.value = json
         } else {
-          console.error(json);
-          throw `Error ${response.status} getting listing. Please check logs.`;
+          console.error(json)
+          throw `Error ${response.status} getting listing. Please check logs.`
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
         $q.notify({
           message: String(error),
           caption: 'Request Error!',
           color: 'negative',
-        });
+        })
       }
 
-      folder_loading.value = false;
+      folder_loading.value = false
     }
 
     async function getZip(selected = []) {
       try {
-        let response = await _fetch('/api/admin/files/zip', {
+        const response = await _fetch('/api/admin/files/zip', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(selected),
-        });
+        })
 
         if (response.ok) {
           // if HTTP-status is 200-299
@@ -276,33 +281,33 @@ export default {
             message: 'Downloading ZIP file',
             caption: 'Files',
             type: 'positive',
-          });
+          })
 
-          let blob = await response.blob();
-          var file = window.URL.createObjectURL(blob);
-          window.location.assign(file);
+          const blob = await response.blob()
+          const file = window.URL.createObjectURL(blob)
+          window.location.assign(file)
         } else {
-          let json = await response.json();
-          console.error(json);
-          throw `Error ${response.status} creating zip. Please check logs.`;
+          const json = await response.json()
+          console.error(json)
+          throw `Error ${response.status} creating zip. Please check logs.`
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
         $q.notify({
           message: String(error),
           caption: 'Request Error!',
           color: 'negative',
-        });
+        })
       }
     }
 
     async function deleteItems(selected = []) {
       try {
-        let response = await _fetch('/api/admin/files/delete', {
+        const response = await _fetch('/api/admin/files/delete', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(selected),
-        });
+        })
 
         if (response.ok) {
           // if HTTP-status is 200-299
@@ -311,43 +316,43 @@ export default {
             message: 'Selected items deleted.',
             caption: 'Files',
             type: 'positive',
-          });
+          })
         } else {
-          console.error(response);
-          throw `Error ${response.status} deleting items. Please check logs.`;
+          console.error(response)
+          throw `Error ${response.status} deleting items. Please check logs.`
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
         $q.notify({
           message: String(error),
           caption: 'Request Error!',
           color: 'negative',
-        });
+        })
       }
 
       // reload in every case (also resets selected items, which is good in delete process)
-      getFolderContent(folder_current.value);
+      getFolderContent(folder_current.value)
     }
 
-    async function createNewFolder(folder_name) {
+    async function createNewFolder(folder_name: string) {
       // https://javascript.info/fetch
 
-      let newfolder_fullpath = folder_name;
+      let newfolder_fullpath = folder_name
 
       if (folder_current.value) {
         // add current folder if not empty (avoid to appear like an absolute path)
-        newfolder_fullpath = folder_current.value + '/' + newfolder_fullpath;
+        newfolder_fullpath = folder_current.value + '/' + newfolder_fullpath
       }
 
-      console.log(newfolder_fullpath);
+      console.log(newfolder_fullpath)
       try {
-        let response = await _fetch('/api/admin/files/folder/new', {
+        const response = await _fetch('/api/admin/files/folder/new', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newfolder_fullpath),
-        });
+        })
 
-        let json = await response.json();
+        const json = await response.json()
 
         if (response.ok) {
           // if HTTP-status is 200-299
@@ -356,27 +361,27 @@ export default {
             message: `Folder "${folder_name}" created.`,
             caption: 'Files',
             type: 'positive',
-          });
+          })
 
           // reload
-          getFolderContent(folder_current.value);
+          getFolderContent(folder_current.value)
         } else {
-          console.error(json);
-          throw `Error ${response.status} while creating folder. Please check logs.`;
+          console.error(json)
+          throw `Error ${response.status} while creating folder. Please check logs.`
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
         $q.notify({
           message: String(error),
           caption: 'Request Error!',
           color: 'negative',
-        });
+        })
       }
     }
 
     onMounted(() => {
-      getFolderContent();
-    });
+      getFolderContent()
+    })
 
     return {
       breadcrumbs,
@@ -403,15 +408,15 @@ export default {
       deleteItems,
       createNewFolder,
       getAccessToken,
-    };
+    }
   },
   // name: 'PageName',
   watch: {
     // whenever folder changes, load new content.
     folder_current(newFolder) {
       // console.log("change directory: ", newFolder);
-      this.getFolderContent(newFolder);
+      this.getFolderContent(newFolder)
     },
   },
-};
+}
 </script>

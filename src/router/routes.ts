@@ -1,18 +1,14 @@
-const routes = [
+import type { RouteRecordRaw } from 'vue-router'
+
+const routes: RouteRecordRaw[] = [
   {
     // default route is kiosk frontend
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
-      {
-        path: 'itempresenter',
-        component: () => import('pages/ItemPresenterPage.vue'),
-      },
-      {
-        path: 'itemapproval',
-        component: () => import('pages/ItemApprovalPage.vue'),
-      },
+      { path: 'itempresenter', component: () => import('pages/ItemPresenterPage.vue') },
+      { path: 'itemapproval', component: () => import('pages/ItemApprovalPage.vue') },
     ],
   },
   {
@@ -77,6 +73,6 @@ const routes = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
   },
-];
+]
 
-export default routes;
+export default routes

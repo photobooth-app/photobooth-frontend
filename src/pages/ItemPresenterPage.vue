@@ -11,29 +11,29 @@
   </q-page>
 </template>
 
-<script>
-import { useStateStore } from '../stores/state-store.js';
-import GalleryImageDetail from '../components/GalleryImageDetail.vue';
+<script lang="ts">
+import { useStateStore } from '../stores/state-store'
+import GalleryImageDetail from '../components/GalleryImageDetail.vue'
 
 export default {
   // name: 'PageName',
   components: { GalleryImageDetail },
   setup() {
-    const stateStore = useStateStore();
+    const stateStore = useStateStore()
 
     return {
       stateStore,
       GalleryImageDetail,
-    };
+    }
   },
   data() {
-    return {};
+    return {}
   },
   computed: {},
   methods: {
     userCloseViewer() {
-      this.$router.push('/');
+      this.$router.push('/')
     },
   },
-};
+}
 </script>

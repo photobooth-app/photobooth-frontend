@@ -30,7 +30,7 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('cpu load') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress size="lg" :value="store.information['cpu1_5_15'][0] / 100"> </q-linear-progress>
+                  <q-linear-progress size="lg" :value="store.information.cpu1_5_15[0] ?? 0 / 100"> </q-linear-progress>
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -39,9 +39,9 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('disk space') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress size="lg" :value="store.information['disk']['used'] / store.information['disk']['total']" />
+                  <q-linear-progress size="lg" :value="store.information.disk.used / store.information.disk.total" />
                 </q-item-label>
-                <q-item-label> {{ (store.information['disk']['free'] / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
+                <q-item-label> {{ (store.information.disk.free / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -49,9 +49,9 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('memory') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress size="lg" :value="store.information['memory']['used'] / store.information['memory']['total']" />
+                  <q-linear-progress size="lg" :value="store.information.memory.used / store.information.memory.total" />
                 </q-item-label>
-                <q-item-label> {{ (store.information['memory']['available'] / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
+                <q-item-label> {{ (store.information.memory.available / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -197,20 +197,20 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue';
-import { useMainStore } from '../stores/main-store.js';
-import { remoteProcedureCall } from '../util/fetch_api.js';
-import { QBtn } from 'quasar';
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import { useMainStore } from '../stores/main-store'
+import { remoteProcedureCall } from '../util/fetch_api.js'
+import { QBtn } from 'quasar'
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: { QBtn },
   setup() {
-    const store = useMainStore();
-    const confirm_reset_counter = ref(false);
-    const selected_field = ref('');
+    const store = useMainStore()
+    const confirm_reset_counter = ref(false)
+    const selected_field = ref('')
 
     return {
       // you can return the whole store instance to use it in the template
@@ -218,17 +218,17 @@ export default defineComponent({
       remoteProcedureCall,
       confirm_reset_counter,
       selected_field,
-    };
+    }
   },
   methods: {
-    displayResetConfirm(field) {
-      this.selected_field = field;
-      this.confirm_reset_counter = true;
+    displayResetConfirm(field: string) {
+      this.selected_field = field
+      this.confirm_reset_counter = true
     },
     confirmAction() {
-      remoteProcedureCall('/api/admin/information/sttscntr/reset/' + this.selected_field);
-      this.confirm_reset_counter = false;
+      remoteProcedureCall('/api/admin/information/sttscntr/reset/' + this.selected_field)
+      this.confirm_reset_counter = false
     },
   },
-});
+})
 </script>

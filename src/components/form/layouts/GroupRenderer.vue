@@ -24,10 +24,10 @@
 </template>
 
 <script lang="ts">
-import { type JsonFormsRendererRegistryEntry, type Layout, rankWith, and, isLayout, uiTypeIs } from '@jsonforms/core';
-import { defineComponent } from 'vue';
-import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue';
-import { useQuasarLayout } from '../util';
+import { type JsonFormsRendererRegistryEntry, type Layout, rankWith, and, isLayout, uiTypeIs } from '@jsonforms/core'
+import { defineComponent } from 'vue'
+import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue'
+import { useQuasarLayout } from '../util'
 
 const layoutRenderer = defineComponent({
   name: 'GroupRenderer',
@@ -38,34 +38,34 @@ const layoutRenderer = defineComponent({
     ...rendererProps<Layout>(),
   },
   setup(props: RendererProps<Layout>) {
-    return useQuasarLayout(useJsonFormsLayout(props));
+    return useQuasarLayout(useJsonFormsLayout(props))
   },
   computed: {
     bare(): boolean {
-      return !!this.appliedOptions.bare;
+      return !!this.appliedOptions.bare
     },
     alignLeft(): boolean {
-      return !!this.appliedOptions.alignLeft;
+      return !!this.appliedOptions.alignLeft
     },
     classes(): string {
-      const classes = ['q-my-xs', 'q-pa-none', `${this.styles.group.root}`];
+      const classes = ['q-my-xs', 'q-pa-none', `${this.styles.group.root}`]
       if (this.bare) {
-        classes.push(`${this.styles.group.bare}`);
+        classes.push(`${this.styles.group.bare}`)
       }
       if (this.alignLeft) {
-        classes.push(`${this.styles.group.alignLeft}`);
+        classes.push(`${this.styles.group.alignLeft}`)
       }
-      return classes.join(' ');
+      return classes.join(' ')
     },
   },
-});
+})
 
-export default layoutRenderer;
+export default layoutRenderer
 
 export const entry: JsonFormsRendererRegistryEntry = {
   renderer: layoutRenderer,
   tester: rankWith(2, and(isLayout, uiTypeIs('Group'))),
-};
+}
 </script>
 
 <!-- Default styles for the 'nested' feature -->

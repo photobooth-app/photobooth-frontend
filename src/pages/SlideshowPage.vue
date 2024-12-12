@@ -12,18 +12,18 @@
   </q-page>
 </template>
 
-<script>
-import { useMediacollectionStore } from '../stores/mediacollection-store.js';
-import GalleryImageDetail from '../components/GalleryImageDetail.vue';
+<script lang="ts">
+import { useMediacollectionStore } from '../stores/mediacollection-store'
+import GalleryImageDetail from '../components/GalleryImageDetail.vue'
 
 export default {
   components: { GalleryImageDetail },
   setup() {
-    const mediacollectionStore = useMediacollectionStore();
+    const mediacollectionStore = useMediacollectionStore()
 
     return {
       mediacollectionStore,
-    };
+    }
   },
-};
+}
 </script>

@@ -15,13 +15,13 @@
   </q-layout>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script lang="ts">
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'GalleryLayout',
 
   components: {},
   computed: {},
-});
+})
 </script>

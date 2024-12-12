@@ -18,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(record, idx) in store.logrecords" :key="idx">
+          <tr v-for="(record, idx) in store.logrecords as any[]" :key="idx">
             <td>
               <q-badge :color="debugLevelColor(record.level)">
                 {{ record.level }}
@@ -36,35 +36,35 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
-import { useMainStore } from '../stores/main-store.js';
-import { remoteProcedureCall } from '../util/fetch_api.js';
-import { QBtn } from 'quasar';
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { useMainStore } from '../stores/main-store'
+import { remoteProcedureCall } from '../util/fetch_api.js'
+import { QBtn } from 'quasar'
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: { QBtn },
   setup() {
-    const store = useMainStore();
+    const store = useMainStore()
 
     return {
       // you can return the whole store instance to use it in the template
       store,
       remoteProcedureCall,
-    };
+    }
   },
   methods: {
-    debugLevelColor(level) {
-      if (level == 'DEBUG') return 'info';
-      if (level == 'INFO') return 'info';
-      if (level == 'WARNING') return 'warning';
-      if (level == 'ERROR') return 'negative';
-      if (level == 'CRITICAL') return 'negative';
+    debugLevelColor(level: string) {
+      if (level == 'DEBUG') return 'info'
+      if (level == 'INFO') return 'info'
+      if (level == 'WARNING') return 'warning'
+      if (level == 'ERROR') return 'negative'
+      if (level == 'CRITICAL') return 'negative'
 
-      return 'grey';
+      return 'grey'
     },
   },
-});
+})
 </script>

@@ -1,6 +1,6 @@
 <template>
   <q-page id="itemapproval-page" class="fullscreen flex flex-center">
-    <q-img :src="imgToApproveSrc" fit="contain" style="height: 95%" />
+    <q-img v-if="imgToApproveSrc" :src="imgToApproveSrc" fit="contain" style="height: 95%" />
     <!-- video approval not yet supported -->
 
     <q-page-sticky position="bottom" :offset="[0, 25]">
@@ -8,7 +8,12 @@
         <div>
           <div class="text-h5">{{ $t('TITLE_ITEM_APPROVAL') }}</div>
           <div class="text-subtitle2">
-            {{ $t('MSG_APPROVE_COLLAGE_ITEM_NO_OF_TOTAL', { no: stateStore.number_captures_taken, total: stateStore.total_captures_to_take }) }}
+            {{
+              $t('MSG_APPROVE_COLLAGE_ITEM_NO_OF_TOTAL', {
+                no: stateStore.number_captures_taken,
+                total: stateStore.total_captures_to_take,
+              })
+            }}
           </div>
         </div>
 
@@ -35,42 +40,39 @@
   </q-page>
 </template>
 
-<script>
-import { useMainStore } from '../stores/main-store.js';
-import { useMediacollectionStore } from '../stores/mediacollection-store.js';
-import { useStateStore } from '../stores/state-store.js';
-import { useConfigurationStore } from '../stores/configuration-store.ts';
-import GalleryImageDetail from '../components/GalleryImageDetail.vue';
-import { remoteProcedureCall } from '../util/fetch_api.js';
+<script lang="ts">
+import { useRouter } from 'vue-router'
+import { useMainStore } from '../stores/main-store'
+import { useMediacollectionStore } from '../stores/mediacollection-store'
+import { useStateStore } from '../stores/state-store'
+import GalleryImageDetail from '../components/GalleryImageDetail.vue'
+import { remoteProcedureCall } from '../util/fetch_api.js'
 
 export default {
   // name: 'PageName',
   components: {},
   setup() {
-    const mainStore = useMainStore();
-    const mediacollectionStore = useMediacollectionStore();
-    const configurationStore = useConfigurationStore();
-    const stateStore = useStateStore();
+    const router = useRouter()
+    const mainStore = useMainStore()
+    const mediacollectionStore = useMediacollectionStore()
+    const stateStore = useStateStore()
 
     return {
-      // you can return the whole store instance to use it in the template
+      router,
       mainStore,
       mediacollectionStore,
       stateStore,
-      configurationStore,
       GalleryImageDetail,
       remoteProcedureCall,
-    };
+    }
   },
   data() {
-    return {};
+    return {}
   },
   computed: {
-    imgToApproveSrc: {
-      get() {
-        // only check first index if multicapture in one pass currently.
-        return this.stateStore.last_captured_mediaitem && this.stateStore.last_captured_mediaitem['preview'];
-      },
+    imgToApproveSrc() {
+      // only check first index if multicapture in one pass currently.
+      return this.stateStore.last_captured_mediaitem && this.stateStore.last_captured_mediaitem['preview']
     },
   },
   mounted() {
@@ -80,19 +82,19 @@ export default {
 
   methods: {
     userConfirm() {
-      remoteProcedureCall('/api/actions/confirm');
-      this.$router.push('/');
+      remoteProcedureCall('/api/actions/confirm')
+      this.router.push('/')
     },
     userReject() {
-      remoteProcedureCall('/api/actions/reject');
-      this.$router.push('/');
+      remoteProcedureCall('/api/actions/reject')
+      this.router.push('/')
     },
     userAbort() {
       // closing the window that was meant to use for approval
       // need to inform the statemachine to reset
-      remoteProcedureCall('/api/actions/abort');
-      this.$router.push('/');
+      remoteProcedureCall('/api/actions/abort')
+      this.router.push('/')
     },
   },
-};
+}
 </script>

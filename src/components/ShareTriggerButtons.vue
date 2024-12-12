@@ -34,33 +34,33 @@
 </template>
 
 <script setup lang="ts">
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash'
 
 const props = defineProps<{
-  triggers: Array<ShareSchema>;
-  directAccessNumberOfButtons: number;
-  currentItemIsImage: boolean;
-}>();
+  triggers: ShareSchema[]
+  directAccessNumberOfButtons: number
+  currentItemIsImage: boolean
+}>()
 
 export interface ShareSchema {
-  show_button: boolean;
-  title: string;
-  icon?: string; // icon is optional
-  handles_images_only: boolean;
-  config_index: number;
+  show_button: boolean
+  title: string
+  icon?: string // icon is optional
+  handles_images_only: boolean
+  config_index: number
 }
 
 function getShareAvailable(handles_images_only: boolean) {
-  console.log(props.currentItemIsImage, handles_images_only);
-  return !props.currentItemIsImage && handles_images_only;
+  console.log(props.currentItemIsImage, handles_images_only)
+  return !props.currentItemIsImage && handles_images_only
 }
 
 const emit = defineEmits<{
-  triggerAction: [config_index: number];
-}>();
+  triggerAction: [config_index: number]
+}>()
 
 function triggerButtonClick(config_index: number) {
-  console.log(`trigger share config_index ${config_index}`);
-  emit('triggerAction', config_index);
+  console.log(`trigger share config_index ${config_index}`)
+  emit('triggerAction', config_index)
 }
 </script>

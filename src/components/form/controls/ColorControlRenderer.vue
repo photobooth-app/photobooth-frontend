@@ -19,11 +19,11 @@
 </template>
 
 <script lang="ts">
-import type { ControlElement } from '@jsonforms/core';
-import { defineComponent } from 'vue';
-import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonforms/vue';
-import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useQuasarControl } from '../util';
+import type { ControlElement } from '@jsonforms/core'
+import { defineComponent } from 'vue'
+import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonforms/vue'
+import { default as ControlWrapper } from './ControlWrapper.vue'
+import { useQuasarControl } from '../util'
 
 const controlRenderer = defineComponent({
   name: 'ColorControlRenderer',
@@ -32,17 +32,17 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useQuasarControl(useJsonFormsControl(props), (value: string) => value || undefined, 300);
+    return useQuasarControl(useJsonFormsControl(props), (value: string) => value || undefined, 300)
   },
   computed: {
     standardized_color(): string {
-      const ctx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d')!;
-      ctx.fillStyle = this.control.data;
-      return ctx.fillStyle.toString();
+      const ctx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d')!
+      ctx.fillStyle = this.control.data
+      return ctx.fillStyle.toString()
     },
   },
   methods: {},
-});
+})
 
-export default controlRenderer;
+export default controlRenderer
 </script>

@@ -14,43 +14,44 @@
   </q-layout>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
-import { useStateStore } from '../stores/state-store.js';
-import { useConfigurationStore } from '../stores/configuration-store.ts';
-import { useRouter } from 'vue-router';
-import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue';
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { useStateStore } from '../stores/state-store'
+import { useConfigurationStore } from '../stores/configuration-store'
+import { useRouter, useRoute } from 'vue-router'
+import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: { RouteAfterTimeout },
   setup() {
-    const stateStore = useStateStore();
-    const configurationStore = useConfigurationStore();
-    const router = useRouter();
+    const stateStore = useStateStore()
+    const configurationStore = useConfigurationStore()
+    const router = useRouter()
+    const route = useRoute()
 
     // watch state to force router to "/" if a capture is triggered
     stateStore.$subscribe((mutation, state) => {
-      if (state.state == 'counting' && router.path != '/') {
+      if (state.state == 'counting' && route.path != '/') {
         // quick fix: receive "counting" state but not on indexpage, push router to index
-        console.log('counting state received, pushing to index page to countdown');
+        console.log('counting state received, pushing to index page to countdown')
 
-        router.push('/');
+        router.push('/')
       }
       if (state.state == 'present_capture') {
-        router.push({ path: '/itempresenter' });
+        router.push({ path: '/itempresenter' })
       }
       if (state.state == 'approve_capture' && state.ask_user_for_approval) {
-        router.push({ path: '/itemapproval' });
+        router.push({ path: '/itemapproval' })
       }
-    });
+    })
 
     return {
       // you can return the whole store instance to use it in the template
       configurationStore,
-    };
+    }
   },
   computed: {},
-});
+})
 </script>

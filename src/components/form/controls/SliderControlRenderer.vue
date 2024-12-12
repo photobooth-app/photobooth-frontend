@@ -20,11 +20,11 @@
 </template>
 
 <script lang="ts">
-import type { ControlElement } from '@jsonforms/core';
-import { defineComponent } from 'vue';
-import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonforms/vue';
-import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useQuasarControl } from '../util';
+import type { ControlElement } from '@jsonforms/core'
+import { defineComponent } from 'vue'
+import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonforms/vue'
+import { default as ControlWrapper } from './ControlWrapper.vue'
+import { useQuasarControl } from '../util'
 
 const controlRenderer = defineComponent({
   name: 'SliderControlRenderer',
@@ -38,12 +38,12 @@ const controlRenderer = defineComponent({
     return useQuasarControl(
       useJsonFormsControl(props),
       (value) => {
-        return Number(value);
+        return Number(value)
       },
       300,
-    );
+    )
   },
-});
+})
 
-export default controlRenderer;
+export default controlRenderer
 </script>

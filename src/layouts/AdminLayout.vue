@@ -74,19 +74,19 @@
   </q-layout>
 </template>
 
-<script>
-import { logout } from '../util/auth';
+<script lang="ts">
+import { logout } from '../util/auth'
 
 export default {
   setup() {
-    return {};
+    return {}
   },
   // name: 'LayoutName',
   methods: {
     click_logout() {
-      logout();
-      this.$router.push('/');
+      logout()
+      this.$router.push('/')
     },
   },
-};
+}
 </script>

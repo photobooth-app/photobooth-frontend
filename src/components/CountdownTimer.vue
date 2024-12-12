@@ -24,8 +24,8 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script lang="ts">
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'CountdownTimer',
@@ -51,45 +51,45 @@ export default defineComponent({
       intervalTimerId: null,
       remainingSeconds: 0,
       startDuration: 0,
-    };
+    }
   },
   computed: {
     showBox() {
-      return this.remainingSeconds > 0;
+      return this.remainingSeconds > 0
     },
     showCountdown() {
-      return this.remainingSeconds > 0;
+      return this.remainingSeconds > 0
     },
     showMessage() {
-      return +this.remainingSeconds <= this.messageDuration;
+      return +this.remainingSeconds <= this.messageDuration
     },
   },
 
   mounted() {
-    this.startTimer();
+    this.startTimer()
   },
   beforeUnmount() {
-    clearInterval(this.intervalTimerId);
+    clearInterval(this.intervalTimerId)
   },
   methods: {
     abortTimer() {
-      clearInterval(this.intervalTimerId);
-      this.remainingSeconds = 0;
+      clearInterval(this.intervalTimerId)
+      this.remainingSeconds = 0
     },
     startTimer() {
-      this.startDuration = this.duration;
-      this.remainingSeconds = this.startDuration;
+      this.startDuration = this.duration
+      this.remainingSeconds = this.startDuration
 
-      console.log(`starting timer, duration=${this.startDuration}`);
+      console.log(`starting timer, duration=${this.startDuration}`)
 
-      this.intervalTimerId = setInterval(() => {
-        this.remainingSeconds -= 0.05;
+      this.intervalTimerId = window.setInterval(() => {
+        this.remainingSeconds -= 0.05
 
         if (this.remainingSeconds <= 0) {
-          clearInterval(this.intervalTimerId);
+          clearInterval(this.intervalTimerId)
         }
-      }, 50);
+      }, 50)
     },
   },
-});
+})
 </script>

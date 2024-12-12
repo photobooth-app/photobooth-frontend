@@ -23,10 +23,10 @@
 </template>
 
 <script lang="ts">
-import { isDescriptionHidden } from '@jsonforms/core';
-import { defineComponent, type PropType } from 'vue';
-import type { Styles } from '../styles';
-import type { Options } from '../util';
+import { isDescriptionHidden } from '@jsonforms/core'
+import { defineComponent, type PropType } from 'vue'
+import type { Styles } from '../styles'
+import type { Options } from '../util'
 
 export default defineComponent({
   name: 'ControlWrapper',
@@ -77,8 +77,8 @@ export default defineComponent({
   },
   computed: {
     showDescription(): boolean {
-      return !isDescriptionHidden(this.visible, this.description, this.isFocused, !!this.appliedOptions?.showUnfocusedDescription);
+      return !isDescriptionHidden(this.visible, this.description, this.isFocused, !!this.appliedOptions?.showUnfocusedDescription)
     },
   },
-});
+})
 </script>
