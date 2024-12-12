@@ -45,7 +45,6 @@ import { useRouter } from 'vue-router'
 import { useMainStore } from '../stores/main-store'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { useStateStore } from '../stores/state-store'
-import GalleryImageDetail from '../components/GalleryImageDetail.vue'
 import { remoteProcedureCall } from '../util/fetch_api.js'
 
 export default {
@@ -62,7 +61,6 @@ export default {
       mainStore,
       mediacollectionStore,
       stateStore,
-      GalleryImageDetail,
       remoteProcedureCall,
     }
   },

@@ -7,15 +7,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
-      { path: 'itempresenter', component: () => import('pages/ItemPresenterPage.vue') },
       { path: 'itemapproval', component: () => import('pages/ItemApprovalPage.vue') },
+      { path: 'gallery', component: () => import('pages/GalleryPage.vue') },
+      { path: 'mediaviewer/:id', name: 'mediaviewer', component: () => import('pages/GalleryDetailPage.vue'), props: { startTimer: false } },
+      { path: 'itempresenter/:id', name: 'itempresenter', component: () => import('pages/GalleryDetailPage.vue'), props: { startTimer: true } },
     ],
-  },
-  {
-    // gallery route
-    path: '/gallery',
-    component: () => import('layouts/GalleryLayout.vue'),
-    children: [{ path: '', component: () => import('pages/GalleryPage.vue') }],
   },
 
   {

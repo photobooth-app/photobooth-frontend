@@ -7,8 +7,6 @@ import { useIdle, useTimestamp } from '@vueuse/core'
 import { computed, watch, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-// import { useI18n } from 'vue-i18n';
-// const { t } = useI18n();
 const $q = useQuasar()
 const router = useRouter()
 const props = defineProps({
@@ -62,6 +60,7 @@ onBeforeUnmount(() => {
 })
 
 watch(showWarning, (showWarningValue) => {
+  // does not fire if showWarning is initially true because warningTimeMs > timeoutMs
   if (showWarningValue) {
     showNotification()
   } else {

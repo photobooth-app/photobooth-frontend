@@ -36,7 +36,7 @@ export default defineComponent({
         router.push('/')
       }
       if (state.state == 'present_capture') {
-        router.push({ path: '/itempresenter' })
+        router.push({ name: 'itempresenter', params: { id: stateStore.last_captured_mediaitem.id } })
       }
       if (state.state == 'approve_capture' && state.ask_user_for_approval) {
         router.push({ path: '/itemapproval' })

@@ -1,40 +1,21 @@
 <template>
   <q-page id="gallery-page" padding>
     <div v-if="!isGalleryEmpty" class="row justify-center q-gutter-sm">
-      <q-intersection v-for="(item, index) in mediacollectionStore.collection as any[]" :key="item.id" once class="preview-item">
-        <q-card class="q-ma-xs no-shadow" @click="openPic(index)">
-          <div v-if="item.media_type != 'video'">
-            <q-img :src="item.thumbnail" loading="eager" no-transition no-spinner :ratio="1" class="rounded-borders"> </q-img>
-          </div>
-          <div v-else>
-            <!-- mimic the q-img for video-elements to make it look same as images but display mp4 gif-like-->
-            <div style="padding-bottom: 100%"></div>
-            <div class="absolute-full">
-              <video
-                style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%"
-                autoplay
-                loop
-                muted
-                playsinline
-                :src="item.thumbnail"
-                class="rounded-borders"
-              ></video>
-            </div>
-          </div>
-        </q-card>
+      <q-intersection v-for="item in mediacollectionStore.collection" :key="item.id" once class="preview-item">
+        <router-link :to="{ name: 'mediaviewer', params: { id: item.id } }">
+          <q-card class="q-ma-xs no-shadow"> <MediaItemThumbnailViewer :item="item" /> </q-card>
+        </router-link>
       </q-intersection>
     </div>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-else v-html="configurationStore.getConfigElement('uisettings.GALLERY_EMPTY_MSG')"></div>
 
-    <q-dialog v-model="showImageDetail" transition-show="jump-up" transition-hide="jump-down" maximized>
-      <gallery-image-detail
-        :item-repository="mediacollectionStore.collection"
-        :index-selected="indexSelected"
-        class="full-height"
-        @close-event="showImageDetail = false"
-      ></gallery-image-detail>
-    </q-dialog>
+    <q-page-sticky position="top-left" :offset="[25, 25]" style="/*z-index: 10000*/">
+      <q-btn id="slideshow-button-to-frontpage" color="primary" rounded no-caps to="/" class="action-button">
+        <q-icon left name="sym_o_arrow_back_ios_new" />
+        <div>{{ $t('BTN_LABEL_BACK') }}</div>
+      </q-btn>
+    </q-page-sticky>
   </q-page>
 </template>
 <script lang="ts">
@@ -42,11 +23,11 @@ import { useMainStore } from '../stores/main-store'
 import { useConfigurationStore } from '../stores/configuration-store'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { ref } from 'vue'
-import GalleryImageDetail from '../components/GalleryImageDetail.vue'
+import { default as MediaItemThumbnailViewer } from '../components/MediaItemThumbnailViewer.vue'
 
 export default {
   // name: 'PageName',
-  components: { GalleryImageDetail },
+  components: { MediaItemThumbnailViewer },
   setup() {
     const store = useMainStore()
     const configurationStore = useConfigurationStore()
@@ -57,7 +38,6 @@ export default {
       store,
       configurationStore,
       mediacollectionStore,
-      GalleryImageDetail,
       indexSelected: ref(0),
       showImageDetail: ref(false),
     }

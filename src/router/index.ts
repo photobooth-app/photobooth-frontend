@@ -18,22 +18,13 @@ export default defineRouter(function (/* { store, ssrContext } */) {
   const Router = createRouter({
     //scrollBehavior: () => ({ left: 0, top: 0 }),
     // seems to not work properly - TODO
-    scrollBehavior: (to, from, savedPosition) => (savedPosition ? { savedPosition } : { left: 0, top: 0 }),
-    // following works, but: TODO
-    /*scrollBehavior(to, from, savedPosition) {
-      if ("scrollRestoration" in history) {
-        history.scrollRestoration = "manual";
-      }
-      let position = { x: 0, y: 0 };
+    scrollBehavior(to, from, savedPosition) {
       if (savedPosition) {
-        position = savedPosition;
+        return savedPosition
+      } else {
+        return { top: 0 }
       }
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(position);
-        }, 100);
-      });
-    },*/
+    },
     routes,
 
     history: createHistory(process.env.VUE_ROUTER_BASE),
