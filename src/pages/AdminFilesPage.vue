@@ -19,10 +19,7 @@
               v-model="new_folder_name"
               dense
               autofocus
-              @keyup.enter="
-                createNewFolder(new_folder_name)
-                dialog_create_new_folder = false
-              "
+              @keyup.enter="[createNewFolder(new_folder_name), (dialog_create_new_folder = false)]"
             />
           </q-card-section>
 
