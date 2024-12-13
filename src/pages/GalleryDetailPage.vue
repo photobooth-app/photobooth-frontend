@@ -1,23 +1,8 @@
 <template>
-  <q-layout view="hhh Lpr ffr" onclick="headercountdowntimer=false">
+  <q-layout view="hhh Lpr ffr" @click="headercountdowntimer = false">
     <div v-if="currentMediaitem" class="fixed-full">
       <!-- v-if above is guard to hide all content that would fail if no currentMediaitem is avail -->
       <q-header class="bg-primary text-white">
-        <HeaderToolbar
-          :item="currentMediaitem"
-          :show-filter="configurationStore.getConfigElement('uisettings.gallery_show_filter', false)"
-          :enable-filter="getFilterAvailable(currentMediaitem.media_type)"
-          :show-share="configurationStore.getConfigElement('share.sharing_enabled', false)"
-          :share-direct-access-buttons="configurationStore.getConfigElement('share.number_direct_access_buttons', 1)"
-          :share-buttons="shareButtons"
-          :show-delete="configurationStore.getConfigElement('uisettings.gallery_show_delete', false)"
-          :show-download="configurationStore.getConfigElement('uisettings.gallery_show_download', false)"
-          :image_number="currentMediaitemNumber"
-          :images_total="mediacollectionStore.collection_number_of_items"
-          @trigger-toggle-display-filter="rightDrawerOpen = !rightDrawerOpen"
-          @trigger-delete-mediaitem="[doDeleteItem, $router.back()]"
-          @trigger-share-action="doShareAction"
-        ></HeaderToolbar>
         <HeaderCountdownTimer
           v-if="headercountdowntimer"
           :duration="configurationStore.getConfigElement('uisettings.AUTOCLOSE_NEW_ITEM_ARRIVED', 0)"
@@ -40,6 +25,7 @@
             :mediaitem-id="currentMediaitem.id"
             :sliced-images="mediacollectionStore.collection"
             @trigger-changed-item="onCarouselTransition"
+            @click="rightDrawerOpen = false"
           />
 
           <q-page-sticky position="top-right" class="q-ma-lg" v-if="configurationStore.getConfigElement('uisettings.gallery_show_qrcode', false)">
@@ -49,6 +35,22 @@
               :text-below="configurationStore.getConfigElement('uisettings.qrcode_text_below', '')"
             />
           </q-page-sticky>
+
+          <PageToolbar
+            :item="currentMediaitem"
+            :show-filter="configurationStore.getConfigElement('uisettings.gallery_show_filter', false)"
+            :enable-filter="getFilterAvailable(currentMediaitem.media_type)"
+            :show-share="configurationStore.getConfigElement('share.sharing_enabled', false)"
+            :share-direct-access-buttons="configurationStore.getConfigElement('share.number_direct_access_buttons', 1)"
+            :share-buttons="shareButtons"
+            :show-delete="configurationStore.getConfigElement('uisettings.gallery_show_delete', false)"
+            :show-download="configurationStore.getConfigElement('uisettings.gallery_show_download', false)"
+            :image_number="currentMediaitemNumber"
+            :images_total="mediacollectionStore.collection_number_of_items"
+            @trigger-toggle-display-filter="rightDrawerOpen = !rightDrawerOpen"
+            @trigger-delete-mediaitem="[doDeleteItem, $router.back()]"
+            @trigger-share-action="doShareAction"
+          ></PageToolbar>
         </q-page>
       </q-page-container>
     </div>
@@ -63,7 +65,7 @@
 import { useConfigurationStore } from '../stores/configuration-store'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { ref, onBeforeMount, computed, onMounted, watch } from 'vue'
-import { default as HeaderToolbar } from '../components/mediaviewer/HeaderToolbar.vue'
+import { default as PageToolbar } from '../components/mediaviewer/PageToolbar.vue'
 import { default as HeaderCountdownTimer } from '../components/mediaviewer/HeaderCountdownTimer.vue'
 import { default as HeaderProcessing } from '../components/mediaviewer/HeaderProcessing.vue'
 import { default as DrawerFilter } from '../components/mediaviewer/DrawerFilter.vue'
