@@ -142,13 +142,15 @@ const showCountdownCounting = computed(() => {
 })
 
 const showPreview = computed(() => {
-  const enabled = true
+  const enabledWhenIdle = configurationStore.getConfigElement('uisettings.enable_livestream_when_idle', true)
+  const enabledWhenActive = configurationStore.getConfigElement('uisettings.enable_livestream_when_active', true)
   const machineIdle = !stateStore.state || stateStore.state == 'finished'
   const machineRecord = stateStore.state == 'record'
   const machineCounting = stateStore.state == 'counting'
   const machineCapture = stateStore.state == 'capture'
 
-  return enabled && (machineIdle || machineCounting || machineRecord || machineCapture)
+  // allow user to choose if shown during idle or process only. during record it cannot be disabled because video useful to show while recording
+  return (machineIdle && enabledWhenIdle) || ((machineCounting || machineCapture) && enabledWhenActive) || machineRecord
 })
 
 const showFrontpage = computed(() => {
