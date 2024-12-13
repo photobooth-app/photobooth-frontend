@@ -1,6 +1,6 @@
 <template>
-  <div v-if="item.media_type != 'video'" class="full-height">
-    <img :draggable="false" class="rounded-borders full-height" style="object-fit: contain; max-width: 100%; max-height: 100%" :src="item.preview" />
+  <div v-if="item.media_type != 'video'" class="full-height full-width">
+    <q-img :draggable="false" class="full-height" fit="contain" :src="item.preview" />
   </div>
   <div v-else class="full-height">
     <video

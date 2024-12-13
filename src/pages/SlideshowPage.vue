@@ -1,6 +1,6 @@
 <template>
   <q-page id="slideshow-page" class="row justify-center items-center flex flex-center full-height">
-    <div v-if="mediacollectionStore.collection_number_of_items > 0" class="full-height">
+    <div v-if="mediacollectionStore.collection_number_of_items > 0" class="full-height full-width">
       <MediaItemPreviewViewer :item="mediacollectionStore.collection[currentMediaitemIndex]" />
     </div>
     <div v-else class="full-height"><ItemNotAvailableError /></div>
