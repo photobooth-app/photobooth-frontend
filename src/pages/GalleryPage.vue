@@ -9,13 +9,6 @@
     </div>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-else v-html="configurationStore.getConfigElement('uisettings.GALLERY_EMPTY_MSG')"></div>
-
-    <q-page-sticky position="top-left" :offset="[25, 25]" style="/*z-index: 10000*/">
-      <q-btn id="slideshow-button-to-frontpage" color="primary" rounded no-caps to="/" class="action-button">
-        <q-icon left name="sym_o_arrow_back_ios_new" />
-        <div>{{ $t('BTN_LABEL_BACK') }}</div>
-      </q-btn>
-    </q-page-sticky>
   </q-page>
 </template>
 <script setup lang="ts">

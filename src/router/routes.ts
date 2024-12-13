@@ -57,9 +57,9 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    // slideshow layout
+    // slideshows share the same layout with main currently.
     path: '/slideshow',
-    component: () => import('layouts/SlideshowLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [{ path: 'random', component: () => import('pages/SlideshowPage.vue') }],
   },
 
