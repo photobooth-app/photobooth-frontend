@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
 let intervalTimerId: number
 const remainingSeconds = ref(0)
