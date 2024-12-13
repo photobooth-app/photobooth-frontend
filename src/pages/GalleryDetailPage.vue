@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="hhh Lpr ffr" onclick="headercountdowntimer=false">
-    <div v-if="currentMediaitem">
+  <q-layout view="hhh Lpr ffr" class="fullscreen" onclick="headercountdowntimer=false">
+    <div v-if="currentMediaitem" class="full-height">
       <!-- v-if above is guard to hide all content that would fail if no currentMediaitem is avail -->
       <q-header class="bg-primary text-white">
         <HeaderToolbar
@@ -33,22 +33,20 @@
       </q-drawer>
 
       <q-page-container class="q-pa-none galleryimagedetail full-height">
-        <!-- TODO: v-if teil kann vielleicht ganz weg? -->
-        <div v-if="false" class="full-height">
-          <PageSingleView :item="mediacollectionStore.collection[0]"></PageSingleView>
-        </div>
-
-        <div v-else class="full-height">
+        <q-page class="full-height">
+          <!-- TODO: v-if teil kann vielleicht ganz weg? -->
+          <PageSingleView v-if="false" :item="mediacollectionStore.collection[0]"></PageSingleView>
           <PageCarouselView
+            v-else
             :initialSlideId="currentMediaitem.id"
             :sliced-images="mediacollectionStore.collection"
             @trigger-changed-item="onCarouselTransition"
           ></PageCarouselView>
-        </div>
 
-        <q-page-sticky position="top-right" :offset="[30, 30]" v-if="configurationStore.getConfigElement('uisettings.gallery_show_qrcode', false)">
-          <PageQrCode :url="currentMediaitem.share_url" />
-        </q-page-sticky>
+          <q-page-sticky position="top-right" :offset="[30, 30]" v-if="configurationStore.getConfigElement('uisettings.gallery_show_qrcode', false)">
+            <PageQrCode :url="currentMediaitem.share_url" />
+          </q-page-sticky>
+        </q-page>
       </q-page-container>
     </div>
     <div v-else>

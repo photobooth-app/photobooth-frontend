@@ -9,6 +9,7 @@
     swipeable
     animated
     draggable="false"
+    :arrows="true"
     :infinite="true"
     transition-prev="slide-right"
     transition-next="slide-left"
