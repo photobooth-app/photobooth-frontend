@@ -5,9 +5,9 @@
 
       <!-- auto-start slideshow after timeout -->
       <RouteAfterTimeout
-        v-if="configurationStore.getConfigElement('uisettings.show_automatic_slideshow_timeout', 0) > 0"
+        v-if="configurationStore.getConfigElement('uisettings.enable_automatic_slideshow', false)"
         route="/slideshow/random"
-        :timeout-ms="configurationStore.getConfigElement('uisettings.show_automatic_slideshow_timeout', 60) * 1000"
+        :timeout-ms="configurationStore.getConfigElement('uisettings.show_automatic_slideshow_timeout', 300) * 1000"
         :warning-message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
       ></RouteAfterTimeout>
     </q-page-container>
