@@ -1,36 +1,20 @@
 <template>
-  <q-btn-group rounded>
-    <div v-for="(trigger, index) in triggers.slice(0, directAccessNumberOfButtons)" :key="index">
-      <q-btn
-        v-if="trigger.show_button && !(isEmpty(trigger.title) && isEmpty(trigger.icon))"
-        flat
-        rounded
-        :disabled="getShareAvailable(trigger.handles_images_only)"
-        class="share-button"
-        :class="['share-button-' + index]"
-        @click="triggerButtonClick(trigger.config_index)"
-      >
-        <q-icon v-if="!isEmpty(trigger.icon)" class="q-mr-sm" :name="`sym_o_${trigger.icon}`" />
-        <div>{{ trigger.title }}</div>
-      </q-btn>
-    </div>
-
-    <q-btn-dropdown v-if="triggers.length > directAccessNumberOfButtons" auto-close rounded color="primary" label="more">
-      <div v-for="(trigger, index) in triggers.slice(directAccessNumberOfButtons)" :key="index" padding style="width: 250px">
-        <q-btn
-          v-if="trigger.show_button && !(isEmpty(trigger.title) && isEmpty(trigger.icon))"
-          flat
-          :disabled="getShareAvailable(trigger.handles_images_only)"
-          class="share-button full-width"
-          :class="['share-button-' + index]"
-          @click="triggerButtonClick(trigger.config_index)"
-        >
-          <q-icon v-if="!isEmpty(trigger.icon)" class="q-mr-sm" :name="`sym_o_${trigger.icon}`" />
-          <div>{{ trigger.title }}</div>
-        </q-btn>
-      </div>
-    </q-btn-dropdown>
-  </q-btn-group>
+  <div v-for="(trigger, index) in triggers" :key="index">
+    <q-btn
+      v-if="trigger.show_button && !(isEmpty(trigger.title) && isEmpty(trigger.icon))"
+      stack
+      rounded
+      no-caps
+      color="primary"
+      :disabled="getShareAvailable(trigger.handles_images_only)"
+      class="q-mr-sm action-button action-button-share col-auto"
+      :class="['share-button-' + index]"
+      @click="triggerButtonClick(trigger.config_index)"
+    >
+      <q-icon v-if="!isEmpty(trigger.icon)" :name="`sym_o_${trigger.icon}`" />
+      <div>{{ trigger.title }}</div>
+    </q-btn>
+  </div>
 </template>
 
 <script setup lang="ts">

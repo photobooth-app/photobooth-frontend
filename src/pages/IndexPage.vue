@@ -36,13 +36,13 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="showFrontpage" id="frontpage_text" v-html="configurationStore.getConfigElement('uisettings.FRONTPAGE_TEXT')"></div>
 
-    <q-page-sticky position="bottom" :offset="[0, 25]">
+    <q-page-sticky position="bottom" class="q-mb-lg">
       <div v-if="showFrontpage">
         <FrontpageTriggerButtons :triggers="triggerButtons" @trigger-action="invokeAction"></FrontpageTriggerButtons>
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="top-left" :offset="[25, 25]">
+    <q-page-sticky position="top-left" class="q-ma-lg">
       <div v-if="showFrontpage">
         <div class="q-gutter-md">
           <q-btn

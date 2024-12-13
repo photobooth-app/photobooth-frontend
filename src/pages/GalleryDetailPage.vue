@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="hhh Lpr ffr" class="fullscreen" onclick="headercountdowntimer=false">
-    <div v-if="currentMediaitem" class="full-height">
+  <q-layout view="hhh Lpr ffr" onclick="headercountdowntimer=false">
+    <div v-if="currentMediaitem" class="fixed-full">
       <!-- v-if above is guard to hide all content that would fail if no currentMediaitem is avail -->
       <q-header class="bg-primary text-white">
         <HeaderToolbar
@@ -12,6 +12,8 @@
           :share-buttons="shareButtons"
           :show-delete="configurationStore.getConfigElement('uisettings.gallery_show_delete', false)"
           :show-download="configurationStore.getConfigElement('uisettings.gallery_show_download', false)"
+          :image_number="currentMediaitemNumber"
+          :images_total="mediacollectionStore.collection_number_of_items"
           @trigger-toggle-display-filter="rightDrawerOpen = !rightDrawerOpen"
           @trigger-delete-mediaitem="[doDeleteItem, $router.back()]"
           @trigger-share-action="doShareAction"
@@ -40,8 +42,12 @@
             @trigger-changed-item="onCarouselTransition"
           />
 
-          <q-page-sticky position="top-right" :offset="[30, 30]" v-if="configurationStore.getConfigElement('uisettings.gallery_show_qrcode', false)">
-            <PageQrCode :url="currentMediaitem.share_url" />
+          <q-page-sticky position="top-right" class="q-ma-lg" v-if="configurationStore.getConfigElement('uisettings.gallery_show_qrcode', false)">
+            <PageQrCode
+              :url="currentMediaitem.share_url"
+              :text-above="configurationStore.getConfigElement('uisettings.qrcode_text_above', '')"
+              :text-below="configurationStore.getConfigElement('uisettings.qrcode_text_below', '')"
+            />
           </q-page-sticky>
         </q-page>
       </q-page-container>
@@ -66,7 +72,7 @@ import { default as PageCarouselView } from '../components/mediaviewer/PageCarou
 import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
 import { useRoute } from 'vue-router'
 import { get } from 'lodash'
-import type { ShareSchema } from 'src/components/ShareTriggerButtons.vue'
+import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
 import { useQuasar } from 'quasar'
 import { remoteProcedureCall } from '../util/fetch_api.js'
 const $q = useQuasar()
@@ -97,6 +103,10 @@ const onCarouselTransition = (newMediaitemId: string) => {
 
 const currentMediaitem = computed(() => {
   return getMediaitemById(selectedMediaitemId.value)
+})
+
+const currentMediaitemNumber = computed(() => {
+  return mediacollectionStore.collection.findIndex((mediaitem) => mediaitem.id == selectedMediaitemId.value) + 1
 })
 const showFilter = computed(() => {
   return configurationStore.getConfigElement('uisettings.gallery_show_filter', false) && getFilterAvailable(currentMediaitem.value.media_type)
@@ -189,9 +199,3 @@ const doShareAction = (config_index: number) => {
   remoteProcedureCall(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`)
 }
 </script>
-
-<style lang="sass" scoped>
-.preview-item
-  height: 400px
-  width: 400px
-</style>

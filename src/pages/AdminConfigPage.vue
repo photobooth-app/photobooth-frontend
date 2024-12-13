@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-page-sticky position="bottom-right" class="q-ma-lg">
       <div class="q-gutter-sm">
         <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
         <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="confirm_reset_config = true" />

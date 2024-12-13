@@ -1,9 +1,10 @@
 <template>
   <q-page id="itemapproval-page" class="fullscreen flex flex-center">
+    <!-- fullscreen class hides the back button, which is what we want here since the back button just returns without aborting the job-->
     <q-img v-if="imgToApproveSrc" :src="imgToApproveSrc" fit="contain" style="height: 95%" />
     <!-- video approval not yet supported -->
 
-    <q-page-sticky position="bottom" :offset="[0, 25]">
+    <q-page-sticky position="bottom" class="q-ma-lg">
       <q-banner rounded inline-actions>
         <div>
           <div class="text-h5">{{ $t('TITLE_ITEM_APPROVAL') }}</div>
