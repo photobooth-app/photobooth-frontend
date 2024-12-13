@@ -74,19 +74,13 @@
   </q-layout>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { logout } from '../util/auth'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-export default {
-  setup() {
-    return {}
-  },
-  // name: 'LayoutName',
-  methods: {
-    click_logout() {
-      logout()
-      this.$router.push('/')
-    },
-  },
+const click_logout = () => {
+  logout()
+  router.push('/')
 }
 </script>

@@ -18,57 +18,18 @@
     </q-page-sticky>
   </q-page>
 </template>
-<script lang="ts">
-import { useMainStore } from '../stores/main-store'
+<script setup lang="ts">
 import { useConfigurationStore } from '../stores/configuration-store'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { default as MediaItemThumbnailViewer } from '../components/MediaItemThumbnailViewer.vue'
 
-export default {
-  // name: 'PageName',
-  components: { MediaItemThumbnailViewer },
-  setup() {
-    const store = useMainStore()
-    const configurationStore = useConfigurationStore()
-    const mediacollectionStore = useMediacollectionStore()
+const configurationStore = useConfigurationStore()
+const mediacollectionStore = useMediacollectionStore()
 
-    return {
-      // you can return the whole store instance to use it in the template
-      store,
-      configurationStore,
-      mediacollectionStore,
-      indexSelected: ref(0),
-      showImageDetail: ref(false),
-    }
-  },
-  computed: {
-    itemId() {
-      return this.$route.params.id
-    },
-
-    isGalleryEmpty() {
-      return this.mediacollectionStore.collection_number_of_items == 0
-    },
-  },
-  watch: {
-    // whenever question changes, this function will run
-    itemId(newItemId) {
-      const index = this.mediacollectionStore.getIndexOfItemId(newItemId)
-      if (index == -1) console.error(`image id not found ${newItemId}`)
-      else this.openPic(index)
-    },
-  },
-  mounted() {
-    //initially get all images, later use eventstream?
-  },
-  methods: {
-    openPic(index: number) {
-      this.indexSelected = index
-      this.showImageDetail = true
-    },
-  },
-}
+const isGalleryEmpty = computed(() => {
+  return mediacollectionStore.collection_number_of_items == 0
+})
 </script>
 
 <style lang="sass" scoped>

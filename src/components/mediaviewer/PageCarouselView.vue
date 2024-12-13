@@ -1,6 +1,6 @@
 <template>
   <q-carousel
-    v-model="currentSlideId"
+    v-model="currentMediaitemId"
     v-touch-swipe.mouse.down="handleSwipeDown"
     class=" "
     style="width: 100%; height: 100%"
@@ -22,20 +22,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { toRef, watch } from 'vue'
 import type { MediaItem } from 'src/dto/dto'
 import { default as MediaItemPreviewViewer } from '../MediaItemPreviewViewer.vue'
 
-const currentSlideId = ref('')
-
 const props = defineProps<{
   slicedImages: MediaItem[]
-  initialSlideId: string // warning: if invalid ID is given, there is just shown nothing...
+  mediaitemId: string // warning: if invalid ID is given, there is just shown nothing...
 }>()
 
-onMounted(() => {
-  currentSlideId.value = props.initialSlideId
-})
+const currentMediaitemId = toRef(props.mediaitemId)
+// update currentSlide if changed externally, so slide can be updated
+watch(
+  () => props.mediaitemId,
+  (mediaitemId) => {
+    currentMediaitemId.value = mediaitemId
+  },
+)
 
 const emit = defineEmits<{
   triggerChangedItem: [id: string]

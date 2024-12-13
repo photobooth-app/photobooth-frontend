@@ -1,17 +1,9 @@
 <template>
   <q-layout id="standalone-layout" view="hHh lpR fFf">
-    <q-page-container>
+    <q-page-container class="fullscreen">
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'StandaloneLayout',
-  components: {},
-  computed: {},
-})
-</script>
+<script setup lang="ts"></script>

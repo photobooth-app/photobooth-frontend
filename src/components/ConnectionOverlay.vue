@@ -11,16 +11,8 @@
   </q-card>
 </template>
 
-<script lang="ts">
-export default {
-  // name: 'ComponentName',
-  setup() {
-    return {}
-  },
-  methods: {
-    reloadPage() {
-      window.location.reload()
-    },
-  },
+<script setup lang="ts">
+const reloadPage = () => {
+  window.location.reload()
 }
 </script>

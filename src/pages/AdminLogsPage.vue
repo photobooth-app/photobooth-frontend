@@ -3,7 +3,7 @@
     <q-card class="q-pa-md q-mt-md">
       <div class="row q-gutter-sm">
         <div class="text-h5">{{ $t('log messages') }}</div>
-        <QBtn href="/api/debug/log/latest" target="_blank">{{ $t('download logs') }}</QBtn>
+        <q-btn href="/api/debug/log/latest" target="_blank">{{ $t('download logs') }}</q-btn>
       </div>
 
       <q-markup-table>
@@ -36,35 +36,19 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import { useMainStore } from '../stores/main-store'
-import { remoteProcedureCall } from '../util/fetch_api.js'
 import { QBtn } from 'quasar'
 
-export default defineComponent({
-  name: 'MainLayout',
+const store = useMainStore()
 
-  components: { QBtn },
-  setup() {
-    const store = useMainStore()
+const debugLevelColor = (level: string) => {
+  if (level == 'DEBUG') return 'info'
+  if (level == 'INFO') return 'info'
+  if (level == 'WARNING') return 'warning'
+  if (level == 'ERROR') return 'negative'
+  if (level == 'CRITICAL') return 'negative'
 
-    return {
-      // you can return the whole store instance to use it in the template
-      store,
-      remoteProcedureCall,
-    }
-  },
-  methods: {
-    debugLevelColor(level: string) {
-      if (level == 'DEBUG') return 'info'
-      if (level == 'INFO') return 'info'
-      if (level == 'WARNING') return 'warning'
-      if (level == 'ERROR') return 'negative'
-      if (level == 'CRITICAL') return 'negative'
-
-      return 'grey'
-    },
-  },
-})
+  return 'grey'
+}
 </script>

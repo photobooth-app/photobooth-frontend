@@ -174,26 +174,17 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 import { remoteProcedureCall } from '../util/fetch_api'
 import LanguageSwitcher from '../components/LanguageSwitcher.vue'
 
-export default defineComponent({
-  name: 'MainLayout',
-  components: { LanguageSwitcher },
-  setup() {
-    return {
-      remoteProcedureCall,
-      confirm_reboot: ref(false),
-      confirm_shutdown: ref(false),
-      confirm_restart_service: ref(false),
-      confirm_reload_service: ref(false),
-      confirm_install_service: ref(false),
-      confirm_uninstall_service: ref(false),
-      confirm_delete_all: ref(false),
-      confirm_clear_recycle_directory: ref(false),
-    }
-  },
-})
+const confirm_reboot = ref(false)
+const confirm_shutdown = ref(false)
+const confirm_restart_service = ref(false)
+const confirm_reload_service = ref(false)
+const confirm_install_service = ref(false)
+const confirm_uninstall_service = ref(false)
+const confirm_delete_all = ref(false)
+const confirm_clear_recycle_directory = ref(false)
 </script>

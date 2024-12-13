@@ -15,48 +15,38 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { enableInContextTranslation, disableInContextTranslation, incontextLanguageCodeSpecial } from 'boot/i18n'
 
-export default {
-  setup() {
-    const { locale, availableLocales } = useI18n({ useScope: 'global' })
-    const languageNames = new Intl.DisplayNames(['en'], {
-      type: 'language',
-      languageDisplay: 'standard',
-    })
+const { locale, availableLocales } = useI18n({ useScope: 'global' })
+const languageNames = new Intl.DisplayNames(['en'], {
+  type: 'language',
+  languageDisplay: 'standard',
+})
 
-    const localeOptions = availableLocales
-      .map(function (locale) {
-        return {
-          value: locale,
-          label: locale != incontextLanguageCodeSpecial ? languageNames.of(locale) : 'Edit translation (Crowdin)',
-        }
-      })
-      .sort((a, b) => a.label!.localeCompare(b.label!))
-
+const localeOptions = availableLocales
+  .map(function (locale) {
     return {
-      locale,
-      localeOptions,
+      value: locale,
+      label: locale != incontextLanguageCodeSpecial ? languageNames.of(locale) : 'Edit translation (Crowdin)',
     }
-  },
-  methods: {
-    switchLocale(locale: string) {
-      this.locale = locale
-      if (locale == incontextLanguageCodeSpecial) {
-        //in context translation special locale -> load incontext translation
-        console.log('enable crowdin in context translation')
-        enableInContextTranslation()
-      } else {
-        console.log('disable crowdin in context translation')
-        disableInContextTranslation()
-      }
+  })
+  .sort((a, b) => a.label!.localeCompare(b.label!))
 
-      localStorage.setItem('locale', locale)
+const switchLocale = (newLocale: string) => {
+  locale.value = newLocale
+  if (locale.value == incontextLanguageCodeSpecial) {
+    //in context translation special locale -> load incontext translation
+    console.log('enable crowdin in context translation')
+    enableInContextTranslation()
+  } else {
+    console.log('disable crowdin in context translation')
+    disableInContextTranslation()
+  }
 
-      console.log('Stored locale: ', locale)
-    },
-  },
+  localStorage.setItem('locale', locale.value)
+
+  console.log('Stored locale: ', locale.value)
 }
 </script>

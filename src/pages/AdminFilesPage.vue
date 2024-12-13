@@ -129,11 +129,14 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { ref, onMounted, computed } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted, computed, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { _fetch } from 'src/util/fetch_api'
 import { getAccessToken } from 'src/util/auth'
+
+const $q = useQuasar()
+
 export declare type AlignType = 'left' | 'center' | 'right'
 export interface PathListItem {
   name: string
@@ -141,7 +144,233 @@ export interface PathListItem {
   is_dir: boolean
   size: number
 }
-function formatBytes(bytes: number, decimals = 2) {
+
+const folder_current = ref('')
+const folder_loading = ref(false)
+const folder_rows = ref([] as PathListItem[])
+const folder_columns = [
+  {
+    label: 'Type',
+    name: 'type',
+    required: true,
+    align: 'left' as AlignType,
+    field: 'is_dir',
+    style: 'width: 25px',
+  },
+  {
+    label: 'Name',
+    name: 'name',
+    required: true,
+    align: 'left' as AlignType,
+    field: 'name',
+  },
+  {
+    label: 'Path',
+    name: 'filepath',
+    required: true,
+    align: 'left' as AlignType,
+    field: 'filepath',
+  },
+  {
+    label: 'Size',
+    name: 'size',
+    required: true,
+    align: 'left' as AlignType,
+    field: 'size',
+    format: (val: number) => formatBytes(val, 0),
+  },
+]
+const selected = ref([])
+const filter = ref('')
+const dialog_create_new_folder = ref(false)
+const new_folder_name = ref('')
+const confirm_delete = ref(false)
+const dialog_upload_files = ref(false)
+const pagination = ref({ rowsPerPage: 0 }) // force display all so virtual scrolling works best
+
+onMounted(() => {
+  getFolderContent()
+})
+
+watch(folder_current, (newFolder: string) => {
+  // console.log("change directory: ", newFolder);
+  getFolderContent(newFolder)
+})
+
+const breadcrumbs = computed(() => {
+  if (!folder_current.value) return [] // return empty array if no value.
+
+  const breadcrumbs = trimSlashes(folder_current.value).split('/')
+  return breadcrumbs
+})
+
+const onNameClick = (row: PathListItem) => {
+  if (row.is_dir) {
+    folder_current.value = row.filepath
+  } else {
+    _fetch(`/api/admin/files/file/${row.filepath}`, {})
+      .then((res) => res.blob())
+      .then((blob) => window.open(URL.createObjectURL(blob)))
+  }
+}
+
+const onBreadcrumbClick = (navigate_to_level = -1) => {
+  // level=-1->root folder, >=0 subfolders
+  folder_current.value = breadcrumbs.value.slice(0, navigate_to_level + 1).join('/')
+}
+
+async function getFolderContent(folder = '') {
+  folder_loading.value = true
+  selected.value = []
+
+  try {
+    const response = await _fetch(`/api/admin/files/list/${folder}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+
+    const json = await response.json()
+
+    if (response.ok) {
+      // if HTTP-status is 200-299
+      // get the response body (the method explained below)
+      folder_rows.value = json
+    } else {
+      console.error(json)
+      throw `Error ${response.status} getting listing. Please check logs.`
+    }
+  } catch (error) {
+    console.error(error)
+    $q.notify({
+      message: String(error),
+      caption: 'Request Error!',
+      color: 'negative',
+    })
+  }
+
+  folder_loading.value = false
+}
+
+async function getZip(selected = []) {
+  try {
+    const response = await _fetch('/api/admin/files/zip', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(selected),
+    })
+
+    if (response.ok) {
+      // if HTTP-status is 200-299
+      // get the response body (the method explained below)
+      $q.notify({
+        message: 'Downloading ZIP file',
+        caption: 'Files',
+        type: 'positive',
+      })
+
+      const blob = await response.blob()
+      const file = window.URL.createObjectURL(blob)
+      window.location.assign(file)
+    } else {
+      const json = await response.json()
+      console.error(json)
+      throw `Error ${response.status} creating zip. Please check logs.`
+    }
+  } catch (error) {
+    console.error(error)
+    $q.notify({
+      message: String(error),
+      caption: 'Request Error!',
+      color: 'negative',
+    })
+  }
+}
+
+async function deleteItems(selected = []) {
+  try {
+    const response = await _fetch('/api/admin/files/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(selected),
+    })
+
+    if (response.ok) {
+      // if HTTP-status is 200-299
+      // get the response body (the method explained below)
+      $q.notify({
+        message: 'Selected items deleted.',
+        caption: 'Files',
+        type: 'positive',
+      })
+    } else {
+      console.error(response)
+      throw `Error ${response.status} deleting items. Please check logs.`
+    }
+  } catch (error) {
+    console.error(error)
+    $q.notify({
+      message: String(error),
+      caption: 'Request Error!',
+      color: 'negative',
+    })
+  }
+
+  // reload in every case (also resets selected items, which is good in delete process)
+  getFolderContent(folder_current.value)
+}
+
+async function createNewFolder(folder_name: string) {
+  // https://javascript.info/fetch
+
+  let newfolder_fullpath = folder_name
+
+  if (folder_current.value) {
+    // add current folder if not empty (avoid to appear like an absolute path)
+    newfolder_fullpath = folder_current.value + '/' + newfolder_fullpath
+  }
+
+  console.log(newfolder_fullpath)
+  try {
+    const response = await _fetch('/api/admin/files/folder/new', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newfolder_fullpath),
+    })
+
+    const json = await response.json()
+
+    if (response.ok) {
+      // if HTTP-status is 200-299
+      // get the response body (the method explained below)
+      $q.notify({
+        message: `Folder "${folder_name}" created.`,
+        caption: 'Files',
+        type: 'positive',
+      })
+
+      // reload
+      getFolderContent(folder_current.value)
+    } else {
+      console.error(json)
+      throw `Error ${response.status} while creating folder. Please check logs.`
+    }
+  } catch (error) {
+    console.error(error)
+    $q.notify({
+      message: String(error),
+      caption: 'Request Error!',
+      color: 'negative',
+    })
+  }
+}
+
+const trimSlashes = (str: string) =>
+  str
+    .split('/')
+    .filter((v) => v !== '')
+    .join('/')
+
+const formatBytes = (bytes: number, decimals = 2) => {
   if (!+bytes) return '0 Bytes'
 
   const k = 1024
@@ -151,269 +380,5 @@ function formatBytes(bytes: number, decimals = 2) {
   const i = Math.floor(Math.log(bytes) / Math.log(k))
 
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
-}
-export default {
-  setup() {
-    const $q = useQuasar()
-
-    const folder_current = ref('')
-    const folder_loading = ref(false)
-    const folder_rows = ref([] as PathListItem[])
-    const folder_columns = [
-      {
-        label: 'Type',
-        name: 'type',
-        required: true,
-        align: 'left' as AlignType,
-        field: 'is_dir',
-        style: 'width: 25px',
-      },
-      {
-        label: 'Name',
-        name: 'name',
-        required: true,
-        align: 'left' as AlignType,
-        field: 'name',
-      },
-      {
-        label: 'Path',
-        name: 'filepath',
-        required: true,
-        align: 'left' as AlignType,
-        field: 'filepath',
-      },
-      {
-        label: 'Size',
-        name: 'size',
-        required: true,
-        align: 'left' as AlignType,
-        field: 'size',
-        format: (val: number) => formatBytes(val, 0),
-      },
-    ]
-    const selected = ref([])
-    const filter = ref('')
-
-    const dialog_create_new_folder = ref(false)
-    const new_folder_name = ref('')
-    const confirm_delete = ref(false)
-
-    const dialog_upload_files = ref(false)
-
-    const pagination = ref({
-      rowsPerPage: 0, // force display all so virtual scrolling works best
-    })
-
-    const trimSlashes = (str: string) =>
-      str
-        .split('/')
-        .filter((v) => v !== '')
-        .join('/')
-    const breadcrumbs = computed(() => {
-      if (!folder_current.value) return [] // return empty array if no value.
-
-      const breadcrumbs = trimSlashes(folder_current.value).split('/')
-      return breadcrumbs
-    })
-
-    const onNameClick = (row: PathListItem) => {
-      if (row.is_dir) {
-        folder_current.value = row.filepath
-      } else {
-        _fetch(`/api/admin/files/file/${row.filepath}`, {})
-          .then((res) => res.blob())
-          .then((blob) => window.open(URL.createObjectURL(blob)))
-      }
-    }
-
-    const onBreadcrumbClick = (navigate_to_level = -1) => {
-      // level=-1->root folder, >=0 subfolders
-      folder_current.value = breadcrumbs.value.slice(0, navigate_to_level + 1).join('/')
-    }
-
-    async function getFolderContent(folder = '') {
-      folder_loading.value = true
-      selected.value = []
-
-      try {
-        const response = await _fetch(`/api/admin/files/list/${folder}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        })
-
-        const json = await response.json()
-
-        if (response.ok) {
-          // if HTTP-status is 200-299
-          // get the response body (the method explained below)
-          folder_rows.value = json
-        } else {
-          console.error(json)
-          throw `Error ${response.status} getting listing. Please check logs.`
-        }
-      } catch (error) {
-        console.error(error)
-        $q.notify({
-          message: String(error),
-          caption: 'Request Error!',
-          color: 'negative',
-        })
-      }
-
-      folder_loading.value = false
-    }
-
-    async function getZip(selected = []) {
-      try {
-        const response = await _fetch('/api/admin/files/zip', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(selected),
-        })
-
-        if (response.ok) {
-          // if HTTP-status is 200-299
-          // get the response body (the method explained below)
-          $q.notify({
-            message: 'Downloading ZIP file',
-            caption: 'Files',
-            type: 'positive',
-          })
-
-          const blob = await response.blob()
-          const file = window.URL.createObjectURL(blob)
-          window.location.assign(file)
-        } else {
-          const json = await response.json()
-          console.error(json)
-          throw `Error ${response.status} creating zip. Please check logs.`
-        }
-      } catch (error) {
-        console.error(error)
-        $q.notify({
-          message: String(error),
-          caption: 'Request Error!',
-          color: 'negative',
-        })
-      }
-    }
-
-    async function deleteItems(selected = []) {
-      try {
-        const response = await _fetch('/api/admin/files/delete', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(selected),
-        })
-
-        if (response.ok) {
-          // if HTTP-status is 200-299
-          // get the response body (the method explained below)
-          $q.notify({
-            message: 'Selected items deleted.',
-            caption: 'Files',
-            type: 'positive',
-          })
-        } else {
-          console.error(response)
-          throw `Error ${response.status} deleting items. Please check logs.`
-        }
-      } catch (error) {
-        console.error(error)
-        $q.notify({
-          message: String(error),
-          caption: 'Request Error!',
-          color: 'negative',
-        })
-      }
-
-      // reload in every case (also resets selected items, which is good in delete process)
-      getFolderContent(folder_current.value)
-    }
-
-    async function createNewFolder(folder_name: string) {
-      // https://javascript.info/fetch
-
-      let newfolder_fullpath = folder_name
-
-      if (folder_current.value) {
-        // add current folder if not empty (avoid to appear like an absolute path)
-        newfolder_fullpath = folder_current.value + '/' + newfolder_fullpath
-      }
-
-      console.log(newfolder_fullpath)
-      try {
-        const response = await _fetch('/api/admin/files/folder/new', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newfolder_fullpath),
-        })
-
-        const json = await response.json()
-
-        if (response.ok) {
-          // if HTTP-status is 200-299
-          // get the response body (the method explained below)
-          $q.notify({
-            message: `Folder "${folder_name}" created.`,
-            caption: 'Files',
-            type: 'positive',
-          })
-
-          // reload
-          getFolderContent(folder_current.value)
-        } else {
-          console.error(json)
-          throw `Error ${response.status} while creating folder. Please check logs.`
-        }
-      } catch (error) {
-        console.error(error)
-        $q.notify({
-          message: String(error),
-          caption: 'Request Error!',
-          color: 'negative',
-        })
-      }
-    }
-
-    onMounted(() => {
-      getFolderContent()
-    })
-
-    return {
-      breadcrumbs,
-
-      folder_current,
-      folder_columns,
-      folder_rows,
-      folder_loading,
-      pagination,
-      selected,
-      filter,
-
-      dialog_create_new_folder,
-      new_folder_name,
-
-      confirm_delete,
-
-      dialog_upload_files,
-
-      onNameClick,
-      onBreadcrumbClick,
-      getFolderContent,
-      getZip,
-      deleteItems,
-      createNewFolder,
-      getAccessToken,
-    }
-  },
-  // name: 'PageName',
-  watch: {
-    // whenever folder changes, load new content.
-    folder_current(newFolder) {
-      // console.log("change directory: ", newFolder);
-      this.getFolderContent(newFolder)
-    },
-  },
 }
 </script>

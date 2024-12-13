@@ -34,14 +34,11 @@
 
       <q-page-container class="q-pa-none galleryimagedetail full-height">
         <q-page class="full-height">
-          <!-- TODO: v-if teil kann vielleicht ganz weg? -->
-          <PageSingleView v-if="false" :item="mediacollectionStore.collection[0]"></PageSingleView>
           <PageCarouselView
-            v-else
-            :initialSlideId="currentMediaitem.id"
+            :mediaitem-id="currentMediaitem.id"
             :sliced-images="mediacollectionStore.collection"
             @trigger-changed-item="onCarouselTransition"
-          ></PageCarouselView>
+          />
 
           <q-page-sticky position="top-right" :offset="[30, 30]" v-if="configurationStore.getConfigElement('uisettings.gallery_show_qrcode', false)">
             <PageQrCode :url="currentMediaitem.share_url" />
@@ -59,13 +56,12 @@
 <script setup lang="ts">
 import { useConfigurationStore } from '../stores/configuration-store'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
-import { ref, onBeforeMount, computed, onMounted } from 'vue'
+import { ref, onBeforeMount, computed, onMounted, watch } from 'vue'
 import { default as HeaderToolbar } from '../components/mediaviewer/HeaderToolbar.vue'
 import { default as HeaderCountdownTimer } from '../components/mediaviewer/HeaderCountdownTimer.vue'
 import { default as HeaderProcessing } from '../components/mediaviewer/HeaderProcessing.vue'
 import { default as DrawerFilter } from '../components/mediaviewer/DrawerFilter.vue'
 import { default as PageQrCode } from '../components/mediaviewer/PageQrCode.vue'
-import { default as PageSingleView } from '../components/mediaviewer/PageSingleView.vue'
 import { default as PageCarouselView } from '../components/mediaviewer/PageCarouselView.vue'
 import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
 import { useRoute } from 'vue-router'
@@ -85,8 +81,12 @@ const displayIndeterminateProgressbar = ref(false)
 const props = defineProps({
   startTimer: Boolean,
 })
+
 onBeforeMount(() => {
   selectedMediaitemId.value = route.params.id as string
+})
+watch(route, (to) => {
+  selectedMediaitemId.value = to.params.id as string
 })
 onMounted(() => {
   headercountdowntimer.value = props.startTimer
@@ -94,10 +94,6 @@ onMounted(() => {
 const onCarouselTransition = (newMediaitemId: string) => {
   selectedMediaitemId.value = newMediaitemId
 }
-
-// const currentMediaitemIndex = computed(() => {
-//   return mediacollectionStore.collection.findIndex((item) => item.id === selectedMediaitemId.value)
-// })
 
 const currentMediaitem = computed(() => {
   return getMediaitemById(selectedMediaitemId.value)

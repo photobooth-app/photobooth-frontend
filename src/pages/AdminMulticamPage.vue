@@ -33,34 +33,23 @@
   </q-page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { computed } from 'vue'
 import { remoteProcedureCall } from '../util/fetch_api'
 import { useConfigurationStore } from '../stores/configuration-store'
 
-export default {
-  components: {},
-  setup() {
-    const configurationStore = useConfigurationStore()
+const configurationStore = useConfigurationStore()
 
-    return {
-      // you can return the whole store instance to use it in the template
-      configurationStore,
-      remoteProcedureCall,
-    }
-  },
-  computed: {
-    multicamNodes() {
-      const group_backends = this.configurationStore.getConfigElement('backends.group_backends', null)
-      const index_backend_multicam = this.configurationStore.getConfigElement('backends.index_backend_multicam', null)
-      if (group_backends == null || index_backend_multicam == null) {
-        console.error('cannot get multicam backend from config')
-        return []
-      }
+const multicamNodes = computed(() => {
+  const group_backends = configurationStore.getConfigElement('backends.group_backends', null)
+  const index_backend_multicam = configurationStore.getConfigElement('backends.index_backend_multicam', null)
+  if (group_backends == null || index_backend_multicam == null) {
+    console.error('cannot get multicam backend from config')
+    return []
+  }
 
-      const multicam_backend = group_backends[index_backend_multicam].wigglecam.nodes
+  const multicam_backend = group_backends[index_backend_multicam].wigglecam.nodes
 
-      return multicam_backend
-    },
-  },
-}
+  return multicam_backend
+})
 </script>

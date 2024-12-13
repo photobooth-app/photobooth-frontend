@@ -40,9 +40,8 @@
     </q-dialog>
   </q-page>
 </template>
-<script lang="ts">
-import { ref } from 'vue'
-import { useMainStore } from '../stores/main-store'
+<script setup lang="ts">
+import { ref, provide } from 'vue'
 import { JsonForms, type JsonFormsChangeEvent } from '@jsonforms/vue'
 import { generateDefaultUISchema } from '@jsonforms/core'
 import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form'
@@ -52,11 +51,15 @@ import { Notify } from 'quasar'
 
 const configurationStore = useConfigurationStore()
 const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } })
-const renderers = [...quasarRenderers]
+const renderers = Object.freeze([...quasarRenderers])
 const isLoadingState = ref(true)
 const schema = ref({})
 const cuischema = ref(generateDefaultUISchema({}))
 const confirm_reset_config = ref(false)
+const ajv = createAjv({ multipleOfPrecision: 2 }) // https://github.com/eclipsesource/jsonforms/issues/1832#issuecomment-966209856
+// init with defaults not working properly yet on array lists. revisit later # useDefaults: 'empty' https://ajv.js.org/options.html#usedefaults
+
+provide('styles', myStyles)
 
 const getSchema = async () => {
   try {
@@ -92,53 +95,11 @@ const updateFormSchema = async () => {
   isLoadingState.value = false
 }
 
-export default {
-  components: {
-    JsonForms,
-  },
-  provide() {
-    return {
-      styles: myStyles,
-    }
-  },
-  setup() {
-    const store = useMainStore()
-    const ajv = createAjv({ multipleOfPrecision: 2 }) // https://github.com/eclipsesource/jsonforms/issues/1832#issuecomment-966209856
-    // init with defaults not working properly yet on array lists. revisit later # useDefaults: 'empty' https://ajv.js.org/options.html#usedefaults
-
-    updateFormSchema()
-
-    return {
-      store,
-      ajv,
-      remoteProcedureCall,
-      updateFormSchema,
-    }
-  },
-  data() {
-    // non-reactive ajv
-
-    // reactive data below
-    return {
-      // freeze renderers for performance gains
-      renderers: Object.freeze(renderers),
-      schema,
-      cuischema,
-      isLoadingState,
-      configurationStore,
-      confirm_reset_config,
-    }
-  },
-  // name: 'PageName',
-  computed: {
-    // a computed getter
-  },
-  methods: {
-    onChange(event: JsonFormsChangeEvent) {
-      this.configurationStore.configuration = event.data
-    },
-  },
+const onChange = (event: JsonFormsChangeEvent) => {
+  configurationStore.configuration = event.data
 }
+
+updateFormSchema()
 </script>
 <style lang="scss">
 .control-wrapper {

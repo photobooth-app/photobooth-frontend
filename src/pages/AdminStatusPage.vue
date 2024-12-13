@@ -197,38 +197,21 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 import { useMainStore } from '../stores/main-store'
 import { remoteProcedureCall } from '../util/fetch_api.js'
-import { QBtn } from 'quasar'
 
-export default defineComponent({
-  name: 'MainLayout',
+const store = useMainStore()
+const confirm_reset_counter = ref(false)
+const selected_field = ref('')
 
-  components: { QBtn },
-  setup() {
-    const store = useMainStore()
-    const confirm_reset_counter = ref(false)
-    const selected_field = ref('')
-
-    return {
-      // you can return the whole store instance to use it in the template
-      store,
-      remoteProcedureCall,
-      confirm_reset_counter,
-      selected_field,
-    }
-  },
-  methods: {
-    displayResetConfirm(field: string) {
-      this.selected_field = field
-      this.confirm_reset_counter = true
-    },
-    confirmAction() {
-      remoteProcedureCall('/api/admin/information/sttscntr/reset/' + this.selected_field)
-      this.confirm_reset_counter = false
-    },
-  },
-})
+const displayResetConfirm = (field: string) => {
+  selected_field.value = field
+  confirm_reset_counter.value = true
+}
+const confirmAction = () => {
+  remoteProcedureCall('/api/admin/information/sttscntr/reset/' + selected_field.value)
+  confirm_reset_counter.value = false
+}
 </script>

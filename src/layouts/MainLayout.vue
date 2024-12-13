@@ -14,44 +14,30 @@
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import { useStateStore } from '../stores/state-store'
 import { useConfigurationStore } from '../stores/configuration-store'
 import { useRouter, useRoute } from 'vue-router'
 import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
 
-export default defineComponent({
-  name: 'MainLayout',
+const stateStore = useStateStore()
+const configurationStore = useConfigurationStore()
+const router = useRouter()
+const route = useRoute()
 
-  components: { RouteAfterTimeout },
-  setup() {
-    const stateStore = useStateStore()
-    const configurationStore = useConfigurationStore()
-    const router = useRouter()
-    const route = useRoute()
+// watch state to force router to "/" if a capture is triggered
+stateStore.$subscribe((mutation, state) => {
+  if (state.state == 'counting' && route.path != '/') {
+    // quick fix: receive "counting" state but not on indexpage, push router to index
+    console.log('counting state received, pushing to index page to countdown')
 
-    // watch state to force router to "/" if a capture is triggered
-    stateStore.$subscribe((mutation, state) => {
-      if (state.state == 'counting' && route.path != '/') {
-        // quick fix: receive "counting" state but not on indexpage, push router to index
-        console.log('counting state received, pushing to index page to countdown')
-
-        router.push('/')
-      }
-      if (state.state == 'present_capture') {
-        router.push({ name: 'itempresenter', params: { id: stateStore.last_captured_mediaitem.id } })
-      }
-      if (state.state == 'approve_capture' && state.ask_user_for_approval) {
-        router.push({ path: '/itemapproval' })
-      }
-    })
-
-    return {
-      // you can return the whole store instance to use it in the template
-      configurationStore,
-    }
-  },
-  computed: {},
+    router.push('/')
+  }
+  if (state.state == 'present_capture') {
+    router.push({ name: 'itempresenter', params: { id: stateStore.last_captured_mediaitem.id } })
+  }
+  if (state.state == 'approve_capture' && state.ask_user_for_approval) {
+    router.push({ path: '/itemapproval' })
+  }
 })
 </script>

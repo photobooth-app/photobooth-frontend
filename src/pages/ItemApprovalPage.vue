@@ -40,59 +40,32 @@
   </q-page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useMainStore } from '../stores/main-store'
-import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { useStateStore } from '../stores/state-store'
 import { remoteProcedureCall } from '../util/fetch_api.js'
+import { computed } from 'vue'
 
-export default {
-  // name: 'PageName',
-  components: {},
-  setup() {
-    const router = useRouter()
-    const mainStore = useMainStore()
-    const mediacollectionStore = useMediacollectionStore()
-    const stateStore = useStateStore()
+const router = useRouter()
+const stateStore = useStateStore()
 
-    return {
-      router,
-      mainStore,
-      mediacollectionStore,
-      stateStore,
-      remoteProcedureCall,
-    }
-  },
-  data() {
-    return {}
-  },
-  computed: {
-    imgToApproveSrc() {
-      // only check first index if multicapture in one pass currently.
-      return this.stateStore.last_captured_mediaitem && this.stateStore.last_captured_mediaitem['preview']
-    },
-  },
-  mounted() {
-    // string representation: console.log((this.$route.query.approval));
-    // bool: console.log((this.approval));
-  },
+const imgToApproveSrc = computed(() => {
+  // only check first index if multicapture in one pass currently.
+  return stateStore.last_captured_mediaitem && stateStore.last_captured_mediaitem['preview']
+})
 
-  methods: {
-    userConfirm() {
-      remoteProcedureCall('/api/actions/confirm')
-      this.router.push('/')
-    },
-    userReject() {
-      remoteProcedureCall('/api/actions/reject')
-      this.router.push('/')
-    },
-    userAbort() {
-      // closing the window that was meant to use for approval
-      // need to inform the statemachine to reset
-      remoteProcedureCall('/api/actions/abort')
-      this.router.push('/')
-    },
-  },
+const userConfirm = () => {
+  remoteProcedureCall('/api/actions/confirm')
+  router.push('/')
+}
+const userReject = () => {
+  remoteProcedureCall('/api/actions/reject')
+  router.push('/')
+}
+const userAbort = () => {
+  // closing the window that was meant to use for approval
+  // need to inform the statemachine to reset
+  remoteProcedureCall('/api/actions/abort')
+  router.push('/')
 }
 </script>

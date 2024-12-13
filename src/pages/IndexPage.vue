@@ -83,95 +83,83 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 import { remoteProcedureCall } from '../util/fetch_api.js'
-import { useMainStore } from '../stores/main-store'
 import { useStateStore } from '../stores/state-store'
 import { useConfigurationStore } from '../stores/configuration-store'
 import CountdownTimer from '../components/CountdownTimer.vue'
 import type { TriggerSchema } from '../components/FrontpageTriggerButtons.vue'
 import { default as FrontpageTriggerButtons } from '../components/FrontpageTriggerButtons.vue'
 import { get } from 'lodash'
-export default defineComponent({
-  components: { CountdownTimer, FrontpageTriggerButtons },
 
-  setup() {
-    const store = useMainStore()
-    const stateStore = useStateStore()
-    const configurationStore = useConfigurationStore()
+const stateStore = useStateStore()
+const configurationStore = useConfigurationStore()
 
-    return {
-      store,
-      stateStore,
-      configurationStore,
-      remoteProcedureCall,
-    }
-  },
-  computed: {
-    triggerButtons() {
-      const result: TriggerSchema[] = []
+const triggerButtons = computed(() => {
+  const result: TriggerSchema[] = []
 
-      const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'actions.multicamera', 'printer.print']
-      action_collections.forEach((action_collection) => {
-        const action_config = this.configurationStore.getConfigElement(action_collection, [])
-        action_config.forEach((action: string, index: number) => {
-          const trigger: TriggerSchema = {
-            action: action_collection.replace('.', '/'),
-            config_index: index,
-            show_button: get(action, 'trigger.ui_trigger.show_button', false),
-            title: get(action, 'trigger.ui_trigger.title', ''),
-            icon: get(action, 'trigger.ui_trigger.icon', ''),
-          }
+  const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'actions.multicamera', 'printer.print']
+  action_collections.forEach((action_collection) => {
+    const action_config = configurationStore.getConfigElement(action_collection, [])
+    action_config.forEach((action: string, index: number) => {
+      const trigger: TriggerSchema = {
+        action: action_collection.replace('.', '/'),
+        config_index: index,
+        show_button: get(action, 'trigger.ui_trigger.show_button', false),
+        title: get(action, 'trigger.ui_trigger.title', ''),
+        icon: get(action, 'trigger.ui_trigger.icon', ''),
+      }
 
-          result.push(trigger)
-        })
-      })
-      console.log(result)
+      result.push(trigger)
+    })
+  })
+  console.log(result)
 
-      return result
-    },
-    showProcessing() {
-      const capture = this.stateStore.state == 'capture'
-      const capturesCompleted = this.stateStore.state == 'captures_completed'
-
-      return capturesCompleted || (capture && !this.showCountdownCounting)
-    },
-    showRecording() {
-      return this.stateStore.state == 'record'
-    },
-    livestreamMirror() {
-      return this.configurationStore.getConfigElement('uisettings.livestream_mirror_effect')
-    },
-
-    showCountdownCounting() {
-      const machineCounting = this.stateStore.state == 'counting'
-      const capture = this.stateStore.state == 'capture'
-
-      return (this.stateStore.duration && this.stateStore.duration > 0 && machineCounting) || capture
-    },
-    showPreview() {
-      const enabled = true
-      const machineIdle = !this.stateStore.state || this.stateStore.state == 'finished'
-      const machineRecord = this.stateStore.state == 'record'
-      const machineCounting = this.stateStore.state == 'counting'
-      const machineCapture = this.stateStore.state == 'capture'
-
-      return enabled && (machineIdle || machineCounting || machineRecord || machineCapture)
-    },
-    showFrontpage() {
-      // show if state not defined (no job ongoing or finished)
-      return !this.stateStore.state || this.stateStore.state == 'finished'
-    },
-  },
-  watch: {},
-  methods: {
-    invokeAction(action: string, config_index: number) {
-      remoteProcedureCall(`/api/${action}/${config_index}`)
-    },
-    stopRecordingVideo() {
-      remoteProcedureCall('/api/actions/stop')
-    },
-  },
+  return result
 })
+
+const showProcessing = computed(() => {
+  const capture = stateStore.state == 'capture'
+  const capturesCompleted = stateStore.state == 'captures_completed'
+
+  return capturesCompleted || (capture && !showCountdownCounting.value)
+})
+
+const showRecording = computed(() => {
+  return stateStore.state == 'record'
+})
+
+const livestreamMirror = computed(() => {
+  return configurationStore.getConfigElement('uisettings.livestream_mirror_effect')
+})
+
+const showCountdownCounting = computed(() => {
+  const machineCounting = stateStore.state == 'counting'
+  const capture = stateStore.state == 'capture'
+
+  return (stateStore.duration && stateStore.duration > 0 && machineCounting) || capture
+})
+
+const showPreview = computed(() => {
+  const enabled = true
+  const machineIdle = !stateStore.state || stateStore.state == 'finished'
+  const machineRecord = stateStore.state == 'record'
+  const machineCounting = stateStore.state == 'counting'
+  const machineCapture = stateStore.state == 'capture'
+
+  return enabled && (machineIdle || machineCounting || machineRecord || machineCapture)
+})
+
+const showFrontpage = computed(() => {
+  // show if state not defined (no job ongoing or finished)
+  return !stateStore.state || stateStore.state == 'finished'
+})
+
+const invokeAction = (action: string, config_index: number) => {
+  remoteProcedureCall(`/api/${action}/${config_index}`)
+}
+const stopRecordingVideo = () => {
+  remoteProcedureCall('/api/actions/stop')
+}
 </script>
