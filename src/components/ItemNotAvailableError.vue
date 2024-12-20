@@ -1,3 +1,4 @@
+<!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
   <!-- usually not visible but if page is called with wrong id or the page was not closed after an item is deleted -->
   <div class="window-height window-width row justify-center items-center flex flex-center">

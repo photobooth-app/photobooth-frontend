@@ -4,6 +4,7 @@ import pluginVue from 'eslint-plugin-vue'
 import pluginQuasar from '@quasar/app-vite/eslint'
 import vueTsEslintConfig from '@vue/eslint-config-typescript'
 import prettierSkipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import vueI18n from '@intlify/eslint-plugin-vue-i18n'
 
 export default [
   {
@@ -94,6 +95,29 @@ export default [
     files: ['src/components/form/**'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+
+  ...vueI18n.configs['flat/recommended'],
+  {
+    rules: {
+      // Optional.
+      '@intlify/vue-i18n/no-dynamic-keys': 'error',
+      '@intlify/vue-i18n/no-unused-keys': [
+        'error',
+        {
+          extensions: ['.js', '.vue'],
+        },
+      ],
+    },
+    settings: {
+      'vue-i18n': {
+        localeDir: './src/i18n/locales/*.{json,json5,yaml,yml}', // extension is glob formatting!
+
+        // Specify the version of `vue-i18n` you are using.
+        // If not specified, the message will be parsed twice.
+        messageSyntaxVersion: '^9.0.0',
+      },
     },
   },
 
