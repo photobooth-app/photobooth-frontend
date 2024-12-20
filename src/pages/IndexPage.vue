@@ -58,14 +58,22 @@
             <q-icon left name="sym_o_photo_library" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_GALLERY') }}</div>
           </q-btn>
+        </div>
+      </div>
+    </q-page-sticky>
+
+    <q-page-sticky position="top-right" class="q-ma-lg">
+      <div v-if="showFrontpage">
+        <div class="q-gutter-md">
           <q-btn
             v-if="configurationStore.getConfigElement('uisettings.show_admin_on_frontpage')"
             id="frontpage-button-to-admin"
             rounded
-            color="secondary"
+            color="transparent"
             no-caps
-            to="/admin"
-            class="action-button"
+            class="action-button action-button-admin"
+            :class="{ 'action-button-admin-invisible': adminButtonInvisible }"
+            @click="onBtnAdminClick"
           >
             <q-icon left name="sym_o_admin_panel_settings" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_ADMIN') }}</div>
@@ -84,7 +92,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { watchDebounced } from '@vueuse/core'
+import { computed, ref } from 'vue'
 import { remoteProcedureCall } from '../util/fetch_api.js'
 import { useStateStore } from '../stores/state-store'
 import { useConfigurationStore } from '../stores/configuration-store'
@@ -95,7 +105,19 @@ import { get } from 'lodash'
 
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
+const router = useRouter()
+const btnAdminClickCounter = ref(0)
 
+watchDebounced(
+  btnAdminClickCounter,
+  () => {
+    if (btnAdminClickCounter.value >= 5) {
+      router.push('/admin')
+    }
+    btnAdminClickCounter.value = 0
+  },
+  { debounce: 500 },
+)
 const triggerButtons = computed(() => {
   const result: TriggerSchema[] = []
 
@@ -134,6 +156,9 @@ const livestreamMirror = computed(() => {
   return configurationStore.getConfigElement('uisettings.livestream_mirror_effect')
 })
 
+const adminButtonInvisible = computed(() => {
+  return configurationStore.getConfigElement('uisettings.admin_button_invisible', false)
+})
 const showCountdownCounting = computed(() => {
   const machineCounting = stateStore.state == 'counting'
   const capture = stateStore.state == 'capture'
@@ -157,7 +182,13 @@ const showFrontpage = computed(() => {
   // show if state not defined (no job ongoing or finished)
   return !stateStore.state || stateStore.state == 'finished'
 })
-
+const onBtnAdminClick = () => {
+  if (adminButtonInvisible.value) {
+    btnAdminClickCounter.value++
+  } else {
+    router.push('/admin')
+  }
+}
 const invokeAction = (action: string, config_index: number) => {
   remoteProcedureCall(`/api/${action}/${config_index}`)
 }
@@ -165,3 +196,11 @@ const stopRecordingVideo = () => {
   remoteProcedureCall('/api/actions/stop')
 }
 </script>
+
+<style lang="sass">
+
+// if button shall be invisible, set it to transparent and on mouseover use default cursor, no pointer
+.action-button-admin-invisible
+  opacity: 0.0
+  cursor: default
+</style>
