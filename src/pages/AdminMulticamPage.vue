@@ -1,4 +1,5 @@
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
+<!-- eslint-disable @intlify/vue-i18n/no-missing-keys -->
 <template>
   <q-page id="multicam-page" padding>
     <q-card flat class="q-pa-md">

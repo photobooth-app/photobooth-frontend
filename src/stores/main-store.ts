@@ -45,6 +45,9 @@ export const useMainStore = defineStore('main-store', {
 
       /* stats */
       stats_counter: {},
+
+      /* limits */
+      limits_counter: {},
     },
   }),
   actions: {},
