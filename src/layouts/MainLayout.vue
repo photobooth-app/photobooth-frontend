@@ -5,7 +5,7 @@
 
       <!-- auto-start slideshow after timeout -->
       <RouteAfterTimeout
-        v-if="configurationStore.getConfigElement('uisettings.show_automatic_slideshow_timeout', 0) > 0"
+        v-if="configurationStore.getConfigElement('uisettings.show_automatic_slideshow_timeout', 0) > 0 && mediacollectionStore.collection.length > 0"
         route="/slideshow/random"
         :timeout-ms="configurationStore.getConfigElement('uisettings.show_automatic_slideshow_timeout', 60) * 1000"
         :warning-message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
@@ -18,6 +18,7 @@
 import { defineComponent } from 'vue';
 import { useStateStore } from '../stores/state-store.js';
 import { useConfigurationStore } from '../stores/configuration-store.ts';
+import { useMediacollectionStore } from '../stores/mediacollection-store.js';
 import { useRouter } from 'vue-router';
 import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue';
 
@@ -28,6 +29,7 @@ export default defineComponent({
   setup() {
     const stateStore = useStateStore();
     const configurationStore = useConfigurationStore();
+    const mediacollectionStore = useMediacollectionStore();
     const router = useRouter();
 
     // watch state to force router to "/" if a capture is triggered
@@ -49,6 +51,7 @@ export default defineComponent({
     return {
       // you can return the whole store instance to use it in the template
       configurationStore,
+      mediacollectionStore,
     };
   },
   computed: {},
