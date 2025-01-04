@@ -30,7 +30,7 @@
 
           <q-page-sticky position="top-right" class="q-ma-lg" v-if="configurationStore.getConfigElement('uisettings.gallery_show_qrcode', false)">
             <PageQrCode
-              :url="currentMediaitem.share_url"
+              :url="qrShareUrl"
               :text-above="configurationStore.getConfigElement('uisettings.qrcode_text_above', '')"
               :text-below="configurationStore.getConfigElement('uisettings.qrcode_text_below', '')"
             />
@@ -48,7 +48,7 @@
             :image_number="currentMediaitemNumber"
             :images_total="mediacollectionStore.collection_number_of_items"
             @trigger-toggle-display-filter="rightDrawerOpen = !rightDrawerOpen"
-            @trigger-delete-mediaitem="[doDeleteItem, $router.back()]"
+            @trigger-delete-mediaitem="doDeleteItem"
             @trigger-share-action="doShareAction"
           ></PageToolbar>
         </q-page>
@@ -72,13 +72,12 @@ import { default as DrawerFilter } from '../components/mediaviewer/DrawerFilter.
 import { default as PageQrCode } from '../components/mediaviewer/PageQrCode.vue'
 import { default as PageCarouselView } from '../components/mediaviewer/PageCarouselView.vue'
 import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { get } from 'lodash'
 import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
-import { useQuasar } from 'quasar'
 import { remoteProcedureCall } from '../util/fetch_api.js'
-const $q = useQuasar()
 const route = useRoute()
+const router = useRouter()
 const configurationStore = useConfigurationStore()
 const mediacollectionStore = useMediacollectionStore()
 const selectedMediaitemId = ref('')
@@ -105,6 +104,16 @@ const onCarouselTransition = (newMediaitemId: string) => {
 
 const currentMediaitem = computed(() => {
   return getMediaitemById(selectedMediaitemId.value)
+})
+
+const qrShareUrl = computed(() => {
+  if (configurationStore.getConfigElement('qrshare.enabled', false)) {
+    const qrShareServiceUrl = configurationStore.getConfigElement('qrshare.shareservice_url', '')
+    return `${qrShareServiceUrl}?action=download&id=${selectedMediaitemId.value}`
+  } else {
+    const customUrl = configurationStore.getConfigElement('qrshare.share_custom_qr_url', '')
+    return customUrl.replace('{filename}', selectedMediaitemId.value).replace('{identifier}', selectedMediaitemId.value)
+  }
 })
 
 const currentMediaitemNumber = computed(() => {
@@ -160,10 +169,10 @@ const doApplyFilter = (id: string, filter: string) => {
         throw new Error('Server returned ' + response.status)
       }
 
-      const item = getMediaitemById(id)
-      reloadImg(item.full)
-      reloadImg(item.preview)
-      reloadImg(item.thumbnail)
+      // const item = getMediaitemById(id)
+      reloadImg(`/media/full/${id}`)
+      reloadImg(`/media/preview/${id}`)
+      reloadImg(`/media/thumbnail/${id}`)
 
       displayIndeterminateProgressbar.value = false
     })
@@ -174,27 +183,8 @@ const doApplyFilter = (id: string, filter: string) => {
 }
 const doDeleteItem = (id: string) => {
   selectedMediaitemId.value = undefined
-  fetch('/api/mediacollection/delete', {
-    method: 'POST',
-    body: JSON.stringify({ image_id: id }),
-    headers: { 'Content-Type': 'application/json' },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Server returned ' + response.status)
-      }
-    })
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((error) => {
-      console.error('There was a problem with the Fetch operation:', error)
-
-      $q.notify({
-        message: 'Error deleting file! Please check logs and browser console.',
-        type: 'negative',
-      })
-    })
+  mediacollectionStore.deleteItem(id)
+  router.back()
 }
 const doShareAction = (config_index: number) => {
   console.log(selectedMediaitemId.value, config_index)

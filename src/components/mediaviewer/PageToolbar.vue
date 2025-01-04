@@ -35,7 +35,7 @@
           class="q-mr-sm action-button action-button-download col-auto"
           icon="sym_o_download"
           :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
-          @click="openURL(item.full)"
+          @click="openURL(`/media/full/${item.id}`)"
         />
         <ShareTriggerButtons
           v-if="showShare"
@@ -47,7 +47,7 @@
       </div>
 
       <div class="q-mr-sm row flex flex-center">
-        <q-badge color="grey-8" class="q-mr-xs"> <q-icon name="sym_o_image" color="white" class="q-mr-xs" /> {{ item.caption }}</q-badge>
+        <q-badge color="grey-8" class="q-mr-xs"> <q-icon name="sym_o_image" color="white" class="q-mr-xs" /> {{ item.id }}</q-badge>
         <q-badge color="grey-8" class="q-mr-xs" v-if="props.image_number && props.images_total">
           <q-icon name="sym_o_tag" color="white" class="q-mr-xs" />
           {{

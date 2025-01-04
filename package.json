@@ -24,7 +24,7 @@
     "@vueuse/integrations": "^12.0.0",
     "pinia": "^2.1.7",
     "qrcode": "^1.5.4",
-    "quasar": "^2.17.5",
+    "quasar": "^2.17.6",
     "vue": "^3.4.18",
     "vue-i18n": "^10.0.0",
     "vue-router": "^4.3.2"
@@ -35,7 +35,7 @@
     "@hey-api/openapi-ts": "^0.59.1",
     "@intlify/eslint-plugin-vue-i18n": "^3.2.0",
     "@intlify/unplugin-vue-i18n": "^6.0.0",
-    "@quasar/app-vite": "^2.0.4",
+    "@quasar/app-vite": "^2.0.5",
     "@types/lodash": "^4.17.1",
     "@types/node": "^22.0.0",
     "@vue/eslint-config-prettier": "^10.1.0",

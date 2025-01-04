@@ -26,12 +26,12 @@ async function _fetch(...args) {
   return response
 }
 
-async function remoteProcedureCall(url) {
+async function remoteProcedureCall(url, method = 'GET') {
   let headers = { 'Content-Type': 'application/json' }
 
   try {
     const response = await _fetch(url, {
-      method: 'GET',
+      method: method,
       headers: headers,
     })
     console.log(response)

@@ -136,7 +136,7 @@
 
                 <q-card-actions align="right">
                   <q-btn v-close-popup flat label="Cancel" color="primary" />
-                  <q-btn v-close-popup label="Delete all" color="primary" @click="remoteProcedureCall('/api/mediacollection/delete_all')" />
+                  <q-btn v-close-popup label="Delete all" color="primary" @click="mediacollectionStore.deleteAllItems()" />
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -177,7 +177,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { remoteProcedureCall } from '../util/fetch_api'
+import { useMediacollectionStore } from '../stores/mediacollection-store'
 import LanguageSwitcher from '../components/LanguageSwitcher.vue'
+const mediacollectionStore = useMediacollectionStore()
 
 const confirm_reboot = ref(false)
 const confirm_shutdown = ref(false)

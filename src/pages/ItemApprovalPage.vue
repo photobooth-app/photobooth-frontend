@@ -1,7 +1,7 @@
 <template>
   <q-page id="itemapproval-page" class="fullscreen flex flex-center">
     <!-- fullscreen class hides the back button, which is what we want here since the back button just returns without aborting the job-->
-    <q-img v-if="imgToApproveSrc" :src="imgToApproveSrc" fit="contain" style="height: 95%" />
+    <q-img v-if="imgToApproveSrc" :src="`/media/preview/${imgToApproveSrc}`" fit="contain" style="height: 95%" />
     <!-- video approval not yet supported -->
 
     <q-page-sticky position="bottom" class="q-ma-lg">
@@ -52,7 +52,7 @@ const stateStore = useStateStore()
 
 const imgToApproveSrc = computed(() => {
   // only check first index if multicapture in one pass currently.
-  return stateStore.last_captured_mediaitem && stateStore.last_captured_mediaitem['preview']
+  return stateStore.last_captured_mediaitem_id
 })
 
 const userConfirm = () => {

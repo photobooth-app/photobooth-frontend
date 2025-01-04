@@ -29,7 +29,7 @@ function startTimer() {
   intervalTimerId = window.setInterval(handleTimeout, nextMediaitemTimeout)
 }
 function loadNextImage() {
-  currentMediaitemIndex.value = Math.floor(Math.random() * mediacollectionStore.collection.length)
+  currentMediaitemIndex.value = Math.floor(Math.random() * mediacollectionStore.collection_number_of_items)
 }
 onMounted(() => {
   startTimer()

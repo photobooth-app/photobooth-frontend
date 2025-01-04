@@ -13,7 +13,9 @@
 
       <!-- auto-start slideshow after timeout -->
       <RouteAfterTimeout
-        v-if="configurationStore.getConfigElement('uisettings.enable_automatic_slideshow', false)"
+        v-if="
+          configurationStore.getConfigElement('uisettings.enable_automatic_slideshow', false) && mediacollectionStore.collection_number_of_items > 0
+        "
         route="/slideshow/random"
         :timeout-ms="configurationStore.getConfigElement('uisettings.show_automatic_slideshow_timeout', 300) * 1000"
         :warning-message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
@@ -25,11 +27,13 @@
 <script setup lang="ts">
 import { useStateStore } from '../stores/state-store'
 import { useConfigurationStore } from '../stores/configuration-store'
+import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { useRouter, useRoute } from 'vue-router'
 import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
 
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
+const mediacollectionStore = useMediacollectionStore()
 const router = useRouter()
 const route = useRoute()
 
@@ -42,7 +46,7 @@ stateStore.$subscribe((mutation, state) => {
     router.push('/')
   }
   if (state.state == 'present_capture') {
-    router.push({ name: 'itempresenter', params: { id: stateStore.last_captured_mediaitem.id } })
+    router.push({ name: 'itempresenter', params: { id: stateStore.last_captured_mediaitem_id } })
   }
   if (state.state == 'approve_capture' && state.ask_user_for_approval) {
     router.push({ path: '/itemapproval' })

@@ -1,6 +1,6 @@
 <template>
   <div v-if="item.media_type != 'video'">
-    <q-img :src="item.thumbnail" loading="eager" no-transition no-spinner :ratio="1" class="rounded-borders"> </q-img>
+    <q-img :src="`/media/thumbnail/${item.id}`" loading="eager" no-transition no-spinner :ratio="1" class="rounded-borders"> </q-img>
   </div>
   <div v-else>
     <!-- mimic the q-img for video-elements to make it look same as images but display mp4 gif-like-->
@@ -12,7 +12,7 @@
         loop
         muted
         playsinline
-        :src="item.thumbnail"
+        :src="`/media/thumbnail/${item.id}`"
         class="rounded-borders"
       ></video>
     </div>

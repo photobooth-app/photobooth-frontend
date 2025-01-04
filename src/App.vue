@@ -121,9 +121,9 @@ const initSseClient = () => {
   })
 
   eventSource.value?.addEventListener('DbInsert', (evt) => {
-    const _data = JSON.parse(evt.data)
-    console.log('received new item to add to collection:', _data)
-    mediacollectionStore.addMediaitem(_data['mediaitem'])
+    const _mediaitem = JSON.parse(evt.data)
+    console.log('received new item to add to collection:', _mediaitem)
+    mediacollectionStore.addMediaitem(_mediaitem)
   })
 
   eventSource.value?.addEventListener('DbRemove', (evt) => {

@@ -1,14 +1,11 @@
 // use this for now, need to improve REST api to clean DTOs, then use the automatic code generation using hey-api
 export interface MediaItem {
-  caption: string
-  datetime: number
-  filename: string
-  full: string
-  hide: boolean
   id: string
+  job_identifier: string
   media_type: string
-  original: string
-  preview: string
-  share_url: string
-  thumbnail: string
+  created_at: string
+  unprocessed: string
+  pipeline_config: object
+  processed: string
+  show_in_gallery: boolean
 }

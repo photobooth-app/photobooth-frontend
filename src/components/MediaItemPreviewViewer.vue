@@ -1,11 +1,11 @@
 <template>
   <div v-if="item.media_type != 'video'" class="full-height full-width">
-    <q-img :draggable="false" class="full-height" fit="contain" :src="item.preview" />
+    <q-img :draggable="false" class="full-height" fit="contain" :src="`/media/preview/${item.id}`" />
   </div>
   <div v-else class="full-height">
     <video
       :draggable="false"
-      :src="item.preview"
+      :src="`/media/preview/${item.id}`"
       class="rounded-borders full-height"
       muted
       autoplay
