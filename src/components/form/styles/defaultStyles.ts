@@ -44,6 +44,7 @@ export const defaultStyles: Styles = {
     itemExpanded: 'expanded',
     itemMoveUp: 'array-list-item-move-up',
     itemMoveDown: 'array-list-item-move-down',
+    itemCopy: 'array-list-item-copy',
     itemDelete: 'array-list-item-delete',
   },
   label: {
