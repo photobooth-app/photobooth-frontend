@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { setCssVar } from 'quasar';
+import { setCssVar, Dark } from 'quasar';
 import { Notify } from 'quasar';
 import { get } from 'lodash';
 import { _fetch } from 'src/util/fetch_api';
@@ -100,6 +100,8 @@ export const useConfigurationStore = defineStore('configuration-store', {
       // apply theme settings
       setCssVar('primary', this.getConfigElement('uisettings.PRIMARY_COLOR', 'black'));
       setCssVar('secondary', this.getConfigElement('uisettings.SECONDARY_COLOR', 'black'));
+      const theme = this.getConfigElement('uisettings.theme', 'system');
+      Dark.set(theme === 'system' ? 'auto' : theme === 'dark');
     },
     initStore(forceReload = false) {
       console.log('loading configuration store');
