@@ -9,6 +9,8 @@
         :move-up-enabled="control.enabled && index > 0"
         :move-down="moveDown?.(control.path, index)"
         :move-down-enabled="control.enabled && index < control.data.length - 1"
+        :copy-enabled="control.enabled"
+        :copy="() => copy(index)"
         :delete-enabled="control.enabled && !minItemsReached"
         :delete="removeItems?.(control.path, [index])"
         :label="childLabelForIndex(index)"
@@ -90,6 +92,11 @@ const controlRenderer = defineComponent({
     createDefaultValue,
     addButtonClick() {
       this.addItem(this.control.path, createDefaultValue(this.control.schema, this.control.rootSchema))();
+    },
+    copy(index: number) {
+      const copy = JSON.parse(JSON.stringify(this.control.data[index]));
+      copy.name = copy.name + ' - copy';
+      this.addItem(this.control.path, copy)();
     },
   },
 });

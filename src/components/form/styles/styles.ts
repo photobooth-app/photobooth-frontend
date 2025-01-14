@@ -69,6 +69,7 @@ export interface Styles {
     itemMoveUp?: string;
     itemMoveDown?: string;
     itemDelete?: string;
+    itemCopy?: string;
   };
   label: {
     root?: string;
