@@ -61,6 +61,8 @@ export const useConfigurationStore = defineStore('configuration-store', {
             message: 'Configuration successfully persisted. To apply hardware settings changed, restart the app!',
             color: 'positive',
           });
+
+          this.postInitStore();
         } else {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
