@@ -10,6 +10,7 @@
         <div class="q-pa-xs q-gutter-xs">
           <q-btn size="sm" icon="sym_o_move_up" flat :disabled="!moveUpEnabled" :class="styles.arrayList.itemMoveUp" @click="moveUpClicked" />
           <q-btn size="sm" icon="sym_o_move_down" flat :disabled="!moveDownEnabled" :class="styles.arrayList.itemMoveDown" @click="moveDownClicked" />
+          <q-btn size="sm" icon="sym_o_content_copy" flat :disabled="!copyEnabled" :class="styles.arrayList.itemCopy" @click="copyClicked" />
           <q-btn size="sm" icon="sym_o_delete" flat :disabled="!deleteEnabled" :class="styles.arrayList.itemDelete" @click="deleteClicked" />
         </div>
       </q-item-section>
@@ -58,6 +59,16 @@ const listItem = defineComponent({
       type: Function,
       default: undefined,
     },
+    copy: {
+      required: false,
+      type: Function,
+      default: undefined,
+    },
+    copyEnabled: {
+      required: false,
+      type: Boolean,
+      default: true,
+    },
     deleteEnabled: {
       required: false,
       type: Boolean,
@@ -85,6 +96,10 @@ const listItem = defineComponent({
     moveDownClicked(event: Event): void {
       event.stopPropagation()
       this.moveDown?.()
+    },
+    copyClicked(event: Event): void {
+      event.stopPropagation();
+      this.copy?.();
     },
     deleteClicked(event: Event): void {
       event.stopPropagation()
