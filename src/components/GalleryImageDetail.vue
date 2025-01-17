@@ -64,7 +64,10 @@
         />
 
         <ShareTriggerButtons
-          v-if="configurationStore.getConfigElement('share.sharing_enabled', false)"
+          v-if="
+            configurationStore.getConfigElement('uisettings.gallery_show_print', false) &&
+            configurationStore.getConfigElement('share.sharing_enabled', false)
+          "
           :triggers="shareButtons"
           :direct-access-number-of-buttons="configurationStore.getConfigElement('share.number_direct_access_buttons', 1)"
           :current-item-is-image="['image', 'collage', 'collageimage', 'animationimage'].includes(itemRepository[currentSlideIndex]['media_type'])"
