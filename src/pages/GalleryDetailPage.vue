@@ -40,7 +40,9 @@
             :item="currentMediaitem"
             :show-filter="configurationStore.configuration.uisettings.gallery_show_filter"
             :enable-filter="getFilterAvailable(currentMediaitem.media_type)"
-            :show-share="configurationStore.configuration.share.sharing_enabled"
+            :show-share="
+              configurationStore.configuration.uisettings.gallery_show_shareprint && configurationStore.configuration.share.sharing_enabled
+            "
             :share-direct-access-buttons="configurationStore.configuration.share.number_direct_access_buttons"
             :share-buttons="shareButtons"
             :show-delete="configurationStore.configuration.uisettings.gallery_show_delete"
