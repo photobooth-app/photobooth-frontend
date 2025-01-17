@@ -32,6 +32,11 @@
                 <q-item-label>
                   <q-linear-progress size="lg" :value="store.information.cpu1_5_15[0] ?? 0 / 100"> </q-linear-progress>
                 </q-item-label>
+
+                <q-item-label>
+                  <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
+                  {{ store.information.cpu1_5_15[0] }}% / {{ store.information.cpu1_5_15[1] }}% / {{ store.information.cpu1_5_15[2] }}%
+                </q-item-label>
               </q-item-section>
             </q-item>
 
