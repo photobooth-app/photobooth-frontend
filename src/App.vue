@@ -15,7 +15,6 @@ import { useConfigurationStore } from 'stores/configuration-store'
 import { useMediacollectionStore } from 'src/stores/mediacollection-store'
 import ConnectionOverlay from './components/ConnectionOverlay.vue'
 import { remoteProcedureCall } from './util/fetch_api.js'
-import { get } from 'lodash'
 import { useQuasar } from 'quasar'
 import type { EventSourceStatus } from '@vueuse/core'
 import { useEventSource } from '@vueuse/core'
@@ -137,21 +136,46 @@ const initSseClient = () => {
   })
 }
 const keyUpHandler = (e: KeyboardEvent) => {
-  if (!configurationStore.getConfigElement('hardwareinputoutput.keyboard_input_enabled', false)) {
+  if (!configurationStore.configuration.hardwareinputoutput.keyboard_input_enabled) {
     console.log('keyboard input is disabled, to use keyboard input enable it in the configuration and reload the page.')
     return
   }
 
-  const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'actions.multicamera', 'share.actions']
-  action_collections.forEach((action_collection) => {
-    const action_config = configurationStore.getConfigElement(action_collection, [])
-    action_config.forEach((action: string, index: number) => {
-      const keycode = get(action, 'trigger.keyboard_trigger.keycode')
-      if (keycode == e.key) {
-        remoteProcedureCall(`/api/${action_collection.replaceAll('.', '/')}/${index}`)
-        return
-      }
-    })
+  configurationStore.configuration.actions.image.forEach((action_config, index: number) => {
+    if (action_config.trigger.keyboard_trigger.keycode == e.key) {
+      remoteProcedureCall(`/api/actions/image/${index}`)
+      return
+    }
+  })
+  configurationStore.configuration.actions.collage.forEach((action_config, index: number) => {
+    if (action_config.trigger.keyboard_trigger.keycode == e.key) {
+      remoteProcedureCall(`/api/actions/collage/${index}`)
+      return
+    }
+  })
+  configurationStore.configuration.actions.animation.forEach((action_config, index: number) => {
+    if (action_config.trigger.keyboard_trigger.keycode == e.key) {
+      remoteProcedureCall(`/api/actions/animation/${index}`)
+      return
+    }
+  })
+  configurationStore.configuration.actions.video.forEach((action_config, index: number) => {
+    if (action_config.trigger.keyboard_trigger.keycode == e.key) {
+      remoteProcedureCall(`/api/actions/video/${index}`)
+      return
+    }
+  })
+  configurationStore.configuration.actions.multicamera.forEach((action_config, index: number) => {
+    if (action_config.trigger.keyboard_trigger.keycode == e.key) {
+      remoteProcedureCall(`/api/actions/multicamera/${index}`)
+      return
+    }
+  })
+  configurationStore.configuration.share.actions.forEach((action_config, index: number) => {
+    if (action_config.trigger.keyboard_trigger.keycode == e.key) {
+      remoteProcedureCall(`/api/share/actions/${index}`)
+      return
+    }
   })
 }
 </script>

@@ -78,12 +78,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { openURL } from 'quasar'
-import type { MediaItem } from 'src/dto/dto'
+import type { components } from 'src/dto/api'
 import { default as ShareTriggerButtons, type ShareSchema } from '../ShareTriggerButtons.vue'
 const confirmDeleteDialog = ref(false)
 
 const props = defineProps<{
-  item: MediaItem
+  item: components['schemas']['MediaitemPublic']
   image_number?: number
   images_total?: number
   showDownload: boolean

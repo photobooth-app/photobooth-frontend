@@ -43,8 +43,8 @@ import { useConfigurationStore } from '../stores/configuration-store'
 const configurationStore = useConfigurationStore()
 
 const multicamNodes = computed(() => {
-  const group_backends = configurationStore.getConfigElement('backends.group_backends', null)
-  const index_backend_multicam = configurationStore.getConfigElement('backends.index_backend_multicam', null)
+  const group_backends = configurationStore.configuration.backends.group_backends
+  const index_backend_multicam = configurationStore.configuration.backends.index_backend_multicam
   if (group_backends == null || index_backend_multicam == null) {
     console.error('cannot get multicam backend from config')
     return []

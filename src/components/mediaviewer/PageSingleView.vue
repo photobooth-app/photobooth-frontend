@@ -6,9 +6,10 @@
 
 <script setup lang="ts">
 import { default as MediaItemPreviewViewer } from '../MediaItemPreviewViewer.vue'
-import type { MediaItem } from 'src/dto/dto'
+import type { components } from 'src/dto/api'
+
 
 defineProps<{
-  item: MediaItem
+  item: components['schemas']['MediaitemPublic']
 }>()
 </script>

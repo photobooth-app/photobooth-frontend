@@ -20,9 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import type { MediaItem } from 'src/dto/dto'
+import type { components } from 'src/dto/api'
+
 
 defineProps<{
-  item: MediaItem
+  item: components['schemas']['MediaitemPublic']
 }>()
 </script>

@@ -5,7 +5,7 @@
       <q-header class="bg-primary text-white">
         <HeaderCountdownTimer
           v-if="headercountdowntimer"
-          :duration="configurationStore.getConfigElement('uisettings.AUTOCLOSE_NEW_ITEM_ARRIVED', 0)"
+          :duration="configurationStore.configuration.uisettings.AUTOCLOSE_NEW_ITEM_ARRIVED"
           @trigger-timeout="$router.push({ path: '/' })"
         ></HeaderCountdownTimer>
         <HeaderProcessing v-if="displayIndeterminateProgressbar"></HeaderProcessing>
@@ -14,7 +14,7 @@
       <q-drawer v-if="showFilter" id="gallery-drawer-filters" v-model="rightDrawerOpen" class="q-pa-sm" side="right" overlay elevated>
         <DrawerFilter
           :id="currentMediaitem.id"
-          :available-filter="configurationStore.getConfigElement('uisettings.gallery_filter_userselectable', [])"
+          :available-filter="configurationStore.configuration.uisettings.gallery_filter_userselectable"
           @trigger-apply-filter="doApplyFilter"
         ></DrawerFilter>
       </q-drawer>
@@ -28,23 +28,23 @@
             @click="rightDrawerOpen = false"
           />
 
-          <q-page-sticky position="top-right" class="q-ma-lg" v-if="configurationStore.getConfigElement('uisettings.gallery_show_qrcode', false)">
+          <q-page-sticky position="top-right" class="q-ma-lg" v-if="configurationStore.configuration.uisettings.gallery_show_qrcode">
             <PageQrCode
               :url="qrShareUrl"
-              :text-above="configurationStore.getConfigElement('uisettings.qrcode_text_above', '')"
-              :text-below="configurationStore.getConfigElement('uisettings.qrcode_text_below', '')"
+              :text-above="configurationStore.configuration.uisettings.qrcode_text_above"
+              :text-below="configurationStore.configuration.uisettings.qrcode_text_below"
             />
           </q-page-sticky>
 
           <PageToolbar
             :item="currentMediaitem"
-            :show-filter="configurationStore.getConfigElement('uisettings.gallery_show_filter', false)"
+            :show-filter="configurationStore.configuration.uisettings.gallery_show_filter"
             :enable-filter="getFilterAvailable(currentMediaitem.media_type)"
-            :show-share="configurationStore.getConfigElement('share.sharing_enabled', false)"
-            :share-direct-access-buttons="configurationStore.getConfigElement('share.number_direct_access_buttons', 1)"
+            :show-share="configurationStore.configuration.share.sharing_enabled"
+            :share-direct-access-buttons="configurationStore.configuration.share.number_direct_access_buttons"
             :share-buttons="shareButtons"
-            :show-delete="configurationStore.getConfigElement('uisettings.gallery_show_delete', false)"
-            :show-download="configurationStore.getConfigElement('uisettings.gallery_show_download', false)"
+            :show-delete="configurationStore.configuration.uisettings.gallery_show_delete"
+            :show-download="configurationStore.configuration.uisettings.gallery_show_download"
             :image_number="currentMediaitemNumber"
             :images_total="mediacollectionStore.collection_number_of_items"
             @trigger-toggle-display-filter="rightDrawerOpen = !rightDrawerOpen"
@@ -73,7 +73,6 @@ import { default as PageQrCode } from '../components/mediaviewer/PageQrCode.vue'
 import { default as PageCarouselView } from '../components/mediaviewer/PageCarouselView.vue'
 import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
 import { useRouter, useRoute } from 'vue-router'
-import { get } from 'lodash'
 import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
 import { remoteProcedureCall } from '../util/fetch_api.js'
 const route = useRoute()
@@ -107,11 +106,11 @@ const currentMediaitem = computed(() => {
 })
 
 const qrShareUrl = computed(() => {
-  if (configurationStore.getConfigElement('qrshare.enabled', false)) {
-    const qrShareServiceUrl = configurationStore.getConfigElement('qrshare.shareservice_url', '')
+  if (configurationStore.configuration.qrshare.enabled) {
+    const qrShareServiceUrl = configurationStore.configuration.qrshare.shareservice_url
     return `${qrShareServiceUrl}?action=download&id=${selectedMediaitemId.value}`
   } else {
-    const customUrl = configurationStore.getConfigElement('qrshare.share_custom_qr_url', '')
+    const customUrl = configurationStore.configuration.qrshare.share_custom_qr_url
     return customUrl.replace('{filename}', selectedMediaitemId.value).replace('{identifier}', selectedMediaitemId.value)
   }
 })
@@ -120,19 +119,19 @@ const currentMediaitemNumber = computed(() => {
   return mediacollectionStore.collection.findIndex((mediaitem) => mediaitem.id == selectedMediaitemId.value) + 1
 })
 const showFilter = computed(() => {
-  return configurationStore.getConfigElement('uisettings.gallery_show_filter', false) && getFilterAvailable(currentMediaitem.value.media_type)
+  return configurationStore.configuration.uisettings.gallery_show_filter && getFilterAvailable(currentMediaitem.value.media_type)
 })
 const shareButtons = computed(() => {
   const result: ShareSchema[] = []
 
-  const share_config = configurationStore.getConfigElement('share.actions', [])
-  share_config.forEach((action: object, index: number) => {
+  const share_config = configurationStore.configuration.share.actions
+  share_config.forEach((action, index: number) => {
     const trigger: ShareSchema = {
       config_index: index,
-      handles_images_only: get(action, 'action.handles_images_only', false),
-      show_button: get(action, 'trigger.ui_trigger.show_button', false),
-      title: get(action, 'trigger.ui_trigger.title', ''),
-      icon: get(action, 'trigger.ui_trigger.icon', ''),
+      handles_images_only: action.handles_images_only,
+      show_button: action.trigger.ui_trigger.show_button,
+      title: action.trigger.ui_trigger.title,
+      icon: action.trigger.ui_trigger.icon,
     }
 
     result.push(trigger)

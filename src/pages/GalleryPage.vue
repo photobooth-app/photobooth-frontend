@@ -8,7 +8,7 @@
       </q-intersection>
     </div>
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-else v-html="configurationStore.getConfigElement('uisettings.GALLERY_EMPTY_MSG')"></div>
+    <div v-else v-html="configurationStore.configuration.uisettings.GALLERY_EMPTY_MSG"></div>
   </q-page>
 </template>
 <script setup lang="ts">

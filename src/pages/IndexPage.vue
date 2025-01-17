@@ -27,14 +27,14 @@
       <countdown-timer
         ref="countdowntimer"
         :duration="stateStore.duration"
-        :message-duration="configurationStore.getConfigElement('uisettings.TAKEPIC_MSG_TIME')"
-        :message-text="configurationStore.getConfigElement('uisettings.TAKEPIC_MSG_TEXT')"
+        :message-duration="configurationStore.configuration.uisettings.TAKEPIC_MSG_TIME"
+        :message-text="configurationStore.configuration.uisettings.TAKEPIC_MSG_TEXT"
       ></countdown-timer>
     </div>
 
     <!-- layer display the front page text -->
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="showFrontpage" id="frontpage_text" v-html="configurationStore.getConfigElement('uisettings.FRONTPAGE_TEXT')"></div>
+    <div v-if="showFrontpage" id="frontpage_text" v-html="configurationStore.configuration.uisettings.FRONTPAGE_TEXT"></div>
 
     <q-page-sticky position="bottom" class="q-mb-lg">
       <div v-if="showFrontpage">
@@ -46,14 +46,13 @@
       <div v-if="showFrontpage">
         <div class="q-gutter-md">
           <q-btn
-            v-if="configurationStore.getConfigElement('uisettings.show_gallery_on_frontpage')"
+            v-if="configurationStore.configuration.uisettings.show_gallery_on_frontpage"
             id="frontpage-button-to-gallery"
             color="primary"
             no-caps
             rounded
             to="/gallery"
             class="action-button"
-            :style="configurationStore.getConfigElement('uisettings.gallery_button_style')"
           >
             <q-icon left name="sym_o_photo_library" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_GALLERY') }}</div>
@@ -66,7 +65,7 @@
       <div v-if="showFrontpage">
         <div class="q-gutter-md">
           <q-btn
-            v-if="configurationStore.getConfigElement('uisettings.show_admin_on_frontpage')"
+            v-if="configurationStore.configuration.uisettings.show_admin_on_frontpage"
             id="frontpage-button-to-admin"
             rounded
             color="transparent"
@@ -101,7 +100,6 @@ import { useConfigurationStore } from '../stores/configuration-store'
 import CountdownTimer from '../components/CountdownTimer.vue'
 import type { TriggerSchema } from '../components/FrontpageTriggerButtons.vue'
 import { default as FrontpageTriggerButtons } from '../components/FrontpageTriggerButtons.vue'
-import { get } from 'lodash'
 
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
@@ -121,21 +119,23 @@ watchDebounced(
 const triggerButtons = computed(() => {
   const result: TriggerSchema[] = []
 
-  const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'actions.multicamera', 'printer.print']
-  action_collections.forEach((action_collection) => {
-    const action_config = configurationStore.getConfigElement(action_collection, [])
-    action_config.forEach((action: string, index: number) => {
+  Object.entries(configurationStore.configuration.actions).forEach(([key, actions]) => {
+    console.log(key)
+    console.log(actions)
+
+    actions.forEach((action, index: number) => {
       const trigger: TriggerSchema = {
-        action: action_collection.replace('.', '/'),
+        action: `actions/${key}`,
         config_index: index,
-        show_button: get(action, 'trigger.ui_trigger.show_button', false),
-        title: get(action, 'trigger.ui_trigger.title', ''),
-        icon: get(action, 'trigger.ui_trigger.icon', ''),
+        show_button: action.trigger.ui_trigger.show_button,
+        title: action.trigger.ui_trigger.title,
+        icon: action.trigger.ui_trigger.icon,
       }
 
       result.push(trigger)
     })
   })
+
   console.log(result)
 
   return result
@@ -153,11 +153,11 @@ const showRecording = computed(() => {
 })
 
 const livestreamMirror = computed(() => {
-  return configurationStore.getConfigElement('uisettings.livestream_mirror_effect')
+  return configurationStore.configuration.uisettings.livestream_mirror_effect
 })
 
 const adminButtonInvisible = computed(() => {
-  return configurationStore.getConfigElement('uisettings.admin_button_invisible', false)
+  return configurationStore.configuration.uisettings.admin_button_invisible
 })
 const showCountdownCounting = computed(() => {
   const machineCounting = stateStore.state == 'counting'
@@ -167,8 +167,8 @@ const showCountdownCounting = computed(() => {
 })
 
 const showPreview = computed(() => {
-  const enabledWhenIdle = configurationStore.getConfigElement('uisettings.enable_livestream_when_idle', true)
-  const enabledWhenActive = configurationStore.getConfigElement('uisettings.enable_livestream_when_active', true)
+  const enabledWhenIdle = configurationStore.configuration.uisettings.enable_livestream_when_idle
+  const enabledWhenActive = configurationStore.configuration.uisettings.enable_livestream_when_active
   const machineIdle = !stateStore.state || stateStore.state == 'finished'
   const machineRecord = stateStore.state == 'record'
   const machineCounting = stateStore.state == 'counting'

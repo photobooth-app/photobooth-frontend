@@ -1,8 +1,8 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { setCssVar, Dark } from 'quasar'
 import { Notify } from 'quasar'
-import { get } from 'lodash'
 import { _fetch } from 'src/util/fetch_api'
+import type { components } from '../dto/api'
 
 const STATES = {
   //https://stackoverflow.com/a/75060220
@@ -15,7 +15,8 @@ const STATES = {
 export const useConfigurationStore = defineStore('configuration-store', {
   state: () => ({
     // all config settings. used by app as well as to configure in admin and update to server.
-    configuration: {},
+    // configuration: {} as AppConfig,
+    configuration: {} as components['schemas']['AppConfig'],
 
     storeState: STATES.INIT,
   }),
@@ -100,9 +101,9 @@ export const useConfigurationStore = defineStore('configuration-store', {
     },
     postInitStore() {
       // apply theme settings
-      setCssVar('primary', this.getConfigElement('uisettings.PRIMARY_COLOR', 'black'))
-      setCssVar('secondary', this.getConfigElement('uisettings.SECONDARY_COLOR', 'black'))
-      const theme = this.getConfigElement('uisettings.theme', 'system')
+      setCssVar('primary', this.configuration.uisettings.PRIMARY_COLOR)
+      setCssVar('secondary', this.configuration.uisettings.SECONDARY_COLOR)
+      const theme = this.configuration.uisettings.theme
       Dark.set(theme === 'system' ? 'auto' : theme === 'dark')
     },
     initStore(forceReload = false) {
@@ -139,12 +140,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
     },
     isLoading(): boolean {
       return this.storeState === STATES.WIP
-    }, // getConfigElement: (state) => state.configuration,
-    getConfigElement:
-      (state) =>
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (path: string, defaultValue?: any) =>
-        get(state.configuration, path, defaultValue),
+    },
   },
 })
 
