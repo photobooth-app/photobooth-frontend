@@ -113,8 +113,8 @@
   "Check the documentation.": "Перевірте документацію.",
   "Battery": "Батарея",
   "System Temperatures": "Системні температури",
-  "Currently there is no item to display.": "Currently there is no item to display.",
+  "Currently there is no item to display.": "В даний час немає елементів для відображення.",
   "Backend Index: ": "Індекс сервера: ",
-  "Stats counter": "Stats counter",
-  "Media Database": "Media Database"
+  "Stats counter": "Лічильник статистики",
+  "Media Database": "База даних мультимедіа"
 }

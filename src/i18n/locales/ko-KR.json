@@ -113,8 +113,8 @@
   "Check the documentation.": "문서를 확인하세요.",
   "Battery": "배터리",
   "System Temperatures": "시스템 온도",
-  "Currently there is no item to display.": "Currently there is no item to display.",
+  "Currently there is no item to display.": "현재 표시할 항목이 없습니다.",
   "Backend Index: ": "백엔드 인덱스: ",
-  "Stats counter": "Stats counter",
-  "Media Database": "Media Database"
+  "Stats counter": "통계 카운터",
+  "Media Database": "미디어 데이터베이스"
 }
