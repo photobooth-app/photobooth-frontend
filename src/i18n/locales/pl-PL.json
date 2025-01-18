@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Pliki",
   "TAB_LABEL_STATUS": "Status",
   "TAB_LABEL_HELP": "Pomoc",
+  "TAB_MULTICAM": "Multicamera",
   "TEXT_PLACEHOLDER_SEARCH": "Szukaj",
   "TITLE_ADMIN_CENTER": "Centrum administracyjne",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "Nowa nazwa folderu",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Czy na pewno chcesz zresetować konfigurację i usunąć config.json?",
   "Clear recycle directory": "Wyczyść katalog recyklingu",
   "Are you sure to clear the recycle directory?": "Czy na pewno chcesz wyczyścić katalog recyklingu?",
-  "Stats counter": "Licznik statystyk",
-  "Are you sure to reset the counter?": "Czy na pewno chcesz zresetować licznik?",
+  "Usage counter": "Licznik użycia",
+  "Limits counter": "Licznik limitów",
+  "Are you sure you want to reset the usage statistics counter?": "Czy na pewno chcesz zresetować licznik statystyk użytkowania?",
+  "Are you sure you want to reset the share limits counter?": "Czy na pewno chcesz zresetować licznik limitów udziałów?",
   "Choose your filter": "Wybierz filtr",
   "Service (Linux only)": "Usługa (tylko Linux)",
   "Host": "Host",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "Szukasz domyślnego hasła lub problemów z logowaniem?",
   "Check the documentation.": "Sprawdź dokumentację.",
   "Battery": "Bateria",
-  "System Temperatures": "Temperatury systemu"
+  "System Temperatures": "Temperatury systemu",
+  "Currently no item to display.": "Obecnie nie ma przedmiotu do wyświetlenia.",
+  "Backend Index: ": "Indeks zaplecza administracyjnego: "
 }

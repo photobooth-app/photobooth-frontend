@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "文件",
   "TAB_LABEL_STATUS": "现状",
   "TAB_LABEL_HELP": "帮助",
+  "TAB_MULTICAM": "Multicamera",
   "TEXT_PLACEHOLDER_SEARCH": "搜索",
   "TITLE_ADMIN_CENTER": "管理中心",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "新文件夹名称",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "您确定要重置配置并删除 config.json？",
   "Clear recycle directory": "清除回收目录",
   "Are you sure to clear the recycle directory?": "您确定要清除回收目录吗？",
-  "Stats counter": "统计计数器",
-  "Are you sure to reset the counter?": "您确定要重置计数器吗？",
+  "Usage counter": "使用计数器",
+  "Limits counter": "限制计数器",
+  "Are you sure you want to reset the usage statistics counter?": "您确定要重置使用统计计数器吗？",
+  "Are you sure you want to reset the share limits counter?": "您确定要重置共享限制计数器？",
   "Choose your filter": "选择您的过滤器",
   "Service (Linux only)": "服务 (Linux)",
   "Host": "主机",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "正在查找默认密码或登录问题？",
   "Check the documentation.": "检查文档。",
   "Battery": "电量：",
-  "System Temperatures": "系统温度"
+  "System Temperatures": "系统温度",
+  "Currently no item to display.": "目前没有要显示的项目。",
+  "Backend Index: ": "后端索引： "
 }

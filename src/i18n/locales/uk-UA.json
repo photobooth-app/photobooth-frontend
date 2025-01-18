@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Файли",
   "TAB_LABEL_STATUS": "Статус",
   "TAB_LABEL_HELP": "Допоможіть!",
+  "TAB_MULTICAM": "Мультикамера",
   "TEXT_PLACEHOLDER_SEARCH": "Пошук",
   "TITLE_ADMIN_CENTER": "Адмінцентр",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "Нова назва теки",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Ви впевнені, що хочете скинути конфігурацію та видалити config.json?",
   "Clear recycle directory": "Очистити каталог кошиків",
   "Are you sure to clear the recycle directory?": "Ви впевнені, що хочете очистити каталог кошика?",
-  "Stats counter": "Лічильник статистики",
-  "Are you sure to reset the counter?": "Справді скинути лічильник?",
+  "Usage counter": "Лічильник використання",
+  "Limits counter": "Ліміт",
+  "Are you sure you want to reset the usage statistics counter?": "Ви дійсно бажаєте скинути лічильник статистики використання?",
+  "Are you sure you want to reset the share limits counter?": "Ви дійсно бажаєте скинути лічильник лімітів поширення?",
   "Choose your filter": "Оберіть свій фільтр",
   "Service (Linux only)": "Сервіс (тільки Linux)",
   "Host": "Хост",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "Шукаєте логін за замовчуванням або проблеми заново?",
   "Check the documentation.": "Перевірте документацію.",
   "Battery": "Батарея",
-  "System Temperatures": "Системні температури"
+  "System Temperatures": "Системні температури",
+  "Currently no item to display.": "Наразі немає жодної речі для відображення.",
+  "Backend Index: ": "Індекс сервера: "
 }

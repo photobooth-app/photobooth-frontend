@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "ファイル",
   "TAB_LABEL_STATUS": "ステータス",
   "TAB_LABEL_HELP": "ヘルプ",
+  "TAB_MULTICAM": "Multicamera",
   "TEXT_PLACEHOLDER_SEARCH": "検索",
   "TITLE_ADMIN_CENTER": "管理センター",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "新しいフォルダ名",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "設定をリセットし、config.jsonを削除してもよろしいですか？",
   "Clear recycle directory": "ごみ箱のディレクトリをクリア",
   "Are you sure to clear the recycle directory?": "ごみ箱のディレクトリをクリアしてもよろしいですか？",
-  "Stats counter": "Stats counter",
-  "Are you sure to reset the counter?": "カウンターをリセットしてもよろしいですか？",
+  "Usage counter": "Usage counter",
+  "Limits counter": "Limits counter",
+  "Are you sure you want to reset the usage statistics counter?": "使用統計カウンターをリセットしてもよろしいですか？",
+  "Are you sure you want to reset the share limits counter?": "共有制限カウンターをリセットしてもよろしいですか？",
   "Choose your filter": "フィルターを選択",
   "Service (Linux only)": "サービス (Linux のみ)",
   "Host": "ホスト",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "デフォルトのパスワードまたはサインイン時の問題をお探しですか？",
   "Check the documentation.": "ドキュメントを確認してください。",
   "Battery": "バッテリー",
-  "System Temperatures": "システム温度"
+  "System Temperatures": "システム温度",
+  "Currently no item to display.": "現在表示するアイテムはありません。",
+  "Backend Index: ": "バックエンドインデックス: "
 }
