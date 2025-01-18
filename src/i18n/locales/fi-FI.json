@@ -113,6 +113,8 @@
   "Check the documentation.": "Tarkista dokumentaatio.",
   "Battery": "Akku",
   "System Temperatures": "Järjestelmän Lämpötilat",
-  "Currently no item to display.": "Tällä hetkellä ei näytettävää esinettä.",
-  "Backend Index: ": "Taustaosan Indeksi: "
+  "Currently there is no item to display.": "Currently there is no item to display.",
+  "Backend Index: ": "Taustaosan Indeksi: ",
+  "Stats counter": "Stats counter",
+  "Media Database": "Media Database"
 }

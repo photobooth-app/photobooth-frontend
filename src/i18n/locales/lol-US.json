@@ -113,6 +113,8 @@
   "Check the documentation.": "crwdns366:0crwdne366:0",
   "Battery": "crwdns368:0crwdne368:0",
   "System Temperatures": "crwdns370:0crwdne370:0",
-  "Currently no item to display.": "crwdns386:0crwdne386:0",
-  "Backend Index: ": "crwdns374:0crwdne374:0"
+  "Currently there is no item to display.": "crwdns388:0crwdne388:0",
+  "Backend Index: ": "crwdns374:0crwdne374:0",
+  "Stats counter": "crwdns390:0crwdne390:0",
+  "Media Database": "crwdns392:0crwdne392:0"
 }
