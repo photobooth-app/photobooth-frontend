@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Αρχεία",
   "TAB_LABEL_STATUS": "Κατάσταση",
   "TAB_LABEL_HELP": "Βοήθεια",
+  "TAB_MULTICAM": "Multicamera",
   "TEXT_PLACEHOLDER_SEARCH": "Αναζήτηση",
   "TITLE_ADMIN_CENTER": "Κέντρο διαχείρισης",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "Νέο όνομα φακέλου",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Είστε βέβαιοι ότι θέλετε να επαναφέρετε τις ρυθμίσεις και να διαγράψετε το config.json?",
   "Clear recycle directory": "Καθαρισμός καταλόγου ανακύκλωσης",
   "Are you sure to clear the recycle directory?": "Είστε βέβαιοι να καθαρίσετε τον κατάλογο ανακύκλωσης?",
-  "Stats counter": "Μετρητής στατιστικών",
-  "Are you sure to reset the counter?": "Είστε βέβαιοι να επαναφέρετε το μετρητή?",
+  "Usage counter": "Μετρητής χρήσης",
+  "Limits counter": "Μετρητής ορίων",
+  "Are you sure you want to reset the usage statistics counter?": "Είστε βέβαιοι ότι θέλετε να επαναφέρετε το μετρητή στατιστικών χρήσης?",
+  "Are you sure you want to reset the share limits counter?": "Είστε βέβαιοι ότι θέλετε να επαναφέρετε το μετρητή ορίων κοινοποίησης?",
   "Choose your filter": "Επιλέξτε το φίλτρο σας",
   "Service (Linux only)": "Υπηρεσία (μόνο για Linux)",
   "Host": "Διακομιστής",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "Ψάχνετε για τον προεπιλεγμένο κωδικό πρόσβασης ή τα προβλήματα σύνδεσης?",
   "Check the documentation.": "Ελέγξτε την τεκμηρίωση.",
   "Battery": "Μπαταρία",
-  "System Temperatures": "Θερμοκρασίες Συστήματος"
+  "System Temperatures": "Θερμοκρασίες Συστήματος",
+  "Currently no item to display.": "Δεν υπάρχει στοιχείο για εμφάνιση.",
+  "Backend Index: ": "Δείκτης Παρασκηνίου: "
 }

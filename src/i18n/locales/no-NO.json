@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Filer",
   "TAB_LABEL_STATUS": "Status:",
   "TAB_LABEL_HELP": "Hjelp",
+  "TAB_MULTICAM": "Multicamera",
   "TEXT_PLACEHOLDER_SEARCH": "Søk",
   "TITLE_ADMIN_CENTER": "Admin senter",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "Nytt mappenavn",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Er du sikker på at du vil tilbakestille konfigurasjonen og slette config.json?",
   "Clear recycle directory": "Tøm papirkurvmappen",
   "Are you sure to clear the recycle directory?": "Er du sikker på at du vil tømme papirkurven?",
-  "Stats counter": "Statistikk teller",
-  "Are you sure to reset the counter?": "Er du sikker på at du vil tilbakestille telleren?",
+  "Usage counter": "Brukt teller",
+  "Limits counter": "Begrenser teller",
+  "Are you sure you want to reset the usage statistics counter?": "Er du sikker på at du vil nullstille brukstatistikktelleren?",
+  "Are you sure you want to reset the share limits counter?": "Er du sikker på at du vil tilbakestille grensetelleren?",
   "Choose your filter": "Velg ditt filter",
   "Service (Linux only)": "Tjeneste (bare Linux-)",
   "Host": "Vert",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "Ser du etter standard passord eller problemer med å logge inn?",
   "Check the documentation.": "Sjekk dokumentasjonen.",
   "Battery": "Batteri",
-  "System Temperatures": "Temperaturer i systemet"
+  "System Temperatures": "Temperaturer i systemet",
+  "Currently no item to display.": "Ingen elementer å vise for øyeblikket.",
+  "Backend Index: ": "Backend indeks: "
 }

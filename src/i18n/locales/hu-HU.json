@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Fájlok",
   "TAB_LABEL_STATUS": "Állapot",
   "TAB_LABEL_HELP": "Segítség",
+  "TAB_MULTICAM": "Multikamera",
   "TEXT_PLACEHOLDER_SEARCH": "Keresés",
   "TITLE_ADMIN_CENTER": "Admin központ",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "Új mappanév",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Biztos, hogy vissza akarja állítani a konfigurációt és törölni a config.json fájlt?",
   "Clear recycle directory": "Újrahasznosítási könyvtár törlése",
   "Are you sure to clear the recycle directory?": "Biztos, hogy kiürítette az újrahasznosítási könyvtárat?",
-  "Stats counter": "Statisztikai számláló",
-  "Are you sure to reset the counter?": "Biztos, hogy vissza kell állítani a számlálót?",
+  "Usage counter": "Használati számláló",
+  "Limits counter": "Határértékek számláló",
+  "Are you sure you want to reset the usage statistics counter?": "Biztos, hogy vissza akarja állítani a használati statisztikák számlálóját?",
+  "Are you sure you want to reset the share limits counter?": "Biztos, hogy vissza akarja állítani a megosztási korlátok számlálóját?",
   "Choose your filter": "Válassza ki a szűrőt",
   "Service (Linux only)": "Szolgáltatás (csak Linux)",
   "Host": "Házigazda",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "Az alapértelmezett jelszót keresi, vagy problémái vannak a bejelentkezéssel?",
   "Check the documentation.": "Ellenőrizze a dokumentációt.",
   "Battery": "Akkumulátor",
-  "System Temperatures": "Rendszerhőmérsékletek"
+  "System Temperatures": "Rendszerhőmérsékletek",
+  "Currently no item to display.": "Jelenleg nincs megjelenítendő elem.",
+  "Backend Index: ": "Backend index: "
 }
