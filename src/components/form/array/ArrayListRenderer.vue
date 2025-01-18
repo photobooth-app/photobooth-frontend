@@ -94,14 +94,9 @@ const controlRenderer = defineComponent({
       this.addItem(this.control.path, createDefaultValue(this.control.schema, this.control.rootSchema))()
     },
     copy(index: number) {
-      const copy = JSON.parse(JSON.stringify(this.control.data[index]));
-      copy.name = copy.name + ' - copy';
-      this.addItem(this.control.path, copy)();
-    },
-    copy(index: number) {
-      const copy = JSON.parse(JSON.stringify(this.control.data[index]));
-      copy.name = copy.name + ' - copy';
-      this.addItem(this.control.path, copy)();
+      const copy = JSON.parse(JSON.stringify(this.control.data[index]))
+      copy.name = copy.name + ' - copy'
+      this.addItem(this.control.path, copy)()
     },
   },
 })

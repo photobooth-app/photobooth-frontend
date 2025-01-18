@@ -98,12 +98,8 @@ const listItem = defineComponent({
       this.moveDown?.()
     },
     copyClicked(event: Event): void {
-      event.stopPropagation();
-      this.copy?.();
-    },
-    copyClicked(event: Event): void {
-      event.stopPropagation();
-      this.copy?.();
+      event.stopPropagation()
+      this.copy?.()
     },
     deleteClicked(event: Event): void {
       event.stopPropagation()
