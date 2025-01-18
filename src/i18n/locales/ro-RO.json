@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Fișiere",
   "TAB_LABEL_STATUS": "Stare",
   "TAB_LABEL_HELP": "Ajutor",
+  "TAB_MULTICAM": "Multicameră",
   "TEXT_PLACEHOLDER_SEARCH": "Căutare",
   "TITLE_ADMIN_CENTER": "Centrul administrativ",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "Noul nume de dosar",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Sunteţi sigur că doriţi să resetaţi configuraţia şi să ştergeţi config.json?",
   "Clear recycle directory": "Curăță directorul Recycle",
   "Are you sure to clear the recycle directory?": "Sunteţi sigur că doriţi să ştergeţi directorul de reciclare?",
-  "Stats counter": "Contor statistici",
-  "Are you sure to reset the counter?": "Ești sigur că vrei să resetezi contorul?",
+  "Usage counter": "Contor de utilizare",
+  "Limits counter": "Contor limite",
+  "Are you sure you want to reset the usage statistics counter?": "Sunteţi sigur că doriţi să resetaţi contorul de statistici de utilizare?",
+  "Are you sure you want to reset the share limits counter?": "Ești sigur că vrei să resetezi contorul de limite de partajare?",
   "Choose your filter": "Alege-ți filtrul",
   "Service (Linux only)": "Serviciu (doar Linux)",
   "Host": "Gazdă",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "Cauți parola implicită sau autentificarea cu probleme?",
   "Check the documentation.": "Verificați documentația.",
   "Battery": "Baterie",
-  "System Temperatures": "Temperaturi sistem"
+  "System Temperatures": "Temperaturi sistem",
+  "Currently no item to display.": "Momentan nu este niciun element de afișat.",
+  "Backend Index: ": "Indicele de backend: "
 }

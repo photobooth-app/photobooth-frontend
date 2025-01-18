@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Tiedostot",
   "TAB_LABEL_STATUS": "Tila",
   "TAB_LABEL_HELP": "Apua",
+  "TAB_MULTICAM": "Multicamera",
   "TEXT_PLACEHOLDER_SEARCH": "Etsi",
   "TITLE_ADMIN_CENTER": "Hallintokeskus",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "Uusi kansion nimi",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Oletko varma, että haluat palauttaa konfiguraation ja poistaa config.json?",
   "Clear recycle directory": "Tyhjennä kierrätyskansio",
   "Are you sure to clear the recycle directory?": "Haluatko varmasti tyhjentää kierrätyshakemiston?",
-  "Stats counter": "Tilastojen laskuri",
-  "Are you sure to reset the counter?": "Oletko varma että palautat laskurin?",
+  "Usage counter": "Käyttö laskuri",
+  "Limits counter": "Rajaa laskuri",
+  "Are you sure you want to reset the usage statistics counter?": "Oletko varma, että haluat palauttaa käyttötilastojen laskun?",
+  "Are you sure you want to reset the share limits counter?": "Oletko varma, että haluat nollata osakerajan laskun?",
   "Choose your filter": "Valitse suodatin",
   "Service (Linux only)": "Palvelu (vain Linux)",
   "Host": "Isäntä",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "Etsitkö oletussalasanaa tai ongelmia kirjautuessa?",
   "Check the documentation.": "Tarkista dokumentaatio.",
   "Battery": "Akku",
-  "System Temperatures": "Järjestelmän Lämpötilat"
+  "System Temperatures": "Järjestelmän Lämpötilat",
+  "Currently no item to display.": "Tällä hetkellä ei näytettävää esinettä.",
+  "Backend Index: ": "Taustaosan Indeksi: "
 }

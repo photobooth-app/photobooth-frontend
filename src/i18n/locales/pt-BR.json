@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Arquivos",
   "TAB_LABEL_STATUS": "Status",
   "TAB_LABEL_HELP": "Ajuda",
+  "TAB_MULTICAM": "Multicamera",
   "TEXT_PLACEHOLDER_SEARCH": "Pesquisar",
   "TITLE_ADMIN_CENTER": "Centro administrativo",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "Novo nome de pasta",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Tem certeza que deseja redefinir a configuração e excluir config.json?",
   "Clear recycle directory": "Limpar diretório de reciclagens",
   "Are you sure to clear the recycle directory?": "Tem certeza que deseja limpar o diretório reciclagem?",
-  "Stats counter": "Contador de estatísticas",
-  "Are you sure to reset the counter?": "Tem certeza de que deseja redefinir o contador?",
+  "Usage counter": "Contador de uso",
+  "Limits counter": "Contador de limites",
+  "Are you sure you want to reset the usage statistics counter?": "Tem certeza que deseja redefinir o contador de estatísticas de uso?",
+  "Are you sure you want to reset the share limits counter?": "Tem certeza de que deseja redefinir o contador de limites de compartilhamento?",
   "Choose your filter": "Escolha seu filtro",
   "Service (Linux only)": "Serviço (Apenas Linux)",
   "Host": "Servidor",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "Procurando a senha padrão ou problemas ao fazer login?",
   "Check the documentation.": "Verifique a documentação.",
   "Battery": "Bateria",
-  "System Temperatures": "Temperaturas do Sistema"
+  "System Temperatures": "Temperaturas do Sistema",
+  "Currently no item to display.": "Nenhum item para exibir no momento.",
+  "Backend Index: ": "Índice de Backend: "
 }

@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "파일",
   "TAB_LABEL_STATUS": "상태",
   "TAB_LABEL_HELP": "도움말",
+  "TAB_MULTICAM": "멀티 카메라",
   "TEXT_PLACEHOLDER_SEARCH": "검색",
   "TITLE_ADMIN_CENTER": "관리 센터",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "새 폴더 이름",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "구성을 재설정하고 config.json을 삭제하시겠습니까?",
   "Clear recycle directory": "휴지통 디렉터리 지우기",
   "Are you sure to clear the recycle directory?": "휴지통 디렉터리를 지우시겠습니까?",
-  "Stats counter": "통계 카운터",
-  "Are you sure to reset the counter?": "카운터를 재설정하시겠습니까?",
+  "Usage counter": "사용량 카운터",
+  "Limits counter": "한도 카운터",
+  "Are you sure you want to reset the usage statistics counter?": "사용량 통계 카운터를 초기화하시겠습니까?",
+  "Are you sure you want to reset the share limits counter?": "공유 한도 카운터를 초기화하시겠습니까?",
   "Choose your filter": "필터 선택",
   "Service (Linux only)": "서비스(Linux 전용)",
   "Host": "호스트",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "기본 비밀번호를 찾지 못했거나 로그인에 문제가 있나요?",
   "Check the documentation.": "문서를 확인하세요.",
   "Battery": "배터리",
-  "System Temperatures": "시스템 온도"
+  "System Temperatures": "시스템 온도",
+  "Currently no item to display.": "현재 표시할 항목이 없습니다.",
+  "Backend Index: ": "백엔드 인덱스: "
 }

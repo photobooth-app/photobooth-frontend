@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Dosyalar",
   "TAB_LABEL_STATUS": "Durum",
   "TAB_LABEL_HELP": "Yardım",
+  "TAB_MULTICAM": "Çoklu Kamera",
   "TEXT_PLACEHOLDER_SEARCH": "Arama",
   "TITLE_ADMIN_CENTER": "Yönetim Merkezi",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "Yeni klasör adı",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Yapılandırmayı sıfırlamak ve config.json dosyasını silmek istediğinizden emin misiniz?",
   "Clear recycle directory": "Geri dönüşüm dizinini temizleyin",
   "Are you sure to clear the recycle directory?": "Geri dönüşüm dizinini temizlediğinizden emin misiniz?",
-  "Stats counter": "İstatistik sayacı",
-  "Are you sure to reset the counter?": "Sayacı sıfırladığınızdan emin misiniz?",
+  "Usage counter": "Kullanım sayacı",
+  "Limits counter": "Limitler sayacı",
+  "Are you sure you want to reset the usage statistics counter?": "Kullanım istatistikleri sayacını sıfırlamak istediğinizden emin misiniz?",
+  "Are you sure you want to reset the share limits counter?": "Paylaşım limitleri sayacını sıfırlamak istediğinizden emin misiniz?",
   "Choose your filter": "Filtrenizi seçin",
   "Service (Linux only)": "Servis (yalnızca Linux)",
   "Host": "Ev sahibi",
@@ -109,5 +112,7 @@
   "Looking for the default password or issues signing in?": "Varsayılan şifreyi mi arıyorsunuz veya oturum açarken sorun mu yaşıyorsunuz?",
   "Check the documentation.": "Belgeleri kontrol edin.",
   "Battery": "Akü",
-  "System Temperatures": "Sistem Sıcaklıkları"
+  "System Temperatures": "Sistem Sıcaklıkları",
+  "Currently no item to display.": "Şu anda görüntülenecek öğe yok.",
+  "Backend Index: ": "Arka Uç Dizini: "
 }
