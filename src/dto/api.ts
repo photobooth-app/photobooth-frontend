@@ -1255,7 +1255,6 @@ export interface components {
              *           "enabled": true,
              *           "selected_device": "VirtualCamera",
              *           "virtualcamera": {
-             *             "emulate_camera_delay_still_capture": 0.2,
              *             "emulate_multicam_capture_devices": 4,
              *             "framerate": 15,
              *             "orientation": "1: 0°"
@@ -1809,7 +1808,6 @@ export interface components {
             selected_device: "VirtualCamera" | "WebcamCv2" | "Wigglecam" | "Digicamcontrol";
             /** @default {
              *       "orientation": "1: 0°",
-             *       "emulate_camera_delay_still_capture": 0.2,
              *       "framerate": 15,
              *       "emulate_multicam_capture_devices": 4
              *     } */
@@ -1899,12 +1897,6 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
-            /**
-             * Emulate Camera Delay Still Capture
-             * @description Emulate the delay of a camera. Time between camera is requested to deliver a still and actual delivery to the app.
-             * @default 0.2
-             */
-            emulate_camera_delay_still_capture: number;
             /**
              * Framerate
              * @description Reduce the framerate to save cpu/gpu on device displaying the live preview
@@ -1998,7 +1990,6 @@ export interface components {
              *         "enabled": true,
              *         "selected_device": "VirtualCamera",
              *         "virtualcamera": {
-             *           "emulate_camera_delay_still_capture": 0.2,
              *           "emulate_multicam_capture_devices": 4,
              *           "framerate": 15,
              *           "orientation": "1: 0°"
