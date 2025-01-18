@@ -13,6 +13,7 @@
 
       <q-drawer v-if="showFilter" id="gallery-drawer-filters" v-model="rightDrawerOpen" class="q-pa-sm" side="right" overlay elevated>
         <DrawerFilter
+          v-if="rightDrawerOpen"
           :id="currentMediaitem.id"
           :available-filter="configurationStore.configuration.uisettings.gallery_filter_userselectable"
           @trigger-apply-filter="doApplyFilter"
