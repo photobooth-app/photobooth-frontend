@@ -5,13 +5,11 @@
         <q-btn class="q-mx-sm" stack to="/" icon="sym_o_arrow_back_ios_new" :label="$t('BTN_LABEL_BACK')" />
         <q-tabs mobile-arrows shrink stretch>
           <q-route-tab to="/admin" icon="sym_o_dashboard" :label="$t('TAB_LABEL_DASHBOARD')" />
-
-          <!--q-route-tab to="/admin/gallery" icon="photo_library" :label="$t('TAB_LABEL_GALLERY')" /-->
           <!-- name based so even if children are active, the config tab is highlighted -->
           <q-route-tab :to="{ name: 'config' }" icon="sym_o_settings" :label="$t('TAB_LABEL_CONFIG')" />
           <q-route-tab to="/admin/files" icon="sym_o_folder_shared" :label="$t('TAB_LABEL_FILES')" />
           <q-route-tab to="/admin/multicam" icon="sym_o_burst_mode" :label="$t('TAB_MULTICAM')" />
-          <q-route-tab to="/admin/status" icon="sym_o_insights" :label="$t('TAB_LABEL_STATUS')" />
+          <q-route-tab to="/admin/logs" icon="sym_o_list" :label="$t('Logs')" />
           <q-btn-dropdown auto-close stretch flat label="">
             <q-list>
               <q-item to="/admin/1ststart">
@@ -20,13 +18,6 @@
                   <q-item-label>{{ $t('1st Start') }}</q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item to="/admin/logs">
-                <q-item-section avatar> <q-icon name="sym_o_list" /> </q-item-section>
-                <q-item-section>
-                  <q-item-label>{{ $t('Logs') }}</q-item-label>
-                </q-item-section>
-              </q-item>
-
               <q-item to="/admin/help">
                 <q-item-section avatar> <q-icon name="sym_o_help" /> </q-item-section>
                 <q-item-section>

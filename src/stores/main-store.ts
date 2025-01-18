@@ -48,6 +48,9 @@ export const useMainStore = defineStore('main-store', {
 
       /* limits */
       limits_counter: {},
+
+      /* mediacollection */
+      mediacollection: {},
     },
   }),
   actions: {},
