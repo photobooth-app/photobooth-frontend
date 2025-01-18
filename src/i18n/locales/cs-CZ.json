@@ -113,6 +113,8 @@
   "Check the documentation.": "Zkontrolujte dokumentaci.",
   "Battery": "Baterie",
   "System Temperatures": "Systémové teploty",
-  "Currently no item to display.": "Momentálně žádná položka k zobrazení.",
-  "Backend Index: ": "Index backendu: "
+  "Currently there is no item to display.": "Momentálně není žádná položka k zobrazení.",
+  "Backend Index: ": "Index backendu: ",
+  "Stats counter": "Počítadlo statistik",
+  "Media Database": "Databáze médií"
 }

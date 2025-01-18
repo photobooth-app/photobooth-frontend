@@ -113,6 +113,8 @@
   "Check the documentation.": "Tjek dokumentationen.",
   "Battery": "Batteri",
   "System Temperatures": "System Temperaturer",
-  "Currently no item to display.": "I øjeblikket er der intet element at vise.",
-  "Backend Index: ": "Backend Indeks: "
+  "Currently there is no item to display.": "Currently there is no item to display.",
+  "Backend Index: ": "Backend Indeks: ",
+  "Stats counter": "Stats counter",
+  "Media Database": "Media Database"
 }

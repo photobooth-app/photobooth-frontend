@@ -113,6 +113,8 @@
   "Check the documentation.": "检查文档。",
   "Battery": "电量：",
   "System Temperatures": "系统温度",
-  "Currently no item to display.": "目前没有要显示的项目。",
-  "Backend Index: ": "后端索引： "
+  "Currently there is no item to display.": "Currently there is no item to display.",
+  "Backend Index: ": "后端索引： ",
+  "Stats counter": "Stats counter",
+  "Media Database": "Media Database"
 }

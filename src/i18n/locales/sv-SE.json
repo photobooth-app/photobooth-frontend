@@ -113,6 +113,8 @@
   "Check the documentation.": "Kontrollera dokumentationen.",
   "Battery": "Batteri",
   "System Temperatures": "System temperaturer",
-  "Currently no item to display.": "För närvarande inget objekt att visa.",
-  "Backend Index: ": "Backend index: "
+  "Currently there is no item to display.": "Currently there is no item to display.",
+  "Backend Index: ": "Backend index: ",
+  "Stats counter": "Stats counter",
+  "Media Database": "Media Database"
 }

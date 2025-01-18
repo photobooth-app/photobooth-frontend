@@ -113,6 +113,8 @@
   "Check the documentation.": "Consultez la documentation.",
   "Battery": "Batterie",
   "System Temperatures": "Températures du système",
-  "Currently no item to display.": "Actuellement, aucun élément à afficher.",
-  "Backend Index: ": "Index du backend : "
+  "Currently there is no item to display.": "Il n'y a actuellement aucun élément à afficher.",
+  "Backend Index: ": "Index du backend : ",
+  "Stats counter": "Compteur de statistiques",
+  "Media Database": "Base de données des médias"
 }

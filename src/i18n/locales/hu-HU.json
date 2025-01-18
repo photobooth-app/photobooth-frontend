@@ -113,6 +113,8 @@
   "Check the documentation.": "Ellenőrizze a dokumentációt.",
   "Battery": "Akkumulátor",
   "System Temperatures": "Rendszerhőmérsékletek",
-  "Currently no item to display.": "Jelenleg nincs megjelenítendő elem.",
-  "Backend Index: ": "Backend index: "
+  "Currently there is no item to display.": "Currently there is no item to display.",
+  "Backend Index: ": "Backend index: ",
+  "Stats counter": "Stats counter",
+  "Media Database": "Media Database"
 }

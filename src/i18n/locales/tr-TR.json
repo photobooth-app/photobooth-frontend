@@ -113,6 +113,8 @@
   "Check the documentation.": "Belgeleri kontrol edin.",
   "Battery": "Akü",
   "System Temperatures": "Sistem Sıcaklıkları",
-  "Currently no item to display.": "Şu anda görüntülenecek öğe yok.",
-  "Backend Index: ": "Arka Uç Dizini: "
+  "Currently there is no item to display.": "Currently there is no item to display.",
+  "Backend Index: ": "Arka Uç Dizini: ",
+  "Stats counter": "Stats counter",
+  "Media Database": "Media Database"
 }
