@@ -12,7 +12,7 @@ Following guide is just very basic instructions. If you run into issues, please 
 ## Prerequisites
 
 - VS Code
-- Node 20 incl. npm
+- Node 22 incl. npm
 - photobooth-app installed and started
 
 ## Setup the repo
