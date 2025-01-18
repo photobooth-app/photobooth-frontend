@@ -1,22 +1,22 @@
 <template>
   <q-page id="config-page">
-    <div v-if="!isLoadingState">
-      <json-forms
-        :data="configurationStore.configuration"
-        :ajv="ajv"
-        :renderers="renderers"
-        :schema="schema"
-        :uischema="cuischema"
-        @change="onChange"
-      />
-    </div>
+    <json-forms
+      v-if="!isLoadingState"
+      :data="configurationStore.configuration"
+      :ajv="ajv"
+      :renderers="renderers"
+      :schema="schema"
+      :uischema="cuischema"
+      @change="onChange"
+    />
+
     <div v-else class="q-pa-md flex flex-center">
       <div>
         <q-spinner-gears size="xl" color="primary" />
       </div>
     </div>
 
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-page-sticky position="bottom-right" class="q-ma-lg">
       <div class="q-gutter-sm">
         <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
         <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="confirm_reset_config = true" />
@@ -40,105 +40,66 @@
     </q-dialog>
   </q-page>
 </template>
-<script lang="ts">
-import { ref, computed } from 'vue';
-import { useMainStore } from '../stores/main-store.js';
-import { JsonForms, type JsonFormsChangeEvent } from '@jsonforms/vue';
-import { generateDefaultUISchema } from '@jsonforms/core';
-import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form';
-import { remoteProcedureCall, _fetch } from '../util/fetch_api';
-import { useConfigurationStore } from '../stores/configuration-store';
-import { Notify } from 'quasar';
+<script setup lang="ts">
+import { ref, provide } from 'vue'
+import { JsonForms, type JsonFormsChangeEvent } from '@jsonforms/vue'
+import { generateDefaultUISchema } from '@jsonforms/core'
+import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form'
+import { remoteProcedureCall, _fetch } from '../util/fetch_api'
+import { useConfigurationStore } from '../stores/configuration-store'
+import { Notify } from 'quasar'
 
-const configurationStore = useConfigurationStore();
-const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } });
-const renderers = [...quasarRenderers];
-const isLoadingState = ref(true);
-const schema = ref({});
-const confirm_reset_config = ref(false);
+const configurationStore = useConfigurationStore()
+const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } })
+const renderers = Object.freeze([...quasarRenderers])
+const isLoadingState = ref(true)
+const schema = ref({})
+const cuischema = ref(generateDefaultUISchema({}))
+const confirm_reset_config = ref(false)
+const ajv = createAjv({ multipleOfPrecision: 2 }) // https://github.com/eclipsesource/jsonforms/issues/1832#issuecomment-966209856
+// init with defaults not working properly yet on array lists. revisit later # useDefaults: 'empty' https://ajv.js.org/options.html#usedefaults
+
+provide('styles', myStyles)
 
 const getSchema = async () => {
   try {
-    const response = await _fetch('/api/admin/config/schema?schema_type=dereferenced');
-    console.log(response);
+    const response = await _fetch('/api/admin/config/schema?schema_type=dereferenced')
+    console.log(response)
     if (!response.ok) {
-      throw new Error('Server returned ' + response.status);
+      throw new Error('Server returned ' + response.status)
     }
-    return await response.json();
+    return await response.json()
   } catch (err: unknown) {
-    console.warn(err);
+    console.warn(err)
 
     Notify.create({
       message: String(err),
       caption: 'Error getting configuration scheme',
       color: 'negative',
-    });
+    })
   } finally {
     // commit('setLoading', false);
   }
-};
+}
 const updateFormSchema = async () => {
   //loadscreen on
-  isLoadingState.value = true;
+  isLoadingState.value = true
 
-  schema.value = await getSchema();
-  await configurationStore.getConfig('currentActive'); //reload because store could have all data but with usercontext so secrets hidden
+  schema.value = await getSchema()
+  cuischema.value = generateDefaultUISchema(schema.value, 'TopLevelNavigation')
+
+  await configurationStore.getConfig('currentActive') //reload because store could have all data but with usercontext so secrets hidden
 
   //loadscreen off
-  console.log('disable loadscreen');
-  isLoadingState.value = false;
-};
+  console.log('disable loadscreen')
+  isLoadingState.value = false
+}
 
-const cuischema = computed(() => {
-  return !isLoadingState.value ? generateDefaultUISchema(schema.value, 'TopLevelNavigation') : undefined;
-});
-export default {
-  components: {
-    JsonForms,
-  },
-  provide() {
-    return {
-      styles: myStyles,
-    };
-  },
-  setup() {
-    const store = useMainStore();
-    const ajv = createAjv({ multipleOfPrecision: 2 }); // https://github.com/eclipsesource/jsonforms/issues/1832#issuecomment-966209856
-    // init with defaults not working properly yet on array lists. revisit later # useDefaults: 'empty' https://ajv.js.org/options.html#usedefaults
+const onChange = (event: JsonFormsChangeEvent) => {
+  configurationStore.configuration = event.data
+}
 
-    updateFormSchema();
-
-    return {
-      store,
-      ajv,
-      remoteProcedureCall,
-      updateFormSchema,
-    };
-  },
-  data() {
-    // non-reactive ajv
-
-    // reactive data below
-    return {
-      // freeze renderers for performance gains
-      renderers: Object.freeze(renderers),
-      schema,
-      cuischema,
-      isLoadingState,
-      configurationStore,
-      confirm_reset_config,
-    };
-  },
-  // name: 'PageName',
-  computed: {
-    // a computed getter
-  },
-  methods: {
-    onChange(event: JsonFormsChangeEvent) {
-      this.configurationStore.configuration = event.data;
-    },
-  },
-};
+updateFormSchema()
 </script>
 <style lang="scss">
 .control-wrapper {

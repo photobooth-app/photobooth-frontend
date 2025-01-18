@@ -13,12 +13,12 @@
 </template>
 
 <script lang="ts">
-import { type ControlElement, findUISchema, Generate, type GroupLayout, type UISchemaElement } from '@jsonforms/core';
-import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsControlWithDetail } from '@jsonforms/vue';
-import cloneDeep from 'lodash/cloneDeep';
-import isEmpty from 'lodash/isEmpty';
-import { defineComponent } from 'vue';
-import { useNested, useQuasarControl } from '../util';
+import { type ControlElement, findUISchema, Generate, type GroupLayout, type UISchemaElement } from '@jsonforms/core'
+import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsControlWithDetail } from '@jsonforms/vue'
+import cloneDeep from 'lodash/cloneDeep'
+import isEmpty from 'lodash/isEmpty'
+import { defineComponent } from 'vue'
+import { useNested, useQuasarControl } from '../util'
 const controlRenderer = defineComponent({
   name: 'ObjectRenderer',
   components: {
@@ -28,25 +28,25 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    const control = useQuasarControl(useJsonFormsControlWithDetail(props));
-    const nested = useNested('object');
+    const control = useQuasarControl(useJsonFormsControlWithDetail(props))
+    const nested = useNested('object')
     return {
       ...control,
       input: control,
       nested,
-    };
+    }
   },
   computed: {
     detailUiSchema(): UISchemaElement {
       const uiSchemaGenerator = () => {
-        const uiSchema = Generate.uiSchema(this.control.schema, 'Group');
+        const uiSchema = Generate.uiSchema(this.control.schema, 'Group')
         if (isEmpty(this.control.path)) {
-          uiSchema.type = 'VerticalLayout';
+          uiSchema.type = 'VerticalLayout'
         } else {
-          (uiSchema as GroupLayout).label = this.control.label;
+          ;(uiSchema as GroupLayout).label = this.control.label
         }
-        return uiSchema;
-      };
+        return uiSchema
+      }
 
       let result = findUISchema(
         this.control.uischemas,
@@ -56,21 +56,21 @@ const controlRenderer = defineComponent({
         uiSchemaGenerator,
         this.control.uischema,
         this.control.rootSchema,
-      );
+      )
 
       if (this.nested.level > 0) {
-        result = cloneDeep(result);
+        result = cloneDeep(result)
         result.options = {
           ...result.options,
           bare: true,
           alignLeft: this.nested.level >= 4 || this.nested.parentElement === 'array',
-        };
+        }
       }
 
-      return result;
+      return result
     },
   },
-});
+})
 
-export default controlRenderer;
+export default controlRenderer
 </script>

@@ -19,26 +19,26 @@
 </template>
 
 <script setup lang="ts">
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash'
 
 defineProps<{
-  triggers: Array<TriggerSchema>;
-}>();
+  triggers: TriggerSchema[]
+}>()
 
 export interface TriggerSchema {
-  show_button: boolean;
-  title: string;
-  icon?: string; // icon is optional
-  action: string;
-  config_index: number;
+  show_button: boolean
+  title: string
+  icon?: string // icon is optional
+  action: string
+  config_index: number
 }
 
 const emit = defineEmits<{
-  triggerAction: [action: string, config_index: number];
-}>();
+  triggerAction: [action: string, config_index: number]
+}>()
 
 function triggerButtonClick(action: string, config_index: number) {
   // console.log(`trigger action ${action}, config_index ${config_index}`);
-  emit('triggerAction', action, config_index);
+  emit('triggerAction', action, config_index)
 }
 </script>

@@ -27,45 +27,52 @@
       <countdown-timer
         ref="countdowntimer"
         :duration="stateStore.duration"
-        :message-duration="configurationStore.getConfigElement('uisettings.TAKEPIC_MSG_TIME')"
-        :message-text="configurationStore.getConfigElement('uisettings.TAKEPIC_MSG_TEXT')"
+        :message-duration="configurationStore.configuration.uisettings.TAKEPIC_MSG_TIME"
+        :message-text="configurationStore.configuration.uisettings.TAKEPIC_MSG_TEXT"
       ></countdown-timer>
     </div>
 
     <!-- layer display the front page text -->
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-if="showFrontpage" id="frontpage_text" v-html="configurationStore.getConfigElement('uisettings.FRONTPAGE_TEXT')"></div>
+    <div v-if="showFrontpage" id="frontpage_text" v-html="configurationStore.configuration.uisettings.FRONTPAGE_TEXT"></div>
 
-    <q-page-sticky position="bottom" :offset="[0, 25]">
+    <q-page-sticky position="bottom" class="q-mb-lg">
       <div v-if="showFrontpage">
         <FrontpageTriggerButtons :triggers="triggerButtons" @trigger-action="invokeAction"></FrontpageTriggerButtons>
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="top-left" :offset="[25, 25]">
+    <q-page-sticky position="top-left" class="q-ma-lg">
       <div v-if="showFrontpage">
         <div class="q-gutter-md">
           <q-btn
-            v-if="configurationStore.getConfigElement('uisettings.show_gallery_on_frontpage')"
+            v-if="configurationStore.configuration.uisettings.show_gallery_on_frontpage"
             id="frontpage-button-to-gallery"
             color="primary"
             no-caps
             rounded
             to="/gallery"
             class="action-button"
-            :style="configurationStore.getConfigElement('uisettings.gallery_button_style')"
           >
             <q-icon left name="sym_o_photo_library" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_GALLERY') }}</div>
           </q-btn>
+        </div>
+      </div>
+    </q-page-sticky>
+
+    <q-page-sticky position="top-right" class="q-ma-lg">
+      <div v-if="showFrontpage">
+        <div class="q-gutter-md">
           <q-btn
-            v-if="configurationStore.getConfigElement('uisettings.show_admin_on_frontpage')"
+            v-if="configurationStore.configuration.uisettings.show_admin_on_frontpage"
             id="frontpage-button-to-admin"
             rounded
-            color="secondary"
+            color="transparent"
             no-caps
-            to="/admin"
-            class="action-button"
+            class="action-button action-button-admin"
+            :class="{ 'action-button-admin-invisible': adminButtonInvisible }"
+            @click="onBtnAdminClick"
           >
             <q-icon left name="sym_o_admin_panel_settings" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_ADMIN') }}</div>
@@ -83,101 +90,117 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
-import { remoteProcedureCall } from '../util/fetch_api.js';
-import { useMainStore } from '../stores/main-store.js';
-import { useStateStore } from '../stores/state-store.js';
-import { useConfigurationStore } from '../stores/configuration-store.ts';
-import CountdownTimer from '../components/CountdownTimer.vue';
-import { default as FrontpageTriggerButtons } from '../components/FrontpageTriggerButtons.vue';
-import { get } from 'lodash';
-export default defineComponent({
-  components: { CountdownTimer, FrontpageTriggerButtons },
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { watchDebounced } from '@vueuse/core'
+import { computed, ref } from 'vue'
+import { remoteProcedureCall } from '../util/fetch_api.js'
+import { useStateStore } from '../stores/state-store'
+import { useConfigurationStore } from '../stores/configuration-store'
+import CountdownTimer from '../components/CountdownTimer.vue'
+import type { TriggerSchema } from '../components/FrontpageTriggerButtons.vue'
+import { default as FrontpageTriggerButtons } from '../components/FrontpageTriggerButtons.vue'
 
-  setup() {
-    const store = useMainStore();
-    const stateStore = useStateStore();
-    const configurationStore = useConfigurationStore();
+const stateStore = useStateStore()
+const configurationStore = useConfigurationStore()
+const router = useRouter()
+const btnAdminClickCounter = ref(0)
 
-    return {
-      store,
-      stateStore,
-      configurationStore,
-      remoteProcedureCall,
-    };
+watchDebounced(
+  btnAdminClickCounter,
+  () => {
+    if (btnAdminClickCounter.value >= 5) {
+      router.push('/admin')
+    }
+    btnAdminClickCounter.value = 0
   },
-  computed: {
-    triggerButtons: {
-      get() {
-        const result = [];
+  { debounce: 500 },
+)
+const triggerButtons = computed(() => {
+  const result: TriggerSchema[] = []
 
-        const action_collections = ['actions.image', 'actions.collage', 'actions.animation', 'actions.video', 'actions.multicamera', 'printer.print'];
-        action_collections.forEach((action_collection) => {
-          const action_config = this.configurationStore.getConfigElement(action_collection, []);
-          action_config.forEach((action, index) => {
-            const frontpage_trigger_backend = get(action, 'trigger.ui_trigger');
-            result.push({ ...{ action: action_collection.replace('.', '/'), config_index: index }, ...frontpage_trigger_backend });
-          });
-        });
-        console.log(result);
+  Object.entries(configurationStore.configuration.actions).forEach(([key, actions]) => {
+    console.log(key)
+    console.log(actions)
 
-        return result;
-      },
-    },
-    showProcessing: {
-      get() {
-        const capture = this.stateStore.state == 'capture';
-        const capturesCompleted = this.stateStore.state == 'captures_completed';
+    actions.forEach((action, index: number) => {
+      const trigger: TriggerSchema = {
+        action: `actions/${key}`,
+        config_index: index,
+        show_button: action.trigger.ui_trigger.show_button,
+        title: action.trigger.ui_trigger.title,
+        icon: action.trigger.ui_trigger.icon,
+      }
 
-        return capturesCompleted || (capture && !this.showCountdownCounting);
-      },
-    },
-    showRecording: {
-      get() {
-        return this.stateStore.state == 'record';
-      },
-    },
-    livestreamMirror: {
-      get() {
-        return this.configurationStore.getConfigElement('uisettings.livestream_mirror_effect');
-      },
-    },
+      result.push(trigger)
+    })
+  })
 
-    showCountdownCounting: {
-      get() {
-        const machineCounting = this.stateStore.state == 'counting';
-        const capture = this.stateStore.state == 'capture';
+  console.log(result)
 
-        return (this.stateStore.duration > 0 && machineCounting) || capture;
-      },
-    },
-    showPreview: {
-      get() {
-        const enabled = true;
-        const machineIdle = !this.stateStore.state || this.stateStore.state == 'finished';
-        const machineRecord = this.stateStore.state == 'record';
-        const machineCounting = this.stateStore.state == 'counting';
-        const machineCapture = this.stateStore.state == 'capture';
+  return result
+})
 
-        return enabled && (machineIdle || machineCounting || machineRecord || machineCapture);
-      },
-    },
-    showFrontpage: {
-      get() {
-        // show if state not defined (no job ongoing or finished)
-        return !this.stateStore.state || this.stateStore.state == 'finished';
-      },
-    },
-  },
-  watch: {},
-  methods: {
-    invokeAction(action, config_index) {
-      remoteProcedureCall(`/api/${action}/${config_index}`);
-    },
-    stopRecordingVideo() {
-      remoteProcedureCall('/api/actions/stop');
-    },
-  },
-});
+const showProcessing = computed(() => {
+  const capture = stateStore.state == 'capture'
+  const capturesCompleted = stateStore.state == 'captures_completed'
+
+  return capturesCompleted || (capture && !showCountdownCounting.value)
+})
+
+const showRecording = computed(() => {
+  return stateStore.state == 'record'
+})
+
+const livestreamMirror = computed(() => {
+  return configurationStore.configuration.uisettings.livestream_mirror_effect
+})
+
+const adminButtonInvisible = computed(() => {
+  return configurationStore.configuration.uisettings.admin_button_invisible
+})
+const showCountdownCounting = computed(() => {
+  const machineCounting = stateStore.state == 'counting'
+  const capture = stateStore.state == 'capture'
+
+  return (stateStore.duration && stateStore.duration > 0 && machineCounting) || capture
+})
+
+const showPreview = computed(() => {
+  const enabledWhenIdle = configurationStore.configuration.uisettings.enable_livestream_when_idle
+  const enabledWhenActive = configurationStore.configuration.uisettings.enable_livestream_when_active
+  const machineIdle = !stateStore.state || stateStore.state == 'finished'
+  const machineRecord = stateStore.state == 'record'
+  const machineCounting = stateStore.state == 'counting'
+  const machineCapture = stateStore.state == 'capture'
+
+  // allow user to choose if shown during idle or process only. during record it cannot be disabled because video useful to show while recording
+  return (machineIdle && enabledWhenIdle) || ((machineCounting || machineCapture) && enabledWhenActive) || machineRecord
+})
+
+const showFrontpage = computed(() => {
+  // show if state not defined (no job ongoing or finished)
+  return !stateStore.state || stateStore.state == 'finished'
+})
+const onBtnAdminClick = () => {
+  if (adminButtonInvisible.value) {
+    btnAdminClickCounter.value++
+  } else {
+    router.push('/admin')
+  }
+}
+const invokeAction = (action: string, config_index: number) => {
+  remoteProcedureCall(`/api/${action}/${config_index}`)
+}
+const stopRecordingVideo = () => {
+  remoteProcedureCall('/api/actions/stop')
+}
 </script>
+
+<style lang="sass">
+
+// if button shall be invisible, set it to transparent and on mouseover use default cursor, no pointer
+.action-button-admin-invisible
+  opacity: 0.0
+  cursor: default
+</style>

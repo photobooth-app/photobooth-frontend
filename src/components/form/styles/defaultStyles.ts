@@ -1,4 +1,4 @@
-import { type Styles } from './styles';
+import { type Styles } from './styles'
 
 export const defaultStyles: Styles = {
   control: {
@@ -76,4 +76,4 @@ export const defaultStyles: Styles = {
     stepperButtonBack: 'categorization-stepper-button-back',
     stepperButtonNext: 'categorization-stepper-button-next',
   },
-};
+}

@@ -14,10 +14,10 @@
 </template>
 
 <script lang="ts">
-import type { Layout } from '@jsonforms/core';
-import { defineComponent } from 'vue';
-import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue';
-import { useQuasarLayout } from '../util';
+import type { Layout } from '@jsonforms/core'
+import { defineComponent } from 'vue'
+import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue'
+import { useQuasarLayout } from '../util'
 
 const layoutRenderer = defineComponent({
   name: 'LayoutRenderer',
@@ -28,14 +28,14 @@ const layoutRenderer = defineComponent({
     ...rendererProps<Layout>(),
   },
   setup(props: RendererProps<Layout>) {
-    return useQuasarLayout(useJsonFormsLayout(props));
+    return useQuasarLayout(useJsonFormsLayout(props))
   },
   computed: {
     layoutClassObject(): any {
-      return this.layout.direction === 'row' ? this.styles.horizontalLayout : this.styles.verticalLayout;
+      return this.layout.direction === 'row' ? this.styles.horizontalLayout : this.styles.verticalLayout
     },
   },
-});
+})
 
-export default layoutRenderer;
+export default layoutRenderer
 </script>

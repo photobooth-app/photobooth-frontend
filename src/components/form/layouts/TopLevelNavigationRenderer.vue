@@ -51,10 +51,10 @@
 </template>
 
 <script lang="ts">
-import { type Layout, type Categorization, type Category, isVisible, type Scoped } from '@jsonforms/core';
-import { defineComponent, ref } from 'vue';
-import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue';
-import { useQuasarLayout, useAjv } from '../util';
+import { type Layout, type Categorization, type Category, isVisible, type Scoped } from '@jsonforms/core'
+import { defineComponent, ref } from 'vue'
+import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue'
+import { useQuasarLayout, useAjv } from '../util'
 
 const TopLevelNavigationRenderer = defineComponent({
   name: 'TopLevelNavigation',
@@ -65,9 +65,9 @@ const TopLevelNavigationRenderer = defineComponent({
     ...rendererProps<Layout>(),
   },
   setup(props: RendererProps<Layout>) {
-    const ajv = useAjv();
-    const drawer = ref(true);
-    const activeCategory = ref(0);
+    const ajv = useAjv()
+    const drawer = ref(true)
+    const activeCategory = ref(0)
 
     return {
       ...useQuasarLayout(useJsonFormsLayout(props)),
@@ -75,23 +75,23 @@ const TopLevelNavigationRenderer = defineComponent({
       activeCategory,
       ajv,
       drawer,
-    };
+    }
   },
   computed: {
     visibleCategories(): (Category | Categorization)[] {
       return (this.layout.uischema as Categorization).elements.filter((category: Category | Categorization) =>
         isVisible(category, this.layout.data, this.layout.path, this.ajv),
-      );
+      )
     },
     visibleCategoryLabels(): string[] {
-      return this.visibleCategories.map((element) => {
-        return element.label ?? `${(element as Category & Scoped).scope.split('/').pop()}`; //TODO: this is a workaround until categorization is well implemented.
-      });
+      return this.visibleCategories.map((element: any) => {
+        return element.label ?? `${(element as Category & Scoped).scope.split('/').pop()}` //TODO: this is a workaround until categorization is well implemented.
+      })
     },
   },
-});
+})
 
-export default TopLevelNavigationRenderer;
+export default TopLevelNavigationRenderer
 
 // export const entry: JsonFormsRendererRegistryEntry = {
 //   renderer: TopLevelNavigationRenderer,

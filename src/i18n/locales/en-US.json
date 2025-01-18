@@ -53,6 +53,7 @@
   "TAB_LABEL_FILES": "Files",
   "TAB_LABEL_STATUS": "Status",
   "TAB_LABEL_HELP": "Help",
+  "TAB_MULTICAM": "Multicamera",
   "TEXT_PLACEHOLDER_SEARCH": "Search",
   "TITLE_ADMIN_CENTER": "Admin center",
   "TITLE_FILES_NEW_FOLDER_DIALOG": "New folder name",
@@ -98,8 +99,10 @@
   "Are you sure you want to reset the configuration and delete config.json?": "Are you sure you want to reset the configuration and delete config.json?",
   "Clear recycle directory": "Clear recycle directory",
   "Are you sure to clear the recycle directory?": "Are you sure to clear the recycle directory?",
-  "Stats counter": "Stats counter",
-  "Are you sure to reset the counter?": "Are you sure to reset the counter?",
+  "Usage counter": "Usage counter",
+  "Limits counter": "Limits counter",
+  "Are you sure you want to reset the usage statistics counter?": "Are you sure you want to reset the usage statistics counter?",
+  "Are you sure you want to reset the share limits counter?": "Are you sure you want to reset the share limits counter?",
   "Choose your filter": "Choose your filter",
   "Service (Linux only)": "Service (Linux only)",
   "Host": "Host",
@@ -110,5 +113,6 @@
   "Check the documentation.": "Check the documentation.",
   "Battery": "Battery",
   "System Temperatures": "System Temperatures",
+  "Currently no item to display.": "Currently no item to display.",
   "Backend Index: ": "Backend Index: "
 }

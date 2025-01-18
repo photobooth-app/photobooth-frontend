@@ -30,7 +30,12 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('cpu load') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress size="lg" :value="store.information['cpu1_5_15'][0] / 100"> </q-linear-progress>
+                  <q-linear-progress size="lg" :value="store.information.cpu1_5_15[0] ?? 0 / 100"> </q-linear-progress>
+                </q-item-label>
+
+                <q-item-label>
+                  <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
+                  {{ store.information.cpu1_5_15[0] }}% / {{ store.information.cpu1_5_15[1] }}% / {{ store.information.cpu1_5_15[2] }}%
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -39,9 +44,9 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('disk space') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress size="lg" :value="store.information['disk']['used'] / store.information['disk']['total']" />
+                  <q-linear-progress size="lg" :value="store.information.disk.used / store.information.disk.total" />
                 </q-item-label>
-                <q-item-label> {{ (store.information['disk']['free'] / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
+                <q-item-label> {{ (store.information.disk.free / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -49,9 +54,9 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('memory') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress size="lg" :value="store.information['memory']['used'] / store.information['memory']['total']" />
+                  <q-linear-progress size="lg" :value="store.information.memory.used / store.information.memory.total" />
                 </q-item-label>
-                <q-item-label> {{ (store.information['memory']['available'] / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
+                <q-item-label> {{ (store.information.memory.available / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -156,79 +161,114 @@
         <q-card-section>
           <q-list separator>
             <q-item-label header>{{ $t('Stats counter') }}</q-item-label>
+            <q-item v-if="Object.keys(store.information.stats_counter).length == 0">{{ $t('Currently no item to display.') }}</q-item>
 
-            <q-item v-for="(value, field, index) in store.information.stats_counter" :key="index">
+            <q-item v-for="(entry, index) in store.information.stats_counter" :key="index">
               <q-item-section>
-                <q-item-label caption>{{ field }}</q-item-label>
-                <q-item-label v-if="value && typeof value === 'object'">
+                <q-item-label caption>{{ entry['action'] }} </q-item-label>
+
+                <q-item-label>
                   <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
-                  <q-item-label v-for="(sub_val, sub_field, sub_index) in value" :key="sub_index"> {{ sub_field }}: {{ sub_val }} </q-item-label>
-                </q-item-label>
-                <q-item-label v-else>
-                  {{ value }}
+                  <q-tooltip> last used at: {{ entry['last_used_at'] }} </q-tooltip>
+                  <q-item-label> {{ entry['count'] }} </q-item-label>
                 </q-item-label>
               </q-item-section>
-              <q-item-section v-if="!['last_reset'].includes(field)" side>
-                <q-btn flat color="primary" icon="sym_o_history" @click="displayResetConfirm(field)" />
+              <q-item-section side>
+                <q-btn flat color="primary" icon="sym_o_history" @click="displayResetStatsConfirm(entry['action'])" />
               </q-item-section>
             </q-item>
           </q-list>
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
-          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="displayResetConfirm('')" />
+          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="displayResetStatsConfirm('')" />
+        </q-card-actions>
+      </q-card>
+
+      <q-card flat class="q-mr-md q-mb-md">
+        <q-card-section>
+          <q-list separator>
+            <q-item-label header>{{ $t('Limits counter') }}</q-item-label>
+            <q-item v-if="Object.keys(store.information.limits_counter).length == 0">{{ $t('Currently no item to display.') }}</q-item>
+
+            <q-item v-for="(entry, index) in store.information.limits_counter" :key="index">
+              <q-item-section>
+                <q-item-label caption>{{ entry['action'] }} </q-item-label>
+
+                <q-item-label>
+                  <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
+                  <q-tooltip> last used at: {{ entry['last_used_at'] }} </q-tooltip>
+                  <q-item-label> {{ entry['count'] }} </q-item-label>
+                </q-item-label>
+              </q-item-section>
+              <q-item-sectio side>
+                <q-btn flat color="primary" icon="sym_o_history" @click="displayResetLimitsConfirm(entry['action'])" />
+              </q-item-sectio>
+            </q-item>
+          </q-list>
+        </q-card-section>
+        <q-separator />
+        <q-card-actions align="right">
+          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="displayResetLimitsConfirm('')" />
         </q-card-actions>
       </q-card>
     </div>
 
-    <q-dialog v-model="confirm_reset_counter">
+    <q-dialog v-model="confirm_reset_stats_counter">
       <q-card class="q-pa-sm">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_history" color="primary" text-color="white" />
-          <span class="q-ml-sm">{{ $t('Are you sure to reset the counter?') }}</span>
+          <span class="q-ml-sm">{{ $t('Are you sure you want to reset the usage statistics counter?') }}</span>
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn v-close-popup flat label="Cancel" color="primary" />
-          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="confirmAction()" />
+          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="actionResetStatsConfirmed()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="confirm_reset_limits_counter">
+      <q-card class="q-pa-sm">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="sym_o_history" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('Are you sure you want to reset the share limits counter?') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat label="Cancel" color="primary" />
+          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="actionResetLimitsConfirmed()" />
         </q-card-actions>
       </q-card>
     </q-dialog>
   </q-page>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue';
-import { useMainStore } from '../stores/main-store.js';
-import { remoteProcedureCall } from '../util/fetch_api.js';
-import { QBtn } from 'quasar';
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useMainStore } from '../stores/main-store'
+import { remoteProcedureCall } from '../util/fetch_api.js'
 
-export default defineComponent({
-  name: 'MainLayout',
+const store = useMainStore()
+const confirm_reset_limits_counter = ref(false)
+const confirm_reset_stats_counter = ref(false)
+const selected_field = ref('')
 
-  components: { QBtn },
-  setup() {
-    const store = useMainStore();
-    const confirm_reset_counter = ref(false);
-    const selected_field = ref('');
+const displayResetLimitsConfirm = (field: string) => {
+  selected_field.value = field
+  confirm_reset_limits_counter.value = true
+}
 
-    return {
-      // you can return the whole store instance to use it in the template
-      store,
-      remoteProcedureCall,
-      confirm_reset_counter,
-      selected_field,
-    };
-  },
-  methods: {
-    displayResetConfirm(field) {
-      this.selected_field = field;
-      this.confirm_reset_counter = true;
-    },
-    confirmAction() {
-      remoteProcedureCall('/api/admin/information/sttscntr/reset/' + this.selected_field);
-      this.confirm_reset_counter = false;
-    },
-  },
-});
+const displayResetStatsConfirm = (field: string) => {
+  selected_field.value = field
+  confirm_reset_stats_counter.value = true
+}
+const actionResetStatsConfirmed = () => {
+  remoteProcedureCall('/api/admin/information/cntr/reset/' + selected_field.value)
+  confirm_reset_stats_counter.value = false
+}
+const actionResetLimitsConfirmed = () => {
+  remoteProcedureCall('/api/admin/share/cntr/reset/' + selected_field.value)
+  confirm_reset_limits_counter.value = false
+}
 </script>

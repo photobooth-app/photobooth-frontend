@@ -45,11 +45,11 @@
 </template>
 
 <script lang="ts">
-import { composePaths, createDefaultValue, type ControlElement, Resolve, type JsonSchema } from '@jsonforms/core';
-import { defineComponent } from 'vue';
-import { DispatchRenderer, rendererProps, useJsonFormsArrayControl, type RendererProps } from '@jsonforms/vue';
-import { useQuasarArrayControl } from '../util';
-import ArrayListElement from './ArrayListElement.vue';
+import { composePaths, createDefaultValue, type ControlElement, Resolve, type JsonSchema } from '@jsonforms/core'
+import { defineComponent } from 'vue'
+import { DispatchRenderer, rendererProps, useJsonFormsArrayControl, type RendererProps } from '@jsonforms/vue'
+import { useQuasarArrayControl } from '../util'
+import ArrayListElement from './ArrayListElement.vue'
 
 const controlRenderer = defineComponent({
   name: 'ArrayListRenderer',
@@ -61,14 +61,14 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useQuasarArrayControl(useJsonFormsArrayControl(props));
+    return useQuasarArrayControl(useJsonFormsArrayControl(props))
   },
   computed: {
     noData(): boolean {
-      return !this.control.data || this.control.data.length === 0;
+      return !this.control.data || this.control.data.length === 0
     },
     arraySchema(): JsonSchema | undefined {
-      return Resolve.schema(this.schema, this.control.uischema.scope, this.control.rootSchema);
+      return Resolve.schema(this.schema, this.control.uischema.scope, this.control.rootSchema)
     },
     maxItemsReached(): boolean | undefined {
       return (
@@ -76,7 +76,7 @@ const controlRenderer = defineComponent({
         this.arraySchema.maxItems !== undefined &&
         this.control.data !== undefined &&
         this.control.data.length >= this.arraySchema.maxItems
-      );
+      )
     },
     minItemsReached(): boolean | undefined {
       return (
@@ -84,14 +84,19 @@ const controlRenderer = defineComponent({
         this.arraySchema.minItems !== undefined &&
         this.control.data !== undefined &&
         this.control.data.length <= this.arraySchema.minItems
-      );
+      )
     },
   },
   methods: {
     composePaths,
     createDefaultValue,
     addButtonClick() {
-      this.addItem(this.control.path, createDefaultValue(this.control.schema, this.control.rootSchema))();
+      this.addItem(this.control.path, createDefaultValue(this.control.schema, this.control.rootSchema))()
+    },
+    copy(index: number) {
+      const copy = JSON.parse(JSON.stringify(this.control.data[index]));
+      copy.name = copy.name + ' - copy';
+      this.addItem(this.control.path, copy)();
     },
     copy(index: number) {
       const copy = JSON.parse(JSON.stringify(this.control.data[index]));
@@ -99,7 +104,7 @@ const controlRenderer = defineComponent({
       this.addItem(this.control.path, copy)();
     },
   },
-});
+})
 
-export default controlRenderer;
+export default controlRenderer
 </script>

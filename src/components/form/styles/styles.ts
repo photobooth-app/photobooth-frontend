@@ -1,7 +1,7 @@
-import { type UISchemaElement } from '@jsonforms/core';
-import { inject } from 'vue';
-import merge from 'lodash/merge';
-import { defaultStyles } from './defaultStyles';
+import { type UISchemaElement } from '@jsonforms/core'
+import { inject } from 'vue'
+import merge from 'lodash/merge'
+import { defaultStyles } from './defaultStyles'
 
 const createEmptyStyles = (): Styles => ({
   control: {},
@@ -14,99 +14,99 @@ const createEmptyStyles = (): Styles => ({
   oneOf: {},
   allOf: {},
   categorization: {},
-});
+})
 
 export interface Styles {
   control: {
-    root?: string;
-    wrapper?: string;
-    label?: string;
-    description?: string;
-    error?: string;
-    input?: string;
-    textarea?: string;
-    select?: string;
-    option?: string;
-    asterisk?: string;
-    required?: string;
-  };
+    root?: string
+    wrapper?: string
+    label?: string
+    description?: string
+    error?: string
+    input?: string
+    textarea?: string
+    select?: string
+    option?: string
+    asterisk?: string
+    required?: string
+  }
   dialog: {
-    root?: string;
-    title?: string;
-    body?: string;
-    actions?: string;
-    buttonPrimary?: string;
-    buttonSecondary?: string;
-  };
+    root?: string
+    title?: string
+    body?: string
+    actions?: string
+    buttonPrimary?: string
+    buttonSecondary?: string
+  }
   verticalLayout: {
-    root?: string;
-    item?: string;
-  };
+    root?: string
+    item?: string
+  }
   horizontalLayout: {
-    root?: string;
-    item?: string;
-  };
+    root?: string
+    item?: string
+  }
   group: {
-    root?: string;
-    label?: string;
-    item?: string;
-    bare?: string;
-    alignLeft?: string;
-  };
+    root?: string
+    label?: string
+    item?: string
+    bare?: string
+    alignLeft?: string
+  }
   arrayList: {
-    root?: string;
-    legend?: string;
-    addButton?: string;
-    label?: string;
-    description?: string;
-    itemWrapper?: string;
-    noData?: string;
-    item?: string;
-    itemToolbar?: string;
-    itemLabel?: string;
-    itemContent?: string;
-    itemExpanded?: string;
-    itemMoveUp?: string;
-    itemMoveDown?: string;
-    itemDelete?: string;
-    itemCopy?: string;
-  };
+    root?: string
+    legend?: string
+    addButton?: string
+    label?: string
+    description?: string
+    itemWrapper?: string
+    noData?: string
+    item?: string
+    itemToolbar?: string
+    itemLabel?: string
+    itemContent?: string
+    itemExpanded?: string
+    itemMoveUp?: string
+    itemMoveDown?: string
+    itemDelete?: string
+    itemCopy?: string
+  }
   label: {
-    root?: string;
-  };
+    root?: string
+  }
   oneOf: {
-    root?: string;
-  };
+    root?: string
+  }
   allOf: {
-    root?: string;
-  };
+    root?: string
+  }
   categorization: {
-    root?: string;
-    category?: string;
-    selected?: string;
-    panel?: string;
-    stepper?: string;
-    stepperBadge?: string;
-    stepperLine?: string;
-    stepperFooter?: string;
-    stepperButtonBack?: string;
-    stepperButtonNext?: string;
-  };
+    root?: string
+    category?: string
+    selected?: string
+    panel?: string
+    stepper?: string
+    stepperBadge?: string
+    stepperLine?: string
+    stepperFooter?: string
+    stepperButtonBack?: string
+    stepperButtonNext?: string
+  }
 }
 
 export const useStyles = (element?: UISchemaElement) => {
-  const userStyles = inject('styles', defaultStyles);
+  const userStyles = inject('styles', defaultStyles)
   if (!element?.options?.styles) {
-    return userStyles;
+    return userStyles
   }
-  const styles = createEmptyStyles();
+  const styles = createEmptyStyles()
   if (userStyles) {
-    merge(styles, userStyles);
+    merge(styles, userStyles)
   } else {
-    merge(styles, defaultStyles);
+    merge(styles, defaultStyles)
   }
   if (element?.options?.styles) {
-    merge(styles, element.options.styles);
+    merge(styles, element.options.styles)
   }
-  return styles;
-};
+  return styles
+}

@@ -17,11 +17,11 @@
 </template>
 
 <script lang="ts">
-import type { ControlElement } from '@jsonforms/core';
-import { defineComponent } from 'vue';
-import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonforms/vue';
-import { default as ControlWrapper } from './ControlWrapper.vue';
-import { useQuasarControl } from '../util';
+import type { ControlElement } from '@jsonforms/core'
+import { defineComponent } from 'vue'
+import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonforms/vue'
+import { default as ControlWrapper } from './ControlWrapper.vue'
+import { useQuasarControl } from '../util'
 
 const controlRenderer = defineComponent({
   name: 'StringControlRenderer',
@@ -30,9 +30,9 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useQuasarControl(useJsonFormsControl(props), (value: any) => value || undefined, 300);
+    return useQuasarControl(useJsonFormsControl(props), (value: any) => value || undefined, 300)
   },
-});
+})
 
-export default controlRenderer;
+export default controlRenderer
 </script>

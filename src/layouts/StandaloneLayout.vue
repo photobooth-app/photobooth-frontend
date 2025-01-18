@@ -6,12 +6,4 @@
   </q-layout>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'StandaloneLayout',
-  components: {},
-  computed: {},
-});
-</script>
+<script setup lang="ts"></script>

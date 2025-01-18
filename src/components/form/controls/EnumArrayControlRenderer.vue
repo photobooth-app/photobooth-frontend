@@ -19,11 +19,11 @@
 </template>
 
 <script lang="ts">
-import type { ControlElement } from '@jsonforms/core';
-import { defineComponent } from 'vue';
-import { rendererProps, useJsonFormsMultiEnumControl, type RendererProps } from '@jsonforms/vue';
-import { useQuasarBasicControl } from '../util';
-import { default as ControlWrapper } from './ControlWrapper.vue';
+import type { ControlElement } from '@jsonforms/core'
+import { defineComponent } from 'vue'
+import { rendererProps, useJsonFormsMultiEnumControl, type RendererProps } from '@jsonforms/vue'
+import { useQuasarBasicControl } from '../util'
+import { default as ControlWrapper } from './ControlWrapper.vue'
 
 const controlRenderer = defineComponent({
   name: 'EnumArrayControlRenderer',
@@ -32,17 +32,17 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    return useQuasarBasicControl(useJsonFormsMultiEnumControl(props));
+    return useQuasarBasicControl(useJsonFormsMultiEnumControl(props))
   },
   methods: {
     addSelected(value: any) {
-      this.addItem(this.control.path, value.value);
+      this.addItem(this.control.path, value.value)
     },
     removeSelected(value: any) {
-      this.removeItem?.(this.control.path, value.value);
+      this.removeItem?.(this.control.path, value.value)
     },
   },
-});
+})
 
-export default controlRenderer;
+export default controlRenderer
 </script>

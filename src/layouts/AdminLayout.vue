@@ -10,6 +10,7 @@
           <!-- name based so even if children are active, the config tab is highlighted -->
           <q-route-tab :to="{ name: 'config' }" icon="sym_o_settings" :label="$t('TAB_LABEL_CONFIG')" />
           <q-route-tab to="/admin/files" icon="sym_o_folder_shared" :label="$t('TAB_LABEL_FILES')" />
+          <q-route-tab to="/admin/multicam" icon="sym_o_burst_mode" :label="$t('TAB_MULTICAM')" />
           <q-route-tab to="/admin/status" icon="sym_o_insights" :label="$t('TAB_LABEL_STATUS')" />
           <q-btn-dropdown auto-close stretch flat label="">
             <q-list>
@@ -73,19 +74,13 @@
   </q-layout>
 </template>
 
-<script>
-import { logout } from '../util/auth';
+<script setup lang="ts">
+import { logout } from '../util/auth'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-export default {
-  setup() {
-    return {};
-  },
-  // name: 'LayoutName',
-  methods: {
-    click_logout() {
-      logout();
-      this.$router.push('/');
-    },
-  },
-};
+const click_logout = () => {
+  logout()
+  router.push('/')
+}
 </script>

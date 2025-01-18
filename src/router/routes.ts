@@ -1,25 +1,17 @@
-const routes = [
+import type { RouteRecordRaw } from 'vue-router'
+
+const routes: RouteRecordRaw[] = [
   {
     // default route is kiosk frontend
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
-      {
-        path: 'itempresenter',
-        component: () => import('pages/ItemPresenterPage.vue'),
-      },
-      {
-        path: 'itemapproval',
-        component: () => import('pages/ItemApprovalPage.vue'),
-      },
+      { path: 'itemapproval', component: () => import('pages/ItemApprovalPage.vue') },
+      { path: 'gallery', component: () => import('pages/GalleryPage.vue') },
+      { path: 'mediaviewer/:id', name: 'mediaviewer', component: () => import('pages/GalleryDetailPage.vue'), props: { startTimer: false } },
+      { path: 'itempresenter/:id', name: 'itempresenter', component: () => import('pages/GalleryDetailPage.vue'), props: { startTimer: true } },
     ],
-  },
-  {
-    // gallery route
-    path: '/gallery',
-    component: () => import('layouts/GalleryLayout.vue'),
-    children: [{ path: '', component: () => import('pages/GalleryPage.vue') }],
   },
 
   {
@@ -46,6 +38,7 @@ const routes = [
       { path: 'logs', component: () => import('pages/AdminLogsPage.vue') },
       { path: 'help', component: () => import('pages/AdminHelpPage.vue') },
       { path: '1ststart', component: () => import('pages/Admin1stStartPage.vue') },
+      { path: 'multicam', component: () => import('pages/AdminMulticamPage.vue') },
       {
         name: 'config',
         path: 'config/:section?',
@@ -64,9 +57,9 @@ const routes = [
     ],
   },
   {
-    // slideshow layout
+    // slideshows share the same layout with main currently.
     path: '/slideshow',
-    component: () => import('layouts/SlideshowLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [{ path: 'random', component: () => import('pages/SlideshowPage.vue') }],
   },
 
@@ -76,6 +69,6 @@ const routes = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
   },
-];
+]
 
-export default routes;
+export default routes

@@ -26,14 +26,14 @@
 </template>
 
 <script lang="ts">
-import { type CombinatorSubSchemaRenderInfo, type ControlElement, createCombinatorRenderInfos } from '@jsonforms/core';
-import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsAnyOfControl } from '@jsonforms/vue';
+import { type CombinatorSubSchemaRenderInfo, type ControlElement, createCombinatorRenderInfos } from '@jsonforms/core'
+import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsAnyOfControl } from '@jsonforms/vue'
 
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 
-import { useQuasarControl } from '../util';
+import { useQuasarControl } from '../util'
 
-import { CombinatorProperties } from './components';
+import { CombinatorProperties } from './components'
 
 const controlRenderer = defineComponent({
   name: 'AnyOfRenderer',
@@ -45,14 +45,14 @@ const controlRenderer = defineComponent({
     ...rendererProps<ControlElement>(),
   },
   setup(props: RendererProps<ControlElement>) {
-    const input = useJsonFormsAnyOfControl(props);
-    const control = input.control.value;
-    const selectedIndex = ref(control.indexOfFittingSchema || 0);
+    const input = useJsonFormsAnyOfControl(props)
+    const control = input.control.value
+    const selectedIndex = ref(control.indexOfFittingSchema || 0)
 
     return {
       ...useQuasarControl(input),
       selectedIndex,
-    };
+    }
   },
   computed: {
     anyOfRenderInfos(): CombinatorSubSchemaRenderInfo[] {
@@ -63,11 +63,11 @@ const controlRenderer = defineComponent({
         this.control.uischema,
         this.control.path,
         this.control.uischemas,
-      );
-      return result.filter((info) => info.uischema);
+      )
+      return result.filter((info) => info.uischema)
     },
   },
-});
+})
 
-export default controlRenderer;
+export default controlRenderer
 </script>

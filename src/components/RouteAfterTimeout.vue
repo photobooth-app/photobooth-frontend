@@ -2,15 +2,13 @@
   <div><!-- empty --></div>
 </template>
 
-<script setup>
-import { useIdle, useTimestamp } from '@vueuse/core';
-import { computed, watch, onBeforeUnmount } from 'vue';
-import { useRouter } from 'vue-router';
-import { useQuasar } from 'quasar';
-// import { useI18n } from 'vue-i18n';
-// const { t } = useI18n();
-const $q = useQuasar();
-const router = useRouter();
+<script setup lang="ts">
+import { useIdle, useTimestamp } from '@vueuse/core'
+import { computed, watch, onBeforeUnmount } from 'vue'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
+const router = useRouter()
 const props = defineProps({
   route: {
     /* route to push after timeout */
@@ -30,48 +28,50 @@ const props = defineProps({
     type: Number,
     default: 10000,
   },
-});
+})
 
-const { idle, lastActive } = useIdle(props.timeoutMs);
-const now = useTimestamp({ interval: 1000 });
-const remainingTime = computed(() => props.timeoutMs - (now.value - lastActive.value));
-const showWarning = computed(() => props.warningTimeMs > remainingTime.value);
-let warningPopup = null;
+const { idle, lastActive } = useIdle(props.timeoutMs)
+const now = useTimestamp({ interval: 1000 })
+const remainingTime = computed(() => props.timeoutMs - (now.value - lastActive.value))
+const showWarning = computed(() => props.warningTimeMs > remainingTime.value)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let warningPopup: any = null
 
 function showNotification() {
   warningPopup = $q.notify({
     progress: true,
     message: props.warningMessage,
     type: 'info',
-    multiline: true,
+    multiLine: true,
     timeout: remainingTime.value,
     icon: 'sym_o_slideshow',
-  });
+  })
 }
 
 function hideNotification() {
   if (warningPopup) {
     //programatically close: https://quasar.dev/quasar-plugins/notify/#programmatically-closing
-    warningPopup(); // this will close the notification
+    warningPopup() // this will close the notification
   }
 }
 
 onBeforeUnmount(() => {
-  hideNotification();
-});
+  hideNotification()
+})
 
 watch(showWarning, (showWarningValue) => {
+  // does not fire if showWarning is initially true because warningTimeMs > timeoutMs
   if (showWarningValue) {
-    showNotification();
+    showNotification()
   } else {
-    hideNotification();
+    hideNotification()
   }
-});
+})
 
 watch(idle, (idleValue) => {
   if (idleValue) {
-    hideNotification();
-    router.push({ path: props.route });
+    hideNotification()
+    router.push({ path: props.route })
   }
-});
+})
 </script>

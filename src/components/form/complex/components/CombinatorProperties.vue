@@ -5,15 +5,15 @@
 </template>
 
 <script lang="ts">
-import { Generate, type JsonSchema, type Layout, type UISchemaElement } from '@jsonforms/core';
-import omit from 'lodash/omit';
-import { type PropType, defineComponent } from 'vue';
-import { DispatchRenderer } from '@jsonforms/vue';
+import { Generate, type JsonSchema, type Layout, type UISchemaElement } from '@jsonforms/core'
+import omit from 'lodash/omit'
+import { type PropType, defineComponent } from 'vue'
+import { DispatchRenderer } from '@jsonforms/vue'
 
 interface CombinatorProps {
-  schema: JsonSchema;
-  combinatorKeyword: 'oneOf' | 'anyOf' | 'allOf';
-  path: string;
+  schema: JsonSchema
+  combinatorKeyword: 'oneOf' | 'anyOf' | 'allOf'
+  path: string
 }
 
 export default defineComponent({
@@ -36,21 +36,21 @@ export default defineComponent({
     },
   },
   setup(props: CombinatorProps) {
-    const otherProps: JsonSchema = omit(props.schema, props.combinatorKeyword) as JsonSchema;
-    const foundUISchema: UISchemaElement = Generate.uiSchema(otherProps, 'VerticalLayout');
+    const otherProps: JsonSchema = omit(props.schema, props.combinatorKeyword) as JsonSchema
+    const foundUISchema: UISchemaElement = Generate.uiSchema(otherProps, 'VerticalLayout')
 
-    const isLayout = (uischema: UISchemaElement): uischema is Layout => Object.prototype.hasOwnProperty.call(uischema, 'elements');
+    const isLayout = (uischema: UISchemaElement): uischema is Layout => Object.prototype.hasOwnProperty.call(uischema, 'elements')
 
-    let isLayoutWithElements = false;
+    let isLayoutWithElements = false
     if (foundUISchema !== null && isLayout(foundUISchema)) {
-      isLayoutWithElements = foundUISchema.elements.length > 0;
+      isLayoutWithElements = foundUISchema.elements.length > 0
     }
 
     return {
       otherProps,
       foundUISchema,
       isLayoutWithElements,
-    };
+    }
   },
-});
+})
 </script>

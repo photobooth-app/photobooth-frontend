@@ -24,72 +24,58 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
-export default defineComponent({
-  name: 'CountdownTimer',
-  props: {
-    duration: {
-      type: Number,
-      required: true,
-    },
+let intervalTimerId: number
+const remainingSeconds = ref(0)
+const startDuration = ref(0)
 
-    messageDuration: {
-      type: Number,
-      default: 0.5,
-    },
+interface Props {
+  duration: number
+  messageDuration?: number
+  messageText?: string
+}
 
-    messageText: {
-      type: String,
-      default: '😃',
-    },
-  },
+const props = withDefaults(defineProps<Props>(), {
+  messageDuration: 0.5,
+  messageText: '😃',
+})
 
-  data() {
-    return {
-      intervalTimerId: null,
-      remainingSeconds: 0,
-      startDuration: 0,
-    };
-  },
-  computed: {
-    showBox() {
-      return this.remainingSeconds > 0;
-    },
-    showCountdown() {
-      return this.remainingSeconds > 0;
-    },
-    showMessage() {
-      return +this.remainingSeconds <= this.messageDuration;
-    },
-  },
+const showBox = computed(() => {
+  return remainingSeconds.value > 0
+})
+const showCountdown = computed(() => {
+  return remainingSeconds.value > 0
+})
+const showMessage = computed(() => {
+  return remainingSeconds.value <= props.messageDuration
+})
 
-  mounted() {
-    this.startTimer();
-  },
-  beforeUnmount() {
-    clearInterval(this.intervalTimerId);
-  },
-  methods: {
-    abortTimer() {
-      clearInterval(this.intervalTimerId);
-      this.remainingSeconds = 0;
-    },
-    startTimer() {
-      this.startDuration = this.duration;
-      this.remainingSeconds = this.startDuration;
+onMounted(() => {
+  startTimer()
+})
 
-      console.log(`starting timer, duration=${this.startDuration}`);
+onBeforeUnmount(() => {
+  abortTimer()
+})
 
-      this.intervalTimerId = setInterval(() => {
-        this.remainingSeconds -= 0.05;
+const abortTimer = () => {
+  clearInterval(intervalTimerId)
+  remainingSeconds.value = 0
+}
+const startTimer = () => {
+  startDuration.value = props.duration
+  remainingSeconds.value = startDuration.value
 
-        if (this.remainingSeconds <= 0) {
-          clearInterval(this.intervalTimerId);
-        }
-      }, 50);
-    },
-  },
-});
+  console.log(`starting timer, duration=${startDuration.value}`)
+
+  intervalTimerId = window.setInterval(() => {
+    remainingSeconds.value -= 0.05
+
+    if (remainingSeconds.value <= 0) {
+      clearInterval(intervalTimerId)
+    }
+  }, 50)
+}
 </script>

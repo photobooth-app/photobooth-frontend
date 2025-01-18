@@ -27,23 +27,23 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { login } from 'src/util/auth';
-import { useRouter } from 'vue-router';
+import { reactive } from 'vue'
+import { login } from 'src/util/auth'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 const user = reactive({
   username: 'admin', // there are no usernames in our app, it's always admin...
   password: null,
-});
+})
 
 const submit = async () => {
   try {
-    await login(user);
-    router.push('/admin');
+    await login(user)
+    router.push('/admin')
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
-};
+}
 </script>
