@@ -163,7 +163,7 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('cpu load') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress size="lg" :value="store.information.cpu1_5_15[0] ?? 0 / 100"> </q-linear-progress>
+                  <q-linear-progress size="lg" :value="(store.information.cpu1_5_15[0] ?? 0) / 100"> </q-linear-progress>
                 </q-item-label>
 
                 <q-item-label>
@@ -318,7 +318,7 @@
         <q-card-section>
           <q-list separator>
             <q-item-label header>{{ $t('Stats counter') }}</q-item-label>
-            <q-item v-if="Object.keys(store.information.stats_counter).length == 0">{{ $t('Currently no item to display.') }}</q-item>
+            <q-item v-if="Object.keys(store.information.stats_counter).length == 0">{{ $t('Currently there is no item to display.') }}</q-item>
 
             <q-item v-for="(entry, index) in store.information.stats_counter" :key="index">
               <q-item-section>
@@ -346,7 +346,7 @@
         <q-card-section>
           <q-list separator>
             <q-item-label header>{{ $t('Limits counter') }}</q-item-label>
-            <q-item v-if="Object.keys(store.information.limits_counter).length == 0">{{ $t('Currently no item to display.') }}</q-item>
+            <q-item v-if="Object.keys(store.information.limits_counter).length == 0">{{ $t('Currently there is no item to display.') }}</q-item>
 
             <q-item v-for="(entry, index) in store.information.limits_counter" :key="index">
               <q-item-section>
@@ -358,9 +358,9 @@
                   <q-item-label> {{ entry['count'] }} </q-item-label>
                 </q-item-label>
               </q-item-section>
-              <q-item-sectio side>
+              <q-item-section side>
                 <q-btn flat color="primary" icon="sym_o_history" @click="displayResetLimitsConfirm(entry['action'])" />
-              </q-item-sectio>
+              </q-item-section>
             </q-item>
           </q-list>
         </q-card-section>
@@ -438,9 +438,9 @@ import LanguageSwitcher from '../components/LanguageSwitcher.vue'
 
 const store = useMainStore()
 const mediacollectionStore = useMediacollectionStore()
+const selected_field = ref('')
 const confirm_reset_limits_counter = ref(false)
 const confirm_reset_stats_counter = ref(false)
-const selected_field = ref('')
 const confirm_reboot = ref(false)
 const confirm_shutdown = ref(false)
 const confirm_restart_service = ref(false)
