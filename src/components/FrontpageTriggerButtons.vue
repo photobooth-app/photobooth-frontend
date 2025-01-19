@@ -7,7 +7,7 @@
         color="primary"
         no-caps
         rounded
-        class="action-button col-auto"
+        class="action-button col-auto glass-effect"
         :class="['action-button-' + index]"
         @click="triggerButtonClick(trigger.action, trigger.config_index)"
       >

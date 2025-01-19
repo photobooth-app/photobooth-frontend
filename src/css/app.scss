@@ -31,22 +31,38 @@ h6 {
   margin-bottom: 1rem;
 }
 
-#preview-stream-wrapper.mirroreffect {
-  transform: scale(-1, 1);
-}
-#preview-stream-wrapper,
-#preview-stream {
+#preview-wrapper,
+#preview-stream,
+#preview-frameoverlay {
   position: fixed;
   top: 0px;
   bottom: 0px;
   left: 0px;
   right: 0px;
   pointer-events: none;
+  transform: translateZ(0);
 }
-#preview-stream {
-  background-size: contain; //cover
+#preview-wrapper.mirroreffect {
+  transform: scale(-1, 1);
+}
+#preview-blurredback {
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  background-position: center center;
+  width: 110%;
+  height: 110%;
+  top: -5%;
+  left: -5%;
+  position: absolute;
+  filter: blur(13px);
+  transform: translateZ(0);
+  opacity: 0.6;
+}
+#preview-stream,
+#preview-frameoverlay {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .action-button {
@@ -54,6 +70,17 @@ h6 {
 
   * > .q-icon {
     font-size: 6.5rem;
+  }
+}
+
+.q-btn.glass-effect {
+  backdrop-filter: blur(10px);
+  &.bg-primary {
+    background: rgba($primary, 0.4) !important;
+  }
+
+  &.bg-secondary {
+    background: rgba($secondary, 0.4) !important;
   }
 }
 

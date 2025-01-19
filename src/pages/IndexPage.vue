@@ -2,13 +2,23 @@
   <q-page id="index-page" class="q-pa-none column full-height">
     <!-- lowest layer: preview stream -->
 
-    <div id="preview-stream-wrapper" :class="{ mirroreffect: livestreamMirror }">
+    <div v-if="showPreview" id="preview-wrapper" :class="{ mirroreffect: livestreamMirror }">
       <div
-        v-if="showPreview"
-        id="preview-stream"
+        v-if="configurationStore.configuration.uisettings.livestream_blurredbackground"
+        id="preview-blurredback"
         style="background-image: url('/api/aquisition/stream.mjpg')"
+      ></div>
+      <div
+        id="preview-stream"
+        style="z-index: 1; background-image: url('/api/aquisition/stream.mjpg')"
         class="full-width column justify-center content-center"
         :class="{ countdowncounting: showCountdownCounting }"
+      ></div>
+      <div
+        v-if="configurationStore.configuration.uisettings.enable_livestream_frameoverlay"
+        id="preview-frameoverlay"
+        style="z-index: 2"
+        :style="{ 'background-image': `url('${configurationStore.configuration.uisettings.livestream_frameoverlay_image}')` }"
       ></div>
     </div>
 
@@ -52,7 +62,7 @@
             no-caps
             rounded
             to="/gallery"
-            class="action-button"
+            class="action-button glass-effect"
           >
             <q-icon left name="sym_o_photo_library" />
             <div class="gt-sm">{{ $t('BTN_LABEL_MAINPAGE_TO_GALLERY') }}</div>
@@ -70,7 +80,7 @@
             rounded
             color="transparent"
             no-caps
-            class="action-button action-button-admin"
+            class="action-button action-button-admin glass-effect"
             :class="{ 'action-button-admin-invisible': adminButtonInvisible }"
             @click="onBtnAdminClick"
           >

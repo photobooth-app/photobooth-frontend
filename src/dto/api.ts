@@ -1182,7 +1182,10 @@ export interface components {
              *       "enable_livestream_when_idle": true,
              *       "enable_livestream_when_active": true,
              *       "livestream_mirror_effect": true,
-             *       "FRONTPAGE_TEXT": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Hey!<br>Let's take some pictures! <br>📷💕</div>",
+             *       "livestream_blurredbackground": true,
+             *       "enable_livestream_frameoverlay": true,
+             *       "livestream_frameoverlay_image": "/demoassets/frames/frame_image_photobooth-app.png",
+             *       "FRONTPAGE_TEXT": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Hey!<br>Let's take some pictures! <br>📷</div>",
              *       "TAKEPIC_MSG_TIME": 0.5,
              *       "TAKEPIC_MSG_TEXT": "😃",
              *       "AUTOCLOSE_NEW_ITEM_ARRIVED": 30,
@@ -2338,9 +2341,27 @@ export interface components {
              */
             livestream_mirror_effect: boolean;
             /**
+             * Livestream Blurredbackground
+             * @description Display the livestream blurred in the background of the actual livestream covering the full screen. This might look nice if the livestream resolution does not match the screen's aspect ratio. Check cpu usage on low power devices.
+             * @default true
+             */
+            livestream_blurredbackground: boolean;
+            /**
+             * Enable Livestream Frameoverlay
+             * @description Enable to overlay the image configured below above the livestream.
+             * @default true
+             */
+            enable_livestream_frameoverlay: boolean;
+            /**
+             * Livestream Frameoverlay Image
+             * @description When enabled, the frame is displayed above the livestream. If mirroreffect is on, it will also be mirrored. Text in the frame appears in the wrong direction but the final image is correct.
+             * @default /demoassets/frames/frame_image_photobooth-app.png
+             */
+            livestream_frameoverlay_image: string;
+            /**
              * Frontpage Text
              * @description Text/HTML displayed on frontpage.
-             * @default <div class="fixed-center text-h2 text-weight-bold text-center text-white" style="text-shadow: 4px 4px 4px #666;">Hey!<br>Let's take some pictures! <br>📷💕</div>
+             * @default <div class="fixed-center text-h2 text-weight-bold text-center text-white" style="text-shadow: 4px 4px 4px #666;">Hey!<br>Let's take some pictures! <br>📷</div>
              */
             FRONTPAGE_TEXT: string;
             /**
