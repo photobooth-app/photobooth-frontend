@@ -120,9 +120,6 @@ const triggerButtons = computed(() => {
   const result: TriggerSchema[] = []
 
   Object.entries(configurationStore.configuration.actions).forEach(([key, actions]) => {
-    console.log(key)
-    console.log(actions)
-
     actions.forEach((action, index: number) => {
       const trigger: TriggerSchema = {
         action: `actions/${key}`,
