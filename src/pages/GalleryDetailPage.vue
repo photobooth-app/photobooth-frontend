@@ -151,16 +151,17 @@ const getMediaitemById = (id: string) => {
 const getFilterAvailable = (media_type: string) => {
   return ['image', 'collageimage', 'animationimage'].includes(media_type)
 }
+
 //https://stackoverflow.com/questions/1077041/refresh-image-with-a-new-one-at-the-same-url/66312176#66312176
 const reloadImg = async (url: string) => {
   // fetch to update cache on regular images, if we do not fetch, on next gallery visit old images are displayed
-  await fetch(url, { cache: 'reload', mode: 'no-cors' })
+  fetch(url, { cache: 'reload', mode: 'no-cors' })
 
-  //now update also current displayed images (some are images, some are in background)
-  // drawback: due to ?time file is transferred twice from server. but without there is no good way to force the browser to render new pic
-  const time = new Date().getTime()
+  // check if there is an img visible, if so, update it:
   document.body.querySelectorAll(`img[src*='${url}']`).forEach((img) => {
-    ;(img as HTMLImageElement).src = url + '#' + time
+    // force browser to show update image. drawback: it might send a second request to the server.
+    // due to #time file is transferred twice from server. but without there is no good way to force the browser to render new pic
+    ;(img as HTMLImageElement).src = url
   })
 }
 const doApplyFilter = (id: string, filter: string) => {
@@ -171,10 +172,10 @@ const doApplyFilter = (id: string, filter: string) => {
         throw new Error('Server returned ' + response.status)
       }
 
-      // const item = getMediaitemById(id)
-      reloadImg(`/media/full/${id}`)
       reloadImg(`/media/preview/${id}`)
       reloadImg(`/media/thumbnail/${id}`)
+      // full is not reloaded as it is nowhere used in the client currently except
+      // from direct download which is always requested up to date.
 
       displayIndeterminateProgressbar.value = false
     })
