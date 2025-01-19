@@ -1,17 +1,6 @@
 <template>
   <div class="row">
-    <q-select
-      v-model="locale"
-      :options="localeOptions"
-      label="Language"
-      emit-value
-      map-options
-      @update:model-value="(locale) => switchLocale(locale)"
-    >
-      <template #prepend>
-        <q-icon name="sym_o_language" />
-      </template>
-    </q-select>
+    <q-select v-model="locale" :options="localeOptions" emit-value map-options @update:model-value="(locale) => switchLocale(locale)"> </q-select>
   </div>
 </template>
 

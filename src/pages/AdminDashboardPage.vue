@@ -1,142 +1,61 @@
 <template>
   <q-page id="admin-page" padding>
-    <q-card flat class="q-pa-md">
-      <div class="text-h5">{{ $t('TITLE_SERVER_CONTROL') }}</div>
-      <div class="q-ma-none">
-        <div>
-          <q-dialog v-model="confirm_reboot">
-            <q-card class="q-pa-sm" style="min-width: 350px">
-              <q-card-section class="row items-center" style="flex-wrap: nowrap">
-                <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
-                <span class="q-ml-sm">{{ $t('MSG_CONFIRM_REBOOT') }}</span>
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
-                <q-btn v-close-popup :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/api/system/server/reboot')" />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-
-          <q-dialog v-model="confirm_shutdown">
-            <q-card class="q-pa-sm" style="min-width: 350px">
-              <q-card-section class="row items-center" style="flex-wrap: nowrap">
-                <q-avatar icon="sym_o_power_settings_new" color="primary" text-color="white" />
-                <span class="q-ml-sm">{{ $t('MSG_CONFIRM_SHUTDOWN') }}</span>
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-                <q-btn v-close-popup :label="$t('BTN_LABEL_SHUTDOWN')" color="primary" @click="remoteProcedureCall('/api/system/server/shutdown')" />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-
-          <q-dialog v-model="confirm_restart_service">
-            <q-card class="q-pa-sm" style="min-width: 350px">
-              <q-card-section class="row items-center" style="flex-wrap: nowrap">
-                <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
-                <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RESTART_SERVICE') }}</span>
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-                <q-btn
-                  v-close-popup
-                  :label="$t('BTN_LABEL_RESTART_SERVICE')"
-                  color="primary"
-                  @click="remoteProcedureCall('/api/system/service/restart')"
-                />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-
-          <q-dialog v-model="confirm_reload_service">
-            <q-card class="q-pa-sm" style="min-width: 350px">
-              <q-card-section class="row items-center" style="flex-wrap: nowrap">
-                <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
-                <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RELOAD_SERVICE') }}</span>
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-                <q-btn
-                  v-close-popup
-                  :label="$t('BTN_LABEL_RELOAD_SERVICE')"
-                  color="primary"
-                  @click="remoteProcedureCall('/api/system/service/reload')"
-                />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-
-          <q-dialog v-model="confirm_install_service">
-            <q-card class="q-pa-sm" style="min-width: 350px">
-              <q-card-section class="row items-center" style="flex-wrap: nowrap">
-                <q-avatar icon="sym_o_add_circle" color="primary" text-color="white" />
-                <span class="q-ml-sm">{{ $t('MSG_CONFIRM_INSTALL_SERVICE') }}</span>
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-                <q-btn
-                  v-close-popup
-                  :label="$t('BTN_LABEL_INSTALL_SERVICE')"
-                  color="primary"
-                  @click="remoteProcedureCall('/api/system/service/install')"
-                />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-
-          <q-dialog v-model="confirm_uninstall_service">
-            <q-card class="q-pa-sm" style="min-width: 350px">
-              <q-card-section class="row items-center" style="flex-wrap: nowrap">
-                <q-avatar icon="sym_o_cancel" color="primary" text-color="white" />
-                <span class="q-ml-sm">{{ $t('MSG_CONFIRM_UNINSTALL_SERVICE') }}</span>
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-                <q-btn
-                  v-close-popup
-                  :label="$t('BTN_LABEL_UNINSTALL_SERVICE')"
-                  color="primary"
-                  @click="remoteProcedureCall('/api/system/service/uninstall')"
-                />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-          <q-card-section class="q-gutter-sm q-px-none">
-            <div class="text-caption">{{ $t('Host') }}</div>
-            <q-btn :label="$t('BTN_LABEL_REBOOT_HOST')" @click="confirm_reboot = true" />
-            <q-btn :label="$t('BTN_LABEL_SHUTDOWN_HOST')" @click="confirm_shutdown = true" />
-          </q-card-section>
-
-          <q-card-section class="q-gutter-sm q-px-none">
-            <div class="text-caption">{{ $t('Service (Linux only)') }}</div>
-            <q-btn :label="$t('BTN_LABEL_INSTALL_SERVICE')" @click="confirm_install_service = true" />
-            <q-btn :label="$t('BTN_LABEL_UNINSTALL_SERVICE')" @click="confirm_uninstall_service = true" />
-            <q-btn :label="$t('BTN_LABEL_RESTART_SERVICE')" @click="confirm_restart_service = true" />
-          </q-card-section>
-        </div>
-      </div>
-    </q-card>
-
-    <q-card flat class="q-pa-md q-mt-md">
-      <div class="text-h5">{{ $t('TITLE_LOCAL_UI_SETTINGS') }}</div>
-      <div class="row q-gutter-sm">
-        <language-switcher />
-        <q-btn href="https://github.com/photobooth-app/photobooth-app/blob/main/CONTRIBUTING.md#help-translate-the-app" target="_blank">
-          {{ $t('Help to translate') }}
-        </q-btn>
-      </div>
-    </q-card>
-
-    <div class="q-pa-none q-mt-md row col-xs-12 col-sm-4 col-md-3 col-lg-3">
+    <div class="q-pa-none q-mt-none row col-xs-12 col-sm-4 col-md-3 col-lg-3">
       <q-card flat class="q-mr-md q-mb-md">
         <q-card-section>
-          <q-list separator>
+          <q-list>
+            <q-item-label header>{{ $t('TITLE_SERVER_CONTROL') }}</q-item-label>
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('Host') }}</q-item-label>
+                <q-item-label> <q-btn flat color="primary" :label="$t('BTN_LABEL_REBOOT_HOST')" @click="confirm_reboot = true" /> </q-item-label>
+                <q-item-label> <q-btn flat color="primary" :label="$t('BTN_LABEL_SHUTDOWN_HOST')" @click="confirm_shutdown = true" /> </q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item v-if="store.information.platform_system == 'Linux'">
+              <q-item-section>
+                <q-item-label caption>{{ $t('Service (Linux only)') }}</q-item-label>
+                <q-item-label>
+                  <q-btn flat color="primary" :label="$t('BTN_LABEL_UNINSTALL_SERVICE')" @click="confirm_uninstall_service = true" />
+                </q-item-label>
+                <q-item-label> <q-btn flat color="primary" :label="$t('BTN_LABEL_SHUTDOWN_HOST')" @click="confirm_shutdown = true" /> </q-item-label>
+                <q-item-label>
+                  <q-btn flat color="primary" :label="$t('BTN_LABEL_RESTART_SERVICE')" @click="confirm_restart_service = true" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+      </q-card>
+
+      <q-card flat class="q-mr-md q-mb-md">
+        <q-card-section>
+          <q-list>
+            <q-item-label header>{{ $t('TITLE_LOCAL_UI_SETTINGS') }}</q-item-label>
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('Selected language') }}</q-item-label>
+                <q-item-label><language-switcher /> </q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-btn
+                  flat
+                  color="primary"
+                  round
+                  icon="sym_o_translate"
+                  href="https://github.com/photobooth-app/photobooth-app/blob/main/CONTRIBUTING.md#help-translate-the-app"
+                  target="_blank"
+                >
+                </q-btn>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+      </q-card>
+
+      <q-card flat class="q-mr-md q-mb-md">
+        <q-card-section>
+          <q-list>
             <q-item-label header>{{ $t('system information') }}</q-item-label>
             <q-item>
               <q-item-section>
@@ -222,7 +141,7 @@
 
       <q-card flat class="q-mr-md q-mb-md">
         <q-card-section>
-          <q-list separator>
+          <q-list>
             <q-item-label header>{{ $t('platform') }}</q-item-label>
             <q-item>
               <q-item-section>
@@ -276,9 +195,9 @@
         </q-card-section>
       </q-card>
 
-      <q-card flat class="q-mr-md q-mb-md">
-        <q-card-section>
-          <q-list separator>
+      <q-card flat class="q-mr-md q-mb-md column">
+        <q-card-section style="flex-grow: 1">
+          <q-list>
             <q-item-label header>{{ $t('Media Database') }}</q-item-label>
             <q-item v-if="Object.keys(store.information.mediacollection).length == 0">{{ $t('Currently there is no item to display.') }}</q-item>
 
@@ -294,15 +213,15 @@
           </q-list>
         </q-card-section>
         <q-separator />
-        <q-card-actions align="right">
-          <q-btn flat color="primary" icon="sym_o_history" :label="$t('BTN_LABEL_DELETE_ALL_MEDIA_FILES')" @click="confirm_delete_all = true" />
-          <q-btn flat color="primary" icon="sym_o_history" :label="$t('Clear recycle directory')" @click="confirm_clear_recycle_directory = true" />
+        <q-card-actions align="right" vertical>
+          <q-btn flat color="primary" :label="$t('BTN_LABEL_DELETE_ALL_MEDIA_FILES')" @click="confirm_delete_all = true" />
+          <q-btn flat color="primary" :label="$t('Clear recycle directory')" @click="confirm_clear_recycle_directory = true" />
         </q-card-actions>
       </q-card>
 
       <q-card v-for="(backend_stats, _, index) in store.information.backends" :key="index" flat class="q-mr-md q-mb-md">
         <q-card-section>
-          <q-list separator>
+          <q-list>
             <q-item-label header>{{ $t('Backend Index: ') }}{{ index }}</q-item-label>
             <q-item v-for="(field_value, field_key, field_index) in backend_stats" :key="field_index">
               <q-item-section>
@@ -314,9 +233,9 @@
         </q-card-section>
       </q-card>
 
-      <q-card flat class="q-mr-md q-mb-md">
-        <q-card-section>
-          <q-list separator>
+      <q-card flat class="q-mr-md q-mb-md column">
+        <q-card-section style="flex-grow: 1">
+          <q-list>
             <q-item-label header>{{ $t('Stats counter') }}</q-item-label>
             <q-item v-if="Object.keys(store.information.stats_counter).length == 0">{{ $t('Currently there is no item to display.') }}</q-item>
 
@@ -338,13 +257,13 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
-          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="displayResetStatsConfirm('')" />
+          <q-btn flat color="primary" label="reset" @click="displayResetStatsConfirm('')" />
         </q-card-actions>
       </q-card>
 
-      <q-card flat class="q-mr-md q-mb-md">
-        <q-card-section>
-          <q-list separator>
+      <q-card flat class="q-mr-md q-mb-md column">
+        <q-card-section style="flex-grow: 1">
+          <q-list>
             <q-item-label header>{{ $t('Limits counter') }}</q-item-label>
             <q-item v-if="Object.keys(store.information.limits_counter).length == 0">{{ $t('Currently there is no item to display.') }}</q-item>
 
@@ -366,10 +285,98 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
-          <q-btn flat color="primary" icon="sym_o_history" label="reset" @click="displayResetLimitsConfirm('')" />
+          <q-btn flat color="primary" label="reset" @click="displayResetLimitsConfirm('')" />
         </q-card-actions>
       </q-card>
     </div>
+    <q-dialog v-model="confirm_reboot">
+      <q-card class="q-pa-sm" style="min-width: 350px">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('MSG_CONFIRM_REBOOT') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
+          <q-btn v-close-popup :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/api/system/server/reboot')" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="confirm_shutdown">
+      <q-card class="q-pa-sm" style="min-width: 350px">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="sym_o_power_settings_new" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('MSG_CONFIRM_SHUTDOWN') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn v-close-popup :label="$t('BTN_LABEL_SHUTDOWN')" color="primary" @click="remoteProcedureCall('/api/system/server/shutdown')" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="confirm_restart_service">
+      <q-card class="q-pa-sm" style="min-width: 350px">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RESTART_SERVICE') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn v-close-popup :label="$t('BTN_LABEL_RESTART_SERVICE')" color="primary" @click="remoteProcedureCall('/api/system/service/restart')" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="confirm_reload_service">
+      <q-card class="q-pa-sm" style="min-width: 350px">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RELOAD_SERVICE') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn v-close-popup :label="$t('BTN_LABEL_RELOAD_SERVICE')" color="primary" @click="remoteProcedureCall('/api/system/service/reload')" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="confirm_install_service">
+      <q-card class="q-pa-sm" style="min-width: 350px">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="sym_o_add_circle" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('MSG_CONFIRM_INSTALL_SERVICE') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn v-close-popup :label="$t('BTN_LABEL_INSTALL_SERVICE')" color="primary" @click="remoteProcedureCall('/api/system/service/install')" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="confirm_uninstall_service">
+      <q-card class="q-pa-sm" style="min-width: 350px">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="sym_o_cancel" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('MSG_CONFIRM_UNINSTALL_SERVICE') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn
+            v-close-popup
+            :label="$t('BTN_LABEL_UNINSTALL_SERVICE')"
+            color="primary"
+            @click="remoteProcedureCall('/api/system/service/uninstall')"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <q-dialog v-model="confirm_reset_stats_counter">
       <q-card class="q-pa-sm">
