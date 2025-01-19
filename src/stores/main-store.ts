@@ -6,7 +6,7 @@ export const useMainStore = defineStore('main-store', {
 
     information: {
       /* system */
-      cpu1_5_15: [0, 0, 0] as number[],
+      cpu_percent: 0,
       memory: {
         total: 0,
         available: 0,
