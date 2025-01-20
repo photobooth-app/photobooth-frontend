@@ -16,9 +16,11 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('Service (Linux only)') }}</q-item-label>
                 <q-item-label>
+                  <q-btn flat color="primary" :label="$t('BTN_LABEL_INSTALL_SERVICE')" @click="confirm_install_service = true" />
+                </q-item-label>
+                <q-item-label>
                   <q-btn flat color="primary" :label="$t('BTN_LABEL_UNINSTALL_SERVICE')" @click="confirm_uninstall_service = true" />
                 </q-item-label>
-                <q-item-label> <q-btn flat color="primary" :label="$t('BTN_LABEL_SHUTDOWN_HOST')" @click="confirm_shutdown = true" /> </q-item-label>
                 <q-item-label>
                   <q-btn flat color="primary" :label="$t('BTN_LABEL_RESTART_SERVICE')" @click="confirm_restart_service = true" />
                 </q-item-label>
