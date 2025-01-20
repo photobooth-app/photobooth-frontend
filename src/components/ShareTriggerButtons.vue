@@ -7,7 +7,7 @@
       no-caps
       color="primary"
       :disabled="getShareAvailable(trigger.handles_images_only)"
-      class="q-mr-sm action-button action-button-share col-auto"
+      class="q-mr-sm action-button action-button-share col-auto glass-effect"
       :class="['share-button-' + index]"
       @click="triggerButtonClick(trigger.config_index)"
     >

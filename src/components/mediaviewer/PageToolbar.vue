@@ -6,7 +6,7 @@
           v-if="showDelete"
           stack
           rounded
-          class="q-mr-sm action-button action-button-delete col-auto"
+          class="q-mr-sm action-button action-button-delete col-auto glass-effect"
           color="primary"
           no-caps
           icon="sym_o_delete"
@@ -15,15 +15,14 @@
         />
 
         <q-btn
-          v-if="showFilter"
+          v-if="showFilter && enableFilter"
           stack
           no-caps
           rounded
           color="primary"
-          class="q-mr-sm action-button action-button-filter col-auto"
+          class="q-mr-sm action-button action-button-filter col-auto glass-effect"
           icon="sym_o_filter"
           :label="$t('BTN_LABEL_GALLERY_FILTER')"
-          :disabled="!enableFilter"
           @click="invokeToggleDisplayFilter"
         />
         <q-btn
@@ -32,7 +31,7 @@
           no-caps
           rounded
           color="primary"
-          class="q-mr-sm action-button action-button-download col-auto"
+          class="q-mr-sm action-button action-button-download col-auto glass-effect"
           icon="sym_o_download"
           :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
           @click="openURL(`/media/full/${item.id}`)"
