@@ -1258,6 +1258,7 @@ export interface components {
              *           "enabled": true,
              *           "selected_device": "VirtualCamera",
              *           "virtualcamera": {
+             *             "emulate_hires_static_still": true,
              *             "emulate_multicam_capture_devices": 4,
              *             "framerate": 15,
              *             "orientation": "1: 0°"
@@ -1812,6 +1813,7 @@ export interface components {
             /** @default {
              *       "orientation": "1: 0°",
              *       "framerate": 15,
+             *       "emulate_hires_static_still": true,
              *       "emulate_multicam_capture_devices": 4
              *     } */
             virtualcamera: components["schemas"]["GroupBackendVirtualcamera"];
@@ -1907,6 +1909,12 @@ export interface components {
              */
             framerate: number;
             /**
+             * Emulate Hires Static Still
+             * @description Deliver high-resolution still image instead the demovideo. Useful to test the processing times by emulating hires cameras.
+             * @default true
+             */
+            emulate_hires_static_still: boolean;
+            /**
              * Emulate Multicam Capture Devices
              * @description Number of emulated cameras when asking for synchronized capture for wigglegrams.
              * @default 4
@@ -1993,6 +2001,7 @@ export interface components {
              *         "enabled": true,
              *         "selected_device": "VirtualCamera",
              *         "virtualcamera": {
+             *           "emulate_hires_static_still": true,
              *           "emulate_multicam_capture_devices": 4,
              *           "framerate": 15,
              *           "orientation": "1: 0°"
