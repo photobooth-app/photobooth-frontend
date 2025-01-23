@@ -50,7 +50,7 @@ export default defineConfig((ctx) => {
       // minify: false,
       // polyfillModulePreload: true,
       // distDir
-      distDir: '../photobooth-app/photobooth/web_spa/',
+      distDir: '../photobooth-app/src/photobooth/web_spa/',
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
