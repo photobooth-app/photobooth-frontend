@@ -1,24 +1,22 @@
 <template>
   <q-page id="index-page" class="q-pa-none column full-height">
     <!-- lowest layer: preview stream -->
-
-    <div id="preview-container" v-if="showPreview">
+    <div id="v2-preview-container" :class="{ mirroreffect: livestreamMirror }" v-if="showPreview">
       <div
-        id="preview-blurredback"
+        id="v2-preview-blurredback"
         v-if="configurationStore.configuration.uisettings.livestream_blurredbackground"
         style="background-image: url('/api/aquisition/stream.mjpg')"
-        :class="{ mirroreffect: livestreamMirror }"
       ></div>
 
-      <div id="preview-wrapper">
-        <div id="stream-container" :class="{ mirroreffect: livestreamMirror }">
-          <img src="/api/aquisition/stream.mjpg" id="stream-image" />
-          <img
-            id="overlay-image"
-            v-if="configurationStore.configuration.uisettings.enable_livestream_frameoverlay"
-            :src="configurationStore.configuration.uisettings.livestream_frameoverlay_image"
-          />
-        </div>
+      <div id="v2-overlay-wrapper" v-if="configurationStore.configuration.uisettings.enable_livestream_frameoverlay">
+        <img
+          id="v2-overlay-image"
+          style="background-image: url('/api/aquisition/stream.mjpg')"
+          :src="configurationStore.configuration.uisettings.livestream_frameoverlay_image"
+        />
+      </div>
+      <div id="v2-stream-wrapper" v-else>
+        <img id="v2-stream-image" src="/api/aquisition/stream.mjpg" />
       </div>
     </div>
 
