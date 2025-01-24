@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view />
+    <router-view v-if="initialInitDone" />
     <q-dialog v-model="showConnectionOverlay" persistent>
       <connection-overlay />
     </q-dialog>
@@ -24,10 +24,8 @@ const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
 const mediacollectionStore = useMediacollectionStore()
 const connected = ref(false)
+const initialInitDone = ref(false)
 const $q = useQuasar()
-
-//TODO: need to make app wait until fully init?
-console.log(configurationStore.isLoaded)
 
 const showConnectionOverlay = computed(() => {
   return !connected.value
@@ -37,6 +35,7 @@ onBeforeMount(async () => {
   console.log('app created, waiting for stores to init first dataset')
   await init()
   console.log('data initialization finished')
+  initialInitDone.value = true
 })
 
 onUnmounted(() => {
