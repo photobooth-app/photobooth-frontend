@@ -1,7 +1,8 @@
 <template>
   <q-page id="index-page" class="q-pa-none column full-height">
     <!-- lowest layer: preview stream -->
-    <div id="preview-container">
+
+    <div id="preview-container" v-if="showPreview">
       <div
         id="preview-blurredback"
         v-if="configurationStore.configuration.uisettings.livestream_blurredbackground"
@@ -9,14 +10,13 @@
         :class="{ mirroreffect: livestreamMirror }"
       ></div>
 
-      <div id="preview-outer-wrapper">
-        <div v-if="showPreview" id="preview-inner-wrapper" :class="{ mirroreffect: livestreamMirror }">
-          <img src="/api/aquisition/stream.mjpg" id="preview-stream" :class="{ countdowncounting: showCountdownCounting }" />
+      <div id="preview-wrapper">
+        <div id="stream-container" :class="{ mirroreffect: livestreamMirror }">
+          <img src="/api/aquisition/stream.mjpg" id="stream-image" />
           <img
+            id="overlay-image"
             v-if="configurationStore.configuration.uisettings.enable_livestream_frameoverlay"
-            id="preview-frameoverlay"
             :src="configurationStore.configuration.uisettings.livestream_frameoverlay_image"
-            style="z-index: 2"
           />
         </div>
       </div>
