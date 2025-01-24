@@ -31,18 +31,27 @@ h6 {
   margin-bottom: 1rem;
 }
 
-#preview-wrapper,
+#preview-blurredback,
 #preview-stream,
 #preview-frameoverlay {
-  position: fixed;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
   pointer-events: none;
+  user-select: none;
+}
+#preview-outer-wrapper {
+  display: flex;
+  justify-content: center;
+}
+#preview-inner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
   transform: translateZ(0);
 }
-#preview-wrapper.mirroreffect {
+#preview-blurredback.mirroreffect,
+#preview-inner-wrapper.mirroreffect {
   transform: scale(-1, 1);
 }
 #preview-blurredback {
@@ -53,16 +62,30 @@ h6 {
   height: 110%;
   top: -5%;
   left: -5%;
-  position: absolute;
   filter: blur(13px);
   transform: translateZ(0);
   opacity: 0.6;
+  position: fixed;
 }
+
 #preview-stream,
 #preview-frameoverlay {
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: fixed;
+  transform: translateZ(0);
+}
+
+#preview-stream {
+  z-index: 1;
+}
+#preview-frameoverlay {
+  z-index: 2;
+}
+
+#frontpage_text {
+  user-select: none;
 }
 
 .action-button {

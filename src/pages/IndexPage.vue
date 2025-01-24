@@ -1,25 +1,25 @@
 <template>
   <q-page id="index-page" class="q-pa-none column full-height">
     <!-- lowest layer: preview stream -->
-
-    <div v-if="showPreview" id="preview-wrapper" :class="{ mirroreffect: livestreamMirror }">
+    <div id="preview-container">
       <div
-        v-if="configurationStore.configuration.uisettings.livestream_blurredbackground"
         id="preview-blurredback"
+        v-if="configurationStore.configuration.uisettings.livestream_blurredbackground"
         style="background-image: url('/api/aquisition/stream.mjpg')"
+        :class="{ mirroreffect: livestreamMirror }"
       ></div>
-      <div
-        id="preview-stream"
-        style="z-index: 1; background-image: url('/api/aquisition/stream.mjpg')"
-        class="full-width column justify-center content-center"
-        :class="{ countdowncounting: showCountdownCounting }"
-      ></div>
-      <div
-        v-if="configurationStore.configuration.uisettings.enable_livestream_frameoverlay"
-        id="preview-frameoverlay"
-        style="z-index: 2"
-        :style="{ 'background-image': `url('${configurationStore.configuration.uisettings.livestream_frameoverlay_image}')` }"
-      ></div>
+
+      <div id="preview-outer-wrapper">
+        <div v-if="showPreview" id="preview-inner-wrapper" :class="{ mirroreffect: livestreamMirror }">
+          <img src="/api/aquisition/stream.mjpg" id="preview-stream" :class="{ countdowncounting: showCountdownCounting }" />
+          <img
+            v-if="configurationStore.configuration.uisettings.enable_livestream_frameoverlay"
+            id="preview-frameoverlay"
+            :src="configurationStore.configuration.uisettings.livestream_frameoverlay_image"
+            style="z-index: 2"
+          />
+        </div>
+      </div>
     </div>
 
     <!-- layer display processing spinner grid to show user computer working hard -->
