@@ -118,7 +118,12 @@ const qrShareUrl = computed(() => {
     return `${qrShareServiceUrl}?action=download&id=${selectedMediaitemId.value}`
   } else {
     const customUrl = configurationStore.configuration.qrshare.share_custom_qr_url
-    return customUrl.replace('{filename}', selectedMediaitemId.value).replace('{identifier}', selectedMediaitemId.value)
+
+    const pathInData = configurationStore.configuration.qrshare.shareservice_share_original
+      ? currentMediaitem.value.unprocessed
+      : currentMediaitem.value.processed
+    const getFileName = (filePath) => filePath.substring(filePath.lastIndexOf('/') + 1)
+    return customUrl.replace('{filename}', getFileName(pathInData)).replace('{identifier}', selectedMediaitemId.value)
   }
 })
 
