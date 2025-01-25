@@ -794,6 +794,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/userdata/{filepath}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Get Userfiles */
+        get: operations["api_get_userfiles_userdata__filepath__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -884,13 +901,13 @@ export interface components {
              *             "fill_background_enable": false,
              *             "filter": "original",
              *             "img_background_enable": true,
-             *             "img_background_file": "backgrounds/pink-7761356_1920.jpg",
+             *             "img_background_file": "userdata/backgrounds/pink-7761356_1920.jpg",
              *             "img_frame_enable": true,
-             *             "img_frame_file": "frames/frame_image_photobooth-app.png",
+             *             "img_frame_file": "userdata/frames/frame_image_photobooth-app.png",
              *             "texts": [
              *               {
              *                 "color": "#333",
-             *                 "font": "fonts/Roboto-Bold.ttf",
+             *                 "font": "userdata/fonts/Roboto-Bold.ttf",
              *                 "font_size": 30,
              *                 "pos_x": 1300,
              *                 "pos_y": 1250,
@@ -933,11 +950,11 @@ export interface components {
              *             "canvas_img_background_enable": false,
              *             "canvas_img_background_file": "",
              *             "canvas_img_front_enable": true,
-             *             "canvas_img_front_file": "frames/pixabay-poster-2871536_1920.png",
+             *             "canvas_img_front_file": "userdata/frames/pixabay-poster-2871536_1920.png",
              *             "canvas_texts": [
              *               {
              *                 "color": "#333",
-             *                 "font": "fonts/Roboto-Bold.ttf",
+             *                 "font": "userdata/fonts/Roboto-Bold.ttf",
              *                 "font_size": 40,
              *                 "pos_x": 200,
              *                 "pos_y": 1100,
@@ -968,7 +985,7 @@ export interface components {
              *                 "height": 725,
              *                 "pos_x": 705,
              *                 "pos_y": 66,
-             *                 "predefined_image": "predefined_images/photobooth-collage-predefined-image.png",
+             *                 "predefined_image": "userdata/predefined_images/photobooth-collage-predefined-image.png",
              *                 "rotate": 0,
              *                 "width": 510
              *               },
@@ -1149,7 +1166,6 @@ export interface components {
              *       "enabled": false,
              *       "shareservice_url": "https://photobooth-app.org/extras/shareservice-landing/",
              *       "shareservice_apikey": "changedefault!",
-             *       "shareservice_share_original": false,
              *       "share_custom_qr_url": "http://localhost:8000/media/full/{identifier}"
              *     } */
             qrshare: components["schemas"]["GroupQrShare"];
@@ -1184,7 +1200,7 @@ export interface components {
              *       "livestream_mirror_effect": true,
              *       "livestream_blurredbackground": true,
              *       "enable_livestream_frameoverlay": true,
-             *       "livestream_frameoverlay_image": "/demoassets/frames/frame_image_photobooth-app.png",
+             *       "livestream_frameoverlay_image": "/userdata/frames/frame_image_photobooth-app.png",
              *       "FRONTPAGE_TEXT": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Hey!<br>Let's take some pictures! <br>📷</div>",
              *       "TAKEPIC_MSG_TIME": 0.5,
              *       "TAKEPIC_MSG_TEXT": "😃",
@@ -1258,7 +1274,7 @@ export interface components {
              *           "enabled": true,
              *           "selected_device": "VirtualCamera",
              *           "virtualcamera": {
-             *             "emulate_hires_static_still": true,
+             *             "emulate_hires_static_still": false,
              *             "emulate_multicam_capture_devices": 4,
              *             "framerate": 15,
              *             "orientation": "1: 0°"
@@ -1538,13 +1554,13 @@ export interface components {
              *           "fill_background_enable": false,
              *           "filter": "original",
              *           "img_background_enable": true,
-             *           "img_background_file": "backgrounds/pink-7761356_1920.jpg",
+             *           "img_background_file": "userdata/backgrounds/pink-7761356_1920.jpg",
              *           "img_frame_enable": true,
-             *           "img_frame_file": "frames/frame_image_photobooth-app.png",
+             *           "img_frame_file": "userdata/frames/frame_image_photobooth-app.png",
              *           "texts": [
              *             {
              *               "color": "#333",
-             *               "font": "fonts/Roboto-Bold.ttf",
+             *               "font": "userdata/fonts/Roboto-Bold.ttf",
              *               "font_size": 30,
              *               "pos_x": 1300,
              *               "pos_y": 1250,
@@ -1592,11 +1608,11 @@ export interface components {
              *           "canvas_img_background_enable": false,
              *           "canvas_img_background_file": "",
              *           "canvas_img_front_enable": true,
-             *           "canvas_img_front_file": "frames/pixabay-poster-2871536_1920.png",
+             *           "canvas_img_front_file": "userdata/frames/pixabay-poster-2871536_1920.png",
              *           "canvas_texts": [
              *             {
              *               "color": "#333",
-             *               "font": "fonts/Roboto-Bold.ttf",
+             *               "font": "userdata/fonts/Roboto-Bold.ttf",
              *               "font_size": 40,
              *               "pos_x": 200,
              *               "pos_y": 1100,
@@ -1627,7 +1643,7 @@ export interface components {
              *               "height": 725,
              *               "pos_x": 705,
              *               "pos_y": 66,
-             *               "predefined_image": "predefined_images/photobooth-collage-predefined-image.png",
+             *               "predefined_image": "userdata/predefined_images/photobooth-collage-predefined-image.png",
              *               "rotate": 0,
              *               "width": 510
              *             },
@@ -1813,7 +1829,7 @@ export interface components {
             /** @default {
              *       "orientation": "1: 0°",
              *       "framerate": 15,
-             *       "emulate_hires_static_still": true,
+             *       "emulate_hires_static_still": false,
              *       "emulate_multicam_capture_devices": 4
              *     } */
             virtualcamera: components["schemas"]["GroupBackendVirtualcamera"];
@@ -1911,7 +1927,7 @@ export interface components {
             /**
              * Emulate Hires Static Still
              * @description Deliver high-resolution still image instead the demovideo. Useful to test the processing times by emulating hires cameras.
-             * @default true
+             * @default false
              */
             emulate_hires_static_still: boolean;
             /**
@@ -2001,7 +2017,7 @@ export interface components {
              *         "enabled": true,
              *         "selected_device": "VirtualCamera",
              *         "virtualcamera": {
-             *           "emulate_hires_static_still": true,
+             *           "emulate_hires_static_still": false,
              *           "emulate_multicam_capture_devices": 4,
              *           "framerate": 15,
              *           "orientation": "1: 0°"
@@ -2215,14 +2231,8 @@ export interface components {
              */
             shareservice_apikey: string;
             /**
-             * Shareservice Share Original
-             * @description Upload original image as received from camera. If unchecked, the full processed version is uploaded with filter and texts applied.
-             * @default false
-             */
-            shareservice_share_original: boolean;
-            /**
              * Share Custom Qr Url
-             * @description URL displayed as QR code to image for download. Need you to sync the files on your own or allow the user to access via hotspot. {identifier} is replaced by the actual item's id in QR code.
+             * @description URL displayed as QR code to image for download. Need you to sync the files on your own or allow the user to access via hotspot. {identifier} is replaced by the actual item's id, {filename} is replaced by the actual filename on the photobooth-data, in QR code.
              * @default http://localhost:8000/media/full/{identifier}
              */
             share_custom_qr_url: string;
@@ -2364,7 +2374,7 @@ export interface components {
             /**
              * Livestream Frameoverlay Image
              * @description When enabled, the frame is displayed above the livestream. If mirroreffect is on, it will also be mirrored. Text in the frame appears in the wrong direction but the final image is correct.
-             * @default /demoassets/frames/frame_image_photobooth-app.png
+             * @default /userdata/frames/frame_image_photobooth-app.png
              */
             livestream_frameoverlay_image: string;
             /**
@@ -2810,7 +2820,7 @@ export interface components {
             font_size: number;
             /**
              * Font
-             * @default fonts/Roboto-Bold.ttf
+             * @default userdata/fonts/Roboto-Bold.ttf
              */
             font: string;
             /**
@@ -4165,6 +4175,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+        };
+    };
+    api_get_userfiles_userdata__filepath__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                filepath: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
