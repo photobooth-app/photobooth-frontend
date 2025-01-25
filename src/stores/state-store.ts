@@ -10,6 +10,7 @@ export const useStateStore = defineStore('state-store', {
     duration: 0,
     ask_user_for_approval: null,
     last_captured_mediaitem_id: null,
+    configuration_set: {},
   }),
   actions: {},
   getters: {},
