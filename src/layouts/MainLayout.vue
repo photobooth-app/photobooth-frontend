@@ -3,14 +3,6 @@
     <q-page-container>
       <router-view />
 
-      <!-- show back button on all pages except / -->
-      <q-page-sticky v-if="route.path != '/'" position="top-left" class="q-ma-lg" style="/*z-index: 10000*/">
-        <q-btn id="layout-button-back" color="primary" rounded no-caps @click="$router.back()" class="action-button glass-effect">
-          <q-icon left name="sym_o_arrow_back_ios_new" />
-          <div>{{ $t('BTN_LABEL_BACK') }}</div>
-        </q-btn>
-      </q-page-sticky>
-
       <!-- auto-start slideshow after timeout -->
       <RouteAfterTimeout
         v-if="configurationStore.configuration.uisettings.enable_automatic_slideshow && mediacollectionStore.collection_number_of_items > 0"

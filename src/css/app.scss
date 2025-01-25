@@ -53,6 +53,18 @@ h6 {
   &.bg-secondary {
     background: rgba($secondary, 0.4) !important;
   }
+
+  &.bg-positive {
+    background: rgba($positive, 0.4) !important;
+  }
+
+  &.bg-negative {
+    background: rgba($negative, 0.4) !important;
+  }
+
+  &.bg-grey {
+    background: rgba($grey, 0.4) !important;
+  }
 }
 
 .toolbar {

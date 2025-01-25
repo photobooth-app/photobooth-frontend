@@ -51,8 +51,8 @@ const routes: RouteRecordRaw[] = [
     path: '/standalone',
     component: () => import('layouts/StandaloneLayout.vue'),
     children: [
-      { path: 'gallery', component: () => import('pages/GalleryPage.vue') },
-      { path: 'slideshow', component: () => import('pages/SlideshowPage.vue') },
+      { path: 'gallery', component: () => import('pages/GalleryPage.vue'), props: { standaloneMode: true } },
+      { path: 'slideshow', component: () => import('pages/SlideshowPage.vue'), props: { standaloneMode: true } },
     ],
   },
   {

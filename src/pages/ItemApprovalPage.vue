@@ -1,42 +1,55 @@
 <template>
-  <q-page id="itemapproval-page" class="fullscreen flex flex-center">
+  <q-page id="itemapproval-page" class="absolute-full flex flex-center">
     <!-- fullscreen class hides the back button, which is what we want here since the back button just returns without aborting the job-->
     <q-img v-if="imgToApproveSrc" :src="`/media/preview/${imgToApproveSrc}`" fit="contain" style="height: 95%" />
     <!-- video approval not yet supported -->
 
+    <q-page-sticky position="top-left" class="q-ma-lg">
+      <q-btn id="layout-button-back" color="grey" rounded no-caps @click="userAbort()" class="action-button glass-effect">
+        <q-icon left name="sym_o_cancel" />
+        <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE') }}</div>
+      </q-btn>
+    </q-page-sticky>
+
     <q-page-sticky position="bottom" class="q-ma-lg">
-      <q-banner rounded inline-actions>
-        <div>
-          <div class="text-h5">{{ $t('TITLE_ITEM_APPROVAL') }}</div>
-          <div class="text-subtitle2">
+      <div class="q-mb-lg action-buttons col">
+        <div class="q-mb-sm row flex flex-center">
+          <q-badge color="grey-8" class="q-mr-xs">
+            <q-icon name="sym_o_tag" color="white" class="q-mr-xs" />
             {{
-              $t('MSG_APPROVE_COLLAGE_ITEM_NO_OF_TOTAL', {
+              $t('LABEL_ELEMENT_X_OF_Y', {
                 no: stateStore.number_captures_taken,
                 total: stateStore.total_captures_to_take,
               })
             }}
-          </div>
+          </q-badge>
         </div>
+        <div class="row">
+          <q-btn
+            id="item-approval-button-reject"
+            stack
+            rounded
+            class="q-mr-lg action-button col-auto glass-effect"
+            color="negative"
+            no-caps
+            icon="sym_o_thumb_down"
+            :label="$t('MSG_APPROVE_COLLAGE_ITEM_RETRY')"
+            @click="userReject()"
+          />
 
-        <template #action>
-          <q-btn id="item-approval-button-reject" color="negative" no-caps class="" @click="userReject()">
-            <q-icon left size="xl" name="sym_o_thumb_down" />
-            <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_RETRY') }}</div>
-          </q-btn>
-
-          <q-btn id="item-approval-button-abort" flat color="grey" no-caps class="" @click="userAbort()">
-            <q-icon left size="xl" name="sym_o_cancel" />
-            <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_CANCEL_COLLAGE') }}</div>
-          </q-btn>
-
-          <q-btn id="item-approval-button-approve" color="positive" no-caps @click="userConfirm()">
-            <q-icon left size="xl" name="sym_o_thumb_up" />
-            <div>
-              <div>{{ $t('MSG_APPROVE_COLLAGE_ITEM_APPROVE') }}</div>
-            </div>
-          </q-btn>
-        </template>
-      </q-banner>
+          <q-btn
+            id="item-approval-button-approve"
+            stack
+            rounded
+            class="q-mr-sm action-button col-auto glass-effect"
+            color="positive"
+            no-caps
+            icon="sym_o_thumb_up"
+            :label="$t('MSG_APPROVE_COLLAGE_ITEM_APPROVE')"
+            @click="userConfirm()"
+          />
+        </div>
+      </div>
     </q-page-sticky>
   </q-page>
 </template>

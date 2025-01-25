@@ -9,6 +9,8 @@
     </div>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-else v-html="configurationStore.configuration.uisettings.GALLERY_EMPTY_MSG"></div>
+
+    <ReturnButton v-if="!props.standaloneMode" @trigger-return="$router.back()"></ReturnButton>
   </q-page>
 </template>
 <script setup lang="ts">
@@ -16,6 +18,11 @@ import { useConfigurationStore } from '../stores/configuration-store'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { computed } from 'vue'
 import { default as MediaItemThumbnailViewer } from '../components/MediaItemThumbnailViewer.vue'
+import { default as ReturnButton } from '../components/ReturnButton.vue'
+
+const props = defineProps({
+  standaloneMode: Boolean,
+})
 
 const configurationStore = useConfigurationStore()
 const mediacollectionStore = useMediacollectionStore()

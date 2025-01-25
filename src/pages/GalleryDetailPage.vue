@@ -61,6 +61,8 @@
       <!-- usually not visible but if page is called with wrong id or the page was not closed after an item is deleted -->
       <ItemNotAvailableError />
     </div>
+
+    <ReturnButton @trigger-return="$router.back()"></ReturnButton>
   </q-layout>
 </template>
 
@@ -78,6 +80,8 @@ import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
 import { remoteProcedureCall } from '../util/fetch_api.js'
+import { default as ReturnButton } from '../components/ReturnButton.vue'
+
 const route = useRoute()
 const router = useRouter()
 const configurationStore = useConfigurationStore()
