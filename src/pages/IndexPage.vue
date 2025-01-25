@@ -1,24 +1,11 @@
 <template>
   <q-page id="index-page" class="q-pa-none column full-height">
-    <!-- lowest layer: preview stream -->
-    <div id="v2-preview-container" :class="{ mirroreffect: livestreamMirror }" v-if="showPreview">
-      <div
-        id="v2-preview-blurredback"
-        v-if="configurationStore.configuration.uisettings.livestream_blurredbackground"
-        style="background-image: url('/api/aquisition/stream.mjpg')"
-      ></div>
-
-      <div id="v2-overlay-wrapper" v-if="configurationStore.configuration.uisettings.enable_livestream_frameoverlay">
-        <img
-          id="v2-overlay-image"
-          style="background-image: url('/api/aquisition/stream.mjpg')"
-          :src="configurationStore.configuration.uisettings.livestream_frameoverlay_image"
-        />
-      </div>
-      <div id="v2-stream-wrapper" v-else>
-        <img id="v2-stream-image" src="/api/aquisition/stream.mjpg" />
-      </div>
-    </div>
+    <preview-stream
+      v-if="showPreview"
+      :frame-overlay-image="frameOverlayImage"
+      :enable-blurred-background-stream="configurationStore.configuration.uisettings.livestream_blurredbackground"
+      :enable-mirror-effect="configurationStore.configuration.uisettings.livestream_mirror_effect"
+    ></preview-stream>
 
     <!-- layer display processing spinner grid to show user computer working hard -->
     <div v-if="showProcessing" class="full-height full-width column justify-center content-center" style="position: absolute">
@@ -108,6 +95,8 @@ import { useConfigurationStore } from '../stores/configuration-store'
 import CountdownTimer from '../components/CountdownTimer.vue'
 import type { TriggerSchema } from '../components/FrontpageTriggerButtons.vue'
 import { default as FrontpageTriggerButtons } from '../components/FrontpageTriggerButtons.vue'
+import { default as PreviewStream } from '../components/PreviewStream.vue'
+import _ from 'lodash'
 
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
@@ -157,10 +146,6 @@ const showRecording = computed(() => {
   return stateStore.state == 'record'
 })
 
-const livestreamMirror = computed(() => {
-  return configurationStore.configuration.uisettings.livestream_mirror_effect
-})
-
 const adminButtonInvisible = computed(() => {
   return configurationStore.configuration.uisettings.admin_button_invisible
 })
@@ -169,6 +154,23 @@ const showCountdownCounting = computed(() => {
   const capture = stateStore.state == 'capture'
 
   return (stateStore.duration && stateStore.duration > 0 && machineCounting) || capture
+})
+
+const frameOverlayImage = computed(() => {
+  if (showCountdownCounting.value) {
+    const enable_action_frame_overlay = _.get(stateStore.configuration_set, 'processing.img_frame_enable', false)
+    const action_frame_overlay_image = _.get(stateStore.configuration_set, 'processing.img_frame_file', '')
+    if (enable_action_frame_overlay) {
+      return action_frame_overlay_image
+      // return '/userdata/frames/sprencles.png'
+    } else {
+      return configurationStore.configuration.uisettings.livestream_frameoverlay_image
+    }
+  } else if (configurationStore.configuration.uisettings.enable_livestream_frameoverlay) {
+    return configurationStore.configuration.uisettings.livestream_frameoverlay_image
+  } else {
+    return ''
+  }
 })
 
 const showPreview = computed(() => {

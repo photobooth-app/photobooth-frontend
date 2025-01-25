@@ -80,8 +80,6 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
     },
 
     collection_number_of_items() {
-      //return Object.keys(this.collection).length;
-      console.log(this.collection.length)
       return this.collection.length
     },
   },

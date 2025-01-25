@@ -100,7 +100,6 @@ export default defineConfig((ctx) => {
       open: true, // opens browser window automatically
       proxy: {
         '/private.css': 'http://127.0.0.1:8000/',
-        '/demoassets': 'http://127.0.0.1:8000/',
         '/userdata': 'http://127.0.0.1:8000/',
         '/media': 'http://127.0.0.1:8000/',
         '/api/sse': {
