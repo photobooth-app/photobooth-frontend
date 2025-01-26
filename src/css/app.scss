@@ -47,23 +47,27 @@ h6 {
 .q-btn.glass-effect {
   backdrop-filter: blur(10px);
   &.bg-primary {
-    background: rgba($primary, 0.4) !important;
+    background: color-mix(in srgb, var(--q-primary) 40%, transparent) !important;
   }
 
   &.bg-secondary {
-    background: rgba($secondary, 0.4) !important;
+    background: color-mix(in srgb, var(--q-secondary) 40%, transparent) !important;
+  }
+
+  &.bg-accent {
+    background: color-mix(in srgb, var(--q-accent) 40%, transparent) !important;
   }
 
   &.bg-positive {
-    background: rgba($positive, 0.4) !important;
+    background: color-mix(in srgb, var(--q-positive) 40%, transparent) !important;
   }
 
   &.bg-negative {
-    background: rgba($negative, 0.4) !important;
+    background: color-mix(in srgb, var(--q-negative) 40%, transparent) !important;
   }
 
   &.bg-grey {
-    background: rgba($grey, 0.4) !important;
+    background: color-mix(in srgb, var(--q-grey) 50%, transparent) !important;
   }
 }
 
