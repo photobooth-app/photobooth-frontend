@@ -1054,7 +1054,7 @@ export interface components {
              *               {
              *                 "duration": 4000,
              *                 "filter": "original",
-             *                 "predefined_image": "predefined_images/photobooth-gif-animation-predefined-image.png"
+             *                 "predefined_image": "userdata/predefined_images/photobooth-gif-animation-predefined-image.png"
              *               }
              *             ]
              *           },
@@ -1193,6 +1193,7 @@ export interface components {
              *       "show_gallery_on_frontpage": true,
              *       "show_admin_on_frontpage": true,
              *       "admin_button_invisible": false,
+             *       "show_frontpage_timeout": 5,
              *       "enable_automatic_slideshow": true,
              *       "show_automatic_slideshow_timeout": 300,
              *       "enable_livestream_when_idle": true,
@@ -1717,7 +1718,7 @@ export interface components {
              *             {
              *               "duration": 4000,
              *               "filter": "original",
-             *               "predefined_image": "predefined_images/photobooth-gif-animation-predefined-image.png"
+             *               "predefined_image": "userdata/predefined_images/photobooth-gif-animation-predefined-image.png"
              *             }
              *           ]
              *         },
@@ -2330,6 +2331,12 @@ export interface components {
              */
             admin_button_invisible: boolean;
             /**
+             * Show Frontpage Timeout
+             * @description Idle timeout in minutes after which the app switches to the frontpage again.
+             * @default 5
+             */
+            show_frontpage_timeout: number;
+            /**
              * Enable Automatic Slideshow
              * @description Enable a random slideshow after some time without any user interaction.
              * @default true
@@ -2367,13 +2374,13 @@ export interface components {
             livestream_blurredbackground: boolean;
             /**
              * Enable Livestream Frameoverlay
-             * @description Enable to overlay the image configured below above the livestream.
+             * @description Enable to overlay livestream_frameoverlay_image the livestream.
              * @default true
              */
             enable_livestream_frameoverlay: boolean;
             /**
              * Livestream Frameoverlay Image
-             * @description When enabled, the frame is displayed above the livestream. If mirroreffect is on, it will also be mirrored. Text in the frame appears in the wrong direction but the final image is correct.
+             * @description When enabled, the frame is overlayed the livestream. This image is not used in the postprocessing. If mirroreffect is on, it will also be mirrored. Text in the frame appears in the wrong direction but the final image is correct.
              * @default /userdata/frames/frame_image_photobooth-app.png
              */
             livestream_frameoverlay_image: string;

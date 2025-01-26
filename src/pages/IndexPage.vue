@@ -82,6 +82,14 @@
       <br />
       <q-btn flat color="red" label="Stop recording" @click="stopRecordingVideo()" />
     </q-page-sticky>
+
+    <!-- auto-start slideshow after timeout -->
+    <RouteAfterTimeout
+      v-if="configurationStore.configuration.uisettings.enable_automatic_slideshow && mediacollectionStore.collection_number_of_items > 0"
+      route="/slideshow/random"
+      :timeout-ms="configurationStore.configuration.uisettings.show_automatic_slideshow_timeout * 1000"
+      :warning-message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
+    ></RouteAfterTimeout>
   </q-page>
 </template>
 
@@ -97,7 +105,10 @@ import type { TriggerSchema } from '../components/FrontpageTriggerButtons.vue'
 import { default as FrontpageTriggerButtons } from '../components/FrontpageTriggerButtons.vue'
 import { default as PreviewStream } from '../components/PreviewStream.vue'
 import _ from 'lodash'
+import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
+import { useMediacollectionStore } from '../stores/mediacollection-store'
 
+const mediacollectionStore = useMediacollectionStore()
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
 const router = useRouter()

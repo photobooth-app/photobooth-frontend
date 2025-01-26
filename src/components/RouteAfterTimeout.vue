@@ -22,7 +22,7 @@ const props = defineProps({
   },
   warningMessage: {
     type: String,
-    default: 'Auto-starting slideshow... Click anywhere to stay on this page.',
+    default: 'The application has been idle for a long time. Click anywhere to stay on this page...',
   },
   warningTimeMs: {
     type: Number,
@@ -44,7 +44,6 @@ function showNotification() {
     type: 'info',
     multiLine: true,
     timeout: remainingTime.value,
-    icon: 'sym_o_slideshow',
   })
 }
 
