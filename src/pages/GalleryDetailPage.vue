@@ -123,7 +123,7 @@ const qrShareUrl = computed(() => {
     const customUrl = configurationStore.configuration.qrshare.share_custom_qr_url
 
     // get filename from processed/unprocessed path. Could be improved in future, when the backend delivers the actual filename
-    const getFileName = (filePath: string) => filePath.substring(filePath.lastIndexOf('\\') + 1)
+    const getFileName = (filepath: string) => filepath.split(/[\\/]/).pop()
 
     return customUrl.replace('{filename}', getFileName(currentMediaitem.value.processed)).replace('{identifier}', selectedMediaitemId.value)
   }
