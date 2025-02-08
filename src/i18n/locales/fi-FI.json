@@ -118,9 +118,9 @@
   "Stats counter": "Tilastojen laskuri",
   "Media Database": "Median Tietokanta",
   "Selected language": "Valittu kieli",
-  "Language": "Language",
-  "Learn how to help translating the app": "Learn how to help translating the app",
-  "Browsers preferred languages": "Browsers preferred languages",
-  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
-  "Translate in context using Crowdin": "Translate in context using Crowdin"
+  "Language": "Kieli",
+  "Learn how to help translating the app": "Opi miten auttaa sovelluksen kääntämisessä",
+  "Browsers preferred languages": "Selaimet ensisijaiset kielet",
+  "Check which languages are supported by the app.": "Tarkista, mitkä kielet ovat sovelluksen tukemia.",
+  "Translate in context using Crowdin": "Käännä yhteydessä käyttäen Crowdinia"
 }
