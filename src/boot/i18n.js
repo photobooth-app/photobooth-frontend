@@ -1,9 +1,25 @@
 import { createI18n } from 'vue-i18n'
 import { default as messages } from 'src/i18n'
+import { usePreferredLanguages } from '@vueuse/core'
 
+const preferredLanguages = usePreferredLanguages()
 const incontextLanguageCodeSpecial = 'lol-US'
+const i18n = createI18n({
+  locale: preferredLanguages.value[0],
+  fallbackLocale: 'en-US',
+  legacy: false, // comment this out if not using Composition API
+  fallbackWarn: false,
+  missingWarn: false,
+  messages,
+})
+
 const script = '//cdn.crowdin.com/jipt/jipt.js'
 function enableInContextTranslation() {
+  console.log('enable crowdin in context translation')
+
+  const { locale } = i18n.global
+  locale.value = incontextLanguageCodeSpecial
+
   let el = document.head.querySelector(`[src="${script}"`)
   if (!el) {
     el = document.createElement('script')
@@ -22,30 +38,33 @@ function disableInContextTranslation() {
   }
 }
 
+function availableLocales() {
+  const { availableLocales } = i18n.global
+
+  return availableLocales
+    .filter((locale) => locale != incontextLanguageCodeSpecial) // remove special lang
+    .map(function (locale) {
+      return {
+        value: locale,
+        label: getLanguageName(locale),
+      }
+    })
+    .sort((a, b) => a.label.localeCompare(b.label))
+}
+
+const getLanguageName = (locale) => {
+  const localeName = new Intl.DisplayNames([locale], { type: 'language', languageDisplay: 'standard' })
+  return localeName.of(locale)
+}
+
 export default ({ app }) => {
   // Create I18n instance
-
-  const lastLocale = localStorage.getItem('locale')
-  const useLocale = lastLocale ? lastLocale : 'en-US'
-  if (lastLocale) {
-    console.log('Loaded last locale: ', lastLocale)
-  } else {
-    console.log('No locale found, using default en-US')
-  }
-
-  const i18n = createI18n({
-    locale: useLocale,
-    fallbackLocale: 'en-US',
-    legacy: false, // comment this out if not using Composition API
-    fallbackWarn: false,
-    missingWarn: false,
-    messages,
-  })
-
-  if (useLocale == 'lol-US') enableInContextTranslation()
-  else disableInContextTranslation()
+  console.log(
+    `preferred languages configured in the browser: ${preferredLanguages.value},
+     using first ${preferredLanguages.value[0]} if available, otherwise fallback to en-US`,
+  )
 
   // Tell app to use the I18n instance
   app.use(i18n)
 }
-export { enableInContextTranslation, disableInContextTranslation, incontextLanguageCodeSpecial }
+export { enableInContextTranslation, disableInContextTranslation, getLanguageName, preferredLanguages, availableLocales }

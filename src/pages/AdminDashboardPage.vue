@@ -30,14 +30,15 @@
         </q-card-section>
       </q-card>
 
-      <q-card flat class="q-mr-md q-mb-md">
-        <q-card-section>
+      <q-card flat class="q-mr-md q-mb-md column">
+        <q-card-section style="flex-grow: 1">
           <q-list>
-            <q-item-label header>{{ $t('TITLE_LOCAL_UI_SETTINGS') }}</q-item-label>
+            <q-item-label header>{{ $t('Language') }}</q-item-label>
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('Selected language') }}</q-item-label>
-                <q-item-label><language-switcher /> </q-item-label>
+                <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+                <q-item-label>{{ getLanguageName(locale) }}, {{ locale }}</q-item-label>
               </q-item-section>
               <q-item-section side>
                 <q-btn
@@ -48,11 +49,37 @@
                   href="https://github.com/photobooth-app/photobooth-app/blob/main/CONTRIBUTING.md#help-translate-the-app"
                   target="_blank"
                 >
+                  <q-tooltip class="">{{ $t('Learn how to help translating the app') }}</q-tooltip>
+                </q-btn>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('Browsers preferred languages') }}</q-item-label>
+                <q-item-label v-for="(language, index) in preferredLanguages" :key="language" :class="{ 'text-italic': index == 0 }">
+                  {{ language }}
+                </q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-btn
+                  flat
+                  color="primary"
+                  round
+                  icon="sym_o_open_in_new"
+                  href="https://github.com/photobooth-app/photobooth-frontend/tree/main/src/i18n/locales"
+                  target="_blank"
+                >
+                  <q-tooltip class="">{{ $t('Check which languages are supported by the app.') }}</q-tooltip>
                 </q-btn>
               </q-item-section>
             </q-item>
           </q-list>
         </q-card-section>
+        <q-separator />
+        <q-card-actions align="right" vertical>
+          <q-btn flat color="primary" @click="enableInContextTranslation()">{{ $t('Translate in context using Crowdin') }}</q-btn>
+        </q-card-actions>
       </q-card>
 
       <q-card flat class="q-mr-md q-mb-md">
@@ -443,7 +470,10 @@ import { ref } from 'vue'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { useMainStore } from '../stores/main-store'
 import { remoteProcedureCall } from '../util/fetch_api.js'
-import LanguageSwitcher from '../components/LanguageSwitcher.vue'
+import { useI18n } from 'vue-i18n'
+import { getLanguageName, preferredLanguages, enableInContextTranslation } from 'boot/i18n'
+
+const { locale } = useI18n({ useScope: 'global' })
 
 const store = useMainStore()
 const mediacollectionStore = useMediacollectionStore()

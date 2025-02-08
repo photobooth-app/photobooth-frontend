@@ -117,5 +117,10 @@
   "Backend Index: ": "Backend Index: ",
   "Stats counter": "Stats counter",
   "Media Database": "Media Database",
-  "Selected language": "Selected language"
+  "Selected language": "Selected language",
+  "Language": "Language",
+  "Learn how to help translating the app": "Learn how to help translating the app",
+  "Browsers preferred languages": "Browsers preferred languages",
+  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
+  "Translate in context using Crowdin": "Translate in context using Crowdin"
 }
