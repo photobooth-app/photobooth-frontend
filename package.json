@@ -20,7 +20,7 @@
   "dependencies": {
     "@jsonforms/core": "^3.2.1",
     "@jsonforms/vue": "^3.2.1",
-    "@quasar/extras": "^1.16.15",
+    "@quasar/extras": "^1.16.16",
     "@vueuse/core": "^12.4.0",
     "@vueuse/integrations": "^12.0.0",
     "pinia": "^2.1.7",
