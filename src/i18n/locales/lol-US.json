@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "crwdns176:0crwdne176:0",
   "BTN_LABEL_RESET_CONFIG": "crwdns178:0crwdne178:0",
   "BTN_LABEL_RESTART_SERVICE": "crwdns180:0crwdne180:0",
-  "BTN_LABEL_RESTORE_CONFIG": "crwdns182:0crwdne182:0",
+  "BTN_LABEL_RELOAD_CONFIG": "crwdns396:0crwdne396:0",
   "BTN_LABEL_SHUTDOWN": "crwdns184:0crwdne184:0",
   "BTN_LABEL_SHUTDOWN_HOST": "crwdns186:0crwdne186:0",
   "BTN_LABEL_UNINSTALL_SERVICE": "crwdns188:0crwdne188:0",
@@ -88,7 +88,7 @@
   "data directory": "crwdns320:0crwdne320:0",
   "system information": "crwdns322:0crwdne322:0",
   "{platform_machine}, {cpu_count} cores": "crwdns324:0{platform_machine}crwdnd324:0{cpu_count}crwdne324:0",
-  "yes, delete": "crwdns326:0crwdne326:0",
+  "yes, reset": "crwdns398:0crwdne398:0",
   "Are you sure you want to delete the selected files and subfolders?": "crwdns328:0crwdne328:0",
   "Edit translation": "crwdns330:0crwdne330:0",
   "Help to translate": "crwdns332:0crwdne332:0",
@@ -96,7 +96,7 @@
   "Logs": "crwdns336:0crwdne336:0",
   "1st Start": "crwdns338:0crwdne338:0",
   "computer model": "crwdns340:0crwdne340:0",
-  "Are you sure you want to reset the configuration and delete config.json?": "crwdns342:0crwdne342:0",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "crwdns400:0{selected_configuration}crwdne400:0",
   "Clear recycle directory": "crwdns344:0crwdne344:0",
   "Are you sure to clear the recycle directory?": "crwdns346:0crwdne346:0",
   "Usage counter": "crwdns378:0crwdne378:0",
@@ -117,5 +117,10 @@
   "Backend Index: ": "crwdns374:0crwdne374:0",
   "Stats counter": "crwdns390:0crwdne390:0",
   "Media Database": "crwdns392:0crwdne392:0",
-  "Selected language": "crwdns394:0crwdne394:0"
+  "Selected language": "crwdns394:0crwdne394:0",
+  "Language": "crwdns402:0crwdne402:0",
+  "Learn how to help translating the app": "crwdns404:0crwdne404:0",
+  "Browsers preferred languages": "crwdns406:0crwdne406:0",
+  "Check which languages are supported by the app.": "crwdns408:0crwdne408:0",
+  "Translate in context using Crowdin": "crwdns410:0crwdne410:0"
 }

@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Lataa palvelu uudelleen",
   "BTN_LABEL_RESET_CONFIG": "Nollaa",
   "BTN_LABEL_RESTART_SERVICE": "Käynnistä palvelu uudelleen",
-  "BTN_LABEL_RESTORE_CONFIG": "Palauta",
+  "BTN_LABEL_RELOAD_CONFIG": "Reload",
   "BTN_LABEL_SHUTDOWN": "Sulkeminen",
   "BTN_LABEL_SHUTDOWN_HOST": "Sulje isäntä",
   "BTN_LABEL_UNINSTALL_SERVICE": "Poista palvelu",
@@ -88,7 +88,7 @@
   "data directory": "Datakansio",
   "system information": "Järjestelmän tiedot",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
-  "yes, delete": "Kyllä, poista",
+  "yes, reset": "Kyllä, nollaa",
   "Are you sure you want to delete the selected files and subfolders?": "Oletko varma, että haluat poistaa valitut tiedostot ja alikansiot?",
   "Edit translation": "Muokkaa käännöstä",
   "Help to translate": "Auta kääntämään",
@@ -96,7 +96,7 @@
   "Logs": "Lokit",
   "1st Start": "1. Aloitus",
   "computer model": "Tietokonemalli",
-  "Are you sure you want to reset the configuration and delete config.json?": "Oletko varma, että haluat palauttaa konfiguraation ja poistaa config.json?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "Oletko varma, että haluat poistaa asetukset kohteelle {selected_configuration} ja palauttaa oletukset?",
   "Clear recycle directory": "Tyhjennä kierrätyskansio",
   "Are you sure to clear the recycle directory?": "Haluatko varmasti tyhjentää kierrätyshakemiston?",
   "Usage counter": "Käyttö laskuri",
@@ -117,5 +117,10 @@
   "Backend Index: ": "Taustaosan Indeksi: ",
   "Stats counter": "Tilastojen laskuri",
   "Media Database": "Median Tietokanta",
-  "Selected language": "Valittu kieli"
+  "Selected language": "Valittu kieli",
+  "Language": "Language",
+  "Learn how to help translating the app": "Learn how to help translating the app",
+  "Browsers preferred languages": "Browsers preferred languages",
+  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
+  "Translate in context using Crowdin": "Translate in context using Crowdin"
 }

@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Yeniden yükleme hizmeti",
   "BTN_LABEL_RESET_CONFIG": "Sıfırla",
   "BTN_LABEL_RESTART_SERVICE": "Hizmeti yeniden başlat",
-  "BTN_LABEL_RESTORE_CONFIG": "Geri Yükleme",
+  "BTN_LABEL_RELOAD_CONFIG": "Yeniden Yükle",
   "BTN_LABEL_SHUTDOWN": "Kapatma",
   "BTN_LABEL_SHUTDOWN_HOST": "Ana bilgisayarı kapatma",
   "BTN_LABEL_UNINSTALL_SERVICE": "Hizmeti kaldırma",
@@ -88,7 +88,7 @@
   "data directory": "Veri dizini",
   "system information": "Sistem bilgileri",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} çekirdek",
-  "yes, delete": "Evet, silin",
+  "yes, reset": "Evet, sıfırla",
   "Are you sure you want to delete the selected files and subfolders?": "Seçili dosyaları ve alt klasörleri silmek istediğinizden emin misiniz?",
   "Edit translation": "Çeviriyi düzenle",
   "Help to translate": "Çeviri için yardım",
@@ -96,7 +96,7 @@
   "Logs": "Günlükler",
   "1st Start": "1. Başlangıç",
   "computer model": "Bilgisayar modeli",
-  "Are you sure you want to reset the configuration and delete config.json?": "Yapılandırmayı sıfırlamak ve config.json dosyasını silmek istediğinizden emin misiniz?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "{selected_configuration} için yapılandırmayı silmek ve varsayılanlara sıfırlamak istediğinizden emin misiniz?",
   "Clear recycle directory": "Geri dönüşüm dizinini temizleyin",
   "Are you sure to clear the recycle directory?": "Geri dönüşüm dizinini temizlediğinizden emin misiniz?",
   "Usage counter": "Kullanım sayacı",
@@ -117,5 +117,10 @@
   "Backend Index: ": "Arka Uç Dizini: ",
   "Stats counter": "İstatistik sayacı",
   "Media Database": "Medya Veritabanı",
-  "Selected language": "Seçilen dil"
+  "Selected language": "Seçilen dil",
+  "Language": "Dil",
+  "Learn how to help translating the app": "Uygulamanın çevirisine nasıl yardımcı olabileceğinizi öğrenin",
+  "Browsers preferred languages": "Tarayıcıların tercih ettiği diller",
+  "Check which languages are supported by the app.": "Uygulama tarafından hangi dillerin desteklendiğini kontrol edin.",
+  "Translate in context using Crowdin": "Crowdin kullanarak bağlam içinde çeviri yapın"
 }

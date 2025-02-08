@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Újratöltési szolgáltatás",
   "BTN_LABEL_RESET_CONFIG": "Reset",
   "BTN_LABEL_RESTART_SERVICE": "A szolgáltatás újraindítása",
-  "BTN_LABEL_RESTORE_CONFIG": "Visszaállítás",
+  "BTN_LABEL_RELOAD_CONFIG": "Újratöltés",
   "BTN_LABEL_SHUTDOWN": "Leállítás",
   "BTN_LABEL_SHUTDOWN_HOST": "Lekapcsolt gazdatest",
   "BTN_LABEL_UNINSTALL_SERVICE": "A szolgáltatás eltávolítása",
@@ -88,7 +88,7 @@
   "data directory": "Adattár",
   "system information": "Rendszerinformáció",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} magok",
-  "yes, delete": "Igen, törölni",
+  "yes, reset": "Igen, visszaállítás",
   "Are you sure you want to delete the selected files and subfolders?": "Biztos, hogy törölni szeretné a kiválasztott fájlokat és almappákat?",
   "Edit translation": "Fordítás szerkesztése",
   "Help to translate": "Segítség a fordításhoz",
@@ -96,7 +96,7 @@
   "Logs": "Naplók",
   "1st Start": "1. Start",
   "computer model": "Számítógépes modell",
-  "Are you sure you want to reset the configuration and delete config.json?": "Biztos, hogy vissza akarja állítani a konfigurációt és törölni a config.json fájlt?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "Biztos, hogy törölni szeretné a {selected_configuration} konfigurációját, és visszaállítani az alapértelmezett értékeket?",
   "Clear recycle directory": "Újrahasznosítási könyvtár törlése",
   "Are you sure to clear the recycle directory?": "Biztos, hogy kiürítette az újrahasznosítási könyvtárat?",
   "Usage counter": "Használati számláló",
@@ -117,5 +117,10 @@
   "Backend Index: ": "Backend index: ",
   "Stats counter": "Statisztikai számláló",
   "Media Database": "Média adatbázis",
-  "Selected language": "Kiválasztott nyelv"
+  "Selected language": "Kiválasztott nyelv",
+  "Language": "Nyelv",
+  "Learn how to help translating the app": "Tudja meg, hogyan segíthet az alkalmazás fordításában",
+  "Browsers preferred languages": "A böngészők által preferált nyelvek",
+  "Check which languages are supported by the app.": "Ellenőrizze, hogy az alkalmazás mely nyelveket támogatja.",
+  "Translate in context using Crowdin": "Fordítás kontextusban a Crowdin segítségével"
 }

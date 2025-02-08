@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Dienst neu laden",
   "BTN_LABEL_RESET_CONFIG": "Zurücksetzen",
   "BTN_LABEL_RESTART_SERVICE": "Dienst neu starten",
-  "BTN_LABEL_RESTORE_CONFIG": "Wiederherstellen",
+  "BTN_LABEL_RELOAD_CONFIG": "Reload",
   "BTN_LABEL_SHUTDOWN": "Herunterfahren",
   "BTN_LABEL_SHUTDOWN_HOST": "Host herunterfahren",
   "BTN_LABEL_UNINSTALL_SERVICE": "Dienst deinstallieren",
@@ -88,7 +88,7 @@
   "data directory": "Datenverzeichnis",
   "system information": "Systeminformationen",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} Kerne",
-  "yes, delete": "Ja, löschen",
+  "yes, reset": "Ja, zurücksetzen",
   "Are you sure you want to delete the selected files and subfolders?": "Sind Sie sicher, dass Sie die ausgewählten Dateien und Unterordner löschen möchten?",
   "Edit translation": "Übersetzung bearbeiten",
   "Help to translate": "Hilf bei der Übersetzung",
@@ -96,7 +96,7 @@
   "Logs": "Logs",
   "1st Start": "Erster Start",
   "computer model": "Computermodell",
-  "Are you sure you want to reset the configuration and delete config.json?": "Sind Sie sicher, dass Sie die Konfiguration zurücksetzen und config.json löschen möchten?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "Sind Sie sicher, dass Sie die Konfiguration für {selected_configuration} löschen und auf die Standardwerte zurücksetzen möchten?",
   "Clear recycle directory": "Recycling-Verzeichnis leeren",
   "Are you sure to clear the recycle directory?": "Möchten Sie das Recycling-Verzeichnis wirklich leeren?",
   "Usage counter": "Nutzungszähler",
@@ -117,5 +117,10 @@
   "Backend Index: ": "Backend-Index: ",
   "Stats counter": "Nutzungszähler",
   "Media Database": "Mediendatenbank",
-  "Selected language": "Ausgewählte Sprache"
+  "Selected language": "Ausgewählte Sprache",
+  "Language": "Language",
+  "Learn how to help translating the app": "Learn how to help translating the app",
+  "Browsers preferred languages": "Browsers preferred languages",
+  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
+  "Translate in context using Crowdin": "Translate in context using Crowdin"
 }

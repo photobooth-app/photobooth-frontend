@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "다시 로드 서비스",
   "BTN_LABEL_RESET_CONFIG": "초기화",
   "BTN_LABEL_RESTART_SERVICE": "서비스 다시 시작",
-  "BTN_LABEL_RESTORE_CONFIG": "복원",
+  "BTN_LABEL_RELOAD_CONFIG": "다시 로드",
   "BTN_LABEL_SHUTDOWN": "종료",
   "BTN_LABEL_SHUTDOWN_HOST": "호스트 종료",
   "BTN_LABEL_UNINSTALL_SERVICE": "서비스 제거",
@@ -88,7 +88,7 @@
   "data directory": "데이터 디렉토리",
   "system information": "시스템 정보",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} 코어",
-  "yes, delete": "예, 삭제",
+  "yes, reset": "예, 재설정",
   "Are you sure you want to delete the selected files and subfolders?": "선택한 파일과 하위 폴더를 삭제하시겠습니까?",
   "Edit translation": "번역 수정",
   "Help to translate": "번역 도움말",
@@ -96,7 +96,7 @@
   "Logs": "로그",
   "1st Start": "첫 시작",
   "computer model": "컴퓨터 모델",
-  "Are you sure you want to reset the configuration and delete config.json?": "구성을 재설정하고 config.json을 삭제하시겠습니까?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "{selected_configuration} 에 대한 구성을 삭제하고 기본값으로 재설정하시겠습니까?",
   "Clear recycle directory": "휴지통 디렉터리 지우기",
   "Are you sure to clear the recycle directory?": "휴지통 디렉터리를 지우시겠습니까?",
   "Usage counter": "사용량 카운터",
@@ -117,5 +117,10 @@
   "Backend Index: ": "백엔드 인덱스: ",
   "Stats counter": "통계 카운터",
   "Media Database": "미디어 데이터베이스",
-  "Selected language": "선택한 언어"
+  "Selected language": "선택한 언어",
+  "Language": "언어",
+  "Learn how to help translating the app": "앱 번역을 돕는 방법 알아보기",
+  "Browsers preferred languages": "브라우저 기본 설정 언어",
+  "Check which languages are supported by the app.": "앱에서 지원되는 언어를 확인하세요.",
+  "Translate in context using Crowdin": "Crowdin을 사용하여 문맥에 맞게 번역하기"
 }
