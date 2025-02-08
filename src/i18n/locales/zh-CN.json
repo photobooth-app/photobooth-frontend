@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "重新加载服务",
   "BTN_LABEL_RESET_CONFIG": "重置",
   "BTN_LABEL_RESTART_SERVICE": "重新启动服务",
-  "BTN_LABEL_RESTORE_CONFIG": "恢复",
+  "BTN_LABEL_RELOAD_CONFIG": "Reload",
   "BTN_LABEL_SHUTDOWN": "关闭",
   "BTN_LABEL_SHUTDOWN_HOST": "关闭主机",
   "BTN_LABEL_UNINSTALL_SERVICE": "卸载服务",
@@ -88,7 +88,7 @@
   "data directory": "数据目录",
   "system information": "系统信息",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
-  "yes, delete": "是，删除",
+  "yes, reset": "是的，重置",
   "Are you sure you want to delete the selected files and subfolders?": "您确定要删除选定的文件和子文件夹吗？",
   "Edit translation": "编辑翻译",
   "Help to translate": "帮助翻译",
@@ -96,7 +96,7 @@
   "Logs": "日志",
   "1st Start": "第一个开始",
   "computer model": "计算机模型",
-  "Are you sure you want to reset the configuration and delete config.json?": "您确定要重置配置并删除 config.json？",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "您确定要删除 {selected_configuration} 的配置并重置为默认值吗？",
   "Clear recycle directory": "清除回收目录",
   "Are you sure to clear the recycle directory?": "您确定要清除回收目录吗？",
   "Usage counter": "使用计数器",
@@ -117,5 +117,10 @@
   "Backend Index: ": "后端索引： ",
   "Stats counter": "统计计数器",
   "Media Database": "媒体数据库",
-  "Selected language": "所选语言"
+  "Selected language": "所选语言",
+  "Language": "Language",
+  "Learn how to help translating the app": "Learn how to help translating the app",
+  "Browsers preferred languages": "Browsers preferred languages",
+  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
+  "Translate in context using Crowdin": "Translate in context using Crowdin"
 }

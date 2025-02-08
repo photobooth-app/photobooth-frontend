@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Serviciul de reîncărcare",
   "BTN_LABEL_RESET_CONFIG": "Resetare",
   "BTN_LABEL_RESTART_SERVICE": "Reporniți serviciul",
-  "BTN_LABEL_RESTORE_CONFIG": "Restaurați",
+  "BTN_LABEL_RELOAD_CONFIG": "Reload",
   "BTN_LABEL_SHUTDOWN": "Oprire",
   "BTN_LABEL_SHUTDOWN_HOST": "Oprire gazdă",
   "BTN_LABEL_UNINSTALL_SERVICE": "Dezinstalarea serviciului",
@@ -88,7 +88,7 @@
   "data directory": "Director de date",
   "system information": "Informatii sistem",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
-  "yes, delete": "Da, șterge",
+  "yes, reset": "Da, resetează",
   "Are you sure you want to delete the selected files and subfolders?": "Sunteţi sigur că doriţi să ştergeţi fişierele şi subdosarele selectate?",
   "Edit translation": "Editare traducere",
   "Help to translate": "Ajută la traducere",
@@ -96,7 +96,7 @@
   "Logs": "Jurnale",
   "1st Start": "Începe primul",
   "computer model": "Modelul calculatorului",
-  "Are you sure you want to reset the configuration and delete config.json?": "Sunteţi sigur că doriţi să resetaţi configuraţia şi să ştergeţi config.json?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "Ești sigur că vrei să ștergi configurația pentru {selected_configuration} și să resetezi la cea implicită?",
   "Clear recycle directory": "Curăță directorul Recycle",
   "Are you sure to clear the recycle directory?": "Sunteţi sigur că doriţi să ştergeţi directorul de reciclare?",
   "Usage counter": "Contor de utilizare",
@@ -117,5 +117,10 @@
   "Backend Index: ": "Indicele de backend: ",
   "Stats counter": "Contor statistici",
   "Media Database": "Baza de date media",
-  "Selected language": "Limba selectată"
+  "Selected language": "Limba selectată",
+  "Language": "Limba",
+  "Learn how to help translating the app": "Aflați cum să ajutați la traducerea aplicației",
+  "Browsers preferred languages": "Limbi preferate de navigatori",
+  "Check which languages are supported by the app.": "Verificați care limbi sunt acceptate de aplicație.",
+  "Translate in context using Crowdin": "Traduceți în context folosind Crowdin"
 }

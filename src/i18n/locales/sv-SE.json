@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Ladda om service",
   "BTN_LABEL_RESET_CONFIG": "Återställ",
   "BTN_LABEL_RESTART_SERVICE": "Starta om tjänsten",
-  "BTN_LABEL_RESTORE_CONFIG": "Återställ",
+  "BTN_LABEL_RELOAD_CONFIG": "Reload",
   "BTN_LABEL_SHUTDOWN": "Avstängning",
   "BTN_LABEL_SHUTDOWN_HOST": "Stänga av värd",
   "BTN_LABEL_UNINSTALL_SERVICE": "Avinstallera tjänst",
@@ -88,7 +88,7 @@
   "data directory": "Datakatalog",
   "system information": "Systeminformation",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
-  "yes, delete": "Ja, ta bort",
+  "yes, reset": "Ja, återställ",
   "Are you sure you want to delete the selected files and subfolders?": "Är du säker på att du vill ta bort de markerade filerna och undermapparna?",
   "Edit translation": "Redigera översättning",
   "Help to translate": "Hjälp att översätta",
@@ -96,7 +96,7 @@
   "Logs": "Loggar",
   "1st Start": "1:a Start",
   "computer model": "Datormodell",
-  "Are you sure you want to reset the configuration and delete config.json?": "Är du säker på att du vill återställa konfigurationen och ta bort config.json?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "Är du säker på att du vill ta bort konfigurationen för {selected_configuration} och återställa till standardinställningarna?",
   "Clear recycle directory": "Rensa papperskorgen",
   "Are you sure to clear the recycle directory?": "Är du säker på att rensa papperskatalogen?",
   "Usage counter": "Användningsräknare",
@@ -117,5 +117,10 @@
   "Backend Index: ": "Backend index: ",
   "Stats counter": "Statistik räknare",
   "Media Database": "Databas med media",
-  "Selected language": "Valt språk"
+  "Selected language": "Valt språk",
+  "Language": "Language",
+  "Learn how to help translating the app": "Learn how to help translating the app",
+  "Browsers preferred languages": "Browsers preferred languages",
+  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
+  "Translate in context using Crowdin": "Translate in context using Crowdin"
 }

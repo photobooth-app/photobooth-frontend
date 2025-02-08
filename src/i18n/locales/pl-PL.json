@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Przeładuj usługę",
   "BTN_LABEL_RESET_CONFIG": "Reset",
   "BTN_LABEL_RESTART_SERVICE": "Uruchom ponownie usługę",
-  "BTN_LABEL_RESTORE_CONFIG": "Przywróć",
+  "BTN_LABEL_RELOAD_CONFIG": "Reload",
   "BTN_LABEL_SHUTDOWN": "Wyłączenie",
   "BTN_LABEL_SHUTDOWN_HOST": "Wyłączenie hosta",
   "BTN_LABEL_UNINSTALL_SERVICE": "Odinstaluj usługę",
@@ -88,7 +88,7 @@
   "data directory": "Katalog danych",
   "system information": "Informacje systemowe",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
-  "yes, delete": "Tak, usuń",
+  "yes, reset": "Tak, zresetuj",
   "Are you sure you want to delete the selected files and subfolders?": "Czy na pewno chcesz usunąć wybrane pliki i podfoldery?",
   "Edit translation": "Edytuj tłumaczenie",
   "Help to translate": "Pomoc w tłumaczeniu",
@@ -96,7 +96,7 @@
   "Logs": "Logi",
   "1st Start": "1. Start",
   "computer model": "Model komputerowy",
-  "Are you sure you want to reset the configuration and delete config.json?": "Czy na pewno chcesz zresetować konfigurację i usunąć config.json?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "Czy na pewno chcesz usunąć konfigurację dla {selected_configuration} i przywrócić domyślne?",
   "Clear recycle directory": "Wyczyść katalog recyklingu",
   "Are you sure to clear the recycle directory?": "Czy na pewno chcesz wyczyścić katalog recyklingu?",
   "Usage counter": "Licznik użycia",
@@ -117,5 +117,10 @@
   "Backend Index: ": "Indeks zaplecza administracyjnego: ",
   "Stats counter": "Licznik statystyk",
   "Media Database": "Baza danych mediów",
-  "Selected language": "Wybrany język"
+  "Selected language": "Wybrany język",
+  "Language": "Language",
+  "Learn how to help translating the app": "Learn how to help translating the app",
+  "Browsers preferred languages": "Browsers preferred languages",
+  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
+  "Translate in context using Crowdin": "Translate in context using Crowdin"
 }

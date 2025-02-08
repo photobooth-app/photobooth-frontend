@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Recargar servicio",
   "BTN_LABEL_RESET_CONFIG": "Restablece",
   "BTN_LABEL_RESTART_SERVICE": "Reinicia el servicio",
-  "BTN_LABEL_RESTORE_CONFIG": "Restaura",
+  "BTN_LABEL_RELOAD_CONFIG": "Reload",
   "BTN_LABEL_SHUTDOWN": "Apaga",
   "BTN_LABEL_SHUTDOWN_HOST": "Apagar host",
   "BTN_LABEL_UNINSTALL_SERVICE": "Desinstalar servicio",
@@ -88,7 +88,7 @@
   "data directory": "Directorio de datos",
   "system information": "Información del sistema",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
-  "yes, delete": "Sí, eliminar",
+  "yes, reset": "Sí, restablecer",
   "Are you sure you want to delete the selected files and subfolders?": "¿Está seguro que desea eliminar los archivos y subcarpetas seleccionados?",
   "Edit translation": "Editar traducción",
   "Help to translate": "Ayuda a traducir",
@@ -96,7 +96,7 @@
   "Logs": "Registros",
   "1st Start": "1º inicio",
   "computer model": "Modelo de computadora",
-  "Are you sure you want to reset the configuration and delete config.json?": "¿Está seguro que desea restablecer la configuración y eliminar config.json?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "¿Está seguro que desea eliminar la configuración de {selected_configuration} y restablecer los valores predeterminados?",
   "Clear recycle directory": "Borrar directorio de reciclado",
   "Are you sure to clear the recycle directory?": "¿Está seguro de borrar el directorio de reciclaje?",
   "Usage counter": "Contador de uso",
@@ -117,5 +117,10 @@
   "Backend Index: ": "Índice de backend: ",
   "Stats counter": "Contador de estadísticas",
   "Media Database": "Base de datos multimedia",
-  "Selected language": "Idioma seleccionado"
+  "Selected language": "Idioma seleccionado",
+  "Language": "Idioma",
+  "Learn how to help translating the app": "Aprende cómo ayudar a traducir la aplicación",
+  "Browsers preferred languages": "Idiomas preferidos de los navegadores",
+  "Check which languages are supported by the app.": "Comprueba qué idiomas son compatibles con la aplicación.",
+  "Translate in context using Crowdin": "Traducir en el contexto usando Crowdin"
 }

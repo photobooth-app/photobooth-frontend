@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Υπηρεσία επαναφόρτωσης",
   "BTN_LABEL_RESET_CONFIG": "Επαναφορά",
   "BTN_LABEL_RESTART_SERVICE": "Επανεκκίνηση της υπηρεσίας",
-  "BTN_LABEL_RESTORE_CONFIG": "Επαναφορά",
+  "BTN_LABEL_RELOAD_CONFIG": "Reload",
   "BTN_LABEL_SHUTDOWN": "Τερματισμός λειτουργίας",
   "BTN_LABEL_SHUTDOWN_HOST": "Τερματισμός κεντρικού υπολογιστή",
   "BTN_LABEL_UNINSTALL_SERVICE": "Απεγκατάσταση υπηρεσίας",
@@ -88,7 +88,7 @@
   "data directory": "Κατάλογος δεδομένων",
   "system information": "Πληροφορίες συστήματος",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
-  "yes, delete": "Ναι, διαγραφή",
+  "yes, reset": "Ναι, επαναφορά",
   "Are you sure you want to delete the selected files and subfolders?": "Είστε βέβαιοι ότι θέλετε να διαγράψετε τα επιλεγμένα αρχεία και υποφακέλους?",
   "Edit translation": "Επεξεργασία μετάφρασης",
   "Help to translate": "Βοηθήστε στη μετάφραση",
@@ -96,7 +96,7 @@
   "Logs": "Καταγραφή",
   "1st Start": "1η Έναρξη",
   "computer model": "Μοντέλο υπολογιστή",
-  "Are you sure you want to reset the configuration and delete config.json?": "Είστε βέβαιοι ότι θέλετε να επαναφέρετε τις ρυθμίσεις και να διαγράψετε το config.json?",
+  "Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?": "Είστε βέβαιοι ότι θέλετε να διαγράψετε τις ρυθμίσεις για το {selected_configuration} και να επαναφέρετε στις προεπιλογές?",
   "Clear recycle directory": "Καθαρισμός καταλόγου ανακύκλωσης",
   "Are you sure to clear the recycle directory?": "Είστε βέβαιοι να καθαρίσετε τον κατάλογο ανακύκλωσης?",
   "Usage counter": "Μετρητής χρήσης",
@@ -117,5 +117,10 @@
   "Backend Index: ": "Δείκτης Παρασκηνίου: ",
   "Stats counter": "Μετρητής στατιστικών",
   "Media Database": "Βάση Δεδομένων Πολυμέσων",
-  "Selected language": "Επιλεγμένη γλώσσα"
+  "Selected language": "Επιλεγμένη γλώσσα",
+  "Language": "Language",
+  "Learn how to help translating the app": "Learn how to help translating the app",
+  "Browsers preferred languages": "Browsers preferred languages",
+  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
+  "Translate in context using Crowdin": "Translate in context using Crowdin"
 }
