@@ -99,7 +99,7 @@
 
               <q-card-actions align="right">
                 <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
-                <q-btn v-close-popup :label="$t('yes, delete')" color="negative" @click="deleteItems(selected)" />
+                <q-btn v-close-popup :label="$t('Yes, delete')" color="negative" @click="deleteItems(selected)" />
               </q-card-actions>
             </q-card>
           </q-dialog>
