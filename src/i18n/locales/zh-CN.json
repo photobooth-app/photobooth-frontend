@@ -118,9 +118,9 @@
   "Stats counter": "统计计数器",
   "Media Database": "媒体数据库",
   "Selected language": "所选语言",
-  "Language": "Language",
-  "Learn how to help translating the app": "Learn how to help translating the app",
-  "Browsers preferred languages": "Browsers preferred languages",
-  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
-  "Translate in context using Crowdin": "Translate in context using Crowdin"
+  "Language": "语言",
+  "Learn how to help translating the app": "学习如何帮助翻译应用程序",
+  "Browsers preferred languages": "浏览器首选语言",
+  "Check which languages are supported by the app.": "检查应用支持哪种语言。",
+  "Translate in context using Crowdin": "使用 Crowdin 翻译上下文文件"
 }

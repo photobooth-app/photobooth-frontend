@@ -118,9 +118,9 @@
   "Stats counter": "Contatore statistiche",
   "Media Database": "Database Multimediale",
   "Selected language": "Lingua selezionata",
-  "Language": "Language",
-  "Learn how to help translating the app": "Learn how to help translating the app",
-  "Browsers preferred languages": "Browsers preferred languages",
-  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
-  "Translate in context using Crowdin": "Translate in context using Crowdin"
+  "Language": "Lingua",
+  "Learn how to help translating the app": "Scopri come aiutare a tradurre l'app",
+  "Browsers preferred languages": "Lingue preferite dai browser",
+  "Check which languages are supported by the app.": "Controlla quali lingue sono supportate dall'app.",
+  "Translate in context using Crowdin": "Traduci in contesto usando Crowdin"
 }

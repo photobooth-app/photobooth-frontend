@@ -118,9 +118,9 @@
   "Stats counter": "Stats counter",
   "Media Database": "メディアデータベース",
   "Selected language": "選択した言語",
-  "Language": "Language",
-  "Learn how to help translating the app": "Learn how to help translating the app",
-  "Browsers preferred languages": "Browsers preferred languages",
-  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
-  "Translate in context using Crowdin": "Translate in context using Crowdin"
+  "Language": "言語",
+  "Learn how to help translating the app": "アプリの翻訳に役立つ方法を学ぶ",
+  "Browsers preferred languages": "ブラウザの優先言語",
+  "Check which languages are supported by the app.": "アプリでサポートされている言語を確認します。",
+  "Translate in context using Crowdin": "Crowdinを使って文脈で翻訳"
 }

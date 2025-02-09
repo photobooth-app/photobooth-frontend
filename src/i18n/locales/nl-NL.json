@@ -118,9 +118,9 @@
   "Stats counter": "Statistieken teller",
   "Media Database": "Media database",
   "Selected language": "Geselecteerde taal",
-  "Language": "Language",
-  "Learn how to help translating the app": "Learn how to help translating the app",
-  "Browsers preferred languages": "Browsers preferred languages",
-  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
-  "Translate in context using Crowdin": "Translate in context using Crowdin"
+  "Language": "Taal",
+  "Learn how to help translating the app": "Leer hoe je kunt helpen met het vertalen van de app",
+  "Browsers preferred languages": "Browsers voorkeurstalen",
+  "Check which languages are supported by the app.": "Controleer welke talen door de app worden ondersteund.",
+  "Translate in context using Crowdin": "Vertalen in de context met behulp van Crowdin"
 }

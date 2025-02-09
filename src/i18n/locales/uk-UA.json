@@ -118,9 +118,9 @@
   "Stats counter": "Лічильник статистики",
   "Media Database": "База даних мультимедіа",
   "Selected language": "Обрана мова",
-  "Language": "Language",
-  "Learn how to help translating the app": "Learn how to help translating the app",
-  "Browsers preferred languages": "Browsers preferred languages",
-  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
-  "Translate in context using Crowdin": "Translate in context using Crowdin"
+  "Language": "Мова:",
+  "Learn how to help translating the app": "Дізнайтеся, як допомогти перекласти додаток",
+  "Browsers preferred languages": "Браузери бажаних мов",
+  "Check which languages are supported by the app.": "Виберіть, які мови підтримується програмою.",
+  "Translate in context using Crowdin": "Перекласти в контексті за допомогою Crowdin"
 }
