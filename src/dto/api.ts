@@ -223,18 +223,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/config/currentActive": {
+    "/api/config": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /**
-         * Api Get Config Current Active
-         * @description returns currently cached and active settings, ui requests this on startup.
-         */
-        get: operations["api_get_config_current_active_api_config_currentActive_get"];
+        /** Api Get Config Current Active */
+        get: operations["api_get_config_current_active_api_config_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -459,19 +456,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/config/schema": {
+    "/api/admin/config/list": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /**
-         * Api Get Config Schema
-         * @description Get schema to build the client UI
-         *     :param str schema_type: default or dereferenced.
-         */
-        get: operations["api_get_config_schema_api_admin_config_schema_get"];
+        /** Api Get Configurables */
+        get: operations["api_get_configurables_api_admin_config_list_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -480,61 +473,63 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/config/reset": {
+    "/api/admin/config": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /**
-         * Api Reset Config
-         * @description Reset config, deleting config.json file
-         */
-        get: operations["api_reset_config_api_admin_config_reset_get"];
+        get?: never;
         put?: never;
         post?: never;
-        delete?: never;
+        /** Api Reset All Config */
+        delete: operations["api_reset_all_config_api_admin_config_delete"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/admin/config/currentActive": {
+    "/api/admin/config/{configurable}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /**
-         * Api Get Config Current Active
-         * @description returns currently cached and active settings
-         */
-        get: operations["api_get_config_current_active_api_admin_config_currentActive_get"];
+        /** Api Get Config Current Active */
+        get: operations["api_get_config_current_active_api_admin_config__configurable__get"];
         put?: never;
         post?: never;
-        delete?: never;
+        /** Api Reset Config */
+        delete: operations["api_reset_config_api_admin_config__configurable__delete"];
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Api Post Config Current
+         * @description Update the configuration for appconfig (configurable=app) or a plugin (example configurable="photobooth.plugins.gpio_lights")
+         *     The configuration is persisted also after update.
+         *     updated_config is a generic type valid to receive json objects instead of a pydantic model because depending on the configurable
+         *     the model is different.
+         *
+         *     Args:
+         *         configurable (str): app for appconfig, otherwise str with plugin name to update the config for. Defaults to None.
+         *         updated_config (dict[AnyStr, Any]): valid json that is validated against appconfig or plugin config pydantic models
+         */
+        patch: operations["api_post_config_current_api_admin_config__configurable__patch"];
         trace?: never;
     };
-    "/api/admin/config/current": {
+    "/api/admin/config/{configurable}/schema": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /**
-         * Api Get Config Current
-         * @description read settings from drive and return
-         */
-        get: operations["api_get_config_current_api_admin_config_current_get"];
+        /** Api Get Config Schema */
+        get: operations["api_get_config_schema_api_admin_config__configurable__schema_get"];
         put?: never;
-        /** Api Post Config Current */
-        post: operations["api_post_config_current_api_admin_config_current_post"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -864,7 +859,7 @@ export interface components {
             canvas_height: number;
             /**
              * Merge Definition
-             * @description Sequence images in an animated GIF. Predefined image files are used instead a camera capture. File needs to be located in DATA_DIR/*
+             * @description Sequence images in an animated GIF. Predefined image files are used instead a camera capture. File needs to be located in working directory/userdata/*
              * @default []
              */
             merge_definition: components["schemas"]["AnimationMergeDefinition"][];
@@ -897,7 +892,7 @@ export interface components {
              *           },
              *           "name": "default single image",
              *           "processing": {
-             *             "fill_background_color": "#00f",
+             *             "fill_background_color": "blue",
              *             "fill_background_enable": false,
              *             "filter": "original",
              *             "img_background_enable": true,
@@ -926,9 +921,11 @@ export interface components {
              *               "keycode": "i"
              *             },
              *             "ui_trigger": {
+             *               "custom_color": "#196cb0",
              *               "icon": "photo_camera",
              *               "show_button": true,
-             *               "title": "Image"
+             *               "title": "Image",
+             *               "use_custom_color": false
              *             }
              *           }
              *         }
@@ -944,7 +941,7 @@ export interface components {
              *           },
              *           "name": "default collage",
              *           "processing": {
-             *             "canvas_fill_background_color": "#008000",
+             *             "canvas_fill_background_color": "green",
              *             "canvas_fill_background_enable": false,
              *             "canvas_height": 1280,
              *             "canvas_img_background_enable": false,
@@ -964,7 +961,7 @@ export interface components {
              *             ],
              *             "canvas_texts_enable": true,
              *             "canvas_width": 1920,
-             *             "capture_fill_background_color": "#00f",
+             *             "capture_fill_background_color": "blue",
              *             "capture_fill_background_enable": false,
              *             "capture_img_background_enable": false,
              *             "capture_img_background_file": "",
@@ -1010,9 +1007,11 @@ export interface components {
              *               "keycode": "c"
              *             },
              *             "ui_trigger": {
+             *               "custom_color": "#196cb0",
              *               "icon": "auto_awesome_mosaic",
              *               "show_button": true,
-             *               "title": "Collage"
+             *               "title": "Collage",
+             *               "use_custom_color": false
              *             }
              *           }
              *         }
@@ -1067,9 +1066,11 @@ export interface components {
              *               "keycode": "g"
              *             },
              *             "ui_trigger": {
+             *               "custom_color": "#196cb0",
              *               "icon": "gif_box",
              *               "show_button": true,
-             *               "title": "Animation"
+             *               "title": "Animation",
+             *               "use_custom_color": false
              *             }
              *           }
              *         }
@@ -1094,9 +1095,11 @@ export interface components {
              *               "keycode": "v"
              *             },
              *             "ui_trigger": {
+             *               "custom_color": "#196cb0",
              *               "icon": "movie",
              *               "show_button": true,
-             *               "title": "Video"
+             *               "title": "Video",
+             *               "use_custom_color": false
              *             }
              *           }
              *         }
@@ -1123,9 +1126,11 @@ export interface components {
              *               "keycode": "w"
              *             },
              *             "ui_trigger": {
+             *               "custom_color": "#196cb0",
              *               "icon": "burst_mode",
              *               "show_button": true,
-             *               "title": "Wigglegram"
+             *               "title": "Wigglegram",
+             *               "use_custom_color": false
              *             }
              *           }
              *         }
@@ -1153,9 +1158,11 @@ export interface components {
              *               "keycode": "p"
              *             },
              *             "ui_trigger": {
+             *               "custom_color": "#196cb0",
              *               "icon": "print",
              *               "show_button": true,
-             *               "title": "Print"
+             *               "title": "Print",
+             *               "use_custom_color": false
              *             }
              *           }
              *         }
@@ -1304,8 +1311,6 @@ export interface components {
             backends: components["schemas"]["GroupBackends"];
             /** @default {
              *       "keyboard_input_enabled": false,
-             *       "wled_enabled": false,
-             *       "wled_serial_port": "",
              *       "gpio_enabled": false,
              *       "gpio_pin_shutdown": 17,
              *       "gpio_pin_reboot": 18
@@ -1411,7 +1416,7 @@ export interface components {
              * Capture Fill Background Color
              * Format: color
              * @description Solid color used to fill background.
-             * @default #00f
+             * @default blue
              */
             capture_fill_background_color: string;
             /**
@@ -1422,7 +1427,7 @@ export interface components {
             capture_img_background_enable: boolean;
             /**
              * Capture Img Background File
-             * @description Image file to use as background filling transparent area. File needs to be located in DATA_DIR/*
+             * @description Image file to use as background filling transparent area. File needs to be located in working directory/userdata/*
              * @default
              */
             capture_img_background_file: string;
@@ -1440,7 +1445,7 @@ export interface components {
             canvas_height: number;
             /**
              * Merge Definition
-             * @description How to arrange single images in the collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Width/Height in pixels. Aspect ratio is kept always. Predefined image files are used instead a camera capture. File needs to be located in DATA_DIR/*
+             * @description How to arrange single images in the collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Width/Height in pixels. Aspect ratio is kept always. Predefined image files are used instead a camera capture. File needs to be located in working directory/userdata/*
              */
             merge_definition: components["schemas"]["CollageMergeDefinition"][];
             /**
@@ -1453,7 +1458,7 @@ export interface components {
              * Canvas Fill Background Color
              * Format: color
              * @description Solid color used to fill background.
-             * @default #008000
+             * @default green
              */
             canvas_fill_background_color: string;
             /**
@@ -1476,7 +1481,7 @@ export interface components {
             canvas_img_front_enable: boolean;
             /**
              * Canvas Img Front File
-             * @description Image file to paste on top over photos and backgrounds. Photos are visible only through transparant parts. Image needs to be transparent (PNG). File needs to be located in DATA_DIR/*
+             * @description Image file to paste on top over photos and backgrounds. Photos are visible only through transparant parts. Image needs to be transparent (PNG). File needs to be located in working directory/userdata/*
              * @default
              */
             canvas_img_front_file: string;
@@ -1488,7 +1493,7 @@ export interface components {
             canvas_texts_enable: boolean;
             /**
              * Canvas Texts
-             * @description Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*
+             * @description Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in working directory/userdata/*
              * @default []
              */
             canvas_texts: components["schemas"]["TextsConfig"][];
@@ -1551,7 +1556,7 @@ export interface components {
              *           "countdown_capture": 2
              *         },
              *         "processing": {
-             *           "fill_background_color": "#00f",
+             *           "fill_background_color": "blue",
              *           "fill_background_enable": false,
              *           "filter": "original",
              *           "img_background_enable": true,
@@ -1580,9 +1585,11 @@ export interface components {
              *             "keycode": "i"
              *           },
              *           "ui_trigger": {
+             *             "custom_color": "#196cb0",
              *             "icon": "photo_camera",
              *             "show_button": true,
-             *             "title": "Image"
+             *             "title": "Image",
+             *             "use_custom_color": false
              *           }
              *         }
              *       }
@@ -1603,7 +1610,7 @@ export interface components {
              *           "show_individual_captures_in_gallery": true
              *         },
              *         "processing": {
-             *           "canvas_fill_background_color": "#008000",
+             *           "canvas_fill_background_color": "green",
              *           "canvas_fill_background_enable": false,
              *           "canvas_height": 1280,
              *           "canvas_img_background_enable": false,
@@ -1623,7 +1630,7 @@ export interface components {
              *           ],
              *           "canvas_texts_enable": true,
              *           "canvas_width": 1920,
-             *           "capture_fill_background_color": "#00f",
+             *           "capture_fill_background_color": "blue",
              *           "capture_fill_background_enable": false,
              *           "capture_img_background_enable": false,
              *           "capture_img_background_file": "",
@@ -1669,9 +1676,11 @@ export interface components {
              *             "keycode": "c"
              *           },
              *           "ui_trigger": {
+             *             "custom_color": "#196cb0",
              *             "icon": "auto_awesome_mosaic",
              *             "show_button": true,
-             *             "title": "Collage"
+             *             "title": "Collage",
+             *             "use_custom_color": false
              *           }
              *         }
              *       }
@@ -1731,9 +1740,11 @@ export interface components {
              *             "keycode": "g"
              *           },
              *           "ui_trigger": {
+             *             "custom_color": "#196cb0",
              *             "icon": "gif_box",
              *             "show_button": true,
-             *             "title": "Animation"
+             *             "title": "Animation",
+             *             "use_custom_color": false
              *           }
              *         }
              *       }
@@ -1763,9 +1774,11 @@ export interface components {
              *             "keycode": "v"
              *           },
              *           "ui_trigger": {
+             *             "custom_color": "#196cb0",
              *             "icon": "movie",
              *             "show_button": true,
-             *             "title": "Video"
+             *             "title": "Video",
+             *             "use_custom_color": false
              *           }
              *         }
              *       }
@@ -1797,9 +1810,11 @@ export interface components {
              *             "keycode": "w"
              *           },
              *           "ui_trigger": {
+             *             "custom_color": "#196cb0",
              *             "icon": "burst_mode",
              *             "show_button": true,
-             *             "title": "Wigglegram"
+             *             "title": "Wigglegram",
+             *             "use_custom_color": false
              *           }
              *         }
              *       }
@@ -2106,18 +2121,6 @@ export interface components {
              */
             keyboard_input_enabled: boolean;
             /**
-             * Wled Enabled
-             * @description Enable WLED integration for user feedback during countdown and capture by LEDs.
-             * @default false
-             */
-            wled_enabled: boolean;
-            /**
-             * Wled Serial Port
-             * @description Serial port the WLED device is connected to.
-             * @default
-             */
-            wled_serial_port: string;
-            /**
              * Gpio Enabled
              * @description Enable Raspberry Pi GPIOzero integration.
              * @default false
@@ -2276,9 +2279,11 @@ export interface components {
              *             "keycode": "p"
              *           },
              *           "ui_trigger": {
+             *             "custom_color": "#196cb0",
              *             "icon": "print",
              *             "show_button": true,
-             *             "title": "Print"
+             *             "title": "Print",
+             *             "use_custom_color": false
              *           }
              *         }
              *       }
@@ -2758,7 +2763,7 @@ export interface components {
              * Fill Background Color
              * Format: color
              * @description Solid color used to fill background.
-             * @default #00f
+             * @default blue
              */
             fill_background_color: string;
             /**
@@ -2769,7 +2774,7 @@ export interface components {
             img_background_enable: boolean;
             /**
              * Img Background File
-             * @description Image file to use as background filling transparent area. File needs to be located in DATA_DIR/*
+             * @description Image file to use as background filling transparent area. File needs to be located in working directory/userdata/*
              * @default
              */
             img_background_file: string;
@@ -2793,7 +2798,7 @@ export interface components {
             texts_enable: boolean;
             /**
              * Texts
-             * @description Text to overlay on images after capture. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in DATA_DIR/*
+             * @description Text to overlay on images after capture. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in working directory/userdata/*
              * @default []
              */
             texts: components["schemas"]["TextsConfig"][];
@@ -2833,7 +2838,7 @@ export interface components {
             /**
              * Color
              * Format: color
-             * @default #f00
+             * @default red
              */
             color: string;
         };
@@ -2852,7 +2857,9 @@ export interface components {
             /** @default {
              *       "show_button": true,
              *       "title": "",
-             *       "icon": ""
+             *       "icon": "",
+             *       "use_custom_color": false,
+             *       "custom_color": "#196cb0"
              *     } */
             ui_trigger: components["schemas"]["UiTrigger"];
             /** @default {
@@ -2889,15 +2896,16 @@ export interface components {
              */
             icon: string;
             /**
-             * Use custom color
-             * @description Use custom color instead of Primary color
-             * @default
+             * Use Custom Color
+             * @description Use custom color for button.
+             * @default false
              */
             use_custom_color: boolean;
             /**
-             * Custom color
-             * @description Custom color used instead of Primary color
-             * @default
+             * Custom Color
+             * Format: color
+             * @description Custom color for the button.
+             * @default #196cb0
              */
             custom_color: string;
         };
@@ -3283,7 +3291,7 @@ export interface operations {
             };
         };
     };
-    api_get_config_current_active_api_config_currentActive_get: {
+    api_get_config_current_active_api_config_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -3298,7 +3306,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["AppConfig"];
                 };
             };
         };
@@ -3473,7 +3481,7 @@ export interface operations {
             header?: never;
             path: {
                 mediaitem_id: string;
-                filter: string;
+                filter: string | null;
             };
             cookie?: never;
         };
@@ -3698,13 +3706,53 @@ export interface operations {
             };
         };
     };
-    api_get_config_schema_api_admin_config_schema_get: {
+    api_get_configurables_api_admin_config_list_get: {
         parameters: {
-            query?: {
-                schema_type?: string;
-            };
+            query?: never;
             header?: never;
             path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    api_reset_all_config_api_admin_config_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    api_get_config_current_active_api_admin_config__configurable__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                configurable: string;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -3729,11 +3777,13 @@ export interface operations {
             };
         };
     };
-    api_reset_config_api_admin_config_reset_get: {
+    api_reset_config_api_admin_config__configurable__delete: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                configurable: string;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -3747,60 +3797,64 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-        };
-    };
-    api_get_config_current_active_api_admin_config_currentActive_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
+            /** @description Validation Error */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
     };
-    api_get_config_current_api_admin_config_current_get: {
+    api_post_config_current_api_admin_config__configurable__patch: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
+            path: {
+                configurable: string;
             };
-        };
-    };
-    api_post_config_current_api_admin_config_current_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["AppConfig"];
+                "application/json": Record<string, never>;
             };
         };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    api_get_config_schema_api_admin_config__configurable__schema_get: {
+        parameters: {
+            query?: {
+                schema_type?: "default" | "dereferenced";
+            };
+            header?: never;
+            path: {
+                configurable: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -3957,7 +4011,7 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: {
+        requestBody: {
             content: {
                 "application/json": components["schemas"]["PathListItem"][];
             };
@@ -3988,7 +4042,7 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: {
+        requestBody: {
             content: {
                 "application/json": components["schemas"]["PathListItem"][];
             };
