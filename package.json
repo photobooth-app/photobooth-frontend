@@ -20,7 +20,7 @@
   "dependencies": {
     "@jsonforms/core": "^3.2.1",
     "@jsonforms/vue": "^3.2.1",
-    "@quasar/extras": "^1.16.16",
+    "@quasar/extras": "^1.16.17",
     "@vueuse/core": "^12.4.0",
     "@vueuse/integrations": "^12.0.0",
     "pinia": "^2.1.7",
@@ -34,7 +34,7 @@
     "@eslint/js": "^9.16.0",
     "@intlify/eslint-plugin-vue-i18n": "^3.2.0",
     "@intlify/unplugin-vue-i18n": "^6.0.0",
-    "@quasar/app-vite": "^2.0.5",
+    "@quasar/app-vite": "^2.1.0",
     "@types/lodash": "^4.17.1",
     "@types/node": "^22.0.0",
     "@vue/eslint-config-prettier": "^10.1.0",
