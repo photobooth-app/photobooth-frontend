@@ -52,7 +52,15 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
     addMediaitem(mediaitem: components['schemas']['MediaitemPublic']) {
       this.collection.unshift(mediaitem)
     },
-
+    // update mediaitem in case there was server side processing. used to bust cache usually.
+    updateMediaitem(mediaitem: components['schemas']['MediaitemPublic']) {
+      const update_index = this.getIndexOfItemId(mediaitem.id)
+      if (update_index > -1) {
+        this.collection[update_index] = mediaitem
+      } else {
+        console.warn('an item shall be updated, but it was not found in the store: ', mediaitem)
+      }
+    },
     // remove mediaitem from store
     removeMediaitem(mediaitem: components['schemas']['MediaitemPublic']) {
       const removed_mediaitem = this.collection.splice(this.getIndexOfItemId(mediaitem.id), 1)

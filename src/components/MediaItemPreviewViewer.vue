@@ -7,13 +7,13 @@
       loading="eager"
       loading-show-delay="800"
       no-transition
-      :src="`/media/preview/${item.id}`"
+      :src="`/media/preview/${item.id}?${item.updated_at}`"
     />
   </div>
   <div v-else class="full-height">
     <video
       :draggable="false"
-      :src="`/media/preview/${item.id}`"
+      :src="`/media/preview/${item.id}?${item.updated_at}`"
       class="rounded-borders full-height"
       muted
       autoplay

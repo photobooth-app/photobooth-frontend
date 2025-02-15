@@ -124,6 +124,12 @@ const initSseClient = () => {
     mediacollectionStore.addMediaitem(_mediaitem)
   })
 
+  eventSource.value?.addEventListener('DbUpdate', (evt) => {
+    const _mediaitem = JSON.parse(evt.data)
+    console.log('received item to update in collection:', _mediaitem)
+    mediacollectionStore.updateMediaitem(_mediaitem)
+  })
+
   eventSource.value?.addEventListener('DbRemove', (evt) => {
     const _mediaitem = JSON.parse(evt.data)
     console.log('received request to remove item from collection:', _mediaitem)

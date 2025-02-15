@@ -151,8 +151,6 @@ const shareButtons = computed(() => {
     result.push(trigger)
   })
 
-  console.log(result)
-
   return result
 })
 const getMediaitemById = (id: string) => {
@@ -163,18 +161,6 @@ const getFilterAvailable = (media_type: string) => {
   return ['image', 'collageimage', 'animationimage'].includes(media_type)
 }
 
-//https://stackoverflow.com/questions/1077041/refresh-image-with-a-new-one-at-the-same-url/66312176#66312176
-const reloadImg = async (url: string) => {
-  // fetch to update cache on regular images, if we do not fetch, on next gallery visit old images are displayed
-  fetch(url, { cache: 'reload', mode: 'no-cors' })
-
-  // check if there is an img visible, if so, update it:
-  document.body.querySelectorAll(`img[src*='${url}']`).forEach((img) => {
-    // force browser to show update image. drawback: it might send a second request to the server.
-    // due to #time file is transferred twice from server. but without there is no good way to force the browser to render new pic
-    ;(img as HTMLImageElement).src = url
-  })
-}
 const doApplyFilter = (id: string, filter: string) => {
   displayIndeterminateProgressbar.value = true
   fetch(`/api/mediaprocessing/applyfilter/${id}/${filter}`)
@@ -182,11 +168,6 @@ const doApplyFilter = (id: string, filter: string) => {
       if (!response.ok) {
         throw new Error('Server returned ' + response.status)
       }
-
-      reloadImg(`/media/preview/${id}`)
-      reloadImg(`/media/thumbnail/${id}`)
-      // full is not reloaded as it is nowhere used in the client currently except
-      // from direct download which is always requested up to date.
 
       displayIndeterminateProgressbar.value = false
     })
