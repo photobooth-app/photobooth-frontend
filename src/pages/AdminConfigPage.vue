@@ -5,7 +5,7 @@
         v-for="(element, index) in configurables"
         :key="index"
         :to="{ name: 'config', params: { section: element } }"
-        :label="element"
+        :label="element.split('.').pop()"
         replace
       />
     </q-tabs>
