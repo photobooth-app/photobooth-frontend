@@ -122,5 +122,6 @@
   "Learn how to help translating the app": "Lær hvordan du hjælper med at oversætte appen",
   "Browsers preferred languages": "Browsere foretrukne sprog",
   "Check which languages are supported by the app.": "Kontroller, hvilke sprog der understøttes af appen.",
-  "Translate in context using Crowdin": "Oversæt i forbindelse med brug af Crowdin"
+  "Translate in context using Crowdin": "Oversæt i forbindelse med brug af Crowdin",
+  "Yes, delete": "Ja, slet"
 }

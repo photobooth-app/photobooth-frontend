@@ -122,5 +122,6 @@
   "Learn how to help translating the app": "Μάθετε πώς να βοηθήσετε στη μετάφραση της εφαρμογής",
   "Browsers preferred languages": "Προτιμώμενες γλώσσες περιήγησης",
   "Check which languages are supported by the app.": "Ελέγξτε ποιες γλώσσες υποστηρίζονται από την εφαρμογή.",
-  "Translate in context using Crowdin": "Μεταφράστε στο περιβάλλον χρησιμοποιώντας το Crowdin"
+  "Translate in context using Crowdin": "Μεταφράστε στο περιβάλλον χρησιμοποιώντας το Crowdin",
+  "Yes, delete": "Ναι, διαγραφή"
 }

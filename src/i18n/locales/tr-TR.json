@@ -122,5 +122,6 @@
   "Learn how to help translating the app": "Uygulamanın çevirisine nasıl yardımcı olabileceğinizi öğrenin",
   "Browsers preferred languages": "Tarayıcıların tercih ettiği diller",
   "Check which languages are supported by the app.": "Uygulama tarafından hangi dillerin desteklendiğini kontrol edin.",
-  "Translate in context using Crowdin": "Crowdin kullanarak bağlam içinde çeviri yapın"
+  "Translate in context using Crowdin": "Crowdin kullanarak bağlam içinde çeviri yapın",
+  "Yes, delete": "Evet, silin"
 }

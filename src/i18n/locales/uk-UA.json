@@ -122,5 +122,6 @@
   "Learn how to help translating the app": "Дізнайтеся, як допомогти перекласти додаток",
   "Browsers preferred languages": "Браузери бажаних мов",
   "Check which languages are supported by the app.": "Виберіть, які мови підтримується програмою.",
-  "Translate in context using Crowdin": "Перекласти в контексті за допомогою Crowdin"
+  "Translate in context using Crowdin": "Перекласти в контексті за допомогою Crowdin",
+  "Yes, delete": "Так, видалити"
 }

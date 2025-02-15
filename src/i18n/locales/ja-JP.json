@@ -122,5 +122,6 @@
   "Learn how to help translating the app": "アプリの翻訳に役立つ方法を学ぶ",
   "Browsers preferred languages": "ブラウザの優先言語",
   "Check which languages are supported by the app.": "アプリでサポートされている言語を確認します。",
-  "Translate in context using Crowdin": "Crowdinを使って文脈で翻訳"
+  "Translate in context using Crowdin": "Crowdinを使って文脈で翻訳",
+  "Yes, delete": "はい、削除します"
 }

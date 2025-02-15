@@ -20,13 +20,13 @@
   "BTN_LABEL_MAINPAGE_TAKE_PHOTO": "Photo",
   "BTN_LABEL_MAINPAGE_TAKE_VIDEO": "Vidéo",
   "BTN_LABEL_PERSIST_CONFIG": "Sauvegarde",
-  "BTN_LABEL_REBOOT": "Reboot",
-  "BTN_LABEL_REBOOT_HOST": "Redémarre l'hôte",
+  "BTN_LABEL_REBOOT": "Redémarrer",
+  "BTN_LABEL_REBOOT_HOST": "Redémarrer l'hôte",
   "BTN_LABEL_RELOAD_PAGE": "Actualiser",
   "BTN_LABEL_RELOAD_SERVICE": "Actualiser le service",
   "BTN_LABEL_RESET_CONFIG": "Remise à zéro",
   "BTN_LABEL_RESTART_SERVICE": "Redémarrer le service",
-  "BTN_LABEL_RELOAD_CONFIG": "Reload",
+  "BTN_LABEL_RELOAD_CONFIG": "Recharger",
   "BTN_LABEL_SHUTDOWN": "Eteindre",
   "BTN_LABEL_SHUTDOWN_HOST": "Eteindre l'hôte",
   "BTN_LABEL_UNINSTALL_SERVICE": "Désinstaller le service",
@@ -122,5 +122,6 @@
   "Learn how to help translating the app": "Apprenez à aider à traduire l'application",
   "Browsers preferred languages": "Langues préférées des navigateurs",
   "Check which languages are supported by the app.": "Vérifiez quelles langues sont prises en charge par l'application.",
-  "Translate in context using Crowdin": "Traduire en contexte en utilisant Crowdin"
+  "Translate in context using Crowdin": "Traduire en contexte en utilisant Crowdin",
+  "Yes, delete": "Oui, supprimer"
 }

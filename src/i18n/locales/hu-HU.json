@@ -122,5 +122,6 @@
   "Learn how to help translating the app": "Tudja meg, hogyan segíthet az alkalmazás fordításában",
   "Browsers preferred languages": "A böngészők által preferált nyelvek",
   "Check which languages are supported by the app.": "Ellenőrizze, hogy az alkalmazás mely nyelveket támogatja.",
-  "Translate in context using Crowdin": "Fordítás kontextusban a Crowdin segítségével"
+  "Translate in context using Crowdin": "Fordítás kontextusban a Crowdin segítségével",
+  "Yes, delete": "Igen, törölni"
 }

@@ -118,9 +118,10 @@
   "Stats counter": "Počítadlo statistik",
   "Media Database": "Databáze médií",
   "Selected language": "Vybraný jazyk",
-  "Language": "Language",
-  "Learn how to help translating the app": "Learn how to help translating the app",
-  "Browsers preferred languages": "Browsers preferred languages",
-  "Check which languages are supported by the app.": "Check which languages are supported by the app.",
-  "Translate in context using Crowdin": "Translate in context using Crowdin"
+  "Language": "Jazyk",
+  "Learn how to help translating the app": "Naučte se pomoci s překladem aplikace",
+  "Browsers preferred languages": "Preferovaný jazyk prohlížečů",
+  "Check which languages are supported by the app.": "Zkontrolujte, které jazyky aplikace podporuje.",
+  "Translate in context using Crowdin": "Přeložit v kontextu pomocí Crowdin",
+  "Yes, delete": "Ano, smazat"
 }

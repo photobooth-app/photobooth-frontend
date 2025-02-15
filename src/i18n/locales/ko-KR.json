@@ -122,5 +122,6 @@
   "Learn how to help translating the app": "앱 번역을 돕는 방법 알아보기",
   "Browsers preferred languages": "브라우저 기본 설정 언어",
   "Check which languages are supported by the app.": "앱에서 지원되는 언어를 확인하세요.",
-  "Translate in context using Crowdin": "Crowdin을 사용하여 문맥에 맞게 번역하기"
+  "Translate in context using Crowdin": "Crowdin을 사용하여 문맥에 맞게 번역하기",
+  "Yes, delete": "예, 삭제"
 }
