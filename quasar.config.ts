@@ -44,8 +44,10 @@ export default defineConfig((ctx) => {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
-      // rawDefine: {}
+      env: {
+        BUILD_DATE: new Date().toISOString(),
+      },
+      // rawDefine: {},
       // ignorePublicFolder: true,
       // minify: false,
       // polyfillModulePreload: true,

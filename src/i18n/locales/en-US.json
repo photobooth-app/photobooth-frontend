@@ -133,5 +133,6 @@
   "Reload services": "Reload services",
   "Service": "Service",
   "Reboot Host": "Reboot Host",
-  "Shutdown Host": "Shutdown Host"
+  "Shutdown Host": "Shutdown Host",
+  "Frontend build date": "Frontend build date"
 }

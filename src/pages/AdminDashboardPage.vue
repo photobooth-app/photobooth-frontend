@@ -119,6 +119,13 @@
 
             <q-item>
               <q-item-section>
+                <q-item-label caption>{{ $t('Frontend build date') }} </q-item-label>
+                <q-item-label>{{ builddate }}</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
                 <q-item-label caption>{{ $t('cpu load') }} </q-item-label>
                 <q-item-label>
                   <q-linear-progress size="lg" :value="store.information.cpu_percent / 100"> </q-linear-progress>
@@ -508,6 +515,7 @@ const confirm_install_systemctl = ref(false)
 const confirm_uninstall_systemctl = ref(false)
 const confirm_delete_all = ref(false)
 const confirm_clear_recycle_directory = ref(false)
+const builddate = new Date(process.env.BUILD_DATE).toLocaleString()
 
 const displayResetLimitsConfirm = (field: string) => {
   selected_field.value = field

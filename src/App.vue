@@ -19,6 +19,8 @@ import { useQuasar } from 'quasar'
 import type { EventSourceStatus } from '@vueuse/core'
 import { useEventSource } from '@vueuse/core'
 
+console.log('frontend build date', process.env.BUILD_DATE)
+
 const store = useMainStore()
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
