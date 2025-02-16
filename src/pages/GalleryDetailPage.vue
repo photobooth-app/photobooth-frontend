@@ -54,6 +54,14 @@
             @trigger-delete-mediaitem="doDeleteItem"
             @trigger-share-action="doShareAction"
           ></PageToolbar>
+
+          <q-dialog v-model="showDialogShareActionWithParameters">
+            <PageShareParameters
+              :parameters="configurationStore.configuration.share.actions[0].processing.parameters"
+              @trigger-share-action-with-parameters="doShareActionWithParameters"
+            >
+            </PageShareParameters>
+          </q-dialog>
         </q-page>
       </q-page-container>
     </div>
@@ -72,6 +80,7 @@
 import { useConfigurationStore } from '../stores/configuration-store'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { ref, onBeforeMount, computed, onMounted, watch } from 'vue'
+import { default as PageShareParameters } from '../components/mediaviewer/PageShareParameters.vue'
 import { default as PageToolbar } from '../components/mediaviewer/PageToolbar.vue'
 import { default as HeaderCountdownTimer } from '../components/mediaviewer/HeaderCountdownTimer.vue'
 import { default as HeaderProcessing } from '../components/mediaviewer/HeaderProcessing.vue'
@@ -80,11 +89,13 @@ import { default as PageQrCode } from '../components/mediaviewer/PageQrCode.vue'
 import { default as PageCarouselView } from '../components/mediaviewer/PageCarouselView.vue'
 import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useQuasar } from 'quasar'
 import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
-import { remoteProcedureCall } from '../util/fetch_api.js'
+import { remoteProcedureCall, _fetch } from '../util/fetch_api.js'
 import { default as ReturnButton } from '../components/ReturnButton.vue'
 import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
 
+const $q = useQuasar()
 const route = useRoute()
 const router = useRouter()
 const configurationStore = useConfigurationStore()
@@ -93,6 +104,7 @@ const selectedMediaitemId = ref('')
 const rightDrawerOpen = ref(false)
 const headercountdowntimer = ref(false) // likely not used here, move to newitempresenter and approval...
 const displayIndeterminateProgressbar = ref(false)
+const showDialogShareActionWithParameters = ref(false)
 
 const props = defineProps({
   startTimer: Boolean,
@@ -183,6 +195,36 @@ const doDeleteItem = (id: string) => {
 }
 const doShareAction = (config_index: number) => {
   console.log(selectedMediaitemId.value, config_index)
-  remoteProcedureCall(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`)
+
+  const simpleShare = false //TODO: configurable
+  if (simpleShare) {
+    // there are no parameters from user required here -> go on and use default values without further questions
+    remoteProcedureCall(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`, 'POST')
+  } else {
+    // advanced share, user input is requested, so show a dialog for the config_index that was already chosen by button click
+    showDialogShareActionWithParameters.value = true
+  }
+}
+const doShareActionWithParameters = async (config_index: number, parameters: unkown) => {
+  console.warn(selectedMediaitemId.value, config_index, parameters)
+
+  try {
+    const response = await _fetch(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify([{ name: 'keyname', value: 'value' }]),
+    })
+    console.log(response)
+    if (!response.ok) {
+      throw `Error: ${response.status} ${response.statusText}`
+    }
+  } catch (error) {
+    console.error(error)
+    $q.notify({
+      message: error,
+      caption: 'Request Error!',
+      color: 'negative',
+    })
+  }
 }
 </script>

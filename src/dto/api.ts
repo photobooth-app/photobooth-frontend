@@ -341,10 +341,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Api Share Latest */
-        get: operations["api_share_latest_api_share_actions_latest__index__get"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Api Share Latest */
+        post: operations["api_share_latest_api_share_actions_latest__index__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -358,10 +358,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Api Share Latest */
-        get: operations["api_share_latest_api_share_actions__index__get"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Api Share Latest */
+        post: operations["api_share_latest_api_share_actions__index__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -375,10 +375,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Api Share Item Id */
-        get: operations["api_share_item_id_api_share_actions__id___index__get"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Api Share Item Id */
+        post: operations["api_share_item_id_api_share_actions__id___index__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -405,15 +405,49 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/system/{action}/{param}": {
+    "/api/system/host/{param}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Api Cmd */
-        get: operations["api_cmd_api_system__action___param__get"];
+        /** Api Cmd Host */
+        get: operations["api_cmd_host_api_system_host__param__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/system/service/{param}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Cmd Service */
+        get: operations["api_cmd_service_api_system_service__param__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/system/systemctl/{param}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Cmd Systemctl */
+        get: operations["api_cmd_systemctl_api_system_systemctl__param__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1138,7 +1172,7 @@ export interface components {
              *     } */
             actions: components["schemas"]["GroupActions"];
             /** @default {
-             *       "sharing_enabled": false,
+             *       "sharing_enabled": true,
              *       "number_direct_access_buttons": 1,
              *       "actions": [
              *         {
@@ -1146,8 +1180,15 @@ export interface components {
              *           "name": "default print settings",
              *           "processing": {
              *             "max_shares": 0,
+             *             "parameters": [
+             *               {
+             *                 "default": "1",
+             *                 "name": "copies",
+             *                 "ui_type": "int"
+             *               }
+             *             ],
              *             "share_blocked_time": 10,
-             *             "share_command": "mspaint /p {filename}"
+             *             "share_command": "echo {filename} {copies}"
              *           },
              *           "trigger": {
              *             "gpio_trigger": {
@@ -2249,7 +2290,7 @@ export interface components {
             /**
              * Sharing Enabled
              * @description Enable sharing service in general.
-             * @default false
+             * @default true
              */
             sharing_enabled: boolean;
             /**
@@ -2267,8 +2308,15 @@ export interface components {
              *         "handles_images_only": true,
              *         "processing": {
              *           "max_shares": 0,
+             *           "parameters": [
+             *             {
+             *               "default": "1",
+             *               "name": "copies",
+             *               "ui_type": "int"
+             *             }
+             *           ],
              *           "share_blocked_time": 10,
-             *           "share_command": "mspaint /p {filename}"
+             *           "share_command": "echo {filename} {copies}"
              *         },
              *         "trigger": {
              *           "gpio_trigger": {
@@ -2707,6 +2755,8 @@ export interface components {
              * @description Command issued to share/print. Use {filename} as placeholder for the mediaitem to be shared/printed.
              */
             share_command: string;
+            /** Parameters */
+            parameters: components["schemas"]["ShareProcessingParameters"][];
             /**
              * Share Blocked Time
              * @description Block queue print until time is passed. Time in seconds.
@@ -2718,6 +2768,41 @@ export interface components {
              * @default 0
              */
             max_shares: number;
+        };
+        /**
+         * Additional parameters
+         * @description Configure additional parameter for the share command to input by the user.
+         */
+        ShareProcessingParameters: {
+            /**
+             * Name
+             * @description Define the parameter name that is replaced in the command. Example: Set to 'copies' to replace {copies} in the command by the value.
+             * @default copies
+             */
+            name: string;
+            /**
+             * Ui Type
+             * @description Display type of the parameter in the UI. 'int' displays ➕➖ buttons in the UI. 'input' displays an input box. This affects only the UI, all parameter are interpreted as strings.
+             * @default int
+             * @enum {string}
+             */
+            ui_type: "input" | "int";
+            /**
+             * Default
+             * @description Default value if the user does not change it.
+             * @default 1
+             */
+            default: string;
+        };
+        /**
+         * ShareProcessingParametersPublic
+         * @description Configure additional parameter for the share command to input by the user.
+         */
+        ShareProcessingParametersPublic: {
+            /** Name */
+            name: string;
+            /** Value */
+            value: string;
         };
         /**
          * Postprocess single captures
@@ -3507,7 +3592,7 @@ export interface operations {
             };
         };
     };
-    api_share_latest_api_share_actions_latest__index__get: {
+    api_share_latest_api_share_actions_latest__index__post: {
         parameters: {
             query?: never;
             header?: never;
@@ -3516,7 +3601,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ShareProcessingParametersPublic"][] | null;
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -3538,7 +3627,7 @@ export interface operations {
             };
         };
     };
-    api_share_latest_api_share_actions__index__get: {
+    api_share_latest_api_share_actions__index__post: {
         parameters: {
             query?: never;
             header?: never;
@@ -3547,7 +3636,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ShareProcessingParametersPublic"][] | null;
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -3569,7 +3662,7 @@ export interface operations {
             };
         };
     };
-    api_share_item_id_api_share_actions__id___index__get: {
+    api_share_item_id_api_share_actions__id___index__post: {
         parameters: {
             query?: never;
             header?: never;
@@ -3579,7 +3672,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ShareProcessingParametersPublic"][] | null;
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -3621,13 +3718,74 @@ export interface operations {
             };
         };
     };
-    api_cmd_api_system__action___param__get: {
+    api_cmd_host_api_system_host__param__get: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                action: unknown;
-                param: unknown;
+                param: "reboot" | "shutdown";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    api_cmd_service_api_system_service__param__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                param: "reload";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    api_cmd_systemctl_api_system_systemctl__param__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                param: "restart" | "stop" | "start" | "install" | "uninstall";
             };
             cookie?: never;
         };
@@ -3810,7 +3968,9 @@ export interface operations {
     };
     api_post_config_current_api_admin_config__configurable__patch: {
         parameters: {
-            query?: never;
+            query?: {
+                reload?: boolean;
+            };
             header?: never;
             path: {
                 configurable: string;
