@@ -26,11 +26,16 @@
     </div>
 
     <q-page-sticky position="bottom-right" class="q-ma-lg">
-      <div class="q-gutter-sm">
+      <div class="row self-end items-end">
         <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
-        <q-btn :label="$t('BTN_LABEL_RESET_CONFIG')" @click="confirm_reset_config = true" />
-        <q-btn :label="$t('BTN_LABEL_RELOAD_CONFIG')" @click="updateFormSchema()" />
-        <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="saveConfig()" />
+        <q-btn class="q-ml-sm" :label="$t('BTN_LABEL_RESET_CONFIG')" @click="confirm_reset_config = true" />
+        <q-btn class="q-ml-sm" :label="$t('BTN_LABEL_RELOAD_CONFIG')" @click="updateFormSchema()" />
+        <div class="q-ml-sm column">
+          <q-toggle v-model="autoReloadServicesOnSave" :label="$t('Apply')">
+            <q-tooltip>{{ $t('Reload services on save to apply settings. Reloading might take some time.') }} </q-tooltip>
+          </q-toggle>
+          <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="saveConfig()" />
+        </div>
       </div>
     </q-page-sticky>
 
@@ -70,7 +75,11 @@ import { useConfigurationStore } from '../stores/configuration-store'
 import { Notify } from 'quasar'
 import { useRoute } from 'vue-router'
 import type { components } from '../dto/api'
+import { useLocalStorage } from '@vueuse/core'
 
+// bind object
+
+const autoReloadServicesOnSave = useLocalStorage('autoReloadServicesOnSave', true)
 const route = useRoute()
 const configurationStore = useConfigurationStore()
 const isLoadingState = ref(true)
@@ -182,7 +191,7 @@ const saveConfig = async () => {
   console.log(configuration.value)
 
   try {
-    const response = await _fetch(`/api/admin/config/${selected_configuration.value}`, {
+    const response = await _fetch(`/api/admin/config/${selected_configuration.value}?reload=${autoReloadServicesOnSave.value}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(configuration.value),
@@ -199,9 +208,12 @@ const saveConfig = async () => {
         configurationStore.postConfigchanged()
       }
 
+      let message = 'Configuration saved.'
+      if (autoReloadServicesOnSave.value) {
+        message = 'Configuration saved and applied by reloading services.'
+      }
       Notify.create({
-        // TODO: use translated string.
-        message: 'Configuration successfully persisted. To apply hardware settings changed, restart the app!',
+        message: message,
         color: 'positive',
       })
     } else {
