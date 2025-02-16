@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Weet je zeker dat je de service installeert?",
   "MSG_CONFIRM_SHUTDOWN": "Weet je zeker dat je het systeem moet afsluiten?",
   "MSG_CONFIRM_REBOOT": "Weet je zeker dat je het systeem opnieuw moet opstarten?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Weet je zeker dat je de service opnieuw moet laden?",
   "MSG_CONFIRM_RESTART_SERVICE": "Weet je zeker dat je de service opnieuw moet starten?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Weet je zeker dat je de service moet verwijderen?",
   "MSG_CONNECTING_TO_BACKEND": "Verbinden met de server. Wacht op automatische herverbinding of probeer de pagina opnieuw te laden.",
@@ -123,5 +122,16 @@
   "Browsers preferred languages": "Browsers voorkeurstalen",
   "Check which languages are supported by the app.": "Controleer welke talen door de app worden ondersteund.",
   "Translate in context using Crowdin": "Vertalen in de context met behulp van Crowdin",
-  "Yes, delete": "Ja, verwijderen"
+  "Yes, delete": "Ja, verwijderen",
+  "Reload services on save to apply settings. Reloading might take some time.": "Herlaad services bij opslaan om instellingen toe te passen. Het herladen kan enige tijd duren.",
+  "Apply": "Toepassen",
+  "You sure to reload the services?": "Weet je zeker dat je de diensten wilt herladen?",
+  "restart systemctl service": "systeemservice herstarten",
+  "uninstall systemctl service": "systeemservice verwijderen",
+  "install systemctl service": "systeemservice installeren",
+  "Systemctl (Linux only)": "Systemctl (alleen Linux)",
+  "Reload services": "Diensten opnieuw laden",
+  "Service": "Diensten",
+  "Reboot Host": "Herstart Host",
+  "Shutdown Host": "Shutdown Host"
 }

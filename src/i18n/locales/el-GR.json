@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Σίγουρα θα εγκαταστήσετε την υπηρεσία;",
   "MSG_CONFIRM_SHUTDOWN": "Σίγουρα θα κλείσετε το σύστημα;",
   "MSG_CONFIRM_REBOOT": "Σίγουρα πρέπει να κάνετε επανεκκίνηση του συστήματος;",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Σίγουρα θα επαναφορτώσετε την υπηρεσία;",
   "MSG_CONFIRM_RESTART_SERVICE": "Σίγουρα θα επανεκκινήσετε την υπηρεσία;",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Σίγουρα θα απεγκαταστήσετε την υπηρεσία;",
   "MSG_CONNECTING_TO_BACKEND": "Σύνδεση στο διακομιστή. Παρακαλώ περιμένετε για αυτόματη επανασύνδεση ή προσπαθήστε να ξαναφορτώσετε τη σελίδα.",
@@ -123,5 +122,16 @@
   "Browsers preferred languages": "Προτιμώμενες γλώσσες περιήγησης",
   "Check which languages are supported by the app.": "Ελέγξτε ποιες γλώσσες υποστηρίζονται από την εφαρμογή.",
   "Translate in context using Crowdin": "Μεταφράστε στο περιβάλλον χρησιμοποιώντας το Crowdin",
-  "Yes, delete": "Ναι, διαγραφή"
+  "Yes, delete": "Ναι, διαγραφή",
+  "Reload services on save to apply settings. Reloading might take some time.": "Επαναφόρτωση των υπηρεσιών στην αποθήκευση για να εφαρμοστούν οι ρυθμίσεις. Η επαναφόρτωση μπορεί να πάρει κάποιο χρόνο.",
+  "Apply": "Εφαρμογή",
+  "You sure to reload the services?": "Σίγουρα να φορτώσετε ξανά τις υπηρεσίες?",
+  "restart systemctl service": "επανεκκίνηση υπηρεσίας systemctl",
+  "uninstall systemctl service": "κατάργηση εγκατάστασης υπηρεσίας systemctl",
+  "install systemctl service": "εγκατάσταση υπηρεσίας systemctl",
+  "Systemctl (Linux only)": "Systemctl (μόνο για Linux)",
+  "Reload services": "Επαναφόρτωση υπηρεσιών",
+  "Service": "Υπηρεσία",
+  "Reboot Host": "Επανεκκίνηση Υπολογιστή",
+  "Shutdown Host": "Shutdown Host"
 }

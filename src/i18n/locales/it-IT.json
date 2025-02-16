@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Sei sicuro di aver installato il servizio?",
   "MSG_CONFIRM_SHUTDOWN": "Sei sicuro di aver chiuso il sistema?",
   "MSG_CONFIRM_REBOOT": "Sei sicuro di aver riavviato il sistema?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Sei sicuro di aver ricaricato il servizio?",
   "MSG_CONFIRM_RESTART_SERVICE": "Sei sicuro di aver riavviato il servizio?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Sei sicuro di aver disinstallato il servizio?",
   "MSG_CONNECTING_TO_BACKEND": "Connessione al server. Attendere la riconnessione automatica o provare a ricaricare la pagina.",
@@ -123,5 +122,16 @@
   "Browsers preferred languages": "Lingue preferite dai browser",
   "Check which languages are supported by the app.": "Controlla quali lingue sono supportate dall'app.",
   "Translate in context using Crowdin": "Traduci in contesto usando Crowdin",
-  "Yes, delete": "Sì, elimina"
+  "Yes, delete": "Sì, elimina",
+  "Reload services on save to apply settings. Reloading might take some time.": "Ricarica i servizi al salvataggio per applicare le impostazioni. L'aggiornamento potrebbe richiedere un po' di tempo.",
+  "Apply": "Applica",
+  "You sure to reload the services?": "Sei sicuro di ricaricare i servizi?",
+  "restart systemctl service": "riavvia servizio systemctl",
+  "uninstall systemctl service": "servizio di disinstallazione systemctl",
+  "install systemctl service": "installa servizio systemctl",
+  "Systemctl (Linux only)": "Systemctl (solo Linux)",
+  "Reload services": "Ricarica servizi",
+  "Service": "Servizio",
+  "Reboot Host": "Riavvia Host",
+  "Shutdown Host": "Shutdown Host"
 }

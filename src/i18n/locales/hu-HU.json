@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Biztos, hogy telepíti a szolgáltatást?",
   "MSG_CONFIRM_SHUTDOWN": "Biztos, hogy le kell állítani a rendszert?",
   "MSG_CONFIRM_REBOOT": "Biztos, hogy újra kell indítani a rendszert?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Biztos, hogy újra kell tölteni a szolgáltatást?",
   "MSG_CONFIRM_RESTART_SERVICE": "Biztos, hogy újra kell indítani a szolgáltatást?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Biztos, hogy eltávolítja a szolgáltatást?",
   "MSG_CONNECTING_TO_BACKEND": "Csatlakozás a szerverhez. Kérjük, várjon az automatikus újracsatlakozásra, vagy próbálja meg újratölteni az oldalt.",
@@ -123,5 +122,16 @@
   "Browsers preferred languages": "A böngészők által preferált nyelvek",
   "Check which languages are supported by the app.": "Ellenőrizze, hogy az alkalmazás mely nyelveket támogatja.",
   "Translate in context using Crowdin": "Fordítás kontextusban a Crowdin segítségével",
-  "Yes, delete": "Igen, törölni"
+  "Yes, delete": "Igen, törölni",
+  "Reload services on save to apply settings. Reloading might take some time.": "A beállítások alkalmazásához a mentéskor töltse újra a szolgáltatásokat. Az újratöltés eltarthat egy ideig.",
+  "Apply": "Alkalmazza a",
+  "You sure to reload the services?": "Biztos, hogy újra kell tölteni a szolgáltatásokat?",
+  "restart systemctl service": "systemctl szolgáltatás újraindítása",
+  "uninstall systemctl service": "uninstall systemctl service",
+  "install systemctl service": "systemctl service telepítése",
+  "Systemctl (Linux only)": "Systemctl (csak Linux)",
+  "Reload services": "Újratöltési szolgáltatások",
+  "Service": "Szolgáltatás",
+  "Reboot Host": "Reboot Host",
+  "Shutdown Host": "Shutdown Host"
 }

@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "你确定要安装服务吗？",
   "MSG_CONFIRM_SHUTDOWN": "你确定要关闭系统吗？",
   "MSG_CONFIRM_REBOOT": "你确定要重启系统吗？",
-  "MSG_CONFIRM_RELOAD_SERVICE": "你确定要重新加载服务吗？",
   "MSG_CONFIRM_RESTART_SERVICE": "你确定要重启服务吗？",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "你确定要卸载服务吗？",
   "MSG_CONNECTING_TO_BACKEND": "正在连接到服务器。请等待自动重新连接或尝试重新加载页面。",
@@ -123,5 +122,16 @@
   "Browsers preferred languages": "浏览器首选语言",
   "Check which languages are supported by the app.": "检查应用支持哪种语言。",
   "Translate in context using Crowdin": "使用 Crowdin 翻译上下文文件",
-  "Yes, delete": "是，删除"
+  "Yes, delete": "是，删除",
+  "Reload services on save to apply settings. Reloading might take some time.": "Reload services on save to apply settings. Reloading might take some time.",
+  "Apply": "Apply",
+  "You sure to reload the services?": "You sure to reload the services?",
+  "restart systemctl service": "restart systemctl service",
+  "uninstall systemctl service": "uninstall systemctl service",
+  "install systemctl service": "install systemctl service",
+  "Systemctl (Linux only)": "Systemctl (Linux only)",
+  "Reload services": "Reload services",
+  "Service": "Service",
+  "Reboot Host": "Reboot Host",
+  "Shutdown Host": "Shutdown Host"
 }

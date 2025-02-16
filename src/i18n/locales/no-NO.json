@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Er du sikker på å installere tjenesten?",
   "MSG_CONFIRM_SHUTDOWN": "Du må skru av systemet?",
   "MSG_CONFIRM_REBOOT": "Du sikker på at du vil starte systemet på nytt?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Du må laste tjenesten på nytt?",
   "MSG_CONFIRM_RESTART_SERVICE": "Er du sikker på at du vil restarte tjenesten?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Du vil avinstallere tjenesten?",
   "MSG_CONNECTING_TO_BACKEND": "Kobler til serveren. Vennligst vent på automatisk tilkobling eller prøv å laste siden på nytt.",
@@ -123,5 +122,16 @@
   "Browsers preferred languages": "Foretrukne språk for nettlesere",
   "Check which languages are supported by the app.": "Sjekk hvilke språk som støttes av appen.",
   "Translate in context using Crowdin": "Oversett i sammenheng med bruk av Crowdin",
-  "Yes, delete": "Ja, slett"
+  "Yes, delete": "Ja, slett",
+  "Reload services on save to apply settings. Reloading might take some time.": "Oppdater tjenester ved lagring for å bruke innstillinger. Det kan ta litt tid.",
+  "Apply": "Bruk",
+  "You sure to reload the services?": "Du vil laste tjenestene på nytt?",
+  "restart systemctl service": "start systemctl på nytt",
+  "uninstall systemctl service": "avinstallere systemctl-tjeneste",
+  "install systemctl service": "installere systemctl-tjeneste",
+  "Systemctl (Linux only)": "Systemctl (kun Linux-)",
+  "Reload services": "Oppdater tjenester",
+  "Service": "Tjeneste",
+  "Reboot Host": "Omstart vert",
+  "Shutdown Host": "Shutdown Host"
 }

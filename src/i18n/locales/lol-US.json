@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "crwdns210:0crwdne210:0",
   "MSG_CONFIRM_SHUTDOWN": "crwdns212:0crwdne212:0",
   "MSG_CONFIRM_REBOOT": "crwdns214:0crwdne214:0",
-  "MSG_CONFIRM_RELOAD_SERVICE": "crwdns216:0crwdne216:0",
   "MSG_CONFIRM_RESTART_SERVICE": "crwdns218:0crwdne218:0",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "crwdns220:0crwdne220:0",
   "MSG_CONNECTING_TO_BACKEND": "crwdns268:0crwdne268:0",
@@ -123,5 +122,16 @@
   "Browsers preferred languages": "crwdns406:0crwdne406:0",
   "Check which languages are supported by the app.": "crwdns408:0crwdne408:0",
   "Translate in context using Crowdin": "crwdns410:0crwdne410:0",
-  "Yes, delete": "crwdns412:0crwdne412:0"
+  "Yes, delete": "crwdns412:0crwdne412:0",
+  "Reload services on save to apply settings. Reloading might take some time.": "crwdns414:0crwdne414:0",
+  "Apply": "crwdns416:0crwdne416:0",
+  "You sure to reload the services?": "crwdns418:0crwdne418:0",
+  "restart systemctl service": "crwdns420:0crwdne420:0",
+  "uninstall systemctl service": "crwdns422:0crwdne422:0",
+  "install systemctl service": "crwdns424:0crwdne424:0",
+  "Systemctl (Linux only)": "crwdns426:0crwdne426:0",
+  "Reload services": "crwdns428:0crwdne428:0",
+  "Service": "crwdns430:0crwdne430:0",
+  "Reboot Host": "crwdns432:0crwdne432:0",
+  "Shutdown Host": "crwdns434:0crwdne434:0"
 }

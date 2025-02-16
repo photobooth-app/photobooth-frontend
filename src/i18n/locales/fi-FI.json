@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Asennatko palvelun varmasti?",
   "MSG_CONFIRM_SHUTDOWN": "Oletko varma, että sammutat järjestelmän?",
   "MSG_CONFIRM_REBOOT": "Oletko varma, että käynnistät järjestelmän uudelleen?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Oletko varma, että lataat palvelun uudelleen?",
   "MSG_CONFIRM_RESTART_SERVICE": "Oletko varma, että käynnistät palvelun uudelleen?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Oletko varma, että poistat palvelun?",
   "MSG_CONNECTING_TO_BACKEND": "Yhteys palvelimeen. Odota automaattista yhdistämistä tai yritä ladata sivu uudelleen.",
@@ -123,5 +122,16 @@
   "Browsers preferred languages": "Selaimet ensisijaiset kielet",
   "Check which languages are supported by the app.": "Tarkista, mitkä kielet ovat sovelluksen tukemia.",
   "Translate in context using Crowdin": "Käännä yhteydessä käyttäen Crowdinia",
-  "Yes, delete": "Kyllä, poista"
+  "Yes, delete": "Kyllä, poista",
+  "Reload services on save to apply settings. Reloading might take some time.": "Lataa palvelut tallennettaessa asetuksia uudelleen. Uudelleenlataaminen saattaa kestää jonkin aikaa.",
+  "Apply": "Käytä",
+  "You sure to reload the services?": "Haluatko varmasti ladata palvelut uudelleen?",
+  "restart systemctl service": "uudelleenkäynnistä systemctl palvelu",
+  "uninstall systemctl service": "poistaa systemctl palvelu",
+  "install systemctl service": "asenna systemctl palvelu",
+  "Systemctl (Linux only)": "Systemctl (vain Linux)",
+  "Reload services": "Uudelleenlataus palvelut",
+  "Service": "Palvelu",
+  "Reboot Host": "Käynnistä Isäntä Uudelleen",
+  "Shutdown Host": "Shutdown Host"
 }
