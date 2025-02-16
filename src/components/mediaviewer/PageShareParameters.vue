@@ -42,16 +42,17 @@
 import type { components } from 'src/dto/api'
 
 const props = defineProps<{
+  config_index: number
   parameters: components['schemas']['ShareProcessingParameters'][]
 }>()
 
 const emit = defineEmits<{
-  triggerShareActionWithParameters: [config_index: number, parameters: unknown]
+  triggerShareActionWithParameters: [config_index: number, parameters: components['schemas']['ShareProcessingParameters'][]]
 }>()
 
-function invokeShareActionWithParameters(testParameter: number) {
-  console.warn('trigger share', testParameter)
-  emit('triggerShareActionWithParameters', testParameter, props.parameters.value)
+function invokeShareActionWithParameters() {
+  console.warn('trigger share', props.config_index, props.parameters)
+  emit('triggerShareActionWithParameters', props.config_index, props.parameters)
 }
 
 // const qrUrl = toRef(props, 'url')

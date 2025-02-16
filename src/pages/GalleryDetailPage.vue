@@ -57,7 +57,8 @@
 
           <q-dialog v-model="showDialogShareActionWithParameters">
             <PageShareParameters
-              :parameters="configurationStore.configuration.share.actions[0].processing.parameters"
+              :parameters="configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters"
+              :config_index="shareActionWithParametersConfigIndex"
               @trigger-share-action-with-parameters="doShareActionWithParameters"
             >
             </PageShareParameters>
@@ -105,6 +106,7 @@ const rightDrawerOpen = ref(false)
 const headercountdowntimer = ref(false) // likely not used here, move to newitempresenter and approval...
 const displayIndeterminateProgressbar = ref(false)
 const showDialogShareActionWithParameters = ref(false)
+const shareActionWithParametersConfigIndex = ref(0)
 
 const props = defineProps({
   startTimer: Boolean,
@@ -202,17 +204,21 @@ const doShareAction = (config_index: number) => {
     remoteProcedureCall(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`, 'POST')
   } else {
     // advanced share, user input is requested, so show a dialog for the config_index that was already chosen by button click
+    shareActionWithParametersConfigIndex.value = config_index
     showDialogShareActionWithParameters.value = true
   }
 }
-const doShareActionWithParameters = async (config_index: number, parameters: unkown) => {
+const doShareActionWithParameters = async (config_index: number, parameters: unknown) => {
   console.warn(selectedMediaitemId.value, config_index, parameters)
 
   try {
     const response = await _fetch(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify([{ name: 'keyname', value: 'value' }]),
+      body: JSON.stringify([
+        { name: 'keyname', value: 'value' },
+        { name: 'copies', value: '1' },
+      ]),
     })
     console.log(response)
     if (!response.ok) {
