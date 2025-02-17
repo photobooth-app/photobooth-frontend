@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Ești sigur că vrei să instalezi serviciul?",
   "MSG_CONFIRM_SHUTDOWN": "Ești sigur că ai oprit sistemul?",
   "MSG_CONFIRM_REBOOT": "Ești sigur că ai repornit sistemul?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Ești sigur că ai reîncărcat serviciul?",
   "MSG_CONFIRM_RESTART_SERVICE": "Sunteți sigur că ați repornit serviciul?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Sunteți sigur că dezinstalați serviciul?",
   "MSG_CONNECTING_TO_BACKEND": "Conectare la server. Așteptați reconectarea automată sau încercați să reîncărcați pagina.",
@@ -123,5 +122,17 @@
   "Browsers preferred languages": "Limbi preferate de navigatori",
   "Check which languages are supported by the app.": "Verificați care limbi sunt acceptate de aplicație.",
   "Translate in context using Crowdin": "Traduceți în context folosind Crowdin",
-  "Yes, delete": "Da, șterge"
+  "Yes, delete": "Da, șterge",
+  "Reload services on save to apply settings. Reloading might take some time.": "Reîncarcă serviciile la salvare pentru a aplica setările. Reîncărcarea poate dura ceva timp.",
+  "Apply": "Aplică",
+  "You sure to reload the services?": "Doriţi să reîncărcaţi serviciile?",
+  "restart systemctl service": "reporniți serviciul systemctl",
+  "uninstall systemctl service": "dezinstalați serviciul systemctl",
+  "install systemctl service": "instalați serviciul systemctl",
+  "Systemctl (Linux only)": "Systemctl (doar Linux)",
+  "Reload services": "Reîncarcă serviciile",
+  "Service": "Serviciu",
+  "Reboot Host": "Repornire Host",
+  "Shutdown Host": "Gazdă de oprire",
+  "Frontend build date": "Data construirii frontend"
 }

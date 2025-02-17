@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Servisi yüklediğinizden emin misiniz?",
   "MSG_CONFIRM_SHUTDOWN": "Sistemi kapattığınızdan emin misiniz?",
   "MSG_CONFIRM_REBOOT": "Sistemi yeniden başlattığınızdan emin misiniz?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Servisi yeniden yüklediğinizden emin misiniz?",
   "MSG_CONFIRM_RESTART_SERVICE": "Hizmeti yeniden başlattığınızdan emin misiniz?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Hizmeti kaldırdığınızdan emin misiniz?",
   "MSG_CONNECTING_TO_BACKEND": "Sunucuya bağlanılıyor. Lütfen otomatik yeniden bağlanma için bekleyin veya sayfayı yeniden yüklemeyi deneyin.",
@@ -123,5 +122,17 @@
   "Browsers preferred languages": "Tarayıcıların tercih ettiği diller",
   "Check which languages are supported by the app.": "Uygulama tarafından hangi dillerin desteklendiğini kontrol edin.",
   "Translate in context using Crowdin": "Crowdin kullanarak bağlam içinde çeviri yapın",
-  "Yes, delete": "Evet, silin"
+  "Yes, delete": "Evet, silin",
+  "Reload services on save to apply settings. Reloading might take some time.": "Ayarları uygulamak için kaydettikten sonra hizmetleri yeniden yükleyin. Yeniden yükleme biraz zaman alabilir.",
+  "Apply": "Başvurmak",
+  "You sure to reload the services?": "Hizmetleri yeniden yüklediğinizden emin misiniz?",
+  "restart systemctl service": "systemctl hizmetini yeniden başlat",
+  "uninstall systemctl service": "systemctl hizmetini kaldır",
+  "install systemctl service": "systemctl hizmetini yükle",
+  "Systemctl (Linux only)": "Systemctl (yalnızca Linux)",
+  "Reload services": "Yeniden yükleme hizmetleri",
+  "Service": "Hizmet",
+  "Reboot Host": "Ana Bilgisayarı Yeniden Başlat",
+  "Shutdown Host": "Kapatma Ana Bilgisayarı",
+  "Frontend build date": "Ön uç oluşturma tarihi"
 }

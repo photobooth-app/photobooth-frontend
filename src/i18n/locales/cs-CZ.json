@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Určitě chcete službu nainstalovat?",
   "MSG_CONFIRM_SHUTDOWN": "Určitě jste systém vypnuli?",
   "MSG_CONFIRM_REBOOT": "Určitě jste restartovali systém?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Jste si jisti, že jste službu znovu načetli?",
   "MSG_CONFIRM_RESTART_SERVICE": "Určitě jste službu restartovali?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Určitě jste službu odinstalovali?",
   "MSG_CONNECTING_TO_BACKEND": "Připojování k serveru. Počkejte na automatické opětovné připojení nebo zkuste stránku znovu načíst.",
@@ -123,5 +122,17 @@
   "Browsers preferred languages": "Preferovaný jazyk prohlížečů",
   "Check which languages are supported by the app.": "Zkontrolujte, které jazyky aplikace podporuje.",
   "Translate in context using Crowdin": "Přeložit v kontextu pomocí Crowdin",
-  "Yes, delete": "Ano, smazat"
+  "Yes, delete": "Ano, smazat",
+  "Reload services on save to apply settings. Reloading might take some time.": "Znovu načíst služby při uložení, abyste mohli použít nastavení. Obnovení může chvíli trvat.",
+  "Apply": "Použít",
+  "You sure to reload the services?": "Opravdu chcete znovu načíst služby?",
+  "restart systemctl service": "restartovat systemctl službu",
+  "uninstall systemctl service": "odinstalovat službu systemctl",
+  "install systemctl service": "instalovat službu systemctl",
+  "Systemctl (Linux only)": "Systemctl (pouze Linux)",
+  "Reload services": "Znovu načíst",
+  "Service": "Servis",
+  "Reboot Host": "Restartovat hostitele",
+  "Shutdown Host": "Vypnutí hostitele",
+  "Frontend build date": "Datum sestavení frontendu"
 }

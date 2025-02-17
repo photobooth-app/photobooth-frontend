@@ -8,21 +8,31 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('Host') }}</q-item-label>
-                <q-item-label> <q-btn flat color="primary" :label="$t('BTN_LABEL_REBOOT_HOST')" @click="confirm_reboot = true" /> </q-item-label>
-                <q-item-label> <q-btn flat color="primary" :label="$t('BTN_LABEL_SHUTDOWN_HOST')" @click="confirm_shutdown = true" /> </q-item-label>
+                <q-item-label> <q-btn flat color="primary" :label="$t('Reboot Host')" @click="confirm_reboot_host = true" /> </q-item-label>
+                <q-item-label> <q-btn flat color="primary" :label="$t('Shutdown Host')" @click="confirm_shutdown_host = true" /> </q-item-label>
               </q-item-section>
             </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('Service') }}</q-item-label>
+                <q-item-label>
+                  <q-btn flat color="primary" :label="$t('Reload services')" @click="confirm_reload_service = true" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
             <q-item v-if="store.information.platform_system == 'Linux'">
               <q-item-section>
-                <q-item-label caption>{{ $t('Service (Linux only)') }}</q-item-label>
+                <q-item-label caption>{{ $t('Systemctl (Linux only)') }}</q-item-label>
                 <q-item-label>
-                  <q-btn flat color="primary" :label="$t('BTN_LABEL_INSTALL_SERVICE')" @click="confirm_install_service = true" />
+                  <q-btn flat color="primary" :label="$t('install systemctl service')" @click="confirm_install_systemctl = true" />
                 </q-item-label>
                 <q-item-label>
-                  <q-btn flat color="primary" :label="$t('BTN_LABEL_UNINSTALL_SERVICE')" @click="confirm_uninstall_service = true" />
+                  <q-btn flat color="primary" :label="$t('uninstall systemctl service')" @click="confirm_uninstall_systemctl = true" />
                 </q-item-label>
                 <q-item-label>
-                  <q-btn flat color="primary" :label="$t('BTN_LABEL_RESTART_SERVICE')" @click="confirm_restart_service = true" />
+                  <q-btn flat color="primary" :label="$t('restart systemctl service')" @click="confirm_restart_systemctl = true" />
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -104,6 +114,13 @@
 
               <q-item-section side>
                 <q-btn flat round color="primary" icon="sym_o_upgrade" href="https://pypi.org/project/photobooth-app/" target="_blank" />
+              </q-item-section>
+            </q-item>
+
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>{{ $t('Frontend build date') }} </q-item-label>
+                <q-item-label>{{ builddate }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -318,7 +335,7 @@
         </q-card-actions>
       </q-card>
     </div>
-    <q-dialog v-model="confirm_reboot">
+    <q-dialog v-model="confirm_reboot_host">
       <q-card class="q-pa-sm" style="min-width: 350px">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
@@ -332,7 +349,7 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="confirm_shutdown">
+    <q-dialog v-model="confirm_shutdown_host">
       <q-card class="q-pa-sm" style="min-width: 350px">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_power_settings_new" color="primary" text-color="white" />
@@ -346,25 +363,11 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="confirm_restart_service">
-      <q-card class="q-pa-sm" style="min-width: 350px">
-        <q-card-section class="row items-center" style="flex-wrap: nowrap">
-          <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
-          <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RESTART_SERVICE') }}</span>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-          <q-btn v-close-popup :label="$t('BTN_LABEL_RESTART_SERVICE')" color="primary" @click="remoteProcedureCall('/api/system/service/restart')" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-
     <q-dialog v-model="confirm_reload_service">
       <q-card class="q-pa-sm" style="min-width: 350px">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
-          <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RELOAD_SERVICE') }}</span>
+          <span class="q-ml-sm">{{ $t('You sure to reload the services?') }}</span>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -374,7 +377,26 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="confirm_install_service">
+    <q-dialog v-model="confirm_restart_systemctl">
+      <q-card class="q-pa-sm" style="min-width: 350px">
+        <q-card-section class="row items-center" style="flex-wrap: nowrap">
+          <q-avatar icon="sym_o_restart_alt" color="primary" text-color="white" />
+          <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RESTART_SERVICE') }}</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn
+            v-close-popup
+            :label="$t('BTN_LABEL_RESTART_SERVICE')"
+            color="primary"
+            @click="remoteProcedureCall('/api/system/systemctl/restart')"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="confirm_install_systemctl">
       <q-card class="q-pa-sm" style="min-width: 350px">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_add_circle" color="primary" text-color="white" />
@@ -383,12 +405,17 @@
 
         <q-card-actions align="right">
           <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-          <q-btn v-close-popup :label="$t('BTN_LABEL_INSTALL_SERVICE')" color="primary" @click="remoteProcedureCall('/api/system/service/install')" />
+          <q-btn
+            v-close-popup
+            :label="$t('BTN_LABEL_INSTALL_SERVICE')"
+            color="primary"
+            @click="remoteProcedureCall('/api/system/systemctl/install')"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="confirm_uninstall_service">
+    <q-dialog v-model="confirm_uninstall_systemctl">
       <q-card class="q-pa-sm" style="min-width: 350px">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_cancel" color="primary" text-color="white" />
@@ -401,7 +428,7 @@
             v-close-popup
             :label="$t('BTN_LABEL_UNINSTALL_SERVICE')"
             color="primary"
-            @click="remoteProcedureCall('/api/system/service/uninstall')"
+            @click="remoteProcedureCall('/api/system/systemctl/uninstall')"
           />
         </q-card-actions>
       </q-card>
@@ -480,14 +507,15 @@ const mediacollectionStore = useMediacollectionStore()
 const selected_field = ref('')
 const confirm_reset_limits_counter = ref(false)
 const confirm_reset_stats_counter = ref(false)
-const confirm_reboot = ref(false)
-const confirm_shutdown = ref(false)
-const confirm_restart_service = ref(false)
+const confirm_reboot_host = ref(false)
+const confirm_shutdown_host = ref(false)
 const confirm_reload_service = ref(false)
-const confirm_install_service = ref(false)
-const confirm_uninstall_service = ref(false)
+const confirm_restart_systemctl = ref(false)
+const confirm_install_systemctl = ref(false)
+const confirm_uninstall_systemctl = ref(false)
 const confirm_delete_all = ref(false)
 const confirm_clear_recycle_directory = ref(false)
+const builddate = new Date(process.env.BUILD_DATE).toLocaleString()
 
 const displayResetLimitsConfirm = (field: string) => {
   selected_field.value = field

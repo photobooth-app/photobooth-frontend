@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Você tem certeza de que vai instalar o serviço?",
   "MSG_CONFIRM_SHUTDOWN": "Você tem certeza de que desligou o sistema?",
   "MSG_CONFIRM_REBOOT": "Você tem certeza de que reiniciou o sistema?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Você tem certeza de que recarregou o serviço?",
   "MSG_CONFIRM_RESTART_SERVICE": "Você tem certeza de que reiniciou o serviço?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Você tem certeza de que desinstalou o serviço?",
   "MSG_CONNECTING_TO_BACKEND": "Conectando ao servidor. Por favor, aguarde a reconexão automática ou tente recarregar a página.",
@@ -123,5 +122,17 @@
   "Browsers preferred languages": "Navegadores em idiomas preferidos",
   "Check which languages are supported by the app.": "Verifica quais idiomas são suportados pelo aplicativo.",
   "Translate in context using Crowdin": "Traduza em contexto usando o Crowdin",
-  "Yes, delete": "Sim, excluir"
+  "Yes, delete": "Sim, excluir",
+  "Reload services on save to apply settings. Reloading might take some time.": "Recarregue os serviços ao salvar para aplicar as configurações. Recarregar pode levar algum tempo.",
+  "Apply": "Aplicar",
+  "You sure to reload the services?": "Você tem certeza que deseja recarregar os serviços?",
+  "restart systemctl service": "reiniciar o serviço systemctl",
+  "uninstall systemctl service": "desinstalar serviço systemctl",
+  "install systemctl service": "instalar serviço systemctl",
+  "Systemctl (Linux only)": "Systemctl (Linux apenas)",
+  "Reload services": "Recarregar serviços",
+  "Service": "Serviço",
+  "Reboot Host": "Servidor de reinicialização",
+  "Shutdown Host": "Host do Desligamento",
+  "Frontend build date": "Data de compilação do Frontend"
 }

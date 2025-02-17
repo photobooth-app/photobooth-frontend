@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Tu es sûr de vouloir installer le service ?",
   "MSG_CONFIRM_SHUTDOWN": "Tu es sûr de vouloir arrêté le système ?",
   "MSG_CONFIRM_REBOOT": "Tu es sûr de vouloir redémarrer le système ?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Veux-tu rechargé le service ?",
   "MSG_CONFIRM_RESTART_SERVICE": "Tu es sûr de vouloir redémarrer le service ?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Veux-tu désinstaller le service ?",
   "MSG_CONNECTING_TO_BACKEND": "Connexion au serveur. Veuillez patienter pour la reconnexion automatique ou essayez de recharger la page.",
@@ -123,5 +122,17 @@
   "Browsers preferred languages": "Langues préférées des navigateurs",
   "Check which languages are supported by the app.": "Vérifiez quelles langues sont prises en charge par l'application.",
   "Translate in context using Crowdin": "Traduire en contexte en utilisant Crowdin",
-  "Yes, delete": "Oui, supprimer"
+  "Yes, delete": "Oui, supprimer",
+  "Reload services on save to apply settings. Reloading might take some time.": "Recharger les services lors de l'enregistrement pour appliquer les paramètres. Le rechargement peut prendre un certain temps.",
+  "Apply": "Appliquer",
+  "You sure to reload the services?": "Vous êtes sûr de recharger les services ?",
+  "restart systemctl service": "redémarrer le service systemctl",
+  "uninstall systemctl service": "désinstaller le service systemctl",
+  "install systemctl service": "installer le service systemctl",
+  "Systemctl (Linux only)": "Systemctl (Linux seulement)",
+  "Reload services": "Recharger les services",
+  "Service": "Service",
+  "Reboot Host": "Redémarrer l'hôte",
+  "Shutdown Host": "Hôte d'arrêt",
+  "Frontend build date": "Date de construction du Frontend"
 }

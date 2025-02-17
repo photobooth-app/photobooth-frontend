@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Ви впевнені, що хочете встановити сервіс?",
   "MSG_CONFIRM_SHUTDOWN": "Ви впевнені, що вимкнули систему?",
   "MSG_CONFIRM_REBOOT": "Ви впевнені, що перезавантажили систему?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Ви впевнені, що хочете перезавантажити сервіс?",
   "MSG_CONFIRM_RESTART_SERVICE": "Ви впевнені, що перезапустили сервіс?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Ви впевнені, що видаляєте службу?",
   "MSG_CONNECTING_TO_BACKEND": "Підключення до сервера. Будь ласка, зачекайте на автоматичне повторне підключення або спробуйте перезавантажити сторінку.",
@@ -123,5 +122,17 @@
   "Browsers preferred languages": "Браузери бажаних мов",
   "Check which languages are supported by the app.": "Виберіть, які мови підтримується програмою.",
   "Translate in context using Crowdin": "Перекласти в контексті за допомогою Crowdin",
-  "Yes, delete": "Так, видалити"
+  "Yes, delete": "Так, видалити",
+  "Reload services on save to apply settings. Reloading might take some time.": "Перезавантажити служби при збереженні для застосування налаштувань. Перезавантаження може зайняти деякий час.",
+  "Apply": "Прийняти",
+  "You sure to reload the services?": "Ви впевнені, що бажаєте перезавантажити сервіси?",
+  "restart systemctl service": "перезапустити службу systemctl",
+  "uninstall systemctl service": "видалити системну службу",
+  "install systemctl service": "встановити systemctl сервіс",
+  "Systemctl (Linux only)": "Systemctl (тільки Linu)",
+  "Reload services": "Перезавантажити сервіси",
+  "Service": "Послуга",
+  "Reboot Host": "Перезавантажити хост",
+  "Shutdown Host": "Завершення війська",
+  "Frontend build date": "Дата збірки на сайті"
 }

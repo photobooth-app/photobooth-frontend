@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "서비스를 설치하시겠습니까?",
   "MSG_CONFIRM_SHUTDOWN": "시스템을 종료하시겠습니까?",
   "MSG_CONFIRM_REBOOT": "시스템을 재부팅하시겠습니까?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "서비스를 다시 로드하시겠습니까?",
   "MSG_CONFIRM_RESTART_SERVICE": "서비스를 다시 시작하시겠습니까?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "정말 서비스를 제거하시겠습니까?",
   "MSG_CONNECTING_TO_BACKEND": "서버에 연결하는 중입니다. 자동 재연결을 기다리거나 페이지를 다시 로드해 보세요.",
@@ -123,5 +122,17 @@
   "Browsers preferred languages": "브라우저 기본 설정 언어",
   "Check which languages are supported by the app.": "앱에서 지원되는 언어를 확인하세요.",
   "Translate in context using Crowdin": "Crowdin을 사용하여 문맥에 맞게 번역하기",
-  "Yes, delete": "예, 삭제"
+  "Yes, delete": "예, 삭제",
+  "Reload services on save to apply settings. Reloading might take some time.": "저장 시 서비스를 다시 로드하여 설정을 적용합니다. 로드하는 데 다소 시간이 걸릴 수 있습니다.",
+  "Apply": "신청하기",
+  "You sure to reload the services?": "서비스를 다시 로드하시겠습니까?",
+  "restart systemctl service": "systemctl 서비스 다시 시작",
+  "uninstall systemctl service": "systemctl 서비스 제거",
+  "install systemctl service": "systemctl 서비스 설치",
+  "Systemctl (Linux only)": "Systemctl(Linux 전용)",
+  "Reload services": "서비스 다시 로드",
+  "Service": "서비스",
+  "Reboot Host": "호스트 재부팅",
+  "Shutdown Host": "호스트 종료",
+  "Frontend build date": "프론트엔드 빌드 날짜"
 }

@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "本当にサービスをインストールするのか？",
   "MSG_CONFIRM_SHUTDOWN": "本当にシャットダウンしたのか？",
   "MSG_CONFIRM_REBOOT": "本当にシステムを再起動したのか？",
-  "MSG_CONFIRM_RELOAD_SERVICE": "サービスのリロードは確かか？",
   "MSG_CONFIRM_RESTART_SERVICE": "本当にサービスを再起動したのか？",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "サービスのアンインストールは確実ですか？",
   "MSG_CONNECTING_TO_BACKEND": "サーバーに接続しています。自動的に再接続するか、ページを再読み込みしてください。",
@@ -123,5 +122,17 @@
   "Browsers preferred languages": "ブラウザの優先言語",
   "Check which languages are supported by the app.": "アプリでサポートされている言語を確認します。",
   "Translate in context using Crowdin": "Crowdinを使って文脈で翻訳",
-  "Yes, delete": "はい、削除します"
+  "Yes, delete": "はい、削除します",
+  "Reload services on save to apply settings. Reloading might take some time.": "設定を適用するためにセーブ時にサービスを再読み込みします。リロードに時間がかかる場合があります。",
+  "Apply": "適用",
+  "You sure to reload the services?": "サービスを再読み込みしますか？",
+  "restart systemctl service": "systemctl サービスを再起動します",
+  "uninstall systemctl service": "systemctl サービスのアンインストール",
+  "install systemctl service": "systemctl サービスのインストール",
+  "Systemctl (Linux only)": "Systemctl (Linux のみ)",
+  "Reload services": "サービスの再読み込み",
+  "Service": "サービス",
+  "Reboot Host": "ホストを再起動",
+  "Shutdown Host": "シャットダウンホスト",
+  "Frontend build date": "Frontend build date"
 }

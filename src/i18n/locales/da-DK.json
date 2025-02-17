@@ -41,7 +41,6 @@
   "MSG_CONFIRM_INSTALL_SERVICE": "Er du sikker på, at du vil installere tjenesten?",
   "MSG_CONFIRM_SHUTDOWN": "Er du sikker på, at du har lukket systemet ned?",
   "MSG_CONFIRM_REBOOT": "Er du sikker på, at du har genstartet systemet?",
-  "MSG_CONFIRM_RELOAD_SERVICE": "Er du sikker på, at du har genindlæst tjenesten?",
   "MSG_CONFIRM_RESTART_SERVICE": "Er du sikker på, at du har genstartet tjenesten?",
   "MSG_CONFIRM_UNINSTALL_SERVICE": "Er du sikker på, at du har afinstalleret tjenesten?",
   "MSG_CONNECTING_TO_BACKEND": "Opretter forbindelse til serveren. Vent venligst på automatisk genforbinde eller prøv at genindlæse siden.",
@@ -123,5 +122,17 @@
   "Browsers preferred languages": "Browsere foretrukne sprog",
   "Check which languages are supported by the app.": "Kontroller, hvilke sprog der understøttes af appen.",
   "Translate in context using Crowdin": "Oversæt i forbindelse med brug af Crowdin",
-  "Yes, delete": "Ja, slet"
+  "Yes, delete": "Ja, slet",
+  "Reload services on save to apply settings. Reloading might take some time.": "Genindlæs tjenester når du gemmer for at anvende indstillinger. Genindlæsning kan tage lidt tid.",
+  "Apply": "Anvend",
+  "You sure to reload the services?": "Du er sikker på at genindlæse tjenesterne?",
+  "restart systemctl service": "genstart systemctl-tjeneste",
+  "uninstall systemctl service": "afinstallere systemctl service",
+  "install systemctl service": "installer systemctl service",
+  "Systemctl (Linux only)": "Systemctl (kun Linux)",
+  "Reload services": "Genindlæs tjenester",
+  "Service": "Tjeneste",
+  "Reboot Host": "Genstart Vært",
+  "Shutdown Host": "Nedlukning Vært",
+  "Frontend build date": "Frontend byggedato"
 }
