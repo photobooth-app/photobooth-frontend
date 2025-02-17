@@ -196,7 +196,7 @@ const doDeleteItem = (id: string) => {
   router.back()
 }
 const doShareAction = (config_index: number) => {
-  console.log(selectedMediaitemId.value, config_index)
+  console.log('doShareAction', selectedMediaitemId.value, config_index)
 
   const simpleShare = false //TODO: configurable
   if (simpleShare) {
@@ -208,17 +208,14 @@ const doShareAction = (config_index: number) => {
     showDialogShareActionWithParameters.value = true
   }
 }
-const doShareActionWithParameters = async (config_index: number, parameters: unknown) => {
-  console.warn(selectedMediaitemId.value, config_index, parameters)
-
+const doShareActionWithParameters = async (config_index: number, input_data: unknown) => {
+  console.warn(selectedMediaitemId.value, config_index, input_data)
+  console.log(JSON.stringify(input_data))
   try {
     const response = await _fetch(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify([
-        { name: 'keyname', value: 'value' },
-        { name: 'copies', value: '1' },
-      ]),
+      body: JSON.stringify(input_data),
     })
     console.log(response)
     if (!response.ok) {
