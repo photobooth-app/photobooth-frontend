@@ -58,6 +58,9 @@
           <q-dialog v-model="showDialogShareActionWithParameters">
             <PageShareParameters
               :parameters="configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters"
+              :parameters_dialog_caption="
+                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_caption
+              "
               :config_index="shareActionWithParametersConfigIndex"
               @trigger-share-action-with-parameters="doShareActionWithParameters"
             >
@@ -198,14 +201,14 @@ const doDeleteItem = (id: string) => {
 const doShareAction = (config_index: number) => {
   console.log('doShareAction', selectedMediaitemId.value, config_index)
 
-  const simpleShare = false //TODO: configurable
-  if (simpleShare) {
-    // there are no parameters from user required here -> go on and use default values without further questions
-    remoteProcedureCall(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`, 'POST')
-  } else {
+  const askUserForInput = configurationStore.configuration.share.actions[config_index].processing.ask_user_for_parameter_input
+  if (askUserForInput) {
     // advanced share, user input is requested, so show a dialog for the config_index that was already chosen by button click
     shareActionWithParametersConfigIndex.value = config_index
     showDialogShareActionWithParameters.value = true
+  } else {
+    // there are no parameters from user required here -> go on and use default values without further questions
+    remoteProcedureCall(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`, 'POST')
   }
 }
 const doShareActionWithParameters = async (config_index: number, input_data: unknown) => {

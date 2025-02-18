@@ -2,43 +2,54 @@
   <q-card style="min-width: 350px" class="">
     <q-form autofocus @submit="onSubmit" class="q-gutter-md" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false">
       <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6">How many copies?</div>
+        <div class="text-h6">{{ parameters_dialog_caption }}</div>
         <q-space />
         <q-btn icon="sym_o_close" flat v-close-popup />
       </q-card-section>
 
       <q-card-section class="q-pa-md">
         <div class="q-gutter-md">
-          <div v-for="parameter in props.parameters" :key="parameter.name">
+          <div v-for="parameter in props.parameters" :key="parameter.key">
             <!-- ui_type=int        -->
             <div v-if="parameter.ui_type == 'int'">
               <div class="row">
-                <q-btn icon="sym_o_remove" color="primary" flat />
+                <q-btn icon="sym_o_remove" color="primary" flat @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) - 1)" />
                 <q-input
                   filled
-                  v-model="formData[parameter.name]"
-                  :label="parameter.name"
-                  :key="parameter.name"
-                  :name="parameter.name"
+                  v-model="formData[parameter.key]"
+                  :label="parameter.label"
+                  :key="parameter.key"
+                  :name="parameter.key"
                   class=""
                   :rules="[
-                    (val) => (val !== null && val !== '') || 'Please type your age',
-                    (val) => (val > 0 && val < 100) || 'Please type a real age',
+                    (val) => (val !== null && val !== '') || 'Please type a number', // required.
+                    (val) =>
+                      (parameter.valid_max && parseInt(val) <= parseInt(parameter.valid_max)) ||
+                      `Please type a number lower than ${parameter.valid_max}`,
+                    (val) =>
+                      (parameter.valid_min && parseInt(val) >= parseInt(parameter.valid_min)) ||
+                      `Please type a number more than ${parameter.valid_min}`,
                   ]"
                 />
-                <q-btn icon="sym_o_add" color="primary" flat />
+                <q-btn icon="sym_o_add" color="primary" flat @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) + 1)" />
               </div>
             </div>
             <!-- ui_type=input (and else) -->
             <div v-else>
               <q-input
                 filled
-                v-model="formData[parameter.name]"
-                :label="parameter.name"
-                :key="parameter.name"
-                :name="parameter.name"
+                v-model="formData[parameter.key]"
+                :label="parameter.label"
+                :key="parameter.key"
+                :name="parameter.key"
                 class=""
-                :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Please type something',
+                  (val) =>
+                    (parameter.valid_max && val.length <= parseInt(parameter.valid_max)) || `Please type text longest ${parameter.valid_max} chars.`,
+                  (val) =>
+                    (parameter.valid_min && val.length >= parseInt(parameter.valid_min)) || `Please type text shortest ${parameter.valid_min} chars.`,
+                ]"
               />
             </div>
           </div>
@@ -63,6 +74,7 @@ import type { components } from 'src/dto/api'
 
 const props = defineProps<{
   config_index: number
+  parameters_dialog_caption: string
   parameters: components['schemas']['ShareProcessingParameters'][]
 }>()
 
@@ -72,7 +84,7 @@ const emit = defineEmits<{
 
 onBeforeMount(() => {
   // set form data to default values
-  props.parameters.forEach((parameter) => (formData[parameter.name] = parameter.default))
+  props.parameters.forEach((parameter) => (formData[parameter.key] = parameter.default))
 })
 
 const onSubmit = () => {

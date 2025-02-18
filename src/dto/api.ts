@@ -1176,19 +1176,69 @@ export interface components {
              *       "number_direct_access_buttons": 1,
              *       "actions": [
              *         {
-             *           "handles_images_only": true,
+             *           "handles_images_only": false,
              *           "name": "default print settings",
              *           "processing": {
+             *             "ask_user_for_parameter_input": false,
              *             "max_shares": 0,
              *             "parameters": [
              *               {
              *                 "default": "1",
-             *                 "name": "copies",
-             *                 "ui_type": "int"
+             *                 "key": "copies",
+             *                 "label": "Copies",
+             *                 "ui_type": "int",
+             *                 "valid_max": "",
+             *                 "valid_min": ""
              *               }
              *             ],
-             *             "share_blocked_time": 10,
+             *             "parameters_dialog_caption": "How many copies?",
+             *             "share_blocked_time": 3,
              *             "share_command": "echo {filename} {copies}"
+             *           },
+             *           "trigger": {
+             *             "gpio_trigger": {
+             *               "pin": "23",
+             *               "trigger_on": "pressed"
+             *             },
+             *             "keyboard_trigger": {
+             *               "keycode": "p"
+             *             },
+             *             "ui_trigger": {
+             *               "custom_color": "#196cb0",
+             *               "icon": "print",
+             *               "show_button": true,
+             *               "title": "Print",
+             *               "use_custom_color": false
+             *             }
+             *           }
+             *         },
+             *         {
+             *           "handles_images_only": true,
+             *           "name": "default print settings",
+             *           "processing": {
+             *             "ask_user_for_parameter_input": true,
+             *             "max_shares": 0,
+             *             "parameters": [
+             *               {
+             *                 "default": "1",
+             *                 "key": "copies",
+             *                 "label": "Copies",
+             *                 "ui_type": "int",
+             *                 "valid_max": "",
+             *                 "valid_min": ""
+             *               },
+             *               {
+             *                 "default": "me@mgineer85.de",
+             *                 "key": "mail",
+             *                 "label": "Copies",
+             *                 "ui_type": "input",
+             *                 "valid_max": "",
+             *                 "valid_min": ""
+             *               }
+             *             ],
+             *             "parameters_dialog_caption": "Print and mail...",
+             *             "share_blocked_time": 3,
+             *             "share_command": "echo {filename} {copies} {mail}"
              *           },
              *           "trigger": {
              *             "gpio_trigger": {
@@ -2305,18 +2355,68 @@ export interface components {
              * @default [
              *       {
              *         "name": "default print settings",
-             *         "handles_images_only": true,
+             *         "handles_images_only": false,
              *         "processing": {
+             *           "ask_user_for_parameter_input": false,
              *           "max_shares": 0,
              *           "parameters": [
              *             {
              *               "default": "1",
-             *               "name": "copies",
-             *               "ui_type": "int"
+             *               "key": "copies",
+             *               "label": "Copies",
+             *               "ui_type": "int",
+             *               "valid_max": "",
+             *               "valid_min": ""
              *             }
              *           ],
-             *           "share_blocked_time": 10,
+             *           "parameters_dialog_caption": "How many copies?",
+             *           "share_blocked_time": 3,
              *           "share_command": "echo {filename} {copies}"
+             *         },
+             *         "trigger": {
+             *           "gpio_trigger": {
+             *             "pin": "23",
+             *             "trigger_on": "pressed"
+             *           },
+             *           "keyboard_trigger": {
+             *             "keycode": "p"
+             *           },
+             *           "ui_trigger": {
+             *             "custom_color": "#196cb0",
+             *             "icon": "print",
+             *             "show_button": true,
+             *             "title": "Print",
+             *             "use_custom_color": false
+             *           }
+             *         }
+             *       },
+             *       {
+             *         "name": "default print settings",
+             *         "handles_images_only": true,
+             *         "processing": {
+             *           "ask_user_for_parameter_input": true,
+             *           "max_shares": 0,
+             *           "parameters": [
+             *             {
+             *               "default": "1",
+             *               "key": "copies",
+             *               "label": "Copies",
+             *               "ui_type": "int",
+             *               "valid_max": "",
+             *               "valid_min": ""
+             *             },
+             *             {
+             *               "default": "me@mgineer85.de",
+             *               "key": "mail",
+             *               "label": "Copies",
+             *               "ui_type": "input",
+             *               "valid_max": "",
+             *               "valid_min": ""
+             *             }
+             *           ],
+             *           "parameters_dialog_caption": "Print and mail...",
+             *           "share_blocked_time": 3,
+             *           "share_command": "echo {filename} {copies} {mail}"
              *         },
              *         "trigger": {
              *           "gpio_trigger": {
@@ -2753,9 +2853,26 @@ export interface components {
             /**
              * Share Command
              * @description Command issued to share/print. Use {filename} as placeholder for the mediaitem to be shared/printed.
+             * @default echo {filename}
              */
             share_command: string;
-            /** Parameters */
+            /**
+             * Ask User For Parameter Input
+             * @description If enabled, when the share button is activated, a dialog pops up to input below configured parameters.
+             * @default false
+             */
+            ask_user_for_parameter_input: boolean;
+            /**
+             * Parameters Dialog Caption
+             * @description Caption of the dialog popup displaying the parameters.
+             * @default Make your choice!
+             */
+            parameters_dialog_caption: string;
+            /**
+             * Parameters
+             * @description Define input fields the user needs to enter on share.
+             * @default []
+             */
             parameters: components["schemas"]["ShareProcessingParameters"][];
             /**
              * Share Blocked Time
@@ -2775,11 +2892,17 @@ export interface components {
          */
         ShareProcessingParameters: {
             /**
-             * Name
-             * @description Define the parameter name that is replaced in the command. Example: Set to 'copies' to replace {copies} in the command by the value.
+             * Key
+             * @description Define the parameter key that is replaced in the command. Example: Set to 'copies' to replace {copies} in the command by the value.
              * @default copies
              */
-            name: string;
+            key: string;
+            /**
+             * Label
+             * @description Label the field, displayed to the user.
+             * @default Copies
+             */
+            label: string;
             /**
              * Ui Type
              * @description Display type of the parameter in the UI. 'int' displays ➕➖ buttons in the UI. 'input' displays an input box. This affects only the UI, all parameter are interpreted as strings.
@@ -2793,16 +2916,16 @@ export interface components {
              * @default 1
              */
             default: string;
-        };
-        /**
-         * ShareProcessingParametersPublic
-         * @description Configure additional parameter for the share command to input by the user.
-         */
-        ShareProcessingParametersPublic: {
-            /** Name */
-            name: string;
-            /** Value */
-            value: string;
+            /**
+             * Valid Min
+             * @default
+             */
+            valid_min: string;
+            /**
+             * Valid Max
+             * @default
+             */
+            valid_max: string;
         };
         /**
          * Postprocess single captures
@@ -3603,7 +3726,9 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["ShareProcessingParametersPublic"][] | null;
+                "application/json": {
+                    [key: string]: string;
+                } | null;
             };
         };
         responses: {
@@ -3638,7 +3763,9 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["ShareProcessingParametersPublic"][] | null;
+                "application/json": {
+                    [key: string]: string;
+                } | null;
             };
         };
         responses: {
@@ -3674,7 +3801,9 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["ShareProcessingParametersPublic"][] | null;
+                "application/json": {
+                    [key: string]: string;
+                } | null;
             };
         };
         responses: {
