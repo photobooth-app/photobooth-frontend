@@ -61,6 +61,12 @@
               :parameters_dialog_caption="
                 configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_caption
               "
+              :parameters_dialog_action_icon="
+                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_icon
+              "
+              :parameters_dialog_action_label="
+                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_label
+              "
               :config_index="shareActionWithParametersConfigIndex"
               @trigger-share-action-with-parameters="doShareActionWithParameters"
             >

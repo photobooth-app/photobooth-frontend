@@ -1187,10 +1187,12 @@ export interface components {
              *                 "key": "copies",
              *                 "label": "Copies",
              *                 "ui_type": "int",
-             *                 "valid_max": "",
-             *                 "valid_min": ""
+             *                 "valid_max": "3",
+             *                 "valid_min": "1"
              *               }
              *             ],
+             *             "parameters_dialog_action_icon": "start",
+             *             "parameters_dialog_action_label": "GO",
              *             "parameters_dialog_caption": "How many copies?",
              *             "share_blocked_time": 3,
              *             "share_command": "echo {filename} {copies}"
@@ -1224,18 +1226,20 @@ export interface components {
              *                 "key": "copies",
              *                 "label": "Copies",
              *                 "ui_type": "int",
-             *                 "valid_max": "",
-             *                 "valid_min": ""
+             *                 "valid_max": "3",
+             *                 "valid_min": "1"
              *               },
              *               {
              *                 "default": "me@mgineer85.de",
              *                 "key": "mail",
-             *                 "label": "Copies",
+             *                 "label": "E-Mail address",
              *                 "ui_type": "input",
-             *                 "valid_max": "",
-             *                 "valid_min": ""
+             *                 "valid_max": "128",
+             *                 "valid_min": "5"
              *               }
              *             ],
+             *             "parameters_dialog_action_icon": "start",
+             *             "parameters_dialog_action_label": "GO",
              *             "parameters_dialog_caption": "Print and mail...",
              *             "share_blocked_time": 3,
              *             "share_command": "echo {filename} {copies} {mail}"
@@ -2365,10 +2369,12 @@ export interface components {
              *               "key": "copies",
              *               "label": "Copies",
              *               "ui_type": "int",
-             *               "valid_max": "",
-             *               "valid_min": ""
+             *               "valid_max": "3",
+             *               "valid_min": "1"
              *             }
              *           ],
+             *           "parameters_dialog_action_icon": "start",
+             *           "parameters_dialog_action_label": "GO",
              *           "parameters_dialog_caption": "How many copies?",
              *           "share_blocked_time": 3,
              *           "share_command": "echo {filename} {copies}"
@@ -2402,18 +2408,20 @@ export interface components {
              *               "key": "copies",
              *               "label": "Copies",
              *               "ui_type": "int",
-             *               "valid_max": "",
-             *               "valid_min": ""
+             *               "valid_max": "3",
+             *               "valid_min": "1"
              *             },
              *             {
              *               "default": "me@mgineer85.de",
              *               "key": "mail",
-             *               "label": "Copies",
+             *               "label": "E-Mail address",
              *               "ui_type": "input",
-             *               "valid_max": "",
-             *               "valid_min": ""
+             *               "valid_max": "128",
+             *               "valid_min": "5"
              *             }
              *           ],
+             *           "parameters_dialog_action_icon": "start",
+             *           "parameters_dialog_action_label": "GO",
              *           "parameters_dialog_caption": "Print and mail...",
              *           "share_blocked_time": 3,
              *           "share_command": "echo {filename} {copies} {mail}"
@@ -2869,6 +2877,18 @@ export interface components {
              */
             parameters_dialog_caption: string;
             /**
+             * Parameters Dialog Action Icon
+             * @description Icon used for the action button (any icon from material icons, see documentation).
+             * @default start
+             */
+            parameters_dialog_action_icon: string;
+            /**
+             * Parameters Dialog Action Label
+             * @description Text used for the action button as label.
+             * @default GO
+             */
+            parameters_dialog_action_label: string;
+            /**
              * Parameters
              * @description Define input fields the user needs to enter on share.
              * @default []
@@ -2918,12 +2938,12 @@ export interface components {
             default: string;
             /**
              * Valid Min
-             * @default
+             * @default 1
              */
             valid_min: string;
             /**
              * Valid Max
-             * @default
+             * @default 3
              */
             valid_max: string;
         };

@@ -1,5 +1,5 @@
 <template>
-  <q-card style="min-width: 350px" class="">
+  <q-card style="width: 400px" class="">
     <q-form autofocus @submit="onSubmit" class="q-gutter-md" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">{{ parameters_dialog_caption }}</div>
@@ -12,27 +12,41 @@
           <div v-for="parameter in props.parameters" :key="parameter.key">
             <!-- ui_type=int        -->
             <div v-if="parameter.ui_type == 'int'">
-              <div class="row">
-                <q-btn icon="sym_o_remove" color="primary" flat @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) - 1)" />
-                <q-input
-                  filled
-                  v-model="formData[parameter.key]"
-                  :label="parameter.label"
-                  :key="parameter.key"
-                  :name="parameter.key"
-                  class=""
-                  :rules="[
-                    (val) => (val !== null && val !== '') || 'Please type a number', // required.
-                    (val) =>
-                      (parameter.valid_max && parseInt(val) <= parseInt(parameter.valid_max)) ||
-                      `Please type a number lower than ${parameter.valid_max}`,
-                    (val) =>
-                      (parameter.valid_min && parseInt(val) >= parseInt(parameter.valid_min)) ||
-                      `Please type a number more than ${parameter.valid_min}`,
-                  ]"
-                />
-                <q-btn icon="sym_o_add" color="primary" flat @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) + 1)" />
-              </div>
+              <q-input
+                filled
+                v-model="formData[parameter.key]"
+                :label="parameter.label"
+                :key="parameter.key"
+                :name="parameter.key"
+                :rules="[
+                  (val) => (val !== null && val !== '') || 'Please type a number', // required.
+                  (val) =>
+                    (parameter.valid_max && parseInt(val) <= parseInt(parameter.valid_max)) ||
+                    `Please type a number lower than ${parameter.valid_max}`,
+                  (val) =>
+                    (parameter.valid_min && parseInt(val) >= parseInt(parameter.valid_min)) ||
+                    `Please type a number more than ${parameter.valid_min}`,
+                ]"
+              >
+                <template v-slot:before>
+                  <q-btn
+                    icon="sym_o_remove"
+                    color="primary"
+                    flat
+                    @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) - 1)"
+                    :disable="parameter.valid_min && parseInt(formData[parameter.key]) <= parseInt(parameter.valid_min)"
+                  />
+                </template>
+                <template v-slot:after>
+                  <q-btn
+                    icon="sym_o_add"
+                    color="primary"
+                    flat
+                    @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) + 1)"
+                    :disable="parameter.valid_max && parseInt(formData[parameter.key]) >= parseInt(parameter.valid_max)"
+                  />
+                </template>
+              </q-input>
             </div>
             <!-- ui_type=input (and else) -->
             <div v-else>
@@ -56,9 +70,11 @@
         </div>
       </q-card-section>
 
-      <q-card-actions align="center" class="text-primary">
-        <!-- <q-btn label="cancel" v-close-popup /> -->
-        <q-btn type="submit" label="GO" color="primary" v-close-popup size="xl" padding="lg" rounded />
+      <q-card-actions align="center">
+        <q-btn stack no-caps color="primary" class="q-ma-sm" type="submit" v-close-popup size="md" padding="md lg">
+          <q-icon v-if="!isEmpty(parameters_dialog_action_icon)" :name="`sym_o_${parameters_dialog_action_icon}`" />
+          <div>{{ parameters_dialog_action_label }}</div>
+        </q-btn>
       </q-card-actions>
     </q-form>
   </q-card>
@@ -67,7 +83,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { onBeforeMount } from 'vue'
-
+import { isEmpty } from 'lodash'
 const formData = reactive({})
 
 import type { components } from 'src/dto/api'
@@ -75,6 +91,8 @@ import type { components } from 'src/dto/api'
 const props = defineProps<{
   config_index: number
   parameters_dialog_caption: string
+  parameters_dialog_action_icon: string
+  parameters_dialog_action_label: string
   parameters: components['schemas']['ShareProcessingParameters'][]
 }>()
 
