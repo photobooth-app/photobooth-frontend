@@ -46,7 +46,7 @@
             "
             :share-direct-access-buttons="configurationStore.configuration.share.number_direct_access_buttons"
             :share-buttons="shareButtons"
-            :show-delete="configurationStore.configuration.uisettings.gallery_show_delete"
+            :show-delete="props.forceShowDeleteButton || configurationStore.configuration.uisettings.gallery_show_delete"
             :show-download="configurationStore.configuration.uisettings.gallery_show_download"
             :image_number="currentMediaitemNumber"
             :images_total="mediacollectionStore.collection_number_of_items"
@@ -117,9 +117,10 @@ const displayIndeterminateProgressbar = ref(false)
 const showDialogShareActionWithParameters = ref(false)
 const shareActionWithParametersConfigIndex = ref(0)
 
-const props = defineProps({
-  startTimer: Boolean,
-})
+const props = defineProps<{
+  startTimer: boolean
+  forceShowDeleteButton?: boolean
+}>()
 
 onBeforeMount(() => {
   selectedMediaitemId.value = route.params.id as string

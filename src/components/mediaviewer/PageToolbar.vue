@@ -1,7 +1,7 @@
 <template>
   <q-page-sticky position="bottom" id="gallery-toolbar" class="toolbar" v-if="item">
     <div class="q-mb-lg action-buttons col">
-      <div class="q-pa-md row">
+      <div class="q-pa-md row flex flex-center">
         <q-btn
           v-if="showDelete"
           stack
