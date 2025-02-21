@@ -10,7 +10,12 @@ const routes: RouteRecordRaw[] = [
       { path: 'itemapproval', component: () => import('pages/ItemApprovalPage.vue') },
       { path: 'gallery', component: () => import('pages/GalleryPage.vue') },
       { path: 'mediaviewer/:id', name: 'mediaviewer', component: () => import('pages/GalleryDetailPage.vue'), props: { startTimer: false } },
-      { path: 'itempresenter/:id', name: 'itempresenter', component: () => import('pages/GalleryDetailPage.vue'), props: { startTimer: true } },
+      {
+        path: 'itempresenter/:id',
+        name: 'itempresenter',
+        component: () => import('pages/GalleryDetailPage.vue'),
+        props: { startTimer: true, forceShowDeleteButton: true },
+      },
     ],
   },
 
