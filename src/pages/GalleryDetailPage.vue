@@ -15,7 +15,7 @@
         <DrawerFilter
           v-if="rightDrawerOpen"
           :id="currentMediaitem.id"
-          :available-filter="getAvailableFilters"
+          :available-filter="available_filter"
           @trigger-apply-filter="doApplyFilter"
         ></DrawerFilter>
       </q-drawer>
@@ -116,7 +116,7 @@ const headercountdowntimer = ref(false) // likely not used here, move to newitem
 const displayIndeterminateProgressbar = ref(false)
 const showDialogShareActionWithParameters = ref(false)
 const shareActionWithParametersConfigIndex = ref(0)
-
+const available_filter = ref([])
 const props = defineProps<{
   startTimer: boolean
   forceShowDeleteButton?: boolean
@@ -124,6 +124,7 @@ const props = defineProps<{
 
 onBeforeMount(() => {
   selectedMediaitemId.value = route.params.id as string
+  getAvailableFilter()
 })
 watch(route, (to) => {
   selectedMediaitemId.value = to.params.id as string
@@ -185,19 +186,19 @@ const getFilterAvailable = (media_type: string) => {
   return ['image', 'collageimage', 'animationimage'].includes(media_type)
 }
 
-const getAvailableFilters = computed(() => {
-  if( configurationStore.configuration.mediaprocessing.filtertype == 'pilgram2') {
-      return configurationStore.configuration.uisettings.gallery_filter_userselectable
-  }
-  else if(configurationStore.configuration.mediaprocessing.filtertype == 'stablediffusion') {
-      return configurationStore.configuration.uisettings.gallery_filter_stablediffusion_userselectable
-  }
-  return []
-})
+const getAvailableFilter = async () => {
+  try {
+    const response = await _fetch('/api/filter/')
 
+    available_filter.value = await response.json()
+    console.log(available_filter.value)
+  } catch (error) {
+    console.warn(error)
+  }
+}
 const doApplyFilter = (id: string, filter: string) => {
   displayIndeterminateProgressbar.value = true
-  fetch(`/api/mediaprocessing/applyfilter/${id}/${filter}`)
+  fetch(`/api/filter/${id}?filter=${filter}`, { method: 'PATCH' })
     .then((response) => {
       if (!response.ok) {
         throw new Error('Server returned ' + response.status)
