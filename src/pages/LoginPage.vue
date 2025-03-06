@@ -16,7 +16,12 @@
         <q-card-section class="text-center">
           <div class="">
             {{ $t('Looking for the default password or issues signing in?') }}
-            <a href="http://photobooth-app.org/setup/admincenter/" target="_blank" class="text-weight-bold" style="text-decoration: none">
+            <a
+              href="https://photobooth-app.org/setup/configuration/admincenter/"
+              target="_blank"
+              class="text-weight-bold"
+              style="text-decoration: none"
+            >
               {{ $t('Check the documentation.') }}
             </a>
           </div>
