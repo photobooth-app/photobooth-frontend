@@ -344,7 +344,7 @@
 
         <q-card-actions align="right">
           <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
-          <q-btn v-close-popup :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/api/system/server/reboot')" />
+          <q-btn v-close-popup :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/api/system/host/reboot')" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -358,7 +358,7 @@
 
         <q-card-actions align="right">
           <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-          <q-btn v-close-popup :label="$t('BTN_LABEL_SHUTDOWN')" color="primary" @click="remoteProcedureCall('/api/system/server/shutdown')" />
+          <q-btn v-close-popup :label="$t('BTN_LABEL_SHUTDOWN')" color="primary" @click="remoteProcedureCall('/api/system/host/shutdown')" />
         </q-card-actions>
       </q-card>
     </q-dialog>
