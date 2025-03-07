@@ -91,7 +91,7 @@ const selected_configuration = ref('')
 const configuration = ref({})
 const schema = ref({})
 const cuischema = ref(generateDefaultUISchema({}))
-const ajv = createAjv({ multipleOfPrecision: 2 }) // https://github.com/eclipsesource/jsonforms/issues/1832#issuecomment-966209856 // init with defaults not working properly yet on array lists. revisit later # useDefaults: 'empty' https://ajv.js.org/options.html#usedefaults
+const ajv = createAjv({ multipleOfPrecision: 2, useDefaults: false, removeAdditional: false }) // https://ajv.js.org/options.html#usedefaults // https://ajv.js.org/json-schema.html#discriminator use in future?
 const renderers = Object.freeze([...quasarRenderers])
 const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } })
 provide('styles', myStyles)
@@ -117,7 +117,7 @@ const onChange = (event: JsonFormsChangeEvent) => {
 
 const getSchema = async () => {
   try {
-    const response = await _fetch(`/api/admin/config/${selected_configuration.value}/schema?schema_type=dereferenced`)
+    const response = await _fetch(`/api/admin/config/${selected_configuration.value}/schema`)
     console.log(response)
     if (!response.ok) {
       throw new Error('Server returned ' + response.status)
