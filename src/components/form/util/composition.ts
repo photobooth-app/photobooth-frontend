@@ -52,7 +52,7 @@ export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
   const styles = useStyles(input.control.value.uischema)
 
   const quasarProps = (path: string) => {
-    const props = get(appliedOptions.value?.vuetify, path)
+    const props = get(appliedOptions.value?.quasar, path)
 
     return props && isPlainObject(props) ? props : {}
   }

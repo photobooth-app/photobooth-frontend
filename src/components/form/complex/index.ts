@@ -1,3 +1,4 @@
+import type { ControlElement, Tester } from '@jsonforms/core'
 import {
   isAllOfControl,
   isAnyOfControl,
@@ -10,10 +11,12 @@ import {
   schemaSubPathMatches,
   uiTypeIs,
   isObjectControl,
+  resolveSchema,
 } from '@jsonforms/core'
 
 import { default as AllOfRenderer } from './AllOfRenderer.vue'
 import { default as AnyOfRenderer } from './AnyOfRenderer.vue'
+import { default as AnyOfOptionalRenderer } from './AnyOfOptionalRenderer.vue'
 // import { default as ArrayControlRenderer } from "./ArrayControlRenderer.vue";
 import { default as EnumArrayRenderer } from './EnumArrayRenderer.vue'
 import { default as ObjectRenderer } from './ObjectRenderer.vue'
@@ -33,6 +36,19 @@ const hasOneOfItems = (schema: JsonSchema): boolean =>
   })
 
 const hasEnumItems = (schema: JsonSchema): boolean => schema.type === 'string' && schema.enum !== undefined
+
+const isOptional: Tester = (uischema, schema, context) => {
+  if (!isAnyOfControl(uischema, schema, context)) return false
+  const controlUISchmea = uischema as ControlElement
+  const resolved = resolveSchema(schema, controlUISchmea.scope, context.rootSchema)
+  if (!resolved?.anyOf || resolved.anyOf.length !== 2) return false
+  return resolved.anyOf.some((obj: JsonSchema) => obj.type === 'null')
+}
+
+const AnyOfOptionalRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: AnyOfOptionalRenderer,
+  tester: rankWith(3.1, isOptional),
+}
 
 export const AnyOfRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: AnyOfRenderer,
@@ -62,6 +78,7 @@ export const ObjectRendererEntry: JsonFormsRendererRegistryEntry = {
 
 export const complexRenderers = [
   AllOfRendererEntry,
+  AnyOfOptionalRendererEntry,
   AnyOfRendererEntry,
   // arrayControlRendererEntry,
   EnumArrayRendererEntry,

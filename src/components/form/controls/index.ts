@@ -28,6 +28,7 @@ import { default as EnumControlRenderer } from './EnumControlRenderer.vue'
 import { default as NumberControlRenderer } from './NumberControlRenderer.vue'
 import { default as SliderControlRenderer } from './SliderControlRenderer.vue'
 import { default as StringControlRenderer } from './StringControlRenderer.vue'
+import { default as FilePathControlRenderer } from './FilePathControlRenderer.vue'
 
 export const BooleanToggleControlRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: BooleanToggleControlRenderer,
@@ -77,6 +78,21 @@ export const StringControlRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: StringControlRenderer,
   tester: rankWith(1.1, isStringControl),
 }
+export const FilePathControlRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: StringControlRenderer,
+  tester: rankWith(3.1, and(isStringControl, or(formatIs('file-path'), optionIs('format', 'file-path')))),
+}
+export const FilePathApiBackedControlRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: FilePathControlRenderer,
+  tester: rankWith(
+    3.2,
+    and(
+      isStringControl,
+      or(formatIs('file-path'), optionIs('format', 'file-path')),
+      schemaMatches((schema) => schema['files_list_api']),
+    ),
+  ),
+}
 
 export const controlRenderers = [
   BooleanToggleControlRendererEntry,
@@ -86,4 +102,6 @@ export const controlRenderers = [
   NumberControlRendererEntry,
   SliderControlRendererEntry,
   StringControlRendererEntry,
+  FilePathControlRendererEntry,
+  FilePathApiBackedControlRendererEntry,
 ]
