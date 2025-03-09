@@ -134,5 +134,6 @@
   "Service": "サービス",
   "Reboot Host": "ホストを再起動",
   "Shutdown Host": "シャットダウンホスト",
-  "Frontend build date": "Frontend build date"
+  "Frontend build date": "Frontend build date",
+  "No results": "結果がありません"
 }

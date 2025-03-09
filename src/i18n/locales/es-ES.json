@@ -134,5 +134,6 @@
   "Service": "Servicio",
   "Reboot Host": "Reiniciar Host",
   "Shutdown Host": "Servidor apagado",
-  "Frontend build date": "Fecha de construcción del Frontend"
+  "Frontend build date": "Fecha de construcción del Frontend",
+  "No results": "Sin resultados"
 }

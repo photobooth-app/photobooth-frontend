@@ -134,5 +134,6 @@
   "Service": "Serviciu",
   "Reboot Host": "Repornire Host",
   "Shutdown Host": "Gazdă de oprire",
-  "Frontend build date": "Data construirii frontend"
+  "Frontend build date": "Data construirii frontend",
+  "No results": "Niciun rezultat"
 }
