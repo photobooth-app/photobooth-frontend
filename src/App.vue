@@ -180,7 +180,7 @@ const keyUpHandler = (e: KeyboardEvent) => {
   })
   configurationStore.configuration.share.actions.forEach((action_config, index: number) => {
     if (action_config.trigger.keyboard_trigger.keycode == e.key) {
-      remoteProcedureCall(`/api/share/actions/${index}`)
+      remoteProcedureCall(`/api/share/actions/latest/${index}`, 'POST')
       return
     }
   })
