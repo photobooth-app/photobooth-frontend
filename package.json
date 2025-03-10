@@ -41,7 +41,7 @@
     "@vue/eslint-config-typescript": "^14.1.4",
     "autoprefixer": "^10.4.19",
     "eslint": "^9.16.0",
-    "eslint-plugin-vue": "^9.32.0",
+    "eslint-plugin-vue": "^10.0.0",
     "globals": "^15.13.0",
     "openapi-typescript": "^7.5.2",
     "prettier": "^3.4.2",
