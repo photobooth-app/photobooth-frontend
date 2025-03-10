@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="`route-name-${String($route.name) ?? 'undefined'}`">
     <router-view v-if="initialInitDone" />
     <q-dialog v-model="showConnectionOverlay" persistent>
       <connection-overlay />
