@@ -134,5 +134,6 @@
   "Service": "Diensten",
   "Reboot Host": "Herstart Host",
   "Shutdown Host": "Host afsluiten",
-  "Frontend build date": "Aanmaakdatum frontend"
+  "Frontend build date": "Aanmaakdatum frontend",
+  "No results": "Geen resultaten gevonden"
 }

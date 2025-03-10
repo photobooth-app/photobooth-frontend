@@ -134,5 +134,6 @@
   "Service": "Tjänst",
   "Reboot Host": "Starta om värd",
   "Shutdown Host": "Stäng av Värd",
-  "Frontend build date": "Frontend byggdatum"
+  "Frontend build date": "Frontend byggdatum",
+  "No results": "Inga resultat"
 }
