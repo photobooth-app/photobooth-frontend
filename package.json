@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
-    "@intlify/eslint-plugin-vue-i18n": "^3.2.0",
+    "@intlify/eslint-plugin-vue-i18n": "^4.0.0",
     "@intlify/unplugin-vue-i18n": "^6.0.0",
     "@quasar/app-vite": "^2.1.4",
     "@types/lodash": "^4.17.1",
