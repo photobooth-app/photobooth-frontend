@@ -134,5 +134,6 @@
   "Service": "Serviço",
   "Reboot Host": "Servidor de reinicialização",
   "Shutdown Host": "Host do Desligamento",
-  "Frontend build date": "Data de compilação do Frontend"
+  "Frontend build date": "Data de compilação do Frontend",
+  "No results": "Nenhum resultado"
 }

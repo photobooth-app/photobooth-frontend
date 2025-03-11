@@ -134,5 +134,6 @@
   "Service": "Palvelu",
   "Reboot Host": "Käynnistä Isäntä Uudelleen",
   "Shutdown Host": "Sammuta Isäntä",
-  "Frontend build date": "Julkisivun rakennuspäivämäärä"
+  "Frontend build date": "Julkisivun rakennuspäivämäärä",
+  "No results": "Ei tuloksia"
 }

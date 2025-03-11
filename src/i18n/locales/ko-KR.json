@@ -134,5 +134,6 @@
   "Service": "서비스",
   "Reboot Host": "호스트 재부팅",
   "Shutdown Host": "호스트 종료",
-  "Frontend build date": "프론트엔드 빌드 날짜"
+  "Frontend build date": "프론트엔드 빌드 날짜",
+  "No results": "결과 없음"
 }

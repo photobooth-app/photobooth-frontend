@@ -134,5 +134,6 @@
   "Service": "Послуга",
   "Reboot Host": "Перезавантажити хост",
   "Shutdown Host": "Завершення війська",
-  "Frontend build date": "Дата збірки на сайті"
+  "Frontend build date": "Дата збірки на сайті",
+  "No results": "Немає результатів"
 }

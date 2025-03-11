@@ -134,5 +134,6 @@
   "Service": "Servis",
   "Reboot Host": "Restartovat hostitele",
   "Shutdown Host": "Vypnutí hostitele",
-  "Frontend build date": "Datum sestavení frontendu"
+  "Frontend build date": "Datum sestavení frontendu",
+  "No results": "Žádné výsledky"
 }
