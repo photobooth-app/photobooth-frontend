@@ -134,5 +134,6 @@
   "Service": "服务",
   "Reboot Host": "重启主机",
   "Shutdown Host": "关闭主机",
-  "Frontend build date": "前端构建日期"
+  "Frontend build date": "前端构建日期",
+  "No results": "没有结果"
 }

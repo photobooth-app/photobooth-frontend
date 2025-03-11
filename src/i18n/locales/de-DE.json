@@ -129,10 +129,11 @@
   "restart systemctl service": "starte den systemctl-Dienst neu",
   "uninstall systemctl service": "systemctl-Dienst deinstallieren",
   "install systemctl service": "installiere systemctl Dienst",
-  "Systemctl (Linux only)": "Systemctl (nur Linux)",
+  "Systemctl (Linux only)": "Kommandozeilenwerkzeug-Dienst (systemctl) (nur Linux)",
   "Reload services": "Dienste neu laden",
   "Service": "Service",
   "Reboot Host": "Host neu starten",
   "Shutdown Host": "Host herunterfahren",
-  "Frontend build date": "Frontend Build-Datum"
+  "Frontend build date": "Frontend Build-Datum",
+  "No results": "Keine Ergebnisse"
 }

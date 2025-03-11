@@ -134,5 +134,6 @@
   "Service": "Tjeneste",
   "Reboot Host": "Omstart vert",
   "Shutdown Host": "Avslutt vert",
-  "Frontend build date": "byggedato for brukersiden"
+  "Frontend build date": "byggedato for brukersiden",
+  "No results": "Ingen resultater"
 }
