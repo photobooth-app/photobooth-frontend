@@ -164,10 +164,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /**
-         * Video Stream
-         * @description endpoint to stream live video to clients
-         */
+        /** Video Stream */
         get: operations["video_stream_api_aquisition_stream_mjpg_get"];
         put?: never;
         post?: never;
@@ -184,16 +181,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /**
-         * Api Still Get
-         * @description Aquire image and serve to download
-         *
-         *     Raises:
-         *         HTTPException: Image could not be aquired from backend
-         *
-         *     Returns:
-         *         Response: Returns jpeg image to download
-         */
+        /** Api Still Get */
         get: operations["api_still_get_api_aquisition_still_get"];
         put?: never;
         post?: never;
@@ -250,10 +238,6 @@ export interface paths {
         /**
          * Get Log Latest
          * @description provide latest logfile to download
-         *     TODO Handle exception if file not exists
-         *
-         *     Returns:
-         *         _type_: _description_
          */
         get: operations["get_log_latest_api_debug_log_latest_get"];
         put?: never;
@@ -300,15 +284,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/mediaprocessing/preview/{mediaitem_id}/{filter}": {
+    "/api/filter/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Api Get Preview Image Filtered */
-        get: operations["api_get_preview_image_filtered_api_mediaprocessing_preview__mediaitem_id___filter__get"];
+        /** Api Get Userselectable Filters */
+        get: operations["api_get_userselectable_filters_api_filter__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -317,21 +301,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/mediaprocessing/applyfilter/{mediaitem_id}/{filter}": {
+    "/api/filter/{mediaitem_id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Api Get Applyfilter */
-        get: operations["api_get_applyfilter_api_mediaprocessing_applyfilter__mediaitem_id___filter__get"];
+        /** Api Get Preview Image Filtered */
+        get: operations["api_get_preview_image_filtered_api_filter__mediaitem_id__get"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /** Api Applyfilter */
+        patch: operations["api_applyfilter_api_filter__mediaitem_id__patch"];
         trace?: never;
     };
     "/api/share/actions/latest/{index}": {
@@ -562,6 +547,23 @@ export interface paths {
         };
         /** Api Get Config Schema */
         get: operations["api_get_config_schema_api_admin_config__configurable__schema_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/files/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Search */
+        get: operations["get_search_api_admin_files_search_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -852,7 +854,7 @@ export interface components {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
-             * @default default animation
+             * @default default action
              */
             name: string;
             jobcontrol: components["schemas"]["MultiImageJobControl"];
@@ -866,13 +868,10 @@ export interface components {
              * @default 2000
              */
             duration: number;
-            /**
-             * Predefined Image
-             * @default
-             */
-            predefined_image: string;
+            /** Predefined Image */
+            predefined_image?: string | null;
             /** @default original */
-            filter: components["schemas"]["PilgramFilter"];
+            image_filter: components["schemas"]["PluginFilters"];
         };
         /**
          * Animation (GIF) processing after capture
@@ -924,19 +923,19 @@ export interface components {
              *           "jobcontrol": {
              *             "countdown_capture": 2
              *           },
-             *           "name": "default single image",
+             *           "name": "default action",
              *           "processing": {
              *             "fill_background_color": "blue",
              *             "fill_background_enable": false,
-             *             "filter": "original",
+             *             "image_filter": "original",
              *             "img_background_enable": true,
-             *             "img_background_file": "userdata/backgrounds/pink-7761356_1920.jpg",
+             *             "img_background_file": "userdata\\demoassets\\backgrounds\\pink-7761356_1920.jpg",
              *             "img_frame_enable": true,
-             *             "img_frame_file": "userdata/frames/frame_image_photobooth-app.png",
+             *             "img_frame_file": "userdata\\demoassets\\frames\\frame_image_photobooth-app.png",
              *             "texts": [
              *               {
              *                 "color": "#333",
-             *                 "font": "userdata/fonts/Roboto-Bold.ttf",
+             *                 "font": "userdata\\demoassets\\fonts\\Roboto-Bold.ttf",
              *                 "font_size": 30,
              *                 "pos_x": 1300,
              *                 "pos_y": 1250,
@@ -973,19 +972,18 @@ export interface components {
              *             "countdown_capture_second_following": 1,
              *             "show_individual_captures_in_gallery": true
              *           },
-             *           "name": "default collage",
+             *           "name": "default action",
              *           "processing": {
              *             "canvas_fill_background_color": "green",
              *             "canvas_fill_background_enable": false,
              *             "canvas_height": 1280,
              *             "canvas_img_background_enable": false,
-             *             "canvas_img_background_file": "",
              *             "canvas_img_front_enable": true,
-             *             "canvas_img_front_file": "userdata/frames/pixabay-poster-2871536_1920.png",
+             *             "canvas_img_front_file": "userdata\\demoassets\\frames\\pixabay-poster-2871536_1920.png",
              *             "canvas_texts": [
              *               {
              *                 "color": "#333",
-             *                 "font": "userdata/fonts/Roboto-Bold.ttf",
+             *                 "font": "userdata\\demoassets\\fonts\\Roboto-Bold.ttf",
              *                 "font_size": 40,
              *                 "pos_x": 200,
              *                 "pos_y": 1100,
@@ -998,35 +996,32 @@ export interface components {
              *             "capture_fill_background_color": "blue",
              *             "capture_fill_background_enable": false,
              *             "capture_img_background_enable": false,
-             *             "capture_img_background_file": "",
              *             "merge_definition": [
              *               {
              *                 "description": "left",
-             *                 "filter": "earlybird",
              *                 "height": 725,
+             *                 "image_filter": "FilterPilgram2.earlybird",
              *                 "pos_x": 160,
              *                 "pos_y": 220,
-             *                 "predefined_image": "",
              *                 "rotate": 0,
              *                 "width": 510
              *               },
              *               {
              *                 "description": "middle predefined",
-             *                 "filter": "original",
              *                 "height": 725,
+             *                 "image_filter": "original",
              *                 "pos_x": 705,
              *                 "pos_y": 66,
-             *                 "predefined_image": "userdata/predefined_images/photobooth-collage-predefined-image.png",
+             *                 "predefined_image": "userdata\\demoassets\\predefined_images\\photobooth-collage-predefined-image.png",
              *                 "rotate": 0,
              *                 "width": 510
              *               },
              *               {
              *                 "description": "right",
-             *                 "filter": "reyes",
              *                 "height": 725,
+             *                 "image_filter": "FilterPilgram2.reyes",
              *                 "pos_x": 1245,
              *                 "pos_y": 220,
-             *                 "predefined_image": "",
              *                 "rotate": 0,
              *                 "width": 510
              *               }
@@ -1059,35 +1054,31 @@ export interface components {
              *             "countdown_capture_second_following": 0.5,
              *             "show_individual_captures_in_gallery": false
              *           },
-             *           "name": "default animation",
+             *           "name": "default action",
              *           "processing": {
              *             "canvas_height": 900,
              *             "canvas_width": 1500,
              *             "merge_definition": [
              *               {
              *                 "duration": 2000,
-             *                 "filter": "crema",
-             *                 "predefined_image": ""
+             *                 "image_filter": "FilterPilgram2.crema"
              *               },
              *               {
              *                 "duration": 2000,
-             *                 "filter": "inkwell",
-             *                 "predefined_image": ""
+             *                 "image_filter": "FilterPilgram2.inkwell"
              *               },
              *               {
              *                 "duration": 2000,
-             *                 "filter": "clarendon",
-             *                 "predefined_image": ""
+             *                 "image_filter": "original"
              *               },
              *               {
              *                 "duration": 2000,
-             *                 "filter": "toaster",
-             *                 "predefined_image": ""
+             *                 "image_filter": "original"
              *               },
              *               {
              *                 "duration": 4000,
-             *                 "filter": "original",
-             *                 "predefined_image": "userdata/predefined_images/photobooth-gif-animation-predefined-image.png"
+             *                 "image_filter": "original",
+             *                 "predefined_image": "userdata\\demoassets\\predefined_images\\photobooth-gif-animation-predefined-image.png"
              *               }
              *             ]
              *           },
@@ -1114,7 +1105,7 @@ export interface components {
              *           "jobcontrol": {
              *             "countdown_capture": 2
              *           },
-             *           "name": "default video",
+             *           "name": "default action",
              *           "processing": {
              *             "boomerang": true,
              *             "video_duration": 5,
@@ -1144,12 +1135,12 @@ export interface components {
              *             "countdown_capture": 2,
              *             "show_individual_captures_in_gallery": false
              *           },
-             *           "name": "default wigglegram",
+             *           "name": "default action",
              *           "processing": {
              *             "canvas_height": 900,
              *             "canvas_width": 1500,
              *             "duration": 125,
-             *             "filter": "original"
+             *             "image_filter": "original"
              *           },
              *           "trigger": {
              *             "gpio_trigger": {
@@ -1191,7 +1182,7 @@ export interface components {
              *                 "valid_min": "1"
              *               }
              *             ],
-             *             "parameters_dialog_action_icon": "start",
+             *             "parameters_dialog_action_icon": "print",
              *             "parameters_dialog_action_label": "GO",
              *             "parameters_dialog_caption": "How many copies?",
              *             "share_blocked_time": 3,
@@ -1238,8 +1229,8 @@ export interface components {
              *                 "valid_min": "5"
              *               }
              *             ],
-             *             "parameters_dialog_action_icon": "start",
-             *             "parameters_dialog_action_label": "GO",
+             *             "parameters_dialog_action_icon": "mail",
+             *             "parameters_dialog_action_label": "send",
              *             "parameters_dialog_caption": "Print and mail...",
              *             "share_blocked_time": 3,
              *             "share_command": "echo {filename} {copies} {mail}"
@@ -1301,9 +1292,9 @@ export interface components {
              *       "enable_livestream_when_idle": true,
              *       "enable_livestream_when_active": true,
              *       "livestream_mirror_effect": true,
-             *       "livestream_blurredbackground": true,
+             *       "livestream_blurredbackground": false,
              *       "enable_livestream_frameoverlay": true,
-             *       "livestream_frameoverlay_image": "/userdata/frames/frame_image_photobooth-app.png",
+             *       "livestream_frameoverlay_image": "userdata\\demoassets\\frames\\frame_image_photobooth-app.png",
              *       "FRONTPAGE_TEXT": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Hey!<br>Let's take some pictures! <br>📷</div>",
              *       "TAKEPIC_MSG_TIME": 0.5,
              *       "TAKEPIC_MSG_TEXT": "😃",
@@ -1313,49 +1304,6 @@ export interface components {
              *       "qrcode_text_above": "👋 Download your photo!",
              *       "qrcode_text_below": "Scan above code with your phone.",
              *       "gallery_show_filter": true,
-             *       "gallery_filter_userselectable": [
-             *         "original",
-             *         "_1977",
-             *         "aden",
-             *         "ashby",
-             *         "amaro",
-             *         "brannan",
-             *         "brooklyn",
-             *         "charmes",
-             *         "clarendon",
-             *         "crema",
-             *         "dogpatch",
-             *         "earlybird",
-             *         "gingham",
-             *         "ginza",
-             *         "hefe",
-             *         "helena",
-             *         "hudson",
-             *         "inkwell",
-             *         "juno",
-             *         "kelvin",
-             *         "lark",
-             *         "lofi",
-             *         "ludwig",
-             *         "maven",
-             *         "mayfair",
-             *         "moon",
-             *         "nashville",
-             *         "perpetua",
-             *         "poprocket",
-             *         "reyes",
-             *         "rise",
-             *         "sierra",
-             *         "skyline",
-             *         "slumber",
-             *         "stinson",
-             *         "sutro",
-             *         "toaster",
-             *         "valencia",
-             *         "walden",
-             *         "willow",
-             *         "xpro2"
-             *       ],
              *       "gallery_show_download": true,
              *       "gallery_show_delete": true,
              *       "gallery_show_shareprint": true
@@ -1449,7 +1397,7 @@ export interface components {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
-             * @default default collage
+             * @default default action
              */
             name: string;
             jobcontrol: components["schemas"]["MultiImageJobControl"];
@@ -1488,13 +1436,10 @@ export interface components {
              * @default 0
              */
             rotate: number;
-            /**
-             * Predefined Image
-             * @default
-             */
-            predefined_image: string;
+            /** Predefined Image */
+            predefined_image?: string | null;
             /** @default original */
-            filter: components["schemas"]["PilgramFilter"];
+            image_filter: components["schemas"]["PluginFilters"];
         };
         /**
          * Collage processing
@@ -1523,9 +1468,8 @@ export interface components {
             /**
              * Capture Img Background File
              * @description Image file to use as background filling transparent area. File needs to be located in working directory/userdata/*
-             * @default
              */
-            capture_img_background_file: string;
+            capture_img_background_file?: string | null;
             /**
              * Canvas Width
              * @description Width (X) in pixel of collage image. The higher the better the quality but also longer time to process. All processes keep aspect ratio.
@@ -1565,9 +1509,8 @@ export interface components {
             /**
              * Canvas Img Background File
              * @description Image file to use as background filling transparent area. File needs to be located in userdata/*
-             * @default
              */
-            canvas_img_background_file: string;
+            canvas_img_background_file?: string | null;
             /**
              * Canvas Img Front Enable
              * @description Overlay image on canvas image.
@@ -1577,9 +1520,8 @@ export interface components {
             /**
              * Canvas Img Front File
              * @description Image file to paste on top over photos and backgrounds. Photos are visible only through transparant parts. Image needs to be transparent (PNG). File needs to be located in working directory/userdata/*
-             * @default
              */
-            canvas_img_front_file: string;
+            canvas_img_front_file?: string | null;
             /**
              * Canvas Texts Enable
              * @description General enable apply texts below.
@@ -1646,22 +1588,22 @@ export interface components {
              * @description Capture single images.
              * @default [
              *       {
-             *         "name": "default single image",
+             *         "name": "default action",
              *         "jobcontrol": {
              *           "countdown_capture": 2
              *         },
              *         "processing": {
              *           "fill_background_color": "blue",
              *           "fill_background_enable": false,
-             *           "filter": "original",
+             *           "image_filter": "original",
              *           "img_background_enable": true,
-             *           "img_background_file": "userdata/backgrounds/pink-7761356_1920.jpg",
+             *           "img_background_file": "userdata\\demoassets\\backgrounds\\pink-7761356_1920.jpg",
              *           "img_frame_enable": true,
-             *           "img_frame_file": "userdata/frames/frame_image_photobooth-app.png",
+             *           "img_frame_file": "userdata\\demoassets\\frames\\frame_image_photobooth-app.png",
              *           "texts": [
              *             {
              *               "color": "#333",
-             *               "font": "userdata/fonts/Roboto-Bold.ttf",
+             *               "font": "userdata\\demoassets\\fonts\\Roboto-Bold.ttf",
              *               "font_size": 30,
              *               "pos_x": 1300,
              *               "pos_y": 1250,
@@ -1696,7 +1638,7 @@ export interface components {
              * @description Capture collages consist of one or more still images.
              * @default [
              *       {
-             *         "name": "default collage",
+             *         "name": "default action",
              *         "jobcontrol": {
              *           "approve_autoconfirm_timeout": 15,
              *           "ask_approval_each_capture": true,
@@ -1709,13 +1651,12 @@ export interface components {
              *           "canvas_fill_background_enable": false,
              *           "canvas_height": 1280,
              *           "canvas_img_background_enable": false,
-             *           "canvas_img_background_file": "",
              *           "canvas_img_front_enable": true,
-             *           "canvas_img_front_file": "userdata/frames/pixabay-poster-2871536_1920.png",
+             *           "canvas_img_front_file": "userdata\\demoassets\\frames\\pixabay-poster-2871536_1920.png",
              *           "canvas_texts": [
              *             {
              *               "color": "#333",
-             *               "font": "userdata/fonts/Roboto-Bold.ttf",
+             *               "font": "userdata\\demoassets\\fonts\\Roboto-Bold.ttf",
              *               "font_size": 40,
              *               "pos_x": 200,
              *               "pos_y": 1100,
@@ -1728,35 +1669,32 @@ export interface components {
              *           "capture_fill_background_color": "blue",
              *           "capture_fill_background_enable": false,
              *           "capture_img_background_enable": false,
-             *           "capture_img_background_file": "",
              *           "merge_definition": [
              *             {
              *               "description": "left",
-             *               "filter": "earlybird",
              *               "height": 725,
+             *               "image_filter": "FilterPilgram2.earlybird",
              *               "pos_x": 160,
              *               "pos_y": 220,
-             *               "predefined_image": "",
              *               "rotate": 0,
              *               "width": 510
              *             },
              *             {
              *               "description": "middle predefined",
-             *               "filter": "original",
              *               "height": 725,
+             *               "image_filter": "original",
              *               "pos_x": 705,
              *               "pos_y": 66,
-             *               "predefined_image": "userdata/predefined_images/photobooth-collage-predefined-image.png",
+             *               "predefined_image": "userdata\\demoassets\\predefined_images\\photobooth-collage-predefined-image.png",
              *               "rotate": 0,
              *               "width": 510
              *             },
              *             {
              *               "description": "right",
-             *               "filter": "reyes",
              *               "height": 725,
+             *               "image_filter": "FilterPilgram2.reyes",
              *               "pos_x": 1245,
              *               "pos_y": 220,
-             *               "predefined_image": "",
              *               "rotate": 0,
              *               "width": 510
              *             }
@@ -1787,7 +1725,7 @@ export interface components {
              * @description Capture GIF animation sequence consist of one or more still images. It's not a video but a low number of still images.
              * @default [
              *       {
-             *         "name": "default animation",
+             *         "name": "default action",
              *         "jobcontrol": {
              *           "approve_autoconfirm_timeout": 15,
              *           "ask_approval_each_capture": false,
@@ -1801,28 +1739,24 @@ export interface components {
              *           "merge_definition": [
              *             {
              *               "duration": 2000,
-             *               "filter": "crema",
-             *               "predefined_image": ""
+             *               "image_filter": "FilterPilgram2.crema"
              *             },
              *             {
              *               "duration": 2000,
-             *               "filter": "inkwell",
-             *               "predefined_image": ""
+             *               "image_filter": "FilterPilgram2.inkwell"
              *             },
              *             {
              *               "duration": 2000,
-             *               "filter": "clarendon",
-             *               "predefined_image": ""
+             *               "image_filter": "original"
              *             },
              *             {
              *               "duration": 2000,
-             *               "filter": "toaster",
-             *               "predefined_image": ""
+             *               "image_filter": "original"
              *             },
              *             {
              *               "duration": 4000,
-             *               "filter": "original",
-             *               "predefined_image": "userdata/predefined_images/photobooth-gif-animation-predefined-image.png"
+             *               "image_filter": "original",
+             *               "predefined_image": "userdata\\demoassets\\predefined_images\\photobooth-gif-animation-predefined-image.png"
              *             }
              *           ]
              *         },
@@ -1851,7 +1785,7 @@ export interface components {
              * @description Capture videos from live streaming backend.
              * @default [
              *       {
-             *         "name": "default video",
+             *         "name": "default action",
              *         "jobcontrol": {
              *           "countdown_capture": 2
              *         },
@@ -1885,7 +1819,7 @@ export interface components {
              * @description Capture wigglegrams from a multicamera backend.
              * @default [
              *       {
-             *         "name": "default wigglegram",
+             *         "name": "default action",
              *         "jobcontrol": {
              *           "countdown_capture": 2,
              *           "show_individual_captures_in_gallery": false
@@ -1894,7 +1828,7 @@ export interface components {
              *           "canvas_height": 900,
              *           "canvas_width": 1500,
              *           "duration": 125,
-             *           "filter": "original"
+             *           "image_filter": "original"
              *         },
              *         "trigger": {
              *           "gpio_trigger": {
@@ -2373,7 +2307,7 @@ export interface components {
              *               "valid_min": "1"
              *             }
              *           ],
-             *           "parameters_dialog_action_icon": "start",
+             *           "parameters_dialog_action_icon": "print",
              *           "parameters_dialog_action_label": "GO",
              *           "parameters_dialog_caption": "How many copies?",
              *           "share_blocked_time": 3,
@@ -2420,8 +2354,8 @@ export interface components {
              *               "valid_min": "5"
              *             }
              *           ],
-             *           "parameters_dialog_action_icon": "start",
-             *           "parameters_dialog_action_label": "GO",
+             *           "parameters_dialog_action_icon": "mail",
+             *           "parameters_dialog_action_label": "send",
              *           "parameters_dialog_caption": "Print and mail...",
              *           "share_blocked_time": 3,
              *           "share_command": "echo {filename} {copies} {mail}"
@@ -2530,7 +2464,7 @@ export interface components {
             /**
              * Livestream Blurredbackground
              * @description Display the livestream blurred in the background of the actual livestream covering the full screen. This might look nice if the livestream resolution does not match the screen's aspect ratio. Check cpu usage on low power devices.
-             * @default true
+             * @default false
              */
             livestream_blurredbackground: boolean;
             /**
@@ -2542,9 +2476,8 @@ export interface components {
             /**
              * Livestream Frameoverlay Image
              * @description When enabled, the frame is overlayed the livestream. This image is not used in the postprocessing. If mirroreffect is on, it will also be mirrored. Text in the frame appears in the wrong direction but the final image is correct.
-             * @default /userdata/frames/frame_image_photobooth-app.png
              */
-            livestream_frameoverlay_image: string;
+            livestream_frameoverlay_image?: string | null;
             /**
              * Frontpage Text
              * @description Text/HTML displayed on frontpage.
@@ -2595,57 +2528,10 @@ export interface components {
             qrcode_text_below: string;
             /**
              * Gallery Show Filter
-             * @description Show instagramlike filter (pilgram2).
+             * @description Show filter provided by plugins. Pilgram2 filter are included in the app. See documentation to extend and build your own plugin.
              * @default true
              */
             gallery_show_filter: boolean;
-            /**
-             * Gallery Filter Userselectable
-             * @default [
-             *       "original",
-             *       "_1977",
-             *       "aden",
-             *       "ashby",
-             *       "amaro",
-             *       "brannan",
-             *       "brooklyn",
-             *       "charmes",
-             *       "clarendon",
-             *       "crema",
-             *       "dogpatch",
-             *       "earlybird",
-             *       "gingham",
-             *       "ginza",
-             *       "hefe",
-             *       "helena",
-             *       "hudson",
-             *       "inkwell",
-             *       "juno",
-             *       "kelvin",
-             *       "lark",
-             *       "lofi",
-             *       "ludwig",
-             *       "maven",
-             *       "mayfair",
-             *       "moon",
-             *       "nashville",
-             *       "perpetua",
-             *       "poprocket",
-             *       "reyes",
-             *       "rise",
-             *       "sierra",
-             *       "skyline",
-             *       "slumber",
-             *       "stinson",
-             *       "sutro",
-             *       "toaster",
-             *       "valencia",
-             *       "walden",
-             *       "willow",
-             *       "xpro2"
-             *     ]
-             */
-            gallery_filter_userselectable: components["schemas"]["PilgramFilter"][];
             /**
              * Gallery Show Download
              * @description Show a download button in gallery.
@@ -2765,7 +2651,7 @@ export interface components {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
-             * @default default wigglegram
+             * @default default action
              */
             name: string;
             jobcontrol: components["schemas"]["MulticameraJobControl"];
@@ -2814,7 +2700,7 @@ export interface components {
              */
             duration: number;
             /** @default original */
-            filter: components["schemas"]["PilgramFilter"];
+            image_filter: components["schemas"]["PluginFilters"];
         };
         /** PathListItem */
         PathListItem: {
@@ -2828,11 +2714,10 @@ export interface components {
             size: number;
         };
         /**
-         * PilgramFilter
-         * @description Choose a Pilgram2 filter manipulating the images colors. Original means no filter to apply.
+         * PluginFilters
          * @enum {string}
          */
-        PilgramFilter: "original" | "_1977" | "aden" | "ashby" | "amaro" | "brannan" | "brooklyn" | "charmes" | "clarendon" | "crema" | "dogpatch" | "earlybird" | "gingham" | "ginza" | "hefe" | "helena" | "hudson" | "inkwell" | "juno" | "kelvin" | "lark" | "lofi" | "ludwig" | "maven" | "mayfair" | "moon" | "nashville" | "perpetua" | "poprocket" | "reyes" | "rise" | "sierra" | "skyline" | "slumber" | "stinson" | "sutro" | "toaster" | "valencia" | "walden" | "willow" | "xpro2";
+        PluginFilters: "original" | "FilterPilgram2._1977" | "FilterPilgram2.aden" | "FilterPilgram2.amaro" | "FilterPilgram2.ashby" | "FilterPilgram2.brannan" | "FilterPilgram2.brooklyn" | "FilterPilgram2.charmes" | "FilterPilgram2.clarendon" | "FilterPilgram2.crema" | "FilterPilgram2.dogpatch" | "FilterPilgram2.earlybird" | "FilterPilgram2.gingham" | "FilterPilgram2.ginza" | "FilterPilgram2.hefe" | "FilterPilgram2.helena" | "FilterPilgram2.hudson" | "FilterPilgram2.inkwell" | "FilterPilgram2.juno" | "FilterPilgram2.kelvin" | "FilterPilgram2.lark" | "FilterPilgram2.lofi" | "FilterPilgram2.ludwig" | "FilterPilgram2.maven" | "FilterPilgram2.mayfair" | "FilterPilgram2.moon" | "FilterPilgram2.nashville" | "FilterPilgram2.perpetua" | "FilterPilgram2.poprocket" | "FilterPilgram2.reyes" | "FilterPilgram2.rise" | "FilterPilgram2.sierra" | "FilterPilgram2.skyline" | "FilterPilgram2.slumber" | "FilterPilgram2.stinson" | "FilterPilgram2.sutro" | "FilterPilgram2.toaster" | "FilterPilgram2.valencia" | "FilterPilgram2.walden" | "FilterPilgram2.willow" | "FilterPilgram2.xpro2";
         /**
          * Process mediaitem before printing on paper
          * @description Configure stages how to process mediaitem before printing on paper.
@@ -2879,7 +2764,7 @@ export interface components {
             /**
              * Parameters Dialog Action Icon
              * @description Icon used for the action button (any icon from material icons, see documentation).
-             * @default start
+             * @default print
              */
             parameters_dialog_action_icon: string;
             /**
@@ -2955,7 +2840,7 @@ export interface components {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
-             * @default default single image
+             * @default default action
              */
             name: string;
             jobcontrol: components["schemas"]["SingleImageJobControl"];
@@ -2980,7 +2865,7 @@ export interface components {
          */
         SingleImageProcessing: {
             /** @default original */
-            filter: components["schemas"]["PilgramFilter"];
+            image_filter: components["schemas"]["PluginFilters"];
             /**
              * Fill Background Enable
              * @description Apply solid color background to captured image (useful only if image is extended or background removed)
@@ -3003,9 +2888,8 @@ export interface components {
             /**
              * Img Background File
              * @description Image file to use as background filling transparent area. File needs to be located in working directory/userdata/*
-             * @default
              */
-            img_background_file: string;
+            img_background_file?: string | null;
             /**
              * Img Frame Enable
              * @description Mount captured image to frame.
@@ -3015,9 +2899,8 @@ export interface components {
             /**
              * Img Frame File
              * @description Image file to which the captured image is mounted to. Frame determines the output image size! Photos are visible through transparant parts. Image needs to be transparent (PNG). File needs to be located in userdata/*
-             * @default
              */
-            img_frame_file: string;
+            img_frame_file?: string | null;
             /**
              * Texts Enable
              * @description General enable apply texts below.
@@ -3058,11 +2941,8 @@ export interface components {
              * @default 40
              */
             font_size: number;
-            /**
-             * Font
-             * @default userdata/fonts/Roboto-Bold.ttf
-             */
-            font: string;
+            /** Font */
+            font?: string | null;
             /**
              * Color
              * Format: color
@@ -3161,7 +3041,7 @@ export interface components {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
-             * @default default video
+             * @default default action
              */
             name: string;
             jobcontrol: components["schemas"]["VideoJobControl"];
@@ -3493,7 +3373,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                mode: string;
+                mode: "preview" | "capture" | "video" | "idle";
             };
             cookie?: never;
         };
@@ -3673,13 +3553,34 @@ export interface operations {
             };
         };
     };
-    api_get_preview_image_filtered_api_mediaprocessing_preview__mediaitem_id___filter__get: {
+    api_get_userselectable_filters_api_filter__get: {
         parameters: {
             query?: never;
             header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    api_get_preview_image_filtered_api_filter__mediaitem_id__get: {
+        parameters: {
+            query: {
+                filter: string;
+            };
+            header?: never;
             path: {
                 mediaitem_id: string;
-                filter: unknown;
             };
             cookie?: never;
         };
@@ -3703,13 +3604,14 @@ export interface operations {
             };
         };
     };
-    api_get_applyfilter_api_mediaprocessing_applyfilter__mediaitem_id___filter__get: {
+    api_applyfilter_api_filter__mediaitem_id__patch: {
         parameters: {
-            query?: never;
+            query: {
+                filter: string;
+            };
             header?: never;
             path: {
                 mediaitem_id: string;
-                filter: string | null;
             };
             cookie?: never;
         };
@@ -4185,6 +4087,37 @@ export interface operations {
             };
         };
     };
+    get_search_api_admin_files_search_get: {
+        parameters: {
+            query: {
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PathListItem"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_list_api_admin_files_list__dir__get: {
         parameters: {
             query?: never;
@@ -4202,7 +4135,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["PathListItem"][];
                 };
             };
             /** @description Validation Error */
