@@ -23,7 +23,7 @@
     "@quasar/extras": "^1.16.17",
     "@vueuse/core": "^12.4.0",
     "@vueuse/integrations": "^12.0.0",
-    "pinia": "^2.1.7",
+    "pinia": "^3.0.1",
     "qrcode": "^1.5.4",
     "quasar": "^2.18.1",
     "vue": "^3.4.18",
