@@ -15,11 +15,11 @@
           <div class="text-caption">{{ $t('Live View') }}</div>
 
           <div class="q-pa-md row items-start q-gutter-md">
-            <q-card v-for="(node, key, index) in multicamNodes" :key="index" style="width: 100%; max-width: 250px">
+            <q-card v-for="(node, index) in multicamNodes" :key="index" style="width: 100%; max-width: 250px">
               <q-img fit="contain" :src="`${node.base_url}api/camera/stream.mjpg`">
                 <div class="absolute-bottom">
                   <div class="text-subtitle2"></div>
-                  <div class="text-subtitle2">{{ key }}: {{ node.description }}</div>
+                  <div class="text-subtitle2">{{ index }}: {{ node.description }}</div>
                 </div>
               </q-img>
 
