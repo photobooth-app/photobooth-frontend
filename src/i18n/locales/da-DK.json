@@ -134,5 +134,6 @@
   "Service": "Tjeneste",
   "Reboot Host": "Genstart Vært",
   "Shutdown Host": "Nedlukning Vært",
-  "Frontend build date": "Frontend byggedato"
+  "Frontend build date": "Frontend byggedato",
+  "No results": "Ingen resultater"
 }

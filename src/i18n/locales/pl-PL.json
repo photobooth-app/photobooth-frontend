@@ -134,5 +134,6 @@
   "Service": "Usługa",
   "Reboot Host": "Uruchom ponownie host",
   "Shutdown Host": "Host wyłączenia",
-  "Frontend build date": "Data kompilacji witryny"
+  "Frontend build date": "Data kompilacji witryny",
+  "No results": "Brak wyników"
 }

@@ -134,5 +134,6 @@
   "Service": "Servizio",
   "Reboot Host": "Riavvia Host",
   "Shutdown Host": "Arresto Host",
-  "Frontend build date": "Data di compilazione Frontend"
+  "Frontend build date": "Data di compilazione Frontend",
+  "No results": "Nessun risultato"
 }
