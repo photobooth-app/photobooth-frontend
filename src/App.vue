@@ -110,6 +110,16 @@ const initSseClient = () => {
     })
   })
 
+  // eventSource.value?.addEventListener('ProcessStateinfo', (evt) => {
+  //   const _procinfo = JSON.parse(evt.data)
+  //   console.log('ProcessStateinfo', _procinfo)
+  //   if (Object.keys(_procinfo).length === 0 && _procinfo.constructor === Object) {
+  //     stateStore.$reset()
+  //   } else {
+  //     Object.assign(stateStore, _procinfo)
+  //   }
+  // })
+
   eventSource.value?.addEventListener('ProcessStateinfo', (evt) => {
     const _procinfo = JSON.parse(evt.data)
     console.log('ProcessStateinfo', _procinfo)

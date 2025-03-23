@@ -1,13 +1,6 @@
 <template>
   <div v-if="item.media_type != 'video'">
-    <q-img
-      :src="`/media/thumbnail/${item.id}?${item.updated_at}`"
-      loading="eager"
-      no-transition
-      loading-show-delay="800"
-      :ratio="1"
-      class="rounded-borders"
-    >
+    <q-img :src="`/media/thumbnail/${item.id}?${item.updated_at}`" loading="eager" loading-show-delay="800" :ratio="1" class="rounded-borders">
     </q-img>
   </div>
   <div v-else>

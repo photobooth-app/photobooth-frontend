@@ -79,3 +79,10 @@ const startTimer = () => {
   }, 50)
 }
 </script>
+
+<style lang="css">
+#countdown-timer-container {
+  pointer-events: none;
+  user-select: none;
+}
+</style>
