@@ -143,8 +143,6 @@ const triggerButtons = computed(() => {
     })
   })
 
-  console.log(result)
-
   return result
 })
 
