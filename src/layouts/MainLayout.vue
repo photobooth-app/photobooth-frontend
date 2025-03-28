@@ -85,7 +85,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  console.error('unregister listener for keyboard input')
+  console.log('unregister listener for keyboard input')
   window.removeEventListener('keyup', keyUpHandler)
 })
 </script>
