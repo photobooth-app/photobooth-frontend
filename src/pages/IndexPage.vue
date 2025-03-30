@@ -1,10 +1,11 @@
 <template>
-  <q-page id="index-page" class="q-pa-none column full-height">
+  <q-page id="index-page" class="q-pa-none full-height">
     <preview-stream
       v-if="showPreview"
       :frame-overlay-image="frameOverlayImage"
       :enable-blurred-background-stream="configurationStore.configuration.uisettings.livestream_blurredbackground"
-      :enable-mirror-effect="configurationStore.configuration.uisettings.livestream_mirror_effect"
+      :enable-mirror-effect-stream="configurationStore.configuration.uisettings.livestream_mirror_effect"
+      :enable-mirror-effect-frame="configurationStore.configuration.uisettings.livestream_frameoverlay_mirror_effect"
     ></preview-stream>
 
     <!-- layer display processing spinner grid to show user computer working hard -->
@@ -168,7 +169,6 @@ const frameOverlayImage = computed(() => {
     const action_frame_overlay_image = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_file', '')
     if (enable_action_frame_overlay) {
       return action_frame_overlay_image
-      // return '/userdata/frames/sprencles.png'
     } else {
       return configurationStore.configuration.uisettings.livestream_frameoverlay_image
     }

@@ -1,86 +1,188 @@
 <template>
-  <!-- lowest layer: preview stream -->
-  <div id="preview-container" :class="{ mirroreffect: props.enableMirrorEffect }">
-    <div id="preview-blurredback" v-if="props.enableBlurredBackgroundStream" style="background-image: url('/api/aquisition/stream.mjpg')"></div>
+  <div style="position: absolute">{{ status }}</div>
+  <div id="preview-container" class="">
+    <canvas
+      v-if="props.enableBlurredBackgroundStream"
+      id="preview-outer-blurred"
+      class="preview-center-element"
+      :class="{ mirroreffect: props.enableMirrorEffectStream }"
+    ></canvas>
 
-    <div id="overlay-wrapper" v-if="props.frameOverlayImage ?? true">
-      <img id="overlay-image" style="background-image: url('/api/aquisition/stream.mjpg')" :src="props.frameOverlayImage" />
-    </div>
-    <div id="stream-wrapper" v-else>
-      <img id="stream-image" src="/api/aquisition/stream.mjpg" />
+    <div id="preview-outer-container" class="preview-center-element">
+      <div
+        id="preview-inner-container"
+        class="preview-center-element"
+        :class="{
+          'stream-no-preview': !showFrameOverlay,
+        }"
+      >
+        <canvas
+          id="preview-inner-stream"
+          class="preview-center-element"
+          :class="{
+            mirroreffect: props.enableMirrorEffectStream,
+            cover: showFrameOverlay,
+            contain: !showFrameOverlay,
+          }"
+        ></canvas>
+
+        <!-- keep element on dom, so the aspect ratio update listener is always registered, even if no permanent overlay but only per actions -->
+        <img
+          v-show="showFrameOverlay"
+          id="preview-inner-overlay"
+          class="preview-center-element contain"
+          :class="{ mirroreffect: props.enableMirrorEffectFrame }"
+          :src="props.frameOverlayImage"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// import type { components } from 'src/dto/api'
+import { onMounted, onUnmounted, computed } from 'vue'
+import { useWebSocket } from '@vueuse/core'
 
 const props = defineProps<{
   // from docs: An absent optional prop other than Boolean will have undefined value.
-  enableMirrorEffect?: boolean
+  enableMirrorEffectStream?: boolean
+  enableMirrorEffectFrame?: boolean
   enableBlurredBackgroundStream?: boolean
   frameOverlayImage?: string
 }>()
+
+let canvasStream = null
+let ctxStream = null
+let canvasBlurred = null
+let ctxBlurred = null
+
+const { status, open, close } = useWebSocket('ws://localhost:8000/api/aquisition/stream', {
+  immediate: false,
+  // autoClose: true,
+  autoReconnect: {
+    retries: -1,
+    delay: 1000,
+  },
+  onConnected() {
+    console.log('stream connected via websockets')
+  },
+  onDisconnected(ws, event) {
+    console.log('stream disconnected', event)
+  },
+
+  async onMessage(ws, event) {
+    if ((canvasStream && ctxStream) || (canvasBlurred && ctxBlurred)) {
+      const imageBitmap = await createImageBitmap(new Blob([event.data], { type: 'image/jpeg' }))
+
+      if (canvasStream && ctxStream) {
+        canvasStream.width = imageBitmap.width
+        canvasStream.height = imageBitmap.height
+        ctxStream.drawImage(imageBitmap, 0, 0)
+      }
+      if (canvasBlurred && ctxBlurred) {
+        canvasBlurred.width = imageBitmap.width
+        canvasBlurred.height = imageBitmap.height
+        ctxBlurred.drawImage(imageBitmap, 0, 0)
+      }
+    } else {
+      console.error('jpeg bytes received but no canvas to draw to.')
+    }
+  },
+})
+
+const showFrameOverlay = computed(() => {
+  return props.frameOverlayImage ?? true
+})
+
+onMounted(() => {
+  // set aspect ratio of overlay frame to container so stream and overlay align properly
+  const overlayImage = document.getElementById('preview-inner-overlay') as HTMLImageElement
+  if (overlayImage) {
+    overlayImage.onload = function () {
+      console.error(overlayImage.naturalWidth / overlayImage.naturalHeight)
+      const container = document.getElementById('preview-inner-container')
+      container.style.aspectRatio = Number(overlayImage.naturalWidth / overlayImage.naturalHeight).toFixed(4)
+    }
+  }
+
+  canvasStream = document.getElementById('preview-inner-stream') as HTMLCanvasElement
+  canvasBlurred = document.getElementById('preview-outer-blurred') as HTMLCanvasElement
+
+  if (canvasStream) ctxStream = canvasStream.getContext('2d')
+  if (canvasBlurred) ctxBlurred = canvasBlurred.getContext('2d')
+  if (canvasStream || canvasBlurred) open()
+})
+
+onUnmounted(() => {
+  close()
+})
 </script>
 
 <style lang="scss">
+.mirroreffect {
+  transform: translate(-50%, -50%) scale(-1, 1) !important;
+}
+
 #preview-container {
   position: fixed;
-  display: flex;
-  justify-content: center;
+  height: 100%;
+  width: 100%;
 
-  align-items: center;
+  /* Prevent interaction */
+  pointer-events: none;
+  user-select: none;
+}
+#preview-outer-container {
+  position: relative;
+
+  /* change following to resize the preview stream and frame container */
   height: 100%;
   width: 100%;
 }
 
-#preview-container.mirroreffect {
-  transform: scale(-1, 1);
-}
-
-#preview-blurredback {
-  z-index: 1;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+#preview-outer-blurred {
   width: 110%;
   height: 110%;
-  top: -5%;
-  left: -5%;
-  filter: blur(10px);
-  transform: translateZ(0);
+
+  object-fit: cover;
+
+  filter: blur(8px);
   opacity: 0.6;
-  position: fixed;
 }
 
-#stream-wrapper,
-#overlay-wrapper {
-  z-index: 2;
-  transform: translateZ(0);
+#preview-inner-container {
+  position: relative;
+
+  aspect-ratio: 1/1;
+  /* fallback */
+  max-width: 100%;
+  max-height: 100%;
 }
 
-#stream-wrapper {
+#preview-inner-container img,
+#preview-inner-container canvas {
+  width: 100%;
   height: 100%;
 }
-#overlay-image {
+
+#preview-inner-container.stream-no-preview {
+  width: 100%;
   height: 100%;
-  max-height: 100vh;
-  max-width: 100vw;
-  background-position: center;
-  background-repeat: no-repeat;
+}
+
+#preview-inner-container > .cover {
+  object-fit: cover;
+}
+
+#preview-inner-container > .contain {
   object-fit: contain;
-  background-size: cover;
 }
 
-#stream-image {
-  height: 100%;
-  max-height: 100vh;
-  max-width: 100vw;
-  object-fit: contain;
-}
-
-#preview-container {
-  pointer-events: none;
-  user-select: none;
+/* position elements */
+.preview-center-element {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
