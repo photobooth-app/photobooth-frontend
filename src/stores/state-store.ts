@@ -18,7 +18,7 @@ export const useStateStore = defineStore('state-store', {
   }),
   actions: {},
   getters: {
-    isStateIdle: (state) => (state.target === null && state.source === null) || state.target == 'finished',
+    isStateIdle: (state) => (state.source === null && state.target === null) || state.target == 'finished',
     isStateCountdown: (state) => state.target == 'counting' && state.jobmodel.duration > 0,
     isStateRecording: (state) => state.target == 'capture' && state.jobmodel.typ == 'video',
     isStateProcessing: (state) => state.target == 'completed',

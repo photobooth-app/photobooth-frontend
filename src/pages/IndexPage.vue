@@ -1,7 +1,7 @@
 <template>
   <q-page id="index-page" class="q-pa-none full-height">
     <preview-stream
-      v-if="showPreview"
+      v-if="showPreviewThrottled"
       :frame-overlay-image="frameOverlayImage"
       :enable-blurred-background-stream="configurationStore.configuration.uisettings.livestream_blurredbackground"
       :enable-mirror-effect-stream="configurationStore.configuration.uisettings.livestream_mirror_effect"
@@ -96,7 +96,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { watchDebounced } from '@vueuse/core'
+import { watchDebounced, refThrottled } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import { remoteProcedureCall } from '../util/fetch_api.js'
 import { useStateStore } from '../stores/state-store'
@@ -162,6 +162,10 @@ const showPreview = computed(() => {
   // allow user to choose if shown during idle or process only. during record it cannot be disabled because video useful to show while recording
   return (machineIdle && enabledWhenIdle) || ((machineCounting || machineCapture) && enabledWhenActive) || machineRecord
 })
+// following is to avoid short time preview requested. there is a race condition when the state machine finishes and short time target is present.
+// right after present it changes to finished and so the route is changed to presenter + the preview component is enabled which causes issues because
+// just a moment later it's disabled again.
+const showPreviewThrottled = refThrottled(showPreview, 500)
 
 const frameOverlayImage = computed(() => {
   if (stateStore.isStateCountdown) {

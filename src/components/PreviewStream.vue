@@ -1,5 +1,4 @@
 <template>
-  <div style="position: absolute">{{ status }}</div>
   <div id="preview-container" class="">
     <canvas
       v-if="props.enableBlurredBackgroundStream"
@@ -56,7 +55,7 @@ let ctxStream = null
 let canvasBlurred = null
 let ctxBlurred = null
 
-const { status, open, close } = useWebSocket('ws://localhost:8000/api/aquisition/stream', {
+const { open, close } = useWebSocket('ws://localhost:8000/api/aquisition/stream', {
   immediate: false,
   // autoClose: true,
   autoReconnect: {
@@ -95,11 +94,12 @@ const showFrameOverlay = computed(() => {
 })
 
 onMounted(() => {
+  console.log('preview stream mounted!')
   // set aspect ratio of overlay frame to container so stream and overlay align properly
   const overlayImage = document.getElementById('preview-inner-overlay') as HTMLImageElement
   if (overlayImage) {
     overlayImage.onload = function () {
-      console.error(overlayImage.naturalWidth / overlayImage.naturalHeight)
+      console.log(overlayImage.naturalWidth / overlayImage.naturalHeight)
       const container = document.getElementById('preview-inner-container')
       container.style.aspectRatio = Number(overlayImage.naturalWidth / overlayImage.naturalHeight).toFixed(4)
     }
