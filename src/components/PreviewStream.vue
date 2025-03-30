@@ -55,7 +55,7 @@ let ctxStream = null
 let canvasBlurred = null
 let ctxBlurred = null
 
-const { open, close } = useWebSocket('ws://localhost:8000/api/aquisition/stream', {
+const { open, close } = useWebSocket('/api/aquisition/stream', {
   immediate: false,
   // autoClose: true,
   autoReconnect: {
