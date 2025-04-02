@@ -163,16 +163,13 @@ const showPreview = computed(() => {
 })
 
 const frameOverlayImage = computed(() => {
-  if (stateStore.isStateCountdown) {
-    const enable_action_frame_overlay = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_enable', false)
-    const action_frame_overlay_image = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_file', '')
-    if (enable_action_frame_overlay) {
-      return action_frame_overlay_image
-      // return '/userdata/frames/sprencles.png'
-    } else {
-      return configurationStore.configuration.uisettings.livestream_frameoverlay_image
-    }
-  } else if (configurationStore.configuration.uisettings.enable_livestream_frameoverlay) {
+  const enable_action_frame_overlay = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_enable', false)
+  const action_frame_overlay_image = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_file', '')
+  if (stateStore.isStateCountdown && enable_action_frame_overlay) {
+    //during countdown the action frame is priorized.
+    return action_frame_overlay_image
+  } else if (stateStore.isStateIdle && configurationStore.configuration.uisettings.enable_livestream_frameoverlay) {
+    // the live frame is shown in idle only
     return configurationStore.configuration.uisettings.livestream_frameoverlay_image
   } else {
     return ''
