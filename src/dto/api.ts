@@ -1133,7 +1133,7 @@ export interface components {
              *             ],
              *             "parameters_dialog_action_icon": "print",
              *             "parameters_dialog_action_label": "GO",
-             *             "parameters_dialog_caption": "How many copies?",
+             *             "parameters_dialog_caption": "Make your choice!",
              *             "share_blocked_time": 3,
              *             "share_command": "echo {filename} {copies}"
              *           },
@@ -1149,13 +1149,13 @@ export interface components {
              *               "custom_color": "#196cb0",
              *               "icon": "print",
              *               "show_button": true,
-             *               "title": "Print",
+             *               "title": "Direct Print",
              *               "use_custom_color": false
              *             }
              *           }
              *         },
              *         {
-             *           "handles_images_only": true,
+             *           "handles_images_only": false,
              *           "name": "default print settings",
              *           "processing": {
              *             "ask_user_for_parameter_input": true,
@@ -1168,7 +1168,38 @@ export interface components {
              *                 "ui_type": "int",
              *                 "valid_max": "3",
              *                 "valid_min": "1"
-             *               },
+             *               }
+             *             ],
+             *             "parameters_dialog_action_icon": "print",
+             *             "parameters_dialog_action_label": "GO",
+             *             "parameters_dialog_caption": "How many copies?",
+             *             "share_blocked_time": 3,
+             *             "share_command": "echo {filename} {copies}"
+             *           },
+             *           "trigger": {
+             *             "gpio_trigger": {
+             *               "pin": "",
+             *               "trigger_on": "pressed"
+             *             },
+             *             "keyboard_trigger": {
+             *               "keycode": ""
+             *             },
+             *             "ui_trigger": {
+             *               "custom_color": "#196cb0",
+             *               "icon": "print",
+             *               "show_button": true,
+             *               "title": "Print Copies",
+             *               "use_custom_color": false
+             *             }
+             *           }
+             *         },
+             *         {
+             *           "handles_images_only": true,
+             *           "name": "default print settings",
+             *           "processing": {
+             *             "ask_user_for_parameter_input": true,
+             *             "max_shares": 0,
+             *             "parameters": [
              *               {
              *                 "default": "me@mgineer85.de",
              *                 "key": "mail",
@@ -1179,24 +1210,24 @@ export interface components {
              *               }
              *             ],
              *             "parameters_dialog_action_icon": "mail",
-             *             "parameters_dialog_action_label": "send",
-             *             "parameters_dialog_caption": "Print and mail...",
+             *             "parameters_dialog_action_label": "Send",
+             *             "parameters_dialog_caption": "E-Mail your image...",
              *             "share_blocked_time": 3,
-             *             "share_command": "echo {filename} {copies} {mail}"
+             *             "share_command": "echo {filename} to mail {mail}"
              *           },
              *           "trigger": {
              *             "gpio_trigger": {
-             *               "pin": "23",
+             *               "pin": "",
              *               "trigger_on": "pressed"
              *             },
              *             "keyboard_trigger": {
-             *               "keycode": "p"
+             *               "keycode": ""
              *             },
              *             "ui_trigger": {
              *               "custom_color": "#196cb0",
-             *               "icon": "print",
+             *               "icon": "mail",
              *               "show_button": true,
-             *               "title": "Print",
+             *               "title": "Send Mail",
              *               "use_custom_color": false
              *             }
              *           }
@@ -1244,6 +1275,7 @@ export interface components {
              *       "livestream_blurredbackground": false,
              *       "enable_livestream_frameoverlay": true,
              *       "livestream_frameoverlay_image": "userdata\\demoassets\\frames\\frame_image_photobooth-app.png",
+             *       "livestream_frameoverlay_mirror_effect": false,
              *       "FRONTPAGE_TEXT": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Hey!<br>Let's take some pictures! <br>📷</div>",
              *       "TAKEPIC_MSG_TIME": 0.5,
              *       "TAKEPIC_MSG_TEXT": "😃",
@@ -2258,7 +2290,7 @@ export interface components {
              *           ],
              *           "parameters_dialog_action_icon": "print",
              *           "parameters_dialog_action_label": "GO",
-             *           "parameters_dialog_caption": "How many copies?",
+             *           "parameters_dialog_caption": "Make your choice!",
              *           "share_blocked_time": 3,
              *           "share_command": "echo {filename} {copies}"
              *         },
@@ -2274,7 +2306,46 @@ export interface components {
              *             "custom_color": "#196cb0",
              *             "icon": "print",
              *             "show_button": true,
-             *             "title": "Print",
+             *             "title": "Direct Print",
+             *             "use_custom_color": false
+             *           }
+             *         }
+             *       },
+             *       {
+             *         "name": "default print settings",
+             *         "handles_images_only": false,
+             *         "processing": {
+             *           "ask_user_for_parameter_input": true,
+             *           "max_shares": 0,
+             *           "parameters": [
+             *             {
+             *               "default": "1",
+             *               "key": "copies",
+             *               "label": "Copies",
+             *               "ui_type": "int",
+             *               "valid_max": "3",
+             *               "valid_min": "1"
+             *             }
+             *           ],
+             *           "parameters_dialog_action_icon": "print",
+             *           "parameters_dialog_action_label": "GO",
+             *           "parameters_dialog_caption": "How many copies?",
+             *           "share_blocked_time": 3,
+             *           "share_command": "echo {filename} {copies}"
+             *         },
+             *         "trigger": {
+             *           "gpio_trigger": {
+             *             "pin": "",
+             *             "trigger_on": "pressed"
+             *           },
+             *           "keyboard_trigger": {
+             *             "keycode": ""
+             *           },
+             *           "ui_trigger": {
+             *             "custom_color": "#196cb0",
+             *             "icon": "print",
+             *             "show_button": true,
+             *             "title": "Print Copies",
              *             "use_custom_color": false
              *           }
              *         }
@@ -2287,14 +2358,6 @@ export interface components {
              *           "max_shares": 0,
              *           "parameters": [
              *             {
-             *               "default": "1",
-             *               "key": "copies",
-             *               "label": "Copies",
-             *               "ui_type": "int",
-             *               "valid_max": "3",
-             *               "valid_min": "1"
-             *             },
-             *             {
              *               "default": "me@mgineer85.de",
              *               "key": "mail",
              *               "label": "E-Mail address",
@@ -2304,24 +2367,24 @@ export interface components {
              *             }
              *           ],
              *           "parameters_dialog_action_icon": "mail",
-             *           "parameters_dialog_action_label": "send",
-             *           "parameters_dialog_caption": "Print and mail...",
+             *           "parameters_dialog_action_label": "Send",
+             *           "parameters_dialog_caption": "E-Mail your image...",
              *           "share_blocked_time": 3,
-             *           "share_command": "echo {filename} {copies} {mail}"
+             *           "share_command": "echo {filename} to mail {mail}"
              *         },
              *         "trigger": {
              *           "gpio_trigger": {
-             *             "pin": "23",
+             *             "pin": "",
              *             "trigger_on": "pressed"
              *           },
              *           "keyboard_trigger": {
-             *             "keycode": "p"
+             *             "keycode": ""
              *           },
              *           "ui_trigger": {
              *             "custom_color": "#196cb0",
-             *             "icon": "print",
+             *             "icon": "mail",
              *             "show_button": true,
-             *             "title": "Print",
+             *             "title": "Send Mail",
              *             "use_custom_color": false
              *           }
              *         }
@@ -2427,6 +2490,12 @@ export interface components {
              * @description When enabled, the frame is overlayed the livestream. This image is not used in the postprocessing. If mirroreffect is on, it will also be mirrored. Text in the frame appears in the wrong direction but the final image is correct.
              */
             livestream_frameoverlay_image?: string | null;
+            /**
+             * Livestream Frameoverlay Mirror Effect
+             * @description Flip the frame overlaid horizontally to create a mirror effect. Useful to flip also if video is flipped when people shall align to the frame. If there is text in the frame it's also mirrored.
+             * @default false
+             */
+            livestream_frameoverlay_mirror_effect: boolean;
             /**
              * Frontpage Text
              * @description Text/HTML displayed on frontpage.

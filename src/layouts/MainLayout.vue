@@ -25,7 +25,7 @@ stateStore.$subscribe((mutation, state) => {
 
     router.push('/')
   }
-  if (state.source == 'completed' && state.target == 'finished') {
+  if (state.source == 'completed' && state.target == 'present') {
     // if aborted, source can by anything but completed. when source is completed, the job was successful and we have an id
     router.push({ name: 'itempresenter', params: { id: stateStore.jobmodel.present_mediaitem_id } })
   }

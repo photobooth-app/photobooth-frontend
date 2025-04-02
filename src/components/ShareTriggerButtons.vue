@@ -35,7 +35,6 @@ export interface ShareSchema {
 }
 
 function getShareAvailable(handles_images_only: boolean) {
-  console.log(props.currentItemIsImage, handles_images_only)
   return !props.currentItemIsImage && handles_images_only
 }
 

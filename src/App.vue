@@ -60,7 +60,10 @@ const until = (conditionFunction: { (): boolean }) => {
 
 const initSseClient = () => {
   const { status, error, eventSource } = useEventSource('/api/sse', [], {
-    autoReconnect: true,
+    autoReconnect: {
+      retries: -1,
+      delay: 1000,
+    },
     immediate: true,
   })
 
