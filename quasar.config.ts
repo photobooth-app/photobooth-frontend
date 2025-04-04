@@ -109,6 +109,11 @@ export default defineConfig((ctx) => {
           changeOrigin: true,
           ws: true,
         },
+        '/api/aquisition/stream': {
+          target: 'http://127.0.0.1:8000/',
+          changeOrigin: true,
+          ws: true,
+        },
         '/api': {
           target: 'http://127.0.0.1:8000/',
           changeOrigin: true,
