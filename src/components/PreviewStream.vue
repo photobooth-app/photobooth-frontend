@@ -41,6 +41,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, computed } from 'vue'
 import { useWebSocket } from '@vueuse/core'
+import { useThrottleFn } from '@vueuse/core'
 
 const props = defineProps<{
   // from docs: An absent optional prop other than Boolean will have undefined value.
@@ -54,6 +55,18 @@ let canvasStream = null
 let ctxStream = null
 let canvasBlurred = null
 let ctxBlurred = null
+
+const updateCanvas = (canvas: HTMLCanvasElement, ctx, img) => {
+  if (canvas.width != img.width || canvas.height != img.height) {
+    canvas.width = img.width
+    canvas.height = img.height
+  }
+  ctx.drawImage(img, 0, 0)
+}
+
+const throttledUpdateCanvas = useThrottleFn((canvas, ctx, img) => {
+  updateCanvas(canvas, ctx, img)
+}, 300)
 
 const { open, close } = useWebSocket('/api/aquisition/stream', {
   immediate: false,
@@ -74,14 +87,10 @@ const { open, close } = useWebSocket('/api/aquisition/stream', {
       const imageBitmap = await createImageBitmap(new Blob([event.data], { type: 'image/jpeg' }))
 
       if (canvasStream && ctxStream) {
-        canvasStream.width = imageBitmap.width
-        canvasStream.height = imageBitmap.height
-        ctxStream.drawImage(imageBitmap, 0, 0)
+        updateCanvas(canvasStream, ctxStream, imageBitmap)
       }
       if (canvasBlurred && ctxBlurred) {
-        canvasBlurred.width = imageBitmap.width
-        canvasBlurred.height = imageBitmap.height
-        ctxBlurred.drawImage(imageBitmap, 0, 0)
+        throttledUpdateCanvas(canvasBlurred, ctxBlurred, imageBitmap)
       }
     } else {
       console.error('jpeg bytes received but no canvas to draw to.')
