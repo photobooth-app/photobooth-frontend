@@ -9,7 +9,7 @@
       :autofocus="appliedOptions.focus"
       :error-message="control.errors"
       :error="control.errors != ''"
-      @update:model-value="onChange"
+      @input-value="onChange"
       @focus="isFocused = true"
       @blur="((isFocused = false), (availableOptions = null))"
       use-input
