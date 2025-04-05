@@ -28,7 +28,7 @@ import { default as EnumControlRenderer } from './EnumControlRenderer.vue'
 import { default as NumberControlRenderer } from './NumberControlRenderer.vue'
 import { default as SliderControlRenderer } from './SliderControlRenderer.vue'
 import { default as StringControlRenderer } from './StringControlRenderer.vue'
-import { default as FilePathControlRenderer } from './FilePathControlRenderer.vue'
+import { default as StringAutosuggestControlRenderer } from './StringAutosuggestControlRenderer.vue'
 
 export const BooleanToggleControlRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: BooleanToggleControlRenderer,
@@ -74,24 +74,19 @@ export const SliderControlRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: SliderControlRenderer,
   tester: rankWith(4.1, isRangeControl), //TODO: Tester not working as expected.
 }
+export const StringAutosuggestControlRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: StringAutosuggestControlRenderer,
+  tester: rankWith(
+    3.1,
+    and(
+      isStringControl,
+      schemaMatches((schema) => schema['list_api']),
+    ),
+  ),
+}
 export const StringControlRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: StringControlRenderer,
   tester: rankWith(1.1, isStringControl),
-}
-export const FilePathControlRendererEntry: JsonFormsRendererRegistryEntry = {
-  renderer: StringControlRenderer,
-  tester: rankWith(3.1, and(isStringControl, or(formatIs('file-path'), optionIs('format', 'file-path')))),
-}
-export const FilePathApiBackedControlRendererEntry: JsonFormsRendererRegistryEntry = {
-  renderer: FilePathControlRenderer,
-  tester: rankWith(
-    3.2,
-    and(
-      isStringControl,
-      or(formatIs('file-path'), optionIs('format', 'file-path')),
-      schemaMatches((schema) => schema['files_list_api']),
-    ),
-  ),
 }
 
 export const controlRenderers = [
@@ -101,7 +96,6 @@ export const controlRenderers = [
   EnumControlRendererEntry,
   NumberControlRendererEntry,
   SliderControlRendererEntry,
+  StringAutosuggestControlRendererEntry,
   StringControlRendererEntry,
-  FilePathControlRendererEntry,
-  FilePathApiBackedControlRendererEntry,
 ]

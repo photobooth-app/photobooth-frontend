@@ -10,8 +10,8 @@
       :error-message="control.errors"
       :error="control.errors != ''"
       @update:model-value="onChange"
-      @focus="((isFocused = true), getOptions())"
-      @blur="isFocused = false"
+      @focus="isFocused = true"
+      @blur="((isFocused = false), (availableOptions = null))"
       use-input
       hide-selected
       fill-input
@@ -36,43 +36,43 @@ import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonfor
 import { default as ControlWrapper } from './ControlWrapper.vue'
 import { useQuasarControl } from '../util'
 import { _fetch } from '../../../util/fetch_api'
-import type { components } from '../../../dto/api'
 
 const controlRenderer = defineComponent({
-  name: 'FilePathControlRenderer',
+  name: 'StringAutosuggestControlRenderer',
   components: { ControlWrapper },
   props: {
     ...rendererProps<ControlElement>(),
   },
+  computed: {},
   setup(props: RendererProps<ControlElement>) {
-    const availableOptions = ref([])
+    const availableOptions = ref(null)
     const filteredOptions = ref([])
+    const useControl = useQuasarControl(useJsonFormsControl(props), (value: any) => value || undefined, 300)
 
     return {
-      ...useQuasarControl(useJsonFormsControl(props), (value: any) => value || undefined, 300),
+      ...useControl,
       filteredOptions,
       availableOptions,
 
-      getOptions() {
-        // for now just send a . to request that means it would list all files. filtering is done locally.
-        // should be acceptable since there are only a few 10s files, maybe 100 and no need to trigger a search on every char typed
-        _fetch(`${this.control.schema['files_list_api']}?q=.`, {})
-          .then((res) => {
-            return res.json()
-          })
-          .then((json: components['schemas']['PathListItem'][]) => {
-            const updatedEntries = []
-            json.forEach((entry) => {
-              updatedEntries.push(entry.filepath)
-            })
-            availableOptions.value = updatedEntries
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
+      async filterFn(val, update) {
+        // on first filter load the avail options. on blur the var is reset to null so its fetched again
+        if (availableOptions.value === null) {
+          // for now just send a "" to request that means it would list all items. filtering is done locally.
+          // should be acceptable since there are only a few 10s items, maybe 100 and no need to trigger a search on every char typed
 
-      filterFn(val, update) {
+          await _fetch(`${useControl.control.value.schema['list_api']}?q=`, {})
+            .then((res) => {
+              return res.json()
+            })
+            .then((json: [string]) => {
+              availableOptions.value = json
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+            .finally(() => {})
+        }
+
         update(() => {
           if (val === '') {
             filteredOptions.value = availableOptions.value
