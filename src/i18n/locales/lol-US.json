@@ -135,5 +135,19 @@
   "Reboot Host": "crwdns432:0crwdne432:0",
   "Shutdown Host": "crwdns434:0crwdne434:0",
   "Frontend build date": "crwdns436:0crwdne436:0",
-  "No results": "crwdns437:0crwdne437:0"
+  "No results": "crwdns437:0crwdne437:0",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "crwdns439:0crwdne439:0",
+      "job_failed": "crwdns441:0crwdne441:0"
+    },
+    "share": {
+      "service_disabled": "crwdns443:0crwdne443:0",
+      "quota_exceeded": "crwdns445:0{action_name}crwdnd445:0{quota}crwdne445:0",
+      "blocked_request_ignored": "crwdns447:0{remaining_s}crwdne447:0",
+      "process_started": "crwdns449:0{action_name}crwdne449:0",
+      "process_failed": "crwdns451:0crwdne451:0",
+      "quota_notification": "crwdns453:0{action_name}crwdnd453:0{current_shares}crwdnd453:0{quota}crwdne453:0"
+    }
+  }
 }

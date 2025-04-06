@@ -135,5 +135,19 @@
   "Reboot Host": "호스트 재부팅",
   "Shutdown Host": "호스트 종료",
   "Frontend build date": "프론트엔드 빌드 날짜",
-  "No results": "결과 없음"
+  "No results": "결과 없음",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ 이미 실행 중인 작업이 있습니다. 완료될 때까지 기다려주세요.",
+      "job_failed": "😔 작업 처리 중 오류가 발생했습니다. 다시 시도해 주세요."
+    },
+    "share": {
+      "service_disabled": "공유 서비스가 비활성화되었습니다! 사용하기 전에 관리자 설정에서 활성화하세요.",
+      "quota_exceeded": "{action_name} 할당량이 초과되었습니다({quota} 최대).",
+      "blocked_request_ignored": "아직 준비되지 않았습니다. {remaining_s}초 정도 기다렸다가 다시 시도하세요.",
+      "process_started": "{action_name} 시작되었습니다.",
+      "process_failed": "😔 작업을 처리하는 동안 오류가 발생했습니다. 다시 시도해 주세요.",
+      "quota_notification": "{action_name} 할당량은 {current_shares} 의 {quota}"
+    }
+  }
 }

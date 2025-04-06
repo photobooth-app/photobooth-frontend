@@ -135,5 +135,19 @@
   "Reboot Host": "Uruchom ponownie host",
   "Shutdown Host": "Host wyłączenia",
   "Frontend build date": "Data kompilacji witryny",
-  "No results": "Brak wyników"
+  "No results": "Brak wyników",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Praca jest już uruchomiona. Poczekaj aż zakończy.",
+      "job_failed": "😔 Błąd podczas przetwarzania pracy. Spróbuj ponownie."
+    },
+    "share": {
+      "service_disabled": "Rezerwa shareservice jest wyłączona! Proszę włączyć ją w konfiguracji administratora przed użyciem.",
+      "quota_exceeded": "{action_name} limit przekroczony (maksimum{quota}).",
+      "blocked_request_ignored": "Jeszcze nie gotowe, proszę poczekać kolejne {remaining_s}przed ponowną próbą.",
+      "process_started": "Rozpoczęto {action_name}.",
+      "process_failed": "😔 Błąd podczas przetwarzania działania. Spróbuj ponownie.",
+      "quota_notification": "Kontyngent {action_name} to {current_shares} {quota}"
+    }
+  }
 }

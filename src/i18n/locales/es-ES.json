@@ -135,5 +135,19 @@
   "Reboot Host": "Reiniciar Host",
   "Shutdown Host": "Servidor apagado",
   "Frontend build date": "Fecha de construcción del Frontend",
-  "No results": "Sin resultados"
+  "No results": "Sin resultados",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Ya hay un trabajo en ejecución. Por favor espere hasta que termine.",
+      "job_failed": "😔 Error al procesar el trabajo. Por favor, inténtalo de nuevo."
+    },
+    "share": {
+      "service_disabled": "¡El shareservice está deshabilitado! Por favor, actívalo en la configuración de administración antes de usarlo.",
+      "quota_exceeded": "Cuota de {action_name} excedida (máximo{quota}).",
+      "blocked_request_ignored": "Aún no está listo, por favor espera otro {remaining_s}s antes de intentarlo de nuevo.",
+      "process_started": "{action_name} comenzó.",
+      "process_failed": "😔 Error al procesar la acción. Por favor, inténtalo de nuevo.",
+      "quota_notification": "La cuota {action_name} es {current_shares} de {quota}"
+    }
+  }
 }

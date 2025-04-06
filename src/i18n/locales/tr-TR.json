@@ -135,5 +135,19 @@
   "Reboot Host": "Ana Bilgisayarı Yeniden Başlat",
   "Shutdown Host": "Kapatma Ana Bilgisayarı",
   "Frontend build date": "Ön uç oluşturma tarihi",
-  "No results": "Sonuç yok"
+  "No results": "Sonuç yok",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Zaten çalışan bir iş var. Lütfen bitene kadar bekleyin.",
+      "job_failed": "😔 İş işlenirken hata oluştu. Lütfen tekrar deneyin."
+    },
+    "share": {
+      "service_disabled": "Paylaşım hizmeti devre dışı! Lütfen kullanmadan önce yönetici yapılandırmasında etkinleştirin.",
+      "quota_exceeded": "{action_name} kota aşıldı ({quota} maksimum).",
+      "blocked_request_ignored": "Henüz hazır değil, lütfen tekrar denemeden önce {remaining_s}s daha bekleyin.",
+      "process_started": "{action_name} başladı.",
+      "process_failed": "😔 Eylem işlenirken hata oluştu. Lütfen tekrar deneyin.",
+      "quota_notification": "{action_name} kota {current_shares} of {quota}"
+    }
+  }
 }

@@ -504,7 +504,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/files/search": {
+    "/api/admin/enumerate/serialports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Get Serial Ports */
+        get: operations["api_get_serial_ports_api_admin_enumerate_serialports_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/enumerate/usbcameras": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Get Usbcameras */
+        get: operations["api_get_usbcameras_api_admin_enumerate_usbcameras_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/enumerate/userfiles": {
         parameters: {
             query?: never;
             header?: never;
@@ -512,7 +546,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get Search */
-        get: operations["get_search_api_admin_files_search_get"];
+        get: operations["get_search_api_admin_enumerate_userfiles_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1272,7 +1306,7 @@ export interface components {
              *       "enable_livestream_when_idle": true,
              *       "enable_livestream_when_active": true,
              *       "livestream_mirror_effect": true,
-             *       "livestream_blurredbackground": false,
+             *       "livestream_blurredbackground": true,
              *       "enable_livestream_frameoverlay": true,
              *       "livestream_frameoverlay_image": "userdata\\demoassets\\frames\\frame_image_photobooth-app.png",
              *       "livestream_frameoverlay_mirror_effect": false,
@@ -1311,12 +1345,13 @@ export interface components {
              *             "framerate": 15,
              *             "orientation": "1: 0°"
              *           },
-             *           "webcamcv2": {
-             *             "CAM_RESOLUTION_HEIGHT": 10000,
-             *             "CAM_RESOLUTION_WIDTH": 10000,
-             *             "device_index": 0,
-             *             "framerate": 15,
-             *             "orientation": "1: 0°"
+             *           "webcampyav": {
+             *             "cam_resolution_height": 2160,
+             *             "cam_resolution_width": 3840,
+             *             "device_identifier": "Insta360 Link 2C",
+             *             "frame_skip_count": 3,
+             *             "orientation": "1: 0°",
+             *             "preview_resolution_reduce_factor": 2
              *           },
              *           "wigglecam": {
              *             "index_cam_stills": 0,
@@ -1851,7 +1886,7 @@ export interface components {
              * @default VirtualCamera
              * @enum {string}
              */
-            selected_device: "VirtualCamera" | "WebcamCv2" | "Wigglecam" | "Digicamcontrol";
+            selected_device: "VirtualCamera" | "WebcamPyav" | "Wigglecam" | "Digicamcontrol";
             /** @default {
              *       "orientation": "1: 0°",
              *       "framerate": 15,
@@ -1861,12 +1896,13 @@ export interface components {
             virtualcamera: components["schemas"]["GroupBackendVirtualcamera"];
             /** @default {
              *       "orientation": "1: 0°",
-             *       "device_index": 0,
-             *       "CAM_RESOLUTION_WIDTH": 10000,
-             *       "CAM_RESOLUTION_HEIGHT": 10000,
-             *       "framerate": 15
+             *       "device_identifier": "Insta360 Link 2C",
+             *       "cam_resolution_width": 3840,
+             *       "cam_resolution_height": 2160,
+             *       "preview_resolution_reduce_factor": 2,
+             *       "frame_skip_count": 3
              *     } */
-            webcamcv2: components["schemas"]["GroupBackendOpenCv2"];
+            webcampyav: components["schemas"]["GroupBackendPyav"];
             /** @default {
              *       "keep_node_copy": false,
              *       "index_cam_stills": 0,
@@ -1901,8 +1937,8 @@ export interface components {
              */
             base_url: string;
         };
-        /** OpenCv2 */
-        GroupBackendOpenCv2: {
+        /** PyAV */
+        GroupBackendPyav: {
             /**
              * Orientation
              * @description Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
@@ -1911,29 +1947,36 @@ export interface components {
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
             /**
-             * Device Index
-             * @description Device index of webcam. Usually 0 or 1, check docs how to determine.
-             * @default 0
+             * Device Identifier
+             * @description Device name (Windows) or index (Linux, Mac) of the webcam.
+             * @default Insta360 Link 2C
              */
-            device_index: number;
+            device_identifier: string;
             /**
              * Cam Resolution Width
-             * @description Resolution width requested from camera.
-             * @default 10000
+             * @description camera resolution width to capture high resolution photo
+             * @default 3840
              */
-            CAM_RESOLUTION_WIDTH: number;
+            cam_resolution_width: number;
             /**
              * Cam Resolution Height
-             * @description Resolution height requested from camera.
-             * @default 10000
+             * @description camera resolution height to capture high resolution photo
+             * @default 2160
              */
-            CAM_RESOLUTION_HEIGHT: number;
+            cam_resolution_height: number;
             /**
-             * Framerate
-             * @description Reduce the framerate to save cpu/gpu on device displaying the live preview
-             * @default 15
+             * Preview Resolution Reduce Factor
+             * @description Reduce the video and permanent livestream by this factor. Raise the factor to save CPU.
+             * @default 2
+             * @enum {integer}
              */
-            framerate: number;
+            preview_resolution_reduce_factor: 1 | 2 | 4 | 8;
+            /**
+             * Frame Skip Count
+             * @description Reduce the framerate_video_mode by frame_skip_count to save cpu/gpu on producing device as well as client devices. Choose 1 to emit every produced frame.
+             * @default 3
+             */
+            frame_skip_count: number;
         };
         /** VirtualCamera */
         GroupBackendVirtualcamera: {
@@ -2048,12 +2091,13 @@ export interface components {
              *           "framerate": 15,
              *           "orientation": "1: 0°"
              *         },
-             *         "webcamcv2": {
-             *           "CAM_RESOLUTION_HEIGHT": 10000,
-             *           "CAM_RESOLUTION_WIDTH": 10000,
-             *           "device_index": 0,
-             *           "framerate": 15,
-             *           "orientation": "1: 0°"
+             *         "webcampyav": {
+             *           "cam_resolution_height": 2160,
+             *           "cam_resolution_width": 3840,
+             *           "device_identifier": "Insta360 Link 2C",
+             *           "frame_skip_count": 3,
+             *           "orientation": "1: 0°",
+             *           "preview_resolution_reduce_factor": 2
              *         },
              *         "wigglecam": {
              *           "index_cam_stills": 0,
@@ -2476,7 +2520,7 @@ export interface components {
             /**
              * Livestream Blurredbackground
              * @description Display the livestream blurred in the background of the actual livestream covering the full screen. This might look nice if the livestream resolution does not match the screen's aspect ratio. Check cpu usage on low power devices.
-             * @default false
+             * @default true
              */
             livestream_blurredbackground: boolean;
             /**
@@ -3954,7 +3998,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": Record<string, never>;
+                "application/json": {
+                    [key: string]: unknown;
+                };
             };
         };
         responses: {
@@ -4011,10 +4057,50 @@ export interface operations {
             };
         };
     };
-    get_search_api_admin_files_search_get: {
+    api_get_serial_ports_api_admin_enumerate_serialports_get: {
         parameters: {
-            query: {
-                q: string;
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
+                };
+            };
+        };
+    };
+    api_get_usbcameras_api_admin_enumerate_usbcameras_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
+                };
+            };
+        };
+    };
+    get_search_api_admin_enumerate_userfiles_get: {
+        parameters: {
+            query?: {
+                q?: string;
             };
             header?: never;
             path?: never;
@@ -4028,7 +4114,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PathListItem"][];
+                    "application/json": string[];
                 };
             };
             /** @description Validation Error */

@@ -26,7 +26,7 @@
   "BTN_LABEL_RELOAD_SERVICE": "Dienst neu laden",
   "BTN_LABEL_RESET_CONFIG": "Zurücksetzen",
   "BTN_LABEL_RESTART_SERVICE": "Dienst neu starten",
-  "BTN_LABEL_RELOAD_CONFIG": "Reload",
+  "BTN_LABEL_RELOAD_CONFIG": "Erneut laden",
   "BTN_LABEL_SHUTDOWN": "Herunterfahren",
   "BTN_LABEL_SHUTDOWN_HOST": "Host herunterfahren",
   "BTN_LABEL_UNINSTALL_SERVICE": "Dienst deinstallieren",
@@ -118,22 +118,36 @@
   "Media Database": "Mediendatenbank",
   "Selected language": "Ausgewählte Sprache",
   "Language": "Sprache",
-  "Learn how to help translating the app": "Lernen Sie, wie Sie bei der Übersetzung der App helfen",
+  "Learn how to help translating the app": "Erfahre, wie du bei der Übersetzung der App helfen kannst",
   "Browsers preferred languages": "Bevorzugte Sprachen des Browsers",
-  "Check which languages are supported by the app.": "Überprüfen Sie, welche Sprachen von der App unterstützt werden.",
+  "Check which languages are supported by the app.": "Prüfe, welche Sprachen von der App unterstützt werden.",
   "Translate in context using Crowdin": "Übersetze im Kontext mit Crowdin",
   "Yes, delete": "Ja, löschen",
-  "Reload services on save to apply settings. Reloading might take some time.": "Services neu laden, wenn sie gespeichert werden. Das erneute Laden kann einige Zeit dauern.",
+  "Reload services on save to apply settings. Reloading might take some time.": "Lade die Dienste beim Speichern neu, um die Einstellungen zu übernehmen. Das Neuladen kann einige Zeit dauern.",
   "Apply": "Anwenden",
-  "You sure to reload the services?": "Sind Sie sicher, die Dienste neu zu laden?",
-  "restart systemctl service": "starte den systemctl-Dienst neu",
+  "You sure to reload the services?": "Bist du sicher, dass du den Dienst neu laden möchtest?",
+  "restart systemctl service": "systemctl Service neu starten",
   "uninstall systemctl service": "systemctl-Dienst deinstallieren",
-  "install systemctl service": "installiere systemctl Dienst",
-  "Systemctl (Linux only)": "Kommandozeilenwerkzeug-Dienst (systemctl) (nur Linux)",
+  "install systemctl service": "systemctl Service installieren",
+  "Systemctl (Linux only)": "systemctl (nur Linux)",
   "Reload services": "Dienste neu laden",
   "Service": "Service",
   "Reboot Host": "Host neu starten",
   "Shutdown Host": "Host herunterfahren",
   "Frontend build date": "Frontend Build-Datum",
-  "No results": "Keine Ergebnisse"
+  "No results": "Keine Ergebnisse",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Es läuft bereits ein Job. Bitte warte, bis er fertig ist.",
+      "job_failed": "😔 Fehler beim Verarbeiten des Jobs. Bitte versuche es erneut."
+    },
+    "share": {
+      "service_disabled": "Der Dienst zum Teilen ist deaktiviert! Bitte aktivieren Sie ihn vor der Verwendung in der Admin-Konfiguration.",
+      "quota_exceeded": "{action_name} Limit überschritten ({quota} maximal).",
+      "blocked_request_ignored": "Noch nicht fertig, bitte warte weitere {remaining_s}s, bevor du es erneut versuchst.",
+      "process_started": "{action_name} gestartet.",
+      "process_failed": "😔 Fehler beim Verarbeiten des Jobs. Bitte versuche es erneut.",
+      "quota_notification": "{action_name} Kontingent ist {current_shares} von {quota}"
+    }
+  }
 }

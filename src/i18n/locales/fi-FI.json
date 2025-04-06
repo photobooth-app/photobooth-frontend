@@ -135,5 +135,19 @@
   "Reboot Host": "Käynnistä Isäntä Uudelleen",
   "Shutdown Host": "Sammuta Isäntä",
   "Frontend build date": "Julkisivun rakennuspäivämäärä",
-  "No results": "Ei tuloksia"
+  "No results": "Ei tuloksia",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Työtä on jo käynnissä. Odota kunnes se on valmis.",
+      "job_failed": "😔 Virhe työn käsittelyssä. Yritä uudelleen."
+    },
+    "share": {
+      "service_disabled": "Shareservice on pois päältä! Ota se käyttöön järjestelmänvalvojan kokoonpanossa ennen käyttöä.",
+      "quota_exceeded": "{action_name} kiintiö ylitetty ({quota} maksimi).",
+      "blocked_request_ignored": "Ei vielä valmis, odota vielä {remaining_s}s ennen kuin yrität uudelleen.",
+      "process_started": "{action_name} aloitettu.",
+      "process_failed": "😔 Virhe toimintoa käsiteltäessä. Yritä uudelleen.",
+      "quota_notification": "{action_name} kiintiö on {current_shares} of {quota}"
+    }
+  }
 }

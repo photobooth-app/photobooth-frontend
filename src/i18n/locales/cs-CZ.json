@@ -135,5 +135,19 @@
   "Reboot Host": "Restartovat hostitele",
   "Shutdown Host": "Vypnutí hostitele",
   "Frontend build date": "Datum sestavení frontendu",
-  "No results": "Žádné výsledky"
+  "No results": "Žádné výsledky",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Pracovní pozice již běží. Počkejte prosím, než bude dokončena.",
+      "job_failed": "😔 Chyba při zpracování zakázky. Zkuste to prosím znovu."
+    },
+    "share": {
+      "service_disabled": "shareservice je zakázána! Před použitím ji prosím povolte v konfiguraci správce.",
+      "quota_exceeded": "{action_name} kvóta byla překročena (maximálně{quota}).",
+      "blocked_request_ignored": "Ještě není připraveno, počkejte prosím další {remaining_s}s než to zkusíte znovu.",
+      "process_started": "{action_name} začalo.",
+      "process_failed": "😔 Chyba při zpracování akce. Zkuste to prosím znovu.",
+      "quota_notification": "{action_name} kvóta je {current_shares} z {quota}"
+    }
+  }
 }

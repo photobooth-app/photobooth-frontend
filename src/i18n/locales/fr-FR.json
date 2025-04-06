@@ -135,5 +135,19 @@
   "Reboot Host": "Redémarrer l'hôte",
   "Shutdown Host": "Hôte d'arrêt",
   "Frontend build date": "Date de construction du Frontend",
-  "No results": "Aucun résultat"
+  "No results": "Aucun résultat",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Il y a déjà un travail en cours. Veuillez patienter jusqu'à ce qu'il soit terminé.",
+      "job_failed": "😔 Erreur lors du traitement de la tâche. Veuillez réessayer."
+    },
+    "share": {
+      "service_disabled": "La shareservice est désactivée ! Veuillez l'activer dans la configuration d'administration avant de l'utiliser.",
+      "quota_exceeded": "Quota {action_name} dépassé ({quota} maximum).",
+      "blocked_request_ignored": "Pas encore prêt, veuillez attendre une autre {remaining_s}s avant de réessayer.",
+      "process_started": "{action_name} a commencé.",
+      "process_failed": "😔 Erreur lors du traitement de l'action. Veuillez réessayer.",
+      "quota_notification": "Le quota {action_name} est {current_shares} de {quota}"
+    }
+  }
 }

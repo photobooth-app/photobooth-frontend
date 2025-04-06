@@ -135,5 +135,19 @@
   "Reboot Host": "Omstart vert",
   "Shutdown Host": "Avslutt vert",
   "Frontend build date": "byggedato for brukersiden",
-  "No results": "Ingen resultater"
+  "No results": "Ingen resultater",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Det er allerede en jobb som utføres. Vennligst vent til det er ferdig.",
+      "job_failed": "😔 Feil under behandling av jobben. Prøv på nytt."
+    },
+    "share": {
+      "service_disabled": "shareserveren er deaktivert! Aktiver den i admin-konfigurasjonen før bruk.",
+      "quota_exceeded": "{action_name} quota exceeded ({quota} maximum).",
+      "blocked_request_ignored": "Ingen ennå klare, vennligst vent en til {remaining_s}er før du prøver igjen.",
+      "process_started": "{action_name} startet.",
+      "process_failed": "😔 Feil under behandling av handlingen. Prøv på nytt.",
+      "quota_notification": "{action_name} kvote er {current_shares} av {quota}"
+    }
+  }
 }

@@ -135,5 +135,19 @@
   "Reboot Host": "Servidor de reinicialização",
   "Shutdown Host": "Host do Desligamento",
   "Frontend build date": "Data de compilação do Frontend",
-  "No results": "Nenhum resultado"
+  "No results": "Nenhum resultado",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Já existe um trabalho em execução. Por favor, aguarde até que ele termine.",
+      "job_failed": "😔 Erro ao processar o trabalho. Por favor, tente novamente."
+    },
+    "share": {
+      "service_disabled": "O shareservice está desativado! Por favor, ative-o na configuração de admin antes do uso.",
+      "quota_exceeded": "Cota de {action_name} excedida ( máximo{quota}).",
+      "blocked_request_ignored": "Ainda não está pronto, por favor, aguarde outro {remaining_s}s antes de tentar novamente.",
+      "process_started": "{action_name} começou.",
+      "process_failed": "😔 Erro durante o processamento da ação. Por favor, tente novamente.",
+      "quota_notification": "Cota {action_name} é {current_shares} de {quota}"
+    }
+  }
 }

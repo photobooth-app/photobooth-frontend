@@ -135,5 +135,19 @@
   "Reboot Host": "Herstart Host",
   "Shutdown Host": "Host afsluiten",
   "Frontend build date": "Aanmaakdatum frontend",
-  "No results": "Geen resultaten gevonden"
+  "No results": "Geen resultaten gevonden",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Er is al een taak actief. Wacht tot het klaar is.",
+      "job_failed": "😔 Fout bij verwerken van de taak. Probeer het opnieuw."
+    },
+    "share": {
+      "service_disabled": "De shareservice is uitgeschakeld! Activeer het in de admin configuratie voordat u het gebruikt.",
+      "quota_exceeded": "{action_name} quota overschreden ({quota} maximum).",
+      "blocked_request_ignored": "Nog niet gereed, gelieve een andere {remaining_s}te wachten voordat je het opnieuw probeert.",
+      "process_started": "{action_name} gestart.",
+      "process_failed": "😔 Fout tijdens het verwerken van de actie. Probeer het opnieuw.",
+      "quota_notification": "{action_name} quotum is {current_shares} van {quota}"
+    }
+  }
 }

@@ -135,5 +135,19 @@
   "Reboot Host": "ホストを再起動",
   "Shutdown Host": "シャットダウンホスト",
   "Frontend build date": "Frontend build date",
-  "No results": "結果がありません"
+  "No results": "結果がありません",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ すでにジョブが実行されています。完了するまでお待ちください。",
+      "job_failed": "😔 ジョブの処理に失敗しました。もう一度やり直してください。"
+    },
+    "share": {
+      "service_disabled": "shareservice は無効になっています！使用する前に管理者設定で有効にしてください。",
+      "quota_exceeded": "{action_name} クォータを超えました({quota} 最大)。",
+      "blocked_request_ignored": "まだ準備ができていません。もう一度お試しになる前に、別の {remaining_s}秒お待ちください。",
+      "process_started": "{action_name} を開始しました。",
+      "process_failed": "アクションの処理中にエラーが発生しました。もう一度やり直してください。",
+      "quota_notification": "{action_name} クォータは {current_shares} / {quota} です"
+    }
+  }
 }

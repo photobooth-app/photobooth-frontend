@@ -135,5 +135,19 @@
   "Reboot Host": "Repornire Host",
   "Shutdown Host": "Gazdă de oprire",
   "Frontend build date": "Data construirii frontend",
-  "No results": "Niciun rezultat"
+  "No results": "Niciun rezultat",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Deja se execută o sarcină. Vă rugăm așteptați până se termină.",
+      "job_failed": "😔 Eroare la procesarea lucrării. Vă rugăm să încercați din nou."
+    },
+    "share": {
+      "service_disabled": "Distribuirea este dezactivată! Vă rugăm să o activați în configurația administratorului înainte de utilizare.",
+      "quota_exceeded": "{action_name} cotă depășită ({quota} maxim).",
+      "blocked_request_ignored": "Încă nu este gata, vă rugăm să așteptați încă un {remaining_s}înainte de a încerca din nou.",
+      "process_started": "{action_name} a început.",
+      "process_failed": "😔 Eroare la procesarea acțiunii. Vă rugăm să încercați din nou.",
+      "quota_notification": "{action_name} contingent este {current_shares} {quota}"
+    }
+  }
 }

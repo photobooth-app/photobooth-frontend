@@ -135,5 +135,19 @@
   "Reboot Host": "Επανεκκίνηση Υπολογιστή",
   "Shutdown Host": "Τερματισμός Υπολογιστή",
   "Frontend build date": "Ημ/νία δημιουργίας καταστήματος",
-  "No results": "Κανένα αποτέλεσμα"
+  "No results": "Κανένα αποτέλεσμα",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Υπάρχει ήδη μια εργασία που εκτελείται. Παρακαλώ περιμένετε μέχρι να τελειώσει.",
+      "job_failed": "😔 Σφάλμα κατά την επεξεργασία της εργασίας. Παρακαλώ δοκιμάστε ξανά."
+    },
+    "share": {
+      "service_disabled": "Η shareservice είναι απενεργοποιημένη! Παρακαλώ ενεργοποιήστε την στις ρυθμίσεις διαχειριστή πριν τη χρήση.",
+      "quota_exceeded": "Ξεπεράστηκε το όριο {action_name} ({quota} μέγιστο).",
+      "blocked_request_ignored": "Δεν είστε ακόμα έτοιμοι, παρακαλώ περιμένετε άλλο {remaining_s}πριν δοκιμάσετε ξανά.",
+      "process_started": "Το {action_name} ξεκίνησε.",
+      "process_failed": "😔 Σφάλμα κατά την επεξεργασία της ενέργειας. Παρακαλώ δοκιμάστε ξανά.",
+      "quota_notification": "{action_name} η ποσόστωση είναι {current_shares} του {quota}"
+    }
+  }
 }

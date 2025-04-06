@@ -135,5 +135,19 @@
   "Reboot Host": "Reboot Host",
   "Shutdown Host": "Shutdown Host",
   "Frontend build date": "Frontend építési dátuma",
-  "No results": "Nincs eredmény"
+  "No results": "Nincs eredmény",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Már fut egy munka. Kérjük, várjon, amíg befejeződik.",
+      "job_failed": "😔 Hiba a feladat feldolgozásában. Kérjük, próbálja meg újra."
+    },
+    "share": {
+      "service_disabled": "A megosztási szolgáltatás le van tiltva! Kérjük, használat előtt engedélyezze az admin konfigurációban.",
+      "quota_exceeded": "{action_name} kvóta túllépése ({quota} maximum).",
+      "blocked_request_ignored": "Még nincs kész, kérjük, várjon még {remaining_s}s-t, mielőtt újra megpróbálná.",
+      "process_started": "{action_name} elkezdődött.",
+      "process_failed": "😔 Hiba a művelet feldolgozása közben. Kérjük, próbálja meg újra.",
+      "quota_notification": "{action_name} a kvóta a {current_shares} a {quota}oldalon található."
+    }
+  }
 }

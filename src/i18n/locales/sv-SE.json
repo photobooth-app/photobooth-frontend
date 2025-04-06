@@ -135,5 +135,19 @@
   "Reboot Host": "Starta om värd",
   "Shutdown Host": "Stäng av Värd",
   "Frontend build date": "Frontend byggdatum",
-  "No results": "Inga resultat"
+  "No results": "Inga resultat",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ Det är redan ett jobb igång. Vänta tills det är klart.",
+      "job_failed": "😔 Fel vid behandling av jobbet. Försök igen."
+    },
+    "share": {
+      "service_disabled": "Shareservice är inaktiverad! Aktivera den i administratörskonfigurationen innan användning.",
+      "quota_exceeded": "{action_name} kvoten överskred ({quota} maximum).",
+      "blocked_request_ignored": "Ännu inte redo, vänligen vänta en annan {remaining_s}s innan du försöker igen.",
+      "process_started": "{action_name} startade.",
+      "process_failed": "😔 Fel vid bearbetningen av åtgärden. Försök igen.",
+      "quota_notification": "{action_name} kvoten är {current_shares} av {quota}"
+    }
+  }
 }
