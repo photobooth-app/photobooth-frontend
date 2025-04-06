@@ -135,5 +135,19 @@
   "Reboot Host": "Reboot Host",
   "Shutdown Host": "Shutdown Host",
   "Frontend build date": "Frontend build date",
-  "No results": "No results"
+  "No results": "No results",
+  "translatedFrontendNotifications": {
+    "processing": {
+      "machine_occupied": "⌛ There is already a job running. Please wait until it finished.",
+      "job_failed": "😔 Error processing the job. Please try again."
+    },
+    "share": {
+      "service_disabled": "The shareservice is disabled! Please enable it in the admin configuration before use.",
+      "quota_exceeded": "{action_name} quota exceeded ({quota} maximum).",
+      "blocked_request_ignored": "No yet ready, please wait another {remaining_s}s before trying again.",
+      "process_started": "{action_name} started.",
+      "process_failed": "😔 Error while processing the action. Please try again.",
+      "quota_notification": "{action_name} quota is {current_shares} of {quota}"
+    }
+  }
 }
