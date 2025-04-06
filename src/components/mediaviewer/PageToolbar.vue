@@ -39,7 +39,6 @@
         <ShareTriggerButtons
           v-if="showShare"
           :triggers="shareButtons"
-          :direct-access-number-of-buttons="shareDirectAccessButtons"
           :current-item-is-image="['image', 'collage', 'collageimage', 'animationimage'].includes(item.media_type)"
           @trigger-action="invokeShareAction"
         ></ShareTriggerButtons>
@@ -89,7 +88,6 @@ const props = defineProps<{
   showDelete: boolean
   showFilter: boolean
   showShare: boolean
-  shareDirectAccessButtons: number
   shareButtons: ShareSchema[]
   enableFilter: boolean
 }>()

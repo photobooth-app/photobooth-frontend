@@ -22,7 +22,6 @@ import { isEmpty } from 'lodash'
 
 const props = defineProps<{
   triggers: ShareSchema[]
-  directAccessNumberOfButtons: number
   currentItemIsImage: boolean
 }>()
 

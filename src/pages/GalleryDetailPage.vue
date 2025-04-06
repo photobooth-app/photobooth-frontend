@@ -44,7 +44,6 @@
             :show-share="
               configurationStore.configuration.uisettings.gallery_show_shareprint && configurationStore.configuration.share.sharing_enabled
             "
-            :share-direct-access-buttons="configurationStore.configuration.share.number_direct_access_buttons"
             :share-buttons="shareButtons"
             :show-delete="props.forceShowDeleteButton || configurationStore.configuration.uisettings.gallery_show_delete"
             :show-download="configurationStore.configuration.uisettings.gallery_show_download"

@@ -1136,7 +1136,7 @@ export interface components {
              *             "ui_trigger": {
              *               "custom_color": "#196cb0",
              *               "icon": "burst_mode",
-             *               "show_button": true,
+             *               "show_button": false,
              *               "title": "Wigglegram",
              *               "use_custom_color": false
              *             }
@@ -1147,11 +1147,10 @@ export interface components {
             actions: components["schemas"]["GroupActions"];
             /** @default {
              *       "sharing_enabled": true,
-             *       "number_direct_access_buttons": 1,
              *       "actions": [
              *         {
-             *           "handles_images_only": false,
-             *           "name": "default print settings",
+             *           "handles_images_only": true,
+             *           "name": "Printing",
              *           "processing": {
              *             "ask_user_for_parameter_input": false,
              *             "max_shares": 0,
@@ -1189,8 +1188,8 @@ export interface components {
              *           }
              *         },
              *         {
-             *           "handles_images_only": false,
-             *           "name": "default print settings",
+             *           "handles_images_only": true,
+             *           "name": "Printing copies",
              *           "processing": {
              *             "ask_user_for_parameter_input": true,
              *             "max_shares": 0,
@@ -1228,8 +1227,8 @@ export interface components {
              *           }
              *         },
              *         {
-             *           "handles_images_only": true,
-             *           "name": "default print settings",
+             *           "handles_images_only": false,
+             *           "name": "Mailing action",
              *           "processing": {
              *             "ask_user_for_parameter_input": true,
              *             "max_shares": 0,
@@ -1857,7 +1856,7 @@ export interface components {
              *           "ui_trigger": {
              *             "custom_color": "#196cb0",
              *             "icon": "burst_mode",
-             *             "show_button": true,
+             *             "show_button": false,
              *             "title": "Wigglegram",
              *             "use_custom_color": false
              *           }
@@ -2307,18 +2306,12 @@ export interface components {
              */
             sharing_enabled: boolean;
             /**
-             * Number Direct Access Buttons
-             * @description Number of buttons directly accessible in the gallery. Remaining items are available in the more-menu.
-             * @default 1
-             */
-            number_direct_access_buttons: number;
-            /**
              * Actions
              * @description Share or print mediaitems.
              * @default [
              *       {
-             *         "name": "default print settings",
-             *         "handles_images_only": false,
+             *         "name": "Printing",
+             *         "handles_images_only": true,
              *         "processing": {
              *           "ask_user_for_parameter_input": false,
              *           "max_shares": 0,
@@ -2356,8 +2349,8 @@ export interface components {
              *         }
              *       },
              *       {
-             *         "name": "default print settings",
-             *         "handles_images_only": false,
+             *         "name": "Printing copies",
+             *         "handles_images_only": true,
              *         "processing": {
              *           "ask_user_for_parameter_input": true,
              *           "max_shares": 0,
@@ -2395,8 +2388,8 @@ export interface components {
              *         }
              *       },
              *       {
-             *         "name": "default print settings",
-             *         "handles_images_only": true,
+             *         "name": "Mailing action",
+             *         "handles_images_only": false,
              *         "processing": {
              *           "ask_user_for_parameter_input": true,
              *           "max_shares": 0,
