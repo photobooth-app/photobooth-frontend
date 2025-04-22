@@ -1,12 +1,12 @@
 <template>
-  <q-page id="itemapproval-page" class="absolute-full flex flex-center">
+  <div id="itemapproval-dialog" class="absolute-full flex flex-center">
     <!-- ITEMS -->
 
     <q-img
       v-if="showImage"
       :draggable="false"
       loading="eager"
-      :src="`/api/processing/approval/${stateStore.jobmodel.approval_id}`"
+      :src="`/api/processing/approval/${approval_id}`"
       fit="contain"
       style="height: 95%"
       @error="showImage = false"
@@ -31,8 +31,8 @@
             <q-icon name="sym_o_tag" color="white" class="q-mr-xs" />
             {{
               $t('LABEL_ELEMENT_X_OF_Y', {
-                no: stateStore.jobmodel.number_captures_taken,
-                total: stateStore.jobmodel.total_captures_to_take,
+                no: number_captures_taken,
+                total: total_captures_to_take,
               })
             }}
           </q-badge>
@@ -64,18 +64,19 @@
         </div>
       </div>
     </q-page-sticky>
-  </q-page>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { useStateStore } from '../stores/state-store'
 import { remoteProcedureCall } from '../util/fetch_api.js'
 import { ref, onBeforeMount } from 'vue'
 import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
 
-const router = useRouter()
-const stateStore = useStateStore()
+defineProps<{
+  approval_id: string
+  number_captures_taken: number
+  total_captures_to_take: number
+}>()
 
 const showImage = ref(true)
 
@@ -85,16 +86,11 @@ onBeforeMount(() => {
 
 const userConfirm = () => {
   remoteProcedureCall('/api/processing/confirm')
-  router.push('/')
 }
 const userReject = () => {
   remoteProcedureCall('/api/processing/reject')
-  router.push('/')
 }
 const userAbort = () => {
-  // closing the window that was meant to use for approval
-  // need to inform the statemachine to reset
   remoteProcedureCall('/api/processing/abort')
-  router.push('/')
 }
 </script>

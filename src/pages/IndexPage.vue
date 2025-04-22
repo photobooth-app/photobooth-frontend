@@ -32,6 +32,16 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="stateStore.isStateIdle" id="frontpage_text" v-html="configurationStore.configuration.uisettings.FRONTPAGE_TEXT"></div>
 
+    <!-- dialog for approval -->
+    <div v-if="stateStore.isStateApproval">
+      <MediaItemApprovalViewer
+        :approval_id="stateStore.jobmodel.approval_id"
+        :number_captures_taken="stateStore.jobmodel.number_captures_taken"
+        :total_captures_to_take="stateStore.jobmodel.total_captures_to_take"
+      >
+      </MediaItemApprovalViewer>
+    </div>
+
     <q-page-sticky position="bottom" class="q-mb-lg">
       <div v-if="stateStore.isStateIdle">
         <FrontpageTriggerButtons :triggers="triggerButtons" @trigger-action="invokeAction"></FrontpageTriggerButtons>
@@ -107,6 +117,7 @@ import { default as FrontpageTriggerButtons } from '../components/FrontpageTrigg
 import { default as PreviewStream } from '../components/PreviewStream.vue'
 import _ from 'lodash'
 import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
+import MediaItemApprovalViewer from 'src/components/MediaItemApprovalViewer.vue'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 
 const mediacollectionStore = useMediacollectionStore()

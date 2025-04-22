@@ -29,9 +29,6 @@ stateStore.$subscribe((mutation, state) => {
     // if aborted, source can by anything but completed. when source is completed, the job was successful and we have an id
     router.push({ name: 'itempresenter', params: { id: stateStore.jobmodel.present_mediaitem_id } })
   }
-  if (state.target == 'approval') {
-    router.push({ path: '/itemapproval' })
-  }
 })
 
 const keyUpHandler = (e: KeyboardEvent) => {

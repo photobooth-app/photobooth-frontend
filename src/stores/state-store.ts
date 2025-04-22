@@ -23,6 +23,7 @@ export const useStateStore = defineStore('state-store', {
     isStateRecording: (state) => state.target == 'capture' && state.jobmodel.typ == 'video',
     isStateProcessing: (state) => state.target == 'completed',
     isStateCapture: (state) => state.target == 'capture',
+    isStateApproval: (state) => state.target == 'approval',
   },
 })
 
