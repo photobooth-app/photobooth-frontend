@@ -136,6 +136,7 @@
   "Shutdown Host": "关闭主机",
   "Frontend build date": "前端构建日期",
   "No results": "没有结果",
+  "Stop recording": "Stop recording",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": ":hourglass_don：作业已经在运行。请等待，直到完成。",

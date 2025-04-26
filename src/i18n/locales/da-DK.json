@@ -136,6 +136,7 @@
   "Shutdown Host": "Nedlukning Vært",
   "Frontend build date": "Frontend byggedato",
   "No results": "Ingen resultater",
+  "Stop recording": "Stop optagelse",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Der er allerede et job, der kører. Vent venligst indtil det er færdigt.",
