@@ -88,10 +88,14 @@
     </q-page-sticky>
 
     <!-- video state controls -->
-    <q-page-sticky v-if="stateStore.isStateRecording" id="frontpage-indicator-recording" position="top" :offset="[0, 25]" align="center">
-      <q-spinner-puff color="red" size="10em" />
-      <br />
-      <q-btn flat color="red" label="Stop recording" @click="stopRecordingVideo()" />
+    <q-page-sticky v-if="stateStore.isStateRecording" id="frontpage-indicator-recording" position="top-right" :offset="[25, 25]" align="center">
+      <q-spinner-puff color="red" size="12em" thickness="20" />
+    </q-page-sticky>
+    <q-page-sticky v-if="stateStore.isStateRecording" id="frontpage-indicator-stop-recording" position="bottom" :offset="[0, 25]" align="center">
+      <q-btn stack rounded no-caps color="negative" class="action-button glass-effect" @click="stopRecordingVideo()">
+        <q-icon name="sym_o_stop_circle" />
+        <div>{{ $t('Stop recording') }}</div>
+      </q-btn>
     </q-page-sticky>
 
     <!-- auto-start slideshow after timeout -->

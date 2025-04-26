@@ -136,6 +136,7 @@
   "Shutdown Host": "Shutdown Host",
   "Frontend build date": "Frontend build date",
   "No results": "No results",
+  "Stop recording": "Stop recording",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ There is already a job running. Please wait until it finished.",

@@ -1,9 +1,10 @@
 <template>
   <q-layout id="admin-layout" view="hHh lpR fFf">
-    <q-header class="bg-secondary text-white">
+    <q-header class="bg-green">
       <q-toolbar class="q-pa-none">
-        <q-btn class="q-mx-sm" stack to="/" icon="sym_o_arrow_back_ios_new" :label="$t('BTN_LABEL_BACK')" />
-        <q-tabs mobile-arrows shrink stretch>
+        <q-btn no-caps flat color="green-1" class="q-mx-sm" stack to="/" icon="sym_o_arrow_back_ios_new" :label="$t('BTN_LABEL_BACK')" />
+        <q-separator vertical color="green-3"></q-separator>
+        <q-tabs no-caps mobile-arrows shrink stretch active-color="white" class="text-green-1" indicator-color="green-3">
           <q-route-tab to="/admin" icon="sym_o_dashboard" :label="$t('TAB_LABEL_DASHBOARD')" />
           <!-- name based so even if children are active, the config tab is highlighted -->
           <q-route-tab :to="{ name: 'config' }" icon="sym_o_settings" :label="$t('TAB_LABEL_CONFIG')" />
@@ -11,7 +12,7 @@
           <!-- <q-route-tab to="/admin/multicam" icon="sym_o_burst_mode" :label="$t('TAB_MULTICAM')" /> -->
           <q-route-tab to="/admin/logs" icon="sym_o_list" :label="$t('Logs')" />
           <q-btn-dropdown auto-close stretch flat label="">
-            <q-list>
+            <q-list class="bg-green-5">
               <q-item to="/admin/1ststart">
                 <q-item-section avatar> <q-icon name="sym_o_info" /> </q-item-section>
                 <q-item-section>
@@ -54,7 +55,7 @@
         </div>
 
         <div>
-          <q-btn class="q-mx-sm" stack icon="sym_o_logout" :label="$t('Sign out')" @click="click_logout" />
+          <q-btn flat no-caps color="green-1" class="q-mx-sm" stack icon="sym_o_logout" :label="$t('Sign out')" @click="click_logout" />
         </div>
       </q-toolbar>
     </q-header>

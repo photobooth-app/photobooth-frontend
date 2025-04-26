@@ -5,9 +5,10 @@
     <div style="height: 100%">
       <!-- div-100%height fixes the max height of the svg to render the circular process not to exhaust the painting area resulting in scrollbars-->
       <q-circular-progress
+        id="countdown-circular-progress"
         v-show="showCountdown"
         :show-value="!showMessage"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%; text-shadow: #222 0 0 10px; font-weight: bold; opacity: 85%"
         :value="remainingSeconds"
         :min="0"
         :max="startDuration"
@@ -15,8 +16,9 @@
         animation-speed="100"
         font-size="0.5em"
         size="70vh"
-        color="primary"
+        color="secondary"
         class="text-secondary"
+        :thickness="0.16"
       >
         {{ parseFloat(remainingSeconds.toFixed(0)) }}
       </q-circular-progress>

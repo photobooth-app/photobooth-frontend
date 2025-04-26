@@ -1,14 +1,6 @@
 <template>
   <q-layout v-if="layout.visible">
-    <q-header style="z-index: 0">
-      <q-toolbar>
-        <q-btn flat round dense icon="sym_o_menu" @click="drawer = !drawer" />
-        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-        <q-toolbar-title>{{ visibleCategoryLabels[activeCategory] }} ({{ activeCategory }})</q-toolbar-title>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer v-model="drawer" :width="300" :breakpoint="500" bordered :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'">
+    <q-drawer side="left" v-model="drawer" :width="250" :breakpoint="800">
       <q-scroll-area class="fit">
         <q-list>
           <q-item
@@ -19,16 +11,23 @@
             :active="activeCategory == index"
             replace
             @click="activeCategory = index"
+            style="text-transform: capitalize"
           >
-            <q-item-section> {{ visibleCategoryLabels[index] }}</q-item-section>
+            <q-item-section> {{ visibleCategoryLabels[index].replace(/_/g, ' ') }}</q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>
-    </q-drawer>
 
+      <div style="position: absolute; top: 5px; right: -17px">
+        <q-btn dense round unelevated color="green" icon="sym_o_chevron_left" @click="drawer = !drawer" />
+      </div>
+    </q-drawer>
     <q-page-container>
-      <q-page padding>
-        <!--div>{{ JSON.stringify(this.serverConfig) }}</div-->
+      <q-page>
+        <div v-if="!drawer" style="position: absolute; top: 5px; left: -12px; z-index: 2">
+          <q-btn dense round unelevated color="green" icon="sym_o_chevron_right" @click="drawer = !drawer" />
+        </div>
+
         <div class="config-form q-mt-md row justify-center">
           <div class="col-12 col-md-10 q-mb-xl">
             <div v-for="(element, index) in visibleCategories" :key="`${layout.path}-${index}`">

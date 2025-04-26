@@ -1,7 +1,7 @@
 <template>
-  <q-page id="admin-files-page" padding>
+  <q-page id="admin-files-page">
     <div class="q-pa-md">
-      <q-breadcrumbs gutter="sm" style="cursor: pointer">
+      <q-breadcrumbs gutter="sm" class="q-pa-md" style="cursor: pointer">
         <q-breadcrumbs-el :label="$t('TITLE_FILES_WORKING_DIR')" icon="sym_o_home" @click="onBreadcrumbClick(-1)" />
         <q-breadcrumbs-el v-for="(value, key) in breadcrumbs" :key="key" @click="onBreadcrumbClick(key)">
           {{ value }}
@@ -24,8 +24,8 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-            <q-btn v-close-popup flat :label="$t('BTN_LABEL_FILES_CREATE_NEW_FOLDER')" @click="createNewFolder(new_folder_name)" />
+            <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+            <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_FILES_CREATE_NEW_FOLDER')" @click="createNewFolder(new_folder_name)" />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -53,7 +53,7 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn v-close-popup flat label="Cancel" />
+            <q-btn no-caps v-close-popup flat label="Cancel" />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -98,16 +98,17 @@
               </q-card-section>
 
               <q-card-actions align="right">
-                <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
-                <q-btn v-close-popup :label="$t('Yes, delete')" color="negative" @click="deleteItems(selected)" />
+                <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
+                <q-btn no-caps v-close-popup :label="$t('Yes, delete')" color="negative" @click="deleteItems(selected)" />
               </q-card-actions>
             </q-card>
           </q-dialog>
           <div>
-            <q-btn :disable="folder_loading" :label="$t('BTN_LABEL_FILES_NEW_FOLDER')" @click="dialog_create_new_folder = true" />
-            <q-btn class="q-ml-sm" :disable="folder_loading" :label="$t('BTN_LABEL_FILES_UPLOAD_FILE')" @click="dialog_upload_files = true" />
-            <q-btn class="q-ml-sm" :disable="selected.length == 0" :label="$t('BTN_LABEL_FILES_DOWNLOAD_ZIP')" @click="getZip(selected)" />
+            <q-btn no-caps :disable="folder_loading" :label="$t('BTN_LABEL_FILES_NEW_FOLDER')" @click="dialog_create_new_folder = true" />
+            <q-btn no-caps class="q-ml-sm" :disable="folder_loading" :label="$t('BTN_LABEL_FILES_UPLOAD_FILE')" @click="dialog_upload_files = true" />
+            <q-btn no-caps class="q-ml-sm" :disable="selected.length == 0" :label="$t('BTN_LABEL_FILES_DOWNLOAD_ZIP')" @click="getZip(selected)" />
             <q-btn
+              no-caps
               class="q-ml-sm"
               color="negative"
               :disable="selected.length == 0"

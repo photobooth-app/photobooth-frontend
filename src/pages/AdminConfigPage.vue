@@ -1,68 +1,72 @@
 <template>
   <q-page id="config-page">
-    <q-tabs no-caps mobile-arrows shrink stretch dense align="left" class="bg-secondary text-white">
-      <q-route-tab
-        v-for="(element, index) in configurables"
-        :key="index"
-        :to="{ name: 'config', params: { section: element } }"
-        :label="element.split('.').pop()"
-        replace
+    <div class="q-pa-md">
+      <q-tabs no-caps mobile-arrows dense align="left">
+        <q-route-tab
+          v-for="(element, index) in configurables"
+          :key="index"
+          :to="{ name: 'config', params: { section: element } }"
+          :label="element.replace(/_/g, ' ').split('.').pop()"
+          replace
+          style="text-transform: capitalize"
+        />
+      </q-tabs>
+      <json-forms
+        v-if="!isLoadingState"
+        :data="configuration"
+        :ajv="ajv"
+        :renderers="renderers"
+        :schema="schema"
+        :uischema="cuischema"
+        @change="onChange"
       />
-    </q-tabs>
-    <json-forms
-      v-if="!isLoadingState"
-      :data="configuration"
-      :ajv="ajv"
-      :renderers="renderers"
-      :schema="schema"
-      :uischema="cuischema"
-      @change="onChange"
-    />
 
-    <div v-else class="q-pa-md flex flex-center">
-      <div>
-        <q-spinner-gears size="xl" color="primary" />
-      </div>
-    </div>
-
-    <q-page-sticky position="bottom-right" class="q-ma-lg">
-      <div class="row self-end items-end">
-        <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
-        <q-btn class="q-ml-sm" :label="$t('BTN_LABEL_RESET_CONFIG')" @click="confirm_reset_config = true" />
-        <q-btn class="q-ml-sm" :label="$t('BTN_LABEL_RELOAD_CONFIG')" @click="updateFormSchema()" />
-        <div class="q-ml-sm column">
-          <q-toggle v-model="autoReloadServicesOnSave" :label="$t('Apply')">
-            <q-tooltip>{{ $t('Reload services on save to apply settings. Reloading might take some time.') }} </q-tooltip>
-          </q-toggle>
-          <q-btn color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="saveConfig()" />
+      <div v-else class="q-pa-md flex flex-center">
+        <div>
+          <q-spinner-gears size="xl" color="primary" />
         </div>
       </div>
-    </q-page-sticky>
 
-    <q-dialog v-model="confirm_reset_config">
-      <q-card class="q-pa-sm" style="min-width: 350px">
-        <q-card-section class="row items-center" style="flex-wrap: nowrap">
-          <q-avatar icon="sym_o_delete" color="negative" text-color="white" />
-          <p class="q-ml-sm">
-            {{
-              $t('Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?', {
-                selected_configuration: selected_configuration,
-              })
-            }}
-          </p>
-        </q-card-section>
+      <q-page-sticky position="bottom-right" class="q-ma-lg">
+        <div class="row self-end items-end">
+          <!-- linter error, see open issue: https://github.com/intlify/vue-i18n-next/issues/1403-->
+          <q-btn no-caps class="q-ml-sm" :label="$t('BTN_LABEL_RESET_CONFIG')" @click="confirm_reset_config = true" />
+          <q-btn no-caps class="q-ml-sm" :label="$t('BTN_LABEL_RELOAD_CONFIG')" @click="updateFormSchema()" />
+          <div class="q-ml-sm column">
+            <q-toggle v-model="autoReloadServicesOnSave" :label="$t('Apply')">
+              <q-tooltip>{{ $t('Reload services on save to apply settings. Reloading might take some time.') }} </q-tooltip>
+            </q-toggle>
+            <q-btn no-caps color="primary" :label="$t('BTN_LABEL_PERSIST_CONFIG')" @click="saveConfig()" />
+          </div>
+        </div>
+      </q-page-sticky>
 
-        <q-card-actions align="right">
-          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
-          <q-btn
-            v-close-popup
-            :label="$t('yes, reset')"
-            color="negative"
-            @click="[remoteProcedureCall(`/api/admin/config/${selected_configuration}`, 'DELETE'), updateFormSchema()]"
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+      <q-dialog v-model="confirm_reset_config">
+        <q-card class="q-pa-sm" style="min-width: 350px">
+          <q-card-section class="row items-center" style="flex-wrap: nowrap">
+            <q-avatar icon="sym_o_delete" color="negative" text-color="white" />
+            <p class="q-ml-sm">
+              {{
+                $t('Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?', {
+                  selected_configuration: selected_configuration,
+                })
+              }}
+            </p>
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
+            <q-btn
+              no-caps
+              v-close-popup
+              :label="$t('yes, reset')"
+              color="negative"
+              @click="[remoteProcedureCall(`/api/admin/config/${selected_configuration}`, 'DELETE'), updateFormSchema()]"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </div>
   </q-page>
 </template>
 <script setup lang="ts">

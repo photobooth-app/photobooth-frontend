@@ -8,8 +8,10 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('Host') }}</q-item-label>
-                <q-item-label> <q-btn flat color="primary" :label="$t('Reboot Host')" @click="confirm_reboot_host = true" /> </q-item-label>
-                <q-item-label> <q-btn flat color="primary" :label="$t('Shutdown Host')" @click="confirm_shutdown_host = true" /> </q-item-label>
+                <q-item-label> <q-btn no-caps flat color="primary" :label="$t('Reboot Host')" @click="confirm_reboot_host = true" /> </q-item-label>
+                <q-item-label>
+                  <q-btn no-caps flat color="primary" :label="$t('Shutdown Host')" @click="confirm_shutdown_host = true" />
+                </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -17,7 +19,7 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('Service') }}</q-item-label>
                 <q-item-label>
-                  <q-btn flat color="primary" :label="$t('Reload services')" @click="confirm_reload_service = true" />
+                  <q-btn no-caps flat color="primary" :label="$t('Reload services')" @click="confirm_reload_service = true" />
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -26,13 +28,13 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('Systemctl (Linux only)') }}</q-item-label>
                 <q-item-label>
-                  <q-btn flat color="primary" :label="$t('install systemctl service')" @click="confirm_install_systemctl = true" />
+                  <q-btn no-caps flat color="primary" :label="$t('install systemctl service')" @click="confirm_install_systemctl = true" />
                 </q-item-label>
                 <q-item-label>
-                  <q-btn flat color="primary" :label="$t('uninstall systemctl service')" @click="confirm_uninstall_systemctl = true" />
+                  <q-btn no-caps flat color="primary" :label="$t('uninstall systemctl service')" @click="confirm_uninstall_systemctl = true" />
                 </q-item-label>
                 <q-item-label>
-                  <q-btn flat color="primary" :label="$t('restart systemctl service')" @click="confirm_restart_systemctl = true" />
+                  <q-btn no-caps flat color="primary" :label="$t('restart systemctl service')" @click="confirm_restart_systemctl = true" />
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -88,7 +90,7 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right" vertical>
-          <q-btn flat color="primary" @click="enableInContextTranslation()">{{ $t('Translate in context using Crowdin') }}</q-btn>
+          <q-btn no-caps flat color="primary" @click="enableInContextTranslation()">{{ $t('Translate in context using Crowdin') }}</q-btn>
         </q-card-actions>
       </q-card>
 
@@ -172,13 +174,14 @@
             <q-item v-if="Object.keys(store.information.temperatures).length > 0">
               <q-item-section>
                 <q-item-label caption>{{ $t('System Temperatures') }} </q-item-label>
-
-                <q-item v-for="(value, key, index) in store.information.temperatures" :key="index">
-                  <q-item-section>
-                    <q-item-label caption>{{ key }}</q-item-label>
-                    <q-item-label>{{ value }}</q-item-label>
-                  </q-item-section>
-                </q-item>
+                <div class="row">
+                  <q-item v-for="(value, key, index) in store.information.temperatures" :key="index">
+                    <q-item-section>
+                      <q-item-label caption>{{ key }}</q-item-label>
+                      <q-item-label>{{ value }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </div>
               </q-item-section>
             </q-item>
           </q-list>
@@ -260,8 +263,8 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right" vertical>
-          <q-btn flat color="primary" :label="$t('BTN_LABEL_DELETE_ALL_MEDIA_FILES')" @click="confirm_delete_all = true" />
-          <q-btn flat color="primary" :label="$t('Clear recycle directory')" @click="confirm_clear_recycle_directory = true" />
+          <q-btn no-caps flat color="primary" :label="$t('BTN_LABEL_DELETE_ALL_MEDIA_FILES')" @click="confirm_delete_all = true" />
+          <q-btn no-caps flat color="primary" :label="$t('Clear recycle directory')" @click="confirm_clear_recycle_directory = true" />
         </q-card-actions>
       </q-card>
 
@@ -303,7 +306,7 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
-          <q-btn flat color="primary" label="reset" @click="displayResetStatsConfirm('')" />
+          <q-btn no-caps flat color="primary" label="Reset" @click="displayResetStatsConfirm('')" />
         </q-card-actions>
       </q-card>
 
@@ -331,7 +334,7 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
-          <q-btn flat color="primary" label="reset" @click="displayResetLimitsConfirm('')" />
+          <q-btn no-caps flat color="primary" label="Reset" @click="displayResetLimitsConfirm('')" />
         </q-card-actions>
       </q-card>
     </div>
@@ -343,8 +346,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
-          <q-btn v-close-popup :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/api/system/host/reboot')" />
+          <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
+          <q-btn no-caps v-close-popup :label="$t('BTN_LABEL_REBOOT')" color="primary" @click="remoteProcedureCall('/api/system/host/reboot')" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -357,8 +360,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-          <q-btn v-close-popup :label="$t('BTN_LABEL_SHUTDOWN')" color="primary" @click="remoteProcedureCall('/api/system/host/shutdown')" />
+          <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn no-caps v-close-popup :label="$t('BTN_LABEL_SHUTDOWN')" color="primary" @click="remoteProcedureCall('/api/system/host/shutdown')" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -371,8 +374,14 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-          <q-btn v-close-popup :label="$t('BTN_LABEL_RELOAD_SERVICE')" color="primary" @click="remoteProcedureCall('/api/system/service/reload')" />
+          <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn
+            no-caps
+            v-close-popup
+            :label="$t('BTN_LABEL_RELOAD_SERVICE')"
+            color="primary"
+            @click="remoteProcedureCall('/api/system/service/reload')"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -385,8 +394,9 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
           <q-btn
+            no-caps
             v-close-popup
             :label="$t('BTN_LABEL_RESTART_SERVICE')"
             color="primary"
@@ -404,8 +414,9 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
           <q-btn
+            no-caps
             v-close-popup
             :label="$t('BTN_LABEL_INSTALL_SERVICE')"
             color="primary"
@@ -423,8 +434,9 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
           <q-btn
+            no-caps
             v-close-popup
             :label="$t('BTN_LABEL_UNINSTALL_SERVICE')"
             color="primary"
@@ -442,8 +454,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat label="Cancel" color="primary" />
-          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="actionResetStatsConfirmed()" />
+          <q-btn no-caps v-close-popup flat label="Cancel" color="primary" />
+          <q-btn no-caps v-close-popup label="Yes, reset!" color="primary" @click="actionResetStatsConfirmed()" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -456,8 +468,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat label="Cancel" color="primary" />
-          <q-btn v-close-popup label="Yes, reset!" color="primary" @click="actionResetLimitsConfirmed()" />
+          <q-btn no-caps v-close-popup flat label="Cancel" color="primary" />
+          <q-btn no-caps v-close-popup label="Yes, reset!" color="primary" @click="actionResetLimitsConfirmed()" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -470,8 +482,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat label="Cancel" color="primary" />
-          <q-btn v-close-popup label="Delete all" color="primary" @click="mediacollectionStore.deleteAllItems()" />
+          <q-btn no-caps v-close-popup flat label="Cancel" color="primary" />
+          <q-btn no-caps v-close-popup label="Delete all" color="primary" @click="mediacollectionStore.deleteAllItems()" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -484,8 +496,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn v-close-popup flat label="Cancel" color="primary" />
-          <q-btn v-close-popup label="Yes, clear!" color="primary" @click="remoteProcedureCall('/api/admin/files/clearrecycledir')" />
+          <q-btn no-caps v-close-popup flat label="Cancel" color="primary" />
+          <q-btn no-caps v-close-popup label="Yes, clear!" color="primary" @click="remoteProcedureCall('/api/admin/files/clearrecycledir')" />
         </q-card-actions>
       </q-card>
     </q-dialog>
