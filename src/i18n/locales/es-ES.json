@@ -136,6 +136,7 @@
   "Shutdown Host": "Servidor apagado",
   "Frontend build date": "Fecha de construcción del Frontend",
   "No results": "Sin resultados",
+  "Stop recording": "Detener grabación",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Ya hay un trabajo en ejecución. Por favor espere hasta que termine.",

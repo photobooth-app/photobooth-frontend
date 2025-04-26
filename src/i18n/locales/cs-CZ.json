@@ -136,6 +136,7 @@
   "Shutdown Host": "Vypnutí hostitele",
   "Frontend build date": "Datum sestavení frontendu",
   "No results": "Žádné výsledky",
+  "Stop recording": "Zastavit nahrávání",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Pracovní pozice již běží. Počkejte prosím, než bude dokončena.",
