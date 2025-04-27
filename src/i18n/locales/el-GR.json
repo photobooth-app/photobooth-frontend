@@ -136,6 +136,7 @@
   "Shutdown Host": "Τερματισμός Υπολογιστή",
   "Frontend build date": "Ημ/νία δημιουργίας καταστήματος",
   "No results": "Κανένα αποτέλεσμα",
+  "Stop recording": "Διακοπή καταγραφής",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Υπάρχει ήδη μια εργασία που εκτελείται. Παρακαλώ περιμένετε μέχρι να τελειώσει.",

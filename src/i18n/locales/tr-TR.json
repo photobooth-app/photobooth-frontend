@@ -136,6 +136,7 @@
   "Shutdown Host": "Kapatma Ana Bilgisayarı",
   "Frontend build date": "Ön uç oluşturma tarihi",
   "No results": "Sonuç yok",
+  "Stop recording": "Kaydı durdur",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Zaten çalışan bir iş var. Lütfen bitene kadar bekleyin.",

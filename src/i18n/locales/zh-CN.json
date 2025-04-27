@@ -136,6 +136,7 @@
   "Shutdown Host": "关闭主机",
   "Frontend build date": "前端构建日期",
   "No results": "没有结果",
+  "Stop recording": "停止录音",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": ":hourglass_don：作业已经在运行。请等待，直到完成。",
@@ -145,7 +146,7 @@
       "service_disabled": "已禁用此可知性！请在管理员配置中启用它后再使用。",
       "quota_exceeded": "{action_name} 超出配额 ({quota} 上限)。",
       "blocked_request_ignored": "尚未准备好，请再等 {remaining_s}秒后再试。",
-      "process_started": "{action_name} 开始了",
+      "process_started": "{action_name} 开始了。",
       "process_failed": ":pensive_face：处理操作时出错。请再试一次。",
       "quota_notification": "{action_name} 配额为 {current_shares} of {quota}"
     }

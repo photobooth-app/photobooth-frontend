@@ -136,6 +136,7 @@
   "Shutdown Host": "Host afsluiten",
   "Frontend build date": "Aanmaakdatum frontend",
   "No results": "Geen resultaten gevonden",
+  "Stop recording": "Stop met opnemen",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Er is al een taak actief. Wacht tot het klaar is.",

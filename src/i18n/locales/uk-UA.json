@@ -136,6 +136,7 @@
   "Shutdown Host": "Завершення війська",
   "Frontend build date": "Дата збірки на сайті",
   "No results": "Немає результатів",
+  "Stop recording": "Зупинити запис",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": ":hourglass_don: Завдання вже виконується. Будь ласка, зачекайте поки воно закінчиться.",

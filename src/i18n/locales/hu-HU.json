@@ -136,6 +136,7 @@
   "Shutdown Host": "Shutdown Host",
   "Frontend build date": "Frontend építési dátuma",
   "No results": "Nincs eredmény",
+  "Stop recording": "Felvétel leállítása",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Már fut egy munka. Kérjük, várjon, amíg befejeződik.",

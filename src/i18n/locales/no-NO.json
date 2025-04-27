@@ -136,6 +136,7 @@
   "Shutdown Host": "Avslutt vert",
   "Frontend build date": "byggedato for brukersiden",
   "No results": "Ingen resultater",
+  "Stop recording": "Stopp opptak",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Det er allerede en jobb som utføres. Vennligst vent til det er ferdig.",

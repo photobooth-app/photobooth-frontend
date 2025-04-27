@@ -136,6 +136,7 @@
   "Shutdown Host": "シャットダウンホスト",
   "Frontend build date": "Frontend build date",
   "No results": "結果がありません",
+  "Stop recording": "録音を停止",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ すでにジョブが実行されています。完了するまでお待ちください。",

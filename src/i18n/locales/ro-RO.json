@@ -136,6 +136,7 @@
   "Shutdown Host": "Gazdă de oprire",
   "Frontend build date": "Data construirii frontend",
   "No results": "Niciun rezultat",
+  "Stop recording": "Oprește înregistrarea",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Deja se execută o sarcină. Vă rugăm așteptați până se termină.",

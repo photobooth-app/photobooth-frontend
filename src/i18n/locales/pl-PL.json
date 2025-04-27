@@ -136,6 +136,7 @@
   "Shutdown Host": "Host wyłączenia",
   "Frontend build date": "Data kompilacji witryny",
   "No results": "Brak wyników",
+  "Stop recording": "Zatrzymaj nagrywanie",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Praca jest już uruchomiona. Poczekaj aż zakończy.",

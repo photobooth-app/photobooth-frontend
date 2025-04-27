@@ -127,7 +127,7 @@
   "Apply": "Anwenden",
   "You sure to reload the services?": "Bist du sicher, dass du den Dienst neu laden möchtest?",
   "restart systemctl service": "systemctl Service neu starten",
-  "uninstall systemctl service": "systemctl-Dienst deinstallieren",
+  "uninstall systemctl service": "systemctl Service deinstallieren",
   "install systemctl service": "systemctl Service installieren",
   "Systemctl (Linux only)": "systemctl (nur Linux)",
   "Reload services": "Dienste neu laden",
@@ -136,6 +136,7 @@
   "Shutdown Host": "Host herunterfahren",
   "Frontend build date": "Frontend Build-Datum",
   "No results": "Keine Ergebnisse",
+  "Stop recording": "Aufnahme stoppen",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Es läuft bereits ein Job. Bitte warte, bis er fertig ist.",

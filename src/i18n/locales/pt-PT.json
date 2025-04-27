@@ -136,6 +136,7 @@
   "Shutdown Host": "Host do Desligamento",
   "Frontend build date": "Data de compilação do Frontend",
   "No results": "Nenhum resultado",
+  "Stop recording": "Parar gravação",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Já existe um trabalho em execução. Por favor, aguarde até que ele termine.",

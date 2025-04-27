@@ -136,6 +136,7 @@
   "Shutdown Host": "Stäng av Värd",
   "Frontend build date": "Frontend byggdatum",
   "No results": "Inga resultat",
+  "Stop recording": "Stoppa inspelning",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Det är redan ett jobb igång. Vänta tills det är klart.",

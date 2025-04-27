@@ -136,6 +136,7 @@
   "Shutdown Host": "Arresto Host",
   "Frontend build date": "Data di compilazione Frontend",
   "No results": "Nessun risultato",
+  "Stop recording": "Interrompi registrazione",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ C'è già un job in esecuzione. Attendere che finisca.",

@@ -136,6 +136,7 @@
   "Shutdown Host": "Sammuta Isäntä",
   "Frontend build date": "Julkisivun rakennuspäivämäärä",
   "No results": "Ei tuloksia",
+  "Stop recording": "Lopeta nauhoitus",
   "translatedFrontendNotifications": {
     "processing": {
       "machine_occupied": "⌛ Työtä on jo käynnissä. Odota kunnes se on valmis.",
