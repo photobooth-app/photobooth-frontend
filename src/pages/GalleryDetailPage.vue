@@ -142,7 +142,7 @@ const currentMediaitem = computed(() => {
 const qrShareUrl = computed(() => {
   if (configurationStore.configuration.qrshare.enabled) {
     const qrShareServiceUrl = configurationStore.configuration.qrshare.shareservice_url
-    return `${qrShareServiceUrl}?action=download&id=${selectedMediaitemId.value}`
+    return `${qrShareServiceUrl}#/?url=${encodeURIComponent(`dl.php?action=download&id=${selectedMediaitemId.value}`)}`
   } else {
     const customUrl = configurationStore.configuration.qrshare.share_custom_qr_url
 
