@@ -31,9 +31,10 @@
 
           <q-page-sticky position="top-right" class="q-ma-lg" v-if="configurationStore.configuration.uisettings.gallery_show_qrcode">
             <PageQrCode
-              :url="qrShareUrl"
+              :urls="qrShareUrls"
               :text-above="configurationStore.configuration.uisettings.qrcode_text_above"
               :text-below="configurationStore.configuration.uisettings.qrcode_text_below"
+              :linkQrCodes="configurationStore.configuration.uisettings.qrcode_link_codes"
             />
           </q-page-sticky>
 
@@ -103,6 +104,7 @@ import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
 import { remoteProcedureCall, _fetch } from '../util/fetch_api.js'
 import { default as ReturnButton } from '../components/ReturnButton.vue'
 import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
+import { watchDebounced } from '@vueuse/core'
 
 const $q = useQuasar()
 const route = useRoute()
@@ -116,6 +118,7 @@ const displayIndeterminateProgressbar = ref(false)
 const showDialogShareActionWithParameters = ref(false)
 const shareActionWithParametersConfigIndex = ref(0)
 const available_filter = ref([])
+const qrShareUrls = ref([])
 const props = defineProps<{
   startTimer: boolean
   forceShowDeleteButton?: boolean
@@ -139,19 +142,23 @@ const currentMediaitem = computed(() => {
   return getMediaitemById(selectedMediaitemId.value)
 })
 
-const qrShareUrl = computed(() => {
-  if (configurationStore.configuration.qrshare.enabled) {
-    const qrShareServiceUrl = configurationStore.configuration.qrshare.shareservice_url
-    return `${qrShareServiceUrl}#/?url=${encodeURIComponent(`dl.php?action=download&id=${selectedMediaitemId.value}`)}`
-  } else {
-    const customUrl = configurationStore.configuration.qrshare.share_custom_qr_url
+watchDebounced(
+  selectedMediaitemId,
+  async () => {
+    try {
+      const response = await _fetch(`/api/share/download/${selectedMediaitemId.value}`)
+      if (!response.ok) {
+        throw `Error: ${response.status} ${response.statusText}`
+      }
+      qrShareUrls.value = await response.json()
+      console.log(qrShareUrls.value)
+    } catch (error) {
+      console.warn(error)
+    }
+  },
 
-    // get filename from processed/unprocessed path. Could be improved in future, when the backend delivers the actual filename
-    const getFileName = (filepath: string) => filepath.split(/[\\/]/).pop()
-
-    return customUrl.replace('{filename}', getFileName(currentMediaitem.value.processed)).replace('{identifier}', selectedMediaitemId.value)
-  }
-})
+  { debounce: 600 },
+)
 
 const currentMediaitemNumber = computed(() => {
   return mediacollectionStore.collection.findIndex((mediaitem) => mediaitem.id == selectedMediaitemId.value) + 1
