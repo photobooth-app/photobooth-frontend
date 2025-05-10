@@ -319,6 +319,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/share/download/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Download Item Id Get Sharelinks */
+        get: operations["api_download_item_id_get_sharelinks_api_share_download__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/sse": {
         parameters: {
             query?: never;
@@ -758,13 +775,14 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Api Getitems */
-        get: operations["api_getitems_media__dimension___mediaitem_id__get"];
+        /** Api Getitems Get */
+        get: operations["api_getitems_get_media__dimension___mediaitem_id__get"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
-        head?: never;
+        /** Api Getitems Head */
+        head: operations["api_getitems_head_media__dimension___mediaitem_id__head"];
         patch?: never;
         trace?: never;
     };
@@ -912,13 +930,13 @@ export interface components {
              *             "fill_background_enable": false,
              *             "image_filter": "original",
              *             "img_background_enable": true,
-             *             "img_background_file": "userdata\\demoassets\\backgrounds\\pink-7761356_1920.jpg",
+             *             "img_background_file": "userdata/demoassets/backgrounds/pink-7761356_1920.jpg",
              *             "img_frame_enable": true,
-             *             "img_frame_file": "userdata\\demoassets\\frames\\frame_image_photobooth-app.png",
+             *             "img_frame_file": "userdata/demoassets/frames/frame_image_photobooth-app.png",
              *             "texts": [
              *               {
              *                 "color": "#333",
-             *                 "font": "userdata\\demoassets\\fonts\\Roboto-Bold.ttf",
+             *                 "font": "userdata/demoassets/fonts/Roboto-Bold.ttf",
              *                 "font_size": 30,
              *                 "pos_x": 1300,
              *                 "pos_y": 1250,
@@ -962,11 +980,11 @@ export interface components {
              *             "canvas_height": 1280,
              *             "canvas_img_background_enable": false,
              *             "canvas_img_front_enable": true,
-             *             "canvas_img_front_file": "userdata\\demoassets\\frames\\pixabay-poster-2871536_1920.png",
+             *             "canvas_img_front_file": "userdata/demoassets/frames/pixabay-poster-2871536_1920.png",
              *             "canvas_texts": [
              *               {
              *                 "color": "#333",
-             *                 "font": "userdata\\demoassets\\fonts\\Roboto-Bold.ttf",
+             *                 "font": "userdata/demoassets/fonts/Roboto-Bold.ttf",
              *                 "font_size": 40,
              *                 "pos_x": 200,
              *                 "pos_y": 1100,
@@ -995,7 +1013,7 @@ export interface components {
              *                 "image_filter": "original",
              *                 "pos_x": 705,
              *                 "pos_y": 66,
-             *                 "predefined_image": "userdata\\demoassets\\predefined_images\\photobooth-collage-predefined-image.png",
+             *                 "predefined_image": "userdata/demoassets/predefined_images/photobooth-collage-predefined-image.png",
              *                 "rotate": 0,
              *                 "width": 510
              *               },
@@ -1061,7 +1079,7 @@ export interface components {
              *               {
              *                 "duration": 4000,
              *                 "image_filter": "original",
-             *                 "predefined_image": "userdata\\demoassets\\predefined_images\\photobooth-gif-animation-predefined-image.png"
+             *                 "predefined_image": "userdata/demoassets/predefined_images/photobooth-gif-animation-predefined-image.png"
              *               }
              *             ]
              *           },
@@ -1091,6 +1109,7 @@ export interface components {
              *           "name": "default action",
              *           "processing": {
              *             "boomerang": true,
+             *             "boomerang_speed": 2,
              *             "video_duration": 5,
              *             "video_framerate": 15
              *           },
@@ -1106,7 +1125,7 @@ export interface components {
              *               "custom_color": "#196cb0",
              *               "icon": "movie",
              *               "show_button": true,
-             *               "title": "Video",
+             *               "title": "Boomerang",
              *               "use_custom_color": false
              *             }
              *           }
@@ -1272,7 +1291,8 @@ export interface components {
              *       "enabled": false,
              *       "shareservice_url": "https://photobooth-app.org/extras/shareservice-landing/",
              *       "shareservice_apikey": "changedefault!",
-             *       "share_custom_qr_url": "http://localhost:8000/media/full/{identifier}"
+             *       "enabled_custom": false,
+             *       "share_custom_qr_url": "http://michael-MINIPC-PN52:8000/download/#?url=http://michael-MINIPC-PN52:8000/media/full/{identifier}"
              *     } */
             qrshare: components["schemas"]["GroupQrShare"];
             /** @default {
@@ -1286,7 +1306,7 @@ export interface components {
              *       "preview_still_length": 1200,
              *       "thumbnail_still_length": 400,
              *       "video_bitrate": 3000,
-             *       "video_compatibility_mode": false,
+             *       "video_compatibility_mode": true,
              *       "removechromakey_enable": false,
              *       "removechromakey_keycolor": 110,
              *       "removechromakey_tolerance": 10
@@ -1294,7 +1314,7 @@ export interface components {
             mediaprocessing: components["schemas"]["GroupMediaprocessing"];
             /** @default {
              *       "PRIMARY_COLOR": "#196cb0",
-             *       "SECONDARY_COLOR": "#b8124f",
+             *       "SECONDARY_COLOR": "#4283b8",
              *       "theme": "system",
              *       "show_gallery_on_frontpage": true,
              *       "show_admin_on_frontpage": true,
@@ -1307,7 +1327,7 @@ export interface components {
              *       "livestream_mirror_effect": true,
              *       "livestream_blurredbackground": true,
              *       "enable_livestream_frameoverlay": true,
-             *       "livestream_frameoverlay_image": "userdata\\demoassets\\frames\\frame_image_photobooth-app.png",
+             *       "livestream_frameoverlay_image": "userdata/demoassets/frames/frame_image_photobooth-app.png",
              *       "livestream_frameoverlay_mirror_effect": false,
              *       "FRONTPAGE_TEXT": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Hey!<br>Let's take some pictures! <br>📷</div>",
              *       "TAKEPIC_MSG_TIME": 0.5,
@@ -1317,6 +1337,7 @@ export interface components {
              *       "gallery_show_qrcode": true,
              *       "qrcode_text_above": "👋 Download your photo!",
              *       "qrcode_text_below": "Scan above code with your phone.",
+             *       "qrcode_link_codes": false,
              *       "gallery_show_filter": true,
              *       "gallery_show_download": true,
              *       "gallery_show_delete": true,
@@ -1332,11 +1353,33 @@ export interface components {
              *       "index_backend_multicam": 0,
              *       "group_backends": [
              *         {
-             *           "digicamcontrol": {
-             *             "base_url": "http://127.0.0.1:5513",
-             *             "orientation": "1: 0°"
-             *           },
              *           "enabled": true,
+             *           "gphoto2": {
+             *             "canon_eosmoviemode": false,
+             *             "disable_viewfinder_before_capture": true,
+             *             "gcapture_target": "",
+             *             "iso_capture": "",
+             *             "iso_liveview": "",
+             *             "orientation": "1: 0°",
+             *             "shutter_speed_capture": "",
+             *             "shutter_speed_liveview": ""
+             *           },
+             *           "picamera2": {
+             *             "CAPTURE_CAM_RESOLUTION_HEIGHT": 2592,
+             *             "CAPTURE_CAM_RESOLUTION_WIDTH": 4608,
+             *             "LIVEVIEW_RESOLUTION_HEIGHT": 648,
+             *             "LIVEVIEW_RESOLUTION_WIDTH": 1152,
+             *             "PREVIEW_CAM_RESOLUTION_HEIGHT": 1296,
+             *             "PREVIEW_CAM_RESOLUTION_WIDTH": 2304,
+             *             "camera_num": 0,
+             *             "frame_skip_count": 2,
+             *             "framerate_still_mode": 10,
+             *             "framerate_video_mode": 25,
+             *             "optimized_lowlight_short_exposure": false,
+             *             "orientation": "1: 0°",
+             *             "original_still_quality": 90,
+             *             "videostream_quality": "MEDIUM"
+             *           },
              *           "selected_device": "VirtualCamera",
              *           "virtualcamera": {
              *             "emulate_hires_static_still": false,
@@ -1345,12 +1388,24 @@ export interface components {
              *             "orientation": "1: 0°"
              *           },
              *           "webcampyav": {
+             *             "cam_framerate": 0,
              *             "cam_resolution_height": 2160,
              *             "cam_resolution_width": 3840,
              *             "device_identifier": "Insta360 Link 2C",
              *             "frame_skip_count": 3,
              *             "orientation": "1: 0°",
              *             "preview_resolution_reduce_factor": 2
+             *           },
+             *           "webcamv4l": {
+             *             "CAM_RESOLUTION_HEIGHT": 480,
+             *             "CAM_RESOLUTION_WIDTH": 640,
+             *             "HIRES_CAM_RESOLUTION_HEIGHT": 3104,
+             *             "HIRES_CAM_RESOLUTION_WIDTH": 4192,
+             *             "device_identifier": "0",
+             *             "flush_number_frames_after_switch": 2,
+             *             "orientation": "1: 0°",
+             *             "pixel_format_fourcc": "MJPG",
+             *             "switch_to_high_resolution_for_stills": true
              *           },
              *           "wigglecam": {
              *             "index_cam_stills": 0,
@@ -1371,7 +1426,10 @@ export interface components {
              *       "keyboard_input_enabled": false,
              *       "gpio_enabled": false,
              *       "gpio_pin_shutdown": 17,
-             *       "gpio_pin_reboot": 18
+             *       "gpio_pin_reboot": 18,
+             *       "gpio_pin_job_next": 27,
+             *       "gpio_pin_job_reject": 22,
+             *       "gpio_pin_job_abort": 20
              *     } */
             hardwareinputoutput: components["schemas"]["GroupHardwareInputOutput"];
             /** @default {
@@ -1612,13 +1670,13 @@ export interface components {
              *           "fill_background_enable": false,
              *           "image_filter": "original",
              *           "img_background_enable": true,
-             *           "img_background_file": "userdata\\demoassets\\backgrounds\\pink-7761356_1920.jpg",
+             *           "img_background_file": "userdata/demoassets/backgrounds/pink-7761356_1920.jpg",
              *           "img_frame_enable": true,
-             *           "img_frame_file": "userdata\\demoassets\\frames\\frame_image_photobooth-app.png",
+             *           "img_frame_file": "userdata/demoassets/frames/frame_image_photobooth-app.png",
              *           "texts": [
              *             {
              *               "color": "#333",
-             *               "font": "userdata\\demoassets\\fonts\\Roboto-Bold.ttf",
+             *               "font": "userdata/demoassets/fonts/Roboto-Bold.ttf",
              *               "font_size": 30,
              *               "pos_x": 1300,
              *               "pos_y": 1250,
@@ -1667,11 +1725,11 @@ export interface components {
              *           "canvas_height": 1280,
              *           "canvas_img_background_enable": false,
              *           "canvas_img_front_enable": true,
-             *           "canvas_img_front_file": "userdata\\demoassets\\frames\\pixabay-poster-2871536_1920.png",
+             *           "canvas_img_front_file": "userdata/demoassets/frames/pixabay-poster-2871536_1920.png",
              *           "canvas_texts": [
              *             {
              *               "color": "#333",
-             *               "font": "userdata\\demoassets\\fonts\\Roboto-Bold.ttf",
+             *               "font": "userdata/demoassets/fonts/Roboto-Bold.ttf",
              *               "font_size": 40,
              *               "pos_x": 200,
              *               "pos_y": 1100,
@@ -1700,7 +1758,7 @@ export interface components {
              *               "image_filter": "original",
              *               "pos_x": 705,
              *               "pos_y": 66,
-             *               "predefined_image": "userdata\\demoassets\\predefined_images\\photobooth-collage-predefined-image.png",
+             *               "predefined_image": "userdata/demoassets/predefined_images/photobooth-collage-predefined-image.png",
              *               "rotate": 0,
              *               "width": 510
              *             },
@@ -1771,7 +1829,7 @@ export interface components {
              *             {
              *               "duration": 4000,
              *               "image_filter": "original",
-             *               "predefined_image": "userdata\\demoassets\\predefined_images\\photobooth-gif-animation-predefined-image.png"
+             *               "predefined_image": "userdata/demoassets/predefined_images/photobooth-gif-animation-predefined-image.png"
              *             }
              *           ]
              *         },
@@ -1806,6 +1864,7 @@ export interface components {
              *         },
              *         "processing": {
              *           "boomerang": true,
+             *           "boomerang_speed": 2,
              *           "video_duration": 5,
              *           "video_framerate": 15
              *         },
@@ -1821,7 +1880,7 @@ export interface components {
              *             "custom_color": "#196cb0",
              *             "icon": "movie",
              *             "show_button": true,
-             *             "title": "Video",
+             *             "title": "Boomerang",
              *             "use_custom_color": false
              *           }
              *         }
@@ -1885,7 +1944,7 @@ export interface components {
              * @default VirtualCamera
              * @enum {string}
              */
-            selected_device: "VirtualCamera" | "WebcamPyav" | "Wigglecam" | "Digicamcontrol";
+            selected_device: "VirtualCamera" | "WebcamPyav" | "Wigglecam" | "Picamera2" | "WebcamV4l" | "Gphoto2";
             /** @default {
              *       "orientation": "1: 0°",
              *       "framerate": 15,
@@ -1898,6 +1957,7 @@ export interface components {
              *       "device_identifier": "Insta360 Link 2C",
              *       "cam_resolution_width": 3840,
              *       "cam_resolution_height": 2160,
+             *       "cam_framerate": 0,
              *       "preview_resolution_reduce_factor": 2,
              *       "frame_skip_count": 3
              *     } */
@@ -1916,12 +1976,47 @@ export interface components {
             wigglecam: components["schemas"]["GroupBackendWigglecam"];
             /** @default {
              *       "orientation": "1: 0°",
-             *       "base_url": "http://127.0.0.1:5513"
+             *       "camera_num": 0,
+             *       "CAPTURE_CAM_RESOLUTION_WIDTH": 4608,
+             *       "CAPTURE_CAM_RESOLUTION_HEIGHT": 2592,
+             *       "PREVIEW_CAM_RESOLUTION_WIDTH": 2304,
+             *       "PREVIEW_CAM_RESOLUTION_HEIGHT": 1296,
+             *       "LIVEVIEW_RESOLUTION_WIDTH": 1152,
+             *       "LIVEVIEW_RESOLUTION_HEIGHT": 648,
+             *       "framerate_still_mode": 10,
+             *       "framerate_video_mode": 25,
+             *       "frame_skip_count": 2,
+             *       "optimized_lowlight_short_exposure": false,
+             *       "videostream_quality": "MEDIUM",
+             *       "original_still_quality": 90
              *     } */
-            digicamcontrol: components["schemas"]["GroupBackendDigicamcontrol"];
+            picamera2: components["schemas"]["GroupBackendPicamera2"];
+            /** @default {
+             *       "orientation": "1: 0°",
+             *       "device_identifier": "0",
+             *       "pixel_format_fourcc": "MJPG",
+             *       "CAM_RESOLUTION_WIDTH": 640,
+             *       "CAM_RESOLUTION_HEIGHT": 480,
+             *       "switch_to_high_resolution_for_stills": true,
+             *       "HIRES_CAM_RESOLUTION_WIDTH": 4192,
+             *       "HIRES_CAM_RESOLUTION_HEIGHT": 3104,
+             *       "flush_number_frames_after_switch": 2
+             *     } */
+            webcamv4l: components["schemas"]["GroupBackendV4l2"];
+            /** @default {
+             *       "orientation": "1: 0°",
+             *       "gcapture_target": "",
+             *       "disable_viewfinder_before_capture": true,
+             *       "iso_liveview": "",
+             *       "iso_capture": "",
+             *       "shutter_speed_liveview": "",
+             *       "shutter_speed_capture": "",
+             *       "canon_eosmoviemode": false
+             *     } */
+            gphoto2: components["schemas"]["GroupBackendGphoto2"];
         };
-        /** Digicamcontrol */
-        GroupBackendDigicamcontrol: {
+        /** Gphoto2 */
+        GroupBackendGphoto2: {
             /**
              * Orientation
              * @description Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
@@ -1930,11 +2025,136 @@ export interface components {
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
             /**
-             * Base Url
-             * @description Base URL used to connect to the host running the digicamcontrol software. Usually photobooth-app and digicamcontrol are on the same computer and no adjustmend needed.
-             * @default http://127.0.0.1:5513
+             * Gcapture Target
+             * @description Set capture target (examples: 'Internal RAM', 'Memory card'). To keep images, capture to a disk target. Empty means default of camera (mostly RAM).
+             * @default
              */
-            base_url: string;
+            gcapture_target: string;
+            /**
+             * Disable Viewfinder Before Capture
+             * @description Disable viewfinder before capture might speed up following capture autofocus. Might not work with every camera.
+             * @default true
+             */
+            disable_viewfinder_before_capture: boolean;
+            /**
+             * Iso Liveview
+             * @description Sets the ISO for when the photobooth is in live preview modus. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. Only works when the camera is in manual. (Example Values: Auto, 100, 200, ...)
+             * @default
+             */
+            iso_liveview: string;
+            /**
+             * Iso Capture
+             * @description Sets the ISO for when the photobooth captures a photo. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. Only works when the camera is in manual. (Example Values: Auto, 100, 200, ...)
+             * @default
+             */
+            iso_capture: string;
+            /**
+             * Shutter Speed Liveview
+             * @description Sets the shutter speed for the camera during the photobooth's live preview mode. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. This setting is effective only when the camera is in manual mode. (Example Values: 1, 1/5, 1/20, 1/30, 1/60, 1/1000, 1/4000, ...) Choose a very high default shutter speed in combination with Auto iso to emulate auto exposure.
+             * @default
+             */
+            shutter_speed_liveview: string;
+            /**
+             * Shutter Speed Capture
+             * @description Configures the shutter speed for the camera at the time of capturing a photo in the photobooth. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. Operational only in manual mode. (Example Values: 1/60, 1/320, 1/1000, 1/2000, 1/4000, ...)
+             * @default
+             */
+            shutter_speed_capture: string;
+            /**
+             * Canon Eosmoviemode
+             * @description Canon specific. Switch on/off eosmoviemode when streaming videos. Might not work with every camera.
+             * @default false
+             */
+            canon_eosmoviemode: boolean;
+        };
+        /** Picamera2 */
+        GroupBackendPicamera2: {
+            /**
+             * Orientation
+             * @description Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
+             * @default 1: 0°
+             * @enum {string}
+             */
+            orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * Camera Num
+             * @description Camera number. Usually 0 or 1.
+             * @default 0
+             */
+            camera_num: number;
+            /**
+             * Capture Cam Resolution Width
+             * @description camera resolution width to capture high resolution photo
+             * @default 4608
+             */
+            CAPTURE_CAM_RESOLUTION_WIDTH: number;
+            /**
+             * Capture Cam Resolution Height
+             * @description camera resolution height to capture high resolution photo
+             * @default 2592
+             */
+            CAPTURE_CAM_RESOLUTION_HEIGHT: number;
+            /**
+             * Preview Cam Resolution Width
+             * @description camera resolution width to capture live video
+             * @default 2304
+             */
+            PREVIEW_CAM_RESOLUTION_WIDTH: number;
+            /**
+             * Preview Cam Resolution Height
+             * @description camera resolution height to capture live video
+             * @default 1296
+             */
+            PREVIEW_CAM_RESOLUTION_HEIGHT: number;
+            /**
+             * Liveview Resolution Width
+             * @description actual resolution width for liveview stream
+             * @default 1152
+             */
+            LIVEVIEW_RESOLUTION_WIDTH: number;
+            /**
+             * Liveview Resolution Height
+             * @description actual resolution height for liveview stream
+             * @default 648
+             */
+            LIVEVIEW_RESOLUTION_HEIGHT: number;
+            /**
+             * Framerate Still Mode
+             * @description Reduce the framerate to save cpu/gpu on device displaying the live preview
+             * @default 10
+             */
+            framerate_still_mode: number;
+            /**
+             * Framerate Video Mode
+             * @description Reduce the framerate to save cpu/gpu on device displaying the live preview
+             * @default 25
+             */
+            framerate_video_mode: number;
+            /**
+             * Frame Skip Count
+             * @description Reduce the framerate_video_mode by frame_skip_count to save cpu/gpu on producing device as well as client devices. Choose 1 to emit every produced frame.
+             * @default 2
+             */
+            frame_skip_count: number;
+            /**
+             * Optimized Lowlight Short Exposure
+             * @description Raise AnalogueGain(=ISO) preferred before longer shutter times to avoid unsharp capture of moving people.
+             * @default false
+             */
+            optimized_lowlight_short_exposure: boolean;
+            /**
+             * Videostream Quality
+             * @description Lower quality results in less data to be transferred and may reduce load on devices.
+             * @default MEDIUM
+             * @enum {string}
+             */
+            videostream_quality: "VERY_LOW" | "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
+            /**
+             * Original Still Quality
+             * @description Picamera produces original files, this is the quality for the JPG.
+             * @default 90
+             */
+            original_still_quality: number;
         };
         /** PyAV */
         GroupBackendPyav: {
@@ -1964,6 +2184,12 @@ export interface components {
              */
             cam_resolution_height: number;
             /**
+             * Cam Framerate
+             * @description Camera capture framerate. If 0, the cameras default is used. 25 or 30 are framerates likely to work.
+             * @default 0
+             */
+            cam_framerate: number;
+            /**
              * Preview Resolution Reduce Factor
              * @description Reduce the video and permanent livestream by this factor. Raise the factor to save CPU.
              * @default 2
@@ -1976,6 +2202,65 @@ export interface components {
              * @default 3
              */
             frame_skip_count: number;
+        };
+        /** V4l2 */
+        GroupBackendV4l2: {
+            /**
+             * Orientation
+             * @description Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
+             * @default 1: 0°
+             * @enum {string}
+             */
+            orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * Device Identifier
+             * @description Device identifier (index 0 or 1 or /dev/xxx) of webcam.
+             * @default 0
+             */
+            device_identifier: string;
+            /**
+             * Pixel Format Fourcc
+             * @description MJPG is preferred usually. Some cameras (especially virtual cameras) do not support MJPG, so you can fall back to uncompressed YUYV here.
+             * @default MJPG
+             * @enum {string}
+             */
+            pixel_format_fourcc: "MJPG" | "YUYV";
+            /**
+             * Cam Resolution Width
+             * @description Camera resolution width in normal mode for preview and videos. Low resolution recommended to save resources.
+             * @default 640
+             */
+            CAM_RESOLUTION_WIDTH: number;
+            /**
+             * Cam Resolution Height
+             * @description Camera resolution width in normal mode for preview and videos. Low resolution recommended to save resources.
+             * @default 480
+             */
+            CAM_RESOLUTION_HEIGHT: number;
+            /**
+             * Switch To High Resolution For Stills
+             * @description Enable to close camera, switch to higher resolution and grab one frame with below configuration. Resolution used for stills.
+             * @default true
+             */
+            switch_to_high_resolution_for_stills: boolean;
+            /**
+             * Hires Cam Resolution Width
+             * @description camera resolution width to capture high resolution photo
+             * @default 4192
+             */
+            HIRES_CAM_RESOLUTION_WIDTH: number;
+            /**
+             * Hires Cam Resolution Height
+             * @description camera resolution height to capture high resolution photo
+             * @default 3104
+             */
+            HIRES_CAM_RESOLUTION_HEIGHT: number;
+            /**
+             * Flush Number Frames After Switch
+             * @description After switching the format, to high resolution, the camera might need some frames to accomodate to the light again. Use the lowest numer of frames that gives the same image as before in preview mode. If too low, images might apper darker or lighter than expected.
+             * @default 2
+             */
+            flush_number_frames_after_switch: number;
         };
         /** VirtualCamera */
         GroupBackendVirtualcamera: {
@@ -2091,6 +2376,7 @@ export interface components {
              *           "orientation": "1: 0°"
              *         },
              *         "webcampyav": {
+             *           "cam_framerate": 0,
              *           "cam_resolution_height": 2160,
              *           "cam_resolution_width": 3840,
              *           "device_identifier": "Insta360 Link 2C",
@@ -2109,9 +2395,42 @@ export interface components {
              *             }
              *           ]
              *         },
-             *         "digicamcontrol": {
-             *           "base_url": "http://127.0.0.1:5513",
-             *           "orientation": "1: 0°"
+             *         "picamera2": {
+             *           "CAPTURE_CAM_RESOLUTION_HEIGHT": 2592,
+             *           "CAPTURE_CAM_RESOLUTION_WIDTH": 4608,
+             *           "LIVEVIEW_RESOLUTION_HEIGHT": 648,
+             *           "LIVEVIEW_RESOLUTION_WIDTH": 1152,
+             *           "PREVIEW_CAM_RESOLUTION_HEIGHT": 1296,
+             *           "PREVIEW_CAM_RESOLUTION_WIDTH": 2304,
+             *           "camera_num": 0,
+             *           "frame_skip_count": 2,
+             *           "framerate_still_mode": 10,
+             *           "framerate_video_mode": 25,
+             *           "optimized_lowlight_short_exposure": false,
+             *           "orientation": "1: 0°",
+             *           "original_still_quality": 90,
+             *           "videostream_quality": "MEDIUM"
+             *         },
+             *         "webcamv4l": {
+             *           "CAM_RESOLUTION_HEIGHT": 480,
+             *           "CAM_RESOLUTION_WIDTH": 640,
+             *           "HIRES_CAM_RESOLUTION_HEIGHT": 3104,
+             *           "HIRES_CAM_RESOLUTION_WIDTH": 4192,
+             *           "device_identifier": "0",
+             *           "flush_number_frames_after_switch": 2,
+             *           "orientation": "1: 0°",
+             *           "pixel_format_fourcc": "MJPG",
+             *           "switch_to_high_resolution_for_stills": true
+             *         },
+             *         "gphoto2": {
+             *           "canon_eosmoviemode": false,
+             *           "disable_viewfinder_before_capture": true,
+             *           "gcapture_target": "",
+             *           "iso_capture": "",
+             *           "iso_liveview": "",
+             *           "orientation": "1: 0°",
+             *           "shutter_speed_capture": "",
+             *           "shutter_speed_liveview": ""
              *         }
              *       }
              *     ]
@@ -2191,6 +2510,24 @@ export interface components {
              * @default 18
              */
             gpio_pin_reboot: number;
+            /**
+             * Gpio Pin Job Next
+             * @description If a job is active, this pin is used to confirm/continue the job process if manual input is required for example to approve.
+             * @default 27
+             */
+            gpio_pin_job_next: number;
+            /**
+             * Gpio Pin Job Reject
+             * @description If a job is active, this pin is used to reject a capture during approval.
+             * @default 22
+             */
+            gpio_pin_job_reject: number;
+            /**
+             * Gpio Pin Job Abort
+             * @description If a job is active, this pin is used to abort the job.
+             * @default 20
+             */
+            gpio_pin_job_abort: number;
         };
         /**
          * Process media after capture
@@ -2229,8 +2566,8 @@ export interface components {
             video_bitrate: number;
             /**
              * Video Compatibility Mode
-             * @description Enable for improved video compatibility on iOS devices. Might reduce resulting quality slightly.
-             * @default false
+             * @description Enable for improved video compatibility on iOS devices and Firefox. Might reduce resulting quality slightly.
+             * @default true
              */
             video_compatibility_mode: boolean;
             /**
@@ -2288,9 +2625,15 @@ export interface components {
              */
             shareservice_apikey: string;
             /**
+             * Enabled Custom
+             * @description Enable qr share service. To enable URL needs to be configured and dl.php script setup properly.
+             * @default false
+             */
+            enabled_custom: boolean;
+            /**
              * Share Custom Qr Url
              * @description URL displayed as QR code to image for download. Need you to sync the files on your own or allow the user to access via hotspot. {identifier} is replaced by the actual item's id, {filename} is replaced by the actual filename on the photobooth-data, in QR code.
-             * @default http://localhost:8000/media/full/{identifier}
+             * @default http://michael-MINIPC-PN52:8000/download/#?url=http://michael-MINIPC-PN52:8000/media/full/{identifier}
              */
             share_custom_qr_url: string;
         };
@@ -2445,8 +2788,8 @@ export interface components {
             /**
              * Secondary Color
              * Format: color
-             * @description Secondary color (admin interface, accents).
-             * @default #b8124f
+             * @description Secondary color (countdown, accents).
+             * @default #4283b8
              */
             SECONDARY_COLOR: string;
             /**
@@ -2525,8 +2868,9 @@ export interface components {
             /**
              * Livestream Frameoverlay Image
              * @description When enabled, the frame is overlayed the livestream. This image is not used in the postprocessing. If mirroreffect is on, it will also be mirrored. Text in the frame appears in the wrong direction but the final image is correct.
+             * @default userdata/demoassets/frames/frame_image_photobooth-app.png
              */
-            livestream_frameoverlay_image?: string | null;
+            livestream_frameoverlay_image: string | null;
             /**
              * Livestream Frameoverlay Mirror Effect
              * @description Flip the frame overlaid horizontally to create a mirror effect. Useful to flip also if video is flipped when people shall align to the frame. If there is text in the frame it's also mirrored.
@@ -2581,6 +2925,12 @@ export interface components {
              * @default Scan above code with your phone.
              */
             qrcode_text_below: string;
+            /**
+             * Qrcode Link Codes
+             * @description Clickable link is added to the QR code itself. This can be helpful for testing but should be disabled on a production system to avoid users escape out of the app.
+             * @default false
+             */
+            qrcode_link_codes: boolean;
             /**
              * Gallery Show Filter
              * @description Show filter provided by plugins. Pilgram2 filter are included in the app. See documentation to extend and build your own plugin.
@@ -2996,8 +3346,11 @@ export interface components {
              * @default 40
              */
             font_size: number;
-            /** Font */
-            font?: string | null;
+            /**
+             * Font
+             * @default userdata/demoassets/fonts/Roboto-Bold.ttf
+             */
+            font: string | null;
             /**
              * Color
              * Format: color
@@ -3132,6 +3485,12 @@ export interface components {
              * @default false
              */
             boomerang: boolean;
+            /**
+             * Boomerang Speed
+             * @description Speed up the resulting boomerang. 1 is normal speed, 2 is double.
+             * @default 1
+             */
+            boomerang_speed: number;
             /**
              * Video Framerate
              * @description Video framerate (frames per second).
@@ -3697,6 +4056,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    api_download_item_id_get_sharelinks_api_share_download__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
                 };
             };
             /** @description Validation Error */
@@ -4425,7 +4815,39 @@ export interface operations {
             };
         };
     };
-    api_getitems_media__dimension___mediaitem_id__get: {
+    api_getitems_get_media__dimension___mediaitem_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                mediaitem_id: string;
+                dimension: components["schemas"]["DimensionTypes"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    api_getitems_head_media__dimension___mediaitem_id__head: {
         parameters: {
             query?: never;
             header?: never;
