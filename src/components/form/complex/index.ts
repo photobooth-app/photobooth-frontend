@@ -12,6 +12,7 @@ import {
   uiTypeIs,
   isObjectControl,
   resolveSchema,
+  isOneOfControl,
 } from '@jsonforms/core'
 
 import { default as AllOfRenderer } from './AllOfRenderer.vue'
@@ -21,7 +22,7 @@ import { default as AnyOfOptionalRenderer } from './AnyOfOptionalRenderer.vue'
 import { default as EnumArrayRenderer } from './EnumArrayRenderer.vue'
 import { default as ObjectRenderer } from './ObjectRenderer.vue'
 // import { default as OneOfRenderer } from "./OneOfRenderer.vue";
-// import { default as OneOfTabRenderer } from "./OneOfTabRenderer.vue";
+import { default as OneOfTabRenderer } from './OneOfTabRenderer.vue'
 
 export const AllOfRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: AllOfRenderer,
@@ -76,6 +77,11 @@ export const ObjectRendererEntry: JsonFormsRendererRegistryEntry = {
   tester: rankWith(2, isObjectControl),
 }
 
+export const oneOfTabRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: OneOfTabRenderer,
+  tester: rankWith(4, isOneOfControl),
+  // tester: rankWith(4, and(isOneOfControl, optionIs('variant', 'tab'))),
+}
 export const complexRenderers = [
   AllOfRendererEntry,
   AnyOfOptionalRendererEntry,
@@ -84,5 +90,5 @@ export const complexRenderers = [
   EnumArrayRendererEntry,
   ObjectRendererEntry,
   // oneOfRendererEntry,
-  // oneOfTabRendererEntry,
+  oneOfTabRendererEntry,
 ]
