@@ -17,6 +17,7 @@
         :label="oneOfRenderInfo.label"
         v-for="(oneOfRenderInfo, oneOfIndex) in oneOfRenderInfos"
         :key="`${control.path}-${oneOfIndex}`"
+        no-caps
       />
     </q-tabs>
 
@@ -38,12 +39,12 @@
       <q-card class="q-pa-sm" style="min-width: 350px">
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_delete" color="green" text-color="white" />
-          <span class="q-ml-sm">When switching the tab, the data is cleared. Continue?</span>
+          <span class="q-ml-sm">{{ $t('The form is cleared when you switch the tab. Do you want to continue?') }}</span>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn no-caps v-close-popup flat label="cancel" />
-          <q-btn no-caps v-close-popup label="continue" color="green" @click="confirm" />
+          <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn no-caps v-close-popup :label="$t('Continue')" color="green" @click="confirm" />
         </q-card-actions>
       </q-card>
     </q-dialog>
