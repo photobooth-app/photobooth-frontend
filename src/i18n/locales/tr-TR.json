@@ -151,6 +151,6 @@
       "quota_notification": "{action_name} kota {current_shares} of {quota}"
     }
   },
-  "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",
-  "Continue": "Continue"
+  "The form is cleared when you switch the tab. Do you want to continue?": "Sekmeyi değiştirdiğinizde form temizlenir. Devam etmek istiyor musunuz?",
+  "Continue": "Devam et"
 }

@@ -151,6 +151,6 @@
       "quota_notification": "{action_name} kvote er {current_shares} av {quota}"
     }
   },
-  "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",
-  "Continue": "Continue"
+  "The form is cleared when you switch the tab. Do you want to continue?": "Skjemaet er fjernet når du bytter fanen. Vil du fortsette?",
+  "Continue": "Fortsett"
 }

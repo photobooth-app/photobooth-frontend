@@ -151,6 +151,6 @@
       "quota_notification": "{action_name} 할당량은 {current_shares} 의 {quota}"
     }
   },
-  "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",
-  "Continue": "Continue"
+  "The form is cleared when you switch the tab. Do you want to continue?": "탭을 전환하면 양식이 지워집니다. 계속하시겠습니까?",
+  "Continue": "계속하기"
 }
