@@ -150,5 +150,7 @@
       "process_failed": "😔 Błąd podczas przetwarzania działania. Spróbuj ponownie.",
       "quota_notification": "Kontyngent {action_name} to {current_shares} {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "Formularz jest wyczyszczony po przełączeniu karty. Czy chcesz kontynuować?",
+  "Continue": "Kontynuuj"
 }

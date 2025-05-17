@@ -150,5 +150,7 @@
       "process_failed": "😔 Virhe toimintoa käsiteltäessä. Yritä uudelleen.",
       "quota_notification": "{action_name} kiintiö on {current_shares} of {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "Lomake on tyhjennetty, kun vaihdat välilehteä. Haluatko jatkaa?",
+  "Continue": "Jatka"
 }

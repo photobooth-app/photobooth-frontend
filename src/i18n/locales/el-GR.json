@@ -150,5 +150,7 @@
       "process_failed": "😔 Σφάλμα κατά την επεξεργασία της ενέργειας. Παρακαλώ δοκιμάστε ξανά.",
       "quota_notification": "{action_name} η ποσόστωση είναι {current_shares} του {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "Η φόρμα διαγράφεται όταν αλλάζετε την καρτέλα. Θέλετε να συνεχίσετε?",
+  "Continue": "Συνέχεια"
 }

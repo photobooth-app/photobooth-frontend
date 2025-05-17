@@ -150,5 +150,7 @@
       "process_failed": "😔 Fejl under behandling af handlingen. Prøv venligst igen.",
       "quota_notification": "{action_name} kvote er {current_shares} af {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "Formularen ryddes når du skifter fanebladet. Vil du fortsætte?",
+  "Continue": "Fortsæt"
 }

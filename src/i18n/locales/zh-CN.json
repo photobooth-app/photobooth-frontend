@@ -150,5 +150,7 @@
       "process_failed": ":pensive_face：处理操作时出错。请再试一次。",
       "quota_notification": "{action_name} 配额为 {current_shares} of {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "当您切换标签页时表单已清除。您想要继续吗？",
+  "Continue": "继续"
 }

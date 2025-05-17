@@ -150,5 +150,7 @@
       "process_failed": "😔 Error while processing the action. Please try again.",
       "quota_notification": "{action_name} quota is {current_shares} of {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",
+  "Continue": "Continue"
 }

@@ -150,5 +150,7 @@
       "process_failed": "😔 Eylem işlenirken hata oluştu. Lütfen tekrar deneyin.",
       "quota_notification": "{action_name} kota {current_shares} of {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",
+  "Continue": "Continue"
 }

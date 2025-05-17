@@ -150,5 +150,7 @@
       "process_failed": "😔 Errore durante l'elaborazione dell'azione. Riprova.",
       "quota_notification": "La quota {action_name} è {current_shares} di {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "Il modulo viene cancellato quando si cambia la scheda. Vuoi continuare?",
+  "Continue": "Continua"
 }

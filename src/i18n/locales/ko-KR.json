@@ -150,5 +150,7 @@
       "process_failed": "😔 작업을 처리하는 동안 오류가 발생했습니다. 다시 시도해 주세요.",
       "quota_notification": "{action_name} 할당량은 {current_shares} 의 {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",
+  "Continue": "Continue"
 }

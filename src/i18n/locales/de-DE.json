@@ -150,5 +150,7 @@
       "process_failed": "😔 Fehler beim Verarbeiten des Jobs. Bitte versuche es erneut.",
       "quota_notification": "{action_name} Kontingent ist {current_shares} von {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "Das Formular wird gelöscht, wenn Sie den Tab wechseln. Möchten Sie fortfahren?",
+  "Continue": "Weiter"
 }

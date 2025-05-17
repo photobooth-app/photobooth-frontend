@@ -150,5 +150,7 @@
       "process_failed": "アクションの処理中にエラーが発生しました。もう一度やり直してください。",
       "quota_notification": "{action_name} クォータは {current_shares} / {quota} です"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "タブを切り替えるとフォームがクリアされます。続行しますか？",
+  "Continue": "続ける"
 }

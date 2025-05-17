@@ -150,5 +150,7 @@
       "process_failed": "crwdns451:0crwdne451:0",
       "quota_notification": "crwdns453:0{action_name}crwdnd453:0{current_shares}crwdnd453:0{quota}crwdne453:0"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "crwdns800:0crwdne800:0",
+  "Continue": "crwdns802:0crwdne802:0"
 }

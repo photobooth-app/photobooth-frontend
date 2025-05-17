@@ -150,5 +150,7 @@
       "process_failed": "😔 Chyba při zpracování akce. Zkuste to prosím znovu.",
       "quota_notification": "{action_name} kvóta je {current_shares} z {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "Formulář je vymazán po přepnutí karty. Chcete pokračovat?",
+  "Continue": "Pokračovat"
 }

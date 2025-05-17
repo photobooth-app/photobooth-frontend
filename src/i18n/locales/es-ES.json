@@ -150,5 +150,7 @@
       "process_failed": "😔 Error al procesar la acción. Por favor, inténtalo de nuevo.",
       "quota_notification": "La cuota {action_name} es {current_shares} de {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "El formulario se borra cuando cambia la pestaña. ¿Desea continuar?",
+  "Continue": "Continuar"
 }

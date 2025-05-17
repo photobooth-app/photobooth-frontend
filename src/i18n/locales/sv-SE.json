@@ -150,5 +150,7 @@
       "process_failed": "😔 Fel vid bearbetningen av åtgärden. Försök igen.",
       "quota_notification": "{action_name} kvoten är {current_shares} av {quota}"
     }
-  }
+  },
+  "The form is cleared when you switch the tab. Do you want to continue?": "Formuläret rensas när du byter flik. Vill du fortsätta?",
+  "Continue": "Fortsätt"
 }
