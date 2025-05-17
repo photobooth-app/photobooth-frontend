@@ -151,6 +151,6 @@
       "quota_notification": "{action_name} a kvóta a {current_shares} a {quota}oldalon található."
     }
   },
-  "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",
-  "Continue": "Continue"
+  "The form is cleared when you switch the tab. Do you want to continue?": "Az űrlap törlődik, amikor a lapot váltja. Szeretné folytatni?",
+  "Continue": "Folytatás"
 }
