@@ -2,6 +2,29 @@
   <q-layout id="main-layout" view="hHh lpR fFf">
     <q-page-container>
       <router-view />
+
+      <!-- in main layout (main app) always show the back button-->
+      <ReturnButton v-if="isSubPage" @trigger-return="$router.back()"></ReturnButton>
+
+      <!-- go back to index after inactivity. matched[0] is / or /standalone so always the parent most of the current entry path -->
+      <RouteAfterTimeout
+        v-if="isSubPage && !route.meta.standbyMode"
+        @on-timeout="$router.push({ path: route.matched[0].path })"
+        :timeout-ms="configurationStore.configuration.uisettings.show_frontpage_timeout * 60 * 1000"
+      ></RouteAfterTimeout>
+
+      <!-- auto-start slideshow after timeout -->
+      <RouteAfterTimeout
+        v-if="
+          !isSubPage &&
+          !route.meta.standbyMode &&
+          configurationStore.configuration.uisettings.enable_automatic_slideshow &&
+          mediacollectionStore.collection_number_of_items > 0
+        "
+        @on-timeout="$router.push({ path: '/standby/slideshow/random' })"
+        :timeout-ms="configurationStore.configuration.uisettings.show_automatic_slideshow_timeout * 1000"
+        :warning-message="$t('MSG_WARN_BEFORE_AUTO_SLIDESHOW')"
+      ></RouteAfterTimeout>
     </q-page-container>
   </q-layout>
 </template>
@@ -10,12 +33,20 @@
 import { useStateStore } from '../stores/state-store'
 import { useConfigurationStore } from '../stores/configuration-store'
 import { useRouter, useRoute } from 'vue-router'
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, computed } from 'vue'
 import { remoteProcedureCall } from '../util/fetch_api.js'
+import ReturnButton from '../components/ReturnButton.vue'
+import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
+import { useMediacollectionStore } from '../stores/mediacollection-store'
+
 const stateStore = useStateStore()
 const router = useRouter()
 const route = useRoute()
 const configurationStore = useConfigurationStore()
+const mediacollectionStore = useMediacollectionStore()
+
+// '/' is main page, used to display/not display the return button. path is always at least '/', never empty
+const isSubPage = computed(() => route.matched.length > 1 && route.matched[0].path != route.matched[1].path)
 
 // watch state to force router to "/" if a capture is triggered
 stateStore.$subscribe((mutation, state) => {

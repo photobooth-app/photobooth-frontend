@@ -5,8 +5,6 @@
     </div>
     <div v-else class="full-height"><ItemNotAvailableError /></div>
   </q-page>
-
-  <ReturnButton v-if="!props.standaloneMode" @trigger-return="$router.back()"></ReturnButton>
 </template>
 
 <script setup lang="ts">
@@ -14,11 +12,6 @@ import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { default as MediaItemPreviewViewer } from '../components/MediaItemPreviewViewer.vue'
 import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
-import { default as ReturnButton } from '../components/ReturnButton.vue'
-
-const props = defineProps({
-  standaloneMode: Boolean,
-})
 
 const mediacollectionStore = useMediacollectionStore()
 const nextMediaitemTimeout = 5_000

@@ -78,10 +78,6 @@
       <!-- usually not visible but if page is called with wrong id or the page was not closed after an item is deleted -->
       <ItemNotAvailableError />
     </div>
-
-    <ReturnButton @trigger-return="$router.back()"></ReturnButton>
-    <!-- go back to index after inactivity -->
-    <RouteAfterTimeout route="/" :timeout-ms="configurationStore.configuration.uisettings.show_frontpage_timeout * 60 * 1000"></RouteAfterTimeout>
   </q-layout>
 </template>
 
@@ -101,8 +97,6 @@ import { useRouter, useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
 import { remoteProcedureCall, _fetch } from '../util/fetch_api.js'
-import { default as ReturnButton } from '../components/ReturnButton.vue'
-import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
 
 const $q = useQuasar()
 const route = useRoute()
