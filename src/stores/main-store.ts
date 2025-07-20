@@ -1,57 +1,49 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
+import type { components } from '../dto/api'
+
+function defaultOnetimeInformation(): components['schemas']['SseEventOnetimeInformationRecord'] {
+  return {
+    version: '',
+    platform_system: '',
+    platform_release: '',
+    platform_machine: '',
+    platform_python_version: '',
+    platform_node: '',
+    platform_cpu_count: null,
+    model: '',
+    data_directory: '',
+    python_executable: '',
+    disk: {},
+    event: 'OnetimeInformationRecord',
+  }
+}
+
+function defaultIntervalInformation(): components['schemas']['SseEventIntervalInformationRecord'] {
+  return {
+    cpu_percent: 0,
+    memory: {},
+    cma: {},
+    backends: {},
+    stats_counter: [],
+    limits_counter: [],
+    battery_percent: null,
+    temperatures: {},
+    mediacollection: {},
+    plugins: null,
+    event: 'IntervalInformationRecord',
+  }
+}
 
 export const useMainStore = defineStore('main-store', {
   state: () => ({
     logrecords: [] as object[],
 
-    information: {
-      /* system */
-      cpu_percent: 0,
-      memory: {
-        total: 0,
-        available: 0,
-        percent: 0,
-        used: 0,
-        free: 0,
-      },
-      cma: {
-        CmaTotal: 0,
-        CmaFree: 0,
-      },
-      disk: {
-        total: 0,
-        used: 0,
-        free: 0,
-        percent: 0,
-      },
-      backends: {
-        primary: {},
-        secondary: {},
-      },
-      battery_percent: 0,
-      temperatures: {},
+    information_onetime: defaultOnetimeInformation(),
+    information_interval: defaultIntervalInformation(),
 
-      /* platform */
-      version: 'unknown',
-      platform_system: 'unknown',
-      platform_release: 'unknown',
-      platform_machine: 'unknown',
-      platform_python_version: 'unknown',
-      platform_node: 'unknown',
-      platform_cpu_count: 'unknown',
-      model: 'unknown',
-      data_directory: 'unknown',
-      python_executable: 'unknown',
-
-      /* stats */
-      stats_counter: {},
-
-      /* limits */
-      limits_counter: {},
-
-      /* mediacollection */
-      mediacollection: {},
-    },
+    //   /* plugins stats */
+    //   plugins: {},
+    // },
   }),
   actions: {},
   getters: {},

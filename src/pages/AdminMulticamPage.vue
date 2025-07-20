@@ -38,20 +38,21 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { remoteProcedureCall } from '../util/fetch_api'
-import { useConfigurationStore } from '../stores/configuration-store'
+// import { useConfigurationStore } from '../stores/configuration-store'
 
-const configurationStore = useConfigurationStore()
+// const configurationStore = useConfigurationStore()
 
 const multicamNodes = computed(() => {
-  const group_backends = configurationStore.configuration.backends.group_backends
-  const index_backend_multicam = configurationStore.configuration.backends.index_backend_multicam
-  if (group_backends == null || index_backend_multicam == null) {
-    console.error('cannot get multicam backend from config')
-    return []
-  }
+  return []
+  // const group_backends = configurationStore.configuration.backends.group_backends
+  // const index_backend_multicam = configurationStore.configuration.backends.index_backend_multicam
+  // if (group_backends == null || index_backend_multicam == null) {
+  //   console.error('cannot get multicam backend from config')
+  //   return []
+  // }
 
-  const multicam_backend = group_backends[index_backend_multicam].wigglecam.nodes
+  // const multicam_backend = group_backends[index_backend_multicam].wigglecam.nodes
 
-  return multicam_backend
+  // return multicam_backend
 })
 </script>

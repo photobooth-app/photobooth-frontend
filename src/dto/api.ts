@@ -734,6 +734,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/information/stts/onetime": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Get Stats Onetime */
+        get: operations["api_get_stats_onetime_api_admin_information_stts_onetime_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/information/stts/interval": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Get Stats Interval */
+        get: operations["api_get_stats_interval_api_admin_information_stts_interval_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/share/cntr/reset/{field}": {
         parameters: {
             query?: never;
@@ -783,26 +817,6 @@ export interface paths {
         options?: never;
         /** Api Getitems Head */
         head: operations["api_getitems_head_media__dimension___mediaitem_id__head"];
-        patch?: never;
-        trace?: never;
-    };
-    "/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Index
-         * @description return homepage of booth
-         */
-        get: operations["index__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
         patch?: never;
         trace?: never;
     };
@@ -1353,75 +1367,19 @@ export interface components {
              *       "index_backend_multicam": 0,
              *       "group_backends": [
              *         {
-             *           "enabled": true,
-             *           "gphoto2": {
-             *             "canon_eosmoviemode": false,
-             *             "disable_viewfinder_before_capture": true,
-             *             "gcapture_target": "",
-             *             "iso_capture": "",
-             *             "iso_liveview": "",
-             *             "orientation": "1: 0°",
-             *             "shutter_speed_capture": "",
-             *             "shutter_speed_liveview": ""
-             *           },
-             *           "picamera2": {
-             *             "CAPTURE_CAM_RESOLUTION_HEIGHT": 2592,
-             *             "CAPTURE_CAM_RESOLUTION_WIDTH": 4608,
-             *             "LIVEVIEW_RESOLUTION_HEIGHT": 648,
-             *             "LIVEVIEW_RESOLUTION_WIDTH": 1152,
-             *             "PREVIEW_CAM_RESOLUTION_HEIGHT": 1296,
-             *             "PREVIEW_CAM_RESOLUTION_WIDTH": 2304,
-             *             "camera_num": 0,
-             *             "frame_skip_count": 2,
-             *             "framerate_still_mode": 10,
-             *             "framerate_video_mode": 25,
-             *             "optimized_lowlight_short_exposure": false,
-             *             "orientation": "1: 0°",
-             *             "original_still_quality": 90,
-             *             "videostream_quality": "MEDIUM"
-             *           },
-             *           "selected_device": "VirtualCamera",
-             *           "virtualcamera": {
+             *           "backend_config": {
+             *             "backend_type": "VirtualCamera",
              *             "emulate_hires_static_still": false,
              *             "emulate_multicam_capture_devices": 4,
              *             "framerate": 15,
              *             "orientation": "1: 0°"
              *           },
-             *           "webcampyav": {
-             *             "cam_framerate": 0,
-             *             "cam_resolution_height": 2160,
-             *             "cam_resolution_width": 3840,
-             *             "device_identifier": "Insta360 Link 2C",
-             *             "frame_skip_count": 3,
-             *             "orientation": "1: 0°",
-             *             "preview_resolution_reduce_factor": 2
-             *           },
-             *           "webcamv4l": {
-             *             "CAM_RESOLUTION_HEIGHT": 480,
-             *             "CAM_RESOLUTION_WIDTH": 640,
-             *             "HIRES_CAM_RESOLUTION_HEIGHT": 3104,
-             *             "HIRES_CAM_RESOLUTION_WIDTH": 4192,
-             *             "device_identifier": "0",
-             *             "flush_number_frames_after_switch": 2,
-             *             "orientation": "1: 0°",
-             *             "pixel_format_fourcc": "MJPG",
-             *             "switch_to_high_resolution_for_stills": true
-             *           },
-             *           "wigglecam": {
-             *             "index_cam_stills": 0,
-             *             "index_cam_video": 0,
-             *             "keep_node_copy": false,
-             *             "nodes": [
-             *               {
-             *                 "base_url": "http://127.0.0.1:8010/",
-             *                 "description": "TestNode"
-             *               }
-             *             ]
-             *           }
+             *           "description": "backend default name",
+             *           "enabled": true
              *         }
              *       ]
              *     } */
-            backends: components["schemas"]["GroupBackends"];
+            backends: components["schemas"]["GroupCameras"];
             /** @default {
              *       "keyboard_input_enabled": false,
              *       "gpio_enabled": false,
@@ -1450,7 +1408,10 @@ export interface components {
             grant_type?: string | null;
             /** Username */
             username: string;
-            /** Password */
+            /**
+             * Password
+             * Format: password
+             */
             password: string;
             /**
              * Scope
@@ -1459,7 +1420,10 @@ export interface components {
             scope: string;
             /** Client Id */
             client_id?: string | null;
-            /** Client Secret */
+            /**
+             * Client Secret
+             * Format: password
+             */
             client_secret?: string | null;
         };
         /**
@@ -1632,6 +1596,22 @@ export interface components {
          * @enum {string}
          */
         DimensionTypes: "full" | "preview" | "thumbnail";
+        /**
+         * DisplayEnum
+         * @enum {string}
+         */
+        DisplayEnum: "label" | "checkbox" | "toggle" | "spinner";
+        /** GenericStats */
+        GenericStats: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Actions */
+            actions?: string[];
+            /** Stats */
+            stats?: (components["schemas"]["SubStats"] | components["schemas"]["SubList"])[];
+        };
         /**
          * GPIO triggers configuration
          * @description Configure trigger the user can interact with. Sources are GPIO and keyboard.
@@ -1926,7 +1906,7 @@ export interface components {
             multicamera: components["schemas"]["MulticameraConfigurationSet"][];
         };
         /**
-         * Main Backend Configuration
+         * Camera Configuration
          * @description Choose backends for still images/high quality images captured on main backend.
          *     If the livepreview is enabled, the video is captured from live backend (if configured)
          *     or main backend.
@@ -1939,84 +1919,15 @@ export interface components {
              */
             enabled: boolean;
             /**
-             * Configure device
-             * @description Select backend and configure the device below
-             * @default VirtualCamera
-             * @enum {string}
+             * Description
+             * @default backend default name
              */
-            selected_device: "VirtualCamera" | "WebcamPyav" | "Wigglecam" | "Picamera2" | "WebcamV4l" | "Gphoto2";
-            /** @default {
-             *       "orientation": "1: 0°",
-             *       "framerate": 15,
-             *       "emulate_hires_static_still": false,
-             *       "emulate_multicam_capture_devices": 4
-             *     } */
-            virtualcamera: components["schemas"]["GroupBackendVirtualcamera"];
-            /** @default {
-             *       "orientation": "1: 0°",
-             *       "device_identifier": "Insta360 Link 2C",
-             *       "cam_resolution_width": 3840,
-             *       "cam_resolution_height": 2160,
-             *       "cam_framerate": 0,
-             *       "preview_resolution_reduce_factor": 2,
-             *       "frame_skip_count": 3
-             *     } */
-            webcampyav: components["schemas"]["GroupBackendPyav"];
-            /** @default {
-             *       "keep_node_copy": false,
-             *       "index_cam_stills": 0,
-             *       "index_cam_video": 0,
-             *       "nodes": [
-             *         {
-             *           "base_url": "http://127.0.0.1:8010/",
-             *           "description": "TestNode"
-             *         }
-             *       ]
-             *     } */
-            wigglecam: components["schemas"]["GroupBackendWigglecam"];
-            /** @default {
-             *       "orientation": "1: 0°",
-             *       "camera_num": 0,
-             *       "CAPTURE_CAM_RESOLUTION_WIDTH": 4608,
-             *       "CAPTURE_CAM_RESOLUTION_HEIGHT": 2592,
-             *       "PREVIEW_CAM_RESOLUTION_WIDTH": 2304,
-             *       "PREVIEW_CAM_RESOLUTION_HEIGHT": 1296,
-             *       "LIVEVIEW_RESOLUTION_WIDTH": 1152,
-             *       "LIVEVIEW_RESOLUTION_HEIGHT": 648,
-             *       "framerate_still_mode": 10,
-             *       "framerate_video_mode": 25,
-             *       "frame_skip_count": 2,
-             *       "optimized_lowlight_short_exposure": false,
-             *       "videostream_quality": "MEDIUM",
-             *       "original_still_quality": 90
-             *     } */
-            picamera2: components["schemas"]["GroupBackendPicamera2"];
-            /** @default {
-             *       "orientation": "1: 0°",
-             *       "device_identifier": "0",
-             *       "pixel_format_fourcc": "MJPG",
-             *       "CAM_RESOLUTION_WIDTH": 640,
-             *       "CAM_RESOLUTION_HEIGHT": 480,
-             *       "switch_to_high_resolution_for_stills": true,
-             *       "HIRES_CAM_RESOLUTION_WIDTH": 4192,
-             *       "HIRES_CAM_RESOLUTION_HEIGHT": 3104,
-             *       "flush_number_frames_after_switch": 2
-             *     } */
-            webcamv4l: components["schemas"]["GroupBackendV4l2"];
-            /** @default {
-             *       "orientation": "1: 0°",
-             *       "gcapture_target": "",
-             *       "disable_viewfinder_before_capture": true,
-             *       "iso_liveview": "",
-             *       "iso_capture": "",
-             *       "shutter_speed_liveview": "",
-             *       "shutter_speed_capture": "",
-             *       "canon_eosmoviemode": false
-             *     } */
-            gphoto2: components["schemas"]["GroupBackendGphoto2"];
+            description: string;
+            /** Backend Config */
+            backend_config: components["schemas"]["GroupCameraVirtual"] | components["schemas"]["GroupCameraPyav"] | components["schemas"]["GroupCameraWigglecam"] | components["schemas"]["GroupCameraPicamera2"] | components["schemas"]["GroupCameraV4l2"] | components["schemas"]["GroupCameraGphoto2"];
         };
         /** Gphoto2 */
-        GroupBackendGphoto2: {
+        GroupCameraGphoto2: {
             /**
              * Orientation
              * @description Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
@@ -2024,6 +1935,11 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            backend_type: "Gphoto2";
             /**
              * Gcapture Target
              * @description Set capture target (examples: 'Internal RAM', 'Memory card'). To keep images, capture to a disk target. Empty means default of camera (mostly RAM).
@@ -2066,9 +1982,21 @@ export interface components {
              * @default false
              */
             canon_eosmoviemode: boolean;
+            /**
+             * Pause Camera On Livestream Inactive
+             * @description When enabled, the app tries to disable the cameras livestream when no livestream is requested. It helps to avoid sensor overheating for older cameras by setting viewfinder=0.
+             * @default false
+             */
+            pause_camera_on_livestream_inactive: boolean;
+            /**
+             * Timeout Until Inactive
+             * @description Delay after which the livestream is considered as inactive and camera should idle.
+             * @default 30
+             */
+            timeout_until_inactive: number;
         };
         /** Picamera2 */
-        GroupBackendPicamera2: {
+        GroupCameraPicamera2: {
             /**
              * Orientation
              * @description Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
@@ -2076,6 +2004,11 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            backend_type: "Picamera2";
             /**
              * Camera Num
              * @description Camera number. Usually 0 or 1.
@@ -2157,7 +2090,7 @@ export interface components {
             original_still_quality: number;
         };
         /** PyAV */
-        GroupBackendPyav: {
+        GroupCameraPyav: {
             /**
              * Orientation
              * @description Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
@@ -2165,6 +2098,11 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            backend_type: "WebcamPyav";
             /**
              * Device Identifier
              * @description Device name (Windows) or index (Linux, Mac) of the webcam.
@@ -2204,7 +2142,7 @@ export interface components {
             frame_skip_count: number;
         };
         /** V4l2 */
-        GroupBackendV4l2: {
+        GroupCameraV4l2: {
             /**
              * Orientation
              * @description Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
@@ -2212,6 +2150,11 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            backend_type: "WebcamV4l";
             /**
              * Device Identifier
              * @description Device identifier (index 0 or 1 or /dev/xxx) of webcam.
@@ -2263,7 +2206,7 @@ export interface components {
             flush_number_frames_after_switch: number;
         };
         /** VirtualCamera */
-        GroupBackendVirtualcamera: {
+        GroupCameraVirtual: {
             /**
              * Orientation
              * @description Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
@@ -2271,6 +2214,11 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            backend_type: "VirtualCamera";
             /**
              * Framerate
              * @description Reduce the framerate to save cpu/gpu on device displaying the live preview
@@ -2291,12 +2239,17 @@ export interface components {
             emulate_multicam_capture_devices: number;
         };
         /** Wigglecam Connector */
-        GroupBackendWigglecam: {
+        GroupCameraWigglecam: {
             /**
              * Keep Node Copy
              * @default false
              */
             keep_node_copy: boolean;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            backend_type: "Wigglecam";
             /**
              * Index Cam Stills
              * @description Index of one node below to capture stills.
@@ -2321,12 +2274,12 @@ export interface components {
             nodes: components["schemas"]["ConfigCameraNode"][];
         };
         /**
-         * Camera Backend Config
+         * Camera Configurations
          * @description Choose backends for still images/high quality images captured on main backend.
          *     If the livepreview is enabled, the video is captured from live backend (if configured)
          *     or main backend.
          */
-        GroupBackends: {
+        GroupCameras: {
             /**
              * Enable Livestream
              * @description Enable livestream (if possible)
@@ -2368,69 +2321,13 @@ export interface components {
              * @default [
              *       {
              *         "enabled": true,
-             *         "selected_device": "VirtualCamera",
-             *         "virtualcamera": {
+             *         "description": "backend default name",
+             *         "backend_config": {
+             *           "backend_type": "VirtualCamera",
              *           "emulate_hires_static_still": false,
              *           "emulate_multicam_capture_devices": 4,
              *           "framerate": 15,
              *           "orientation": "1: 0°"
-             *         },
-             *         "webcampyav": {
-             *           "cam_framerate": 0,
-             *           "cam_resolution_height": 2160,
-             *           "cam_resolution_width": 3840,
-             *           "device_identifier": "Insta360 Link 2C",
-             *           "frame_skip_count": 3,
-             *           "orientation": "1: 0°",
-             *           "preview_resolution_reduce_factor": 2
-             *         },
-             *         "wigglecam": {
-             *           "index_cam_stills": 0,
-             *           "index_cam_video": 0,
-             *           "keep_node_copy": false,
-             *           "nodes": [
-             *             {
-             *               "base_url": "http://127.0.0.1:8010/",
-             *               "description": "TestNode"
-             *             }
-             *           ]
-             *         },
-             *         "picamera2": {
-             *           "CAPTURE_CAM_RESOLUTION_HEIGHT": 2592,
-             *           "CAPTURE_CAM_RESOLUTION_WIDTH": 4608,
-             *           "LIVEVIEW_RESOLUTION_HEIGHT": 648,
-             *           "LIVEVIEW_RESOLUTION_WIDTH": 1152,
-             *           "PREVIEW_CAM_RESOLUTION_HEIGHT": 1296,
-             *           "PREVIEW_CAM_RESOLUTION_WIDTH": 2304,
-             *           "camera_num": 0,
-             *           "frame_skip_count": 2,
-             *           "framerate_still_mode": 10,
-             *           "framerate_video_mode": 25,
-             *           "optimized_lowlight_short_exposure": false,
-             *           "orientation": "1: 0°",
-             *           "original_still_quality": 90,
-             *           "videostream_quality": "MEDIUM"
-             *         },
-             *         "webcamv4l": {
-             *           "CAM_RESOLUTION_HEIGHT": 480,
-             *           "CAM_RESOLUTION_WIDTH": 640,
-             *           "HIRES_CAM_RESOLUTION_HEIGHT": 3104,
-             *           "HIRES_CAM_RESOLUTION_WIDTH": 4192,
-             *           "device_identifier": "0",
-             *           "flush_number_frames_after_switch": 2,
-             *           "orientation": "1: 0°",
-             *           "pixel_format_fourcc": "MJPG",
-             *           "switch_to_high_resolution_for_stills": true
-             *         },
-             *         "gphoto2": {
-             *           "canon_eosmoviemode": false,
-             *           "disable_viewfinder_before_capture": true,
-             *           "gcapture_target": "",
-             *           "iso_capture": "",
-             *           "iso_liveview": "",
-             *           "orientation": "1: 0°",
-             *           "shutter_speed_capture": "",
-             *           "shutter_speed_liveview": ""
              *         }
              *       }
              *     ]
@@ -2464,19 +2361,19 @@ export interface components {
             users_delete_to_recycle_dir: boolean;
         };
         /**
-         * USB File Transfer Service Config
+         * USB File Transfer Service Config (deprecated since v8)
          * @description Configuration for USB File Transfer Service.
          */
         GroupFileTransfer: {
             /**
              * Enabled
-             * @description Enable the automatic file transfer to USB service. Files are copied when the USB drive is inserted.
+             * @description (DEPRECATED in v8) Enable the automatic file transfer to USB service. Files are copied when the USB drive is inserted.
              * @default false
              */
             enabled: boolean;
             /**
              * Target Folder Name
-             * @description Name of the top-level folder on the USB drive where files will be copied to.
+             * @description (DEPRECATED in v8) Name of the top-level folder on the USB drive where files will be copied to.
              * @default photobooth
              */
             target_folder_name: string;
@@ -2608,19 +2505,19 @@ export interface components {
         GroupQrShare: {
             /**
              * Enabled
-             * @description Enable qr share service. To enable URL needs to be configured and dl.php script setup properly.
+             * @description (DEPRECATED in v8) Enable qr share service. To enable URL needs to be configured and dl.php script setup properly.
              * @default false
              */
             enabled: boolean;
             /**
              * Shareservice Url
-             * @description URL of php script that is used to serve files and share via QR code. The default is a landingpage with further instructions how to setup.
+             * @description (DEPRECATED in v8) URL of php script that is used to serve files and share via QR code. The default is a landingpage with further instructions how to setup.
              * @default https://photobooth-app.org/extras/shareservice-landing/
              */
             shareservice_url: string;
             /**
              * Shareservice Apikey
-             * @description Key to secure the download php script. Set the key in dl.php script to same value. Only if correct key is provided the shareservice works properly.
+             * @description (DEPRECATED in v8) Key to secure the download php script. Set the key in dl.php script to same value. Only if correct key is provided the shareservice works properly.
              * @default changedefault!
              */
             shareservice_apikey: string;
@@ -3143,6 +3040,18 @@ export interface components {
             processing: components["schemas"]["ShareProcessing"];
             trigger: components["schemas"]["Trigger"];
         };
+        /** ShareLimitsPublic */
+        ShareLimitsPublic: {
+            /** Action */
+            action: string;
+            /** Count */
+            count: number;
+            /**
+             * Last Used At
+             * Format: date-time
+             */
+            last_used_at: string;
+        };
         /**
          * Share/Print Actions
          * @description Configure options to share or print images.
@@ -3319,6 +3228,109 @@ export interface components {
              */
             texts: components["schemas"]["TextsConfig"][];
         };
+        /** SseEventIntervalInformationRecord */
+        SseEventIntervalInformationRecord: {
+            /** Cpu Percent */
+            cpu_percent: number;
+            /** Memory */
+            memory: {
+                [key: string]: number;
+            };
+            /** Cma */
+            cma: {
+                [key: string]: number | null;
+            } | {
+                [key: string]: null;
+            };
+            /** Backends */
+            backends: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            };
+            /** Stats Counter */
+            stats_counter: components["schemas"]["UsageStatsPublic"][];
+            /** Limits Counter */
+            limits_counter: components["schemas"]["ShareLimitsPublic"][];
+            /** Battery Percent */
+            battery_percent: number | null;
+            /** Temperatures */
+            temperatures: {
+                [key: string]: unknown;
+            };
+            /** Mediacollection */
+            mediacollection: {
+                [key: string]: unknown;
+            };
+            /** Plugins */
+            plugins: components["schemas"]["GenericStats"][];
+            /**
+             * Event
+             * @default IntervalInformationRecord
+             */
+            event: string;
+        };
+        /** SseEventOnetimeInformationRecord */
+        SseEventOnetimeInformationRecord: {
+            /** Version */
+            version: string;
+            /** Platform System */
+            platform_system: string;
+            /** Platform Release */
+            platform_release: string;
+            /** Platform Machine */
+            platform_machine: string;
+            /** Platform Python Version */
+            platform_python_version: string;
+            /** Platform Node */
+            platform_node: string;
+            /** Platform Cpu Count */
+            platform_cpu_count: number | null;
+            /** Model */
+            model: string;
+            /**
+             * Data Directory
+             * Format: path
+             */
+            data_directory: string;
+            /** Python Executable */
+            python_executable: string;
+            /** Disk */
+            disk: {
+                [key: string]: number;
+            };
+            /**
+             * Event
+             * @default OnetimeInformationRecord
+             */
+            event: string;
+        };
+        /** SubList */
+        SubList: {
+            /** Name */
+            name: string;
+            /** Val */
+            val: components["schemas"]["SubStats"][];
+        };
+        /** SubStats */
+        SubStats: {
+            /** Name */
+            name: string;
+            /** Val */
+            val: string | number | boolean | null;
+            /**
+             * Decimals
+             * @default 0
+             */
+            decimals: number;
+            /**
+             * Unit
+             * @default
+             */
+            unit: string;
+            /** @default label */
+            display: components["schemas"]["DisplayEnum"];
+        };
         /** TextsConfig */
         TextsConfig: {
             /**
@@ -3424,6 +3436,18 @@ export interface components {
              * @default #196cb0
              */
             custom_color: string;
+        };
+        /** UsageStatsPublic */
+        UsageStatsPublic: {
+            /** Action */
+            action: string;
+            /** Count */
+            count: number;
+            /**
+             * Last Used At
+             * Format: date-time
+             */
+            last_used_at: string;
         };
         /** User */
         User: {
@@ -4086,7 +4110,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": string[];
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -4768,6 +4792,46 @@ export interface operations {
             };
         };
     };
+    api_get_stats_onetime_api_admin_information_stts_onetime_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SseEventOnetimeInformationRecord"];
+                };
+            };
+        };
+    };
+    api_get_stats_interval_api_admin_information_stts_interval_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SseEventIntervalInformationRecord"];
+                };
+            };
+        };
+    };
     api_get_limitscounter_reset_field_api_admin_share_cntr_reset__field__get: {
         parameters: {
             query?: never;
@@ -4875,26 +4939,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    index__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
                 };
             };
         };

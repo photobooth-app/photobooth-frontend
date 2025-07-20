@@ -24,7 +24,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item v-if="store.information.platform_system == 'Linux'">
+            <q-item v-if="store.information_onetime.platform_system == 'Linux'">
               <q-item-section>
                 <q-item-label caption>{{ $t('Systemctl (Linux only)') }}</q-item-label>
                 <q-item-label>
@@ -101,7 +101,7 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('data directory') }}</q-item-label>
-                <q-item-label>{{ store.information.data_directory }} </q-item-label>
+                <q-item-label>{{ store.information_onetime.data_directory }} </q-item-label>
               </q-item-section>
               <q-item-section side>
                 <q-btn flat round color="green" icon="sym_o_folder_shared" to="/admin/files" />
@@ -111,7 +111,7 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('app version') }} </q-item-label>
-                <q-item-label>{{ store.information.version }}</q-item-label>
+                <q-item-label>{{ store.information_onetime.version }}</q-item-label>
               </q-item-section>
 
               <q-item-section side>
@@ -130,12 +130,12 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('cpu load') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress color="green" size="lg" :value="store.information.cpu_percent / 100"> </q-linear-progress>
+                  <q-linear-progress color="green" size="lg" :value="store.information_interval.cpu_percent / 100"> </q-linear-progress>
                 </q-item-label>
 
                 <q-item-label>
                   <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
-                  {{ store.information.cpu_percent }}%
+                  {{ store.information_interval.cpu_percent }}%
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -144,9 +144,9 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('disk space') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress color="green" size="lg" :value="store.information.disk.used / store.information.disk.total" />
+                  <q-linear-progress color="green" size="lg" :value="store.information_onetime.disk.used / store.information_onetime.disk.total" />
                 </q-item-label>
-                <q-item-label> {{ (store.information.disk.free / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
+                <q-item-label> {{ (store.information_onetime.disk.free / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -154,28 +154,32 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('memory') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress color="green" size="lg" :value="store.information.memory.used / store.information.memory.total" />
+                  <q-linear-progress
+                    color="green"
+                    size="lg"
+                    :value="store.information_interval.memory.used / store.information_interval.memory.total"
+                  />
                 </q-item-label>
-                <q-item-label> {{ (store.information.memory.available / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
+                <q-item-label> {{ (store.information_interval.memory.available / 1024 ** 3).toFixed(1) }}{{ $t('GB available') }} </q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item v-if="store.information['battery_percent'] !== null">
+            <q-item v-if="store.information_interval.battery_percent !== null">
               <q-item-section>
                 <q-item-label caption>{{ $t('Battery') }} </q-item-label>
                 <q-item-label>
-                  <q-linear-progress color="green" size="lg" :value="store.information['battery_percent'] / 100" />
+                  <q-linear-progress color="green" size="lg" :value="store.information_interval.battery_percent / 100" />
                 </q-item-label>
                 <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
-                <q-item-label> {{ store.information['battery_percent'].toFixed(0) }}% </q-item-label>
+                <q-item-label> {{ store.information_interval.battery_percent.toFixed(0) }}% </q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item v-if="Object.keys(store.information.temperatures).length > 0">
+            <q-item v-if="Object.keys(store.information_interval.temperatures).length > 0">
               <q-item-section>
                 <q-item-label caption>{{ $t('System Temperatures') }} </q-item-label>
                 <div class="row">
-                  <q-item v-for="(value, key, index) in store.information.temperatures" :key="index">
+                  <q-item v-for="(value, key, index) in store.information_interval.temperatures" :key="index">
                     <q-item-section>
                       <q-item-label caption>{{ key }}</q-item-label>
                       <q-item-label>{{ value }}</q-item-label>
@@ -195,7 +199,7 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('hostname') }}</q-item-label>
-                <q-item-label>{{ store.information.platform_node }}</q-item-label>
+                <q-item-label>{{ store.information_onetime.platform_node }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -204,8 +208,8 @@
                 <q-item-label caption>{{ $t('machine') }} </q-item-label>
                 <q-item-label>{{
                   $t('{platform_machine}, {cpu_count} cores', {
-                    platform_machine: store.information.platform_machine,
-                    cpu_count: store.information.platform_cpu_count,
+                    platform_machine: store.information_onetime.platform_machine,
+                    cpu_count: store.information_onetime.platform_cpu_count,
                   })
                 }}</q-item-label>
               </q-item-section>
@@ -214,21 +218,21 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('platform system') }} </q-item-label>
-                <q-item-label>{{ store.information.platform_system }} {{ store.information.platform_release }} </q-item-label>
+                <q-item-label>{{ store.information_onetime.platform_system }} {{ store.information_onetime.platform_release }} </q-item-label>
               </q-item-section>
             </q-item>
 
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('computer model') }}</q-item-label>
-                <q-item-label>{{ store.information.model }} </q-item-label>
+                <q-item-label>{{ store.information_onetime.model }} </q-item-label>
               </q-item-section>
             </q-item>
 
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('python executable') }} </q-item-label>
-                <q-item-label>{{ store.information.python_executable }}</q-item-label>
+                <q-item-label>{{ store.information_onetime.python_executable }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -236,7 +240,7 @@
               <q-item-section>
                 <q-item-label caption>{{ $t('python version') }} </q-item-label>
                 <q-item-label>
-                  {{ store.information.platform_python_version }}
+                  {{ store.information_onetime.platform_python_version }}
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -248,9 +252,11 @@
         <q-card-section style="flex-grow: 1">
           <q-list>
             <q-item-label header>{{ $t('Media Database') }}</q-item-label>
-            <q-item v-if="Object.keys(store.information.mediacollection).length == 0">{{ $t('Currently there is no item to display.') }}</q-item>
+            <q-item v-if="Object.keys(store.information_interval.mediacollection).length == 0">{{
+              $t('Currently there is no item to display.')
+            }}</q-item>
 
-            <q-item v-for="(entry, index) in store.information.mediacollection" :key="index">
+            <q-item v-for="(entry, index) in store.information_interval.mediacollection" :key="index">
               <q-item-section>
                 <q-item-label caption>{{ index }} </q-item-label>
 
@@ -268,7 +274,7 @@
         </q-card-actions>
       </q-card>
 
-      <q-card v-for="(backend_stats, _, index) in store.information.backends" :key="index" flat class="q-mr-md q-mb-md">
+      <q-card v-for="(backend_stats, _, index) in store.information_interval.backends" :key="index" flat class="q-mr-md q-mb-md">
         <q-card-section>
           <q-list>
             <q-item-label header>{{ $t('Backend Index: ') }}{{ index }}</q-item-label>
@@ -282,24 +288,30 @@
         </q-card-section>
       </q-card>
 
+      <!-- <DashboardGenericStatsCard :stats="sampleStats" /> -->
+      <DashboardGenericStatsCard v-for="(entry, key) in store.information_interval.plugins" :key="key" :stats="entry"></DashboardGenericStatsCard>
+      <!-- <DashboardGenericStatsCard :stats="store.information_interval.plugins[0]" /> -->
+
       <q-card flat class="q-mr-md q-mb-md column">
         <q-card-section style="flex-grow: 1">
           <q-list>
             <q-item-label header>{{ $t('Stats counter') }}</q-item-label>
-            <q-item v-if="Object.keys(store.information.stats_counter).length == 0">{{ $t('Currently there is no item to display.') }}</q-item>
+            <q-item v-if="Object.keys(store.information_interval.stats_counter).length == 0">{{
+              $t('Currently there is no item to display.')
+            }}</q-item>
 
-            <q-item v-for="(entry, index) in store.information.stats_counter" :key="index">
+            <q-item v-for="(entry, index) in store.information_interval.stats_counter" :key="index">
               <q-item-section>
-                <q-item-label caption>{{ entry['action'] }} </q-item-label>
+                <q-item-label caption>{{ entry.action }} </q-item-label>
 
                 <q-item-label>
                   <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
-                  <q-tooltip> last used at: {{ entry['last_used_at'] }} </q-tooltip>
-                  <q-item-label> {{ entry['count'] }} </q-item-label>
+                  <q-tooltip> last used at: {{ entry.last_used_at }} </q-tooltip>
+                  <q-item-label> {{ entry.count }} </q-item-label>
                 </q-item-label>
               </q-item-section>
               <q-item-section side>
-                <q-btn flat color="green" icon="sym_o_history" @click="displayResetStatsConfirm(entry['action'])" />
+                <q-btn flat color="green" icon="sym_o_history" @click="displayResetStatsConfirm(entry.action)" />
               </q-item-section>
             </q-item>
           </q-list>
@@ -314,20 +326,22 @@
         <q-card-section style="flex-grow: 1">
           <q-list>
             <q-item-label header>{{ $t('Limits counter') }}</q-item-label>
-            <q-item v-if="Object.keys(store.information.limits_counter).length == 0">{{ $t('Currently there is no item to display.') }}</q-item>
+            <q-item v-if="Object.keys(store.information_interval.limits_counter).length == 0">{{
+              $t('Currently there is no item to display.')
+            }}</q-item>
 
-            <q-item v-for="(entry, index) in store.information.limits_counter" :key="index">
+            <q-item v-for="(entry, index) in store.information_interval.limits_counter" :key="index">
               <q-item-section>
-                <q-item-label caption>{{ entry['action'] }} </q-item-label>
+                <q-item-label caption>{{ entry.action }} </q-item-label>
 
                 <q-item-label>
                   <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
-                  <q-tooltip> last used at: {{ entry['last_used_at'] }} </q-tooltip>
-                  <q-item-label> {{ entry['count'] }} </q-item-label>
+                  <q-tooltip> last used at: {{ entry.last_used_at }} </q-tooltip>
+                  <q-item-label> {{ entry.count }} </q-item-label>
                 </q-item-label>
               </q-item-section>
               <q-item-section side>
-                <q-btn flat color="green" icon="sym_o_history" @click="displayResetLimitsConfirm(entry['action'])" />
+                <q-btn flat color="green" icon="sym_o_history" @click="displayResetLimitsConfirm(entry.action)" />
               </q-item-section>
             </q-item>
           </q-list>
@@ -511,9 +525,9 @@ import { useMainStore } from '../stores/main-store'
 import { remoteProcedureCall } from '../util/fetch_api.js'
 import { useI18n } from 'vue-i18n'
 import { getLanguageName, preferredLanguages, enableInContextTranslation } from 'boot/i18n'
+import DashboardGenericStatsCard from '../components/DashboardGenericStatsCard.vue'
 
 const { locale } = useI18n({ useScope: 'global' })
-
 const store = useMainStore()
 const mediacollectionStore = useMediacollectionStore()
 const selected_field = ref('')

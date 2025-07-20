@@ -136,8 +136,12 @@ const initSseClient = () => {
     mediacollectionStore.removeMediaitem(_mediaitem)
   })
 
-  eventSource.value?.addEventListener('InformationRecord', (evt) => {
-    Object.assign(store.information, JSON.parse(evt.data))
+  eventSource.value?.addEventListener('OnetimeInformationRecord', (evt) => {
+    Object.assign(store.information_onetime, JSON.parse(evt.data))
+  })
+
+  eventSource.value?.addEventListener('IntervalInformationRecord', (evt) => {
+    Object.assign(store.information_interval, JSON.parse(evt.data))
   })
 }
 </script>
