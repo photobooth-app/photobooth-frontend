@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularz jest wyczyszczony po przełączeniu karty. Czy chcesz kontynuować?",
-  "Continue": "Kontynuuj"
+  "Continue": "Kontynuuj",
+  "(Plugin)": "(Plugin)"
 }

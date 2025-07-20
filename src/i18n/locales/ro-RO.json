@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularul este șters atunci când comutați fila. Doriți să continuați?",
-  "Continue": "Continuă"
+  "Continue": "Continuă",
+  "(Plugin)": "(Plugin)"
 }

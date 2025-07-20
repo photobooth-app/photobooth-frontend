@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Das Formular wird gelöscht, wenn Sie den Tab wechseln. Möchten Sie fortfahren?",
-  "Continue": "Fortfahren"
+  "Continue": "Fortfahren",
+  "(Plugin)": "(Plugin)"
 }

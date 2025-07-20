@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "O formulário é apagado quando você troca a aba. Deseja continuar?",
-  "Continue": "Continuar"
+  "Continue": "Continuar",
+  "(Plugin)": "(Plugin)"
 }

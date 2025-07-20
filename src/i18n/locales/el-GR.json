@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Η φόρμα διαγράφεται όταν αλλάζετε την καρτέλα. Θέλετε να συνεχίσετε?",
-  "Continue": "Συνέχεια"
+  "Continue": "Συνέχεια",
+  "(Plugin)": "(Πρόσθετο)"
 }

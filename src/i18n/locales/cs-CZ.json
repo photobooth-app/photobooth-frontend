@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formulář je vymazán po přepnutí karty. Chcete pokračovat?",
-  "Continue": "Pokračovat"
+  "Continue": "Pokračovat",
+  "(Plugin)": "(zavazadlo)"
 }

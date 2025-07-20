@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Az űrlap törlődik, amikor a lapot váltja. Szeretné folytatni?",
-  "Continue": "Folytatás"
+  "Continue": "Folytatás",
+  "(Plugin)": "(Plugin)"
 }
