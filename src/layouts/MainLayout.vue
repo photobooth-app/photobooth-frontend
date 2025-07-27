@@ -50,6 +50,9 @@ const isSubPage = computed(() => route.matched.length > 1 && route.matched[0].pa
 
 // watch state to force router to "/" if a capture is triggered
 stateStore.$subscribe((mutation, state) => {
+  // do not push if document is hidden anyways because it might pile up in the background(?)
+  if (document.hidden) return
+
   if (state.target == 'counting' && route.path != '/') {
     // quick fix: receive "counting" state but not on indexpage, push router to index
     console.log('counting state received, pushing to index page to countdown')

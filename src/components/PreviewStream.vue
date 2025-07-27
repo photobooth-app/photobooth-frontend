@@ -76,13 +76,19 @@ const { open, close } = useWebSocket('/api/aquisition/stream', {
     delay: 1000,
   },
   onConnected() {
-    console.log('stream connected via websockets')
+    console.log('stream connected via websocket')
   },
-  onDisconnected(ws, event) {
-    console.log('stream disconnected', event)
+  onDisconnected() {
+    console.log('stream disconnected from websocket')
   },
 
   async onMessage(ws, event) {
+    if (document.hidden) {
+      // if doc is hidden, do not process any decoding to save cpu/memory.
+      // otherwise it seems to write in the background and leak memory
+      return
+    }
+
     if ((canvasStream && ctxStream) || (canvasBlurred && ctxBlurred)) {
       const imageBitmap = await createImageBitmap(new Blob([event.data], { type: 'image/jpeg' }))
 
@@ -92,6 +98,8 @@ const { open, close } = useWebSocket('/api/aquisition/stream', {
       if (canvasBlurred && ctxBlurred) {
         throttledUpdateCanvas(canvasBlurred, ctxBlurred, imageBitmap)
       }
+
+      imageBitmap.close() // descroy after drawing to avoid mem leak
     } else {
       console.error('jpeg bytes received but no canvas to draw to.')
     }
@@ -124,6 +132,13 @@ onMounted(() => {
 
 onUnmounted(() => {
   close()
+
+  // reset to void memory leaking
+  canvasStream = null
+  ctxStream = null
+  canvasBlurred = null
+  ctxBlurred = null
+  console.log('preview stream unmounted!')
 })
 </script>
 
