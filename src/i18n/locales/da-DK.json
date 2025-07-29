@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularen ryddes når du skifter fanebladet. Vil du fortsætte?",
-  "Continue": "Fortsæt"
+  "Continue": "Fortsæt",
+  "(Plugin)": "(Plugin)"
 }

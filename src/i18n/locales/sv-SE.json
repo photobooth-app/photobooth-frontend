@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formuläret rensas när du byter flik. Vill du fortsätta?",
-  "Continue": "Fortsätt"
+  "Continue": "Fortsätt",
+  "(Plugin)": "(Plugin)"
 }

@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Форма буде очищена коли ви зміните вкладку. Бажаєте продовжити?",
-  "Continue": "Продовжити"
+  "Continue": "Продовжити",
+  "(Plugin)": "(Плагін)"
 }

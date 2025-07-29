@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Skjemaet er fjernet når du bytter fanen. Vil du fortsette?",
-  "Continue": "Fortsett"
+  "Continue": "Fortsett",
+  "(Plugin)": "(Plugin)"
 }
