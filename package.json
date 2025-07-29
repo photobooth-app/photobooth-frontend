@@ -20,12 +20,12 @@
   "dependencies": {
     "@jsonforms/core": "^3.5.1",
     "@jsonforms/vue": "^3.5.1",
-    "@quasar/extras": "^1.16.17",
+    "@quasar/extras": "^1.17.0",
     "@vueuse/core": "^13.0.0",
     "@vueuse/integrations": "^13.0.0",
     "pinia": "^3.0.1",
     "qrcode.vue": "^3.6.0",
-    "quasar": "^2.18.1",
+    "quasar": "^2.18.2",
     "vue": "^3.5.0",
     "vue-i18n": "^11.0.0",
     "vue-router": "^4.5.0"
@@ -33,7 +33,7 @@
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^4.0.0",
     "@intlify/unplugin-vue-i18n": "^6.0.0",
-    "@quasar/app-vite": "^2.1.4",
+    "@quasar/app-vite": "^2.3.0",
     "@types/lodash": "^4.17.1",
     "@vue/eslint-config-prettier": "^10.1.0",
     "@vue/eslint-config-typescript": "^14.1.4",
