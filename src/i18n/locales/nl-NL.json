@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Het formulier wordt gewist wanneer u van tabblad wisselt. Wilt u doorgaan?",
-  "Continue": "Doorgaan"
+  "Continue": "Doorgaan",
+  "(Plugin)": "(Plugin)"
 }

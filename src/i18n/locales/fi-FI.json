@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Lomake on tyhjennetty, kun vaihdat välilehteä. Haluatko jatkaa?",
-  "Continue": "Jatka"
+  "Continue": "Jatka",
+  "(Plugin)": "(Lugiini)"
 }

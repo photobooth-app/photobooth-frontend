@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Sekmeyi değiştirdiğinizde form temizlenir. Devam etmek istiyor musunuz?",
-  "Continue": "Devam et"
+  "Continue": "Devam et",
+  "(Plugin)": "(Eklenti)"
 }

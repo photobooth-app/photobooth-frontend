@@ -1,6 +1,6 @@
 {
-  "BTN_LABEL_BACK": "返回",
-  "BTN_LABEL_CANCEL": "取消",
+  "BTN_LABEL_BACK": "Artqa",
+  "BTN_LABEL_CANCEL": "Biykarlaw",
   "BTN_LABEL_DELETE_IMAGE": "删除",
   "BTN_LABEL_DELETE_ALL_MEDIA_FILES": "删除所有媒体文件",
   "BTN_LABEL_FILES_CREATE_NEW_FOLDER": "创建文件夹",
@@ -8,13 +8,13 @@
   "BTN_LABEL_FILES_DOWNLOAD_ZIP": "下载 ZIP",
   "BTN_LABEL_FILES_NEW_FOLDER": "新文件夹",
   "BTN_LABEL_FILES_UPLOAD_FILE": "上传文件",
-  "BTN_LABEL_GALLERY_DELETE": "删除",
-  "BTN_LABEL_GALLERY_DOWNLOAD": "下载",
+  "BTN_LABEL_GALLERY_DELETE": "O'shiriw",
+  "BTN_LABEL_GALLERY_DOWNLOAD": "Ju'klep aliw",
   "BTN_LABEL_GALLERY_FILTER": "过滤器",
   "BTN_LABEL_GALLERY_PRINT": "打印",
   "BTN_LABEL_INSTALL_SERVICE": "安装服务",
   "BTN_LABEL_MAINPAGE_TO_ADMIN": "管理员",
-  "BTN_LABEL_MAINPAGE_TO_GALLERY": "画廊",
+  "BTN_LABEL_MAINPAGE_TO_GALLERY": "Galleriya",
   "BTN_LABEL_MAINPAGE_TAKE_ANIMATION": "动画",
   "BTN_LABEL_MAINPAGE_TAKE_COLLAGE": "整理中",
   "BTN_LABEL_MAINPAGE_TAKE_PHOTO": "图片",
@@ -152,5 +152,6 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "当您切换标签页时表单已清除。您想要继续吗？",
-  "Continue": "继续"
+  "Continue": "继续",
+  "(Plugin)": "(插件)"
 }
