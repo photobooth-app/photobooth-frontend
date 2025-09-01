@@ -22,12 +22,29 @@
 
       <q-page-container class="q-pa-none galleryimagedetail full-height">
         <q-page class="full-height">
+          <!-- Normal Gallery: Show carousel with swipe navigation -->
           <PageCarouselView
+            v-if="!isItemPresenterMode"
             :mediaitem-id="currentMediaitem.id"
             :sliced-images="mediacollectionStore.collection"
             @trigger-changed-item="onCarouselTransition"
             @click="rightDrawerOpen = false"
           />
+          
+          <!-- ItemPresenter: Static single image display -->
+          <div 
+            v-else 
+            class="item-presenter-static"
+            @touchmove.prevent
+            @touchstart.passive="false"
+            @touchend.passive="false"
+            @click="rightDrawerOpen = false"
+          >
+            <MediaItemPreviewViewer 
+              :item="currentMediaitem" 
+              class="full-width full-height"
+            />
+          </div>
 
           <q-page-sticky position="top-right" class="q-ma-lg" v-if="configurationStore.configuration.uisettings.gallery_show_qrcode">
             <PageQrCode
@@ -85,7 +102,7 @@
 <script setup lang="ts">
 import { useConfigurationStore } from '../stores/configuration-store'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
-import { ref, onBeforeMount, computed, onMounted, watch } from 'vue'
+import { ref, onBeforeMount, computed, onMounted, onUnmounted, watch } from 'vue'
 import { default as PageShareParameters } from '../components/mediaviewer/PageShareParameters.vue'
 import { default as PageToolbar } from '../components/mediaviewer/PageToolbar.vue'
 import { default as HeaderCountdownTimer } from '../components/mediaviewer/HeaderCountdownTimer.vue'
@@ -94,6 +111,7 @@ import { default as DrawerFilter } from '../components/mediaviewer/DrawerFilter.
 import { default as PageQrCode } from '../components/mediaviewer/PageQrCode.vue'
 import { default as PageCarouselView } from '../components/mediaviewer/PageCarouselView.vue'
 import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
+import MediaItemPreviewViewer from '../components/MediaItemPreviewViewer.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
@@ -118,6 +136,11 @@ const props = defineProps<{
   forceShowDeleteButton?: boolean
 }>()
 
+// Detect if we're in ItemPresenter mode
+const isItemPresenterMode = computed(() => 
+  route.name === 'itempresenter'
+)
+
 onBeforeMount(() => {
   selectedMediaitemId.value = route.params.id as string
   getAvailableFilter()
@@ -127,6 +150,11 @@ watch(route, (to) => {
 })
 onMounted(() => {
   headercountdowntimer.value = props.startTimer
+  
+  // Add touch event blocking for ItemPresenter mode
+  if (isItemPresenterMode.value) {
+    setupTouchBlocking()
+  }
 })
 const onCarouselTransition = (newMediaitemId: string) => {
   selectedMediaitemId.value = newMediaitemId
@@ -251,4 +279,79 @@ const doShareActionWithParameters = async (config_index: number, input_data: unk
     })
   }
 }
+
+// Touch event blocking for ItemPresenter
+let touchStartX = 0
+let touchEventListeners: Array<() => void> = []
+
+const setupTouchBlocking = () => {
+  // Block touch events more aggressively
+  const blockTouch = (e: TouchEvent) => {
+    if (e.type === 'touchmove') {
+      e.preventDefault()
+      e.stopPropagation()
+      return false
+    }
+    
+    // Allow single taps but block swipes
+    if (e.type === 'touchstart') {
+      touchStartX = e.touches[0].clientX
+    }
+    
+    if (e.type === 'touchend') {
+      const touchEndX = e.changedTouches[0].clientX
+      const swipeDistance = Math.abs(touchEndX - touchStartX)
+      
+      if (swipeDistance > 50) { // Swipe detected
+        e.preventDefault()
+        e.stopPropagation()
+        return false
+      }
+    }
+  }
+  
+  // Add event listeners with capture
+  document.addEventListener('touchmove', blockTouch, { passive: false, capture: true })
+  document.addEventListener('touchstart', blockTouch, { passive: false, capture: true })
+  document.addEventListener('touchend', blockTouch, { passive: false, capture: true })
+  
+  // Store cleanup functions
+  touchEventListeners = [
+    () => document.removeEventListener('touchmove', blockTouch, { capture: true }),
+    () => document.removeEventListener('touchstart', blockTouch, { capture: true }),
+    () => document.removeEventListener('touchend', blockTouch, { capture: true })
+  ]
+}
+
+onUnmounted(() => {
+  // Cleanup touch event listeners
+  touchEventListeners.forEach(cleanup => cleanup())
+})
 </script>
+
+<style scoped>
+.item-presenter-static {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  overflow: hidden;
+}
+
+.item-presenter-static * {
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
+
+/* Ensure image is clickable but not swipeable */
+.item-presenter-static .q-img,
+.item-presenter-static img {
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+</style>
