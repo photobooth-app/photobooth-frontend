@@ -22,12 +22,17 @@
 
       <q-page-container class="q-pa-none galleryimagedetail full-height">
         <q-page class="full-height">
-          <PageCarouselView
-            :mediaitem-id="currentMediaitem.id"
-            :sliced-images="mediacollectionStore.collection"
-            @trigger-changed-item="onCarouselTransition"
-            @click="rightDrawerOpen = false"
-          />
+          <template v-if="itemPresenterMode">
+            <MediaItemPreviewViewer :item="currentMediaitem" style="user-select: none" />
+          </template>
+          <template v-else>
+            <PageCarouselView
+              :mediaitem-id="currentMediaitem.id"
+              :sliced-images="mediacollectionStore.collection"
+              @trigger-changed-item="onCarouselTransition"
+              @click="rightDrawerOpen = false"
+            />
+          </template>
 
           <q-page-sticky position="top-right" class="q-ma-lg" v-if="configurationStore.configuration.uisettings.gallery_show_qrcode">
             <PageQrCode
@@ -46,7 +51,7 @@
               configurationStore.configuration.uisettings.gallery_show_shareprint && configurationStore.configuration.share.sharing_enabled
             "
             :share-buttons="shareButtons"
-            :show-delete="props.forceShowDeleteButton || configurationStore.configuration.uisettings.gallery_show_delete"
+            :show-delete="props.itemPresenterMode || configurationStore.configuration.uisettings.gallery_show_delete"
             :show-download="configurationStore.configuration.uisettings.gallery_show_download"
             :image_number="currentMediaitemNumber"
             :images_total="mediacollectionStore.collection_number_of_items"
@@ -99,6 +104,7 @@ import { useQuasar } from 'quasar'
 import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
 import { remoteProcedureCall, _fetch } from '../util/fetch_api.js'
 import { watchDebounced } from '@vueuse/core'
+import { default as MediaItemPreviewViewer } from '../components/MediaItemPreviewViewer.vue'
 
 const $q = useQuasar()
 const route = useRoute()
@@ -115,7 +121,7 @@ const available_filter = ref([])
 const qrShareUrls = ref([])
 const props = defineProps<{
   startTimer: boolean
-  forceShowDeleteButton?: boolean
+  itemPresenterMode?: boolean
 }>()
 
 onBeforeMount(() => {

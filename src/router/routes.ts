@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
         path: 'itempresenter/:id',
         name: 'itempresenter',
         component: () => import('pages/GalleryDetailPage.vue'),
-        props: { startTimer: true, forceShowDeleteButton: true },
+        props: { startTimer: true, itemPresenterMode: true },
       },
     ],
   },
