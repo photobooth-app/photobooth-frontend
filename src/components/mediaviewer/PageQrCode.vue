@@ -5,11 +5,11 @@
       <q-card-section class="pb-qrcode-code q-pa-none q-px-sm" v-for="(url, index) in props.urls" v-bind:key="index">
         <div v-if="linkQrCodes">
           <a :href="url" target="_blank">
-            <qrcode-vue :value="url" :size="200" level="L" render-as="svg" style="width: 100%" />
+            <qrcode-vue :value="url" :margin="margin" :size="200" level="L" render-as="svg" style="width: 100%" />
           </a>
         </div>
         <div v-else>
-          <qrcode-vue :value="url" :size="200" level="L" render-as="svg" style="width: 100%" />
+          <qrcode-vue :value="url" :margin="margin" :size="200" level="L" render-as="svg" style="width: 100%" />
         </div>
       </q-card-section>
       <q-card-section v-if="textBelow" class="pb-qrcode-text-below q-pa-sm"> {{ textBelow }} </q-card-section>
@@ -19,6 +19,8 @@
 
 <script setup lang="ts">
 import QrcodeVue from 'qrcode.vue'
+import { useQuasar } from 'quasar'
+import { computed } from 'vue'
 
 interface Props {
   urls: string[]
@@ -29,6 +31,10 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   linkQrCodes: () => false,
+})
+
+const margin = computed((): number => {
+  return useQuasar().dark.isActive ? 2 : 0
 })
 </script>
 
