@@ -40,12 +40,12 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9.35.0",
     "eslint-plugin-vue": "^10.4.0",
-    "globals": "^16.3.0",
+    "globals": "^16.4.0",
     "openapi-typescript": "^7.9.1",
     "prettier": "^3.6.2",
     "typescript": "^5.9.2",
     "vite-plugin-checker": "^0.10.3",
-    "vue-tsc": "^3.0.6"
+    "vue-tsc": "^3.0.7"
   },
   "engines": {
     "node": "^28 || ^26 || ^24 || ^22 || ^20 || ^18",
