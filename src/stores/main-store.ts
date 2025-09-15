@@ -14,7 +14,6 @@ function defaultOnetimeInformation(): components['schemas']['SseEventOnetimeInfo
     data_directory: '',
     python_executable: '',
     disk: {},
-    event: 'OnetimeInformationRecord',
   }
 }
 
@@ -30,7 +29,6 @@ function defaultIntervalInformation(): components['schemas']['SseEventIntervalIn
     temperatures: {},
     mediacollection: {},
     plugins: null,
-    event: 'IntervalInformationRecord',
   }
 }
 

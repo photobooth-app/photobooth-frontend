@@ -815,7 +815,10 @@ export interface paths {
         post?: never;
         delete?: never;
         options?: never;
-        /** Api Getitems Head */
+        /**
+         * Api Getitems Head
+         * @description head used for download portal to check if the file is available without downloading it.
+         */
         head: operations["api_getitems_head_media__dimension___mediaitem_id__head"];
         patch?: never;
         trace?: never;
@@ -1201,7 +1204,7 @@ export interface components {
              *             "parameters_dialog_action_label": "GO",
              *             "parameters_dialog_caption": "Make your choice!",
              *             "share_blocked_time": 3,
-             *             "share_command": "echo {filename} {copies}"
+             *             "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
              *           },
              *           "trigger": {
              *             "gpio_trigger": {
@@ -1240,7 +1243,7 @@ export interface components {
              *             "parameters_dialog_action_label": "GO",
              *             "parameters_dialog_caption": "How many copies?",
              *             "share_blocked_time": 3,
-             *             "share_command": "echo {filename} {copies}"
+             *             "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
              *           },
              *           "trigger": {
              *             "gpio_trigger": {
@@ -1279,7 +1282,7 @@ export interface components {
              *             "parameters_dialog_action_label": "Send",
              *             "parameters_dialog_caption": "E-Mail your image...",
              *             "share_blocked_time": 3,
-             *             "share_command": "echo {filename} to mail {mail}"
+             *             "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} to mail {mail}"
              *           },
              *           "trigger": {
              *             "gpio_trigger": {
@@ -1391,7 +1394,9 @@ export interface components {
              *     } */
             hardwareinputoutput: components["schemas"]["GroupHardwareInputOutput"];
             /** @default {
-             *       "secret_key": "ThisIsTheDefaultSecret"
+             *       "secret_key": "ThisIsTheDefaultSecret",
+             *       "cmd_shutdown": "shutdown now",
+             *       "cmd_reboot": "reboot"
              *     } */
             misc: components["schemas"]["GroupMisc"];
         };
@@ -2439,19 +2444,19 @@ export interface components {
             HIRES_STILL_QUALITY: number;
             /**
              * Full Still Length
-             * @description Dimension of longer side used for scaling full images. Shorter side of the image is calculated to keep aspect ratio. For performance choose as low as possible but still gives decent print quality. Example: 1500/6inch=250dpi
+             * @description Minimum dimension of the longer side used to scale full captures. The shorter side is calculated to keep aspect ratio. For best performance choose as low as possible but still gives decent print quality. Example: 1500/6inch=250dpi
              * @default 1500
              */
             full_still_length: number;
             /**
              * Preview Still Length
-             * @description Dimension of longer side used for scaling previews. Shorter side of the image is calculated to keep aspect ratio.
+             * @description Minimum dimension of the longer side used to scale preview captures. The shorter side is calculated to keep aspect ratio.
              * @default 1200
              */
             preview_still_length: number;
             /**
              * Thumbnail Still Length
-             * @description Dimension of longer side used for scaling thumbnails. Shorter side of the image is calculated to keep aspect ratio.
+             * @description Minimum dimension of the longer side used to scale thumbnails captures. The shorter side is calculated to keep aspect ratio.
              * @default 400
              */
             thumbnail_still_length: number;
@@ -2497,6 +2502,18 @@ export interface components {
              * @default ThisIsTheDefaultSecret
              */
             secret_key: string;
+            /**
+             * Cmd Shutdown
+             * @description Command to shutdown when requested by the app. Change it if you have custom UPS solutions that need to poweroff properly.
+             * @default shutdown now
+             */
+            cmd_shutdown: string;
+            /**
+             * Cmd Reboot
+             * @description Command to reboot when requested by the app. Change it if you have custom UPS solutions that need to poweroff properly.
+             * @default reboot
+             */
+            cmd_reboot: string;
         };
         /**
          * QR code share
@@ -2569,7 +2586,7 @@ export interface components {
              *           "parameters_dialog_action_label": "GO",
              *           "parameters_dialog_caption": "Make your choice!",
              *           "share_blocked_time": 3,
-             *           "share_command": "echo {filename} {copies}"
+             *           "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
              *         },
              *         "trigger": {
              *           "gpio_trigger": {
@@ -2608,7 +2625,7 @@ export interface components {
              *           "parameters_dialog_action_label": "GO",
              *           "parameters_dialog_caption": "How many copies?",
              *           "share_blocked_time": 3,
-             *           "share_command": "echo {filename} {copies}"
+             *           "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
              *         },
              *         "trigger": {
              *           "gpio_trigger": {
@@ -2647,7 +2664,7 @@ export interface components {
              *           "parameters_dialog_action_label": "Send",
              *           "parameters_dialog_caption": "E-Mail your image...",
              *           "share_blocked_time": 3,
-             *           "share_command": "echo {filename} to mail {mail}"
+             *           "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} to mail {mail}"
              *         },
              *         "trigger": {
              *           "gpio_trigger": {
@@ -3059,7 +3076,7 @@ export interface components {
         ShareProcessing: {
             /**
              * Share Command
-             * @description Command issued to share/print. Use {filename} as placeholder for the mediaitem to be shared/printed.
+             * @description Command issued to share/print. Use {filename} as placeholder for the mediaitem to be shared/printed. Also available: {media_type}=[image,collage,video,animation] and {action_config_name} which is the action name defined in the config.
              * @default echo {filename}
              */
             share_command: string;
@@ -3264,11 +3281,6 @@ export interface components {
             };
             /** Plugins */
             plugins: components["schemas"]["GenericStats"][];
-            /**
-             * Event
-             * @default IntervalInformationRecord
-             */
-            event: string;
         };
         /** SseEventOnetimeInformationRecord */
         SseEventOnetimeInformationRecord: {
@@ -3299,11 +3311,6 @@ export interface components {
             disk: {
                 [key: string]: number;
             };
-            /**
-             * Event
-             * @default OnetimeInformationRecord
-             */
-            event: string;
         };
         /** SubList */
         SubList: {
