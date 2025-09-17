@@ -148,7 +148,8 @@
       "blocked_request_ignored": "crwdns447:0{remaining_s}crwdne447:0",
       "process_started": "crwdns449:0{action_name}crwdne449:0",
       "process_failed": "crwdns451:0crwdne451:0",
-      "quota_notification": "crwdns453:0{action_name}crwdnd453:0{current_shares}crwdnd453:0{quota}crwdne453:0"
+      "quota_notification": "crwdns453:0{action_name}crwdnd453:0{current_shares}crwdnd453:0{quota}crwdne453:0",
+      "wrong_media_type": "crwdns806:0{action_name}crwdne806:0"
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "crwdns800:0crwdne800:0",

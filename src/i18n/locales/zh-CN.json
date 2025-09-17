@@ -148,7 +148,8 @@
       "blocked_request_ignored": "尚未准备好，请再等 {remaining_s}秒后再试。",
       "process_started": "{action_name} 开始了。",
       "process_failed": ":pensive_face：处理操作时出错。请再试一次。",
-      "quota_notification": "{action_name} 配额为 {current_shares} of {quota}"
+      "quota_notification": "{action_name} 配额为 {current_shares} of {quota}",
+      "wrong_media_type": "{action_name} 只支持图像。"
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "当您切换标签页时表单已清除。您想要继续吗？",

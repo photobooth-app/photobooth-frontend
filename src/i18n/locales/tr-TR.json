@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Henüz hazır değil, lütfen tekrar denemeden önce {remaining_s}s daha bekleyin.",
       "process_started": "{action_name} başladı.",
       "process_failed": "😔 Eylem işlenirken hata oluştu. Lütfen tekrar deneyin.",
-      "quota_notification": "{action_name} kota {current_shares} of {quota}"
+      "quota_notification": "{action_name} kota {current_shares} of {quota}",
+      "wrong_media_type": "{action_name} yalnızca görüntüleri destekler."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Sekmeyi değiştirdiğinizde form temizlenir. Devam etmek istiyor musunuz?",

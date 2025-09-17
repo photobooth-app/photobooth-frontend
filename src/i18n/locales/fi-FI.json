@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Ei vielä valmis, odota vielä {remaining_s}s ennen kuin yrität uudelleen.",
       "process_started": "{action_name} aloitettu.",
       "process_failed": "😔 Virhe toimintoa käsiteltäessä. Yritä uudelleen.",
-      "quota_notification": "{action_name} kiintiö on {current_shares} of {quota}"
+      "quota_notification": "{action_name} kiintiö on {current_shares} of {quota}",
+      "wrong_media_type": "{action_name} tukee vain kuvia."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Lomake on tyhjennetty, kun vaihdat välilehteä. Haluatko jatkaa?",

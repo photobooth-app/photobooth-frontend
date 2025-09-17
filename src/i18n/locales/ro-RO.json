@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Încă nu este gata, vă rugăm să așteptați încă un {remaining_s}înainte de a încerca din nou.",
       "process_started": "{action_name} a început.",
       "process_failed": "😔 Eroare la procesarea acțiunii. Vă rugăm să încercați din nou.",
-      "quota_notification": "{action_name} contingent este {current_shares} {quota}"
+      "quota_notification": "{action_name} contingent este {current_shares} {quota}",
+      "wrong_media_type": "{action_name} suportă doar imagini."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularul este șters atunci când comutați fila. Doriți să continuați?",

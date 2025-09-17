@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Ännu inte redo, vänligen vänta en annan {remaining_s}s innan du försöker igen.",
       "process_started": "{action_name} startade.",
       "process_failed": "😔 Fel vid bearbetningen av åtgärden. Försök igen.",
-      "quota_notification": "{action_name} kvoten är {current_shares} av {quota}"
+      "quota_notification": "{action_name} kvoten är {current_shares} av {quota}",
+      "wrong_media_type": "{action_name} stöder endast bilder."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formuläret rensas när du byter flik. Vill du fortsätta?",

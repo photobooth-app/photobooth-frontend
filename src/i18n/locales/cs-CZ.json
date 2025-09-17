@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Ještě není připraveno, počkejte prosím další {remaining_s}s než to zkusíte znovu.",
       "process_started": "{action_name} začalo.",
       "process_failed": "😔 Chyba při zpracování akce. Zkuste to prosím znovu.",
-      "quota_notification": "{action_name} kvóta je {current_shares} z {quota}"
+      "quota_notification": "{action_name} kvóta je {current_shares} z {quota}",
+      "wrong_media_type": "{action_name} podporuje pouze obrázky."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formulář je vymazán po přepnutí karty. Chcete pokračovat?",

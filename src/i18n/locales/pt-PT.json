@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Ainda não está pronto, por favor, aguarde outro {remaining_s}s antes de tentar novamente.",
       "process_started": "{action_name} começou.",
       "process_failed": "😔 Erro durante o processamento da ação. Por favor, tente novamente.",
-      "quota_notification": "Cota {action_name} é {current_shares} de {quota}"
+      "quota_notification": "Cota {action_name} é {current_shares} de {quota}",
+      "wrong_media_type": "{action_name} suporta apenas imagens."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "O formulário é apagado quando você troca a aba. Deseja continuar?",

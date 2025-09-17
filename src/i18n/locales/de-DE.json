@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Noch nicht fertig, bitte warte weitere {remaining_s}s, bevor du es erneut versuchst.",
       "process_started": "{action_name} gestartet.",
       "process_failed": "😔 Fehler beim Verarbeiten des Jobs. Bitte versuche es erneut.",
-      "quota_notification": "{action_name} Kontingent ist {current_shares} von {quota}"
+      "quota_notification": "{action_name} Kontingent ist {current_shares} von {quota}",
+      "wrong_media_type": "{action_name} unterstützt nur Bilder."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Das Formular wird gelöscht, wenn Sie den Tab wechseln. Möchten Sie fortfahren?",

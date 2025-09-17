@@ -148,7 +148,8 @@
       "blocked_request_ignored": "まだ準備ができていません。もう一度お試しになる前に、別の {remaining_s}秒お待ちください。",
       "process_started": "{action_name} を開始しました。",
       "process_failed": "アクションの処理中にエラーが発生しました。もう一度やり直してください。",
-      "quota_notification": "{action_name} クォータは {current_shares} / {quota} です"
+      "quota_notification": "{action_name} クォータは {current_shares} / {quota} です",
+      "wrong_media_type": "{action_name} は画像のみをサポートしています。"
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "タブを切り替えるとフォームがクリアされます。続行しますか？",

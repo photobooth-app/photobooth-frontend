@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Pas encore prêt, veuillez attendre {remaining_s}s avant de réessayer.",
       "process_started": "{action_name} à commencé.",
       "process_failed": "😔 Erreur lors du traitement de l'action. Veuillez réessayer.",
-      "quota_notification": "Le quota {action_name} est de {current_shares} sur {quota}"
+      "quota_notification": "Le quota {action_name} est de {current_shares} sur {quota}",
+      "wrong_media_type": "{action_name} ne prend en charge que les images."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Le formulaire est effacé lorsque vous changer d'onglet. Voulez-vous continuer ?",

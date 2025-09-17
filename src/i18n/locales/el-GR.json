@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Δεν είστε ακόμα έτοιμοι, παρακαλώ περιμένετε άλλο {remaining_s}πριν δοκιμάσετε ξανά.",
       "process_started": "Το {action_name} ξεκίνησε.",
       "process_failed": "😔 Σφάλμα κατά την επεξεργασία της ενέργειας. Παρακαλώ δοκιμάστε ξανά.",
-      "quota_notification": "{action_name} η ποσόστωση είναι {current_shares} του {quota}"
+      "quota_notification": "{action_name} η ποσόστωση είναι {current_shares} του {quota}",
+      "wrong_media_type": "Το {action_name} υποστηρίζει μόνο εικόνες."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Η φόρμα διαγράφεται όταν αλλάζετε την καρτέλα. Θέλετε να συνεχίσετε?",

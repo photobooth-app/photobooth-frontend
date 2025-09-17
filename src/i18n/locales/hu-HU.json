@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Még nincs kész, kérjük, várjon még {remaining_s}s-t, mielőtt újra megpróbálná.",
       "process_started": "{action_name} elkezdődött.",
       "process_failed": "😔 Hiba a művelet feldolgozása közben. Kérjük, próbálja meg újra.",
-      "quota_notification": "{action_name} a kvóta a {current_shares} a {quota}oldalon található."
+      "quota_notification": "{action_name} a kvóta a {current_shares} a {quota}oldalon található.",
+      "wrong_media_type": "{action_name} csak képeket támogat."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Az űrlap törlődik, amikor a lapot váltja. Szeretné folytatni?",

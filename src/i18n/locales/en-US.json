@@ -148,7 +148,8 @@
       "blocked_request_ignored": "No yet ready, please wait another {remaining_s}s before trying again.",
       "process_started": "{action_name} started.",
       "process_failed": "😔 Error while processing the action. Please try again.",
-      "quota_notification": "{action_name} quota is {current_shares} of {quota}"
+      "quota_notification": "{action_name} quota is {current_shares} of {quota}",
+      "wrong_media_type": "{action_name} supports only images."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",

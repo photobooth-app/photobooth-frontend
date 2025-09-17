@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Ще немає готових, будь ласка, зачекайте декілька {remaining_s}и перед повторною спробою.",
       "process_started": "{action_name} розпочато.",
       "process_failed": "😔 Помилка при обробці дії. Будь ласка, спробуйте знову.",
-      "quota_notification": "Квота {action_name} складає {current_shares} {quota}"
+      "quota_notification": "Квота {action_name} складає {current_shares} {quota}",
+      "wrong_media_type": "{action_name} підтримує тільки зображення."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Форма буде очищена коли ви зміните вкладку. Бажаєте продовжити?",

@@ -148,7 +148,8 @@
       "blocked_request_ignored": "아직 준비되지 않았습니다. {remaining_s}초 정도 기다렸다가 다시 시도하세요.",
       "process_started": "{action_name} 시작되었습니다.",
       "process_failed": "😔 작업을 처리하는 동안 오류가 발생했습니다. 다시 시도해 주세요.",
-      "quota_notification": "{action_name} 할당량은 {current_shares} 의 {quota}"
+      "quota_notification": "{action_name} 할당량은 {current_shares} 의 {quota}",
+      "wrong_media_type": "{action_name} 는 이미지만 지원합니다."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "탭을 전환하면 양식이 지워집니다. 계속하시겠습니까?",

@@ -148,7 +148,8 @@
       "blocked_request_ignored": "Endnu ikke klar, vent venligst en anden {remaining_s}s, før du prøver igen.",
       "process_started": "{action_name} startet.",
       "process_failed": "😔 Fejl under behandling af handlingen. Prøv venligst igen.",
-      "quota_notification": "{action_name} kvote er {current_shares} af {quota}"
+      "quota_notification": "{action_name} kvote er {current_shares} af {quota}",
+      "wrong_media_type": "{action_name} understøtter kun billeder."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularen ryddes når du skifter fanebladet. Vil du fortsætte?",
