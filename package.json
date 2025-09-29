@@ -45,7 +45,7 @@
     "prettier": "^3.6.2",
     "typescript": "^5.9.2",
     "vite-plugin-checker": "^0.10.3",
-    "vue-tsc": "^3.0.7"
+    "vue-tsc": "^3.1.0"
   },
   "engines": {
     "node": "^28 || ^26 || ^24 || ^22 || ^20 || ^18",
