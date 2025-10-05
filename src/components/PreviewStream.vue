@@ -68,7 +68,10 @@ const throttledUpdateCanvas = useThrottleFn((canvas, ctx, img) => {
   updateCanvas(canvas, ctx, img)
 }, 300)
 
-const { open, close } = useWebSocket('/api/aquisition/stream', {
+// fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
+// so we generate the absolute URL to connect to
+const websocketStreamUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream`
+const { open, close } = useWebSocket(websocketStreamUrl, {
   immediate: false,
   // autoClose: true,
   autoReconnect: {
