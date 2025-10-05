@@ -38,20 +38,6 @@ function disableInContextTranslation() {
   }
 }
 
-function availableLocales() {
-  const { availableLocales } = i18n.global
-
-  return availableLocales
-    .filter((locale) => locale != incontextLanguageCodeSpecial) // remove special lang
-    .map(function (locale) {
-      return {
-        value: locale,
-        label: getLanguageName(locale),
-      }
-    })
-    .sort((a, b) => a.label.localeCompare(b.label))
-}
-
 const getLanguageName = (locale) => {
   const localeName = new Intl.DisplayNames([locale], { type: 'language', languageDisplay: 'standard' })
   return localeName.of(locale)
@@ -67,4 +53,4 @@ export default ({ app }) => {
   // Tell app to use the I18n instance
   app.use(i18n)
 }
-export { enableInContextTranslation, disableInContextTranslation, getLanguageName, preferredLanguages, availableLocales }
+export { enableInContextTranslation, disableInContextTranslation, getLanguageName, preferredLanguages }
