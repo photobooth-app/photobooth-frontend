@@ -25,7 +25,7 @@ import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonfor
 import { default as ControlWrapper } from './ControlWrapper.vue'
 import { useQuasarControl } from '../util'
 
-const controlRenderer = defineComponent({
+export default defineComponent({
   name: 'NumberControlRenderer',
   components: { ControlWrapper },
   props: {
@@ -36,6 +36,4 @@ const controlRenderer = defineComponent({
   },
   computed: {},
 })
-
-export default controlRenderer
 </script>

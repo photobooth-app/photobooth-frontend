@@ -19,7 +19,7 @@ import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsAnyOfC
 import { defineComponent } from 'vue'
 import { useQuasarControl } from '../util'
 
-const controlRenderer = defineComponent({
+export default defineComponent({
   name: 'AnyOfOptionalRenderer',
   components: { DispatchRenderer },
   props: {
@@ -64,6 +64,4 @@ const controlRenderer = defineComponent({
     },
   },
 })
-
-export default controlRenderer
 </script>

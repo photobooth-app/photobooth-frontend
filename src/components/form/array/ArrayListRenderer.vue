@@ -51,7 +51,7 @@ import { DispatchRenderer, rendererProps, useJsonFormsArrayControl, type Rendere
 import { useQuasarArrayControl } from '../util'
 import ArrayListElement from './ArrayListElement.vue'
 
-const controlRenderer = defineComponent({
+export default defineComponent({
   name: 'ArrayListRenderer',
   components: {
     ArrayListElement,
@@ -100,6 +100,4 @@ const controlRenderer = defineComponent({
     },
   },
 })
-
-export default controlRenderer
 </script>

@@ -23,7 +23,7 @@ import { rendererProps, useJsonFormsEnumControl, type RendererProps } from '@jso
 import { default as ControlWrapper } from './ControlWrapper.vue'
 import { useQuasarControl } from '../util'
 
-const controlRenderer = defineComponent({
+export default defineComponent({
   name: 'EnumControlRenderer',
   components: {
     ControlWrapper,
@@ -35,6 +35,4 @@ const controlRenderer = defineComponent({
     return useQuasarControl(useJsonFormsEnumControl(props), (target) => target.value)
   },
 })
-
-export default controlRenderer
 </script>

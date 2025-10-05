@@ -19,7 +19,8 @@ import cloneDeep from 'lodash/cloneDeep'
 import isEmpty from 'lodash/isEmpty'
 import { defineComponent } from 'vue'
 import { useNested, useQuasarControl } from '../util'
-const controlRenderer = defineComponent({
+
+export default defineComponent({
   name: 'ObjectRenderer',
   components: {
     DispatchRenderer,
@@ -71,6 +72,4 @@ const controlRenderer = defineComponent({
     },
   },
 })
-
-export default controlRenderer
 </script>

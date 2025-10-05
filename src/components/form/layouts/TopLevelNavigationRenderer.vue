@@ -55,8 +55,8 @@ import { defineComponent, ref } from 'vue'
 import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue'
 import { useQuasarLayout, useAjv } from '../util'
 
-const TopLevelNavigationRenderer = defineComponent({
-  name: 'TopLevelNavigation',
+export default defineComponent({
+  name: 'TopLevelNavigationRenderer',
   components: {
     DispatchRenderer,
   },
@@ -89,11 +89,4 @@ const TopLevelNavigationRenderer = defineComponent({
     },
   },
 })
-
-export default TopLevelNavigationRenderer
-
-// export const entry: JsonFormsRendererRegistryEntry = {
-//   renderer: TopLevelNavigationRenderer,
-//   tester: rankWith(2, uiTypeIs('TopLevelNavigation')),
-// };
 </script>

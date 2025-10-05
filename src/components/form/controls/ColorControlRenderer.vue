@@ -25,7 +25,7 @@ import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonfor
 import { default as ControlWrapper } from './ControlWrapper.vue'
 import { useQuasarControl } from '../util'
 
-const controlRenderer = defineComponent({
+export default defineComponent({
   name: 'ColorControlRenderer',
   components: { ControlWrapper },
   props: {
@@ -43,6 +43,4 @@ const controlRenderer = defineComponent({
   },
   methods: {},
 })
-
-export default controlRenderer
 </script>

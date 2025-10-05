@@ -21,7 +21,7 @@ import { defineComponent } from 'vue'
 import { rendererProps, useJsonFormsMultiEnumControl, type RendererProps } from '@jsonforms/vue'
 import { useQuasarBasicControl } from '../util'
 
-const controlRenderer = defineComponent({
+export default defineComponent({
   name: 'EnumArrayRenderer',
   components: {},
   props: {
@@ -39,6 +39,4 @@ const controlRenderer = defineComponent({
     },
   },
 })
-
-export default controlRenderer
 </script>

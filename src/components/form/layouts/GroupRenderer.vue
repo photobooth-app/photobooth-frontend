@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
-import { type JsonFormsRendererRegistryEntry, type Layout, rankWith, and, isLayout, uiTypeIs } from '@jsonforms/core'
+import { type Layout } from '@jsonforms/core'
 import { defineComponent } from 'vue'
 import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue'
 import { useQuasarLayout } from '../util'
 
-const layoutRenderer = defineComponent({
+export default defineComponent({
   name: 'GroupRenderer',
   components: {
     DispatchRenderer,
@@ -59,13 +59,6 @@ const layoutRenderer = defineComponent({
     },
   },
 })
-
-export default layoutRenderer
-
-export const entry: JsonFormsRendererRegistryEntry = {
-  renderer: layoutRenderer,
-  tester: rankWith(2, and(isLayout, uiTypeIs('Group'))),
-}
 </script>
 
 <!-- Default styles for the 'nested' feature -->

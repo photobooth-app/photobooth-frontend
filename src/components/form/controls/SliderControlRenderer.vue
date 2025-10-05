@@ -26,7 +26,7 @@ import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonfor
 import { default as ControlWrapper } from './ControlWrapper.vue'
 import { useQuasarControl } from '../util'
 
-const controlRenderer = defineComponent({
+export default defineComponent({
   name: 'SliderControlRenderer',
   components: {
     ControlWrapper,
@@ -44,6 +44,4 @@ const controlRenderer = defineComponent({
     )
   },
 })
-
-export default controlRenderer
 </script>

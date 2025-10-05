@@ -59,8 +59,8 @@ import { defineComponent, ref } from 'vue'
 import { CombinatorProperties } from './components'
 import { useQuasarControl } from '../util'
 
-const controlRenderer = defineComponent({
-  name: 'one-of-renderer',
+export default defineComponent({
+  name: 'OneOfTabRenderer',
   components: {
     DispatchRenderer,
     CombinatorProperties,
@@ -128,6 +128,4 @@ const controlRenderer = defineComponent({
     },
   },
 })
-
-export default controlRenderer
 </script>

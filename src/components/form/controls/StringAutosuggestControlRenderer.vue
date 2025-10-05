@@ -37,7 +37,7 @@ import { default as ControlWrapper } from './ControlWrapper.vue'
 import { useQuasarControl } from '../util'
 import { _fetch } from '../../../util/fetch_api'
 
-const controlRenderer = defineComponent({
+export default defineComponent({
   name: 'StringAutosuggestControlRenderer',
   components: { ControlWrapper },
   props: {
@@ -89,6 +89,4 @@ const controlRenderer = defineComponent({
     }
   },
 })
-
-export default controlRenderer
 </script>

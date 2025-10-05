@@ -20,8 +20,8 @@ import { rendererProps, useJsonFormsControl, type RendererProps } from '@jsonfor
 import { default as ControlWrapper } from './ControlWrapper.vue'
 import { useQuasarControl } from '../util'
 
-const controlRenderer = defineComponent({
-  name: 'BooleanControlRenderer',
+export default defineComponent({
+  name: 'BooleanToggleControlRenderer',
   components: { ControlWrapper },
   props: {
     ...rendererProps<ControlElement>(),
@@ -30,6 +30,4 @@ const controlRenderer = defineComponent({
     return useQuasarControl(useJsonFormsControl(props), (value: any) => value)
   },
 })
-
-export default controlRenderer
 </script>

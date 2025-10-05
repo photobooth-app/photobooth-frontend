@@ -41,7 +41,7 @@ import { defineComponent } from 'vue'
 import { useQuasarControl } from '../util'
 import { CombinatorProperties } from './components'
 
-const controlRenderer = defineComponent({
+export default defineComponent({
   name: 'AllOfRenderer',
   components: {
     DispatchRenderer,
@@ -71,6 +71,4 @@ const controlRenderer = defineComponent({
     },
   },
 })
-
-export default controlRenderer
 </script>

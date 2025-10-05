@@ -26,7 +26,7 @@
 import { defineComponent, type PropType } from 'vue'
 import type { Styles } from '../styles'
 
-const listItem = defineComponent({
+export default defineComponent({
   name: 'ArrayListElement',
   props: {
     label: {
@@ -107,6 +107,4 @@ const listItem = defineComponent({
     },
   },
 })
-
-export default listItem
 </script>

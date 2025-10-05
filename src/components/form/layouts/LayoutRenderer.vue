@@ -19,7 +19,7 @@ import { defineComponent } from 'vue'
 import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue'
 import { useQuasarLayout } from '../util'
 
-const layoutRenderer = defineComponent({
+export default defineComponent({
   name: 'LayoutRenderer',
   components: {
     DispatchRenderer,
@@ -36,6 +36,4 @@ const layoutRenderer = defineComponent({
     },
   },
 })
-
-export default layoutRenderer
 </script>
