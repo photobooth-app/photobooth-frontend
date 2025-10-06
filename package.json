@@ -44,7 +44,7 @@
     "openapi-typescript": "^7.9.1",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
-    "vite-plugin-checker": "^0.10.3",
+    "vite-plugin-checker": "^0.11.0",
     "vue-tsc": "^3.1.0"
   },
   "engines": {
