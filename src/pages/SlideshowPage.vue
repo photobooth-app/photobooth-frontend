@@ -12,10 +12,12 @@ import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { default as MediaItemPreviewViewer } from '../components/MediaItemPreviewViewer.vue'
 import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
+import { useRouter } from 'vue-router'
 
 const mediacollectionStore = useMediacollectionStore()
 const nextMediaitemTimeout = 5_000
 const currentMediaitemIndex = ref(0)
+const router = useRouter()
 
 let intervalTimerId: number
 
@@ -33,9 +35,14 @@ function loadNextImage() {
 }
 onMounted(() => {
   startTimer()
+  document.addEventListener('click', exitSlideshow)
 })
 
 onBeforeUnmount(() => {
   clearInterval(intervalTimerId)
 })
+
+function exitSlideshow() {
+  router.back();
+}
 </script>
