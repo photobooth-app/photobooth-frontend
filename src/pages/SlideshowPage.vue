@@ -27,6 +27,9 @@ function handleTimeout() {
   clearTimeout(intervalTimerId)
   startTimer()
 }
+function exitSlideshow() {
+  router.back()
+}
 function startTimer() {
   intervalTimerId = window.setInterval(handleTimeout, nextMediaitemTimeout)
 }
@@ -39,10 +42,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  document.removeEventListener('click', exitSlideshow)
   clearInterval(intervalTimerId)
 })
-
-function exitSlideshow() {
-  router.back();
-}
 </script>
