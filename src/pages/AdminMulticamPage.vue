@@ -15,7 +15,7 @@
           <div class="text-caption">{{ $t('Live View') }}</div>
 
           <q-btn @click="capture">Capture</q-btn>
-          <q-toggle label="autoupdate every 1s" />
+          <!-- <q-toggle label="autoupdate every 1s" /> -->
 
           <div v-if="images.length" class="row">
             <div v-for="(img, idx) in images" :key="idx">
