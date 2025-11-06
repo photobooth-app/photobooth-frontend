@@ -59,8 +59,7 @@
           <thead>
             <tr>
               <th class="text-left">Device Description</th>
-              <th class="text-right">Index</th>
-              <th class="text-right">Device ID</th>
+              <th class="text-right">Index/Device-Id</th>
               <th class="text-right">Address</th>
             </tr>
           </thead>
@@ -68,7 +67,6 @@
             <tr v-for="(node, idx) in multicamNodes" :key="idx">
               <td class="text-left">{{ node.description }}</td>
               <td class="text-right">{{ idx }}</td>
-              <td class="text-right">{{ node.device_id }}</td>
               <td class="text-right">{{ node.address }}</td>
             </tr>
           </tbody>
@@ -81,38 +79,40 @@
       </q-step>
 
       <q-step :name="2" title="Capture images for calibration" icon="sym_o_camera" :done="step > 2">
-        <div class="q-pa-none row items-start q-gutter-md" v-if="images.length">
-          <p>
-            Here are the results from the last capture. Please check that the images look well, the CharuCo board is about in the center of the image
-            and in roughly 2m distance to the camera array.
-          </p>
-          <q-card v-for="(node, idx) in multicamNodes" :key="idx" style="width: 100%; max-width: 300px" class="q-pa-sm" flat bordered>
-            <q-card-section>
-              <div class="text-h6 q-mb-xs">{{ node.description }}</div>
-            </q-card-section>
-            <a :href="images[idx]" target="_blank">
-              <q-img fit="contain" :src="images[idx]" />
-            </a>
-            <q-list>
-              <q-item>
-                <q-item-section>
-                  <q-item-label>{{ idx }}</q-item-label>
-                  <q-item-label caption>Index</q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-item>
-                <q-item-section>
-                  <q-item-label>{{ node.device_id }}</q-item-label>
-                  <q-item-label caption>Device-Id</q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-item>
-                <q-item-section>
-                  <q-item-label>{{ node.address }}</q-item-label>
-                  <q-item-label caption>Address</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
+        <p>
+          Here are the results from the last capture. Please check that the images look well, the CharuCo board is about in the center of the image
+          and in roughly 2m distance to the camera array.
+        </p>
+
+        <div v-if="images.length">
+          <q-card bordered flat class="q-ma-sm row items-start q-gutter-md" v-for="(camera, camera_idx) in images" :key="camera_idx">
+            <q-card v-for="(image, image_idx) in camera" :key="image_idx" style="width: 100%; max-width: 300px" class="q-pa-sm" flat>
+              <a :href="`/api/aquisition/multicam/${image}`" target="_blank">
+                <q-img fit="contain" :src="`/api/aquisition/multicam/${image}`" />
+              </a>
+              <q-list>
+                <q-item>
+                  <q-item-section>
+                    <q-item-label>{{ multicamNodes[camera_idx].description }}</q-item-label>
+                    <q-item-label caption>Description</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item>
+                  <q-item-section>
+                    <q-item-label>{{ camera_idx }}</q-item-label>
+                    <q-item-label caption>Index/DeviceId</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item>
+                  <q-item-section>
+                    <q-item-label>{{ multicamNodes[camera_idx].address }}</q-item-label>
+                    <q-item-label caption>Address</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-card>
           </q-card>
         </div>
 
@@ -125,7 +125,7 @@
 
       <q-step :name="3" title="Calculate the new calibration data" icon="sym_o_calculate" :done="step > 3">
         Press the button to calculate and save the new data.
-        <p>Result: {{ calculation_result_if_error }}</p>
+        <p>Result: {{ calculation_result }}</p>
         <q-stepper-navigation class="q-gutter-sm">
           <q-btn
             no-caps
@@ -157,26 +157,29 @@ import { computed } from 'vue'
 import { remoteProcedureCall, _fetch } from '../util/fetch_api'
 import { ref } from 'vue'
 import { useConfigurationStore } from '../stores/configuration-store'
-// import type { components } from 'src/dto/api'
+import type { components } from 'src/dto/api'
+// const GroupCameraWigglecam1 = components['schemas']['GroupCameraWigglecam']
+type WigglecamNodes = components['schemas']['WigglecamNodes']
 const configurationStore = useConfigurationStore()
 
-const images = ref([])
+const images = ref<string[][]>([])
 const step = ref(1)
 const capture_in_progress = ref(false)
 const calculation_in_progress = ref(false)
 const calculation_successful = ref(false)
-const calculation_result_if_error = ref('')
+const calculation_result = ref('')
 
 async function capture() {
   try {
-    // Step 1: trigger multicam capture and get file paths
     capture_in_progress.value = true
     const res = await _fetch('/api/aquisition/multicam')
-    const data = await res.json()
+    const data: string[] = await res.json() // one image per camera
 
-    // Step 2: build URLs for each file
-    // assuming backend returns list of relative paths
-    images.value = data.map((path) => `/api/aquisition/multicam/${encodeURIComponent(path)}`)
+    if (images.value.length === 0) {
+      images.value = data.map((img) => [img])
+    } else {
+      data.forEach((img, i) => images.value[i].push(img))
+    }
   } catch (err) {
     console.error('Error capturing multicam images:', err)
   } finally {
@@ -196,16 +199,17 @@ async function postCalibration() {
     })
     const result = await res.json()
     console.log('Calibration result:', result)
+    calculation_result.value = result
 
     calculation_successful.value = true
   } catch (err) {
-    calculation_result_if_error.value = err
+    calculation_result.value = err
     console.error('Error posting calibration:', err)
   } finally {
     calculation_in_progress.value = false
   }
 }
-const multicamNodes = computed(() => {
+const multicamNodes = computed<WigglecamNodes[]>(() => {
   const group_backends = configurationStore.configuration.backends.group_backends
   const index_backend_multicam = configurationStore.configuration.backends.index_backend_multicam
   if (group_backends == null || index_backend_multicam == null) {
@@ -213,9 +217,15 @@ const multicamNodes = computed(() => {
     return []
   }
 
-  const multicam_backend = group_backends[index_backend_multicam].backend_config.devices
-  console.log(multicam_backend)
+  const backend = group_backends[index_backend_multicam].backend_config
+  console.log(backend)
 
-  return multicam_backend
+  if (backend.backend_type === 'Wigglecam') {
+    // Now TypeScript knows this branch has `devices`
+    return backend.devices
+  }
+
+  console.error('selected backend is not a Wigglecam')
+  return []
 })
 </script>
