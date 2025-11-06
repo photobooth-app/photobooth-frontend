@@ -1,132 +1,126 @@
 <template>
-  <q-page id="admin-files-page">
-    <div class="q-pa-md">
-      <q-breadcrumbs gutter="sm" class="q-pa-md" style="cursor: pointer">
-        <q-breadcrumbs-el :label="$t('TITLE_FILES_WORKING_DIR')" icon="sym_o_home" @click="onBreadcrumbClick(-1)" />
-        <q-breadcrumbs-el v-for="(value, key) in breadcrumbs" :key="key" @click="onBreadcrumbClick(key)">
-          {{ value }}
-        </q-breadcrumbs-el>
-      </q-breadcrumbs>
+  <q-page id="admin-files-page" padding>
+    <q-breadcrumbs gutter="sm" class="q-pa-md" style="cursor: pointer">
+      <q-breadcrumbs-el :label="$t('TITLE_FILES_WORKING_DIR')" icon="sym_o_home" @click="onBreadcrumbClick(-1)" />
+      <q-breadcrumbs-el v-for="(value, key) in breadcrumbs" :key="key" @click="onBreadcrumbClick(key)">
+        {{ value }}
+      </q-breadcrumbs-el>
+    </q-breadcrumbs>
 
-      <q-dialog v-model="dialog_create_new_folder">
-        <q-card style="min-width: 350px">
-          <q-card-section>
-            <div class="text-h6">{{ $t('TITLE_FILES_NEW_FOLDER_DIALOG') }}</div>
-          </q-card-section>
+    <q-dialog v-model="dialog_create_new_folder">
+      <q-card style="min-width: 350px" flat>
+        <q-card-section>
+          <div class="text-h6">{{ $t('TITLE_FILES_NEW_FOLDER_DIALOG') }}</div>
+        </q-card-section>
 
-          <q-card-section class="q-pt-none">
-            <q-input
-              v-model="new_folder_name"
-              dense
-              autofocus
-              @keyup.enter="[createNewFolder(new_folder_name), (dialog_create_new_folder = false)]"
-            />
-          </q-card-section>
+        <q-card-section class="q-pt-none">
+          <q-input v-model="new_folder_name" dense autofocus @keyup.enter="[createNewFolder(new_folder_name), (dialog_create_new_folder = false)]" />
+        </q-card-section>
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
-            <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_FILES_CREATE_NEW_FOLDER')" @click="createNewFolder(new_folder_name)" />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
+        <q-card-actions align="right" class="text-primary">
+          <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" />
+          <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_FILES_CREATE_NEW_FOLDER')" @click="createNewFolder(new_folder_name)" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
-      <q-dialog v-model="dialog_upload_files">
-        <q-card style="min-width: 350px">
-          <q-card-section>
-            <div class="text-h6">
-              {{ $t('TITLE_FILES_UPLOAD_FILES_DIALOG') }}
-            </div>
-          </q-card-section>
-
-          <q-card-section class="q-pt-none">
-            <q-uploader
-              label="Upload Files"
-              url="/api/admin/files/file/upload"
-              :form-fields="[{ name: 'upload_target_folder', value: folder_current }]"
-              :headers="[{ name: 'authorization', value: `Bearer ${getAccessToken()}` }]"
-              field-name="uploaded_files"
-              batch
-              multiple
-              @finish="getFolderContent(folder_current)"
-              @uploaded="dialog_upload_files = false"
-            />
-          </q-card-section>
-
-          <q-card-actions align="right" class="text-primary">
-            <q-btn no-caps v-close-popup flat label="Cancel" />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-
-      <q-table
-        v-model:selected="selected"
-        class="full-height"
-        flat
-        bordered
-        title="File Browser"
-        :pagination="pagination"
-        :rows="folder_rows"
-        :filter="filter"
-        :columns="folder_columns"
-        color="primary"
-        row-key="filepath"
-        dense
-        :loading="folder_loading"
-        selection="multiple"
-        virtual-scroll
-        :rows-per-page-options="[0]"
-      >
-        <template #body-cell-type="props">
-          <q-td :props="props">
-            <q-icon v-if="props.value" name="sym_o_folder" />
-            <q-icon v-else name="sym_o_description" />
-          </q-td>
-        </template>
-
-        <template #body-cell-name="props">
-          <q-td :props="props" style="cursor: pointer">
-            <div @click="onNameClick(props.row)">{{ props.value }}</div>
-          </q-td>
-        </template>
-
-        <template #top-left>
-          <q-dialog v-model="confirm_delete">
-            <q-card class="q-pa-sm" style="min-width: 350px">
-              <q-card-section class="row items-center" style="flex-wrap: nowrap">
-                <q-avatar icon="sym_o_delete" color="negative" text-color="white" />
-                <span class="q-ml-sm">{{ $t('Are you sure you want to delete the selected files and subfolders?') }}</span>
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
-                <q-btn no-caps v-close-popup :label="$t('Yes, delete')" color="negative" @click="deleteItems(selected)" />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-          <div>
-            <q-btn no-caps :disable="folder_loading" :label="$t('BTN_LABEL_FILES_NEW_FOLDER')" @click="dialog_create_new_folder = true" />
-            <q-btn no-caps class="q-ml-sm" :disable="folder_loading" :label="$t('BTN_LABEL_FILES_UPLOAD_FILE')" @click="dialog_upload_files = true" />
-            <q-btn no-caps class="q-ml-sm" :disable="selected.length == 0" :label="$t('BTN_LABEL_FILES_DOWNLOAD_ZIP')" @click="getZip(selected)" />
-            <q-btn
-              no-caps
-              class="q-ml-sm"
-              color="negative"
-              :disable="selected.length == 0"
-              :label="$t('BTN_LABEL_FILES_DELETE_SELECTED')"
-              @click="confirm_delete = true"
-            />
+    <q-dialog v-model="dialog_upload_files">
+      <q-card style="min-width: 350px" flat>
+        <q-card-section>
+          <div class="text-h6">
+            {{ $t('TITLE_FILES_UPLOAD_FILES_DIALOG') }}
           </div>
-        </template>
+        </q-card-section>
 
-        <template #top-right>
-          <q-input v-model="filter" borderless dense debounce="300" :placeholder="$t('TEXT_PLACEHOLDER_SEARCH')">
-            <template #append>
-              <q-icon name="sym_o_search" />
-            </template>
-          </q-input>
-        </template>
-      </q-table>
-    </div>
+        <q-card-section class="q-pt-none">
+          <q-uploader
+            flat
+            label="Upload Files"
+            url="/api/admin/files/file/upload"
+            :form-fields="[{ name: 'upload_target_folder', value: folder_current }]"
+            :headers="[{ name: 'authorization', value: `Bearer ${getAccessToken()}` }]"
+            field-name="uploaded_files"
+            batch
+            multiple
+            @finish="getFolderContent(folder_current)"
+            @uploaded="dialog_upload_files = false"
+            style="width: 100%"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn no-caps v-close-popup flat label="Cancel" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-table
+      v-model:selected="selected"
+      class="full-height"
+      flat
+      title="File Browser"
+      :pagination="pagination"
+      :rows="folder_rows"
+      :filter="filter"
+      :columns="folder_columns"
+      color="primary"
+      row-key="filepath"
+      dense
+      :loading="folder_loading"
+      selection="multiple"
+      virtual-scroll
+      :rows-per-page-options="[0]"
+    >
+      <template #body-cell-type="props">
+        <q-td :props="props">
+          <q-icon v-if="props.value" name="sym_o_folder" />
+          <q-icon v-else name="sym_o_description" />
+        </q-td>
+      </template>
+
+      <template #body-cell-name="props">
+        <q-td :props="props" style="cursor: pointer">
+          <div @click="onNameClick(props.row)">{{ props.value }}</div>
+        </q-td>
+      </template>
+
+      <template #top-left>
+        <q-dialog v-model="confirm_delete">
+          <q-card class="q-pa-sm" style="min-width: 350px">
+            <q-card-section class="row items-center" style="flex-wrap: nowrap">
+              <q-avatar icon="sym_o_delete" color="negative" text-color="white" />
+              <span class="q-ml-sm">{{ $t('Are you sure you want to delete the selected files and subfolders?') }}</span>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn no-caps v-close-popup flat :label="$t('BTN_LABEL_CANCEL')" color="primary" />
+              <q-btn no-caps v-close-popup :label="$t('Yes, delete')" color="negative" @click="deleteItems(selected)" />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+        <div>
+          <q-btn no-caps :disable="folder_loading" :label="$t('BTN_LABEL_FILES_NEW_FOLDER')" @click="dialog_create_new_folder = true" />
+          <q-btn no-caps class="q-ml-sm" :disable="folder_loading" :label="$t('BTN_LABEL_FILES_UPLOAD_FILE')" @click="dialog_upload_files = true" />
+          <q-btn no-caps class="q-ml-sm" :disable="selected.length == 0" :label="$t('BTN_LABEL_FILES_DOWNLOAD_ZIP')" @click="getZip(selected)" />
+          <q-btn
+            no-caps
+            class="q-ml-sm"
+            color="negative"
+            :disable="selected.length == 0"
+            :label="$t('BTN_LABEL_FILES_DELETE_SELECTED')"
+            @click="confirm_delete = true"
+          />
+        </div>
+      </template>
+
+      <template #top-right>
+        <q-input v-model="filter" borderless dense debounce="300" :placeholder="$t('TEXT_PLACEHOLDER_SEARCH')">
+          <template #append>
+            <q-icon name="sym_o_search" />
+          </template>
+        </q-input>
+      </template>
+    </q-table>
   </q-page>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <q-page id="logs-page" padding>
-    <q-card class="q-pa-md q-mt-md">
+    <q-card class="q-pa-md" flat>
       <div class="row q-gutter-sm">
         <div class="text-h5">{{ $t('log messages') }}</div>
         <q-btn no-caps outline color="primary" href="/api/debug/log/latest" target="_blank">{{ $t('download logs') }}</q-btn>

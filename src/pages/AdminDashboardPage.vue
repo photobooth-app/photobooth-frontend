@@ -1,6 +1,6 @@
 <template>
   <q-page id="admin-page" padding>
-    <div class="q-pa-none q-mt-none row col-xs-12 col-sm-4 col-md-3 col-lg-3">
+    <div class="row col-xs-12 col-sm-4 col-md-3 col-lg-3">
       <q-card flat class="q-mr-md q-mb-md">
         <q-card-section>
           <q-list>
