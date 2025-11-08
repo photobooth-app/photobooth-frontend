@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isVideo(item.unprocessed)" class="full-height full-width">
+  <div v-if="isImage(item.unprocessed)" class="full-height full-width">
     <q-img
       :draggable="false"
       class="full-height"
@@ -10,7 +10,7 @@
       :src="`/media/preview/${item.id}?${item.updated_at}`"
     />
   </div>
-  <div v-else class="full-height">
+  <div v-else-if="isVideo(item.unprocessed)" class="full-height">
     <video
       :draggable="false"
       :src="`/media/preview/${item.id}?${item.updated_at}`"
@@ -25,18 +25,15 @@
       disablepictureinpicture
     ></video>
   </div>
+  <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
+  <div v-else>Element not supported to display.</div>
 </template>
 
 <script setup lang="ts">
 import type { components } from 'src/dto/api'
+import { isVideo, isImage } from 'src/util/media_is_type'
 
 defineProps<{
   item: components['schemas']['MediaitemPublic']
 }>()
-
-function isVideo(path) {
-  if (!path) return false
-  const ext = path.split('.').pop().toLowerCase()
-  return ['mp4', 'mov', 'webm', 'avi', 'mkv'].includes(ext)
-}
 </script>

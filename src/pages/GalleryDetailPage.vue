@@ -46,7 +46,7 @@
           <PageToolbar
             :item="currentMediaitem"
             :show-filter="configurationStore.configuration.uisettings.gallery_show_filter"
-            :enable-filter="getFilterAvailable(currentMediaitem.media_type)"
+            :enable-filter="filterEnabled(currentMediaitem.media_type)"
             :show-share="
               configurationStore.configuration.uisettings.gallery_show_shareprint && configurationStore.configuration.share.sharing_enabled
             "
@@ -164,7 +164,7 @@ const currentMediaitemNumber = computed(() => {
   return mediacollectionStore.collection.findIndex((mediaitem) => mediaitem.id == selectedMediaitemId.value) + 1
 })
 const showFilter = computed(() => {
-  return configurationStore.configuration.uisettings.gallery_show_filter && getFilterAvailable(currentMediaitem.value.media_type)
+  return configurationStore.configuration.uisettings.gallery_show_filter && filterEnabled(currentMediaitem.value.media_type)
 })
 const shareButtons = computed(() => {
   const result: ShareSchema[] = []
@@ -188,8 +188,8 @@ const getMediaitemById = (id: string) => {
   return mediacollectionStore.collection.find((mediaitem) => mediaitem.id == id)
 }
 
-const getFilterAvailable = (media_type: string) => {
-  return ['image', 'collageimage', 'animationimage'].includes(media_type)
+const filterEnabled = (media_type: string) => {
+  return ['image'].includes(media_type)
 }
 
 const getAvailableFilter = async () => {

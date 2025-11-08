@@ -39,7 +39,7 @@
         <ShareTriggerButtons
           v-if="showShare"
           :triggers="shareButtons"
-          :current-item-is-image="['image', 'collage', 'collageimage', 'animationimage'].includes(item.media_type)"
+          :current-item-is-image="isPrintableImage(item.unprocessed)"
           @trigger-action="invokeShareAction"
         ></ShareTriggerButtons>
       </div>
@@ -77,6 +77,7 @@
 import { ref } from 'vue'
 import { openURL } from 'quasar'
 import type { components } from 'src/dto/api'
+import { isPrintableImage } from 'src/util/media_is_type'
 import { default as ShareTriggerButtons, type ShareSchema } from '../ShareTriggerButtons.vue'
 const confirmDeleteDialog = ref(false)
 
