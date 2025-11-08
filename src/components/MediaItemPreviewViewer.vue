@@ -1,5 +1,5 @@
 <template>
-  <div v-if="item.media_type != 'video'" class="full-height full-width">
+  <div v-if="!isVideo(item.unprocessed)" class="full-height full-width">
     <q-img
       :draggable="false"
       class="full-height"
@@ -33,4 +33,10 @@ import type { components } from 'src/dto/api'
 defineProps<{
   item: components['schemas']['MediaitemPublic']
 }>()
+
+function isVideo(path) {
+  if (!path) return false
+  const ext = path.split('.').pop().toLowerCase()
+  return ['mp4', 'mov', 'webm', 'avi', 'mkv'].includes(ext)
+}
 </script>

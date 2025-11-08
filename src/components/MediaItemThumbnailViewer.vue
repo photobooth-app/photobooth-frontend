@@ -1,5 +1,5 @@
 <template>
-  <div v-if="item.media_type != 'video'">
+  <div v-if="!isVideo(item.unprocessed)">
     <q-img :src="`/media/thumbnail/${item.id}?${item.updated_at}`" loading="eager" loading-show-delay="800" :ratio="1" class="rounded-borders">
     </q-img>
   </div>
@@ -26,4 +26,10 @@ import type { components } from 'src/dto/api'
 defineProps<{
   item: components['schemas']['MediaitemPublic']
 }>()
+
+function isVideo(path) {
+  if (!path) return false
+  const ext = path.split('.').pop().toLowerCase()
+  return ['mp4', 'mov', 'webm', 'avi', 'mkv'].includes(ext)
+}
 </script>
