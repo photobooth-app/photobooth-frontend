@@ -115,7 +115,7 @@
             the capture.
           </p>
 
-          <q-btn no-caps class="q-mb-md" @click="capture" color="green" label="Capture" :loading="capture_in_progress" />
+          <q-btn no-caps class="q-mb-md" @click="capture" color="green" label="Capture" :loading="loading" />
 
           <div>
             <q-scroll-area class="q-mb-md" style="height: 220px; width: 100%" v-for="(node, node_idx) in multicamNodes" :key="node_idx">
@@ -128,7 +128,7 @@
                     <q-img fit="contain" :src="`/api/aquisition/stream.mjpg?index_subdevice=${node_idx}`" />
 
                     <q-card-actions align="right">
-                      <q-btn flat round color="primary" icon="sym_o_camera" @click="capture" :loading="capture_in_progress" />
+                      <q-btn flat round color="primary" icon="sym_o_camera" @click="capture" :loading="loading" />
                     </q-card-actions>
                   </q-card>
 
@@ -149,7 +149,7 @@
           <q-stepper-navigation>
             <div class="row">
               <div class="col q-gutter-sm">
-                <q-btn no-caps @click="capture" color="green" label="Capture " :loading="capture_in_progress" />
+                <q-btn no-caps @click="capture" color="green" label="Capture " :loading="loading" />
               </div>
               <div class="col q-gutter-sm" align="right">
                 <q-btn flat no-caps @click="step = 1" color="green" :label="$t('BTN_LABEL_BACK')" />
@@ -160,35 +160,39 @@
         </q-step>
 
         <q-step :name="3" title="Calculate the new calibration data" icon="sym_o_calculate" :done="step > 3">
-          Press the button to calculate and save the new data.
-          <p>Result: {{ calculation_result }}</p>
+          Press the button to calculate and save the new calibration data.
 
           <q-stepper-navigation>
             <div class="row">
               <div class="col q-gutter-sm">
-                <q-btn
-                  no-caps
-                  color="green"
-                  :disable="images.length == 0"
-                  :label="$t('Calculate')"
-                  @click="postCalibration"
-                  :loading="calculation_in_progress"
-                />
+                <q-btn no-caps color="green" :disable="images.length == 0" :label="$t('Calculate')" @click="postCalibration" :loading="loading" />
               </div>
               <div class="col q-gutter-sm" align="right">
                 <q-btn no-caps flat @click="step = 2" color="green" :label="$t('BTN_LABEL_BACK')" />
-                <q-btn no-caps @click="step = 4" color="green" :label="$t('Continue')" :disable="!calculation_successful" />
+                <q-btn no-caps @click="step = 4" color="green" :label="$t('Continue')" />
               </div>
             </div>
           </q-stepper-navigation>
         </q-step>
 
         <q-step :name="4" title="Confirm the result" icon="sym_o_flag">
-          ok, done, here is your new wiggle
+          <p>
+            ✅️ You made it! At this point you can check the calibration result. Click the capture button to trigger the camera array and compile a
+            GIF.
+          </p>
+          <p>If your image looks good, you can continue setup the actions in the configuration. Otherwise you might want to start over.</p>
 
-          <q-stepper-navigation class="q-gutter-sm">
-            <q-btn no-caps color="green" :label="$t('Finish')" disable />
-            <q-btn no-caps flat @click="step = 3" color="green" :label="$t('BTN_LABEL_BACK')" />
+          <q-img v-if="wigglegramResult" :src="wigglegramResult" alt="Charuco Board" style="max-width: 600px; max-height: 400px" fit="contain" />
+
+          <q-stepper-navigation>
+            <div class="row">
+              <div class="col q-gutter-sm">
+                <q-btn no-caps color="green" :label="$t('Capture and create wigglegram')" @click="captureCreateWigglegram" :loading="loading" />
+              </div>
+              <div class="col q-gutter-sm" align="right">
+                <q-btn no-caps flat @click="step = 3" color="green" :label="$t('BTN_LABEL_BACK')" />
+              </div>
+            </div>
           </q-stepper-navigation>
         </q-step>
       </q-stepper>
@@ -208,21 +212,20 @@ import { ref } from 'vue'
 import { useConfigurationStore } from '../stores/configuration-store'
 import type { components } from 'src/dto/api'
 import CharucoGenerator from 'src/components/CharucoGenerator.vue'
-// const GroupCameraWigglecam1 = components['schemas']['GroupCameraWigglecam']
+import { Notify } from 'quasar'
+
 type WigglecamNodes = components['schemas']['WigglecamNodes']
 const configurationStore = useConfigurationStore()
 
 const dialog_charuco_generator = ref(false)
 const images = ref<string[][]>([])
 const step = ref(0)
-const capture_in_progress = ref(false)
-const calculation_in_progress = ref(false)
-const calculation_successful = ref(false)
-const calculation_result = ref('')
+const loading = ref(false)
+const wigglegramResult = ref<string | null>(null)
 
 async function capture() {
   try {
-    capture_in_progress.value = true
+    loading.value = true
     const res = await _fetch('/api/aquisition/multicam')
     const data: string[] = await res.json() // one image per camera
 
@@ -234,15 +237,13 @@ async function capture() {
   } catch (err) {
     console.error('Error capturing multicam images:', err)
   } finally {
-    capture_in_progress.value = false
+    loading.value = false
   }
 }
 
 async function postCalibration() {
   try {
-    calculation_successful.value = false
-    calculation_in_progress.value = true
-    calculation_result.value = ''
+    loading.value = true
 
     const res = await _fetch('/api/admin/multicamera/calibration', {
       method: 'POST',
@@ -254,14 +255,53 @@ async function postCalibration() {
     if (!res.ok) {
       throw new Error('Server returned code ' + res.status + ': ' + result['detail'])
     }
-    calculation_result.value = result
 
-    calculation_successful.value = true
+    Notify.create({
+      message: 'Calibration finished and saved.',
+      color: 'positive',
+    })
   } catch (err) {
     console.error('Error posting calibration:', err)
-    calculation_result.value = err
+    console.warn(err)
+
+    Notify.create({
+      message: String(err),
+      caption: 'Error posting the calibration data',
+      color: 'negative',
+    })
   } finally {
-    calculation_in_progress.value = false
+    loading.value = false
+  }
+}
+
+// GET the image with fetch
+async function captureCreateWigglegram() {
+  try {
+    loading.value = true
+
+    const response = await _fetch('/api/admin/multicamera/result', {
+      method: 'GET',
+    })
+
+    if (!response.ok) {
+      const err_msg = await response.json()
+      throw new Error(`Request failed: ${err_msg['detail']}`)
+    }
+
+    const blob = await response.blob()
+    wigglegramResult.value = URL.createObjectURL(blob)
+    loading.value = false
+  } catch (err: unknown) {
+    wigglegramResult.value = null
+    console.warn(err)
+
+    Notify.create({
+      message: String(err),
+      caption: 'Error creating the wigglegram',
+      color: 'negative',
+    })
+  } finally {
+    // commit('setLoading', false);
   }
 }
 const multicamNodes = computed<WigglecamNodes[]>(() => {

@@ -70,7 +70,7 @@ async function postBoardDefinition() {
 
     Notify.create({
       message: String(err),
-      caption: 'Error getting configuration scheme',
+      caption: 'Error generating the board',
       color: 'negative',
     })
   } finally {
