@@ -833,12 +833,33 @@ export interface paths {
          * Api Post Calibrate All
          * @description Post files to calculate a new calibration, save it and reload services to apply the calibration.
          *
-         *     Args:
-         *         files_in (dict[int, list[Path]]): _description_
+         *     filess_in = [
+         *         [Path("./tmp/calib_test_in/input_0.jpg"),...],  # camera 0
+         *         [Path("./tmp/calib_test_in/input_1.jpg"),...],  # camera 1
+         *         [Path("./tmp/calib_test_in/input_2.jpg"),...],  # ...
+         *         [Path("./tmp/calib_test_in/input_3.jpg"),...],
+         *     ]
          */
         post: operations["api_post_calibrate_all_api_admin_multicamera_calibration_post"];
         /** Api Delete Calibration Delete */
         delete: operations["api_delete_calibration_delete_api_admin_multicamera_calibration_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/multicamera/calibration/charuco": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Api Get Calibration Generate Charucoboard */
+        post: operations["api_get_calibration_generate_charucoboard_api_admin_multicamera_calibration_charuco_post"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -944,7 +965,7 @@ export interface components {
          * Postprocess animation captures
          * @description Configure stages how to process images after capture.
          */
-        "AnimationConfigurationSet-Input": {
+        AnimationConfigurationSet: {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
@@ -952,22 +973,7 @@ export interface components {
              */
             name: string;
             jobcontrol: components["schemas"]["MultiImageJobControl"];
-            processing: components["schemas"]["AnimationProcessing-Input"];
-            trigger: components["schemas"]["Trigger"];
-        };
-        /**
-         * Postprocess animation captures
-         * @description Configure stages how to process images after capture.
-         */
-        "AnimationConfigurationSet-Output": {
-            /**
-             * Name
-             * @description Name to identify, only used for display in admin center.
-             * @default default action
-             */
-            name: string;
-            jobcontrol: components["schemas"]["MultiImageJobControl"];
-            processing: components["schemas"]["AnimationProcessing-Output"];
+            processing: components["schemas"]["AnimationProcessing"];
             trigger: components["schemas"]["Trigger"];
         };
         /** AnimationMergeDefinition */
@@ -986,31 +992,7 @@ export interface components {
          * Animation (GIF) processing after capture
          * @description Configure stages how to process collage after capture.
          */
-        "AnimationProcessing-Input": {
-            /**
-             * Canvas Width
-             * @description Width (X) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.
-             * @default 1500
-             */
-            canvas_width: number;
-            /**
-             * Canvas Height
-             * @description Height (Y) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.
-             * @default 900
-             */
-            canvas_height: number;
-            /**
-             * Merge Definition
-             * @description Sequence images in an animated GIF. Predefined image files are used instead a camera capture. File needs to be located in working directory/userdata/*
-             * @default []
-             */
-            merge_definition: components["schemas"]["AnimationMergeDefinition"][];
-        };
-        /**
-         * Animation (GIF) processing after capture
-         * @description Configure stages how to process collage after capture.
-         */
-        "AnimationProcessing-Output": {
+        AnimationProcessing: {
             /**
              * Canvas Width
              * @description Width (X) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.
@@ -1272,12 +1254,11 @@ export interface components {
              *         {
              *           "jobcontrol": {
              *             "countdown_capture": 2,
+             *             "output_fileformat": "gif",
              *             "show_individual_captures_in_gallery": false
              *           },
              *           "name": "default action",
              *           "processing": {
-             *             "canvas_height": 900,
-             *             "canvas_width": 1500,
              *             "duration": 125,
              *             "image_filter": "original"
              *           },
@@ -1292,7 +1273,7 @@ export interface components {
              *             "ui_trigger": {
              *               "custom_color": "#196cb0",
              *               "icon": "burst_mode",
-             *               "show_button": false,
+             *               "show_button": true,
              *               "title": "Wigglegram",
              *               "use_custom_color": false
              *             }
@@ -1301,7 +1282,7 @@ export interface components {
              *       ]
              *     }
              */
-            actions: components["schemas"]["GroupActions-Output"];
+            actions: components["schemas"]["GroupActions"];
             /**
              * @default {
              *       "sharing_enabled": true,
@@ -1426,7 +1407,7 @@ export interface components {
              *       ]
              *     }
              */
-            share: components["schemas"]["GroupShare-Output"];
+            share: components["schemas"]["GroupShare"];
             /**
              * @default {
              *       "enabled": false,
@@ -1513,7 +1494,7 @@ export interface components {
              *       ]
              *     }
              */
-            backends: components["schemas"]["GroupCameras-Output"];
+            backends: components["schemas"]["GroupCameras"];
             /**
              * @default {
              *       "keyboard_input_enabled": false,
@@ -1566,26 +1547,34 @@ export interface components {
              */
             client_secret?: string | null;
         };
-        /**
-         * Postprocess collage captures
-         * @description Configure stages how to process images after capture.
-         */
-        "CollageConfigurationSet-Input": {
+        /** CharucoRequest */
+        CharucoRequest: {
             /**
-             * Name
-             * @description Name to identify, only used for display in admin center.
-             * @default default action
+             * Squares X
+             * @default 14
              */
-            name: string;
-            jobcontrol: components["schemas"]["MultiImageJobControl"];
-            processing: components["schemas"]["CollageProcessing-Input"];
-            trigger: components["schemas"]["Trigger"];
+            squares_x: number;
+            /**
+             * Squares Y
+             * @default 9
+             */
+            squares_y: number;
+            /**
+             * Square Length Mm
+             * @default 20
+             */
+            square_length_mm: number;
+            /**
+             * Marker Length Mm
+             * @default 15
+             */
+            marker_length_mm: number;
         };
         /**
          * Postprocess collage captures
          * @description Configure stages how to process images after capture.
          */
-        "CollageConfigurationSet-Output": {
+        CollageConfigurationSet: {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
@@ -1593,7 +1582,7 @@ export interface components {
              */
             name: string;
             jobcontrol: components["schemas"]["MultiImageJobControl"];
-            processing: components["schemas"]["CollageProcessing-Output"];
+            processing: components["schemas"]["CollageProcessing"];
             trigger: components["schemas"]["Trigger"];
         };
         /** CollageMergeDefinition */
@@ -1637,107 +1626,7 @@ export interface components {
          * Collage processing
          * @description Configure stages how to process collage after capture.
          */
-        "CollageProcessing-Input": {
-            /**
-             * Capture Remove Background
-             * @description Use AI to remove the background from the captured image. Results may vary. There are different models available in the mediaprocessing section.
-             * @default false
-             */
-            capture_remove_background: boolean;
-            /**
-             * Capture Fill Background Enable
-             * @description Apply solid color background to captured image (useful only if image is extended or background removed)
-             * @default false
-             */
-            capture_fill_background_enable: boolean;
-            /**
-             * Capture Fill Background Color
-             * Format: color
-             * @description Solid color used to fill background.
-             * @default blue
-             */
-            capture_fill_background_color: string;
-            /**
-             * Capture Img Background Enable
-             * @description Add image from file to background (useful only if image is extended or background removed)
-             * @default false
-             */
-            capture_img_background_enable: boolean;
-            /**
-             * Capture Img Background File
-             * @description Image file to use as background filling transparent area. File needs to be located in working directory/userdata/*
-             */
-            capture_img_background_file?: string | null;
-            /**
-             * Canvas Width
-             * @description Width (X) in pixel of collage image. The higher the better the quality but also longer time to process. All processes keep aspect ratio.
-             * @default 1920
-             */
-            canvas_width: number;
-            /**
-             * Canvas Height
-             * @description Height (Y) in pixel of collage image. The higher the better the quality but also longer time to process. All processes keep aspect ratio.
-             * @default 1280
-             */
-            canvas_height: number;
-            /**
-             * Merge Definition
-             * @description How to arrange single images in the collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Width/Height in pixels. Aspect ratio is kept always. Predefined image files are used instead a camera capture. File needs to be located in working directory/userdata/*
-             */
-            merge_definition: components["schemas"]["CollageMergeDefinition"][];
-            /**
-             * Canvas Fill Background Enable
-             * @description Apply solid color background to collage
-             * @default false
-             */
-            canvas_fill_background_enable: boolean;
-            /**
-             * Canvas Fill Background Color
-             * Format: color
-             * @description Solid color used to fill background.
-             * @default green
-             */
-            canvas_fill_background_color: string;
-            /**
-             * Canvas Img Background Enable
-             * @description Add image from file to background.
-             * @default false
-             */
-            canvas_img_background_enable: boolean;
-            /**
-             * Canvas Img Background File
-             * @description Image file to use as background filling transparent area. File needs to be located in userdata/*
-             */
-            canvas_img_background_file?: string | null;
-            /**
-             * Canvas Img Front Enable
-             * @description Overlay image on canvas image.
-             * @default false
-             */
-            canvas_img_front_enable: boolean;
-            /**
-             * Canvas Img Front File
-             * @description Image file to paste on top over photos and backgrounds. Photos are visible only through transparant parts. Image needs to be transparent (PNG). File needs to be located in working directory/userdata/*
-             */
-            canvas_img_front_file?: string | null;
-            /**
-             * Canvas Texts Enable
-             * @description General enable apply texts below.
-             * @default false
-             */
-            canvas_texts_enable: boolean;
-            /**
-             * Canvas Texts
-             * @description Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in working directory/userdata/*
-             * @default []
-             */
-            canvas_texts: components["schemas"]["TextsConfig"][];
-        };
-        /**
-         * Collage processing
-         * @description Configure stages how to process collage after capture.
-         */
-        "CollageProcessing-Output": {
+        CollageProcessing: {
             /**
              * Capture Remove Background
              * @description Use AI to remove the background from the captured image. Results may vary. There are different models available in the mediaprocessing section.
@@ -1880,7 +1769,7 @@ export interface components {
          * Actions configuration
          * @description Configure actions like capture photo, video, collage and animations.
          */
-        "GroupActions-Input": {
+        GroupActions: {
             /**
              * Image
              * @description Capture single images.
@@ -1931,7 +1820,7 @@ export interface components {
              *       }
              *     ]
              */
-            image: components["schemas"]["SingleImageConfigurationSet-Input"][];
+            image: components["schemas"]["SingleImageConfigurationSet"][];
             /**
              * Collage
              * @description Capture collages consist of one or more still images.
@@ -2019,7 +1908,7 @@ export interface components {
              *       }
              *     ]
              */
-            collage: components["schemas"]["CollageConfigurationSet-Input"][];
+            collage: components["schemas"]["CollageConfigurationSet"][];
             /**
              * Animation
              * @description Capture GIF animation sequence consist of one or more still images. It's not a video but a low number of still images.
@@ -2079,7 +1968,7 @@ export interface components {
              *       }
              *     ]
              */
-            animation: components["schemas"]["AnimationConfigurationSet-Input"][];
+            animation: components["schemas"]["AnimationConfigurationSet"][];
             /**
              * Video
              * @description Capture videos from live streaming backend.
@@ -2114,7 +2003,7 @@ export interface components {
              *       }
              *     ]
              */
-            video: components["schemas"]["VideoConfigurationSet-Input"][];
+            video: components["schemas"]["VideoConfigurationSet"][];
             /**
              * Multicamera
              * @description Capture wigglegrams from a multicamera backend.
@@ -2123,11 +2012,10 @@ export interface components {
              *         "name": "default action",
              *         "jobcontrol": {
              *           "countdown_capture": 2,
+             *           "output_fileformat": "gif",
              *           "show_individual_captures_in_gallery": false
              *         },
              *         "processing": {
-             *           "canvas_height": 900,
-             *           "canvas_width": 1500,
              *           "duration": 125,
              *           "image_filter": "original"
              *         },
@@ -2142,7 +2030,7 @@ export interface components {
              *           "ui_trigger": {
              *             "custom_color": "#196cb0",
              *             "icon": "burst_mode",
-             *             "show_button": false,
+             *             "show_button": true,
              *             "title": "Wigglegram",
              *             "use_custom_color": false
              *           }
@@ -2150,283 +2038,7 @@ export interface components {
              *       }
              *     ]
              */
-            multicamera: components["schemas"]["MulticameraConfigurationSet-Input"][];
-        };
-        /**
-         * Actions configuration
-         * @description Configure actions like capture photo, video, collage and animations.
-         */
-        "GroupActions-Output": {
-            /**
-             * Image
-             * @description Capture single images.
-             * @default [
-             *       {
-             *         "name": "default action",
-             *         "jobcontrol": {
-             *           "countdown_capture": 2
-             *         },
-             *         "processing": {
-             *           "fill_background_color": "blue",
-             *           "fill_background_enable": false,
-             *           "image_filter": "original",
-             *           "img_background_enable": true,
-             *           "img_background_file": "userdata/demoassets/backgrounds/background.jpg",
-             *           "img_frame_enable": true,
-             *           "img_frame_file": "userdata/demoassets/frames/frame_image_photobooth-app.png",
-             *           "remove_background": true,
-             *           "texts": [
-             *             {
-             *               "color": "#333",
-             *               "font": "userdata/demoassets/fonts/Roboto-Bold.ttf",
-             *               "font_size": 30,
-             *               "pos_x": 1300,
-             *               "pos_y": 1250,
-             *               "rotate": 0,
-             *               "text": "Visit photobooth-app.org and build yours!"
-             *             }
-             *           ],
-             *           "texts_enable": true
-             *         },
-             *         "trigger": {
-             *           "gpio_trigger": {
-             *             "pin": "27",
-             *             "trigger_on": "pressed"
-             *           },
-             *           "keyboard_trigger": {
-             *             "keycode": "i"
-             *           },
-             *           "ui_trigger": {
-             *             "custom_color": "#196cb0",
-             *             "icon": "photo_camera",
-             *             "show_button": true,
-             *             "title": "Image",
-             *             "use_custom_color": false
-             *           }
-             *         }
-             *       }
-             *     ]
-             */
-            image: components["schemas"]["SingleImageConfigurationSet-Output"][];
-            /**
-             * Collage
-             * @description Capture collages consist of one or more still images.
-             * @default [
-             *       {
-             *         "name": "default action",
-             *         "jobcontrol": {
-             *           "approve_autoconfirm_timeout": 15,
-             *           "ask_approval_each_capture": true,
-             *           "countdown_capture": 2,
-             *           "countdown_capture_second_following": 1,
-             *           "show_individual_captures_in_gallery": true
-             *         },
-             *         "processing": {
-             *           "canvas_fill_background_color": "green",
-             *           "canvas_fill_background_enable": false,
-             *           "canvas_height": 1280,
-             *           "canvas_img_background_enable": false,
-             *           "canvas_img_front_enable": true,
-             *           "canvas_img_front_file": "userdata/demoassets/frames/pixabay-poster-2871536_1920.png",
-             *           "canvas_texts": [
-             *             {
-             *               "color": "#333",
-             *               "font": "userdata/demoassets/fonts/Roboto-Bold.ttf",
-             *               "font_size": 40,
-             *               "pos_x": 200,
-             *               "pos_y": 1100,
-             *               "rotate": 1,
-             *               "text": "Have a nice day :)"
-             *             }
-             *           ],
-             *           "canvas_texts_enable": true,
-             *           "canvas_width": 1920,
-             *           "capture_fill_background_color": "white",
-             *           "capture_fill_background_enable": true,
-             *           "capture_img_background_enable": false,
-             *           "capture_remove_background": true,
-             *           "merge_definition": [
-             *             {
-             *               "description": "left",
-             *               "height": 725,
-             *               "image_filter": "FilterPilgram2.earlybird",
-             *               "pos_x": 160,
-             *               "pos_y": 220,
-             *               "rotate": 0,
-             *               "width": 510
-             *             },
-             *             {
-             *               "description": "middle predefined",
-             *               "height": 725,
-             *               "image_filter": "original",
-             *               "pos_x": 705,
-             *               "pos_y": 66,
-             *               "predefined_image": "userdata/demoassets/predefined_images/photobooth-collage-predefined-image.png",
-             *               "rotate": 0,
-             *               "width": 510
-             *             },
-             *             {
-             *               "description": "right",
-             *               "height": 725,
-             *               "image_filter": "FilterPilgram2.reyes",
-             *               "pos_x": 1245,
-             *               "pos_y": 220,
-             *               "rotate": 0,
-             *               "width": 510
-             *             }
-             *           ]
-             *         },
-             *         "trigger": {
-             *           "gpio_trigger": {
-             *             "pin": "22",
-             *             "trigger_on": "pressed"
-             *           },
-             *           "keyboard_trigger": {
-             *             "keycode": "c"
-             *           },
-             *           "ui_trigger": {
-             *             "custom_color": "#196cb0",
-             *             "icon": "auto_awesome_mosaic",
-             *             "show_button": true,
-             *             "title": "Collage",
-             *             "use_custom_color": false
-             *           }
-             *         }
-             *       }
-             *     ]
-             */
-            collage: components["schemas"]["CollageConfigurationSet-Output"][];
-            /**
-             * Animation
-             * @description Capture GIF animation sequence consist of one or more still images. It's not a video but a low number of still images.
-             * @default [
-             *       {
-             *         "name": "default action",
-             *         "jobcontrol": {
-             *           "approve_autoconfirm_timeout": 15,
-             *           "ask_approval_each_capture": false,
-             *           "countdown_capture": 2,
-             *           "countdown_capture_second_following": 0.5,
-             *           "show_individual_captures_in_gallery": false
-             *         },
-             *         "processing": {
-             *           "canvas_height": 900,
-             *           "canvas_width": 1500,
-             *           "merge_definition": [
-             *             {
-             *               "duration": 2000,
-             *               "image_filter": "FilterPilgram2.crema"
-             *             },
-             *             {
-             *               "duration": 2000,
-             *               "image_filter": "FilterPilgram2.inkwell"
-             *             },
-             *             {
-             *               "duration": 2000,
-             *               "image_filter": "original"
-             *             },
-             *             {
-             *               "duration": 2000,
-             *               "image_filter": "original"
-             *             },
-             *             {
-             *               "duration": 4000,
-             *               "image_filter": "original",
-             *               "predefined_image": "userdata/demoassets/predefined_images/photobooth-gif-animation-predefined-image.png"
-             *             }
-             *           ]
-             *         },
-             *         "trigger": {
-             *           "gpio_trigger": {
-             *             "pin": "24",
-             *             "trigger_on": "pressed"
-             *           },
-             *           "keyboard_trigger": {
-             *             "keycode": "g"
-             *           },
-             *           "ui_trigger": {
-             *             "custom_color": "#196cb0",
-             *             "icon": "gif_box",
-             *             "show_button": true,
-             *             "title": "Animation",
-             *             "use_custom_color": false
-             *           }
-             *         }
-             *       }
-             *     ]
-             */
-            animation: components["schemas"]["AnimationConfigurationSet-Output"][];
-            /**
-             * Video
-             * @description Capture videos from live streaming backend.
-             * @default [
-             *       {
-             *         "name": "default action",
-             *         "jobcontrol": {
-             *           "countdown_capture": 2
-             *         },
-             *         "processing": {
-             *           "boomerang": true,
-             *           "boomerang_speed": 2,
-             *           "video_duration": 5,
-             *           "video_framerate": 15
-             *         },
-             *         "trigger": {
-             *           "gpio_trigger": {
-             *             "pin": "25",
-             *             "trigger_on": "pressed"
-             *           },
-             *           "keyboard_trigger": {
-             *             "keycode": "v"
-             *           },
-             *           "ui_trigger": {
-             *             "custom_color": "#196cb0",
-             *             "icon": "movie",
-             *             "show_button": true,
-             *             "title": "Boomerang",
-             *             "use_custom_color": false
-             *           }
-             *         }
-             *       }
-             *     ]
-             */
-            video: components["schemas"]["VideoConfigurationSet-Output"][];
-            /**
-             * Multicamera
-             * @description Capture wigglegrams from a multicamera backend.
-             * @default [
-             *       {
-             *         "name": "default action",
-             *         "jobcontrol": {
-             *           "countdown_capture": 2,
-             *           "show_individual_captures_in_gallery": false
-             *         },
-             *         "processing": {
-             *           "canvas_height": 900,
-             *           "canvas_width": 1500,
-             *           "duration": 125,
-             *           "image_filter": "original"
-             *         },
-             *         "trigger": {
-             *           "gpio_trigger": {
-             *             "pin": "12",
-             *             "trigger_on": "pressed"
-             *           },
-             *           "keyboard_trigger": {
-             *             "keycode": "w"
-             *           },
-             *           "ui_trigger": {
-             *             "custom_color": "#196cb0",
-             *             "icon": "burst_mode",
-             *             "show_button": false,
-             *             "title": "Wigglegram",
-             *             "use_custom_color": false
-             *           }
-             *         }
-             *       }
-             *     ]
-             */
-            multicamera: components["schemas"]["MulticameraConfigurationSet-Output"][];
+            multicamera: components["schemas"]["MulticameraConfigurationSet"][];
         };
         /**
          * Camera Configuration
@@ -2434,28 +2046,7 @@ export interface components {
          *     If the livepreview is enabled, the video is captured from live backend (if configured)
          *     or main backend.
          */
-        "GroupBackend-Input": {
-            /**
-             * Load and start backend
-             * @description Selected device will be loaded and started.
-             * @default true
-             */
-            enabled: boolean;
-            /**
-             * Description
-             * @default backend default name
-             */
-            description: string;
-            /** Backend Config */
-            backend_config: components["schemas"]["GroupCameraVirtual"] | components["schemas"]["GroupCameraPyav"] | components["schemas"]["GroupCameraWigglecam"] | components["schemas"]["GroupCameraPicamera2"] | components["schemas"]["GroupCameraV4l2"] | components["schemas"]["GroupCameraGphoto2"];
-        };
-        /**
-         * Camera Configuration
-         * @description Choose backends for still images/high quality images captured on main backend.
-         *     If the livepreview is enabled, the video is captured from live backend (if configured)
-         *     or main backend.
-         */
-        "GroupBackend-Output": {
+        GroupBackend: {
             /**
              * Load and start backend
              * @description Selected device will be loaded and started.
@@ -2810,28 +2401,25 @@ export interface components {
             index_cam_video: number;
             /**
              * Devices
+             * @description List all nodes to connect to the app. The list is considered as indexed list starting at 0. So the first node should have device_id=0. For 4 cameras you end up with 4 entries in the list and need to assign them device_id's 0,1,2,3.
              * @default [
              *       {
-             *         "description": "wiggle1-device0",
-             *         "device_id": 0,
+             *         "description": "wiggle1-device-id=0",
              *         "address": "wiggle1",
              *         "base_port": 5550
              *       },
              *       {
-             *         "description": "wiggle2-device1",
-             *         "device_id": 1,
+             *         "description": "wiggle2-device-id=1",
              *         "address": "wiggle2",
              *         "base_port": 5550
              *       },
              *       {
-             *         "description": "wiggle3-device2",
-             *         "device_id": 2,
+             *         "description": "wiggle3-device-id=2",
              *         "address": "wiggle3",
              *         "base_port": 5550
              *       },
              *       {
-             *         "description": "wiggle4-device3",
-             *         "device_id": 3,
+             *         "description": "wiggle4-device-id=3",
              *         "address": "wiggle4",
              *         "base_port": 5550
              *       }
@@ -2845,7 +2433,7 @@ export interface components {
          *     If the livepreview is enabled, the video is captured from live backend (if configured)
          *     or main backend.
          */
-        "GroupCameras-Input": {
+        GroupCameras: {
             /**
              * Enable Livestream
              * @description Enable livestream (if possible)
@@ -2898,68 +2486,7 @@ export interface components {
              *       }
              *     ]
              */
-            group_backends: components["schemas"]["GroupBackend-Input"][];
-        };
-        /**
-         * Camera Configurations
-         * @description Choose backends for still images/high quality images captured on main backend.
-         *     If the livepreview is enabled, the video is captured from live backend (if configured)
-         *     or main backend.
-         */
-        "GroupCameras-Output": {
-            /**
-             * Enable Livestream
-             * @description Enable livestream (if possible)
-             * @default true
-             */
-            enable_livestream: boolean;
-            /**
-             * Retry Capture
-             * @description Number of attempts to gather a picture from backend.
-             * @default 3
-             */
-            retry_capture: number;
-            /**
-             * Countdown Camera Capture Offset
-             * @description Trigger camera capture by offset earlier (in seconds). 0 trigger exactly when countdown is 0. Use to compensate for delay in camera processing for better UX.
-             * @default 0.2
-             */
-            countdown_camera_capture_offset: number;
-            /**
-             * Index Backend Stills
-             * @description Index of one backend below to capture stills.
-             * @default 0
-             */
-            index_backend_stills: number;
-            /**
-             * Index Backend Video
-             * @description Index of one backend below to capture live preview and video.
-             * @default 0
-             */
-            index_backend_video: number;
-            /**
-             * Index Backend Multicam
-             * @description Index of one backend below used for multicamera images (wigglegrams).
-             * @default 0
-             */
-            index_backend_multicam: number;
-            /**
-             * Group Backends
-             * @default [
-             *       {
-             *         "enabled": true,
-             *         "description": "backend default name",
-             *         "backend_config": {
-             *           "backend_type": "VirtualCamera",
-             *           "emulate_hires_static_still": false,
-             *           "emulate_multicam_capture_devices": 4,
-             *           "framerate": 15,
-             *           "orientation": "1: 0°"
-             *         }
-             *       }
-             *     ]
-             */
-            group_backends: components["schemas"]["GroupBackend-Output"][];
+            group_backends: components["schemas"]["GroupBackend"][];
         };
         /**
          * Common Config
@@ -3166,7 +2693,7 @@ export interface components {
          * Define Share and Print Actions
          * @description Configure share or print actions.
          */
-        "GroupShare-Input": {
+        GroupShare: {
             /**
              * Sharing Enabled
              * @description Enable sharing service in general.
@@ -3296,143 +2823,7 @@ export interface components {
              *       }
              *     ]
              */
-            actions: components["schemas"]["ShareConfigurationSet-Input"][];
-        };
-        /**
-         * Define Share and Print Actions
-         * @description Configure share or print actions.
-         */
-        "GroupShare-Output": {
-            /**
-             * Sharing Enabled
-             * @description Enable sharing service in general.
-             * @default true
-             */
-            sharing_enabled: boolean;
-            /**
-             * Actions
-             * @description Share or print mediaitems.
-             * @default [
-             *       {
-             *         "name": "Printing",
-             *         "handles_images_only": true,
-             *         "processing": {
-             *           "ask_user_for_parameter_input": false,
-             *           "max_shares": 0,
-             *           "parameters": [
-             *             {
-             *               "default": "1",
-             *               "key": "copies",
-             *               "label": "Copies",
-             *               "ui_type": "int",
-             *               "valid_max": "3",
-             *               "valid_min": "1"
-             *             }
-             *           ],
-             *           "parameters_dialog_action_icon": "print",
-             *           "parameters_dialog_action_label": "GO",
-             *           "parameters_dialog_caption": "Make your choice!",
-             *           "share_blocked_time": 3,
-             *           "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
-             *         },
-             *         "trigger": {
-             *           "gpio_trigger": {
-             *             "pin": "23",
-             *             "trigger_on": "pressed"
-             *           },
-             *           "keyboard_trigger": {
-             *             "keycode": "p"
-             *           },
-             *           "ui_trigger": {
-             *             "custom_color": "#196cb0",
-             *             "icon": "print",
-             *             "show_button": true,
-             *             "title": "Direct Print",
-             *             "use_custom_color": false
-             *           }
-             *         }
-             *       },
-             *       {
-             *         "name": "Printing copies",
-             *         "handles_images_only": true,
-             *         "processing": {
-             *           "ask_user_for_parameter_input": true,
-             *           "max_shares": 0,
-             *           "parameters": [
-             *             {
-             *               "default": "1",
-             *               "key": "copies",
-             *               "label": "Copies",
-             *               "ui_type": "int",
-             *               "valid_max": "3",
-             *               "valid_min": "1"
-             *             }
-             *           ],
-             *           "parameters_dialog_action_icon": "print",
-             *           "parameters_dialog_action_label": "GO",
-             *           "parameters_dialog_caption": "How many copies?",
-             *           "share_blocked_time": 3,
-             *           "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
-             *         },
-             *         "trigger": {
-             *           "gpio_trigger": {
-             *             "pin": "",
-             *             "trigger_on": "pressed"
-             *           },
-             *           "keyboard_trigger": {
-             *             "keycode": ""
-             *           },
-             *           "ui_trigger": {
-             *             "custom_color": "#196cb0",
-             *             "icon": "print",
-             *             "show_button": true,
-             *             "title": "Print Copies",
-             *             "use_custom_color": false
-             *           }
-             *         }
-             *       },
-             *       {
-             *         "name": "Mailing action",
-             *         "handles_images_only": false,
-             *         "processing": {
-             *           "ask_user_for_parameter_input": true,
-             *           "max_shares": 0,
-             *           "parameters": [
-             *             {
-             *               "default": "me@mgineer85.de",
-             *               "key": "mail",
-             *               "label": "E-Mail address",
-             *               "ui_type": "input",
-             *               "valid_max": "128",
-             *               "valid_min": "5"
-             *             }
-             *           ],
-             *           "parameters_dialog_action_icon": "mail",
-             *           "parameters_dialog_action_label": "Send",
-             *           "parameters_dialog_caption": "E-Mail your image...",
-             *           "share_blocked_time": 3,
-             *           "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} to mail {mail}"
-             *         },
-             *         "trigger": {
-             *           "gpio_trigger": {
-             *             "pin": "",
-             *             "trigger_on": "pressed"
-             *           },
-             *           "keyboard_trigger": {
-             *             "keycode": ""
-             *           },
-             *           "ui_trigger": {
-             *             "custom_color": "#196cb0",
-             *             "icon": "mail",
-             *             "show_button": true,
-             *             "title": "Send Mail",
-             *             "use_custom_color": false
-             *           }
-             *         }
-             *       }
-             *     ]
-             */
-            actions: components["schemas"]["ShareConfigurationSet-Output"][];
+            actions: components["schemas"]["ShareConfigurationSet"][];
         };
         /**
          * Personalize the User Interface
@@ -3713,22 +3104,7 @@ export interface components {
          * Postprocess multicamera captures
          * @description Configure stages how to process images after capture.
          */
-        "MulticameraConfigurationSet-Input": {
-            /**
-             * Name
-             * @description Name to identify, only used for display in admin center.
-             * @default default action
-             */
-            name: string;
-            jobcontrol: components["schemas"]["MulticameraJobControl"];
-            processing: components["schemas"]["MulticameraProcessing"];
-            trigger: components["schemas"]["Trigger"];
-        };
-        /**
-         * Postprocess multicamera captures
-         * @description Configure stages how to process images after capture.
-         */
-        "MulticameraConfigurationSet-Output": {
+        MulticameraConfigurationSet: {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
@@ -3756,24 +3132,19 @@ export interface components {
              * @default false
              */
             show_individual_captures_in_gallery: boolean;
+            /**
+             * Output Fileformat
+             * @description Choose the file format of the wigglegram. GIF is usually lower quality (max 256 colors) but good compatibility. MP4 offers better quality per file size but might not replay on old devices.
+             * @default gif
+             * @enum {string}
+             */
+            output_fileformat: "gif" | "mp4";
         };
         /**
          * Wigglegram-multicamera processing
          * @description Configure stages how to process collage after capture.
          */
         MulticameraProcessing: {
-            /**
-             * Canvas Width
-             * @description Width (X) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.
-             * @default 1500
-             */
-            canvas_width: number;
-            /**
-             * Canvas Height
-             * @description Height (Y) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.
-             * @default 900
-             */
-            canvas_height: number;
             /**
              * Duration
              * @description Duration of each frame in milliseconds. Wigglegrams look good usually between 100-200ms duration.
@@ -3803,27 +3174,7 @@ export interface components {
          * Process mediaitem before printing on paper
          * @description Configure stages how to process mediaitem before printing on paper.
          */
-        "ShareConfigurationSet-Input": {
-            /**
-             * Name
-             * @description Name to identify, only used for display in admin center.
-             * @default default print settings
-             */
-            name: string;
-            /**
-             * Handles Images Only
-             * @description Enable if this share type can handle only still images.
-             * @default true
-             */
-            handles_images_only: boolean;
-            processing: components["schemas"]["ShareProcessing"];
-            trigger: components["schemas"]["Trigger"];
-        };
-        /**
-         * Process mediaitem before printing on paper
-         * @description Configure stages how to process mediaitem before printing on paper.
-         */
-        "ShareConfigurationSet-Output": {
+        ShareConfigurationSet: {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
@@ -3949,22 +3300,7 @@ export interface components {
          * Postprocess single captures
          * @description Configure stages how to process images after capture.
          */
-        "SingleImageConfigurationSet-Input": {
-            /**
-             * Name
-             * @description Name to identify, only used for display in admin center.
-             * @default default action
-             */
-            name: string;
-            jobcontrol: components["schemas"]["SingleImageJobControl"];
-            processing: components["schemas"]["SingleImageProcessing"];
-            trigger: components["schemas"]["Trigger"];
-        };
-        /**
-         * Postprocess single captures
-         * @description Configure stages how to process images after capture.
-         */
-        "SingleImageConfigurationSet-Output": {
+        SingleImageConfigurationSet: {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
@@ -4285,22 +3621,7 @@ export interface components {
          * Postprocess video captures
          * @description Configure stages how to process images after capture.
          */
-        "VideoConfigurationSet-Input": {
-            /**
-             * Name
-             * @description Name to identify, only used for display in admin center.
-             * @default default action
-             */
-            name: string;
-            jobcontrol: components["schemas"]["VideoJobControl"];
-            processing: components["schemas"]["VideoProcessing"];
-            trigger: components["schemas"]["Trigger"];
-        };
-        /**
-         * Postprocess video captures
-         * @description Configure stages how to process images after capture.
-         */
-        "VideoConfigurationSet-Output": {
+        VideoConfigurationSet: {
             /**
              * Name
              * @description Name to identify, only used for display in admin center.
@@ -4362,12 +3683,6 @@ export interface components {
              */
             description: string;
             /**
-             * Device Id
-             * @description Unique ID of this node/device. Must match the device id configured in the wigglecam node.
-             * @default 0
-             */
-            device_id: number;
-            /**
              * Address
              * @description Host or IP address to connect to the node.
              * @default 0.0.0.0
@@ -4423,7 +3738,9 @@ export interface operations {
     };
     video_stream_api_aquisition_stream_mjpg_get: {
         parameters: {
-            query?: never;
+            query?: {
+                index_subdevice?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -4437,6 +3754,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -5803,9 +5129,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    [key: string]: string[];
-                };
+                "application/json": string[][];
             };
         };
         responses: {
@@ -5845,6 +5169,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+        };
+    };
+    api_get_calibration_generate_charucoboard_api_admin_multicamera_calibration_charuco_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CharucoRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
