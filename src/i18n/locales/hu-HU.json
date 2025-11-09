@@ -154,5 +154,6 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Az űrlap törlődik, amikor a lapot váltja. Szeretné folytatni?",
   "Continue": "Folytatás",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "ChAruCo Board Generator": "ChAruCo Board Generator"
 }

@@ -154,5 +154,6 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "当您切换标签页时表单已清除。您想要继续吗？",
   "Continue": "继续",
-  "(Plugin)": "(插件)"
+  "(Plugin)": "(插件)",
+  "ChAruCo Board Generator": "ChAruCo Board Generator"
 }
