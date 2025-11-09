@@ -154,5 +154,6 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Le formulaire est effacé lorsque vous changer d'onglet. Voulez-vous continuer ?",
   "Continue": "Continuer",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "ChAruCo Board Generator": "Générateur de carte ChAruCo"
 }
