@@ -7,36 +7,31 @@
         <div class="text-h5">Multicamera Tools</div>
       </q-card-section>
       <q-card-section>
-        <div class="row no-wrap q-gutter-x-md">
-          <div style="width: 100%; max-width: 300px" class="gt-sm">
-            <q-img src="/api/aquisition/stream.mjpg" />
-          </div>
-          <div>
-            <p>👋 Hey, this multicamera tool is to help you creating awesome wigglegrams.</p>
-            <p>
-              Wigglegrams are stills captured using a camera array. Usually 4 equal cameras are required to capture sufficient perspectives of a
-              scene. The stills are stitched together and replayed as a GIF/Video.
-            </p>
-            <p>
-              Since the cameras, despite being the same model underly some tolerances in optics and alignment during assembly, to create smooth
-              wigglegrams, the cameras need to be calibrated once. Please follow the steps to calibrate the cameras.
-            </p>
+        <p>👋 Hey, this multicamera tool is to help you creating awesome wigglegrams.</p>
+        <p>
+          Wigglegrams are stills captured using a camera array. Usually 4 equal cameras are required to capture sufficient perspectives of a scene.
+          The stills are stitched together and replayed as a GIF/Video.
+        </p>
+        <p>
+          Since the cameras, despite being the same model underly some tolerances in optics and alignment during assembly, to create smooth
+          wigglegrams, the cameras need to be calibrated once. Please follow the steps to calibrate the cameras.
+        </p>
 
-            <q-btn
-              outline
-              no-caps
-              color="green"
-              href="https://photobooth-app.org/wigglegramcamera/"
-              target="_blank"
-              icon-right="sym_o_open_in_new"
-              label="Learn more"
-            >
-            </q-btn>
-          </div>
+        <div class="q-gutter-sm q-px-none">
+          <q-btn
+            outline
+            no-caps
+            color="green"
+            href="https://photobooth-app.org/wigglegramcamera/"
+            target="_blank"
+            icon-right="sym_o_open_in_new"
+            label="Learn more"
+          >
+          </q-btn>
         </div>
       </q-card-section>
       <q-card-actions class="q-gutter-sm q-px-none" align="right">
-        <q-btn no-caps :label="$t('Get stats')" @click="remoteProcedureCall('/api/admin/multicamera/calibration')" />
+        <!-- <q-btn no-caps :label="$t('Get stats')" @click="remoteProcedureCall('/api/admin/multicamera/calibration')" /> -->
         <q-btn
           no-caps
           outline
@@ -58,6 +53,22 @@
       <q-stepper v-else v-model="step" vertical animated flat class="q-pa-md q-mb-md">
         <div class="text-h5">{{ $t('Calibrate') }}</div>
 
+        <q-step :name="0" title="Set your calibration target" icon="sym_o_target" :done="step > 0">
+          <p>You need a ChAruCo board for the calibration routine. If you do not have one, generate it here.</p>
+          <p>The board needs to be very solid and plane for good results.</p>
+
+          <q-stepper-navigation>
+            <div class="row">
+              <div class="col q-gutter-sm">
+                <q-btn color="green" no-caps :label="$t('Generate your ChAruCo board')" @click="dialog_charuco_generator = true" />
+              </div>
+              <div class="col q-gutter-sm" align="right">
+                <q-btn no-caps @click="step = 1" color="green" label="Start" />
+              </div>
+            </div>
+          </q-stepper-navigation>
+        </q-step>
+
         <q-step :name="1" title="Preflight check before starting the calibration" icon="sym_o_verified" :done="step > 1">
           <p>
             Following nodes are configured as multicamera backend currently. Please confirm, that the backend is setup correctly as later changes
@@ -66,16 +77,20 @@
           <q-markup-table flat bordered>
             <thead>
               <tr>
+                <th class="text-left">Stream</th>
                 <th class="text-left">Device Description</th>
-                <th class="text-right">Index/Device-Id</th>
-                <th class="text-right">Address</th>
+                <th class="text-left">Index/Device-Id</th>
+                <th class="text-left">Address</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(node, idx) in multicamNodes" :key="idx">
+                <td class="text-left">
+                  <q-img style="width: 200px" fit="contain" :src="`/api/aquisition/stream.mjpg?index_subdevice=${idx}`" />
+                </td>
                 <td class="text-left">{{ node.description }}</td>
-                <td class="text-right">{{ idx }}</td>
-                <td class="text-right">{{ node.address }}</td>
+                <td class="text-left">{{ idx }}</td>
+                <td class="text-left">{{ node.address }}</td>
               </tr>
             </tbody>
           </q-markup-table>
@@ -86,7 +101,8 @@
                 <q-btn flat no-caps color="green" label="Configure backends" icon-right="sym_o_open_in_new" to="/admin/config" />
               </div>
               <div class="col q-gutter-sm" align="right">
-                <q-btn no-caps @click="step = 2" color="green" label="Start" />
+                <q-btn flat no-caps @click="step = 0" color="green" :label="$t('BTN_LABEL_BACK')" />
+                <q-btn no-caps @click="step = 2" color="green" :label="$t('Continue')" />
               </div>
             </div>
           </q-stepper-navigation>
@@ -101,65 +117,43 @@
 
           <q-btn no-caps class="q-mb-md" @click="capture" color="green" label="Capture" :loading="capture_in_progress" />
 
-          <div v-if="images.length > 0">
-            <q-scroll-area class="q-mb-md" style="height: 220px; width: 100%" v-for="(camera, camera_idx) in images" :key="camera_idx">
+          <div>
+            <q-scroll-area class="q-mb-md" style="height: 220px; width: 100%" v-for="(node, node_idx) in multicamNodes" :key="node_idx">
               <div style="height: 100%" class="col">
-                <div style="height: 20px">Camera Index/Device-Id: {{ camera_idx }}</div>
+                <div style="height: 20px">Camera Index/Device-Id: {{ node_idx }}</div>
 
                 <div style="height: 200px" class="row no-wrap">
-                  <q-card v-for="(image, image_idx) in camera" :key="image_idx" style="width: 250px; height: 100%" class="q-pa-sm" flat>
-                    <a :href="`/api/aquisition/multicam/${image}`" target="_blank">
-                      <q-img loading="lazy" fit="contain" :src="`/api/aquisition/multicam/${image}`" />
-                    </a>
+                  <!-- Live Preview -->
+                  <q-card style="width: 250px; height: 100%" class="q-pa-sm" flat>
+                    <q-img fit="contain" :src="`/api/aquisition/stream.mjpg?index_subdevice=${node_idx}`" />
 
                     <q-card-actions align="right">
-                      <q-btn flat round color="red" icon="sym_o_delete" />
-                      <q-btn flat round color="primary" icon="sym_o_download" />
+                      <q-btn flat round color="primary" icon="sym_o_camera" @click="capture" :loading="capture_in_progress" />
+                    </q-card-actions>
+                  </q-card>
+
+                  <!-- Captured Images -->
+                  <q-card v-for="(image, image_idx) in images[node_idx]" :key="image_idx" style="width: 250px; height: 100%" class="q-pa-sm" flat>
+                    <q-img loading="lazy" fit="contain" :src="`/api/aquisition/multicam/${image}`" />
+
+                    <q-card-actions align="right">
+                      <q-btn flat round color="red" icon="sym_o_delete" @click="images[node_idx].splice(image_idx, 1)" />
+                      <q-btn flat round color="primary" icon="sym_o_download" :to="`/api/aquisition/multicam/${image}`" target="_blank" />
                     </q-card-actions>
                   </q-card>
                 </div>
               </div>
             </q-scroll-area>
-            <!--
-            <q-card bordered flat class="q-ma-sm row items-start q-gutter-md" v-for="(camera, camera_idx) in images" :key="camera_idx">
-              <q-card v-for="(image, image_idx) in camera" :key="image_idx" style="width: 100%; max-width: 300px" class="q-pa-sm" flat>
-                <a :href="`/api/aquisition/multicam/${image}`" target="_blank">
-                  <q-img fit="contain" :src="`/api/aquisition/multicam/${image}`" />
-                </a>
-                <q-list>
-                  <q-item>
-                    <q-item-section>
-                      <q-item-label>{{ multicamNodes[camera_idx].description }}</q-item-label>
-                      <q-item-label caption>Description</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item>
-                    <q-item-section>
-                      <q-item-label>{{ camera_idx }}</q-item-label>
-                      <q-item-label caption>Index/DeviceId</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item>
-                    <q-item-section>
-                      <q-item-label>{{ multicamNodes[camera_idx].address }}</q-item-label>
-                      <q-item-label caption>Address</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-card>
-            </q-card> -->
           </div>
 
           <q-stepper-navigation>
             <div class="row">
               <div class="col q-gutter-sm">
-                <q-btn v-if="images.length > 0" no-caps @click="capture" color="green" label="Capture more" :loading="capture_in_progress" />
+                <q-btn no-caps @click="capture" color="green" label="Capture " :loading="capture_in_progress" />
               </div>
               <div class="col q-gutter-sm" align="right">
-                <q-btn flat no-caps @click="step = 1" color="green" label="Back" />
-                <q-btn no-caps @click="step = 3" color="green" label="Continue" :disable="images.length == 0" />
+                <q-btn flat no-caps @click="step = 1" color="green" :label="$t('BTN_LABEL_BACK')" />
+                <q-btn no-caps @click="step = 3" color="green" :label="$t('Continue')" :disable="images.length == 0" />
               </div>
             </div>
           </q-stepper-navigation>
@@ -182,8 +176,8 @@
                 />
               </div>
               <div class="col q-gutter-sm" align="right">
-                <q-btn no-caps flat @click="step = 2" color="green" label="Back" />
-                <q-btn no-caps @click="step = 4" color="green" label="Continue" :disable="!calculation_successful" />
+                <q-btn no-caps flat @click="step = 2" color="green" :label="$t('BTN_LABEL_BACK')" />
+                <q-btn no-caps @click="step = 4" color="green" :label="$t('Continue')" :disable="!calculation_successful" />
               </div>
             </div>
           </q-stepper-navigation>
@@ -193,27 +187,34 @@
           ok, done, here is your new wiggle
 
           <q-stepper-navigation class="q-gutter-sm">
-            <q-btn no-caps color="green" label="Finish" disable />
-            <q-btn no-caps flat @click="step = 3" color="green" label="Back" />
+            <q-btn no-caps color="green" :label="$t('Finish')" disable />
+            <q-btn no-caps flat @click="step = 3" color="green" :label="$t('BTN_LABEL_BACK')" />
           </q-stepper-navigation>
         </q-step>
       </q-stepper>
     </div>
+
+    <q-dialog v-model="dialog_charuco_generator">
+      <charuco-generator></charuco-generator>
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { remoteProcedureCall, _fetch } from '../util/fetch_api'
+
 import { ref } from 'vue'
 import { useConfigurationStore } from '../stores/configuration-store'
 import type { components } from 'src/dto/api'
+import CharucoGenerator from 'src/components/CharucoGenerator.vue'
 // const GroupCameraWigglecam1 = components['schemas']['GroupCameraWigglecam']
 type WigglecamNodes = components['schemas']['WigglecamNodes']
 const configurationStore = useConfigurationStore()
 
+const dialog_charuco_generator = ref(false)
 const images = ref<string[][]>([])
-const step = ref(1)
+const step = ref(0)
 const capture_in_progress = ref(false)
 const calculation_in_progress = ref(false)
 const calculation_successful = ref(false)
@@ -228,7 +229,7 @@ async function capture() {
     if (images.value.length === 0) {
       images.value = data.map((img) => [img])
     } else {
-      data.forEach((img, i) => images.value[i].push(img))
+      data.forEach((img, i) => images.value[i].unshift(img)) // add new to the beginning of the array
     }
   } catch (err) {
     console.error('Error capturing multicam images:', err)
