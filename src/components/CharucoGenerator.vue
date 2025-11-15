@@ -6,12 +6,12 @@
 
     <q-card-section class="q-pt-none">
       <div class="row no-wrap q-gutter-x-md">
-        <q-input v-model="charucoRequest.squares_x" label="Squares X" />
-        <q-input v-model="charucoRequest.squares_y" label="Squares Y" />
+        <q-input v-model="charucoBoardDefinitionModel.squares_x" :label="$t('Squares X')" />
+        <q-input v-model="charucoBoardDefinitionModel.squares_y" :label="$t('Squares Y')" />
       </div>
       <div class="row no-wrap q-gutter-x-md">
-        <q-input v-model="charucoRequest.square_length_mm" label="Square Length (mm)" />
-        <q-input v-model="charucoRequest.marker_length_mm" label="Marker Length (mm)" />
+        <q-input v-model="charucoBoardDefinitionModel.square_length_mm" :label="$t('Square Length (mm)')" />
+        <q-input v-model="charucoBoardDefinitionModel.marker_length_mm" :label="$t('Marker Length (mm)')" />
       </div>
     </q-card-section>
 
@@ -20,8 +20,8 @@
       <q-btn color="green" no-caps label="Generate" @click="postBoardDefinition" :loading="loading" />
     </q-card-actions>
 
-    <q-card-section>
-      <q-img v-if="imageUrl" :src="imageUrl" alt="Charuco Board" style="max-width: 600px; max-height: 400px" fit="contain" />
+    <q-card-section v-if="imageUrl">
+      <q-img :src="imageUrl" alt="Charuco Board" style="max-width: 600px; max-height: 400px" fit="contain" />
     </q-card-section>
   </q-card>
 </template>
@@ -32,14 +32,19 @@ import { ref } from 'vue'
 import type { components } from '../dto/api'
 import { Notify } from 'quasar'
 
-type CharucoRequest = components['schemas']['CharucoRequest']
+type CharucoBoardDefinition = components['schemas']['CharucoBoardDefinition']
 
-const charucoRequest = ref<CharucoRequest>({
-  squares_x: 14,
-  squares_y: 9,
-  square_length_mm: 20,
-  marker_length_mm: 15,
+const props = withDefaults(defineProps<{ charucoBoardDefinition: CharucoBoardDefinition }>(), {
+  charucoBoardDefinition: () => ({
+    squares_x: 14,
+    squares_y: 9,
+    square_length_mm: 20,
+    marker_length_mm: 15,
+  }),
 })
+
+// Copy props once into an internal model
+const charucoBoardDefinitionModel = ref<CharucoBoardDefinition>({ ...props.charucoBoardDefinition })
 const imageUrl = ref<string | null>(null)
 const loading = ref(false)
 
@@ -53,7 +58,7 @@ async function postBoardDefinition() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(charucoRequest.value),
+      body: JSON.stringify(charucoBoardDefinitionModel.value),
     })
 
     if (!response.ok) {

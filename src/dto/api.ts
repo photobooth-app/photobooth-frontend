@@ -1548,8 +1548,14 @@ export interface components {
              */
             client_secret?: string | null;
         };
-        /** CharucoRequest */
-        CharucoRequest: {
+        /** CalibrationRequest */
+        CalibrationRequest: {
+            /** Filess In */
+            filess_in: string[][];
+            board_definition: components["schemas"]["CharucoBoardDefinition"];
+        };
+        /** CharucoBoardDefinition */
+        CharucoBoardDefinition: {
             /**
              * Squares X
              * @default 14
@@ -5104,7 +5110,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": string[][];
+                "application/json": components["schemas"]["CalibrationRequest"];
             };
         };
         responses: {
@@ -5157,7 +5163,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CharucoRequest"];
+                "application/json": components["schemas"]["CharucoBoardDefinition"];
             };
         };
         responses: {

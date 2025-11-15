@@ -1,21 +1,14 @@
-<!-- eslint-disable @intlify/vue-i18n/no-missing-keys -->
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
   <q-page id="multicam-page" padding>
     <q-card flat class="q-pa-md q-mb-md">
       <q-card-section>
-        <div class="text-h5">Multicamera Tools</div>
+        <div class="text-h5">{{ $t('Multicamera Tools') }}</div>
       </q-card-section>
       <q-card-section>
-        <p>👋 Hey, this multicamera tool is to help you creating awesome wigglegrams.</p>
-        <p>
-          Wigglegrams are stills captured using a camera array. Usually 4 equal cameras are required to capture sufficient perspectives of a scene.
-          The stills are stitched together and replayed as an animated image. You can choose between WebP, AVIF and GIF, while WebP is default.
-        </p>
-        <p>
-          Since the cameras, despite being the same model underly some tolerances in optics and alignment during assembly, to create smooth
-          wigglegrams, the cameras need to be calibrated once. Please follow the steps to calibrate the cameras.
-        </p>
+        <p>{{ $t('adminmulticampage.intro') }}</p>
+        <p>{{ $t('adminmulticampage.paragraph1') }}</p>
+        <p>{{ $t('adminmulticampage.paragraph2') }}</p>
 
         <div class="q-gutter-sm q-px-none">
           <q-btn
@@ -31,7 +24,6 @@
         </div>
       </q-card-section>
       <q-card-actions class="q-gutter-sm q-px-none" align="right">
-        <!-- <q-btn no-caps :label="$t('Get stats')" @click="remoteProcedureCall('/api/admin/multicamera/calibration')" /> -->
         <q-btn
           no-caps
           outline
@@ -47,33 +39,49 @@
           {{ $t('Calibrate') }} <q-badge color="negative" align="top"><q-icon name="sym_o_error" color="white" size="15px" /> </q-badge>
         </div>
 
-        <p>Not available, because there is no multicamera/wigglecamera enabled in the backends.</p>
+        <p>{{ $t('The tool is not available, because there is no multicamera enabled in the backends.') }}</p>
       </q-card>
 
       <q-stepper v-else v-model="step" vertical animated flat class="q-pa-md q-mb-md">
         <div class="text-h5">{{ $t('Calibrate') }}</div>
 
         <q-step :name="0" title="Set your calibration target" icon="sym_o_target" :done="step > 0">
-          <p>You need a ChAruCo board for the calibration routine. If you do not have one, generate it here.</p>
-          <p>The board needs to be very solid and plane for good results.</p>
+          <p>{{ $t('adminmulticampage.step0.paragraph1') }}</p>
+          <p>{{ $t('adminmulticampage.step0.paragraph2') }}</p>
+
+          <q-card flat>
+            <q-card-section>
+              <div class="text-h6">{{ $t('ChAruCo Board Parameter') }}</div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              <div class="row no-wrap q-gutter-x-md">
+                <q-input v-model="charucoBoardDefinition.squares_x" :label="$t('Squares X')" />
+                <q-input v-model="charucoBoardDefinition.squares_y" :label="$t('Squares Y')" />
+              </div>
+              <div class="row no-wrap q-gutter-x-md">
+                <q-input v-model="charucoBoardDefinition.square_length_mm" :label="$t('Square Length (mm)')" />
+                <q-input v-model="charucoBoardDefinition.marker_length_mm" :label="$t('Marker Length (mm)')" />
+              </div>
+            </q-card-section>
+          </q-card>
 
           <q-stepper-navigation>
             <div class="row">
               <div class="col q-gutter-sm">
-                <q-btn color="green" no-caps :label="$t('Generate your ChAruCo board')" @click="dialog_charuco_generator = true" />
+                <q-btn color="accent" no-caps :label="$t('Generate your ChAruCo board')" @click="dialogCharucoGenerator = true" />
               </div>
               <div class="col q-gutter-sm" align="right">
-                <q-btn no-caps @click="step = 1" color="green" label="Start" />
+                <q-btn no-caps @click="step = 1" color="green" label="Start" icon-right="sym_o_arrow_right" />
               </div>
             </div>
           </q-stepper-navigation>
         </q-step>
 
         <q-step :name="1" title="Preflight check before starting the calibration" icon="sym_o_verified" :done="step > 1">
-          <p>
-            Following nodes are configured as multicamera backend currently. Please confirm, that the backend is setup correctly as later changes
-            invalidate the calibration.
-          </p>
+          <p>{{ $t('adminmulticampage.step1.paragraph1') }}</p>
+          <p>{{ $t('adminmulticampage.step1.paragraph2') }}</p>
+
           <q-markup-table flat bordered>
             <thead>
               <tr>
@@ -101,21 +109,18 @@
                 <q-btn flat no-caps color="green" label="Configure backends" icon-right="sym_o_open_in_new" to="/admin/config" />
               </div>
               <div class="col q-gutter-sm" align="right">
-                <q-btn flat no-caps @click="step = 0" color="green" :label="$t('BTN_LABEL_BACK')" />
-                <q-btn no-caps @click="step = 2" color="green" :label="$t('Continue')" />
+                <q-btn flat no-caps @click="step = 0" color="green" :label="$t('BTN_LABEL_BACK')" icon="sym_o_arrow_left" />
+                <q-btn no-caps @click="step = 2" color="green" :label="$t('Continue')" icon-right="sym_o_arrow_right" />
               </div>
             </div>
           </q-stepper-navigation>
         </q-step>
 
         <q-step :name="2" title="Capture images for calibration" icon="sym_o_camera" :done="step > 2">
-          <p>
-            Now capture images with the CharuCo board. Please check that the images look well, the CharuCo board is about in the center of the image
-            and in roughly 2m distance to the camera array. Ensure the scene is well lit and all cameras are in focus. Do not move the board during
-            the capture.
-          </p>
+          <p>{{ $t('adminmulticampage.step2.paragraph1') }}</p>
+          <p>{{ $t('adminmulticampage.step2.paragraph2') }}</p>
 
-          <q-btn no-caps class="q-mb-md" @click="capture" color="green" label="Capture" :loading="loading" />
+          <q-btn no-caps class="q-mb-md" @click="capture" color="accent" label="Capture" :loading="loading" />
 
           <div>
             <q-scroll-area class="q-mb-md" style="height: 220px; width: 100%" v-for="(node, node_idx) in multicamNodes" :key="node_idx">
@@ -149,48 +154,46 @@
           <q-stepper-navigation>
             <div class="row">
               <div class="col q-gutter-sm">
-                <q-btn no-caps @click="capture" color="green" label="Capture " :loading="loading" />
+                <q-btn no-caps @click="capture" color="accent" label="Capture" :loading="loading" />
               </div>
               <div class="col q-gutter-sm" align="right">
-                <q-btn flat no-caps @click="step = 1" color="green" :label="$t('BTN_LABEL_BACK')" />
-                <q-btn no-caps @click="step = 3" color="green" :label="$t('Continue')" :disable="images.length == 0" />
+                <q-btn flat no-caps @click="step = 1" color="green" :label="$t('BTN_LABEL_BACK')" icon="sym_o_arrow_left" />
+                <q-btn no-caps @click="step = 3" color="green" :label="$t('Continue')" :disable="images.length == 0" icon-right="sym_o_arrow_right" />
               </div>
             </div>
           </q-stepper-navigation>
         </q-step>
 
         <q-step :name="3" title="Calculate the new calibration data" icon="sym_o_calculate" :done="step > 3">
-          Press the button to calculate and save the new calibration data.
+          <p>{{ $t('adminmulticampage.step3.paragraph1') }}</p>
+          <p>{{ $t('adminmulticampage.step3.paragraph2') }}</p>
 
           <q-stepper-navigation>
             <div class="row">
               <div class="col q-gutter-sm">
-                <q-btn no-caps color="green" :disable="images.length == 0" :label="$t('Calculate')" @click="postCalibration" :loading="loading" />
+                <q-btn no-caps color="accent" :disable="images.length == 0" :label="$t('Calculate')" @click="postCalibration" :loading="loading" />
               </div>
               <div class="col q-gutter-sm" align="right">
-                <q-btn no-caps flat @click="step = 2" color="green" :label="$t('BTN_LABEL_BACK')" />
-                <q-btn no-caps @click="step = 4" color="green" :label="$t('Continue')" />
+                <q-btn no-caps flat @click="step = 2" color="green" :label="$t('BTN_LABEL_BACK')" icon="sym_o_arrow_left" />
+                <q-btn no-caps @click="step = 4" color="green" :label="$t('Continue')" icon-right="sym_o_arrow_right" />
               </div>
             </div>
           </q-stepper-navigation>
         </q-step>
 
         <q-step :name="4" title="Confirm the result" icon="sym_o_flag">
-          <p>
-            ✅️ You made it! At this point you can check the calibration result. Click the capture button to trigger the camera array and compile an
-            animated image.
-          </p>
-          <p>If your image looks good, you can continue setup the actions in the configuration. Otherwise you might want to start over.</p>
+          <p>{{ $t('adminmulticampage.step4.paragraph1') }}</p>
+          <p>{{ $t('adminmulticampage.step4.paragraph2') }}</p>
 
           <q-img v-if="wigglegramResult" :src="wigglegramResult" alt="Charuco Board" style="max-width: 600px; max-height: 400px" fit="contain" />
 
           <q-stepper-navigation>
             <div class="row">
               <div class="col q-gutter-sm">
-                <q-btn no-caps color="green" :label="$t('Capture and create wigglegram')" @click="captureCreateWigglegram" :loading="loading" />
+                <q-btn no-caps color="accent" :label="$t('Capture and create wigglegram')" @click="captureCreateWigglegram" :loading="loading" />
               </div>
               <div class="col q-gutter-sm" align="right">
-                <q-btn no-caps flat @click="step = 3" color="green" :label="$t('BTN_LABEL_BACK')" />
+                <q-btn no-caps flat @click="step = 3" color="green" :label="$t('BTN_LABEL_BACK')" icon="sym_o_arrow_left" />
               </div>
             </div>
           </q-stepper-navigation>
@@ -198,8 +201,8 @@
       </q-stepper>
     </div>
 
-    <q-dialog v-model="dialog_charuco_generator">
-      <charuco-generator></charuco-generator>
+    <q-dialog v-model="dialogCharucoGenerator">
+      <charuco-generator :charucoBoardDefinition="charucoBoardDefinition"></charuco-generator>
     </q-dialog>
   </q-page>
 </template>
@@ -215,9 +218,17 @@ import CharucoGenerator from 'src/components/CharucoGenerator.vue'
 import { Notify } from 'quasar'
 
 type WigglecamNodes = components['schemas']['WigglecamNodes']
+type CharucoBoardDefinition = components['schemas']['CharucoBoardDefinition']
+type CalibrationRequest = components['schemas']['CalibrationRequest']
 const configurationStore = useConfigurationStore()
 
-const dialog_charuco_generator = ref(false)
+const dialogCharucoGenerator = ref(false)
+const charucoBoardDefinition = ref<CharucoBoardDefinition>({
+  squares_x: 14,
+  squares_y: 9,
+  square_length_mm: 20,
+  marker_length_mm: 15,
+})
 const images = ref<string[][]>([])
 const step = ref(0)
 const loading = ref(false)
@@ -248,7 +259,10 @@ async function postCalibration() {
     const res = await _fetch('/api/admin/multicamera/calibration', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(images.value),
+      body: JSON.stringify({
+        filess_in: images.value,
+        board_definition: charucoBoardDefinition.value,
+      } satisfies CalibrationRequest),
     })
     const result = await res.json()
     console.log('Calibration result:', result)
