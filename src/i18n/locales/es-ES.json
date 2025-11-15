@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "El formulario se borra cuando cambia la pestaña. ¿Desea continuar?",
   "Continue": "Continuar",
-  "(Plugin)": "(Plugina)"
+  "(Plugin)": "(Plugina)",
+  "Multicamera Tools": "Herramientas multicamera",
+  "Capture and create wigglegram": "Captura y crea wigglegram",
+  "Calculate": "Calcular",
+  "Generate your ChAruCo board": "Generar tu tablero ChAruCo",
+  "ChAruCo Board Generator": "Generador de Junta ChAruCo",
+  "ChAruCo Board Parameter": "Parámetro del tablero ChAruCo",
+  "Calibrate": "Calibrar",
+  "Delete calibration data": "Eliminar datos de evaluación",
+  "Squares X": "Cuadrados X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Longitud cuadrada (mm)",
+  "Marker Length (mm)": "Longitud del Marcador (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "La herramienta no está disponible, porque no hay multicamera habilitada en los backends.",
+  "adminmulticampage": {
+    "intro": "👋 Hey, esta herramienta de multicamera es para ayudarte a crear wigglegrams.",
+    "paragraph1": "Los Wigglegrams se capturan usando una matriz de cámaras. Normalmente se requieren 4 cámaras iguales para capturar las perspectivas suficientes de una escena. Los stills son unidos y reproducidos como una imagen animada. Puede elegir entre WebP, AVIF y GIF, mientras que WebP es por defecto.",
+    "paragraph2": "Desde las cámaras, a pesar de ser el mismo modelo subyacentemente algunas tolerancias en la óptica y alineación durante el ensamblado, para crear muñecas suaves, las cámaras necesitan ser calificadas una vez. Siga los pasos para calificar las cámaras.",
+    "step0": {
+      "paragraph1": "Necesita un tablero ChAruCo para la rutina de calificación. Si no tiene uno, genere uno aquí.",
+      "paragraph2": "La tabla debe ser muy sólida y plana, para obtener buenos resultados."
+    },
+    "step1": {
+      "paragraph1": "Los nodos siguientes se configuran como backend multicamera actualmente. ",
+      "paragraph2": "Por favor, confirme que el backend está configurado correctamente ya que los cambios posteriores invalidan la calificación."
+    },
+    "step2": {
+      "paragraph1": "Ahora capturar imágenes con el tablero CharuCo. Por favor, comprueba que las imágenes se vean bien, la placa CharuCo se encuentra en el centro de la imagen y a aproximadamente 2 m de distancia de la matriz de la cámara.",
+      "paragraph2": "Asegúrate de que la escena esté bien iluminada y que todas las cámaras estén enfocadas. No muevas la placa durante la captura."
+    },
+    "step3": {
+      "paragraph1": "Pulse el botón 'calcular' para procesar las imágenes, guardar los nuevos datos de calibración y recargar todos los servicios.",
+      "paragraph2": "¿Tienes problemas? Asegúrate de que el tablero esté bien visible en las imágenes, aunque no hay necesidad de cubrir todo el tablero en la imagen. También asegúrese de que el tablero está correctamente definido en el primer paso!"
+    },
+    "step4": {
+      "paragraph1": "✅ ¡Lo has conseguido! En este punto puedes comprobar el resultado de la calificación. Haga clic en el botón de captura para activar la matriz de la cámara y compilar una imagen animada.",
+      "paragraph2": "Si tu imagen se ve bien, puedes continuar configurando las acciones en la configuración. De lo contrario, deberías volver a empezar."
+    }
+  }
 }

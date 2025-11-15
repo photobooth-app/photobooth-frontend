@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "当您切换标签页时表单已清除。您想要继续吗？",
   "Continue": "继续",
-  "(Plugin)": "(插件)"
+  "(Plugin)": "(插件)",
+  "Multicamera Tools": "Multicamera工具",
+  "Capture and create wigglegram": "夺取并创建 wigglegram",
+  "Calculate": "计算",
+  "Generate your ChAruCo board": "生成您的 ChAruCo 棋盘",
+  "ChAruCo Board Generator": "CharuCo 棋盘生成器",
+  "ChAruCo Board Parameter": "ChAruCo 棋盘参数",
+  "Calibrate": "校准",
+  "Delete calibration data": "删除校准数据",
+  "Squares X": "正方形 X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "平方长度 (mm)",
+  "Marker Length (mm)": "标记长度 (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "该工具不可用，因为后端没有启用多功能版本。",
+  "adminmulticampage": {
+    "intro": "👋 嘿, 这个多功能工具是帮助你创建超棒的wigglegrams。",
+    "paragraph1": "Wigglegrams仍然用相机数组拍摄。通常需要4个相同的相机来拍摄场景的足够视图。 死记在一起作为动画图像重新播放。您可以在WebP、AVIF和GIF之间选择，而WebP是默认的。",
+    "paragraph2": "自拍摄器尽管是同一型号，但在装配过程中光学和校准方面的容忍度仍然偏低， 要创建平滑的wiglegrams，摄像头需要校准一次。 请按照步骤校准相机。",
+    "step0": {
+      "paragraph1": "你需要一个 ChAruCo 板来进行校准常规。如果你没有，请在此处生成。",
+      "paragraph2": "为了取得良好的结果，董事会必须是非常坚实和平面的。"
+    },
+    "step1": {
+      "paragraph1": "以下节点目前被配置为多功能后端。 ",
+      "paragraph2": "请确认后端设置正确，因为稍后更改校准无效。"
+    },
+    "step2": {
+      "paragraph1": "现在使用CharuCo 板捕获图像。 请检查图像看起来是否好 CharuCo 板在图像中心和相机数组大约2米距。",
+      "paragraph2": "确保场景光亮得很好，所有摄像头都对焦。不要在抓取过程中移动棋盘。"
+    },
+    "step3": {
+      "paragraph1": "按“计算”按钮来处理图像，保存新的校准数据并重新加载所有服务。",
+      "paragraph2": "有问题？确保看板在图像中非常可见，但没有必要在图像中覆盖整个棋盘。 还确保棋盘在第一步中定义正确！"
+    },
+    "step4": {
+      "paragraph1": ":check_mark_buton: 你制作了！此时你可以检查校准结果。 点击捕获按钮触发相机数组并编译动画图像。",
+      "paragraph2": "如果您的图像看起来很好，您可以继续设置配置中的动作。否则您可能想要重新启动。"
+    }
+  }
 }

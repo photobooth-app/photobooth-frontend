@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Le formulaire est effacé lorsque vous changer d'onglet. Voulez-vous continuer ?",
   "Continue": "Continuer",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "Multicamera Tools": "Outils Multicamera",
+  "Capture and create wigglegram": "Capturer et créer une wigglegram",
+  "Calculate": "Calculer",
+  "Generate your ChAruCo board": "Générer votre carte ChAruCo",
+  "ChAruCo Board Generator": "Générateur de carte ChAruCo",
+  "ChAruCo Board Parameter": "Paramètre du tableau ChAruCo",
+  "Calibrate": "Étalonner",
+  "Delete calibration data": "Supprimer les données d'étalonnage",
+  "Squares X": "Carrés X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Longueur carrée (mm)",
+  "Marker Length (mm)": "Longueur du marqueur (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "L'outil n'est pas disponible, car il n'y a pas de multicamera activé dans les backends.",
+  "adminmulticampage": {
+    "intro": "👋 Hé, cet outil multicamera est pour vous aider à créer des wigglegrammes géniaux.",
+    "paragraph1": "Les Wigglegrammes sont des photos prises à l'aide d'un tableau de caméra. En général, 4 caméras identiques sont nécessaires pour capturer des points de vue suffisants d'une scène. Vous pouvez choisir entre WebP, AVIF et GIF, alors que WebP est par défaut.",
+    "paragraph2": "Depuis les caméras, malgré le fait d'être le même modèle, certaines tolérances en optique et l'alignement pendant l'assemblage, pour créer des wigglegrammes lisses, les caméras doivent être calibrées une fois. Veuillez suivre les étapes pour calibrer les caméras.",
+    "step0": {
+      "paragraph1": "Vous avez besoin d'une carte ChAruCo pour la routine d'étalonnage. Si vous n'en avez pas, générez-la ici.",
+      "paragraph2": "La planche doit être très solide et l'avion pour de bons résultats."
+    },
+    "step1": {
+      "paragraph1": "Les nœuds suivants sont configurés comme backend multicamera actuellement. ",
+      "paragraph2": "Veuillez confirmer, que le backend est configuré correctement lorsque les changements ultérieurs invalident l'étalonnage."
+    },
+    "step2": {
+      "paragraph1": "Maintenant capturez des images avec la carte Charuco. Veuillez vérifier que les images ont l'air bien la planche CharuCo est à peu près au centre de l'image et à environ 2m de distance du tableau caméra.",
+      "paragraph2": "Assurez-vous que la scène est bien éclairée et que toutes les caméras sont mises au point. Ne déplacez pas la carte pendant la capture."
+    },
+    "step3": {
+      "paragraph1": "Appuyez sur le bouton 'calculer' pour traiter les images, enregistrer les nouvelles données d'étalonnage et recharger tous les services.",
+      "paragraph2": "Vous avez des problèmes? Assurez-vous que le tableau est bien visible dans les images, bien qu'il n'y ait pas besoin de couvrir l'ensemble du tableau dans l'image. Assurez-vous également que le tableau est correctement défini dans la première étape!"
+    },
+    "step4": {
+      "paragraph1": "✅ Tu as réussi ! À ce stade, tu peux vérifier le résultat d'étalonnage. Cliquez sur le bouton de capture pour déclencher le tableau de caméra et compiler une image animée.",
+      "paragraph2": "Si votre image a l'air correcte, vous pouvez continuer à configurer les actions dans la configuration. Sinon, vous pourriez vouloir recommencer."
+    }
+  }
 }

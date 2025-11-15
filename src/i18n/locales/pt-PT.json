@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "O formulário é apagado quando você troca a aba. Deseja continuar?",
   "Continue": "Continuar",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "Multicamera Tools": "Ferramentas de multicamera",
+  "Capture and create wigglegram": "Capture e crie wigglegram",
+  "Calculate": "Calcular",
+  "Generate your ChAruCo board": "Gerar o seu tabuleiro de ChAruCo",
+  "ChAruCo Board Generator": "Gerador de Conselho ChAruCo",
+  "ChAruCo Board Parameter": "Parâmetro do ChAruCo Board",
+  "Calibrate": "Calibrar",
+  "Delete calibration data": "Excluir dados de calibração",
+  "Squares X": "Quadrados X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Comprimento Quadrado (mm)",
+  "Marker Length (mm)": "Comprimento do Marcador (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "A ferramenta não está disponível, porque não há nenhum multicamera habilitado nos bastidores.",
+  "adminmulticampage": {
+    "intro": "👋 Ei, essa ferramenta de multicamera é para ajudá-lo a criar gramas incríveis.",
+    "paragraph1": "Wigglegramas ainda são capturados usando um array de câmeras. Geralmente 4 câmeras iguais são necessárias para capturar uma cena suficiente. As ainda são costuradas e reproduzidas como uma imagem animada. Você pode escolher entre WebP, AVIF e GIF, enquanto WebP é o padrão.",
+    "paragraph2": "Desde as câmaras, apesar de serem o mesmo modelo, algumas tolerâncias na óptica e no alinhamento durante a Assembleia, Para criar wigglegramas suaves, as câmeras precisam ser calibradas uma vez. Siga os passos para calibrar as câmeras.",
+    "step0": {
+      "paragraph1": "Você precisa de um quadro de ChAruCo para a rotina de calibração. Se você não tiver um, gerá-lo aqui.",
+      "paragraph2": "O conselho tem de ser muito sólido e avião para bons resultados."
+    },
+    "step1": {
+      "paragraph1": "Os seguintes nós são configurados como backend multicamera atualmente. ",
+      "paragraph2": "Por favor, confirme que o backend está configurado corretamente como alterações posteriores invalidam a calibração."
+    },
+    "step2": {
+      "paragraph1": "Agora capture imagens com o quadro CharuCo. Por favor, verifique se as imagens estão bem, o tabuleiro CharuCo está aproximadamente no centro da imagem e em cerca de 2 metros de distância até o array da câmera.",
+      "paragraph2": "Certifique-se de que a cena esteja bem iluminada e que todas as câmeras estejam em foco. Não mova o quadro durante a captura."
+    },
+    "step3": {
+      "paragraph1": "Pressione o botão 'calcular' para processar as imagens, salvar os novos dados de calibração e recarregar todos os serviços.",
+      "paragraph2": "Está tendo problemas? Certifique-se de que o quadro esteja bem visível nas imagens, embora não haja necessidade de cobrir toda a placa na imagem. Também certifique-se de que o board está definido corretamente na primeira etapa!"
+    },
+    "step4": {
+      "paragraph1": "✅ Você conseguiu! Neste momento, você pode verificar o resultado de calibração. Clique no botão de captura para acionar a matriz da câmera e compilar uma imagem animada.",
+      "paragraph2": "Se a sua imagem está boa, você pode continuar a configuração das ações na configuração. Caso contrário, você pode querer começar de novo."
+    }
+  }
 }

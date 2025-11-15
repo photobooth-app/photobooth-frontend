@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Lomake on tyhjennetty, kun vaihdat välilehteä. Haluatko jatkaa?",
   "Continue": "Jatka",
-  "(Plugin)": "(Lugiini)"
+  "(Plugin)": "(Lugiini)",
+  "Multicamera Tools": "Multicamera-työkalut",
+  "Capture and create wigglegram": "Kaappaa ja luo wigglegram",
+  "Calculate": "Laske",
+  "Generate your ChAruCo board": "Luo ChAruCo lauta",
+  "ChAruCo Board Generator": "ChAruCo Board Generator",
+  "ChAruCo Board Parameter": "ChAruCo Board -parametri",
+  "Calibrate": "Kalibroi",
+  "Delete calibration data": "Poista kalibrointitiedot",
+  "Squares X": "Neliöt X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Neliön Pituus (mm)",
+  "Marker Length (mm)": "Merkin Pituus (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "Työkalu ei ole käytettävissä, koska taustaosissa ei ole käytössä multicameraa.",
+  "adminmulticampage": {
+    "intro": "👋 Hei, tämä multicamera työkalu on auttaa sinua luomaan mahtavia wigglegrams.",
+    "paragraph1": "Wigglegrammit tallennetaan kamerarakenteen avulla. Yleensä 4 yhtä suurta kameraa tarvitaan riittävän perspektiivin keräämiseen. Takit on ommeltu yhteen ja toistettu animoidun kuvan. Voit valita WebP, AVIF ja GIF, kun taas WebP on oletusarvoinen.",
+    "paragraph2": "Koska kamerat, vaikka se on sama malli, joitakin toleransseja optiikka ja kohdistus asennuksen aikana, luoda sileä wigglegrams, kamerat on kalibroitava kerran. Ole hyvä ja seuraa vaiheita kalibroidaksesi kamerat.",
+    "step0": {
+      "paragraph1": "Tarvitset ChAruCo laudan kalibrointirutiinia varten. Jos sinulla ei ole lautaa, luo se täältä.",
+      "paragraph2": "Laudan on oltava erittäin vankka ja kone hyviä tuloksia."
+    },
+    "step1": {
+      "paragraph1": "Seuraavat solmut on määritetty monikeskustaustaosaksi tällä hetkellä. ",
+      "paragraph2": "Ole hyvä ja vahvista, että taustaosa on määritetty oikein, kun myöhemmät muutokset mitätöivät kalibroinnin."
+    },
+    "step2": {
+      "paragraph1": "Nyt kaapata kuvia CharuCo taululla. Tarkista, että kuvat näyttävät hyvältä CharuCo levy on noin keskellä kuvan ja noin 2m etäisyys kameran tauluun.",
+      "paragraph2": "Varmista, että tilanne on hyvin valaistu ja kaikki kamerat ovat tarkennettu. Älä liikuta taulua kaappauksen aikana."
+    },
+    "step3": {
+      "paragraph1": "Paina 'Lasketa' painiketta kuvien käsittelyyn, tallenna uudet kalibrointitiedot ja lataa kaikki palvelut uudelleen.",
+      "paragraph2": "Onko ongelmia? Varmista, että hallitus on hyvin näkyvissä kuvissa, vaikka ei ole tarvetta peittää koko taulua kuvassa. Varmista myös, että hallitus on oikein määritelty ensimmäisessä vaiheessa!"
+    },
+    "step4": {
+      "paragraph1": ":checkŽ_button: Sinä teit sen! Tässä vaiheessa voit tarkistaa kalibroinnin tuloksen. Klikkaa kaappauspainiketta laukaise kamerarray ja koota animoitu kuva.",
+      "paragraph2": "Jos kuvasi näyttää hyvältä, voit jatkaa asetusten määrittämistä asetuksissa. Muuten saatat haluta aloittaa toiminnan."
+    }
+  }
 }

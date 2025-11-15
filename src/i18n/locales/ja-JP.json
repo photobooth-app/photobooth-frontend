@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "タブを切り替えるとフォームがクリアされます。続行しますか？",
   "Continue": "続ける",
-  "(Plugin)": "(プラグイン)"
+  "(Plugin)": "(プラグイン)",
+  "Multicamera Tools": "マルチカメラ・ツール",
+  "Capture and create wigglegram": "ウィグルグラムをキャプチャして作成",
+  "Calculate": "計算",
+  "Generate your ChAruCo board": "ChAruCoボードを生成する",
+  "ChAruCo Board Generator": "ChAruCoボードジェネレーター",
+  "ChAruCo Board Parameter": "ChAruCoボードパラメータ",
+  "Calibrate": "Calibrate",
+  "Delete calibration data": "キャリブレーションデータを削除",
+  "Squares X": "正方形X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "平方メートルの長さ (mm)",
+  "Marker Length (mm)": "マーカーの長さ (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "バックエンドにマルチカメラが有効になっていないため、ツールは使用できません。",
+  "adminmulticampage": {
+    "intro": "👋 ねえ、このマルチカメラツールは素晴らしいウィグルグラムを作成するのに役立ちます。",
+    "paragraph1": "Wigglegramsはカメラアレイを使用して静止画を撮影します。通常、シーンの視点を十分に把握するには4つの等しいカメラが必要です。 スティルは一緒にステッチされ、アニメーション画像として再生されます。WebP、AVIF、GIFのいずれかを選択できますが、WebPはデフォルトです。",
+    "paragraph2": "カメラ以来、同じモデルであるにもかかわらず、光学とアセンブリ中のアライメントでいくつかの公差。 スムーズなウィグルグラムを作るには一度カメラを調整する必要がある カメラのキャリブレーション手順に従ってください。",
+    "step0": {
+      "paragraph1": "キャリブレーションルーチンにはChAruCoボードが必要です。ない場合は、ここで生成してください。",
+      "paragraph2": "良い結果を得るには、ボードは非常にしっかりと平面である必要があります。"
+    },
+    "step1": {
+      "paragraph1": "以下のノードは現在、multicamera バックエンドとして設定されています。 ",
+      "paragraph2": "後で変更するとキャリブレーションが無効になるため、バックエンドが正しくセットアップされていることを確認してください。"
+    },
+    "step2": {
+      "paragraph1": "今CharuCoボードで画像をキャプチャします。 画像がよく見えることを確認してください。 CharuCoボードは、画像の中央にあり、カメラアレイまでおよそ2mの距離にあります。",
+      "paragraph2": "シーンが明るく、すべてのカメラがフォーカスされていることを確認します。キャプチャ中にボードを移動しないでください。"
+    },
+    "step3": {
+      "paragraph1": "「計算」ボタンを押して画像を処理し、新しい較正データを保存し、すべてのサービスを再読み込みします。",
+      "paragraph2": "問題がありますか? イメージのボード全体をカバーする必要はありませんが、ボードが画像に十分に表示されていることを確認してください。 また、最初のステップでボードが正しく定義されていることを確認してください!"
+    },
+    "step4": {
+      "paragraph1": "✅ 作成しました! この時点でキャリブレーションの結果を確認できます。 キャプチャボタンをクリックしてカメラアレイをトリガーし、アニメーション画像をコンパイルします。",
+      "paragraph2": "画像が良く見える場合は、設定でアクションを続けることができます。それ以外の場合は、やり直す必要があります。"
+    }
+  }
 }

@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularul este șters atunci când comutați fila. Doriți să continuați?",
   "Continue": "Continuă",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "Multicamera Tools": "Instrumente Multicamera",
+  "Capture and create wigglegram": "Capturează și crează wiglegram",
+  "Calculate": "Calculează",
+  "Generate your ChAruCo board": "Genereaza-ti tabla ChAruCo",
+  "ChAruCo Board Generator": "Generator de consilii ChAruCo",
+  "ChAruCo Board Parameter": "Parametrul Secțiunii ChAruCo",
+  "Calibrate": "Calibrare",
+  "Delete calibration data": "Ștergeți datele de calibrare",
+  "Squares X": "Pătrate X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Lungime pătrată (mm)",
+  "Marker Length (mm)": "Lungimea marcatorului (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "Unealta nu este disponibila, pentru ca nu este activata multicamera in backend-uri.",
+  "adminmulticampage": {
+    "intro": "👋 Hei, această unealtă multicamera este de a te ajuta să creezi fire minunate.",
+    "paragraph1": "Wiggrams sunt încăperi capturate folosind o matrice a camerei. De obicei sunt necesare 4 camere egale pentru a capta suficiente perspective ale scenei. Stilurile sunt puse laolaltă și reluate ca o imagine animată. Poți alege între WebP, AVIF și GIF, în timp ce WebP este implicit.",
+    "paragraph2": "De la aparatele foto, în ciuda faptului că este același model sub anumite toleranțe în materie de optică și aliniere în timpul asamblării, pentru a crea parbrize netede, camerele trebuie calibrate o dată. Vă rugăm să urmaţi paşii pentru calibrarea camerelor.",
+    "step0": {
+      "paragraph1": "Aveţi nevoie de o placă ChAruCo pentru rutina de calibrare. Dacă nu aveţi una, generaţi-o aici.",
+      "paragraph2": "Tabloul de bord trebuie să fie foarte solid şi să aibă rezultate bune."
+    },
+    "step1": {
+      "paragraph1": "Următoarele noduri sunt configurate ca backend multicamera în prezent. ",
+      "paragraph2": "Vă rugăm să confirmaţi, că backend este configurat corect deoarece modificările ulterioare invalidează calibrarea."
+    },
+    "step2": {
+      "paragraph1": "Acum capturează imagini cu tabla CharuCo. Vă rugăm să verificaţi dacă imaginile arată bine, tabla CharuCo se află în centrul imaginii şi se află la o distanţă de aproximativ 2 m până la poarta camerei.",
+      "paragraph2": "Asigurați-vă că scena este bine luminată și că toate camerele sunt în focalizare. Nu mutați tabla în timpul capturii."
+    },
+    "step3": {
+      "paragraph1": "Apăsați butonul \"calculează\" pentru a procesa imaginile, salvați datele noi de calibrare și reîncărcați toate serviciile.",
+      "paragraph2": "Aveţi probleme? Asiguraţi-vă că secţiunea este bine vizibilă în imagini, deşi nu este nevoie să acoperiţi întreaga secţiune în imagine. De asemenea, asigură-te că secţiunea este corect definită în primul pas!"
+    },
+    "step4": {
+      "paragraph1": "✅ Ai făcut-o! În acest moment poți verifica rezultatul calibrării. Faceți clic pe butonul de captură pentru a declanșa array-ul camerei și compilați o imagine animată.",
+      "paragraph2": "Daca imaginea ta arata bine, poti continua setarea actiunilor in configurare. Altfel s-ar putea sa doresti sa incepi din nou."
+    }
+  }
 }

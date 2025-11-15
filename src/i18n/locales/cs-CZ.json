@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formulář je vymazán po přepnutí karty. Chcete pokračovat?",
   "Continue": "Pokračovat",
-  "(Plugin)": "(zavazadlo)"
+  "(Plugin)": "(zavazadlo)",
+  "Multicamera Tools": "Nástroje Multicamera",
+  "Capture and create wigglegram": "Zachytit a vytvořit wigglegram",
+  "Calculate": "Vypočítat",
+  "Generate your ChAruCo board": "Generovat tabuli ChAruCo",
+  "ChAruCo Board Generator": "Generátor rady ChAruCo",
+  "ChAruCo Board Parameter": "Parametr výboru ChAruCo",
+  "Calibrate": "Kalibrace",
+  "Delete calibration data": "Odstranit kalibrační data",
+  "Squares X": "Čtverce X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Čtvereční délka (mm)",
+  "Marker Length (mm)": "Délka značky (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "Nástroj není k dispozici, protože v pozadí není povolena žádná multicamera.",
+  "adminmulticampage": {
+    "intro": "👋 Hej, tento multicamera nástroj vám pomůže vytvořit úžasné wigglegramy.",
+    "paragraph1": "Wigglegramy jsou zachyceny pomocí pole kamery. Obvykle jsou 4 stejné kamery potřebné k zachycení dostatečných pohledů scény. Stále jsou uloženy a znovu přehrávány jako animovaný obrázek. Můžete si vybrat mezi WebP, AVIF a GIF, zatímco WebP je výchozí.",
+    "paragraph2": "Od kamer, přestože je tentýž model nepatrně některé tolerance v optice a seřizování během montáže, pro vytváření hladkých wigglegramů, kamery je třeba kalibrovat jednou. Postupujte prosím podle kroků ke kalibraci kamer.",
+    "step0": {
+      "paragraph1": "Pro kalibraci potřebujete desku ChAruCo. Pokud ji nemáte, vygenerujte ji zde.",
+      "paragraph2": "Deska musí být velmi pevná a mít dobré výsledky."
+    },
+    "step1": {
+      "paragraph1": "Následující uzly jsou nakonfigurovány jako backend multicamera. ",
+      "paragraph2": "Potvrďte prosím, že backend je nastaven správně, protože později změní platnost kalibrace."
+    },
+    "step2": {
+      "paragraph1": "Nyní získej obrázky s deskou CharuCo. Zkontrolujte, zda obrázky vypadají dobře, Tabule CharuCo je asi ve středu obrazu a přibližně ve vzdálenosti 2 m k poli kamery.",
+      "paragraph2": "Ujistěte se, že scéna je dobře rozsvícená a všechny kamery jsou zaostřené. Během snímání se deska nepohybujte."
+    },
+    "step3": {
+      "paragraph1": "Stiskněte tlačítko 'kalkulovat' pro zpracování obrázků, uložte nová kalibrační data a znovu načíst všechny služby.",
+      "paragraph2": "Máte problémy? Zajistěte, aby byla tabule dobře viditelná v obrázcích, i když není třeba pokrývat celou představenbu. Také se ujistěte, že deska je správně definována v prvním kroku!"
+    },
+    "step4": {
+      "paragraph1": "✅ Vytvořili jste to! V tomto bodě můžete zkontrolovat výsledek kalibrace. Klepnutím na tlačítko zachytit spustíte pole fotoaparátu a zkompilujte animovaný obrázek.",
+      "paragraph2": "Pokud váš obrázek vypadá dobře, můžete pokračovat v nastavení akcí v konfiguraci. V opačném případě budete chtít začít znovu."
+    }
+  }
 }

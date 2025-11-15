@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularz jest wyczyszczony po przełączeniu karty. Czy chcesz kontynuować?",
   "Continue": "Kontynuuj",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "Multicamera Tools": "Narzędzia Multicamera",
+  "Capture and create wigglegram": "Przechwyć i utwórz wigglegram",
+  "Calculate": "Oblicz",
+  "Generate your ChAruCo board": "Wygeneruj swoją tablicę ChAruCo",
+  "ChAruCo Board Generator": "Generator Rady ChAruCo",
+  "ChAruCo Board Parameter": "Parametr rady ChAruCo",
+  "Calibrate": "Kalibruj",
+  "Delete calibration data": "Usuń dane kalibracji",
+  "Squares X": "Kwadraty X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Długość kwadratowa (mm)",
+  "Marker Length (mm)": "Długość znacznika (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "Narzędzie nie jest dostępne, ponieważ w zapleczu nie ma włączonej multicamery.",
+  "adminmulticampage": {
+    "intro": "👋 Hej, to narzędzie multicamera pomoże Ci stworzyć niesamowite wigglegramy.",
+    "paragraph1": "Wigglegramy są przechwytywane przy użyciu tablicy kamer. Zwykle 4 równe kamery są wymagane do zdobycia wystarczających perspektyw sceny. Klawisze są ułożone razem i odtwarzane jako animowany obraz. Możesz wybrać pomiędzy WebP, AVIF i GIF, podczas gdy WebP jest domyślny.",
+    "paragraph2": "od czasu kamer, mimo że są tym samym modelem, niektóre tolerancje w optyce i ustawieniu podczas montażu, aby stworzyć gładkie wiglegramy, kamery muszą być raz skalibrowane. Postępuj zgodnie z krokami, aby skalibrować kamery.",
+    "step0": {
+      "paragraph1": "Potrzebujesz tablicy ChAruCo do procedury kalibracji. Jeśli nie posiadasz, wygeneruj ją tutaj.",
+      "paragraph2": "Płyta musi być bardzo solidna i samolotowa, aby uzyskać dobre wyniki."
+    },
+    "step1": {
+      "paragraph1": "Obserwowane węzły są skonfigurowane jako backend multicamery. ",
+      "paragraph2": "Proszę potwierdzić, że backend jest poprawnie skonfigurowany, ponieważ później zmienia się poprawność kalibracji."
+    },
+    "step2": {
+      "paragraph1": "Teraz przechwytywaj obrazy za pomocą tablicy CharuCo. Sprawdź, czy obrazy wyglądają dobrze, tablica CharuCo znajduje się w środku obrazu i w odległości około 2 m od tablicy kamer.",
+      "paragraph2": "Upewnij się, że scena jest dobrze oświetlona, a wszystkie kamery są w ognisku. Nie przesuwaj płytki podczas przechwytywania."
+    },
+    "step3": {
+      "paragraph1": "Naciśnij przycisk 'Oblicz', aby przetworzyć obrazy, zapisać nowe dane kalibracji i przeładować wszystkie usługi.",
+      "paragraph2": "Masz problemy? Upewnij się, że tablica jest dobrze widoczna na zdjęciach, ale nie ma potrzeby zakrycia całej tablicy na obrazku. Upewnij się, że tablica jest poprawnie zdefiniowana w pierwszym kroku!"
+    },
+    "step4": {
+      "paragraph1": "✅ Zrobiłeś to! W tym miejscu możesz sprawdzić wynik kalibracji. Kliknij przycisk przechwytywania, aby uruchomić tablicę kamery i skompilować animowany obraz.",
+      "paragraph2": "Jeśli obraz wygląda dobrze, możesz kontynuować konfigurację akcji w konfiguracji. W przeciwnym razie możesz zacząć od nowa."
+    }
+  }
 }

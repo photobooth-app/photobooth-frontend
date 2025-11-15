@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Az űrlap törlődik, amikor a lapot váltja. Szeretné folytatni?",
   "Continue": "Folytatás",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "Multicamera Tools": "Többkamerás eszközök",
+  "Capture and create wigglegram": "Wigglegram rögzítése és létrehozása",
+  "Calculate": "Számítsa ki a  címet.",
+  "Generate your ChAruCo board": "Generálja a ChAruCo táblát",
+  "ChAruCo Board Generator": "ChAruCo Board generátor",
+  "ChAruCo Board Parameter": "ChAruCo Board Paraméter",
+  "Calibrate": "Kalibrálja a  címet.",
+  "Delete calibration data": "Kalibrációs adatok törlése",
+  "Squares X": "Négyzetek X",
+  "Squares Y": "Négyzetek Y",
+  "Square Length (mm)": "Négyzet Hosszúság (mm)",
+  "Marker Length (mm)": "Jelző hossza (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "Az eszköz nem érhető el, mert a backendekben nincs engedélyezve a többkamerás használat.",
+  "adminmulticampage": {
+    "intro": "👋 Hé, ez a többkamerás eszköz segít neked fantasztikus wigglegramok létrehozásában.",
+    "paragraph1": "A wigglegramok egy kamerasorozattal rögzített állóképek. Általában 4 egyforma kamerára van szükség egy jelenet megfelelő perspektívájának rögzítéséhez. Az állóképeket összeillesztik és animált képként lejátsszák. Választhat WebP, AVIF és GIF között, míg a WebP az alapértelmezett.",
+    "paragraph2": "Mivel a kamerák annak ellenére, hogy azonos modellről van szó, az összeszerelés során az optikában és az igazításban bizonyos tűréshatárok vannak, a sima wigglegramok létrehozásához a kamerákat egyszer kell kalibrálni. Kérjük, kövesse a kamerák kalibrálásának lépéseit.",
+    "step0": {
+      "paragraph1": "A kalibrációs rutinhoz szükség van egy ChAruCo kártyára. Ha nincs ilyenje, itt generálhatja.",
+      "paragraph2": "A deszkának nagyon szilárdnak és síknak kell lennie a jó eredményekhez."
+    },
+    "step1": {
+      "paragraph1": "Jelenleg a következő csomópontok vannak többkamerás háttértárként konfigurálva. ",
+      "paragraph2": "Kérjük, ellenőrizze, hogy a háttértár helyesen van-e beállítva, mivel a későbbi módosítások érvénytelenítik a kalibrációt."
+    },
+    "step2": {
+      "paragraph1": "Most készítsen képeket a CharuCo táblával. Kérjük, ellenőrizze, hogy a képek jól néznek-e ki, a CharuCo tábla körülbelül a kép közepén van, és nagyjából 2 m távolságra a kamerasorozattól.",
+      "paragraph2": "Győződjön meg róla, hogy a helyszín jól megvilágított, és minden kamera fókuszban van. Ne mozgassa a táblát a felvételkészítés során."
+    },
+    "step3": {
+      "paragraph1": "Nyomja meg a \"számítás\" gombot a képek feldolgozásához, az új kalibrációs adatok mentéséhez és az összes szolgáltatás újratöltéséhez.",
+      "paragraph2": "Problémái vannak? Győződjön meg róla, hogy a tábla jól látható a képeken, bár nem szükséges, hogy az egész tábla a képen legyen. Győződjön meg arról is, hogy a tábla az első lépésben helyesen van meghatározva!"
+    },
+    "step4": {
+      "paragraph1": "✅️ Megcsináltad! Ezen a ponton ellenőrizheti a kalibrálás eredményét. Kattintson a rögzítés gombra a kameratömb elindításához és egy animált kép összeállításához.",
+      "paragraph2": "Ha a kép jól néz ki, folytathatja a konfigurációban szereplő műveletek beállítását. Ellenkező esetben érdemes újrakezdeni."
+    }
+  }
 }

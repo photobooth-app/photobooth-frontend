@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Das Formular wird gelöscht, wenn Sie den Tab wechseln. Möchten Sie fortfahren?",
   "Continue": "Fortfahren",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "Multicamera Tools": "Mehrfachkamera-Werkzeuge",
+  "Capture and create wigglegram": "Erfasse und erstelle ein Wigglegram",
+  "Calculate": "Berechne",
+  "Generate your ChAruCo board": "Erstelle dein ChAruCo Board",
+  "ChAruCo Board Generator": "ChAruCo Boardgenerator",
+  "ChAruCo Board Parameter": "ChAruCo Board-Parameter",
+  "Calibrate": "Kalibrieren",
+  "Delete calibration data": "Kalibrierdaten löschen",
+  "Squares X": "Quadrate X",
+  "Squares Y": "Quadrate Y",
+  "Square Length (mm)": "Quadratlänge (mm)",
+  "Marker Length (mm)": "Marker-Länge (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "Das Werkzeug ist nicht verfügbar, da im Backend keine Multicamera aktiviert ist.",
+  "adminmulticampage": {
+    "intro": "👋 Hey, mit diesem Multicamera Tool kannst du großartige Wigglegrams erstellen.",
+    "paragraph1": "Wigglegrams werden mit Hilfe eines Kamera-Arrays erfasst. In der Regel werden 4 gleiche Kameras benötigt, um ausreichende Perspektiven einer Szene zu erfassen. Du kannst zwischen WebP, AVIF und GIF wählen, wobei WebP Standard ist.",
+    "paragraph2": "Da die Kameras, obwohl sie das gleiche Modell sind, Toleranz in der Optik und Ausrichtung während der Montage aufweisen, um glatte Wigglegrams zu erzeugen, müssen die Kameras einmal kalibriert werden. Bitte befolge die Schritte, um die Kameras zu kalibrieren.",
+    "step0": {
+      "paragraph1": "Sie benötigen ein ChAruCo Board für die Kalibrierroutine. Wenn du keines hast, erzeuge es sie hier.",
+      "paragraph2": "Das Board muss sehr solide und eben sein, um gute Ergebnisse zu erzielen."
+    },
+    "step1": {
+      "paragraph1": "Folgende Kamera-Geräte sind derzeit im Multicamera Backend konfiguriert. ",
+      "paragraph2": "Bitte stelle sicher, dass das Backend korrekt eingerichtet ist, da spätere Änderungen die Kalibrierung ungültig machen."
+    },
+    "step2": {
+      "paragraph1": "Nimm nun Bilder mit dem CharuCo-Board auf. Überprüfe, ob die Bilder gut aussehen. Das CharuCo-Board befindet sich ungefähr in der Mitte des Bildes und in etwa 2 m Entfernung zum Kamera-Array.",
+      "paragraph2": "Achte darauf, dass die Szene gut beleuchtet ist und alle Kameras scharf eingestellt sind. Bewege das Brett während der Aufnahme nicht."
+    },
+    "step3": {
+      "paragraph1": "Drücke die Schaltfläche \"Berechnen\", um die Bilder zu verarbeiten, die neuen Kalibrierungsdaten zu speichern und alle Dienste neu zu laden.",
+      "paragraph2": "Hast du Probleme? Achte darauf, dass das Brett in den Bildern gut zu sehen ist. Es ist jedoch nicht nötig, das gesamte Brett im Bild zu verdecken. Achte auch darauf, dass das Brett im ersten Schritt richtig definiert ist!"
+    },
+    "step4": {
+      "paragraph1": "✅️ Du hast es geschafft! Jetzt kannst du das Ergebnis der Kalibrierung überprüfen. Klicke auf die Schaltfläche \"Aufnehmen\", um die Kameraanordnung auszulösen und ein animiertes Bild zu erstellen.",
+      "paragraph2": "Wenn Ihr Bild gut aussieht, können Sie mit dem Einrichten der Aktionen in der Konfiguration fortfahren. Andernfalls möchten Sie vielleicht neu beginnen."
+    }
+  }
 }

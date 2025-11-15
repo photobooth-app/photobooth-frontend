@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Il modulo viene cancellato quando si cambia la scheda. Vuoi continuare?",
   "Continue": "Continua",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "Multicamera Tools": "Strumenti Multicamera",
+  "Capture and create wigglegram": "Cattura e crea wigglegram",
+  "Calculate": "Calcola",
+  "Generate your ChAruCo board": "Genera la tua scheda ChAruCo",
+  "ChAruCo Board Generator": "ChAruCo Board Generator",
+  "ChAruCo Board Parameter": "Parametro Scheda ChAruCo",
+  "Calibrate": "Calibra",
+  "Delete calibration data": "Elimina dati di calibrazione",
+  "Squares X": "Quadrati X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Lunghezza Quadrata (Mm)",
+  "Marker Length (mm)": "Lunghezza Indicatore (Mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "Lo strumento non è disponibile, perché non c'è multicamera abilitata nei backend.",
+  "adminmulticampage": {
+    "intro": "👋 Hey, questo strumento multicamera è per aiutarti a creare fantastici wigglegrams.",
+    "paragraph1": "I Wigglegrams sono ancora catturati utilizzando un array di fotocamere. Di solito sono necessarie 4 telecamere uguali per catturare prospettive sufficienti di una scena. Le pillole sono cucite insieme e riprodotte come immagine animata. È possibile scegliere tra WebP, AVIF e GIF, mentre WebP è predefinito.",
+    "paragraph2": "Dal momento che le telecamere, pur essendo lo stesso modello sottostante alcune tolleranze in ottica e allineamento durante il montaggio, per creare wigglegrams, le telecamere devono essere calibrate una volta. Si prega di seguire i passaggi per calibrare le telecamere.",
+    "step0": {
+      "paragraph1": "Hai bisogno di una scheda ChAruCo per la routine di calibrazione. Se non ne hai una, generala qui.",
+      "paragraph2": "La scheda deve essere molto solida e piano per ottenere buoni risultati."
+    },
+    "step1": {
+      "paragraph1": "I nodi seguenti sono configurati come backend multicamera al momento. ",
+      "paragraph2": "Si prega di confermare che il backend è configurato correttamente poiché le modifiche successive invalidano la calibrazione."
+    },
+    "step2": {
+      "paragraph1": "Ora cattura immagini con la scheda CharuCo. Si prega di controllare che le immagini sembrano bene, la scheda CharuCo è circa al centro dell'immagine e a circa 2 m di distanza dal vettore della fotocamera.",
+      "paragraph2": "Assicurati che la scena sia ben illuminata e che tutte le telecamere siano a fuoco. Non spostare la scheda durante la cattura."
+    },
+    "step3": {
+      "paragraph1": "Premere il pulsante 'calcolare' per elaborare le immagini, salvare i nuovi dati di calibrazione e ricaricare tutti i servizi.",
+      "paragraph2": "Avere problemi? Assicurarsi che la scheda sia ben visibile nelle immagini, anche se non c'è bisogno di coprire l'intera scheda nell'immagine. Assicurarsi inoltre che la scheda sia correttamente definita nel primo passo!"
+    },
+    "step4": {
+      "paragraph1": "✅ Lo hai fatto! A questo punto puoi controllare il risultato della calibrazione. Fare clic sul pulsante di acquisizione per attivare l'array della fotocamera e compilare un'immagine animata.",
+      "paragraph2": "Se l'immagine appare buona, puoi continuare a configurare le azioni nella configurazione. Altrimenti potresti voler ricominciare."
+    }
+  }
 }

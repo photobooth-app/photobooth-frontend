@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "crwdns800:0crwdne800:0",
   "Continue": "crwdns802:0crwdne802:0",
-  "(Plugin)": "crwdns804:0crwdne804:0"
+  "(Plugin)": "crwdns804:0crwdne804:0",
+  "Multicamera Tools": "crwdns810:0crwdne810:0",
+  "Capture and create wigglegram": "crwdns812:0crwdne812:0",
+  "Calculate": "crwdns814:0crwdne814:0",
+  "Generate your ChAruCo board": "crwdns816:0crwdne816:0",
+  "ChAruCo Board Generator": "crwdns808:0crwdne808:0",
+  "ChAruCo Board Parameter": "crwdns818:0crwdne818:0",
+  "Calibrate": "crwdns820:0crwdne820:0",
+  "Delete calibration data": "crwdns822:0crwdne822:0",
+  "Squares X": "crwdns824:0crwdne824:0",
+  "Squares Y": "crwdns826:0crwdne826:0",
+  "Square Length (mm)": "crwdns828:0crwdne828:0",
+  "Marker Length (mm)": "crwdns830:0crwdne830:0",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "crwdns832:0crwdne832:0",
+  "adminmulticampage": {
+    "intro": "crwdns834:0crwdne834:0",
+    "paragraph1": "crwdns836:0crwdne836:0",
+    "paragraph2": "crwdns838:0crwdne838:0",
+    "step0": {
+      "paragraph1": "crwdns840:0crwdne840:0",
+      "paragraph2": "crwdns842:0crwdne842:0"
+    },
+    "step1": {
+      "paragraph1": "crwdns844:0crwdne844:0",
+      "paragraph2": "crwdns846:0crwdne846:0"
+    },
+    "step2": {
+      "paragraph1": "crwdns848:0crwdne848:0",
+      "paragraph2": "crwdns850:0crwdne850:0"
+    },
+    "step3": {
+      "paragraph1": "crwdns852:0crwdne852:0",
+      "paragraph2": "crwdns854:0crwdne854:0"
+    },
+    "step4": {
+      "paragraph1": "crwdns856:0crwdne856:0",
+      "paragraph2": "crwdns858:0crwdne858:0"
+    }
+  }
 }

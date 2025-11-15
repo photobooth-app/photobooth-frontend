@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formuläret rensas när du byter flik. Vill du fortsätta?",
   "Continue": "Fortsätt",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "Multicamera Tools": "Multicamera verktyg",
+  "Capture and create wigglegram": "Fånga och skapa wigglegram",
+  "Calculate": "Beräkna",
+  "Generate your ChAruCo board": "Generera ditt ChAruCo-kort",
+  "ChAruCo Board Generator": "ChAruCo Board Generator",
+  "ChAruCo Board Parameter": "Parameter för ChAruCo Board",
+  "Calibrate": "Kalibrera",
+  "Delete calibration data": "Ta bort kalibreringsdata",
+  "Squares X": "Kvadrater X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Fyrkantig längd (mm)",
+  "Marker Length (mm)": "Markörens längd (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "Verktyget är inte tillgängligt, eftersom det inte finns någon multicamera aktiverad i backends.",
+  "adminmulticampage": {
+    "intro": "👋 Hej, detta multicamera verktyg är att hjälpa dig att skapa fantastiska wigglegram.",
+    "paragraph1": "Wigglegram är stillbilder fångas med hjälp av en kamerarray. Vanligtvis krävs 4 lika kameror för att fånga tillräckligt med perspektiv på en scen. Stillestånden sys ihop och spelas upp som en animerad bild. Du kan välja mellan WebP, AVIF och GIF, medan WebP är standard.",
+    "paragraph2": "Eftersom kamerorna, trots att samma modell underly vissa toleranser i optik och inriktning under montering, För att skapa smidiga wigglegram, måste kamerorna kalibreras en gång. Följ stegen för att kalibrera kamerorna.",
+    "step0": {
+      "paragraph1": "Du behöver ett ChAruCo-kort för kalibreringsrutinen. Om du inte har ett, generera det här.",
+      "paragraph2": "Styrelsen måste vara mycket solid och plan för bra resultat."
+    },
+    "step1": {
+      "paragraph1": "Följande noder är konfigurerade som multicamera backend för närvarande. ",
+      "paragraph2": "Vänligen bekräfta, att backend är korrekt inställd eftersom senare ändringar ogiltigförklarar kalibreringen."
+    },
+    "step2": {
+      "paragraph1": "Nu ta bilder med CharuCo styrelsen. Kontrollera att bilderna ser bra ut, CharuCo styrelsen handlar om i mitten av bilden och i ungefär 2m avstånd till kamerarray.",
+      "paragraph2": "Se till att scenen är väl upplyst och alla kameror är i fokus. Flytta inte brädet under inspelningen."
+    },
+    "step3": {
+      "paragraph1": "Tryck på \"Beräkna\" knappen för att bearbeta bilderna, spara de nya kalibreringsdata och ladda om alla tjänster.",
+      "paragraph2": "Har du problem? Se till att tavlan är väl synlig i bilderna, men det finns ingen anledning att täcka hela tavlan i bilden. Se också till att tavlan är korrekt definierad i det första steget!"
+    },
+    "step4": {
+      "paragraph1": ":check_mark<unk> Du gjorde det! Vid denna punkt kan du kontrollera kalibreringsresultatet. Klicka på knappen för att starta kamerarrayen och kompilera en animerad bild.",
+      "paragraph2": "Om din bild ser bra ut, kan du fortsätta ställa in åtgärderna i konfigurationen. Annars kanske du vill börja om."
+    }
+  }
 }

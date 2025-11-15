@@ -154,5 +154,43 @@
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Skjemaet er fjernet når du bytter fanen. Vil du fortsette?",
   "Continue": "Fortsett",
-  "(Plugin)": "(Plugin)"
+  "(Plugin)": "(Plugin)",
+  "Multicamera Tools": "Multicamera verktøy",
+  "Capture and create wigglegram": "Fang og lag wigglegram",
+  "Calculate": "Beregn",
+  "Generate your ChAruCo board": "Generer din ChAruCo-tavle",
+  "ChAruCo Board Generator": "ChAruCo Styrets leder",
+  "ChAruCo Board Parameter": "ChAruCo Board Parameter",
+  "Calibrate": "Kalibrer",
+  "Delete calibration data": "Slett kalibreringsdata",
+  "Squares X": "Ruter X",
+  "Squares Y": "Squares Y",
+  "Square Length (mm)": "Kvadratisk lengde (mm)",
+  "Marker Length (mm)": "Markørlengde (mm)",
+  "The tool is not available, because there is no multicamera enabled in the backends.": "Verktøyet er ikke tilgjengelig fordi det ikke er noen multicamera aktivert i endene.",
+  "adminmulticampage": {
+    "intro": "👋 Hei, dette multicCache-verktøyet er for å hjelpe deg med å lage fantastiske vokser.",
+    "paragraph1": "Wigglegrammer er fremdeles fanget ved hjelp av kamerarray. Vanligvis er det nødvendig med 4 like kamera for å fange tilstrekkelig perspektiver av en scene. Får blir sydd sammen og spilt på nytt som et animert bilde. Du kan velge mellom WebP, AVIF og GIF, mens WebP er standard.",
+    "paragraph2": "Siden kameraene til tross for at de er den samme modellen for lite toleranser i optikk og justering under montering, For å lage myke vuggplanter, må kameraene kalibreres én gang. Følg trinnene for å kalibrere kameraene.",
+    "step0": {
+      "paragraph1": "Du trenger en ChAruCo tavle for kalibreringsrutinen. Hvis du ikke har en, generer det her.",
+      "paragraph2": "Styret må være meget solid og skal gi et godt resultat."
+    },
+    "step1": {
+      "paragraph1": "Etter noder er konfigurert som multicamera backend for strøm. ",
+      "paragraph2": "Vennligst bekreft, at administrasjonen er riktig satt opp slik at senere endringer ugyldiggjør kalibreringen."
+    },
+    "step2": {
+      "paragraph1": "Får nå bilder med CharuCo-tavlen. Vennligst sjekk at bildene ser bra ut. Styret i CharuCo ligger rundt i midten av bildet og i cirka 2 m avstand til kameraets listen.",
+      "paragraph2": "Sørg for at scenen er godt opplyst og at alle kameraene er i fokus. Ikke flytt tavlen under opptaket."
+    },
+    "step3": {
+      "paragraph1": "Trykk på 'beregne' knappen for å behandle bildene, lagre nye kalibreringsdata og laste alle tjenester på nytt.",
+      "paragraph2": "Har du problemer? Sørg for at tavlen er godt synlig i bildene, selv om det ikke er nødvendig å dekke hele brettet i bildet. Forsikre deg også om at styret er riktig definert i første trinn!"
+    },
+    "step4": {
+      "paragraph1": ":check_mark_knapp: Du klarte det! På dette punktet kan du sjekke kalibreringsresultatet. Klikk på fanger-knappen for å utløse kameraarray og kompilere et animert bilde.",
+      "paragraph2": "Hvis bildet ser bra ut, kan du fortsette å sette opp handlingene i konfigurasjonen. Ellers vil du kanskje starte på nytt."
+    }
+  }
 }
