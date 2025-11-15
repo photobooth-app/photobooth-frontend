@@ -72,23 +72,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/aquisition/multicam/postprocess": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Api Postprocess Multicam Set */
-        post: operations["api_postprocess_multicam_set_api_aquisition_multicam_postprocess_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/aquisition/multicam/{file_path}": {
         parameters: {
             query?: never;
@@ -865,6 +848,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/multicamera/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Get Result */
+        get: operations["api_get_result_api_admin_multicamera_result_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/share/cntr/reset/{field}": {
         parameters: {
             query?: never;
@@ -989,25 +989,25 @@ export interface components {
             image_filter: components["schemas"]["PluginFilters"];
         };
         /**
-         * Animation (GIF) processing after capture
+         * Process animated images processing after capture
          * @description Configure stages how to process collage after capture.
          */
         AnimationProcessing: {
             /**
              * Canvas Width
-             * @description Width (X) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.
+             * @description Width (X) in pixel for the resulting animated image. The higher the better the quality but also longer time to process. All processes keep aspect ratio.
              * @default 1500
              */
             canvas_width: number;
             /**
              * Canvas Height
-             * @description Height (Y) in pixel of animation image (GIF). The higher the better the quality but also longer time to process. All processes keep aspect ratio.
+             * @description Height (Y) in pixel for the resulting animated image. The higher the better the quality but also longer time to process. All processes keep aspect ratio.
              * @default 900
              */
             canvas_height: number;
             /**
              * Merge Definition
-             * @description Sequence images in an animated GIF. Predefined image files are used instead a camera capture. File needs to be located in working directory/userdata/*
+             * @description Sequence captures and predefined images to line up in the resulting animated image. Predefined images are used instead a camera capture. File needs to be located in working directory/userdata/*
              * @default []
              */
             merge_definition: components["schemas"]["AnimationMergeDefinition"][];
@@ -1212,7 +1212,7 @@ export interface components {
              *             },
              *             "ui_trigger": {
              *               "custom_color": "#196cb0",
-             *               "icon": "gif_box",
+             *               "icon": "animated_images",
              *               "show_button": true,
              *               "title": "Animation",
              *               "use_custom_color": false
@@ -1254,7 +1254,6 @@ export interface components {
              *         {
              *           "jobcontrol": {
              *             "countdown_capture": 2,
-             *             "output_fileformat": "gif",
              *             "show_individual_captures_in_gallery": false
              *           },
              *           "name": "default action",
@@ -1272,7 +1271,7 @@ export interface components {
              *             },
              *             "ui_trigger": {
              *               "custom_color": "#196cb0",
-             *               "icon": "burst_mode",
+             *               "icon": "3d",
              *               "show_button": true,
              *               "title": "Wigglegram",
              *               "use_custom_color": false
@@ -1433,7 +1432,9 @@ export interface components {
              *       "thumbnail_still_length": 400,
              *       "video_bitrate": 3000,
              *       "video_compatibility_mode": true,
-             *       "remove_background_model": "modnet"
+             *       "remove_background_model": "modnet",
+             *       "fileformat_animations": "webp",
+             *       "fileformat_multicamera": "webp"
              *     }
              */
             mediaprocessing: components["schemas"]["GroupMediaprocessing"];
@@ -1488,7 +1489,7 @@ export interface components {
              *             "framerate": 15,
              *             "orientation": "1: 0°"
              *           },
-             *           "description": "backend default name",
+             *           "description": "virtual camera",
              *           "enabled": true
              *         }
              *       ]
@@ -1911,7 +1912,7 @@ export interface components {
             collage: components["schemas"]["CollageConfigurationSet"][];
             /**
              * Animation
-             * @description Capture GIF animation sequence consist of one or more still images. It's not a video but a low number of still images.
+             * @description Capture an animation consisting of one or more still images. It's not a video but a low number of still images.
              * @default [
              *       {
              *         "name": "default action",
@@ -1959,7 +1960,7 @@ export interface components {
              *           },
              *           "ui_trigger": {
              *             "custom_color": "#196cb0",
-             *             "icon": "gif_box",
+             *             "icon": "animated_images",
              *             "show_button": true,
              *             "title": "Animation",
              *             "use_custom_color": false
@@ -2012,7 +2013,6 @@ export interface components {
              *         "name": "default action",
              *         "jobcontrol": {
              *           "countdown_capture": 2,
-             *           "output_fileformat": "gif",
              *           "show_individual_captures_in_gallery": false
              *         },
              *         "processing": {
@@ -2029,7 +2029,7 @@ export interface components {
              *           },
              *           "ui_trigger": {
              *             "custom_color": "#196cb0",
-             *             "icon": "burst_mode",
+             *             "icon": "3d",
              *             "show_button": true,
              *             "title": "Wigglegram",
              *             "use_custom_color": false
@@ -2471,11 +2471,12 @@ export interface components {
              */
             index_backend_multicam: number;
             /**
-             * Group Backends
+             * List of Camera Backends
+             * @description Configure the cameras here. Typical is only one camera, but it is also possible to use a DSLR for stills and another camera for the livestream.
              * @default [
              *       {
              *         "enabled": true,
-             *         "description": "backend default name",
+             *         "description": "virtual camera",
              *         "backend_config": {
              *           "backend_type": "VirtualCamera",
              *           "emulate_hires_static_still": false,
@@ -2628,6 +2629,20 @@ export interface components {
              * @enum {string}
              */
             remove_background_model: "modnet" | "u2netp" | "u2net";
+            /**
+             * Fileformat Animations
+             * @description Format in which animations are stored. WebP is recommended nowadays. AVIF is a newer format, encodes fast, produces smallest files but is not yet broadly compatible. GIF is lower quality (max 256 colors), more compute intensive to encode but offers best compatibility. GIF is deprecated here.
+             * @default webp
+             * @enum {string}
+             */
+            fileformat_animations: "webp" | "avif" | "gif";
+            /**
+             * Fileformat Multicamera
+             * @description Format in which wigglegrams are stored. WebP is recommended nowadays. AVIF is a newer format, encodes fast, produces smallest files but is not yet broadly compatible. GIF is lower quality (max 256 colors), more compute intensive to encode but offers best compatibility. GIF is deprecated here.
+             * @default webp
+             * @enum {string}
+             */
+            fileformat_multicamera: "webp" | "avif" | "gif";
         };
         /**
          * Miscellaneous Config
@@ -3132,13 +3147,6 @@ export interface components {
              * @default false
              */
             show_individual_captures_in_gallery: boolean;
-            /**
-             * Output Fileformat
-             * @description Choose the file format of the wigglegram. GIF is usually lower quality (max 256 colors) but good compatibility. MP4 offers better quality per file size but might not replay on old devices.
-             * @default gif
-             * @enum {string}
-             */
-            output_fileformat: "gif" | "mp4";
         };
         /**
          * Wigglegram-multicamera processing
@@ -3803,39 +3811,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": string[];
-                };
-            };
-        };
-    };
-    api_postprocess_multicam_set_api_aquisition_multicam_postprocess_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": string[];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string[];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -5202,6 +5177,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    api_get_result_api_admin_multicamera_result_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
         };
