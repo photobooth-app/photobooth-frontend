@@ -48,6 +48,7 @@ const props = defineProps<{
   enableMirrorEffectStream?: boolean
   enableMirrorEffectFrame?: boolean
   enableBlurredBackgroundStream?: boolean
+  blurredbackgroundHighFramerate?: boolean
   frameOverlayImage?: string
 }>()
 
@@ -55,6 +56,7 @@ let canvasStream = null
 let ctxStream = null
 let canvasBlurred = null
 let ctxBlurred = null
+const refreshBlurredTimeout = props.blurredbackgroundHighFramerate === true ? 50 : 300
 
 const updateCanvas = (canvas: HTMLCanvasElement, ctx, img) => {
   if (canvas.width != img.width || canvas.height != img.height) {
@@ -66,7 +68,7 @@ const updateCanvas = (canvas: HTMLCanvasElement, ctx, img) => {
 
 const throttledUpdateCanvas = useThrottleFn((canvas, ctx, img) => {
   updateCanvas(canvas, ctx, img)
-}, 300)
+}, refreshBlurredTimeout)
 
 // fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
 // so we generate the absolute URL to connect to

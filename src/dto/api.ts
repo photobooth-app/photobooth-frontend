@@ -1453,6 +1453,7 @@ export interface components {
              *       "enable_livestream_when_active": true,
              *       "livestream_mirror_effect": true,
              *       "livestream_blurredbackground": true,
+             *       "livestream_blurredbackground_high_framerate": false,
              *       "enable_livestream_frameoverlay": true,
              *       "livestream_frameoverlay_image": "userdata/demoassets/frames/frame_image_photobooth-app.png",
              *       "livestream_frameoverlay_mirror_effect": false,
@@ -2932,6 +2933,12 @@ export interface components {
              * @default true
              */
             livestream_blurredbackground: boolean;
+            /**
+             * Livestream Blurredbackground High Framerate
+             * @description To save CPU, the blurred refreshs only every 300ms/3.3fps. If the app runs on a beefy computer, you can enable the higher framerate refreshing every 50ms/20fps.
+             * @default false
+             */
+            livestream_blurredbackground_high_framerate: boolean;
             /**
              * Enable Livestream Frameoverlay
              * @description Enable to overlay livestream_frameoverlay_image the livestream.
