@@ -9,7 +9,7 @@
           <!-- name based so even if children are active, the config tab is highlighted -->
           <q-route-tab :to="{ name: 'config' }" icon="sym_o_settings" :label="$t('TAB_LABEL_CONFIG')" />
           <q-route-tab to="/admin/files" icon="sym_o_folder_shared" :label="$t('TAB_LABEL_FILES')" />
-          <q-route-tab to="/admin/multicam" icon="sym_o_burst_mode" :label="$t('TAB_MULTICAM')" />
+          <q-route-tab to="/admin/multicam" icon="sym_o_3d" :label="$t('TAB_MULTICAM')" />
           <q-route-tab to="/admin/logs" icon="sym_o_list" :label="$t('Logs')" />
           <q-btn-dropdown auto-close stretch flat label="">
             <q-list class="bg-green-5">

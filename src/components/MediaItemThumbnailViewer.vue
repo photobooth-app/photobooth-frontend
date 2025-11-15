@@ -40,7 +40,7 @@
       v-else-if="item.media_type == 'animation'"
       class="absolute all-pointer-events"
       size="32px"
-      name="sym_o_gif_box"
+      name="sym_o_animated_images"
       color="white"
       style="top: 8px; right: 8px"
     />
@@ -56,7 +56,7 @@
       v-else-if="item.media_type == 'multicamera'"
       class="absolute all-pointer-events"
       size="32px"
-      name="sym_o_burst_mode"
+      name="sym_o_3d"
       color="white"
       style="top: 8px; right: 8px"
     />

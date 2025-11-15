@@ -10,7 +10,7 @@
         <p>👋 Hey, this multicamera tool is to help you creating awesome wigglegrams.</p>
         <p>
           Wigglegrams are stills captured using a camera array. Usually 4 equal cameras are required to capture sufficient perspectives of a scene.
-          The stills are stitched together and replayed as a GIF/Video.
+          The stills are stitched together and replayed as an animated image. You can choose between WebP, AVIF and GIF, while WebP is default.
         </p>
         <p>
           Since the cameras, despite being the same model underly some tolerances in optics and alignment during assembly, to create smooth
@@ -177,8 +177,8 @@
 
         <q-step :name="4" title="Confirm the result" icon="sym_o_flag">
           <p>
-            ✅️ You made it! At this point you can check the calibration result. Click the capture button to trigger the camera array and compile a
-            GIF.
+            ✅️ You made it! At this point you can check the calibration result. Click the capture button to trigger the camera array and compile an
+            animated image.
           </p>
           <p>If your image looks good, you can continue setup the actions in the configuration. Otherwise you might want to start over.</p>
 
