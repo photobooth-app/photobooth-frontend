@@ -2,6 +2,7 @@
   <q-page id="index-page" class="q-pa-none full-height">
     <preview-stream
       v-if="showPreviewThrottled"
+      :index_device="configurationStore.configuration.backends.index_backend_video"
       :frame-overlay-image="frameOverlayImage"
       :enable-blurred-background-stream="configurationStore.configuration.uisettings.livestream_blurredbackground"
       :enable-mirror-effect-stream="configurationStore.configuration.uisettings.livestream_mirror_effect"

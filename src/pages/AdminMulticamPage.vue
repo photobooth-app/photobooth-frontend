@@ -94,7 +94,11 @@
             <tbody>
               <tr v-for="(node, idx) in multicamNodes" :key="idx">
                 <td class="text-left">
-                  <q-img style="width: 200px" fit="contain" :src="`/api/aquisition/stream.mjpg?index_subdevice=${idx}`" />
+                  <q-img
+                    style="width: 200px"
+                    fit="contain"
+                    :src="`/api/aquisition/stream.mjpg?index_device=${configurationStore.configuration.backends.index_backend_multicam}&index_subdevice=${idx}`"
+                  />
                 </td>
                 <td class="text-left">{{ node.description }}</td>
                 <td class="text-left">{{ idx }}</td>
@@ -130,7 +134,10 @@
                 <div style="height: 200px" class="row no-wrap">
                   <!-- Live Preview -->
                   <q-card style="width: 250px; height: 100%" class="q-pa-sm" flat>
-                    <q-img fit="contain" :src="`/api/aquisition/stream.mjpg?index_subdevice=${node_idx}`" />
+                    <q-img
+                      fit="contain"
+                      :src="`/api/aquisition/stream.mjpg?index_device=${configurationStore.configuration.backends.index_backend_multicam}&index_subdevice=${node_idx}`"
+                    />
 
                     <q-card-actions align="right">
                       <q-btn flat round color="primary" icon="sym_o_camera" @click="capture" :loading="loading" />

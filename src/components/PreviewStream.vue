@@ -45,6 +45,7 @@ import { useThrottleFn } from '@vueuse/core'
 
 const props = defineProps<{
   // from docs: An absent optional prop other than Boolean will have undefined value.
+  index_device: number
   enableMirrorEffectStream?: boolean
   enableMirrorEffectFrame?: boolean
   enableBlurredBackgroundStream?: boolean
@@ -72,7 +73,7 @@ const throttledUpdateCanvas = useThrottleFn((canvas, ctx, img) => {
 
 // fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
 // so we generate the absolute URL to connect to
-const websocketStreamUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream`
+const websocketStreamUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream?index_device=${props.index_device}&index_subdevice=0`
 const { open, close } = useWebSocket(websocketStreamUrl, {
   immediate: false,
   // autoClose: true,
