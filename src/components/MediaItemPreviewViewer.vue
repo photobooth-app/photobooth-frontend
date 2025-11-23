@@ -14,17 +14,18 @@
     <video
       :draggable="false"
       :src="`/media/preview/${item.id}?${item.updated_at}`"
-      class="rounded-borders full-height"
+      class="rounded-borders full-height full-width"
       muted
       autoplay
       style="object-fit: contain; max-width: 100%; max-height: 100%"
       loop
       playsinline
-      controls
+      :controls="item.media_type === 'video'"
       controlslist="nofullscreen nodownload noremoteplayback noplaybackrate"
       disablepictureinpicture
     ></video>
   </div>
+
   <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
   <div v-else>Element not supported to display.</div>
 </template>
