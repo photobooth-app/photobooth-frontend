@@ -1,4 +1,3 @@
-<!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
   <q-page id="multicam-page" padding>
     <q-card flat class="q-pa-md q-mb-md">
@@ -85,10 +84,10 @@
           <q-markup-table flat bordered>
             <thead>
               <tr>
-                <th class="text-left">Stream</th>
-                <th class="text-left">Device Description</th>
-                <th class="text-left">Index/Device-Id</th>
-                <th class="text-left">Address</th>
+                <th class="text-left">{{ $t('Stream') }}</th>
+                <th class="text-left">{{ $t('Device Description') }}</th>
+                <th class="text-left">{{ $t('Index/Device-Id') }}</th>
+                <th class="text-left">{{ $t('Address') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -129,7 +128,7 @@
           <div>
             <q-scroll-area class="q-mb-md" style="height: 220px; width: 100%" v-for="(node, node_idx) in multicamNodes" :key="node_idx">
               <div style="height: 100%" class="col">
-                <div style="height: 20px">Camera Index/Device-Id: {{ node_idx }}</div>
+                <div style="height: 20px">{{ $t('Camera Index/Device-Id:') }} {{ node_idx }}</div>
 
                 <div style="height: 200px" class="row no-wrap">
                   <!-- Live Preview -->
