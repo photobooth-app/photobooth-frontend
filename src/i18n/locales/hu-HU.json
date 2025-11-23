@@ -168,7 +168,7 @@
   "Square Length (mm)": "Négyzet Hosszúság (mm)",
   "Marker Length (mm)": "Jelző hossza (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Az eszköz nem érhető el, mert a backendekben nincs engedélyezve a többkamerás használat.",
-  "Camera Index/Device-Id: ": "Kamera Index/Device-Id:",
+  "Camera Index/Device-Id:": "Kamera Index/Device-Id:",
   "Address": "Cím:",
   "Index/Device-Id": "Index/Device-Id",
   "Device Description": "Eszköz leírása",

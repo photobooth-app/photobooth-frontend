@@ -168,7 +168,7 @@
   "Square Length (mm)": "Квадратна довжина (мм)",
   "Marker Length (mm)": "Довжина позначки (мм)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Інструмент не доступний, тому що в задньому плані немає ввімкненого мультичастоти.",
-  "Camera Index/Device-Id: ": "ID камери/пристрою:",
+  "Camera Index/Device-Id:": "ID камери/пристрою:",
   "Address": "Адреса",
   "Index/Device-Id": "Індекс/Device-Id",
   "Device Description": "Опис носія",

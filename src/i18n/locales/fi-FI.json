@@ -168,7 +168,7 @@
   "Square Length (mm)": "Neliön Pituus (mm)",
   "Marker Length (mm)": "Merkin Pituus (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Työkalu ei ole käytettävissä, koska taustaosissa ei ole käytössä multicameraa.",
-  "Camera Index/Device-Id: ": "Kamera Indeksi/Laitetunnus:",
+  "Camera Index/Device-Id:": "Kamera Indeksi/Laitetunnus:",
   "Address": "Osoite",
   "Index/Device-Id": "Indeksi/Laitetunniste",
   "Device Description": "Laitteen Kuvaus",

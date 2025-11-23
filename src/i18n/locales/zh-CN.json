@@ -168,7 +168,7 @@
   "Square Length (mm)": "平方长度 (mm)",
   "Marker Length (mm)": "标记长度 (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "该工具不可用，因为后端没有启用多功能版本。",
-  "Camera Index/Device-Id: ": "相机索引/指定ID：",
+  "Camera Index/Device-Id:": "相机索引/指定ID：",
   "Address": "地址",
   "Index/Device-Id": "Index/DEfirer Id",
   "Device Description": "设备描述",

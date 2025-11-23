@@ -168,7 +168,7 @@
   "Square Length (mm)": "정사각형 길이(mm)",
   "Marker Length (mm)": "마커 길이(mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "백엔드에 멀티 카메라가 활성화되어 있지 않기 때문에 이 도구를 사용할 수 없습니다.",
-  "Camera Index/Device-Id: ": "카메라 인덱스/장치 ID:",
+  "Camera Index/Device-Id:": "카메라 인덱스/장치 ID:",
   "Address": "주소",
   "Index/Device-Id": "인덱스/장치 ID",
   "Device Description": "장치 설명",

@@ -168,7 +168,7 @@
   "Square Length (mm)": "Τετραγωνικό Μήκος (Χιλ.)",
   "Marker Length (mm)": "Μήκος Δείκτη (Χιλ.)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Το εργαλείο δεν είναι διαθέσιμο, επειδή δεν υπάρχει ενεργοποιημένη πολυφωνία στα backends.",
-  "Camera Index/Device-Id: ": "Δείκτης/Συσκευή-Id Κάμερας:",
+  "Camera Index/Device-Id:": "Δείκτης/Συσκευή-Id Κάμερας:",
   "Address": "Διεύθυνση",
   "Index/Device-Id": "Αναγνωριστικό Ευρετηρίου/Συσκευής",
   "Device Description": "Περιγραφή Συσκευής",

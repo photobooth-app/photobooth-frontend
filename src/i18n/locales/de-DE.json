@@ -168,7 +168,7 @@
   "Square Length (mm)": "Quadratlänge (mm)",
   "Marker Length (mm)": "Marker-Länge (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Das Werkzeug ist nicht verfügbar, da im Backend keine Multicamera aktiviert ist.",
-  "Camera Index/Device-Id: ": "Kamera-Index/Geräte-Id:",
+  "Camera Index/Device-Id:": "Kamera-Index/Geräte-Id:",
   "Address": "Adresse",
   "Index/Device-Id": "Index/Geräte-Id",
   "Device Description": "Gerätebeschreibung",

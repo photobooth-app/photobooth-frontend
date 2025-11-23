@@ -168,7 +168,7 @@
   "Square Length (mm)": "平方メートルの長さ (mm)",
   "Marker Length (mm)": "マーカーの長さ (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "バックエンドにマルチカメラが有効になっていないため、ツールは使用できません。",
-  "Camera Index/Device-Id: ": "カメラインデックス/デバイスID:",
+  "Camera Index/Device-Id:": "カメラインデックス/デバイスID:",
   "Address": "住所",
   "Index/Device-Id": "インデックス/デバイスID",
   "Device Description": "デバイスの説明",

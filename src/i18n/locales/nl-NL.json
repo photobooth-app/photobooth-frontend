@@ -168,7 +168,7 @@
   "Square Length (mm)": "Vierkante Lengte (mm)",
   "Marker Length (mm)": "Markering Lengte (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "De tool is niet beschikbaar, omdat er geen multicamera is ingeschakeld in de backends.",
-  "Camera Index/Device-Id: ": "Camera index/apparaat-Id:",
+  "Camera Index/Device-Id:": "Camera index/apparaat-Id:",
   "Address": "Adres:",
   "Index/Device-Id": "Index/Apparaat-ID",
   "Device Description": "Omschrijving apparaat",

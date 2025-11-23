@@ -168,7 +168,7 @@
   "Square Length (mm)": "Čtvereční délka (mm)",
   "Marker Length (mm)": "Délka značky (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Nástroj není k dispozici, protože v pozadí není povolena žádná multicamera.",
-  "Camera Index/Device-Id: ": "Index kamery/ID zařízení:",
+  "Camera Index/Device-Id:": "Index kamery/ID zařízení:",
   "Address": "Adresa",
   "Index/Device-Id": "Index/ID zařízení",
   "Device Description": "Popis zařízení",

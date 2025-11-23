@@ -168,7 +168,7 @@
   "Square Length (mm)": "Fyrkantig längd (mm)",
   "Marker Length (mm)": "Markörens längd (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Verktyget är inte tillgängligt, eftersom det inte finns någon multicamera aktiverad i backends.",
-  "Camera Index/Device-Id: ": "Kamera Index/Enhet-Id:",
+  "Camera Index/Device-Id:": "Kamera Index/Enhet-Id:",
   "Address": "Adress",
   "Index/Device-Id": "Index/Enhet-ID",
   "Device Description": "Enhetens beskrivning",

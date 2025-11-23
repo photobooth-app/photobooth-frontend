@@ -168,7 +168,7 @@
   "Square Length (mm)": "Lungime pătrată (mm)",
   "Marker Length (mm)": "Lungimea marcatorului (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Unealta nu este disponibila, pentru ca nu este activata multicamera in backend-uri.",
-  "Camera Index/Device-Id: ": "Index/Dispozitiv:",
+  "Camera Index/Device-Id:": "Index/Dispozitiv:",
   "Address": "Adresa",
   "Index/Device-Id": "Index/Dispozitiv-Id",
   "Device Description": "Descriere dispozitiv",

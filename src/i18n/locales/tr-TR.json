@@ -168,7 +168,7 @@
   "Square Length (mm)": "Kare Uzunluk (mm)",
   "Marker Length (mm)": "İşaretleyici Uzunluğu (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Arka uçlarda çoklu kamera etkin olmadığı için araç kullanılamaz.",
-  "Camera Index/Device-Id: ": "Kamera Dizini/Aygıt Kimliği:",
+  "Camera Index/Device-Id:": "Kamera Dizini/Aygıt Kimliği:",
   "Address": "Adres",
   "Index/Device-Id": "Dizin/Aygıt Kimliği",
   "Device Description": "Cihaz Açıklaması",
