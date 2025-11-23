@@ -168,6 +168,11 @@
   "Square Length (mm)": "平方メートルの長さ (mm)",
   "Marker Length (mm)": "マーカーの長さ (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "バックエンドにマルチカメラが有効になっていないため、ツールは使用できません。",
+  "Camera Index/Device-Id: ": "カメラインデックス/デバイスID:",
+  "Address": "住所",
+  "Index/Device-Id": "インデックス/デバイスID",
+  "Device Description": "デバイスの説明",
+  "Stream": "ストリーム",
   "adminmulticampage": {
     "intro": "👋 ねえ、このマルチカメラツールは素晴らしいウィグルグラムを作成するのに役立ちます。",
     "paragraph1": "Wigglegramsはカメラアレイを使用して静止画を撮影します。通常、シーンの視点を十分に把握するには4つの等しいカメラが必要です。 スティルは一緒にステッチされ、アニメーション画像として再生されます。WebP、AVIF、GIFのいずれかを選択できますが、WebPはデフォルトです。",

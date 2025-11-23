@@ -168,6 +168,11 @@
   "Square Length (mm)": "Kvadratisk Længde (mm)",
   "Marker Length (mm)": "Markør Længde (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Værktøjet er ikke tilgængeligt, fordi der ikke er nogen multicamera aktiveret i backends.",
+  "Camera Index/Device-Id: ": "Kamera Indeks/Enhed-Id:",
+  "Address": "Adresse",
+  "Index/Device-Id": "Indeks/Enhed-Id",
+  "Device Description": "Enheds Beskrivelse",
+  "Stream": "Stream",
   "adminmulticampage": {
     "intro": "👋 Hej, dette multicamera værktøj er at hjælpe dig med at skabe awesome wigglegrammer.",
     "paragraph1": "Wigglegrammer er stills taget til fange ved hjælp af et kamerarray. Normalt kræves der 4 lige store kameraer for at fange tilstrækkelige perspektiver på en scene. Stillerne syes sammen og genspilles som et animeret billede. Du kan vælge mellem WebP, AVIF og GIF, mens WebP er standard.",

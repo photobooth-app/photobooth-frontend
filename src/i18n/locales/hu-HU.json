@@ -168,6 +168,11 @@
   "Square Length (mm)": "Négyzet Hosszúság (mm)",
   "Marker Length (mm)": "Jelző hossza (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Az eszköz nem érhető el, mert a backendekben nincs engedélyezve a többkamerás használat.",
+  "Camera Index/Device-Id: ": "Kamera Index/Device-Id:",
+  "Address": "Cím:",
+  "Index/Device-Id": "Index/Device-Id",
+  "Device Description": "Eszköz leírása",
+  "Stream": "Patak",
   "adminmulticampage": {
     "intro": "👋 Hé, ez a többkamerás eszköz segít neked fantasztikus wigglegramok létrehozásában.",
     "paragraph1": "A wigglegramok egy kamerasorozattal rögzített állóképek. Általában 4 egyforma kamerára van szükség egy jelenet megfelelő perspektívájának rögzítéséhez. Az állóképeket összeillesztik és animált képként lejátsszák. Választhat WebP, AVIF és GIF között, míg a WebP az alapértelmezett.",

@@ -168,6 +168,11 @@
   "Square Length (mm)": "Comprimento Quadrado (mm)",
   "Marker Length (mm)": "Comprimento do Marcador (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "A ferramenta não está disponível, porque não há nenhum multicamera habilitado nos bastidores.",
+  "Camera Index/Device-Id: ": "Índice de Câmera/Identificação Desvice-versa:",
+  "Address": "Endereço",
+  "Index/Device-Id": "Index/Device-Id",
+  "Device Description": "Descrição do dispositivo",
+  "Stream": "Transmissão",
   "adminmulticampage": {
     "intro": "👋 Ei, essa ferramenta de multicamera é para ajudá-lo a criar gramas incríveis.",
     "paragraph1": "Wigglegramas ainda são capturados usando um array de câmeras. Geralmente 4 câmeras iguais são necessárias para capturar uma cena suficiente. As ainda são costuradas e reproduzidas como uma imagem animada. Você pode escolher entre WebP, AVIF e GIF, enquanto WebP é o padrão.",

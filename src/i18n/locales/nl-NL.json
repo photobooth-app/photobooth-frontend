@@ -168,6 +168,11 @@
   "Square Length (mm)": "Vierkante Lengte (mm)",
   "Marker Length (mm)": "Markering Lengte (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "De tool is niet beschikbaar, omdat er geen multicamera is ingeschakeld in de backends.",
+  "Camera Index/Device-Id: ": "Camera index/apparaat-Id:",
+  "Address": "Adres:",
+  "Index/Device-Id": "Index/Apparaat-ID",
+  "Device Description": "Omschrijving apparaat",
+  "Stream": "Stroom",
   "adminmulticampage": {
     "intro": "👋 Hé, dit gereedschap voor multicamera is om je te helpen fantastische wigglegrams te maken.",
     "paragraph1": "Wigglegrams zijn nog steeds gevangen met behulp van camerarray. Meestal zijn 4 dezelfde camera's nodig om voldoende perspectieven van een scène te bepalen. De stillen worden samengesneden en weergegeven als een geanimeerde afbeelding. Je kunt kiezen tussen WebP, AVIF en GIF, terwijl WebP standaard is.",

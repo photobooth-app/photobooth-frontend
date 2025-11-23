@@ -168,6 +168,11 @@
   "Square Length (mm)": "Długość kwadratowa (mm)",
   "Marker Length (mm)": "Długość znacznika (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Narzędzie nie jest dostępne, ponieważ w zapleczu nie ma włączonej multicamery.",
+  "Camera Index/Device-Id: ": "Indeks kamery / Id urządzenia:",
+  "Address": "Adres",
+  "Index/Device-Id": "Indeks/Identyfikator urządzenia",
+  "Device Description": "Opis urządzenia",
+  "Stream": "Strumień",
   "adminmulticampage": {
     "intro": "👋 Hej, to narzędzie multicamera pomoże Ci stworzyć niesamowite wigglegramy.",
     "paragraph1": "Wigglegramy są przechwytywane przy użyciu tablicy kamer. Zwykle 4 równe kamery są wymagane do zdobycia wystarczających perspektyw sceny. Klawisze są ułożone razem i odtwarzane jako animowany obraz. Możesz wybrać pomiędzy WebP, AVIF i GIF, podczas gdy WebP jest domyślny.",

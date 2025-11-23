@@ -168,6 +168,11 @@
   "Square Length (mm)": "平方长度 (mm)",
   "Marker Length (mm)": "标记长度 (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "该工具不可用，因为后端没有启用多功能版本。",
+  "Camera Index/Device-Id: ": "相机索引/指定ID：",
+  "Address": "地址",
+  "Index/Device-Id": "Index/DEfirer Id",
+  "Device Description": "设备描述",
+  "Stream": "流",
   "adminmulticampage": {
     "intro": "👋 嘿, 这个多功能工具是帮助你创建超棒的wigglegrams。",
     "paragraph1": "Wigglegrams仍然用相机数组拍摄。通常需要4个相同的相机来拍摄场景的足够视图。 死记在一起作为动画图像重新播放。您可以在WebP、AVIF和GIF之间选择，而WebP是默认的。",

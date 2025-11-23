@@ -168,6 +168,11 @@
   "Square Length (mm)": "Neliön Pituus (mm)",
   "Marker Length (mm)": "Merkin Pituus (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Työkalu ei ole käytettävissä, koska taustaosissa ei ole käytössä multicameraa.",
+  "Camera Index/Device-Id: ": "Kamera Indeksi/Laitetunnus:",
+  "Address": "Osoite",
+  "Index/Device-Id": "Indeksi/Laitetunniste",
+  "Device Description": "Laitteen Kuvaus",
+  "Stream": "Virta",
   "adminmulticampage": {
     "intro": "👋 Hei, tämä multicamera työkalu on auttaa sinua luomaan mahtavia wigglegrams.",
     "paragraph1": "Wigglegrammit tallennetaan kamerarakenteen avulla. Yleensä 4 yhtä suurta kameraa tarvitaan riittävän perspektiivin keräämiseen. Takit on ommeltu yhteen ja toistettu animoidun kuvan. Voit valita WebP, AVIF ja GIF, kun taas WebP on oletusarvoinen.",

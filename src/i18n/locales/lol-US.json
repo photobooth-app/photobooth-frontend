@@ -168,6 +168,11 @@
   "Square Length (mm)": "crwdns828:0crwdne828:0",
   "Marker Length (mm)": "crwdns830:0crwdne830:0",
   "The tool is not available, because there is no multicamera enabled in the backends.": "crwdns832:0crwdne832:0",
+  "Camera Index/Device-Id: ": "crwdns860:0crwdne860:0",
+  "Address": "crwdns862:0crwdne862:0",
+  "Index/Device-Id": "crwdns864:0crwdne864:0",
+  "Device Description": "crwdns866:0crwdne866:0",
+  "Stream": "crwdns868:0crwdne868:0",
   "adminmulticampage": {
     "intro": "crwdns834:0crwdne834:0",
     "paragraph1": "crwdns836:0crwdne836:0",

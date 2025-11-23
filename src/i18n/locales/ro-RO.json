@@ -168,6 +168,11 @@
   "Square Length (mm)": "Lungime pătrată (mm)",
   "Marker Length (mm)": "Lungimea marcatorului (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Unealta nu este disponibila, pentru ca nu este activata multicamera in backend-uri.",
+  "Camera Index/Device-Id: ": "Index/Dispozitiv:",
+  "Address": "Adresa",
+  "Index/Device-Id": "Index/Dispozitiv-Id",
+  "Device Description": "Descriere dispozitiv",
+  "Stream": "Flux",
   "adminmulticampage": {
     "intro": "👋 Hei, această unealtă multicamera este de a te ajuta să creezi fire minunate.",
     "paragraph1": "Wiggrams sunt încăperi capturate folosind o matrice a camerei. De obicei sunt necesare 4 camere egale pentru a capta suficiente perspective ale scenei. Stilurile sunt puse laolaltă și reluate ca o imagine animată. Poți alege între WebP, AVIF și GIF, în timp ce WebP este implicit.",

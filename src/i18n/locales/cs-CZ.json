@@ -168,6 +168,11 @@
   "Square Length (mm)": "Čtvereční délka (mm)",
   "Marker Length (mm)": "Délka značky (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Nástroj není k dispozici, protože v pozadí není povolena žádná multicamera.",
+  "Camera Index/Device-Id: ": "Index kamery/ID zařízení:",
+  "Address": "Adresa",
+  "Index/Device-Id": "Index/ID zařízení",
+  "Device Description": "Popis zařízení",
+  "Stream": "Stream",
   "adminmulticampage": {
     "intro": "👋 Hej, tento multicamera nástroj vám pomůže vytvořit úžasné wigglegramy.",
     "paragraph1": "Wigglegramy jsou zachyceny pomocí pole kamery. Obvykle jsou 4 stejné kamery potřebné k zachycení dostatečných pohledů scény. Stále jsou uloženy a znovu přehrávány jako animovaný obrázek. Můžete si vybrat mezi WebP, AVIF a GIF, zatímco WebP je výchozí.",

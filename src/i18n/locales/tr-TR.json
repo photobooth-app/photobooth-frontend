@@ -168,6 +168,11 @@
   "Square Length (mm)": "Kare Uzunluk (mm)",
   "Marker Length (mm)": "İşaretleyici Uzunluğu (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Arka uçlarda çoklu kamera etkin olmadığı için araç kullanılamaz.",
+  "Camera Index/Device-Id: ": "Kamera Dizini/Aygıt Kimliği:",
+  "Address": "Adres",
+  "Index/Device-Id": "Dizin/Aygıt Kimliği",
+  "Device Description": "Cihaz Açıklaması",
+  "Stream": "Akış",
   "adminmulticampage": {
     "intro": "👋 Hey, bu çoklu kamera aracı harika wigglegramlar oluşturmanıza yardımcı olmak içindir.",
     "paragraph1": "Wigglegram'lar bir kamera dizisi kullanılarak çekilen fotoğraflardır. Bir sahnenin yeterli perspektifini yakalamak için genellikle 4 eşit kamera gerekir. Hareketsiz görüntüler bir araya getirilir ve animasyonlu bir görüntü olarak yeniden oynatılır. WebP, AVIF ve GIF arasında seçim yapabilirsiniz, WebP ise varsayılandır.",

@@ -168,6 +168,11 @@
   "Square Length (mm)": "Quadratlänge (mm)",
   "Marker Length (mm)": "Marker-Länge (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Das Werkzeug ist nicht verfügbar, da im Backend keine Multicamera aktiviert ist.",
+  "Camera Index/Device-Id: ": "Kamera-Index/Geräte-Id:",
+  "Address": "Adresse",
+  "Index/Device-Id": "Index/Geräte-Id",
+  "Device Description": "Gerätebeschreibung",
+  "Stream": "Stream",
   "adminmulticampage": {
     "intro": "👋 Hey, mit diesem Multicamera Tool kannst du großartige Wigglegrams erstellen.",
     "paragraph1": "Wigglegrams werden mit Hilfe eines Kamera-Arrays erfasst. In der Regel werden 4 gleiche Kameras benötigt, um ausreichende Perspektiven einer Szene zu erfassen. Du kannst zwischen WebP, AVIF und GIF wählen, wobei WebP Standard ist.",

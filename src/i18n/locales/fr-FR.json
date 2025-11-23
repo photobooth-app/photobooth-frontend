@@ -168,6 +168,11 @@
   "Square Length (mm)": "Longueur carrée (mm)",
   "Marker Length (mm)": "Longueur du marqueur (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "L'outil n'est pas disponible, car il n'y a pas de multicamera activé dans les backends.",
+  "Camera Index/Device-Id: ": "Index/ID appareil photo :",
+  "Address": "Adresses",
+  "Index/Device-Id": "Index/ID-Périphérique",
+  "Device Description": "Description de l'appareil",
+  "Stream": "Flux",
   "adminmulticampage": {
     "intro": "👋 Hé, cet outil multicamera est pour vous aider à créer des wigglegrammes géniaux.",
     "paragraph1": "Les Wigglegrammes sont des photos prises à l'aide d'un tableau de caméra. En général, 4 caméras identiques sont nécessaires pour capturer des points de vue suffisants d'une scène. Vous pouvez choisir entre WebP, AVIF et GIF, alors que WebP est par défaut.",

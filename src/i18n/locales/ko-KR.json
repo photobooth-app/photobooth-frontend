@@ -168,6 +168,11 @@
   "Square Length (mm)": "정사각형 길이(mm)",
   "Marker Length (mm)": "마커 길이(mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "백엔드에 멀티 카메라가 활성화되어 있지 않기 때문에 이 도구를 사용할 수 없습니다.",
+  "Camera Index/Device-Id: ": "카메라 인덱스/장치 ID:",
+  "Address": "주소",
+  "Index/Device-Id": "인덱스/장치 ID",
+  "Device Description": "장치 설명",
+  "Stream": "스트림",
   "adminmulticampage": {
     "intro": "이 멀티 카메라 도구는 멋진 위글그램을 만드는 데 도움이 됩니다.",
     "paragraph1": "위글그램은 카메라 어레이를 사용하여 캡처한 스틸 사진입니다. 일반적으로 한 장면의 충분한 시점을 캡처하려면 4대의 동일한 카메라가 필요합니다. 스틸은 함께 스티칭되어 애니메이션 이미지로 재생됩니다. WebP, AVIF 및 GIF 중에서 선택할 수 있으며 기본값은 WebP입니다.",

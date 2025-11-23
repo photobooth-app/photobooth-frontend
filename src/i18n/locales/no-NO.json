@@ -168,6 +168,11 @@
   "Square Length (mm)": "Kvadratisk lengde (mm)",
   "Marker Length (mm)": "Markørlengde (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "Verktøyet er ikke tilgjengelig fordi det ikke er noen multicamera aktivert i endene.",
+  "Camera Index/Device-Id: ": "Kamera indeks/Enhet-Id:",
+  "Address": "Adresse",
+  "Index/Device-Id": "Indeks/Ende-ID",
+  "Device Description": "Beskrivelse av enheten",
+  "Stream": "Strøm",
   "adminmulticampage": {
     "intro": "👋 Hei, dette multicCache-verktøyet er for å hjelpe deg med å lage fantastiske vokser.",
     "paragraph1": "Wigglegrammer er fremdeles fanget ved hjelp av kamerarray. Vanligvis er det nødvendig med 4 like kamera for å fange tilstrekkelig perspektiver av en scene. Får blir sydd sammen og spilt på nytt som et animert bilde. Du kan velge mellom WebP, AVIF og GIF, mens WebP er standard.",
