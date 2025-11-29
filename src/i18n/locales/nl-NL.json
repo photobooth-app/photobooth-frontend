@@ -86,6 +86,7 @@
   "app version": "App versie",
   "data directory": "Data map",
   "system information": "Systeem informatie",
+  "Pi Throttled Flags": "Pi Gegrotte vlaggen",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, reset": "Ja, opnieuw instellen",
   "Are you sure you want to delete the selected files and subfolders?": "Weet u zeker dat u de geselecteerde bestanden en submappen wilt verwijderen?",

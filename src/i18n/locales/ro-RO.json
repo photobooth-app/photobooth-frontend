@@ -86,6 +86,7 @@
   "app version": "Versiune aplicație",
   "data directory": "Director de date",
   "system information": "Informatii sistem",
+  "Pi Throttled Flags": "Steaguri cu rotație",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, reset": "Da, resetează",
   "Are you sure you want to delete the selected files and subfolders?": "Sunteţi sigur că doriţi să ştergeţi fişierele şi subdosarele selectate?",

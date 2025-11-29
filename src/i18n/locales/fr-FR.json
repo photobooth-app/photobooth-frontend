@@ -86,6 +86,7 @@
   "app version": "Version de l'application",
   "data directory": "Répertoire des données",
   "system information": "Informations du système",
+  "Pi Throttled Flags": "Drapeaux avec Pi Throttled",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, reset": "Oui, réinitialiser",
   "Are you sure you want to delete the selected files and subfolders?": "Êtes-vous sûr de vouloir supprimer les fichiers et sous-dossiers sélectionnés ?",
