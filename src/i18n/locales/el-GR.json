@@ -86,6 +86,7 @@
   "app version": "Έκδοση εφαρμογής",
   "data directory": "Κατάλογος δεδομένων",
   "system information": "Πληροφορίες συστήματος",
+  "Pi Throttled Flags": "Σημαίες Pi",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, reset": "Ναι, επαναφορά",
   "Are you sure you want to delete the selected files and subfolders?": "Είστε βέβαιοι ότι θέλετε να διαγράψετε τα επιλεγμένα αρχεία και υποφακέλους?",

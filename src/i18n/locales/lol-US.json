@@ -86,6 +86,7 @@
   "app version": "crwdns318:0crwdne318:0",
   "data directory": "crwdns320:0crwdne320:0",
   "system information": "crwdns322:0crwdne322:0",
+  "Pi Throttled Flags": "crwdns872:0crwdne872:0",
   "{platform_machine}, {cpu_count} cores": "crwdns324:0{platform_machine}crwdnd324:0{cpu_count}crwdne324:0",
   "yes, reset": "crwdns398:0crwdne398:0",
   "Are you sure you want to delete the selected files and subfolders?": "crwdns328:0crwdne328:0",

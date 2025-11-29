@@ -86,6 +86,7 @@
   "app version": "Sovelluksen versio",
   "data directory": "Datakansio",
   "system information": "Järjestelmän tiedot",
+  "Pi Throttled Flags": "Pi Throttled Liput",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, reset": "Kyllä, nollaa",
   "Are you sure you want to delete the selected files and subfolders?": "Oletko varma, että haluat poistaa valitut tiedostot ja alikansiot?",
