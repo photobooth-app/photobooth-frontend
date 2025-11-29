@@ -189,11 +189,11 @@
               </q-item-section>
             </q-item>
 
-            <q-item v-if="Object.keys(store.information_interval.pi_throttled_flags).length > 0">
+            <q-item v-if="Object.keys(filteredPiThrottledFlags).length > 0">
               <q-item-section>
                 <q-item-label caption>{{ $t('Pi Throttled Flags') }} </q-item-label>
-                <div class="row">
-                  <q-item v-for="(value, key, index) in store.information_interval.pi_throttled_flags" :key="index">
+                <div class="col">
+                  <q-item v-for="(value, key, index) in filteredPiThrottledFlags" :key="index">
                     <q-item-section>
                       <q-item-label caption>{{ key }}</q-item-label>
                       <q-item-label>{{ value }}</q-item-label>
@@ -533,7 +533,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { useMainStore } from '../stores/main-store'
 import { remoteProcedureCall } from '../util/fetch_api.js'
@@ -574,4 +574,10 @@ const actionResetLimitsConfirmed = () => {
   remoteProcedureCall('/api/admin/share/cntr/reset/' + selected_field.value)
   confirm_reset_limits_counter.value = false
 }
+
+// Computed filtering logic
+const filteredPiThrottledFlags = computed(() => {
+  const flags = store.information_interval.pi_throttled_flags
+  return Object.fromEntries(Object.entries(flags).filter(([key, value]) => key === 'undervoltage_occurred' || value === true))
+})
 </script>
