@@ -79,7 +79,7 @@ export default defineComponent({
   computed: {
     visibleCategories(): (Category | Categorization)[] {
       return (this.layout.uischema as Categorization).elements.filter((category: Category | Categorization) =>
-        isVisible(category, this.layout.data, this.layout.path, this.ajv),
+        isVisible(category, this.layout.data, this.layout.path, this.ajv, this.config),
       )
     },
     visibleCategoryLabels(): string[] {
