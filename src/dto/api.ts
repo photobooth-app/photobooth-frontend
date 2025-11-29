@@ -1426,7 +1426,6 @@ export interface components {
             filetransfer: components["schemas"]["GroupFileTransfer"];
             /**
              * @default {
-             *       "HIRES_STILL_QUALITY": 90,
              *       "full_still_length": 1500,
              *       "preview_still_length": 1200,
              *       "thumbnail_still_length": 400,
@@ -1434,7 +1433,7 @@ export interface components {
              *       "video_compatibility_mode": true,
              *       "remove_background_model": "modnet",
              *       "fileformat_animations": "webp",
-             *       "fileformat_multicamera": "webp"
+             *       "fileformat_multicamera": "mp4"
              *     }
              */
             mediaprocessing: components["schemas"]["GroupMediaprocessing"];
@@ -2309,7 +2308,7 @@ export interface components {
              * @default MJPG
              * @enum {string}
              */
-            pixel_format_fourcc: "MJPG" | "YUYV";
+            pixel_format_fourcc: "MJPG" | "YUYV" | "YU12";
             /**
              * Cam Resolution Width
              * @description Camera resolution width in normal mode for preview and videos. Low resolution recommended to save resources.
@@ -2411,23 +2410,23 @@ export interface components {
              * @description List all nodes to connect to the app. The list is considered as indexed list starting at 0. So the first node should have device_id=0. For 4 cameras you end up with 4 entries in the list and need to assign them device_id's 0,1,2,3.
              * @default [
              *       {
-             *         "description": "wiggle1-device-id=0",
+             *         "description": "wiggle0_device-id=0",
+             *         "address": "wiggle0",
+             *         "base_port": 5550
+             *       },
+             *       {
+             *         "description": "wiggle1_device-id=1",
              *         "address": "wiggle1",
              *         "base_port": 5550
              *       },
              *       {
-             *         "description": "wiggle2-device-id=1",
+             *         "description": "wiggle2_device-id=2",
              *         "address": "wiggle2",
              *         "base_port": 5550
              *       },
              *       {
-             *         "description": "wiggle3-device-id=2",
+             *         "description": "wiggle3_device-id=3",
              *         "address": "wiggle3",
-             *         "base_port": 5550
-             *       },
-             *       {
-             *         "description": "wiggle4-device-id=3",
-             *         "address": "wiggle4",
              *         "base_port": 5550
              *       }
              *     ]
@@ -2594,12 +2593,6 @@ export interface components {
          */
         GroupMediaprocessing: {
             /**
-             * Hires Still Quality
-             * @description Still JPEG full resolution quality, applied to download images and images with filter
-             * @default 90
-             */
-            HIRES_STILL_QUALITY: number;
-            /**
              * Full Still Length
              * @description Minimum dimension of the longer side used to scale full captures. The shorter side is calculated to keep aspect ratio. For best performance choose as low as possible but still gives decent print quality. Example: 1500/6inch=250dpi
              * @default 1500
@@ -2645,11 +2638,11 @@ export interface components {
             fileformat_animations: "webp" | "avif" | "gif";
             /**
              * Fileformat Multicamera
-             * @description Format in which wigglegrams are stored. WebP is recommended nowadays. AVIF is a newer format, encodes fast, produces smallest files but is not yet broadly compatible. GIF is lower quality (max 256 colors), more compute intensive to encode but offers best compatibility. GIF is deprecated here.
-             * @default webp
+             * @description Format in which wigglegrams are stored. MP4 is recommended for quality and filesize as well as compatibility. WebP/AVIF are recommended over MP4 and GIF but still lack support sharing via WhatsApp. GIF is lower quality (max 256 colors), more compute intensive to encode but offers best compatibility. GIF is deprecated here.
+             * @default mp4
              * @enum {string}
              */
-            fileformat_multicamera: "webp" | "avif" | "gif";
+            fileformat_multicamera: "mp4" | "webp" | "avif" | "gif";
         };
         /**
          * Miscellaneous Config
@@ -3441,6 +3434,10 @@ export interface components {
             };
             /** Plugins */
             plugins: components["schemas"]["GenericStats"][];
+            /** Pi Throttled Flags */
+            pi_throttled_flags: {
+                [key: string]: boolean;
+            };
         };
         /** SseEventOnetimeInformationRecord */
         SseEventOnetimeInformationRecord: {
@@ -3760,6 +3757,7 @@ export interface operations {
     video_stream_api_aquisition_stream_mjpg_get: {
         parameters: {
             query?: {
+                index_device?: number;
                 index_subdevice?: number;
             };
             header?: never;

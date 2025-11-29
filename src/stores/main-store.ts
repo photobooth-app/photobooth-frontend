@@ -29,6 +29,7 @@ function defaultIntervalInformation(): components['schemas']['SseEventIntervalIn
     temperatures: {},
     mediacollection: {},
     plugins: null,
+    pi_throttled_flags: {},
   }
 }
 

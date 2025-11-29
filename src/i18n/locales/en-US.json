@@ -86,6 +86,7 @@
   "app version": "App version",
   "data directory": "Data directory",
   "system information": "System information",
+  "Pi Throttled Flags": "Pi Throttled Flags",
   "{platform_machine}, {cpu_count} cores": "{platform_machine}, {cpu_count} cores",
   "yes, reset": "Yes, reset",
   "Are you sure you want to delete the selected files and subfolders?": "Are you sure you want to delete the selected files and subfolders?",

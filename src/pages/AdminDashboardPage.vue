@@ -188,6 +188,20 @@
                 </div>
               </q-item-section>
             </q-item>
+
+            <q-item v-if="Object.keys(store.information_interval.pi_throttled_flags).length > 0">
+              <q-item-section>
+                <q-item-label caption>{{ $t('Pi Throttled Flags') }} </q-item-label>
+                <div class="row">
+                  <q-item v-for="(value, key, index) in store.information_interval.pi_throttled_flags" :key="index">
+                    <q-item-section>
+                      <q-item-label caption>{{ key }}</q-item-label>
+                      <q-item-label>{{ value }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </div>
+              </q-item-section>
+            </q-item>
           </q-list>
         </q-card-section>
       </q-card>
