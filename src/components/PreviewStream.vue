@@ -41,7 +41,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, computed } from 'vue'
 import { useWebSocket } from '@vueuse/core'
-import { useThrottleFn } from '@vueuse/core'
 
 const props = defineProps<{
   // from docs: An absent optional prop other than Boolean will have undefined value.
@@ -53,27 +52,17 @@ const props = defineProps<{
   frameOverlayImage?: string
 }>()
 
-let canvasStream = null
-let ctxStream = null
-let canvasBlurred = null
-let ctxBlurred = null
-const refreshBlurredTimeout = props.blurredbackgroundHighFramerate === true ? 50 : 300
-
-const updateCanvas = (canvas: HTMLCanvasElement, ctx, img) => {
-  if (canvas.width != img.width || canvas.height != img.height) {
-    canvas.width = img.width
-    canvas.height = img.height
-  }
-  ctx.drawImage(img, 0, 0)
-}
-
-const throttledUpdateCanvas = useThrottleFn((canvas, ctx, img) => {
-  updateCanvas(canvas, ctx, img)
-}, refreshBlurredTimeout)
-
 // fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
 // so we generate the absolute URL to connect to
 const websocketStreamUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream?index_device=${props.index_device}&index_subdevice=0`
+const streamWorker = new Worker('src/util/stream_worker.ts', { type: 'module' })
+
+// Receive stats from worker
+streamWorker.onmessage = (ev) => {
+  if (ev.data.type === 'stats') {
+    console.log(`FPS plain=${ev.data.fpsPlain}, augmented=${ev.data.fpsAug}, ` + `dropped=${ev.data.dropped}, avgDecode=${ev.data.avgDecode}ms`)
+  }
+}
 const { open, close } = useWebSocket(websocketStreamUrl, {
   immediate: false,
   // autoClose: true,
@@ -81,8 +70,17 @@ const { open, close } = useWebSocket(websocketStreamUrl, {
     retries: -1,
     delay: 1000,
   },
-  onConnected() {
+  onConnected(ws) {
+    ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
     console.log('stream connected via websocket')
+
+    const plainCanvas = (document.getElementById('preview-inner-stream') as HTMLCanvasElement).transferControlToOffscreen()
+    const augCanvas = (document.getElementById('preview-outer-blurred') as HTMLCanvasElement).transferControlToOffscreen()
+
+    streamWorker.postMessage(
+      { type: 'init', canvases: { plain: plainCanvas, aug: augCanvas }, blurredbackgroundHighFramerate: props.blurredbackgroundHighFramerate },
+      [plainCanvas, augCanvas],
+    )
   },
   onDisconnected() {
     console.log('stream disconnected from websocket')
@@ -95,20 +93,7 @@ const { open, close } = useWebSocket(websocketStreamUrl, {
       return
     }
 
-    if ((canvasStream && ctxStream) || (canvasBlurred && ctxBlurred)) {
-      const imageBitmap = await createImageBitmap(new Blob([event.data], { type: 'image/jpeg' }))
-
-      if (canvasStream && ctxStream) {
-        updateCanvas(canvasStream, ctxStream, imageBitmap)
-      }
-      if (canvasBlurred && ctxBlurred) {
-        throttledUpdateCanvas(canvasBlurred, ctxBlurred, imageBitmap)
-      }
-
-      imageBitmap.close() // descroy after drawing to avoid mem leak
-    } else {
-      console.error('jpeg bytes received but no canvas to draw to.')
-    }
+    streamWorker.postMessage({ type: 'frame', payload: event.data }, [event.data])
   },
 })
 
@@ -128,22 +113,12 @@ onMounted(() => {
     }
   }
 
-  canvasStream = document.getElementById('preview-inner-stream') as HTMLCanvasElement
-  canvasBlurred = document.getElementById('preview-outer-blurred') as HTMLCanvasElement
-
-  if (canvasStream) ctxStream = canvasStream.getContext('2d')
-  if (canvasBlurred) ctxBlurred = canvasBlurred.getContext('2d')
-  if (canvasStream || canvasBlurred) open()
+  open()
 })
 
 onUnmounted(() => {
   close()
 
-  // reset to void memory leaking
-  canvasStream = null
-  ctxStream = null
-  canvasBlurred = null
-  ctxBlurred = null
   console.log('preview stream unmounted!')
 })
 </script>
