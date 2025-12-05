@@ -55,7 +55,7 @@ const props = defineProps<{
 // fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
 // so we generate the absolute URL to connect to
 const websocketStreamUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream?index_device=${props.index_device}&index_subdevice=0`
-const streamWorker = new Worker('src/util/stream_worker.ts', { type: 'module' })
+const streamWorker = new Worker(new URL('/src/util/stream_worker.ts', import.meta.url), { type: 'module' })
 
 // Receive stats from worker
 streamWorker.onmessage = (ev) => {
@@ -118,6 +118,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   close()
+  streamWorker.terminate()
 
   console.log('preview stream unmounted!')
 })
