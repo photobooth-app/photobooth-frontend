@@ -107,7 +107,7 @@ async function drawCanvas() {
 
 async function loadOverlay(url: string) {
   const t0 = performance.now()
-  let t1, t2, t3, t4
+  let t1, t2, t3, t4, t5, t6
 
   try {
     const resp = await fetch(url)
@@ -120,11 +120,18 @@ async function loadOverlay(url: string) {
     t3 = performance.now()
     const overlayBox3 = await computeTransparentBoundingBoxScaleRefine(overlayBitmap)
     t4 = performance.now()
+    const overlayBox4 = await computeTransparentBoundingBoxScaleRefine2(overlayBitmap)
+    t5 = performance.now()
+    const overlayBox5 = await computeTransparentBoundingBoxScaleNorefine(overlayBitmap)
+    t6 = performance.now()
 
     console.warn('computeTransparentBoundingBoxSimple area', overlayBox1, 'took ', (t2 - t1).toFixed(1))
     console.warn('computeTransparentBoundingBoxU32 area', overlayBox2, 'took ', (t3 - t2).toFixed(1))
     console.warn('computeTransparentBoundingBoxScaleRefine area', overlayBox3, 'took ', (t4 - t3).toFixed(1))
-    overlayBox = overlayBox3
+    console.warn('computeTransparentBoundingBoxScaleRefine2 area', overlayBox4, 'took ', (t5 - t4).toFixed(1))
+    console.warn('computeTransparentBoundingBoxScaleNorefine area', overlayBox5, 'took ', (t6 - t5).toFixed(1))
+
+    overlayBox = overlayBox5
   } catch (e) {
     console.error('Overlay load error:', e)
     overlayBitmap = null
@@ -278,6 +285,119 @@ async function computeTransparentBoundingBoxScaleRefine(bitmap: ImageBitmap, sca
     y: top ?? coarseY,
     w: (right ?? coarseX + coarseW) - (left ?? coarseX) + 1,
     h: (bottom ?? coarseY + coarseH) - (top ?? coarseY) + 1,
+  }
+}
+async function computeTransparentBoundingBoxScaleRefine2(
+  bitmap: ImageBitmap,
+  scale = 8,
+  margin = 50,
+): Promise<{ x: number; y: number; w: number; h: number }> {
+  const { width, height } = bitmap
+
+  // --- Step 1: Coarse pass ---
+  const dsWidth = Math.ceil(width / scale)
+  const dsHeight = Math.ceil(height / scale)
+
+  const dsCtx = new OffscreenCanvas(dsWidth, dsHeight).getContext('2d', { willReadFrequently: true })!
+  dsCtx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
+  const dsData = dsCtx.getImageData(0, 0, dsWidth, dsHeight).data
+
+  let minX = dsWidth,
+    minY = dsHeight,
+    maxX = -1,
+    maxY = -1
+  for (let y = 0; y < dsHeight; y++) {
+    for (let x = 0; x < dsWidth; x++) {
+      const alpha = dsData[(y * dsWidth + x) * 4 + 3]
+      if (alpha < 128) {
+        if (x < minX) minX = x
+        if (y < minY) minY = y
+        if (x > maxX) maxX = x
+        if (y > maxY) maxY = y
+      }
+    }
+  }
+
+  // Scale coarse box back to original coords
+  const coarseX = minX * scale
+  const coarseY = minY * scale
+  const coarseW = (maxX - minX + 1) * scale
+  const coarseH = (maxY - minY + 1) * scale
+
+  // --- Step 2: Refine strips ---
+  const ctx = new OffscreenCanvas(width, height).getContext('2d', { willReadFrequently: true })!
+  ctx.drawImage(bitmap, 0, 0)
+
+  function refineEdge(x: number, y: number, w: number, h: number, axis: 'x' | 'y', mode: 'min' | 'max') {
+    const data = ctx.getImageData(x, y, w, h).data
+    let result = mode === 'min' ? Infinity : -Infinity
+
+    for (let yy = 0; yy < h; yy++) {
+      for (let xx = 0; xx < w; xx++) {
+        const alpha = data[(yy * w + xx) * 4 + 3]
+        if (alpha < 128) {
+          const globalCoord = axis === 'y' ? y + yy : x + xx
+          result = mode === 'min' ? Math.min(result, globalCoord) : Math.max(result, globalCoord)
+        }
+      }
+    }
+    return result === Infinity || result === -Infinity ? null : result
+  }
+
+  const top = refineEdge(coarseX, Math.max(0, coarseY - margin), coarseW, margin * 2, 'y', 'min')
+  const bottom = refineEdge(coarseX, Math.min(height - margin, coarseY + coarseH - margin), coarseW, margin * 2, 'y', 'max')
+  const left = refineEdge(Math.max(0, coarseX - margin), coarseY, margin * 2, coarseH, 'x', 'min')
+  const right = refineEdge(Math.min(width - margin, coarseX + coarseW - margin), coarseY, margin * 2, coarseH, 'x', 'max')
+
+  return {
+    x: left ?? coarseX,
+    y: top ?? coarseY,
+    w: (right ?? coarseX + coarseW) - (left ?? coarseX) + 1,
+    h: (bottom ?? coarseY + coarseH) - (top ?? coarseY) + 1,
+  }
+}
+
+async function computeTransparentBoundingBoxScaleNorefine(bitmap: ImageBitmap, scale = 4): Promise<{ x: number; y: number; w: number; h: number }> {
+  const { width, height } = bitmap
+
+  // --- Step 1: Coarse pass ---
+  const dsWidth = Math.ceil(width / scale)
+  const dsHeight = Math.ceil(height / scale)
+
+  const dsCtx = new OffscreenCanvas(dsWidth, dsHeight).getContext('2d', { willReadFrequently: true })!
+  dsCtx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
+  const dsData = dsCtx.getImageData(0, 0, dsWidth, dsHeight).data
+
+  let minX = dsWidth,
+    minY = dsHeight,
+    maxX = -1,
+    maxY = -1
+  for (let y = 0; y < dsHeight; y++) {
+    for (let x = 0; x < dsWidth; x++) {
+      const alpha = dsData[(y * dsWidth + x) * 4 + 3]
+      if (alpha < 128) {
+        if (x < minX) minX = x
+        if (y < minY) minY = y
+        if (x > maxX) maxX = x
+        if (y > maxY) maxY = y
+      }
+    }
+  }
+
+  // Scale coarse box back to original coords
+  const coarseX = minX * scale
+  const coarseY = minY * scale
+  const coarseW = (maxX - minX + 1) * scale
+  const coarseH = (maxY - minY + 1) * scale
+
+  // --- Step 2: Refine pass ---
+  // We skip this pass because it is costly and not needed for the frontend. It will be okay if it is /scale exact for previews.
+
+  return {
+    x: coarseX,
+    y: coarseY,
+    w: coarseW,
+    h: coarseH,
   }
 }
 
