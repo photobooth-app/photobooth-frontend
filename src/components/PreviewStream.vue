@@ -1,45 +1,12 @@
 <template>
-  <div id="preview-container" class="">
-    <canvas
-      v-if="props.enableBlurredBackgroundStream"
-      id="preview-outer-blurred"
-      class="preview-center-element"
-      :class="{ mirroreffect: props.enableMirrorEffectStream }"
-    ></canvas>
-
-    <div id="preview-outer-container" class="preview-center-element">
-      <div
-        id="preview-inner-container"
-        class="preview-center-element"
-        :class="{
-          'stream-no-preview': !showFrameOverlay,
-        }"
-      >
-        <canvas
-          id="preview-inner-stream"
-          class="preview-center-element"
-          :class="{
-            mirroreffect: props.enableMirrorEffectStream,
-            cover: showFrameOverlay,
-            contain: !showFrameOverlay,
-          }"
-        ></canvas>
-
-        <!-- keep element on dom, so the aspect ratio update listener is always registered, even if no permanent overlay but only per actions -->
-        <img
-          v-show="showFrameOverlay"
-          id="preview-inner-overlay"
-          class="preview-center-element contain"
-          :class="{ mirroreffect: props.enableMirrorEffectFrame }"
-          :src="props.frameOverlayImage"
-        />
-      </div>
-    </div>
+  <div class="canvas-stack">
+    <canvas id="canvas-blurred"></canvas>
+    <canvas id="canvas-stream" :class="{ mirroreffect: props.enableMirrorEffectStream }"></canvas>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, computed } from 'vue'
+import { onMounted, onUnmounted, watchEffect } from 'vue'
 import { useWebSocket } from '@vueuse/core'
 
 const props = defineProps<{
@@ -52,10 +19,24 @@ const props = defineProps<{
   frameOverlayImage?: string
 }>()
 
+const streamWorker = new Worker(new URL('/src/util/stream_worker.ts', import.meta.url), { type: 'module' })
+//TODO:
+// -mirroreffectframe not yet used.
+
+watchEffect(() => {
+  console.log('frame changed to ', props.frameOverlayImage)
+
+  if (props.frameOverlayImage) {
+    console.log(props.frameOverlayImage)
+    const overlayAbsUrl = new URL(props.frameOverlayImage, document.baseURI).href
+    streamWorker.postMessage({ type: 'overlay', url: overlayAbsUrl })
+  } else {
+    streamWorker.postMessage({ type: 'overlay', url: null })
+  }
+})
 // fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
 // so we generate the absolute URL to connect to
 const websocketStreamUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream?index_device=${props.index_device}&index_subdevice=0`
-const streamWorker = new Worker(new URL('/src/util/stream_worker.ts', import.meta.url), { type: 'module' })
 
 // Receive stats from worker
 streamWorker.onmessage = (ev) => {
@@ -74,12 +55,16 @@ const { open, close } = useWebSocket(websocketStreamUrl, {
     ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
     console.log('stream connected via websocket')
 
-    const plainCanvas = (document.getElementById('preview-inner-stream') as HTMLCanvasElement).transferControlToOffscreen()
-    const augCanvas = (document.getElementById('preview-outer-blurred') as HTMLCanvasElement).transferControlToOffscreen()
+    const canvasStream = (document.getElementById('canvas-stream') as HTMLCanvasElement).transferControlToOffscreen()
+    const canvasBlurred = (document.getElementById('canvas-blurred') as HTMLCanvasElement).transferControlToOffscreen()
 
     streamWorker.postMessage(
-      { type: 'init', canvases: { plain: plainCanvas, aug: augCanvas }, blurredbackgroundHighFramerate: props.blurredbackgroundHighFramerate },
-      [plainCanvas, augCanvas],
+      {
+        type: 'init',
+        canvases: { stream: canvasStream, blurred: canvasBlurred },
+        blurredbackgroundHighFramerate: props.blurredbackgroundHighFramerate,
+      },
+      [canvasStream, canvasBlurred],
     )
   },
   onDisconnected() {
@@ -97,21 +82,12 @@ const { open, close } = useWebSocket(websocketStreamUrl, {
   },
 })
 
-const showFrameOverlay = computed(() => {
-  return props.frameOverlayImage ?? true
-})
-
 onMounted(() => {
   console.log('preview stream mounted!')
   // set aspect ratio of overlay frame to container so stream and overlay align properly
-  const overlayImage = document.getElementById('preview-inner-overlay') as HTMLImageElement
-  if (overlayImage) {
-    overlayImage.onload = function () {
-      console.log(overlayImage.naturalWidth / overlayImage.naturalHeight)
-      const container = document.getElementById('preview-inner-container')
-      container.style.aspectRatio = Number(overlayImage.naturalWidth / overlayImage.naturalHeight).toFixed(4)
-    }
-  }
+
+  // const overlayAbsUrl = new URL(props.frameOverlayImage, document.baseURI).href
+  // streamWorker.postMessage({ type: 'overlay', url: overlayAbsUrl })
 
   open()
 })
@@ -125,11 +101,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
-.mirroreffect {
-  transform: translate(-50%, -50%) scale(-1, 1) !important;
-}
-
-#preview-container {
+.canvas-stack {
   position: fixed;
   height: 100%;
   width: 100%;
@@ -137,58 +109,32 @@ onUnmounted(() => {
   /* Prevent interaction */
   pointer-events: none;
   user-select: none;
-}
-#preview-outer-container {
-  position: relative;
 
-  /* change following to resize the preview stream and frame container */
-  height: 100%;
-  width: 100%;
-}
+  display: grid; // Create a sizing context
+  place-items: center;
 
-#preview-outer-blurred {
-  width: 110%;
-  height: 110%;
+  > canvas {
+    grid-area: 1 / 1; // overlap in same cell
+    overflow: hidden; // this tells the browser to resize the canvas if exceeding in height (it doesn't clip)
+    width: 100%;
+    height: 100%;
 
-  object-fit: cover;
+    &#canvas-blurred {
+      z-index: 1;
+      object-fit: cover;
 
-  filter: blur(8px);
-  opacity: 0.6;
-}
+      filter: blur(6px);
+      opacity: 0.6;
+    }
 
-#preview-inner-container {
-  position: relative;
+    &#canvas-stream {
+      z-index: 2;
+      object-fit: contain;
+    }
 
-  aspect-ratio: 1/1;
-  /* fallback */
-  max-width: 100%;
-  max-height: 100%;
-}
-
-#preview-inner-container img,
-#preview-inner-container canvas {
-  width: 100%;
-  height: 100%;
-}
-
-#preview-inner-container.stream-no-preview {
-  width: 100%;
-  height: 100%;
-}
-
-#preview-inner-container > .cover {
-  object-fit: cover;
-}
-
-#preview-inner-container > .contain {
-  object-fit: contain;
-}
-
-/* position elements */
-.preview-center-element {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    &.mirroreffect {
+      transform: scale(-1, 1);
+    }
+  }
 }
 </style>
