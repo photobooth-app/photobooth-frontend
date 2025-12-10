@@ -108,27 +108,19 @@ async function drawCanvas() {
 async function loadOverlay(url: string) {
   const t0 = performance.now()
   let t1
-  let tBefore
   try {
     const resp = await fetch(url)
     const blob = await resp.blob()
     overlayBitmap = await createImageBitmap(blob)
     t1 = performance.now()
-    overlayBox = await computeTransparentBoundingBoxScaleNorefine(overlayBitmap)
+    overlayBox = await computeTransparentBoundingBox(overlayBitmap)
   } catch (e) {
     console.error('Overlay load error:', e)
     overlayBitmap = null
   }
 
   const te = performance.now()
-  console.log('load overlay took ', (t1 - t0).toFixed(1), 'ms and calc transparency took ', (te - t1).toFixed(1), 'ms')
-
-  tBefore = performance.now()
-  console.warn(await computeTransparentBoundingBoxScaleNorefine(overlayBitmap))
-  console.log('computeTransparentBoundingBoxScaleNorefine took ', (performance.now() - tBefore).toFixed(1), 'ms')
-  tBefore = performance.now()
-  console.warn(await computeTransparentBoundingBoxScaleNorefineU32(overlayBitmap))
-  console.log('computeTransparentBoundingBoxScaleNorefineU32 took ', (performance.now() - tBefore).toFixed(1), 'ms')
+  console.log('load overlay took ', (t1 - t0).toFixed(1), 'ms and calc transparency box ', overlayBox, ' took ', (te - t1).toFixed(1), 'ms')
 }
 
 function fitCover(srcW: number, srcH: number, boxW: number, boxH: number) {
@@ -140,13 +132,14 @@ function fitCover(srcW: number, srcH: number, boxW: number, boxH: number) {
   return { drawW, drawH, offsetX, offsetY }
 }
 
-async function computeTransparentBoundingBoxScaleNorefine(bitmap: ImageBitmap, scale = 4): Promise<{ x: number; y: number; w: number; h: number }> {
-  const { width, height } = bitmap
+async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 5): Promise<{ x: number; y: number; w: number; h: number }> {
+  // algorithm scales down the image and returns the coarse bounding box which is usually fine for preview and sufficiently fast in the 5-20ms range
 
   // --- Step 1: Coarse pass ---
-  const dsWidth = Math.ceil(width / scale)
-  const dsHeight = Math.ceil(height / scale)
+  const dsWidth = Math.ceil(bitmap.width / scale)
+  const dsHeight = Math.ceil(bitmap.height / scale)
 
+  // will not read frequently but will read at least once. if not set, the context is placed in the GPU and copy times are longer.
   const dsCtx = new OffscreenCanvas(dsWidth, dsHeight).getContext('2d', { willReadFrequently: true })!
   dsCtx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
   const dsData = dsCtx.getImageData(0, 0, dsWidth, dsHeight).data
@@ -155,6 +148,7 @@ async function computeTransparentBoundingBoxScaleNorefine(bitmap: ImageBitmap, s
     minY = dsHeight,
     maxX = -1,
     maxY = -1
+
   for (let y = 0; y < dsHeight; y++) {
     for (let x = 0; x < dsWidth; x++) {
       const alpha = dsData[(y * dsWidth + x) * 4 + 3]
@@ -178,47 +172,6 @@ async function computeTransparentBoundingBoxScaleNorefine(bitmap: ImageBitmap, s
   }
 }
 
-async function computeTransparentBoundingBoxScaleNorefineU32(
-  bitmap: ImageBitmap,
-  scale = 4,
-): Promise<{ x: number; y: number; w: number; h: number }> {
-  const { width, height } = bitmap
-
-  // --- Step 1: Coarse pass ---
-  const dsWidth = Math.ceil(width / scale)
-  const dsHeight = Math.ceil(height / scale)
-
-  const dsCtx = new OffscreenCanvas(dsWidth, dsHeight).getContext('2d', { willReadFrequently: true })!
-  dsCtx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
-  const dsData = dsCtx.getImageData(0, 0, dsWidth, dsHeight).data
-  const u32 = new Uint32Array(dsData.buffer)
-
-  let minX = dsWidth,
-    minY = dsHeight,
-    maxX = -1,
-    maxY = -1
-  for (let y = 0; y < dsHeight; y++) {
-    for (let x = 0; x < dsWidth; x++) {
-      const alpha = (u32[y * dsWidth + x] >>> 24) & 0xff
-      if (alpha < 128) {
-        if (x < minX) minX = x
-        if (y < minY) minY = y
-        if (x > maxX) maxX = x
-        if (y > maxY) maxY = y
-      }
-    }
-  }
-
-  // --- Step 2: Refine pass ---
-  // We skip this pass because it is costly and not needed for the frontend. It will be okay if it is /scale exact for previews.
-
-  return {
-    x: minX * scale,
-    y: minY * scale,
-    w: (maxX - minX + 1) * scale,
-    h: (maxY - minY + 1) * scale,
-  }
-}
 function reportStats() {
   const now = performance.now()
   if (now - lastReport >= 1000) {
