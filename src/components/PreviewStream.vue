@@ -1,7 +1,7 @@
 <template>
   <div class="canvas-stack">
+    <canvas id="canvas-stream"></canvas>
     <canvas id="canvas-blurred"></canvas>
-    <canvas id="canvas-stream" :class="{ mirroreffect: props.enableMirrorEffectStream }"></canvas>
   </div>
 </template>
 
@@ -20,8 +20,6 @@ const props = defineProps<{
 }>()
 
 const streamWorker = new Worker(new URL('/src/util/stream_worker.ts', import.meta.url), { type: 'module' })
-//TODO:
-// -mirroreffectframe not yet used.
 
 watchEffect(() => {
   console.log('frame changed to ', props.frameOverlayImage)
@@ -44,7 +42,7 @@ streamWorker.onmessage = (ev) => {
     console.log(`FPS plain=${ev.data.fpsPlain}, augmented=${ev.data.fpsAug}, ` + `dropped=${ev.data.dropped}, avgDecode=${ev.data.avgDecode}ms`)
   }
 }
-const { open, close } = useWebSocket(websocketStreamUrl, {
+const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(websocketStreamUrl, {
   immediate: false,
   // autoClose: true,
   autoReconnect: {
@@ -63,6 +61,8 @@ const { open, close } = useWebSocket(websocketStreamUrl, {
         type: 'init',
         canvases: { stream: canvasStream, blurred: canvasBlurred },
         blurredbackgroundHighFramerate: props.blurredbackgroundHighFramerate,
+        enableMirrorEffectStream: props.enableMirrorEffectStream,
+        enableMirrorEffectFrame: props.enableMirrorEffectFrame,
       },
       [canvasStream, canvasBlurred],
     )
@@ -84,16 +84,12 @@ const { open, close } = useWebSocket(websocketStreamUrl, {
 
 onMounted(() => {
   console.log('preview stream mounted!')
-  // set aspect ratio of overlay frame to container so stream and overlay align properly
 
-  // const overlayAbsUrl = new URL(props.frameOverlayImage, document.baseURI).href
-  // streamWorker.postMessage({ type: 'overlay', url: overlayAbsUrl })
-
-  open()
+  openWebSocketStream()
 })
 
 onUnmounted(() => {
-  close()
+  closeWebSocketStream()
   streamWorker.terminate()
 
   console.log('preview stream unmounted!')
@@ -123,17 +119,13 @@ onUnmounted(() => {
       z-index: 1;
       object-fit: cover;
 
-      filter: blur(6px);
+      filter: blur(10px);
       opacity: 0.6;
     }
 
     &#canvas-stream {
       z-index: 2;
       object-fit: contain;
-    }
-
-    &.mirroreffect {
-      transform: scale(-1, 1);
     }
   }
 }

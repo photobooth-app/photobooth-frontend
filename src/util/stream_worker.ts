@@ -1,51 +1,51 @@
-import { useThrottleFn } from '@vueuse/core'
-import { ref } from 'vue'
+interface BoundingBox {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+interface Overlay {
+  bitmap: ImageBitmap | null
+  transparent_bbox: BoundingBox | null
+}
 
 let canvasStream: HTMLCanvasElement, canvasBlurred: HTMLCanvasElement
 let ctxStream: CanvasRenderingContext2D, ctxBlurred: CanvasRenderingContext2D
-let pendingBuffer: ArrayBuffer = null // store received img in buffer
-const blurredbackgroundTimeout = ref(500)
-
-// Overlay PNG
-let overlayUrl: string | null = null
-let overlayBitmap: ImageBitmap | null = null
-let overlayBox = null
-
-// Stats
-let framesStream = 0,
-  framesBlurred = 0,
-  framesDropped = 0
-let lastReport = performance.now()
-let decodeTimes: number[] = []
+let pendingBuffer: ArrayBuffer | null = null // store received img in buffer
+let overlay: Overlay | null = null
+let enableMirrorEffectStream: boolean = false
+let enableMirrorEffectFrame: boolean = false
+let lastLog = performance.now()
 
 self.onmessage = async (ev: MessageEvent) => {
   if (ev.data.type === 'init') {
     canvasStream = ev.data.canvases.stream
     canvasBlurred = ev.data.canvases.blurred
 
+    enableMirrorEffectStream = ev.data.enableMirrorEffectStream
+    enableMirrorEffectFrame = ev.data.enableMirrorEffectFrame
+
     ctxStream = canvasStream.getContext('2d', { alpha: true })
     ctxBlurred = canvasBlurred.getContext('2d', { alpha: true })
-
-    blurredbackgroundTimeout.value = ev.data.blurredbackgroundHighFramerate === true ? 50 : 300
   } else if (ev.data.type === 'frame') {
-    if (pendingBuffer) framesDropped++
+    if (pendingBuffer) console.log('frame dropped')
     pendingBuffer = ev.data.payload
     drawCanvas()
   } else if (ev.data.type === 'overlay') {
     // set overlay PNG URL
-    overlayUrl = ev.data.url
-    console.log(overlayUrl)
-    if (overlayUrl) {
-      loadOverlay(overlayUrl)
+    console.log(ev.data.url)
+    if (ev.data.url) {
+      overlay = await loadOverlay(ev.data.url)
     } else {
-      overlayBitmap = null
+      overlay = null
     }
   }
 }
 
 const updateCanvas = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, img: ImageBitmap) => {
-  const cW = overlayBitmap ? overlayBitmap.width : img.width
-  const cH = overlayBitmap ? overlayBitmap.height : img.height
+  const cW = overlay ? overlay.bitmap.width : img.width
+  const cH = overlay ? overlay.bitmap.height : img.height
 
   if (canvas.width !== cW || canvas.height !== cH) {
     canvas.width = cW
@@ -53,74 +53,93 @@ const updateCanvas = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, 
     console.log(`set canvas size to ${cW}x${cH}`)
   }
 
-  if (overlayBitmap && overlayBox) {
-    const { drawW, drawH, offsetX, offsetY } = fitCover(img.width, img.height, overlayBox.w, overlayBox.h)
+  if (overlay) {
+    const { drawW, drawH, offsetX, offsetY } = fitCover(img.width, img.height, overlay.transparent_bbox.width, overlay.transparent_bbox.height)
 
-    ctx.drawImage(img, overlayBox.x + offsetX, overlayBox.y + offsetY, drawW, drawH)
-    ctx.drawImage(overlayBitmap, 0, 0) // overlay on top
+    // stream image at specific position if overlay enabled
+    if (enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
+    else ctx.resetTransform()
+    ctx.drawImage(img, overlay.transparent_bbox.x + offsetX, overlay.transparent_bbox.y + offsetY, drawW, drawH)
+
+    // overlay on top
+    if (enableMirrorEffectFrame) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
+    else ctx.resetTransform()
+    ctx.drawImage(overlay.bitmap, 0, 0)
 
     // Debug rectangle: outline the bounding box
-    ctx.strokeStyle = 'red'
-    ctx.lineWidth = 2
-    ctx.strokeRect(overlayBox.x, overlayBox.y, overlayBox.w, overlayBox.h)
+    // ctx.strokeStyle = 'red'
+    // ctx.lineWidth = 2
+    // ctx.strokeRect(overlay.transparent_bbox.x, overlay.transparent_bbox.y, overlay.transparent_bbox.width, overlay.transparent_bbox.height)
   } else {
+    // stream image fills canvas if no overlay enabled
+    if (enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
+    else ctx.resetTransform()
     ctx.drawImage(img, 0, 0)
   }
 }
 
-const throttledUpdateCanvas = useThrottleFn((canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, img: ImageBitmap) => {
-  updateCanvas(canvas, ctx, img)
-  framesBlurred++
-}, blurredbackgroundTimeout)
+const updateCanvasLoresBlur = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, img: ImageBitmap) => {
+  const cW = Math.ceil(img.width / 32)
+  const cH = Math.ceil(img.height / 32)
+
+  if (canvas.width !== cW || canvas.height !== cH) {
+    canvas.width = cW
+    canvas.height = cH
+    console.log(`set canvas size to ${cW}x${cH}`)
+  }
+
+  if (enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
+  else ctx.resetTransform()
+  ctx.drawImage(img, 0, 0, cW, cH)
+}
 
 async function drawCanvas() {
-  if (!pendingBuffer) return
-
-  // local copy because the throttledupdate might be inavail when the throttled function triggers.
   const buf = pendingBuffer
-
+  pendingBuffer = null
+  if (!buf) return
+  const ts = performance.now()
   try {
-    const t0 = performance.now()
     // await new Promise((r) => setTimeout(r, 2000))
 
     const blob = new Blob([buf], { type: 'image/jpeg' })
     const bitmap = await createImageBitmap(blob)
 
     updateCanvas(canvasStream, ctxStream, bitmap)
-    framesStream++
-
-    throttledUpdateCanvas(canvasBlurred, ctxBlurred, bitmap)
+    updateCanvasLoresBlur(canvasBlurred, ctxBlurred, bitmap)
 
     bitmap.close()
-
-    const t1 = performance.now()
-    decodeTimes.push(t1 - t0)
   } catch (e) {
     console.error(e)
-    console.error('Decode error:', e)
   } finally {
-    // reset pendingBuffer to null to signal ready for next frame
-    pendingBuffer = null
-    reportStats()
+    const te = performance.now()
+    const elapsed = te - ts
+
+    // only log if at least 2000ms since last log
+    if (te - lastLog >= 2000) {
+      console.log('drawCanvas took', elapsed.toFixed(1), 'ms')
+      lastLog = te
+    }
   }
 }
 
-async function loadOverlay(url: string) {
-  const t0 = performance.now()
-  let t1
+async function loadOverlay(url: string): Promise<Overlay> {
   try {
+    const t0 = performance.now()
+
     const resp = await fetch(url)
     const blob = await resp.blob()
-    overlayBitmap = await createImageBitmap(blob)
-    t1 = performance.now()
-    overlayBox = await computeTransparentBoundingBox(overlayBitmap)
+    const overlayBitmap = await createImageBitmap(blob)
+    const overlayTransparentBBox = await computeTransparentBoundingBox(overlayBitmap) // scaled down usually in the range of 5ms
+
+    const te = performance.now()
+    console.log('load overlay+calc transparency bbox took ', (te - t0).toFixed(1), 'ms, bbox is ', overlayTransparentBBox)
+
+    return { bitmap: overlayBitmap, transparent_bbox: overlayTransparentBBox }
   } catch (e) {
     console.error('Overlay load error:', e)
-    overlayBitmap = null
-  }
 
-  const te = performance.now()
-  console.log('load overlay took ', (t1 - t0).toFixed(1), 'ms and calc transparency box ', overlayBox, ' took ', (te - t1).toFixed(1), 'ms')
+    return null
+  }
 }
 
 function fitCover(srcW: number, srcH: number, boxW: number, boxH: number) {
@@ -132,7 +151,7 @@ function fitCover(srcW: number, srcH: number, boxW: number, boxH: number) {
   return { drawW, drawH, offsetX, offsetY }
 }
 
-async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 5): Promise<{ x: number; y: number; w: number; h: number }> {
+async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 5): Promise<BoundingBox> {
   // algorithm scales down the image and returns the coarse bounding box which is usually fine for preview and sufficiently fast in the 5-20ms range
 
   // --- Step 1: Coarse pass ---
@@ -167,28 +186,7 @@ async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 5): Pr
   return {
     x: minX * scale,
     y: minY * scale,
-    w: (maxX - minX + 1) * scale,
-    h: (maxY - minY + 1) * scale,
-  }
-}
-
-function reportStats() {
-  const now = performance.now()
-  if (now - lastReport >= 1000) {
-    const fpsPlain = framesStream
-    const fpsAug = framesBlurred
-    const avgDecode = decodeTimes.length ? decodeTimes.reduce((a, b) => a + b, 0) / decodeTimes.length : 0
-
-    self.postMessage({
-      type: 'stats',
-      fpsPlain,
-      fpsAug,
-      dropped: framesDropped,
-      avgDecode: avgDecode.toFixed(1),
-    })
-
-    framesStream = framesBlurred = framesDropped = 0
-    decodeTimes = []
-    lastReport = now
+    width: (maxX - minX + 1) * scale,
+    height: (maxY - minY + 1) * scale,
   }
 }
