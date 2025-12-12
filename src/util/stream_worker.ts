@@ -29,7 +29,7 @@ self.onmessage = async (ev: MessageEvent) => {
     ctxStream = canvasStream.getContext('2d', { alpha: true })
     ctxBlurred = canvasBlurred.getContext('2d', { alpha: true })
   } else if (ev.data.type === 'frame') {
-    if (pendingBuffer) console.log('frame dropped')
+    if (pendingBuffer) console.log('frame dropped') // TODO: remove.
     pendingBuffer = ev.data.payload
     drawCanvas()
   } else if (ev.data.type === 'overlay') {
@@ -122,7 +122,7 @@ async function drawCanvas() {
   }
 }
 
-async function loadOverlay(url: string): Promise<Overlay> {
+async function loadOverlay(url: string): Promise<Overlay | null> {
   try {
     const t0 = performance.now()
 
@@ -151,7 +151,7 @@ function fitCover(srcW: number, srcH: number, boxW: number, boxH: number) {
   return { drawW, drawH, offsetX, offsetY }
 }
 
-async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 5): Promise<BoundingBox> {
+async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 8): Promise<BoundingBox> {
   // algorithm scales down the image and returns the coarse bounding box which is usually fine for preview and sufficiently fast in the 5-20ms range
 
   // --- Step 1: Coarse pass ---
