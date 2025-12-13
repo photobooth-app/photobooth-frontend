@@ -1,7 +1,8 @@
 <template>
   <div class="canvas-stack">
     <canvas id="canvas-stream"></canvas>
-    <canvas id="canvas-blurred"></canvas>
+    <!-- canvas kept on dom because it's not expensive and keeps the stream worker simple as we just don't process the data -->
+    <canvas id="canvas-blurred" v-show="enableBlurredBackgroundStream"></canvas>
   </div>
 </template>
 
@@ -22,10 +23,7 @@ const props = defineProps<{
 const streamWorker = new Worker(new URL('/src/util/stream_worker.ts', import.meta.url), { type: 'module' })
 
 watchEffect(() => {
-  console.log('frame changed to ', props.frameOverlayImage)
-
   if (props.frameOverlayImage) {
-    console.log(props.frameOverlayImage)
     const overlayAbsUrl = new URL(props.frameOverlayImage, document.baseURI).href
     streamWorker.postMessage({ type: 'overlay', url: overlayAbsUrl })
   } else {
@@ -52,20 +50,6 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
   onConnected(ws) {
     ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
     console.log('stream connected via websocket')
-
-    const canvasStream = (document.getElementById('canvas-stream') as HTMLCanvasElement).transferControlToOffscreen()
-    const canvasBlurred = (document.getElementById('canvas-blurred') as HTMLCanvasElement).transferControlToOffscreen()
-
-    streamWorker.postMessage(
-      {
-        type: 'init',
-        canvases: { stream: canvasStream, blurred: canvasBlurred },
-        blurredbackgroundHighFramerate: props.blurredbackgroundHighFramerate,
-        enableMirrorEffectStream: props.enableMirrorEffectStream,
-        enableMirrorEffectFrame: props.enableMirrorEffectFrame,
-      },
-      [canvasStream, canvasBlurred],
-    )
   },
   onDisconnected() {
     console.log('stream disconnected from websocket')
@@ -84,6 +68,21 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
 
 onMounted(() => {
   console.log('preview stream mounted!')
+
+  const canvasStream = (document.getElementById('canvas-stream') as HTMLCanvasElement).transferControlToOffscreen()
+  const canvasBlurred = (document.getElementById('canvas-blurred') as HTMLCanvasElement).transferControlToOffscreen()
+
+  streamWorker.postMessage(
+    {
+      type: 'init',
+      enableBlurredBackgroundStream: props.enableBlurredBackgroundStream,
+      enableMirrorEffectStream: props.enableMirrorEffectStream,
+      enableMirrorEffectFrame: props.enableMirrorEffectFrame,
+      blurredbackgroundHighFramerate: props.blurredbackgroundHighFramerate,
+      canvases: { stream: canvasStream, blurred: canvasBlurred },
+    },
+    [canvasStream, canvasBlurred],
+  )
 
   openWebSocketStream()
 })
