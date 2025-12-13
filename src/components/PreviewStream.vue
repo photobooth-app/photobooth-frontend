@@ -118,7 +118,7 @@ onUnmounted(() => {
       z-index: 1;
       object-fit: cover;
 
-      filter: blur(10px);
+      filter: blur(6px);
       opacity: 0.6;
     }
 
