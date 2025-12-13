@@ -12,29 +12,43 @@ interface Overlay {
 
 let canvasStream: HTMLCanvasElement, canvasBlurred: HTMLCanvasElement
 let ctxStream: CanvasRenderingContext2D, ctxBlurred: CanvasRenderingContext2D
-let pendingBuffer: ArrayBuffer | null = null // store received img in buffer
+const offscreenComputeCanvas = { canvas: null as OffscreenCanvas | null, ctx: null as OffscreenCanvasRenderingContext2D | null }
+
+let isDrawing = false
 let overlay: Overlay | null = null
+let enableBlurredBackgroundStream: boolean = false
 let enableMirrorEffectStream: boolean = false
 let enableMirrorEffectFrame: boolean = false
+let droppedFrameCount: number = 0
 let lastLog = performance.now()
+let lastBlurUpdate = 0 // track last blurred update timestamp
+let blurInterval = 300 // ms
 
 self.onmessage = async (ev: MessageEvent) => {
   if (ev.data.type === 'init') {
-    canvasStream = ev.data.canvases.stream
-    canvasBlurred = ev.data.canvases.blurred
-
     enableMirrorEffectStream = ev.data.enableMirrorEffectStream
     enableMirrorEffectFrame = ev.data.enableMirrorEffectFrame
+    blurInterval = ev.data.blurredbackgroundHighFramerate ? 50 : 300
 
-    ctxStream = canvasStream.getContext('2d', { alpha: true })
-    ctxBlurred = canvasBlurred.getContext('2d', { alpha: true })
+    canvasStream = ev.data.canvases.stream
+    ctxStream = canvasStream.getContext('2d', { alpha: false })
+
+    enableBlurredBackgroundStream = ev.data.enableBlurredBackgroundStream
+    canvasBlurred = ev.data.canvases.blurred
+    ctxBlurred = canvasBlurred.getContext('2d', { alpha: false })
   } else if (ev.data.type === 'frame') {
-    if (pendingBuffer) console.log('frame dropped') // TODO: remove.
-    pendingBuffer = ev.data.payload
-    drawCanvas()
+    if (isDrawing) {
+      droppedFrameCount++
+      return
+    }
+
+    drawCanvas(ev.data.payload)
   } else if (ev.data.type === 'overlay') {
-    // set overlay PNG URL
-    console.log(ev.data.url)
+    console.log('update overlay to:', ev.data.url)
+
+    // Release previous overlay bitmap
+    if (overlay?.bitmap) overlay.bitmap.close()
+
     if (ev.data.url) {
       overlay = await loadOverlay(ev.data.url)
     } else {
@@ -79,8 +93,8 @@ const updateCanvas = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, 
 }
 
 const updateCanvasLoresBlur = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, img: ImageBitmap) => {
-  const cW = Math.ceil(img.width / 32)
-  const cH = Math.ceil(img.height / 32)
+  const cW = Math.ceil(img.width / 16)
+  const cH = Math.ceil(img.height / 16)
 
   if (canvas.width !== cW || canvas.height !== cH) {
     canvas.width = cW
@@ -93,31 +107,40 @@ const updateCanvasLoresBlur = (canvas: HTMLCanvasElement, ctx: CanvasRenderingCo
   ctx.drawImage(img, 0, 0, cW, cH)
 }
 
-async function drawCanvas() {
-  const buf = pendingBuffer
-  pendingBuffer = null
-  if (!buf) return
+async function drawCanvas(buffer: ArrayBuffer) {
+  isDrawing = true
+  const buf = buffer
   const ts = performance.now()
+  let bitmap
+  // await new Promise((r) => setTimeout(r, 2000)) // emulate long processing - during the timeout, the frames should be dropped and afterwards just the latest img is presented.
   try {
-    // await new Promise((r) => setTimeout(r, 2000))
-
     const blob = new Blob([buf], { type: 'image/jpeg' })
-    const bitmap = await createImageBitmap(blob)
+    bitmap = await createImageBitmap(blob)
 
     updateCanvas(canvasStream, ctxStream, bitmap)
-    updateCanvasLoresBlur(canvasBlurred, ctxBlurred, bitmap)
 
-    bitmap.close()
+    //only process if enabled to save cpu processing. the canvas is still passed on init for simplicity but hidden (not removed from DOM)
+    if (enableBlurredBackgroundStream) {
+      // only update blurred canvas if enough time has passed
+      const now = performance.now()
+      if (now - lastBlurUpdate >= blurInterval) {
+        updateCanvasLoresBlur(canvasBlurred, ctxBlurred, bitmap)
+        lastBlurUpdate = now
+      }
+    }
   } catch (e) {
     console.error(e)
   } finally {
+    if (bitmap) bitmap.close()
+    isDrawing = false
     const te = performance.now()
     const elapsed = te - ts
 
     // only log if at least 2000ms since last log
     if (te - lastLog >= 2000) {
-      console.log('drawCanvas took', elapsed.toFixed(1), 'ms')
+      console.log('drawCanvas took', elapsed.toFixed(1), 'ms, droppedFrameCount is ', droppedFrameCount)
       lastLog = te
+      droppedFrameCount = 0
     }
   }
 }
@@ -150,7 +173,8 @@ function fitCover(srcW: number, srcH: number, boxW: number, boxH: number) {
   const offsetY = (boxH - drawH) / 2
   return { drawW, drawH, offsetX, offsetY }
 }
-function findBoundingBoxOpt(dsData, dsWidth, dsHeight) {
+
+function findBoundingBox(dsData: ImageDataArray, dsWidth: number, dsHeight: number) {
   let minX = dsWidth,
     minY = dsHeight,
     maxX = -1,
@@ -207,27 +231,6 @@ function findBoundingBoxOpt(dsData, dsWidth, dsHeight) {
   return { minX, minY, maxX, maxY }
 }
 
-function findBoundingBoxBrute(dsData, dsWidth, dsHeight) {
-  let minX = dsWidth,
-    minY = dsHeight,
-    maxX = -1,
-    maxY = -1
-
-  for (let y = 0; y < dsHeight; y++) {
-    for (let x = 0; x < dsWidth; x++) {
-      const alpha = dsData[(y * dsWidth + x) * 4 + 3]
-      if (alpha < 255) {
-        if (x < minX) minX = x
-        if (y < minY) minY = y
-        if (x > maxX) maxX = x
-        if (y > maxY) maxY = y
-      }
-    }
-  }
-
-  return { minX, minY, maxX, maxY }
-}
-
 async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 8): Promise<BoundingBox> {
   // algorithm scales down the image and returns the coarse bounding box which is usually fine for preview and sufficiently fast in the 5-20ms range
 
@@ -235,23 +238,30 @@ async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 8): Pr
   const dsWidth = Math.ceil(bitmap.width / scale)
   const dsHeight = Math.ceil(bitmap.height / scale)
 
-  // will not read frequently but will read at least once. if not set, the context is placed in the GPU and copy times are longer.
-  const trs = performance.now()
-  const dsCtx = new OffscreenCanvas(dsWidth, dsHeight).getContext('2d', { willReadFrequently: true })!
-  dsCtx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
-  const dsData = dsCtx.getImageData(0, 0, dsWidth, dsHeight).data
-  const tre = performance.now()
-  console.log((tre - trs).toFixed(1))
-
   const t1 = performance.now()
-  const val1 = findBoundingBoxBrute(dsData, dsWidth, dsHeight)
+
+  // will not read frequently but will read at least once. if not set, the context is placed in the GPU and copy times are longer.
+
+  if (!offscreenComputeCanvas.canvas) {
+    offscreenComputeCanvas.canvas = new OffscreenCanvas(dsWidth, dsHeight)
+    offscreenComputeCanvas.ctx = offscreenComputeCanvas.canvas.getContext('2d', { willReadFrequently: true, alpha: true })!
+  } else if (offscreenComputeCanvas.canvas.width !== dsWidth || offscreenComputeCanvas.canvas.height !== dsHeight) {
+    offscreenComputeCanvas.canvas.width = dsWidth
+    offscreenComputeCanvas.canvas.height = dsHeight
+  }
+
+  // const dsCtx = new OffscreenCanvas(dsWidth, dsHeight).getContext('2d', { willReadFrequently: true, alpha: true })!
+  offscreenComputeCanvas.ctx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
+  const dsData = offscreenComputeCanvas.ctx.getImageData(0, 0, dsWidth, dsHeight).data
+
   const t2 = performance.now()
-  const val2 = findBoundingBoxOpt(dsData, dsWidth, dsHeight)
-  const te = performance.now()
-  console.log(val1, val2)
-  console.log((t2 - t1).toFixed(1))
-  console.log((te - t2).toFixed(1))
-  const { minX, minY, maxX, maxY } = val2
+
+  const { minX, minY, maxX, maxY } = findBoundingBox(dsData, dsWidth, dsHeight)
+
+  const t3 = performance.now()
+
+  console.log('draw canvas for transparency detection took ', (t2 - t1).toFixed(1))
+  console.log('detect transparent area took ', (t3 - t2).toFixed(1))
 
   // --- Step 2: Refine pass ---
   // We skip this pass because it is costly and not needed for the frontend. It will be okay if it is /scale exact for previews.
