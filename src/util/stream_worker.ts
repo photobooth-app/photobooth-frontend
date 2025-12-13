@@ -150,6 +150,83 @@ function fitCover(srcW: number, srcH: number, boxW: number, boxH: number) {
   const offsetY = (boxH - drawH) / 2
   return { drawW, drawH, offsetX, offsetY }
 }
+function findBoundingBoxOpt(dsData, dsWidth, dsHeight) {
+  let minX = dsWidth,
+    minY = dsHeight,
+    maxX = -1,
+    maxY = -1
+
+  // --- Scan top to find minY ---
+  for (let y = 0; y < dsHeight; y++) {
+    for (let x = 0; x < dsWidth; x++) {
+      const alpha = dsData[(y * dsWidth + x) * 4 + 3]
+      if (alpha < 255) {
+        minY = y
+        y = dsHeight // break outer loop
+        break
+      }
+    }
+  }
+
+  // --- Scan bottom to find maxY ---
+  for (let y = dsHeight - 1; y >= 0; y--) {
+    for (let x = 0; x < dsWidth; x++) {
+      const alpha = dsData[(y * dsWidth + x) * 4 + 3]
+      if (alpha < 255) {
+        maxY = y
+        y = -1 // break outer loop
+        break
+      }
+    }
+  }
+
+  // --- Scan left to find minX ---
+  for (let x = 0; x < dsWidth; x++) {
+    for (let y = minY; y <= maxY; y++) {
+      const alpha = dsData[(y * dsWidth + x) * 4 + 3]
+      if (alpha < 255) {
+        minX = x
+        x = dsWidth // break outer loop
+        break
+      }
+    }
+  }
+
+  // --- Scan right to find maxX ---
+  for (let x = dsWidth - 1; x >= 0; x--) {
+    for (let y = minY; y <= maxY; y++) {
+      const alpha = dsData[(y * dsWidth + x) * 4 + 3]
+      if (alpha < 255) {
+        maxX = x
+        x = -1 // break outer loop
+        break
+      }
+    }
+  }
+
+  return { minX, minY, maxX, maxY }
+}
+
+function findBoundingBoxBrute(dsData, dsWidth, dsHeight) {
+  let minX = dsWidth,
+    minY = dsHeight,
+    maxX = -1,
+    maxY = -1
+
+  for (let y = 0; y < dsHeight; y++) {
+    for (let x = 0; x < dsWidth; x++) {
+      const alpha = dsData[(y * dsWidth + x) * 4 + 3]
+      if (alpha < 255) {
+        if (x < minX) minX = x
+        if (y < minY) minY = y
+        if (x > maxX) maxX = x
+        if (y > maxY) maxY = y
+      }
+    }
+  }
+
+  return { minX, minY, maxX, maxY }
+}
 
 async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 8): Promise<BoundingBox> {
   // algorithm scales down the image and returns the coarse bounding box which is usually fine for preview and sufficiently fast in the 5-20ms range
@@ -159,26 +236,22 @@ async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 8): Pr
   const dsHeight = Math.ceil(bitmap.height / scale)
 
   // will not read frequently but will read at least once. if not set, the context is placed in the GPU and copy times are longer.
+  const trs = performance.now()
   const dsCtx = new OffscreenCanvas(dsWidth, dsHeight).getContext('2d', { willReadFrequently: true })!
   dsCtx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
   const dsData = dsCtx.getImageData(0, 0, dsWidth, dsHeight).data
+  const tre = performance.now()
+  console.log((tre - trs).toFixed(1))
 
-  let minX = dsWidth,
-    minY = dsHeight,
-    maxX = -1,
-    maxY = -1
-
-  for (let y = 0; y < dsHeight; y++) {
-    for (let x = 0; x < dsWidth; x++) {
-      const alpha = dsData[(y * dsWidth + x) * 4 + 3]
-      if (alpha < 128) {
-        if (x < minX) minX = x
-        if (y < minY) minY = y
-        if (x > maxX) maxX = x
-        if (y > maxY) maxY = y
-      }
-    }
-  }
+  const t1 = performance.now()
+  const val1 = findBoundingBoxBrute(dsData, dsWidth, dsHeight)
+  const t2 = performance.now()
+  const val2 = findBoundingBoxOpt(dsData, dsWidth, dsHeight)
+  const te = performance.now()
+  console.log(val1, val2)
+  console.log((t2 - t1).toFixed(1))
+  console.log((te - t2).toFixed(1))
+  const { minX, minY, maxX, maxY } = val2
 
   // --- Step 2: Refine pass ---
   // We skip this pass because it is costly and not needed for the frontend. It will be okay if it is /scale exact for previews.
