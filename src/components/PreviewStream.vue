@@ -20,26 +20,25 @@ const props = defineProps<{
   frameOverlayImage?: string
 }>()
 
-const streamWorker = new Worker(new URL('/src/util/stream_worker.ts', import.meta.url), { type: 'module' })
+const streamRenderer = new Worker(new URL('/src/util/streamRenderer.ts', import.meta.url), { type: 'module' })
+
+// Receive stats from worker
+// streamRenderer.onmessage = (ev) => {
+//   console.log(ev)
+// }
 
 watchEffect(() => {
   if (props.frameOverlayImage) {
     const overlayAbsUrl = new URL(props.frameOverlayImage, document.baseURI).href
-    streamWorker.postMessage({ type: 'overlay', url: overlayAbsUrl })
+    streamRenderer.postMessage({ type: 'overlay', url: overlayAbsUrl })
   } else {
-    streamWorker.postMessage({ type: 'overlay', url: null })
+    streamRenderer.postMessage({ type: 'overlay', url: null })
   }
 })
 // fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
 // so we generate the absolute URL to connect to
 const websocketStreamUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream?index_device=${props.index_device}&index_subdevice=0`
 
-// Receive stats from worker
-streamWorker.onmessage = (ev) => {
-  if (ev.data.type === 'stats') {
-    console.log(`FPS plain=${ev.data.fpsPlain}, augmented=${ev.data.fpsAug}, ` + `dropped=${ev.data.dropped}, avgDecode=${ev.data.avgDecode}ms`)
-  }
-}
 const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(websocketStreamUrl, {
   immediate: false,
   // autoClose: true,
@@ -62,7 +61,7 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
       return
     }
 
-    streamWorker.postMessage({ type: 'frame', payload: event.data }, [event.data])
+    streamRenderer.postMessage({ type: 'frame', payload: event.data }, [event.data])
   },
 })
 
@@ -72,7 +71,7 @@ onMounted(() => {
   const canvasStream = (document.getElementById('canvas-stream') as HTMLCanvasElement).transferControlToOffscreen()
   const canvasBlurred = (document.getElementById('canvas-blurred') as HTMLCanvasElement).transferControlToOffscreen()
 
-  streamWorker.postMessage(
+  streamRenderer.postMessage(
     {
       type: 'init',
       enableBlurredBackgroundStream: props.enableBlurredBackgroundStream,
@@ -89,7 +88,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   closeWebSocketStream()
-  streamWorker.terminate()
+  streamRenderer.terminate()
 
   console.log('preview stream unmounted!')
 })
