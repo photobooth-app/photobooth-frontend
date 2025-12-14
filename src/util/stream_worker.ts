@@ -139,19 +139,13 @@ async function loadOverlay(url: string): Promise<Overlay> {
    Canvas update helpers
    ------------------------- */
 
-function updateCanvas(
-  canvas: OffscreenCanvas,
-  ctx: OffscreenCanvasRenderingContext2D,
-  img: ImageBitmap,
-  overlay: Overlay | null,
-  config: StreamConfig,
-) {
+function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap, overlay: Overlay | null, config: StreamConfig) {
   const cW = overlay && overlay.bitmap ? overlay.bitmap.width : img.width
   const cH = overlay && overlay.bitmap ? overlay.bitmap.height : img.height
 
-  if (canvas.width !== cW || canvas.height !== cH) {
-    canvas.width = cW
-    canvas.height = cH
+  if (canvasPair.canvas.width !== cW || canvasPair.canvas.height !== cH) {
+    canvasPair.canvas.width = cW
+    canvasPair.canvas.height = cH
     console.log(`set stream canvas size to ${cW}x${cH}`)
   }
 
@@ -159,43 +153,43 @@ function updateCanvas(
     const { drawW, drawH, offsetX, offsetY } = fitCover(img.width, img.height, overlay.transparentBBox.width, overlay.transparentBBox.height)
 
     // draw stream image into transparent bbox area
-    if (config.enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
-    else ctx.resetTransform()
+    if (config.enableMirrorEffectStream) canvasPair.ctx.setTransform(-1, 0, 0, 1, canvasPair.canvas.width, 0)
+    else canvasPair.ctx.resetTransform()
 
-    ctx.drawImage(img, overlay.transparentBBox.x + offsetX, overlay.transparentBBox.y + offsetY, drawW, drawH)
+    canvasPair.ctx.drawImage(img, overlay.transparentBBox.x + offsetX, overlay.transparentBBox.y + offsetY, drawW, drawH)
 
     // overlay on top
-    if (config.enableMirrorEffectFrame) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
-    else ctx.resetTransform()
+    if (config.enableMirrorEffectFrame) canvasPair.ctx.setTransform(-1, 0, 0, 1, canvasPair.canvas.width, 0)
+    else canvasPair.ctx.resetTransform()
 
-    ctx.drawImage(overlay.bitmap, 0, 0)
+    canvasPair.ctx.drawImage(overlay.bitmap, 0, 0)
 
     // Debug rectangle: outline the bounding box
-    ctx.strokeStyle = 'red'
-    ctx.lineWidth = 2
-    ctx.strokeRect(overlay.transparentBBox.x, overlay.transparentBBox.y, overlay.transparentBBox.width, overlay.transparentBBox.height)
+    canvasPair.ctx.strokeStyle = 'red'
+    canvasPair.ctx.lineWidth = 2
+    canvasPair.ctx.strokeRect(overlay.transparentBBox.x, overlay.transparentBBox.y, overlay.transparentBBox.width, overlay.transparentBBox.height)
   } else {
     // stream image fills canvas if no overlay enabled
-    if (config.enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
-    else ctx.resetTransform()
+    if (config.enableMirrorEffectStream) canvasPair.ctx.setTransform(-1, 0, 0, 1, canvasPair.canvas.width, 0)
+    else canvasPair.ctx.resetTransform()
 
-    ctx.drawImage(img, 0, 0)
+    canvasPair.ctx.drawImage(img, 0, 0)
   }
 }
 
-function updateCanvasLoresBlur(canvas: OffscreenCanvas, ctx: OffscreenCanvasRenderingContext2D, img: ImageBitmap, config: StreamConfig) {
+function updateCanvasLoresBlur(canvasPair: CanvasPair, img: ImageBitmap, config: StreamConfig) {
   const cW = Math.ceil(img.width / 16)
   const cH = Math.ceil(img.height / 16)
 
-  if (canvas.width !== cW || canvas.height !== cH) {
-    canvas.width = cW
-    canvas.height = cH
+  if (canvasPair.canvas.width !== cW || canvasPair.canvas.height !== cH) {
+    canvasPair.canvas.width = cW
+    canvasPair.canvas.height = cH
     console.log(`set blur canvas size to ${cW}x${cH}`)
   }
 
-  if (config.enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
-  else ctx.resetTransform()
-  ctx.drawImage(img, 0, 0, cW, cH)
+  if (config.enableMirrorEffectStream) canvasPair.ctx.setTransform(-1, 0, 0, 1, canvasPair.canvas.width, 0)
+  else canvasPair.ctx.resetTransform()
+  canvasPair.ctx.drawImage(img, 0, 0, cW, cH)
 }
 
 /* -------------------------
@@ -241,8 +235,10 @@ class StreamRenderer {
       if (url) {
         newOverlay = await loadOverlay(url)
       }
-
-      // swap: promote nextOverlay to currentOverlay
+    } catch (e) {
+      console.error('updateOverlay error', e)
+    } finally {
+      // swap: promote newOverlay to currentOverlay even in case the fetch failed.
       const oldOverlay = this.currentOverlay
       this.currentOverlay = newOverlay
 
@@ -253,11 +249,9 @@ class StreamRenderer {
           /* empty */
         }
       }
-    } catch (e) {
-      console.error('updateOverlay error', e)
-      // keep currentOverlay unchanged
     }
   }
+
   async drawFrame(buffer: ArrayBuffer) {
     if (!this.stream) {
       console.warn('drawFrame called before init')
@@ -278,13 +272,13 @@ class StreamRenderer {
       bitmap = await createImageBitmap(blob)
 
       // update main canvas
-      updateCanvas(this.stream.canvas, this.stream.ctx, bitmap, this.currentOverlay, this.config)
+      updateCanvas(this.stream, bitmap, this.currentOverlay, this.config)
 
       // update blurred canvas if enabled and interval passed
       if (this.config.enableBlurredBackgroundStream && this.blurred) {
         const now = performance.now()
         if (now - this.draw.lastBlurUpdate >= this.config.blurInterval) {
-          updateCanvasLoresBlur(this.blurred.canvas, this.blurred.ctx, bitmap, this.config)
+          updateCanvasLoresBlur(this.blurred, bitmap, this.config)
           this.draw.lastBlurUpdate = now
         }
       }
@@ -310,15 +304,15 @@ class StreamRenderer {
     }
   }
 
-  // Expose a small API for diagnostics if needed
-  getStats() {
-    return {
-      isDrawing: this.draw.isDrawing,
-      droppedFrameCount: this.draw.droppedFrameCount,
-      lastBlurUpdate: this.draw.lastBlurUpdate,
-      lastLog: this.draw.lastLog,
-    }
-  }
+  // // Expose a small API for diagnostics if needed
+  // getStats() {
+  //   return {
+  //     isDrawing: this.draw.isDrawing,
+  //     droppedFrameCount: this.draw.droppedFrameCount,
+  //     lastBlurUpdate: this.draw.lastBlurUpdate,
+  //     lastLog: this.draw.lastLog,
+  //   }
+  // }
 }
 
 /* -------------------------
@@ -346,11 +340,11 @@ self.onmessage = async (ev: MessageEvent) => {
       // data.url may be null to clear overlay
       await renderer.updateOverlay(data.url ?? null)
       console.log(`overlay updated to ${data.url}`)
-    } else if (data.type === 'getStats') {
-      // optional: return stats
-      const stats = renderer.getStats()
-      // postMessage back to main thread
-      self.postMessage({ type: 'stats', payload: stats })
+      // } else if (data.type === 'getStats') {
+      //   // optional: return stats
+      //   const stats = renderer.getStats()
+      //   // postMessage back to main thread
+      //   self.postMessage({ type: 'stats', payload: stats })
     } else {
       console.warn('unknown message type', data.type)
     }
