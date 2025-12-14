@@ -7,163 +7,31 @@ interface BoundingBox {
 
 interface Overlay {
   bitmap: ImageBitmap | null
-  transparent_bbox: BoundingBox | null
+  transparentBBox: BoundingBox | null
 }
 
-let canvasStream: HTMLCanvasElement, canvasBlurred: HTMLCanvasElement
-let ctxStream: CanvasRenderingContext2D, ctxBlurred: CanvasRenderingContext2D
-const offscreenComputeCanvas = { canvas: null as OffscreenCanvas | null, ctx: null as OffscreenCanvasRenderingContext2D | null }
-
-let isDrawing = false
-let overlay: Overlay | null = null
-let enableBlurredBackgroundStream: boolean = false
-let enableMirrorEffectStream: boolean = false
-let enableMirrorEffectFrame: boolean = false
-let droppedFrameCount: number = 0
-let lastLog = performance.now()
-let lastBlurUpdate = 0 // track last blurred update timestamp
-let blurInterval = 300 // ms
-
-self.onmessage = async (ev: MessageEvent) => {
-  if (ev.data.type === 'init') {
-    enableMirrorEffectStream = ev.data.enableMirrorEffectStream
-    enableMirrorEffectFrame = ev.data.enableMirrorEffectFrame
-    blurInterval = ev.data.blurredbackgroundHighFramerate ? 50 : 300
-
-    canvasStream = ev.data.canvases.stream
-    ctxStream = canvasStream.getContext('2d', { alpha: false })
-
-    enableBlurredBackgroundStream = ev.data.enableBlurredBackgroundStream
-    canvasBlurred = ev.data.canvases.blurred
-    ctxBlurred = canvasBlurred.getContext('2d', { alpha: false })
-  } else if (ev.data.type === 'frame') {
-    if (isDrawing) {
-      droppedFrameCount++
-      return
-    }
-
-    drawCanvas(ev.data.payload)
-  } else if (ev.data.type === 'overlay') {
-    console.log('update overlay to:', ev.data.url)
-
-    // Release previous overlay bitmap
-    if (overlay?.bitmap) overlay.bitmap.close()
-
-    if (ev.data.url) {
-      overlay = await loadOverlay(ev.data.url)
-    } else {
-      overlay = null
-    }
-  }
+interface CanvasPair {
+  canvas: OffscreenCanvas
+  ctx: OffscreenCanvasRenderingContext2D
 }
 
-const updateCanvas = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, img: ImageBitmap) => {
-  const cW = overlay ? overlay.bitmap.width : img.width
-  const cH = overlay ? overlay.bitmap.height : img.height
-
-  if (canvas.width !== cW || canvas.height !== cH) {
-    canvas.width = cW
-    canvas.height = cH
-    console.log(`set canvas size to ${cW}x${cH}`)
-  }
-
-  if (overlay) {
-    const { drawW, drawH, offsetX, offsetY } = fitCover(img.width, img.height, overlay.transparent_bbox.width, overlay.transparent_bbox.height)
-
-    // stream image at specific position if overlay enabled
-    if (enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
-    else ctx.resetTransform()
-    ctx.drawImage(img, overlay.transparent_bbox.x + offsetX, overlay.transparent_bbox.y + offsetY, drawW, drawH)
-
-    // overlay on top
-    if (enableMirrorEffectFrame) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
-    else ctx.resetTransform()
-    ctx.drawImage(overlay.bitmap, 0, 0)
-
-    // Debug rectangle: outline the bounding box
-    // ctx.strokeStyle = 'red'
-    // ctx.lineWidth = 2
-    // ctx.strokeRect(overlay.transparent_bbox.x, overlay.transparent_bbox.y, overlay.transparent_bbox.width, overlay.transparent_bbox.height)
-  } else {
-    // stream image fills canvas if no overlay enabled
-    if (enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
-    else ctx.resetTransform()
-    ctx.drawImage(img, 0, 0)
-  }
+interface StreamConfig {
+  enableBlurredBackgroundStream: boolean
+  enableMirrorEffectStream: boolean
+  enableMirrorEffectFrame: boolean
+  blurInterval: number
 }
 
-const updateCanvasLoresBlur = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, img: ImageBitmap) => {
-  const cW = Math.ceil(img.width / 16)
-  const cH = Math.ceil(img.height / 16)
-
-  if (canvas.width !== cW || canvas.height !== cH) {
-    canvas.width = cW
-    canvas.height = cH
-    console.log(`set canvas size to ${cW}x${cH}`)
-  }
-
-  if (enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
-  else ctx.resetTransform()
-  ctx.drawImage(img, 0, 0, cW, cH)
+interface DrawState {
+  isDrawing: boolean
+  droppedFrameCount: number
+  lastLog: number
+  lastBlurUpdate: number
 }
 
-async function drawCanvas(buffer: ArrayBuffer) {
-  isDrawing = true
-  const buf = buffer
-  const ts = performance.now()
-  let bitmap
-  // await new Promise((r) => setTimeout(r, 2000)) // emulate long processing - during the timeout, the frames should be dropped and afterwards just the latest img is presented.
-  try {
-    const blob = new Blob([buf], { type: 'image/jpeg' })
-    bitmap = await createImageBitmap(blob)
-
-    updateCanvas(canvasStream, ctxStream, bitmap)
-
-    //only process if enabled to save cpu processing. the canvas is still passed on init for simplicity but hidden (not removed from DOM)
-    if (enableBlurredBackgroundStream) {
-      // only update blurred canvas if enough time has passed
-      const now = performance.now()
-      if (now - lastBlurUpdate >= blurInterval) {
-        updateCanvasLoresBlur(canvasBlurred, ctxBlurred, bitmap)
-        lastBlurUpdate = now
-      }
-    }
-  } catch (e) {
-    console.error(e)
-  } finally {
-    if (bitmap) bitmap.close()
-    isDrawing = false
-    const te = performance.now()
-    const elapsed = te - ts
-
-    // only log if at least 2000ms since last log
-    if (te - lastLog >= 2000) {
-      console.log('drawCanvas took', elapsed.toFixed(1), 'ms, droppedFrameCount is ', droppedFrameCount)
-      lastLog = te
-      droppedFrameCount = 0
-    }
-  }
-}
-
-async function loadOverlay(url: string): Promise<Overlay | null> {
-  try {
-    const t0 = performance.now()
-
-    const resp = await fetch(url)
-    const blob = await resp.blob()
-    const overlayBitmap = await createImageBitmap(blob)
-    const overlayTransparentBBox = await computeTransparentBoundingBox(overlayBitmap) // scaled down usually in the range of 5ms
-
-    const te = performance.now()
-    console.log('load overlay+calc transparency bbox took ', (te - t0).toFixed(1), 'ms, bbox is ', overlayTransparentBBox)
-
-    return { bitmap: overlayBitmap, transparent_bbox: overlayTransparentBBox }
-  } catch (e) {
-    console.error('Overlay load error:', e)
-
-    return null
-  }
-}
+/* -------------------------
+   Module-level helpers
+   ------------------------- */
 
 function fitCover(srcW: number, srcH: number, boxW: number, boxH: number) {
   const scale = Math.max(boxW / srcW, boxH / srcH)
@@ -232,36 +100,18 @@ function findBoundingBox(dsData: ImageDataArray, dsWidth: number, dsHeight: numb
 }
 
 async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 8): Promise<BoundingBox> {
+  // Coarse pass: scale down and detect transparent area
   // algorithm scales down the image and returns the coarse bounding box which is usually fine for preview and sufficiently fast in the 5-20ms range
-
-  // --- Step 1: Coarse pass ---
   const dsWidth = Math.ceil(bitmap.width / scale)
   const dsHeight = Math.ceil(bitmap.height / scale)
-
-  const t1 = performance.now()
-
+  const computeCanvas = new OffscreenCanvas(dsWidth, dsHeight)
   // will not read frequently but will read at least once. if not set, the context is placed in the GPU and copy times are longer.
+  const computeCtx = computeCanvas.getContext('2d', { willReadFrequently: true, alpha: true })!
 
-  if (!offscreenComputeCanvas.canvas) {
-    offscreenComputeCanvas.canvas = new OffscreenCanvas(dsWidth, dsHeight)
-    offscreenComputeCanvas.ctx = offscreenComputeCanvas.canvas.getContext('2d', { willReadFrequently: true, alpha: true })!
-  } else if (offscreenComputeCanvas.canvas.width !== dsWidth || offscreenComputeCanvas.canvas.height !== dsHeight) {
-    offscreenComputeCanvas.canvas.width = dsWidth
-    offscreenComputeCanvas.canvas.height = dsHeight
-  }
+  computeCtx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
+  const dsImage = computeCtx.getImageData(0, 0, dsWidth, dsHeight)
 
-  // const dsCtx = new OffscreenCanvas(dsWidth, dsHeight).getContext('2d', { willReadFrequently: true, alpha: true })!
-  offscreenComputeCanvas.ctx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
-  const dsData = offscreenComputeCanvas.ctx.getImageData(0, 0, dsWidth, dsHeight).data
-
-  const t2 = performance.now()
-
-  const { minX, minY, maxX, maxY } = findBoundingBox(dsData, dsWidth, dsHeight)
-
-  const t3 = performance.now()
-
-  console.log('draw canvas for transparency detection took ', (t2 - t1).toFixed(1))
-  console.log('detect transparent area took ', (t3 - t2).toFixed(1))
+  const { minX, minY, maxX, maxY } = findBoundingBox(dsImage.data, dsWidth, dsHeight)
 
   // --- Step 2: Refine pass ---
   // We skip this pass because it is costly and not needed for the frontend. It will be okay if it is /scale exact for previews.
@@ -271,5 +121,240 @@ async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 8): Pr
     y: minY * scale,
     width: (maxX - minX + 1) * scale,
     height: (maxY - minY + 1) * scale,
+  }
+}
+
+async function loadOverlay(url: string): Promise<Overlay> {
+  const t0 = performance.now()
+  const resp = await fetch(url)
+  const blob = await resp.blob()
+  const overlayBitmap = await createImageBitmap(blob)
+  const overlayTransparentBBox = await computeTransparentBoundingBox(overlayBitmap)
+  const te = performance.now()
+  console.log('load overlay+calc transparency bbox took ', (te - t0).toFixed(1), 'ms, bbox is ', overlayTransparentBBox)
+  return { bitmap: overlayBitmap, transparentBBox: overlayTransparentBBox }
+}
+
+/* -------------------------
+   Canvas update helpers
+   ------------------------- */
+
+function updateCanvas(
+  canvas: OffscreenCanvas,
+  ctx: OffscreenCanvasRenderingContext2D,
+  img: ImageBitmap,
+  overlay: Overlay | null,
+  config: StreamConfig,
+) {
+  const cW = overlay && overlay.bitmap ? overlay.bitmap.width : img.width
+  const cH = overlay && overlay.bitmap ? overlay.bitmap.height : img.height
+
+  if (canvas.width !== cW || canvas.height !== cH) {
+    canvas.width = cW
+    canvas.height = cH
+    console.log(`set stream canvas size to ${cW}x${cH}`)
+  }
+
+  if (overlay && overlay.bitmap && overlay.transparentBBox) {
+    const { drawW, drawH, offsetX, offsetY } = fitCover(img.width, img.height, overlay.transparentBBox.width, overlay.transparentBBox.height)
+
+    // draw stream image into transparent bbox area
+    if (config.enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
+    else ctx.resetTransform()
+
+    ctx.drawImage(img, overlay.transparentBBox.x + offsetX, overlay.transparentBBox.y + offsetY, drawW, drawH)
+
+    // overlay on top
+    if (config.enableMirrorEffectFrame) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
+    else ctx.resetTransform()
+
+    ctx.drawImage(overlay.bitmap, 0, 0)
+
+    // Debug rectangle: outline the bounding box
+    ctx.strokeStyle = 'red'
+    ctx.lineWidth = 2
+    ctx.strokeRect(overlay.transparentBBox.x, overlay.transparentBBox.y, overlay.transparentBBox.width, overlay.transparentBBox.height)
+  } else {
+    // stream image fills canvas if no overlay enabled
+    if (config.enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
+    else ctx.resetTransform()
+
+    ctx.drawImage(img, 0, 0)
+  }
+}
+
+function updateCanvasLoresBlur(canvas: OffscreenCanvas, ctx: OffscreenCanvasRenderingContext2D, img: ImageBitmap, config: StreamConfig) {
+  const cW = Math.ceil(img.width / 16)
+  const cH = Math.ceil(img.height / 16)
+
+  if (canvas.width !== cW || canvas.height !== cH) {
+    canvas.width = cW
+    canvas.height = cH
+    console.log(`set blur canvas size to ${cW}x${cH}`)
+  }
+
+  if (config.enableMirrorEffectStream) ctx.setTransform(-1, 0, 0, 1, canvas.width, 0)
+  else ctx.resetTransform()
+  ctx.drawImage(img, 0, 0, cW, cH)
+}
+
+/* -------------------------
+   StreamRenderer class
+   ------------------------- */
+
+class StreamRenderer {
+  private stream: CanvasPair | null = null
+  private blurred: CanvasPair | null = null
+  private currentOverlay: Overlay | null = null
+
+  private config: StreamConfig = {
+    enableBlurredBackgroundStream: false,
+    enableMirrorEffectStream: false,
+    enableMirrorEffectFrame: false,
+    blurInterval: 300,
+  }
+
+  private draw: DrawState = {
+    isDrawing: false,
+    droppedFrameCount: 0,
+    lastLog: performance.now(),
+    lastBlurUpdate: 0,
+  }
+
+  init(canvases: { stream: OffscreenCanvas; blurred: OffscreenCanvas }, opts: Partial<StreamConfig>) {
+    this.stream = { canvas: canvases.stream, ctx: canvases.stream.getContext('2d', { alpha: false })! }
+    this.blurred = { canvas: canvases.blurred, ctx: canvases.blurred.getContext('2d', { alpha: false })! }
+    Object.assign(this.config, opts)
+    // ensure lastLog is fresh on init
+    this.draw.lastLog = performance.now()
+    this.draw.lastBlurUpdate = 0
+    this.draw.droppedFrameCount = 0
+
+    console.log('StreamRenderer initialized with config', this.config)
+  }
+
+  async updateOverlay(url: string | null) {
+    let newOverlay = null
+
+    try {
+      // start loading into nextOverlay
+      if (url) {
+        newOverlay = await loadOverlay(url)
+      }
+
+      // swap: promote nextOverlay to currentOverlay
+      const oldOverlay = this.currentOverlay
+      this.currentOverlay = newOverlay
+
+      if (oldOverlay?.bitmap) {
+        try {
+          oldOverlay.bitmap.close()
+        } catch {
+          /* empty */
+        }
+      }
+    } catch (e) {
+      console.error('updateOverlay error', e)
+      // keep currentOverlay unchanged
+    }
+  }
+  async drawFrame(buffer: ArrayBuffer) {
+    if (!this.stream) {
+      console.warn('drawFrame called before init')
+      return
+    }
+
+    if (this.draw.isDrawing) {
+      this.draw.droppedFrameCount++
+      return
+    }
+
+    this.draw.isDrawing = true
+    const ts = performance.now()
+    let bitmap: ImageBitmap | null = null
+
+    try {
+      const blob = new Blob([buffer], { type: 'image/jpeg' })
+      bitmap = await createImageBitmap(blob)
+
+      // update main canvas
+      updateCanvas(this.stream.canvas, this.stream.ctx, bitmap, this.currentOverlay, this.config)
+
+      // update blurred canvas if enabled and interval passed
+      if (this.config.enableBlurredBackgroundStream && this.blurred) {
+        const now = performance.now()
+        if (now - this.draw.lastBlurUpdate >= this.config.blurInterval) {
+          updateCanvasLoresBlur(this.blurred.canvas, this.blurred.ctx, bitmap, this.config)
+          this.draw.lastBlurUpdate = now
+        }
+      }
+    } catch (e) {
+      console.error('drawFrame error', e)
+    } finally {
+      if (bitmap) {
+        try {
+          bitmap.close()
+        } catch {
+          // ignore
+        }
+      }
+      this.draw.isDrawing = false
+      const te = performance.now()
+      const elapsed = te - ts
+
+      if (te - this.draw.lastLog >= 2000) {
+        console.log('drawFrame took', elapsed.toFixed(1), 'ms, droppedFrameCount is', this.draw.droppedFrameCount)
+        this.draw.lastLog = te
+        this.draw.droppedFrameCount = 0
+      }
+    }
+  }
+
+  // Expose a small API for diagnostics if needed
+  getStats() {
+    return {
+      isDrawing: this.draw.isDrawing,
+      droppedFrameCount: this.draw.droppedFrameCount,
+      lastBlurUpdate: this.draw.lastBlurUpdate,
+      lastLog: this.draw.lastLog,
+    }
+  }
+}
+
+/* -------------------------
+   Worker message handling
+   ------------------------- */
+
+const renderer = new StreamRenderer()
+
+self.onmessage = async (ev: MessageEvent) => {
+  const data = ev.data
+  try {
+    if (data.type === 'init') {
+      const canvases = data.canvases as { stream: OffscreenCanvas; blurred: OffscreenCanvas }
+      const opts: Partial<StreamConfig> = {
+        enableMirrorEffectStream: !!data.enableMirrorEffectStream,
+        enableMirrorEffectFrame: !!data.enableMirrorEffectFrame,
+        enableBlurredBackgroundStream: !!data.enableBlurredBackgroundStream,
+        blurInterval: data.blurredbackgroundHighFramerate ? 50 : 300,
+      }
+      renderer.init(canvases, opts)
+    } else if (data.type === 'frame') {
+      // payload is ArrayBuffer
+      renderer.drawFrame(data.payload)
+    } else if (data.type === 'overlay') {
+      // data.url may be null to clear overlay
+      await renderer.updateOverlay(data.url ?? null)
+      console.log(`overlay updated to ${data.url}`)
+    } else if (data.type === 'getStats') {
+      // optional: return stats
+      const stats = renderer.getStats()
+      // postMessage back to main thread
+      self.postMessage({ type: 'stats', payload: stats })
+    } else {
+      console.warn('unknown message type', data.type)
+    }
+  } catch (e) {
+    console.error('onmessage handler error', e)
   }
 }
