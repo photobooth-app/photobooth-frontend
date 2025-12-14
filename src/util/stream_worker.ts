@@ -20,6 +20,7 @@ interface StreamConfig {
   enableMirrorEffectStream: boolean
   enableMirrorEffectFrame: boolean
   blurInterval: number
+  debugRectangleBbox: boolean
 }
 
 interface DrawState {
@@ -165,9 +166,11 @@ function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap, overlay: Overlay
     canvasPair.ctx.drawImage(overlay.bitmap, 0, 0)
 
     // Debug rectangle: outline the bounding box
-    canvasPair.ctx.strokeStyle = 'red'
-    canvasPair.ctx.lineWidth = 2
-    canvasPair.ctx.strokeRect(overlay.transparentBBox.x, overlay.transparentBBox.y, overlay.transparentBBox.width, overlay.transparentBBox.height)
+    if (config.debugRectangleBbox) {
+      canvasPair.ctx.strokeStyle = 'red'
+      canvasPair.ctx.lineWidth = 2
+      canvasPair.ctx.strokeRect(overlay.transparentBBox.x, overlay.transparentBBox.y, overlay.transparentBBox.width, overlay.transparentBBox.height)
+    }
   } else {
     // stream image fills canvas if no overlay enabled
     if (config.enableMirrorEffectStream) canvasPair.ctx.setTransform(-1, 0, 0, 1, canvasPair.canvas.width, 0)
@@ -206,6 +209,7 @@ class StreamRenderer {
     enableMirrorEffectStream: false,
     enableMirrorEffectFrame: false,
     blurInterval: 300,
+    debugRectangleBbox: false,
   }
 
   private draw: DrawState = {
