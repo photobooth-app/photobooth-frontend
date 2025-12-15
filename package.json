@@ -32,19 +32,19 @@
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^4.1.0",
-    "@intlify/unplugin-vue-i18n": "^11.0.1",
+    "@intlify/unplugin-vue-i18n": "^11.0.3",
     "@quasar/app-vite": "^2.4.0",
     "@types/lodash": "^4.17.21",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
-    "autoprefixer": "^10.4.22",
+    "autoprefixer": "^10.4.23",
     "eslint": "^9.39.2",
     "eslint-plugin-vue": "^10.6.2",
     "globals": "^16.5.0",
     "openapi-typescript": "^7.10.1",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3",
-    "vite-plugin-checker": "^0.11.0",
+    "vite-plugin-checker": "^0.12.0",
     "vue-tsc": "^3.1.8"
   },
   "engines": {
