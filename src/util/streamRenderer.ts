@@ -140,9 +140,9 @@ async function loadOverlay(url: string): Promise<Overlay> {
    Canvas update helpers
    ------------------------- */
 
-function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap, overlay: Overlay | null, config: StreamConfig) {
-  const cW = overlay && overlay.bitmap ? overlay.bitmap.width : img.width
-  const cH = overlay && overlay.bitmap ? overlay.bitmap.height : img.height
+function updateCanvas(canvasPair: CanvasPair, img: VideoFrame, overlay: Overlay | null, config: StreamConfig) {
+  const cW = overlay && overlay.bitmap ? overlay.bitmap.width : img.displayWidth
+  const cH = overlay && overlay.bitmap ? overlay.bitmap.height : img.displayHeight
 
   if (canvasPair.canvas.width !== cW || canvasPair.canvas.height !== cH) {
     canvasPair.canvas.width = cW
@@ -151,7 +151,12 @@ function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap, overlay: Overlay
   }
 
   if (overlay && overlay.bitmap && overlay.transparentBBox) {
-    const { drawW, drawH, offsetX, offsetY } = fitCover(img.width, img.height, overlay.transparentBBox.width, overlay.transparentBBox.height)
+    const { drawW, drawH, offsetX, offsetY } = fitCover(
+      img.displayWidth,
+      img.displayHeight,
+      overlay.transparentBBox.width,
+      overlay.transparentBBox.height,
+    )
 
     // draw stream image into transparent bbox area
     if (config.enableMirrorEffectStream) canvasPair.ctx.setTransform(-1, 0, 0, 1, canvasPair.canvas.width, 0)
@@ -180,9 +185,9 @@ function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap, overlay: Overlay
   }
 }
 
-function updateCanvasLoresBlur(canvasPair: CanvasPair, img: ImageBitmap, config: StreamConfig) {
-  const cW = Math.ceil(img.width / 16)
-  const cH = Math.ceil(img.height / 16)
+function updateCanvasLoresBlur(canvasPair: CanvasPair, img: VideoFrame, config: StreamConfig) {
+  const cW = Math.ceil(img.displayWidth / 16)
+  const cH = Math.ceil(img.displayHeight / 16)
 
   if (canvasPair.canvas.width !== cW || canvasPair.canvas.height !== cH) {
     canvasPair.canvas.width = cW
@@ -256,7 +261,7 @@ class StreamRenderer {
     }
   }
 
-  async drawFrame(blob: Blob) {
+  async drawFrame(buffer: ArrayBuffer) {
     if (!this.stream) {
       console.warn('drawFrame called before init')
       return
@@ -269,10 +274,13 @@ class StreamRenderer {
 
     this.draw.isDrawing = true
     const ts = performance.now()
-    let bitmap: ImageBitmap | null = null
+    let bitmap: VideoFrame | null = null
 
     try {
-      bitmap = await createImageBitmap(blob)
+      const decoder = new ImageDecoder({ data: buffer, type: 'image/jpeg' })
+      const result = await decoder.decode()
+      bitmap = result.image
+      // bitmap = await createImageBitmap(blob)
 
       // update main canvas
       updateCanvas(this.stream, bitmap, this.currentOverlay, this.config)
