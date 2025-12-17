@@ -256,7 +256,7 @@ class StreamRenderer {
     }
   }
 
-  async drawFrame(buffer: ArrayBuffer) {
+  async drawFrame(blob: Blob) {
     if (!this.stream) {
       console.warn('drawFrame called before init')
       return
@@ -272,7 +272,6 @@ class StreamRenderer {
     let bitmap: ImageBitmap | null = null
 
     try {
-      const blob = new Blob([buffer], { type: 'image/jpeg' })
       bitmap = await createImageBitmap(blob)
 
       // update main canvas
@@ -338,7 +337,7 @@ self.onmessage = async (ev: MessageEvent) => {
       }
       renderer.init(canvases, opts)
     } else if (data.type === 'frame') {
-      // payload is ArrayBuffer
+      // payload is Blob
       renderer.drawFrame(data.payload)
     } else if (data.type === 'overlay') {
       // data.url may be null to clear overlay
