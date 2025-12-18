@@ -47,8 +47,9 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
     delay: 1000,
   },
   onConnected(ws) {
-    // ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
-    ws.binaryType = 'blob' // blob is not transferrable to worker but we use it as it avoid recreation in the worker
+    if (typeof ImageDecoder !== 'undefined')
+      ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
+    else ws.binaryType = 'blob' // blob is not transferrable to worker but we use it as it avoid recreation in the worker
     console.log('stream connected via websocket')
   },
   onDisconnected() {

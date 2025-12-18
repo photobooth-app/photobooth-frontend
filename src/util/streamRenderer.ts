@@ -135,14 +135,24 @@ async function loadOverlay(url: string): Promise<Overlay> {
   console.log('load overlay+calc transparency bbox took ', (te - t0).toFixed(1), 'ms, bbox is ', overlayTransparentBBox)
   return { bitmap: overlayBitmap, transparentBBox: overlayTransparentBBox }
 }
+function getDrawableSize(drawable: ImageBitmap | VideoFrame) {
+  if ('codedWidth' in drawable) {
+    // VideoFrame
+    return { width: drawable.displayWidth ?? drawable.codedWidth, height: drawable.displayHeight ?? drawable.codedHeight }
+  } else {
+    // ImageBitmap
+    return { width: drawable.width, height: drawable.height }
+  }
+}
 
 /* -------------------------
    Canvas update helpers
    ------------------------- */
 
-function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap, overlay: Overlay | null, config: StreamConfig) {
-  const cW = overlay && overlay.bitmap ? overlay.bitmap.width : img.width
-  const cH = overlay && overlay.bitmap ? overlay.bitmap.height : img.height
+function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap | VideoFrame, overlay: Overlay | null, config: StreamConfig) {
+  const drawableSize = getDrawableSize(img)
+  const cW = overlay && overlay.bitmap ? overlay.bitmap.width : drawableSize.width
+  const cH = overlay && overlay.bitmap ? overlay.bitmap.height : drawableSize.height
 
   if (canvasPair.canvas.width !== cW || canvasPair.canvas.height !== cH) {
     canvasPair.canvas.width = cW
@@ -151,7 +161,12 @@ function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap, overlay: Overlay
   }
 
   if (overlay && overlay.bitmap && overlay.transparentBBox) {
-    const { drawW, drawH, offsetX, offsetY } = fitCover(img.width, img.height, overlay.transparentBBox.width, overlay.transparentBBox.height)
+    const { drawW, drawH, offsetX, offsetY } = fitCover(
+      drawableSize.width,
+      drawableSize.height,
+      overlay.transparentBBox.width,
+      overlay.transparentBBox.height,
+    )
 
     // draw stream image into transparent bbox area
     if (config.enableMirrorEffectStream) canvasPair.ctx.setTransform(-1, 0, 0, 1, canvasPair.canvas.width, 0)
@@ -180,9 +195,10 @@ function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap, overlay: Overlay
   }
 }
 
-function updateCanvasLoresBlur(canvasPair: CanvasPair, img: ImageBitmap, config: StreamConfig) {
-  const cW = Math.ceil(img.width / 16)
-  const cH = Math.ceil(img.height / 16)
+function updateCanvasLoresBlur(canvasPair: CanvasPair, img: ImageBitmap | VideoFrame, config: StreamConfig) {
+  const drawableSize = getDrawableSize(img)
+  const cW = Math.ceil(drawableSize.width / 16)
+  const cH = Math.ceil(drawableSize.height / 16)
 
   if (canvasPair.canvas.width !== cW || canvasPair.canvas.height !== cH) {
     canvasPair.canvas.width = cW
@@ -256,7 +272,7 @@ class StreamRenderer {
     }
   }
 
-  async drawFrame(blob: Blob) {
+  async drawFrame(drawable: Blob | ArrayBuffer) {
     if (!this.stream) {
       console.warn('drawFrame called before init')
       return
@@ -269,10 +285,20 @@ class StreamRenderer {
 
     this.draw.isDrawing = true
     const ts = performance.now()
-    let bitmap: ImageBitmap | null = null
+    let bitmap: ImageBitmap | VideoFrame | null = null
 
     try {
-      bitmap = await createImageBitmap(blob)
+      if (typeof ImageDecoder !== 'undefined') {
+        // Use ImageDecoder if supported
+        // const t1 = performance.now()
+        const decoder = new ImageDecoder({ data: drawable as ArrayBuffer, type: 'image/jpeg' })
+        const result = await decoder.decode()
+        bitmap = result.image
+        // console.log('took', (performance.now() - t1).toFixed(1))
+      } else {
+        // Fallback to createImageBitmap
+        bitmap = await createImageBitmap(drawable as Blob)
+      }
 
       // update main canvas
       updateCanvas(this.stream, bitmap, this.currentOverlay, this.config)
