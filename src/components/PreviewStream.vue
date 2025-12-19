@@ -129,8 +129,10 @@ onUnmounted(() => {
       z-index: 1;
       object-fit: cover;
 
-      filter: blur(6px);
-      opacity: 0.6;
+      filter: blur(6px) brightness(0.5);
+
+      width: 105%;
+      height: 105%;
     }
 
     &#canvas-stream {
