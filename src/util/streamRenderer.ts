@@ -219,6 +219,7 @@ class StreamRenderer {
   private stream: CanvasPair | null = null
   private blurred: CanvasPair | null = null
   private currentOverlay: Overlay | null = null
+  private streamRendererImageDecoderMode: boolean = false
 
   private config: StreamConfig = {
     enableBlurredBackgroundStream: false,
@@ -235,9 +236,10 @@ class StreamRenderer {
     lastBlurUpdate: 0,
   }
 
-  init(canvases: { stream: OffscreenCanvas; blurred: OffscreenCanvas }, opts: Partial<StreamConfig>) {
+  init(canvases: { stream: OffscreenCanvas; blurred: OffscreenCanvas }, streamRendererImageDecoderMode: boolean, opts: Partial<StreamConfig>) {
     this.stream = { canvas: canvases.stream, ctx: canvases.stream.getContext('2d', { alpha: false })! }
     this.blurred = { canvas: canvases.blurred, ctx: canvases.blurred.getContext('2d', { alpha: false })! }
+    this.streamRendererImageDecoderMode = streamRendererImageDecoderMode
     Object.assign(this.config, opts)
     // ensure lastLog is fresh on init
     this.draw.lastLog = performance.now()
@@ -288,13 +290,11 @@ class StreamRenderer {
     let bitmap: ImageBitmap | VideoFrame | null = null
 
     try {
-      if (typeof ImageDecoder !== 'undefined') {
-        // Use ImageDecoder if supported
-        // const t1 = performance.now()
+      if (this.streamRendererImageDecoderMode) {
+        // Use ImageDecoder if supported (localhost and secure contexts only)
         const decoder = new ImageDecoder({ data: drawable as ArrayBuffer, type: 'image/jpeg' })
         const result = await decoder.decode()
         bitmap = result.image
-        // console.log('took', (performance.now() - t1).toFixed(1))
       } else {
         // Fallback to createImageBitmap
         bitmap = await createImageBitmap(drawable as Blob)
@@ -306,7 +306,10 @@ class StreamRenderer {
       // update blurred canvas if enabled and interval passed
       if (this.config.enableBlurredBackgroundStream && this.blurred) {
         const now = performance.now()
-        if (now - this.draw.lastBlurUpdate >= this.config.blurInterval) {
+
+        if (now - this.draw.lastBlurUpdate >= this.config.blurInterval || this.draw.lastBlurUpdate == 0) {
+          // check for lastBlurUpdate==0 because performance.now starts with the document load (start the worker)
+          // so without the check the first blur update would delay until first time hitting the interval only.
           updateCanvasLoresBlur(this.blurred, bitmap, this.config)
           this.draw.lastBlurUpdate = now
         }
@@ -325,7 +328,7 @@ class StreamRenderer {
       const te = performance.now()
       const elapsed = te - ts
 
-      if (te - this.draw.lastLog >= 2000) {
+      if (te - this.draw.lastLog >= 2000 && this.draw.droppedFrameCount > 0) {
         console.log('drawFrame took', elapsed.toFixed(1), 'ms, droppedFrameCount is', this.draw.droppedFrameCount)
         this.draw.lastLog = te
         this.draw.droppedFrameCount = 0
@@ -361,9 +364,11 @@ self.onmessage = async (ev: MessageEvent) => {
         enableBlurredBackgroundStream: !!data.enableBlurredBackgroundStream,
         blurInterval: data.blurredbackgroundHighFramerate ? 50 : 300,
       }
-      renderer.init(canvases, opts)
+
+      renderer.init(canvases, data.streamRendererImageDecoderMode, opts)
     } else if (data.type === 'frame') {
-      // payload is Blob
+      // payload is Blob/ArrayBuffer depending on the availablity of the ImageDecoder
+
       renderer.drawFrame(data.payload)
     } else if (data.type === 'overlay') {
       // data.url may be null to clear overlay

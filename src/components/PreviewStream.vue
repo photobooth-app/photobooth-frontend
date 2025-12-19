@@ -21,7 +21,7 @@ const props = defineProps<{
 }>()
 
 const streamRenderer = new Worker(new URL('/src/util/streamRenderer.ts', import.meta.url), { type: 'module' })
-
+const streamRendererImageDecoderMode = typeof ImageDecoder !== 'undefined'
 // Receive stats from worker
 // streamRenderer.onmessage = (ev) => {
 //   console.log(ev)
@@ -47,10 +47,17 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
     delay: 1000,
   },
   onConnected(ws) {
-    if (typeof ImageDecoder !== 'undefined')
+    if (streamRendererImageDecoderMode)
       ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
     else ws.binaryType = 'blob' // blob is not transferrable to worker but we use it as it avoid recreation in the worker
-    console.log('stream connected via websocket')
+
+    console.log(
+      'stream connected via websocket, set binaryType to',
+      ws.binaryType,
+      'streamRendererImageDecoderMode is ',
+      streamRendererImageDecoderMode,
+      '(only modern browser and secure contexts)',
+    )
   },
   onDisconnected() {
     console.log('stream disconnected from websocket')
@@ -64,6 +71,8 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
     }
 
     streamRenderer.postMessage({ type: 'frame', payload: event.data })
+    // the ImageDecoder consumes arraybuffer which would be transferable - we do not transfer as there is no speed improvement
+    // streamRenderer.postMessage({ type: 'frame', payload: event.data }, [event.data])
   },
 })
 
@@ -81,6 +90,7 @@ onMounted(() => {
       enableMirrorEffectFrame: props.enableMirrorEffectFrame,
       blurredbackgroundHighFramerate: props.blurredbackgroundHighFramerate,
       canvases: { stream: canvasStream, blurred: canvasBlurred },
+      streamRendererImageDecoderMode: streamRendererImageDecoderMode,
     },
     [canvasStream, canvasBlurred],
   )
