@@ -6,6 +6,12 @@
           <label :for="id + '-input'" :class="[styles.control.label, required ? styles.control.required : '']">
             {{ label }}
           </label>
+          <q-icon v-if="appliedOptions.computeIntense" name="sym_o_memory" color="red" class="q-ml-sm">
+            <q-tooltip>This setting affects CPU/GPU usage.</q-tooltip>
+          </q-icon>
+          <q-icon v-if="appliedOptions.deprecated" name="sym_o_block" color="warning" class="q-ml-sm">
+            <q-tooltip>This setting is deprecated and may be removed in future versions.</q-tooltip>
+          </q-icon>
         </div>
         <div class="control-description-wrapper">
           <!--div :class="styles.control.description">{{ showDescription ? description : "" }}</div-->
@@ -18,7 +24,6 @@
         </div>
       </div>
     </div>
-    <div :class="styles.control.description"></div>
   </div>
 </template>
 
