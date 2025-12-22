@@ -15,9 +15,16 @@ import {
   extractAjv,
 } from '@jsonforms/core'
 import isPlainObject from 'lodash/isPlainObject'
+import type { Options } from './options'
 
 export const useControlAppliedOptions = <I extends { control: any }>(input: I) => {
-  return computed(() => merge({}, cloneDeep(input.control.value.config), cloneDeep(input.control.value.uischema.options)))
+  return computed<Options>(() =>
+    merge(
+      { deprecated: input.control.value.schema.deprecated, computeIntense: input.control.value.schema.computeIntense },
+      cloneDeep(input.control.value.config),
+      cloneDeep(input.control.value.uischema.options),
+    ),
+  )
 }
 
 export const useComputedLabel = <I extends { control: any }>(input: I, appliedOptions: ComputedRef<any>) => {
