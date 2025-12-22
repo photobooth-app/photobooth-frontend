@@ -58,19 +58,13 @@ export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
 
   const styles = useStyles(input.control.value.uischema)
 
-  const quasarProps = (path: string) => {
-    const props = get(appliedOptions.value?.quasar, path)
-
-    return props && isPlainObject(props) ? props : {}
-  }
-
   return {
     ...input,
     styles,
     isFocused,
     appliedOptions,
     controlWrapper,
-    quasarProps,
+
     persistentHint,
     computedLabel,
   }
@@ -105,17 +99,10 @@ export const useQuasarControl = <I extends { control: any; handleChange: any }>(
 export const useQuasarLayout = <I extends { layout: any }>(input: I) => {
   const appliedOptions = computed(() => merge({}, cloneDeep(input.layout.value.config), cloneDeep(input.layout.value.uischema.options)))
 
-  const quasarProps = (path: string) => {
-    const props = get(appliedOptions.value?.quasar, path)
-
-    return props && isPlainObject(props) ? props : {}
-  }
-
   return {
     ...input,
     styles: useStyles(input.layout.value.uischema),
     appliedOptions,
-    quasarProps,
   }
 }
 
