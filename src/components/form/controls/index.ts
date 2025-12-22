@@ -5,7 +5,6 @@ import {
   type JsonFormsRendererRegistryEntry,
   rankWith,
   isStringControl,
-  isRangeControl,
   isNumberControl,
   isIntegerControl,
   or,
@@ -19,6 +18,7 @@ import {
   formatIs,
   optionIs,
   isEnumControl,
+  schemaTypeIs,
 } from '@jsonforms/core'
 
 import { default as BooleanToggleControlRenderer } from './BooleanToggleControlRenderer.vue'
@@ -70,9 +70,23 @@ export const NumberControlRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: NumberControlRenderer,
   tester: rankWith(1.1, or(isNumberControl, isIntegerControl)),
 }
+
+const isRangeControl = and(
+  uiTypeIs('Control'),
+  or(schemaTypeIs('number'), schemaTypeIs('integer')),
+  schemaMatches(function (schema) {
+    return (
+      Object.prototype.hasOwnProperty.call(schema, 'maximum') &&
+      Object.prototype.hasOwnProperty.call(schema, 'minimum') &&
+      Object.prototype.hasOwnProperty.call(schema, 'default')
+    )
+  }),
+  //custom part: can pass in via pydantic json_schema_extra:
+  schemaMatches((schema) => Object.prototype.hasOwnProperty.call(schema, 'ui_schema_extra') && schema['ui_schema_extra']['slider'] === true),
+)
 export const SliderControlRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: SliderControlRenderer,
-  tester: rankWith(4.1, isRangeControl), //TODO: Tester not working as expected.
+  tester: rankWith(4.1, isRangeControl),
 }
 export const StringAutosuggestControlRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: StringAutosuggestControlRenderer,
