@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularz jest wyczyszczony po przełączeniu karty. Czy chcesz kontynuować?",
+  "This setting affects CPU/GPU usage.": "To ustawienie wpływa na użycie CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "To ustawienie jest przestarzałe i może być usunięte w przyszłych wersjach.",
   "Continue": "Kontynuuj",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Narzędzia Multicamera",

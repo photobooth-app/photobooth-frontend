@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "El formulario se borra cuando cambia la pestaña. ¿Desea continuar?",
+  "This setting affects CPU/GPU usage.": "Esta configuración afecta al uso de CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Esta configuración está obsoleta y puede ser eliminada en futuras versiones.",
   "Continue": "Continuar",
   "(Plugin)": "(Plugina)",
   "Multicamera Tools": "Herramientas multicamera",

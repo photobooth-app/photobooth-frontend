@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Az űrlap törlődik, amikor a lapot váltja. Szeretné folytatni?",
+  "This setting affects CPU/GPU usage.": "Ez a beállítás befolyásolja a CPU/GPU használatot.",
+  "This setting is deprecated and may be removed in future versions.": "Ez a beállítás elavult, és a jövőbeni verziókban eltávolításra kerülhet.",
   "Continue": "Folytatás",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Többkamerás eszközök",

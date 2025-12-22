@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Sekmeyi değiştirdiğinizde form temizlenir. Devam etmek istiyor musunuz?",
+  "This setting affects CPU/GPU usage.": "Bu ayar CPU/GPU kullanımını etkiler.",
+  "This setting is deprecated and may be removed in future versions.": "Bu ayar kullanımdan kaldırılmıştır ve gelecek sürümlerde kaldırılabilir.",
   "Continue": "Devam et",
   "(Plugin)": "(Eklenti)",
   "Multicamera Tools": "Çoklu Kamera Araçları",

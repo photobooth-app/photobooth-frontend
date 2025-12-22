@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "当您切换标签页时表单已清除。您想要继续吗？",
+  "This setting affects CPU/GPU usage.": "此设置会影响 CPU/GPU 使用率。",
+  "This setting is deprecated and may be removed in future versions.": "此设置已废弃，可能会在未来的版本中删除。",
   "Continue": "继续",
   "(Plugin)": "(插件)",
   "Multicamera Tools": "Multicamera工具",

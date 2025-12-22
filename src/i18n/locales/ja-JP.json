@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "タブを切り替えるとフォームがクリアされます。続行しますか？",
+  "This setting affects CPU/GPU usage.": "この設定はCPU/GPU の使用状況に影響します。",
+  "This setting is deprecated and may be removed in future versions.": "この設定は非推奨であり、将来のバージョンで削除される可能性があります。",
   "Continue": "続ける",
   "(Plugin)": "(プラグイン)",
   "Multicamera Tools": "マルチカメラ・ツール",
