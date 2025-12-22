@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",
+  "This setting affects CPU/GPU usage.": "This setting affects CPU/GPU usage.",
+  "This setting is deprecated and may be removed in future versions.": "This setting is deprecated and may be removed in future versions.",
   "Continue": "Continue",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Multicamera Tools",
