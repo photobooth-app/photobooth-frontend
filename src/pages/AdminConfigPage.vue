@@ -257,6 +257,7 @@ const saveConfig = async () => {
 <style lang="scss">
 .control-wrapper {
   margin-bottom: 10px;
+  grid-gap: 10px;
 }
 
 .control-wrapper .control-description-wrapper,
