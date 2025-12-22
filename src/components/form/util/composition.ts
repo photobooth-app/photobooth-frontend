@@ -3,7 +3,7 @@ import { computed, ref, type ComputedRef, inject, provide } from 'vue'
 import cloneDeep from 'lodash/cloneDeep'
 import debounce from 'lodash/debounce'
 import merge from 'lodash/merge'
-import get from 'lodash/get'
+
 import {
   composePaths,
   computeLabel,
@@ -14,7 +14,6 @@ import {
   type JsonFormsSubStates,
   extractAjv,
 } from '@jsonforms/core'
-import isPlainObject from 'lodash/isPlainObject'
 import type { Options } from './options'
 
 export const useControlAppliedOptions = <I extends { control: any }>(input: I) => {
