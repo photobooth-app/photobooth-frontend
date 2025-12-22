@@ -1,20 +1,29 @@
 <template>
   <control-wrapper v-bind="controlWrapper" :styles="styles" :is-focused="isFocused" :applied-options="appliedOptions">
-    <q-color
+    <q-input
       :id="control.id + '-input'"
-      :model-value="standardized_color"
-      no-header-tabs
-      no-footer
-      :rules="['anyColor']"
+      filled
+      :model-value="control.data"
       :class="styles.control.input"
       :disable="!control.enabled"
       :autofocus="appliedOptions.focus"
       :error-message="control.errors"
       :error="control.errors != ''"
-      @update:model-value="onChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
-    ></q-color>
+      bordered
+    >
+      <template v-slot:prepend>
+        <q-icon name="sym_o_fullscreen_portrait" :style="{ color: control.data }" />
+      </template>
+      <template v-slot:append>
+        <q-icon name="sym_o_colorize" class="cursor-pointer" :color="control.data">
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-color :model-value="control.data" @update:model-value="onChange" no-header-tabs format-model="hex" :rules="['hexColor']" />
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
   </control-wrapper>
 </template>
 
@@ -33,13 +42,6 @@ export default defineComponent({
   },
   setup(props: RendererProps<ControlElement>) {
     return useQuasarControl(useJsonFormsControl(props), (value: string) => value || undefined, 300)
-  },
-  computed: {
-    standardized_color(): string {
-      const ctx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d')!
-      ctx.fillStyle = this.control.data
-      return ctx.fillStyle.toString()
-    },
   },
   methods: {},
 })
