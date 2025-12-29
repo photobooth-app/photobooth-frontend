@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Η φόρμα διαγράφεται όταν αλλάζετε την καρτέλα. Θέλετε να συνεχίσετε?",
+  "This setting affects CPU/GPU usage.": "Αυτή η ρύθμιση επηρεάζει τη χρήση CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Αυτή η ρύθμιση είναι παρωχημένη και μπορεί να αφαιρεθεί σε μελλοντικές εκδόσεις.",
   "Continue": "Συνέχεια",
   "(Plugin)": "(Πρόσθετο)",
   "Multicamera Tools": "Εργαλεία Multicamera",

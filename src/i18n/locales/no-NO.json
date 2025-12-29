@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Skjemaet er fjernet når du bytter fanen. Vil du fortsette?",
+  "This setting affects CPU/GPU usage.": "Denne innstillingen påvirker CPU/GPU-bruk.",
+  "This setting is deprecated and may be removed in future versions.": "Denne innstillingen er foreldet og kan fjernes i fremtidige versjoner.",
   "Continue": "Fortsett",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Multicamera verktøy",

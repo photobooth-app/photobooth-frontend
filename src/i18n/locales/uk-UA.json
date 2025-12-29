@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Форма буде очищена коли ви зміните вкладку. Бажаєте продовжити?",
+  "This setting affects CPU/GPU usage.": "Цей параметр впливає на використання ЦП/АП.",
+  "This setting is deprecated and may be removed in future versions.": "Цей параметр є застарілим і може бути видалений в наступних версіях.",
   "Continue": "Продовжити",
   "(Plugin)": "(Плагін)",
   "Multicamera Tools": "Інструменти Multicamera",

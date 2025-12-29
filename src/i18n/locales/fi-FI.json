@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Lomake on tyhjennetty, kun vaihdat välilehteä. Haluatko jatkaa?",
+  "This setting affects CPU/GPU usage.": "Tämä asetus vaikuttaa CPU/GPU käyttöön.",
+  "This setting is deprecated and may be removed in future versions.": "Tämä asetus on vanhentunut, ja se voidaan poistaa tulevista versioista.",
   "Continue": "Jatka",
   "(Plugin)": "(Lugiini)",
   "Multicamera Tools": "Multicamera-työkalut",

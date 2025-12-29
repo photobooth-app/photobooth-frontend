@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formulář je vymazán po přepnutí karty. Chcete pokračovat?",
+  "This setting affects CPU/GPU usage.": "Toto nastavení ovlivňuje využití CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Toto nastavení je zastaralé a může být odstraněno v budoucích verzích.",
   "Continue": "Pokračovat",
   "(Plugin)": "(zavazadlo)",
   "Multicamera Tools": "Nástroje Multicamera",

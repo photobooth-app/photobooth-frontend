@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Il modulo viene cancellato quando si cambia la scheda. Vuoi continuare?",
+  "This setting affects CPU/GPU usage.": "Questa impostazione influisce sull'utilizzo della CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Questa impostazione è deprecata e può essere rimossa nelle versioni future.",
   "Continue": "Continua",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Strumenti Multicamera",

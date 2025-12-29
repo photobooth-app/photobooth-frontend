@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularen ryddes når du skifter fanebladet. Vil du fortsætte?",
+  "This setting affects CPU/GPU usage.": "Denne indstilling påvirker CPU/GPU forbrug.",
+  "This setting is deprecated and may be removed in future versions.": "Denne indstilling er forældet og kan fjernes i fremtidige versioner.",
   "Continue": "Fortsæt",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Værktøjer Til Multicamera",

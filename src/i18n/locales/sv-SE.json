@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formuläret rensas när du byter flik. Vill du fortsätta?",
+  "This setting affects CPU/GPU usage.": "Denna inställning påverkar CPU/GPU-användning.",
+  "This setting is deprecated and may be removed in future versions.": "Denna inställning är föråldrad och kan tas bort i framtida versioner.",
   "Continue": "Fortsätt",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Multicamera verktyg",

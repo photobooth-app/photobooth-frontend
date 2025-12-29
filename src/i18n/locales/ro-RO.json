@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularul este șters atunci când comutați fila. Doriți să continuați?",
+  "This setting affects CPU/GPU usage.": "Această setare afectează utilizarea CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Această setare este învechită și poate fi eliminată în versiunile viitoare.",
   "Continue": "Continuă",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Instrumente Multicamera",

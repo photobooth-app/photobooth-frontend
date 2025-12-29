@@ -154,6 +154,8 @@
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Het formulier wordt gewist wanneer u van tabblad wisselt. Wilt u doorgaan?",
+  "This setting affects CPU/GPU usage.": "Deze instelling heeft invloed op CPU/GPU gebruik.",
+  "This setting is deprecated and may be removed in future versions.": "Deze instelling is verouderd en kan in toekomstige versies worden verwijderd.",
   "Continue": "Doorgaan",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Multicamera gereedschap",
