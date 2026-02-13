@@ -150,10 +150,13 @@
       "process_started": "{action_name} começou.",
       "process_failed": "😔 Erro durante o processamento da ação. Por favor, tente novamente.",
       "quota_notification": "Cota {action_name} é {current_shares} de {quota}",
-      "wrong_media_type": "{action_name} suporta apenas imagens."
+      "wrong_media_type": "{action_name} suporta apenas imagens.",
+      "printer_not_ready": "'{printer_name}' não está pronto para imprimir. Verificar energia, conectividade, papel e cartuchos."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "O formulário é apagado quando você troca a aba. Deseja continuar?",
+  "This setting affects CPU/GPU usage.": "Esta configuração afeta o uso da CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Esta configuração está obsoleta e pode ser removida em versões futuras.",
   "Continue": "Continuar",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Ferramentas de multicamera",

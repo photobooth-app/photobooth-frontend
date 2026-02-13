@@ -150,10 +150,13 @@
       "process_started": "{action_name} a început.",
       "process_failed": "😔 Eroare la procesarea acțiunii. Vă rugăm să încercați din nou.",
       "quota_notification": "{action_name} contingent este {current_shares} {quota}",
-      "wrong_media_type": "{action_name} suportă doar imagini."
+      "wrong_media_type": "{action_name} suportă doar imagini.",
+      "printer_not_ready": "'{printer_name}' nu este gata de tipar. Verificați puterea, conectivitatea, hârtia și cartușele."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularul este șters atunci când comutați fila. Doriți să continuați?",
+  "This setting affects CPU/GPU usage.": "Această setare afectează utilizarea CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Această setare este învechită și poate fi eliminată în versiunile viitoare.",
   "Continue": "Continuă",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Instrumente Multicamera",

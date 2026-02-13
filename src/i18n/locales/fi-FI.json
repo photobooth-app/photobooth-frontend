@@ -150,10 +150,13 @@
       "process_started": "{action_name} aloitettu.",
       "process_failed": "😔 Virhe toimintoa käsiteltäessä. Yritä uudelleen.",
       "quota_notification": "{action_name} kiintiö on {current_shares} of {quota}",
-      "wrong_media_type": "{action_name} tukee vain kuvia."
+      "wrong_media_type": "{action_name} tukee vain kuvia.",
+      "printer_not_ready": "'{printer_name}' ei ole valmis tulostamaan. Tarkista virta, yhteydet, paperi ja patruunat."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Lomake on tyhjennetty, kun vaihdat välilehteä. Haluatko jatkaa?",
+  "This setting affects CPU/GPU usage.": "Tämä asetus vaikuttaa CPU/GPU käyttöön.",
+  "This setting is deprecated and may be removed in future versions.": "Tämä asetus on vanhentunut, ja se voidaan poistaa tulevista versioista.",
   "Continue": "Jatka",
   "(Plugin)": "(Lugiini)",
   "Multicamera Tools": "Multicamera-työkalut",

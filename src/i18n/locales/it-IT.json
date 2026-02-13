@@ -150,10 +150,13 @@
       "process_started": "{action_name} iniziato.",
       "process_failed": "😔 Errore durante l'elaborazione dell'azione. Riprova.",
       "quota_notification": "La quota {action_name} è {current_shares} di {quota}",
-      "wrong_media_type": "{action_name} supporta solo le immagini."
+      "wrong_media_type": "{action_name} supporta solo le immagini.",
+      "printer_not_ready": "'{printer_name}' non è pronto per la stampa. Controlla alimentazione, connettività, carta e cartucce."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Il modulo viene cancellato quando si cambia la scheda. Vuoi continuare?",
+  "This setting affects CPU/GPU usage.": "Questa impostazione influisce sull'utilizzo della CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Questa impostazione è deprecata e può essere rimossa nelle versioni future.",
   "Continue": "Continua",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Strumenti Multicamera",

@@ -150,10 +150,13 @@
       "process_started": "{action_name} gestartet.",
       "process_failed": "😔 Fehler beim Verarbeiten des Jobs. Bitte versuche es erneut.",
       "quota_notification": "{action_name} Kontingent ist {current_shares} von {quota}",
-      "wrong_media_type": "{action_name} unterstützt nur Bilder."
+      "wrong_media_type": "{action_name} unterstützt nur Bilder.",
+      "printer_not_ready": "'{printer_name}' ist nicht zum Drucken bereit. Prüfen Sie die Leistung, Konnektivität, Papier und Patronen."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Das Formular wird gelöscht, wenn Sie den Tab wechseln. Möchten Sie fortfahren?",
+  "This setting affects CPU/GPU usage.": "Diese Einstellung beeinflusst die CPU/GPU-Nutzung.",
+  "This setting is deprecated and may be removed in future versions.": "Diese Einstellung ist veraltet und kann in zukünftigen Versionen entfernt werden.",
   "Continue": "Fortfahren",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Mehrfachkamera-Werkzeuge",

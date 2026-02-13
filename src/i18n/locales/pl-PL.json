@@ -150,10 +150,13 @@
       "process_started": "Rozpoczęto {action_name}.",
       "process_failed": "😔 Błąd podczas przetwarzania działania. Spróbuj ponownie.",
       "quota_notification": "Kontyngent {action_name} to {current_shares} {quota}",
-      "wrong_media_type": "{action_name} obsługuje tylko obrazy."
+      "wrong_media_type": "{action_name} obsługuje tylko obrazy.",
+      "printer_not_ready": "'{printer_name}' nie jest gotowy do wydruku. Sprawdź moc, łączność, papier i nabojy."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularz jest wyczyszczony po przełączeniu karty. Czy chcesz kontynuować?",
+  "This setting affects CPU/GPU usage.": "To ustawienie wpływa na użycie CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "To ustawienie jest przestarzałe i może być usunięte w przyszłych wersjach.",
   "Continue": "Kontynuuj",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Narzędzia Multicamera",

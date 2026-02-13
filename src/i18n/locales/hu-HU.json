@@ -150,10 +150,13 @@
       "process_started": "{action_name} elkezdődött.",
       "process_failed": "😔 Hiba a művelet feldolgozása közben. Kérjük, próbálja meg újra.",
       "quota_notification": "{action_name} a kvóta a {current_shares} a {quota}oldalon található.",
-      "wrong_media_type": "{action_name} csak képeket támogat."
+      "wrong_media_type": "{action_name} csak képeket támogat.",
+      "printer_not_ready": "'{printer_name}' nem áll készen a nyomtatásra. Ellenőrizze a tápellátást, a csatlakoztathatóságot, a papírt és a patronokat."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Az űrlap törlődik, amikor a lapot váltja. Szeretné folytatni?",
+  "This setting affects CPU/GPU usage.": "Ez a beállítás befolyásolja a CPU/GPU használatot.",
+  "This setting is deprecated and may be removed in future versions.": "Ez a beállítás elavult, és a jövőbeni verziókban eltávolításra kerülhet.",
   "Continue": "Folytatás",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Többkamerás eszközök",

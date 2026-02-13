@@ -150,10 +150,13 @@
       "process_started": "{action_name} gestart.",
       "process_failed": "😔 Fout tijdens het verwerken van de actie. Probeer het opnieuw.",
       "quota_notification": "{action_name} quotum is {current_shares} van {quota}",
-      "wrong_media_type": "{action_name} ondersteunt alleen afbeeldingen."
+      "wrong_media_type": "{action_name} ondersteunt alleen afbeeldingen.",
+      "printer_not_ready": "'{printer_name}' is niet klaar om af te drukken. Controleer vermogen, connectiviteit, papier en cartridges."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Het formulier wordt gewist wanneer u van tabblad wisselt. Wilt u doorgaan?",
+  "This setting affects CPU/GPU usage.": "Deze instelling heeft invloed op CPU/GPU gebruik.",
+  "This setting is deprecated and may be removed in future versions.": "Deze instelling is verouderd en kan in toekomstige versies worden verwijderd.",
   "Continue": "Doorgaan",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Multicamera gereedschap",

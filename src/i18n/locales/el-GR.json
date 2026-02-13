@@ -150,10 +150,13 @@
       "process_started": "Το {action_name} ξεκίνησε.",
       "process_failed": "😔 Σφάλμα κατά την επεξεργασία της ενέργειας. Παρακαλώ δοκιμάστε ξανά.",
       "quota_notification": "{action_name} η ποσόστωση είναι {current_shares} του {quota}",
-      "wrong_media_type": "Το {action_name} υποστηρίζει μόνο εικόνες."
+      "wrong_media_type": "Το {action_name} υποστηρίζει μόνο εικόνες.",
+      "printer_not_ready": "'{printer_name}' δεν είναι έτοιμη να εκτυπώσει. Ελέγξτε την ισχύ, τη συνδεσιμότητα, το χαρτί και τις κασέτες"
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Η φόρμα διαγράφεται όταν αλλάζετε την καρτέλα. Θέλετε να συνεχίσετε?",
+  "This setting affects CPU/GPU usage.": "Αυτή η ρύθμιση επηρεάζει τη χρήση CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Αυτή η ρύθμιση είναι παρωχημένη και μπορεί να αφαιρεθεί σε μελλοντικές εκδόσεις.",
   "Continue": "Συνέχεια",
   "(Plugin)": "(Πρόσθετο)",
   "Multicamera Tools": "Εργαλεία Multicamera",

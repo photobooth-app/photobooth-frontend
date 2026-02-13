@@ -150,14 +150,17 @@
       "process_started": "{action_name} à commencé.",
       "process_failed": "😔 Erreur lors du traitement de l'action. Veuillez réessayer.",
       "quota_notification": "Le quota {action_name} est de {current_shares} sur {quota}",
-      "wrong_media_type": "{action_name} ne prend en charge que les images."
+      "wrong_media_type": "{action_name} prend uniquement en charge les images.",
+      "printer_not_ready": "'{printer_name}' n'est pas prêt à imprimer. Vérifiez la puissance, la connectivité, le papier et les cartouches."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Le formulaire est effacé lorsque vous changer d'onglet. Voulez-vous continuer ?",
+  "This setting affects CPU/GPU usage.": "Ce paramètre affecte l'utilisation du CPU/GPU.",
+  "This setting is deprecated and may be removed in future versions.": "Ce paramètre est obsolète et peut être supprimé dans les futures versions.",
   "Continue": "Continuer",
   "(Plugin)": "(Plugin)",
   "Multicamera Tools": "Outils Multicamera",
-  "Capture and create wigglegram": "Capturer et créer une wigglegram",
+  "Capture and create wigglegram": "Capturer et créer une animation de décalage de perspective",
   "Calculate": "Calculer",
   "Generate your ChAruCo board": "Générer votre carte ChAruCo",
   "ChAruCo Board Generator": "Générateur de carte ChAruCo",
@@ -169,17 +172,17 @@
   "Square Length (mm)": "Longueur carrée (mm)",
   "Marker Length (mm)": "Longueur du marqueur (mm)",
   "The tool is not available, because there is no multicamera enabled in the backends.": "L'outil n'est pas disponible, car il n'y a pas de multicamera activé dans les backends.",
-  "Camera Index/Device-Id:": "Index/ID appareil photo :",
+  "Camera Index/Device-Id:": "Index/ID Appareil photo :",
   "Address": "Adresses",
   "Index/Device-Id": "Index/ID-Périphérique",
   "Device Description": "Description de l'appareil",
   "Stream": "Flux",
   "adminmulticampage": {
     "intro": "👋 Hé, cet outil multicamera est pour vous aider à créer des wigglegrammes géniaux.",
-    "paragraph1": "Les Wigglegrammes sont des photos prises à l'aide d'un tableau de caméra. En général, 4 caméras identiques sont nécessaires pour capturer des points de vue suffisants d'une scène. Vous pouvez choisir entre WebP, AVIF et GIF, alors que WebP est par défaut.",
+    "paragraph1": "Les Wigglegrams sont des photos prises à l'aide d'un tableau de caméra. En général, 4 caméras identiques sont nécessaires pour capturer des points de vue suffisants d'une scène. Vous pouvez choisir entre WebP, AVIF et GIF, alors que WebP est par défaut.",
     "paragraph2": "Depuis les caméras, malgré le fait d'être le même modèle, certaines tolérances en optique et l'alignement pendant l'assemblage, pour créer des wigglegrammes lisses, les caméras doivent être calibrées une fois. Veuillez suivre les étapes pour calibrer les caméras.",
     "step0": {
-      "paragraph1": "Vous avez besoin d'une carte ChAruCo pour la routine d'étalonnage. Si vous n'en avez pas, générez-la ici.",
+      "paragraph1": "Vous avez besoin d'une carte Charrue",
       "paragraph2": "La planche doit être très solide et l'avion pour de bons résultats."
     },
     "step1": {
