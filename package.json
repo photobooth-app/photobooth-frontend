@@ -18,19 +18,20 @@
     "postinstall": "quasar prepare"
   },
   "dependencies": {
-    "@jsonforms/core": "^3.5.1",
+    "@jsonforms/core": "^3.7.0",
     "@jsonforms/vue": "^3.7.0",
-    "@quasar/extras": "^1.18.0",
-    "@vueuse/core": "^14.1.0",
+    "@quasar/extras": "^2.0.1",
+    "@vueuse/core": "^14.3.0",
     "@vueuse/integrations": "^14.3.0",
     "pinia": "^3.0.4",
     "qrcode.vue": "^3.9.1",
     "quasar": "^2.20.0",
-    "vue": "^3.5.27",
+    "vue": "^3.5.38",
     "vue-i18n": "^11.4.5",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.1.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@intlify/eslint-plugin-vue-i18n": "^4.5.1",
     "@intlify/unplugin-vue-i18n": "^11.2.3",
     "@quasar/app-vite": "^2.6.2",
@@ -38,13 +39,13 @@
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.8.0",
     "autoprefixer": "^10.5.0",
-    "eslint": "^9.39.4",
+    "eslint": "^10.5.0",
     "eslint-plugin-vue": "^10.9.2",
     "globals": "^17.6.0",
     "openapi-typescript": "^7.13.0",
     "prettier": "^3.8.4",
     "typescript": "^5.9.3",
-    "vite-plugin-checker": "^0.12.0",
+    "vite-plugin-checker": "^0.14.1",
     "vue-tsc": "^3.3.5"
   },
   "engines": {

@@ -18,7 +18,7 @@ export default defineConfig((ctx) => {
     css: ['app.scss'],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
-    extras: ['fontawesome-v6', 'material-symbols-outlined'],
+    extras: ['fontawesome-v7', 'material-symbols-outlined'],
 
     // Full list of options: // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
     build: {
