@@ -151,7 +151,7 @@
       "process_failed": "😔 Fehler beim Verarbeiten des Jobs. Bitte versuche es erneut.",
       "quota_notification": "{action_name} Kontingent ist {current_shares} von {quota}",
       "wrong_media_type": "{action_name} unterstützt nur Bilder.",
-      "printer_not_ready": "'{printer_name}' ist nicht zum Drucken bereit. Prüfen Sie die Stromversorgung, Konnektivität, Papier und Patronen."
+      "printer_not_ready": "'{printer_name}' ist nicht zum Drucken bereit. Prüfen Sie die Stromversorgung, Verbindung, Papier und Patronen."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Das Formular wird gelöscht, wenn Sie den Tab wechseln. Möchten Sie fortfahren?",
