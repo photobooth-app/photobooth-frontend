@@ -280,6 +280,8 @@ class StreamRenderer {
       return
     }
 
+    //await new Promise((r) => setTimeout(r, 50)) // simulate slow rendering
+
     if (this.draw.isDrawing) {
       this.draw.droppedFrameCount++
       return
@@ -366,10 +368,17 @@ self.onmessage = async (ev: MessageEvent) => {
       }
 
       renderer.init(canvases, data.streamRendererImageDecoderMode, opts)
+
+      // send initial ready so the server knows it can start streaming frames
+      console.log('send ready to server so streaming is initiated')
+      self.postMessage({ type: 'ready' })
     } else if (data.type === 'frame') {
       // payload is Blob/ArrayBuffer depending on the availablity of the ImageDecoder
 
-      renderer.drawFrame(data.payload)
+      await renderer.drawFrame(data.payload)
+
+      // after every frame a ready type message is sent, so the server knows it can deliver the next frame
+      self.postMessage({ type: 'ready' })
     } else if (data.type === 'overlay') {
       // data.url may be null to clear overlay
       await renderer.updateOverlay(data.url ?? null)

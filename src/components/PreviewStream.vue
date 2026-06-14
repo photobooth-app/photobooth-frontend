@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, watchEffect } from 'vue'
-import { useWebSocket } from '@vueuse/core'
+import { onMounted, onUnmounted, watch, watchEffect } from 'vue'
+import { useWebSocket, useDocumentVisibility } from '@vueuse/core'
 
 const props = defineProps<{
   // from docs: An absent optional prop other than Boolean will have undefined value.
@@ -20,12 +20,29 @@ const props = defineProps<{
   frameOverlayImage?: string
 }>()
 
+let wsRef: WebSocket | null = null
+const visibility = useDocumentVisibility()
+let pendingReady = false // if worker says ready but ws not open yet
 const streamRenderer = new Worker(new URL('/src/util/streamRenderer.ts', import.meta.url), { type: 'module' })
 const streamRendererImageDecoderMode = typeof ImageDecoder !== 'undefined'
-// Receive stats from worker
-// streamRenderer.onmessage = (ev) => {
-//   console.log(ev)
-// }
+
+// handle worker messages
+streamRenderer.onmessage = (ev) => {
+  const msg = ev.data
+  if (msg?.type === 'ready') {
+    // worker finished rendering the last frame
+    if (wsRef && wsRef.readyState === WebSocket.OPEN) {
+      wsRef.send('ready')
+    } else {
+      console.log('not open, yet')
+      pendingReady = true
+    }
+
+    return
+  }
+  // other worker messages like stats or errors
+  console.log(ev.data)
+}
 
 watchEffect(() => {
   if (props.frameOverlayImage) {
@@ -47,6 +64,7 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
     delay: 1000,
   },
   onConnected(ws) {
+    wsRef = ws
     if (streamRendererImageDecoderMode)
       ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
     else ws.binaryType = 'blob' // blob is not transferrable to worker but we use it as it avoid recreation in the worker
@@ -58,22 +76,40 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
       streamRendererImageDecoderMode,
       '(only modern browser and secure contexts)',
     )
+
+    // if worker already signalled ready while reconnecting
+    if (pendingReady) {
+      ws.send('ready')
+      pendingReady = false
+    }
   },
   onDisconnected() {
+    wsRef = null
     console.log('stream disconnected from websocket')
   },
 
   async onMessage(ws, event) {
     if (document.hidden) {
-      // if doc is hidden, do not process any decoding to save cpu/memory.
-      // otherwise it seems to write in the background and leak memory
+      console.log('The document was hidden while receiving a frame. The frame is not processed to save cpu.')
+      // if paused, the app needs to ensure sending a ready via websocket, to resume streaming.
+      // this means, postMessage does not trigger the onMessage to receive the ready flag back -> see visibilitychange
       return
     }
 
     streamRenderer.postMessage({ type: 'frame', payload: event.data })
+
     // the ImageDecoder consumes arraybuffer which would be transferable - we do not transfer as there is no speed improvement
     // streamRenderer.postMessage({ type: 'frame', payload: event.data }, [event.data])
   },
+})
+
+watch(visibility, (currentVisibility) => {
+  if (currentVisibility === 'hidden') {
+    console.log('The document is now hidden!')
+  } else {
+    console.log('The document is visible again, send a ready signal to resume streaming.')
+    if (wsRef) wsRef.send('ready')
+  }
 })
 
 onMounted(() => {
