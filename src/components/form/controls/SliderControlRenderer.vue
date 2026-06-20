@@ -37,10 +37,10 @@ export default defineComponent({
   setup(props: RendererProps<ControlElement>) {
     return useQuasarControl(
       useJsonFormsControl(props),
-      (value) => {
+      value => {
         return Number(value)
       },
-      300,
+      300
     )
   },
 })

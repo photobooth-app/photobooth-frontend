@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { useMainStore } from '../stores/main-store'
+import { useMainStore } from '@/stores/main-store'
 import { QBtn } from 'quasar'
 
 const store = useMainStore()

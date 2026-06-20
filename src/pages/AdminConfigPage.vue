@@ -71,12 +71,12 @@
 import { ref, provide, onBeforeMount, watch } from 'vue'
 import { JsonForms, type JsonFormsChangeEvent } from '@jsonforms/vue'
 import { generateDefaultUISchema } from '@jsonforms/core'
-import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '../components/form'
-import { remoteProcedureCall, _fetch } from '../util/fetch_api'
-import { useConfigurationStore } from '../stores/configuration-store'
+import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '@/components/form'
+import { remoteProcedureCall, _fetch } from '@/util/fetch_api'
+import { useConfigurationStore } from '@/stores/configuration-store'
 import { Notify } from 'quasar'
 import { useRoute } from 'vue-router'
-import type { components } from '../dto/api'
+import type { components } from '@/dto/api'
 import { useLocalStorage } from '@vueuse/core'
 
 // bind object
@@ -93,7 +93,11 @@ const selected_configuration = ref('')
 const configuration = ref({})
 const schema = ref({})
 const cuischema = ref(generateDefaultUISchema({}))
-const ajv = createAjv({ multipleOfPrecision: 2, useDefaults: false, removeAdditional: false }) // https://ajv.js.org/options.html#usedefaults // https://ajv.js.org/json-schema.html#discriminator use in future?
+const ajv = createAjv({
+  multipleOfPrecision: 2,
+  useDefaults: false,
+  removeAdditional: false,
+}) // https://ajv.js.org/options.html#usedefaults // https://ajv.js.org/json-schema.html#discriminator use in future?
 const renderers = Object.freeze([...quasarRenderers])
 const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } })
 provide('styles', myStyles)
@@ -105,7 +109,7 @@ onBeforeMount(() => {
   getConfigurables()
   updateFormSchema()
 })
-watch(route, (to) => {
+watch(route, to => {
   const section = (to.params.section as string) || 'app'
   selected_configuration.value = section
 
@@ -231,7 +235,7 @@ const saveConfig = async () => {
       const json: ResponseErrorData = await response.json()
 
       let notify_msg = ''
-      Object.values(json.detail).forEach((detail) => {
+      Object.values(json.detail).forEach(detail => {
         notify_msg += `${detail['msg']}: ${detail['loc'].join('→')}<br/>`
       })
 

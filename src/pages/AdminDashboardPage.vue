@@ -8,7 +8,9 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('Host') }}</q-item-label>
-                <q-item-label> <q-btn no-caps flat color="green" :label="$t('Reboot Host')" @click="confirm_reboot_host = true" /> </q-item-label>
+                <q-item-label>
+                  <q-btn no-caps flat color="green" :label="$t('Reboot Host')" @click="confirm_reboot_host = true" />
+                </q-item-label>
                 <q-item-label>
                   <q-btn no-caps flat color="green" :label="$t('Shutdown Host')" @click="confirm_shutdown_host = true" />
                 </q-item-label>
@@ -232,7 +234,10 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>{{ $t('platform system') }} </q-item-label>
-                <q-item-label>{{ store.information_onetime.platform_system }} {{ store.information_onetime.platform_release }} </q-item-label>
+                <q-item-label
+                  >{{ store.information_onetime.platform_system }}
+                  {{ store.information_onetime.platform_release }}
+                </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -534,12 +539,12 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useMediacollectionStore } from '../stores/mediacollection-store'
-import { useMainStore } from '../stores/main-store'
-import { remoteProcedureCall } from '../util/fetch_api.js'
+import { useMediacollectionStore } from '@/stores/mediacollection-store'
+import { useMainStore } from '@/stores/main-store'
+import { remoteProcedureCall } from '@/util/fetch_api.js'
 import { useI18n } from 'vue-i18n'
-import { getLanguageName, preferredLanguages, enableInContextTranslation } from 'boot/i18n'
-import DashboardGenericStatsCard from '../components/DashboardGenericStatsCard.vue'
+import { getLanguageName, preferredLanguages, enableInContextTranslation } from '@/boot/i18n'
+import DashboardGenericStatsCard from '@/components/DashboardGenericStatsCard.vue'
 
 const { locale } = useI18n({ useScope: 'global' })
 const store = useMainStore()
@@ -555,7 +560,7 @@ const confirm_install_systemctl = ref(false)
 const confirm_uninstall_systemctl = ref(false)
 const confirm_delete_all = ref(false)
 const confirm_clear_recycle_directory = ref(false)
-const builddate = new Date(process.env.BUILD_DATE).toLocaleString()
+const builddate = new Date(import.meta.env.BUILD_DATE).toLocaleString()
 
 const displayResetLimitsConfirm = (field: string) => {
   selected_field.value = field

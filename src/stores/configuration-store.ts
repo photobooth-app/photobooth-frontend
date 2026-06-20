@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { setCssVar, Dark } from 'quasar'
-import type { components } from '../dto/api'
+import type { components } from '@/dto/api'
 
 const STATES = {
   //https://stackoverflow.com/a/75060220
@@ -37,8 +37,8 @@ export const useConfigurationStore = defineStore('configuration-store', {
       this.storeState = STATES.WIP
 
       fetch('/api/config')
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           console.log(data)
 
           this.configuration = data
@@ -47,7 +47,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
 
           this.storeState = STATES.DONE
         })
-        .catch((e) => {
+        .catch(e => {
           console.log('get config failed', e)
           console.log(e)
           this.storeState = STATES.ERROR

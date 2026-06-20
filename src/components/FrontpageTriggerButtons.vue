@@ -36,7 +36,7 @@ export interface TriggerSchema {
   custom_color: string
 }
 
-const visibleTriggers = computed(() => props.triggers.filter((t) => t.show_button && !(isEmpty(t.title) && isEmpty(t.icon))))
+const visibleTriggers = computed(() => props.triggers.filter(t => t.show_button && !(isEmpty(t.title) && isEmpty(t.icon))))
 
 const emit = defineEmits<{
   triggerAction: [action: string, config_index: number]

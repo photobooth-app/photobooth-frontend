@@ -19,11 +19,11 @@
                 :key="parameter.key"
                 :name="parameter.key"
                 :rules="[
-                  (val) => (val !== null && val !== '') || 'Please type a number', // required.
-                  (val) =>
+                  val => (val !== null && val !== '') || 'Please type a number', // required.
+                  val =>
                     (parameter.valid_max && parseInt(val) <= parseInt(parameter.valid_max)) ||
                     `Please type a number lower than ${parameter.valid_max}`,
-                  (val) =>
+                  val =>
                     (parameter.valid_min && parseInt(val) >= parseInt(parameter.valid_min)) ||
                     `Please type a number more than ${parameter.valid_min}`,
                 ]"
@@ -58,10 +58,10 @@
                 :name="parameter.key"
                 class=""
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please type something',
-                  (val) =>
+                  val => (val && val.length > 0) || 'Please type something',
+                  val =>
                     (parameter.valid_max && val.length <= parseInt(parameter.valid_max)) || `Please type text longest ${parameter.valid_max} chars.`,
-                  (val) =>
+                  val =>
                     (parameter.valid_min && val.length >= parseInt(parameter.valid_min)) || `Please type text shortest ${parameter.valid_min} chars.`,
                 ]"
               />
@@ -86,7 +86,7 @@ import { onBeforeMount } from 'vue'
 import { isEmpty } from 'lodash'
 const formData = reactive({})
 
-import type { components } from 'src/dto/api'
+import type { components } from '@/dto/api'
 
 const props = defineProps<{
   config_index: number
@@ -102,7 +102,7 @@ const emit = defineEmits<{
 
 onBeforeMount(() => {
   // set form data to default values
-  props.parameters.forEach((parameter) => (formData[parameter.key] = parameter.default))
+  props.parameters.forEach(parameter => (formData[parameter.key] = parameter.default))
 })
 
 const onSubmit = () => {

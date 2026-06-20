@@ -11,8 +11,8 @@
       multiple
       use-chips
       emit-value
-      @add="(details) => addSelected(details)"
-      @remove="(details) => removeSelected(details)"
+      @add="details => addSelected(details)"
+      @remove="details => removeSelected(details)"
       filled
     >
     </q-select>

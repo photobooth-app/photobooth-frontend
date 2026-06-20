@@ -1,5 +1,5 @@
 import { createI18n } from 'vue-i18n'
-import { default as messages } from 'src/i18n'
+import { default as messages } from '@/i18n'
 import { usePreferredLanguages } from '@vueuse/core'
 
 const preferredLanguages = usePreferredLanguages()
@@ -38,8 +38,11 @@ function disableInContextTranslation() {
   }
 }
 
-const getLanguageName = (locale) => {
-  const localeName = new Intl.DisplayNames([locale], { type: 'language', languageDisplay: 'standard' })
+const getLanguageName = locale => {
+  const localeName = new Intl.DisplayNames([locale], {
+    type: 'language',
+    languageDisplay: 'standard',
+  })
   return localeName.of(locale)
 }
 function resolvePreferredLocale(preferredLocale) {
@@ -48,7 +51,7 @@ function resolvePreferredLocale(preferredLocale) {
 
   // if no exact match, maybe at least the base lang is avail?
   const baseLang = preferredLocale.split('-')[0]
-  const fallbackLang = Object.keys(messages).find((key) => key.startsWith(baseLang))
+  const fallbackLang = Object.keys(messages).find(key => key.startsWith(baseLang))
   if (fallbackLang) return fallbackLang
 
   return 'en-US' // final fallback
@@ -56,8 +59,8 @@ function resolvePreferredLocale(preferredLocale) {
 
 export default ({ app }) => {
   console.log(
-    `preferred languages configured in the browser: ${preferredLanguages.value},
-     best match for ${preferredLanguages.value[0]} found is ${i18n.global.locale.value}, otherwise fallback to en-US`,
+    `preferred languages configured in the browser: ${preferredLanguages.value.join(', ')}.,
+     best match for ${preferredLanguages.value[0]} found is ${i18n.global.locale.value}, otherwise fallback to en-US`
   )
 
   // Tell app to use the I18n instance

@@ -40,8 +40,8 @@
 </template>
 
 <script setup lang="ts">
-import type { components } from '../dto/api'
 import DashboardGenericItemSection from './DashboardGenericItemSection.vue'
+import type { components } from '@/dto/api'
 
 type SubStats = components['schemas']['SubStats']
 type SubList = components['schemas']['SubList']

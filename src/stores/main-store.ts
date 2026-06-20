@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import type { components } from '../dto/api'
+import type { components } from '@/dto/api'
 
 function defaultOnetimeInformation(): components['schemas']['SseEventOnetimeInformationRecord'] {
   return {
@@ -28,7 +28,7 @@ function defaultIntervalInformation(): components['schemas']['SseEventIntervalIn
     battery_percent: null,
     temperatures: {},
     mediacollection: {},
-    plugins: null,
+    plugins: [],
     pi_throttled_flags: {},
   }
 }

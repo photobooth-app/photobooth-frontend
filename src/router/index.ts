@@ -1,7 +1,7 @@
-import { defineRouter } from '#q-app/wrappers'
+import { defineRouter } from '#q-app'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
-import { hasAccessToken } from '../util/auth'
+import { hasAccessToken } from '@/util/auth'
 
 /*
  * If not building with SSR mode, you can
@@ -13,7 +13,11 @@ import { hasAccessToken } from '../util/auth'
  */
 
 export default defineRouter(function (/* { store, ssrContext } */) {
-  const createHistory = process.env.SERVER ? createMemoryHistory : process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory
+  const createHistory = import.meta.env.QUASAR_SERVER
+    ? createMemoryHistory
+    : import.meta.env.QUASAR_VUE_ROUTER_MODE === 'history'
+      ? createWebHistory
+      : createWebHashHistory
 
   const Router = createRouter({
     //scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -27,15 +31,14 @@ export default defineRouter(function (/* { store, ssrContext } */) {
     },
     routes,
 
-    history: createHistory(process.env.VUE_ROUTER_BASE),
+    history: createHistory(import.meta.env.QUASAR_VUE_ROUTER_BASE),
   })
 
-  Router.beforeEach((to, from, next) => {
+  Router.beforeEach((to, _): import('vue-router').NavigationGuardReturn => {
     if (to.meta.requiresAdmin && !hasAccessToken()) {
-      return next('/auth/')
+      return 'auth/login'
     }
-
-    return next()
+    return true
   })
 
   return Router

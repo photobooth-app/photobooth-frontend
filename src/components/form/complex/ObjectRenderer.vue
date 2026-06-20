@@ -56,7 +56,7 @@ export default defineComponent({
         this.control.path,
         uiSchemaGenerator,
         this.control.uischema,
-        this.control.rootSchema,
+        this.control.rootSchema
       )
 
       if (this.nested.level > 0) {

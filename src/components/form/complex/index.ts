@@ -63,12 +63,12 @@ export const EnumArrayRendererEntry: JsonFormsRendererRegistryEntry = {
     and(
       uiTypeIs('Control'),
       and(
-        schemaMatches((schema) => hasType(schema, 'array') && !Array.isArray(schema.items)),
-        schemaSubPathMatches('items', (schema) => {
+        schemaMatches(schema => hasType(schema, 'array') && !Array.isArray(schema.items)),
+        schemaSubPathMatches('items', schema => {
           return hasOneOfItems(schema) || hasEnumItems(schema)
-        }),
-      ),
-    ),
+        })
+      )
+    )
   ),
 }
 

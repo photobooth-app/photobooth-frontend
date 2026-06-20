@@ -34,7 +34,7 @@ export default defineComponent({
     const editedSchema = { ...control.schema } as JsonSchema
     // console.log(editedSchema)
 
-    const nonNullType = editedSchema.anyOf?.find((obj) => obj.type !== 'null') as { type: string }
+    const nonNullType = editedSchema.anyOf?.find(obj => obj.type !== 'null') as { type: string }
     delete editedSchema.anyOf
     // console.warn(nonNullType)
     // console.error(editedSchema)
@@ -48,7 +48,10 @@ export default defineComponent({
   },
   computed: {
     NonNullType() {
-      return { ...this.control.value, schema: { ...this.editedSchema, ...this.nonNullType } }
+      return {
+        ...this.control.value,
+        schema: { ...this.editedSchema, ...this.nonNullType },
+      }
     },
 
     anyOfRenderInfos(): CombinatorSubSchemaRenderInfo {
@@ -58,9 +61,9 @@ export default defineComponent({
         'anyOf',
         this.control.uischema,
         this.control.path,
-        this.control.uischemas,
+        this.control.uischemas
       )
-      return result.filter((info) => info.uischema)[0]
+      return result.filter(info => info.uischema)[0]
     },
   },
 })

@@ -1,7 +1,7 @@
 import { Notify } from 'quasar'
 import { hasAccessToken, getAccessToken, authStateChange } from './auth'
 import { set } from 'lodash'
-const { fetch: originalFetch } = window
+const originalFetch = window.fetch.bind(window)
 
 async function _fetch(...args) {
   let [resource, options] = args

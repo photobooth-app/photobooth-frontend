@@ -19,7 +19,8 @@
       The photobooth comes with a REST-API. The frontend part of the app uses the same API. It's well documented and used to integrate further with
       your own systems. Check the openapi documentation, it's interactive so easy to test.
     </p>
-    Open the <a href="/api/doc" target="_blank">API documentation of the photobooth-app</a>.
+    Open the
+    <a href="/api/doc" target="_blank">API documentation of the photobooth-app</a>.
   </q-page>
 </template>
 

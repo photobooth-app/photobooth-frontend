@@ -54,12 +54,12 @@ export const EnumArrayControlRendererEntry: JsonFormsRendererRegistryEntry = {
     and(
       uiTypeIs('Control'),
       and(
-        schemaMatches((schema) => hasType(schema, 'array') && !Array.isArray(schema.items)),
-        schemaSubPathMatches('items', (schema) => {
+        schemaMatches(schema => hasType(schema, 'array') && !Array.isArray(schema.items)),
+        schemaSubPathMatches('items', schema => {
           return hasOneOfItems(schema) || hasEnumItems(schema)
-        }),
-      ),
-    ),
+        })
+      )
+    )
   ),
 }
 export const EnumControlRendererEntry: JsonFormsRendererRegistryEntry = {
@@ -82,7 +82,10 @@ const isRangeControl = and(
     )
   }),
   //custom part: can pass in via pydantic json_schema_extra:
-  schemaMatches((schema) => Object.prototype.hasOwnProperty.call(schema, 'ui_schema_extra') && schema['ui_schema_extra']['slider'] === true),
+  schemaMatches(
+    (schema: JsonSchema) =>
+      'ui_schema_extra' in schema && typeof schema.ui_schema_extra === 'object' && (schema.ui_schema_extra as any).slider === true
+  )
 )
 export const SliderControlRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: SliderControlRenderer,
@@ -94,8 +97,8 @@ export const StringAutosuggestControlRendererEntry: JsonFormsRendererRegistryEnt
     3.1,
     and(
       isStringControl,
-      schemaMatches((schema) => schema['list_api']),
-    ),
+      schemaMatches((schema: JsonSchema) => 'list_api' in schema && typeof schema.list_api === 'string' && schema.list_api.length > 0)
+    )
   ),
 }
 export const StringControlRendererEntry: JsonFormsRendererRegistryEntry = {

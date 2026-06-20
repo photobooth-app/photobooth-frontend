@@ -1,7 +1,7 @@
 import { SessionStorage } from 'quasar'
 import { Notify } from 'quasar'
 
-export const authStateChange = (credentials) => {
+export const authStateChange = credentials => {
   if (credentials) {
     SessionStorage.setItem('credentials', credentials)
   } else {
@@ -24,9 +24,9 @@ export const logout = () => {
     message: 'Logout successful',
   })
 }
-export const login = (userdata) => {
+export const login = userdata => {
   return new Promise((resolve, reject) => {
-    const getFormData = (object) =>
+    const getFormData = object =>
       Object.keys(object).reduce((formData, key) => {
         formData.append(key, object[key])
         return formData
@@ -36,7 +36,7 @@ export const login = (userdata) => {
       method: 'POST',
       body: getFormData(userdata),
     })
-      .then((response) => {
+      .then(response => {
         if (response.ok) {
           return response.json()
         } else {
@@ -44,11 +44,11 @@ export const login = (userdata) => {
           throw new Error('Failed to authenticate')
         }
       })
-      .then((response_json_credentials) => {
+      .then(response_json_credentials => {
         authStateChange(response_json_credentials)
         resolve(response_json_credentials)
       })
-      .catch((err) => {
+      .catch(err => {
         authStateChange(null)
         Notify.create({
           type: 'negative',

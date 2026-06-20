@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import type { components } from '../dto/api'
+import type { components } from '@/dto/api'
 
 defineProps<{
   substats: components['schemas']['SubStats']

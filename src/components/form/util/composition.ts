@@ -19,10 +19,13 @@ import type { Options } from './options'
 export const useControlAppliedOptions = <I extends { control: any }>(input: I) => {
   return computed<Options>(() =>
     merge(
-      { deprecated: input.control.value.schema.deprecated, computeIntense: input.control.value.schema.computeIntense },
+      {
+        deprecated: input.control.value.schema.deprecated,
+        computeIntense: input.control.value.schema.computeIntense,
+      },
       cloneDeep(input.control.value.config),
-      cloneDeep(input.control.value.uischema.options),
-    ),
+      cloneDeep(input.control.value.uischema.options)
+    )
   )
 }
 
@@ -44,7 +47,7 @@ export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
       input.control.value.visible,
       input.control.value.description,
       isFocused.value,
-      !!appliedOptions.value?.showUnfocusedDescription,
+      !!appliedOptions.value?.showUnfocusedDescription
     )
   }
 
@@ -74,8 +77,8 @@ export const useQuasarBasicControl = <I extends { control: any }>(input: I) => {
  */
 export const useQuasarControl = <I extends { control: any; handleChange: any }>(
   input: I,
-  adaptValue: (target: any) => any = (v) => v,
-  debounceWait?: number,
+  adaptValue: (target: any) => any = v => v,
+  debounceWait?: number
 ) => {
   const changeEmitter = typeof debounceWait === 'number' ? debounce(input.handleChange, debounceWait) : input.handleChange
 
@@ -131,8 +134,8 @@ export const useQuasarArrayControl = <I extends { control: any }>(input: I) => {
       input.control.value.path,
       undefined,
       input.control.value.uischema,
-      input.control.value.rootSchema,
-    ),
+      input.control.value.rootSchema
+    )
   )
 
   const childLabelForIndex = (index: number) => {

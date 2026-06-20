@@ -68,9 +68,9 @@
 </template>
 
 <script setup lang="ts">
-import { remoteProcedureCall } from '../util/fetch_api.js'
 import { ref, onBeforeMount } from 'vue'
-import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
+import { remoteProcedureCall } from '@/util/fetch_api.js'
+import ItemNotAvailableError from '@/components/ItemNotAvailableError.vue'
 
 defineProps<{
   approval_id: string

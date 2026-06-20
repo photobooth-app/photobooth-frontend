@@ -9,8 +9,8 @@
     :error="control.errors != ''"
     multiple
     use-chips
-    @add="(details) => addSelected(details.value)"
-    @remove="(details) => removeSelected(details.value)"
+    @add="details => addSelected(details.value)"
+    @remove="details => removeSelected(details.value)"
     filled
   >
   </q-select>

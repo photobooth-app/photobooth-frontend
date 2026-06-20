@@ -55,7 +55,7 @@ onBeforeUnmount(() => {
   hideNotification()
 })
 
-watch(showWarning, (showWarningValue) => {
+watch(showWarning, showWarningValue => {
   // does not fire if showWarning is initially true because warningTimeMs > timeoutMs
   if (showWarningValue) {
     showNotification()
@@ -64,7 +64,7 @@ watch(showWarning, (showWarningValue) => {
   }
 })
 
-watch(idle, (idleValue) => {
+watch(idle, idleValue => {
   if (idleValue) {
     hideNotification()
     emit('onTimeout')

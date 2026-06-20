@@ -27,7 +27,7 @@ const streamRenderer = new Worker(new URL('/src/util/streamRenderer.ts', import.
 const streamRendererImageDecoderMode = typeof ImageDecoder !== 'undefined'
 
 // handle worker messages
-streamRenderer.onmessage = (ev) => {
+streamRenderer.onmessage = ev => {
   const msg = ev.data
   if (msg?.type === 'ready') {
     // worker finished rendering the last frame
@@ -74,7 +74,7 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
       ws.binaryType,
       'streamRendererImageDecoderMode is ',
       streamRendererImageDecoderMode,
-      '(only modern browser and secure contexts)',
+      '(only modern browser and secure contexts)'
     )
 
     // if worker already signalled ready while reconnecting
@@ -103,7 +103,7 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
   },
 })
 
-watch(visibility, (currentVisibility) => {
+watch(visibility, currentVisibility => {
   if (currentVisibility === 'hidden') {
     console.log('The document is now hidden!')
   } else {
@@ -128,7 +128,7 @@ onMounted(() => {
       canvases: { stream: canvasStream, blurred: canvasBlurred },
       streamRendererImageDecoderMode: streamRendererImageDecoderMode,
     },
-    [canvasStream, canvasBlurred],
+    [canvasStream, canvasBlurred]
   )
 
   openWebSocketStream()

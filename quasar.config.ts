@@ -1,10 +1,10 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
-import { defineConfig } from '#q-app/wrappers'
-import { fileURLToPath } from 'node:url'
+import { defineConfig } from '#q-app'
+//import { fileURLToPath } from 'node:url'
 
-export default defineConfig((ctx) => {
+export default defineConfig(ctx => {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,
@@ -43,14 +43,21 @@ export default defineConfig((ctx) => {
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
       // publicPath: '/',
-      // analyze: true,
-      env: {
+      defineEnv: {
         BUILD_DATE: new Date().toISOString(),
       },
-      // rawDefine: {},
+      // define: {},
+      // change to "true" if needed; defaults to "false" now!
+      vueOptionsAPI: true,
+
+      // new! Vue Router v5+ filename-based routing
+      filenameBasedRouting: false,
+
+      // NOT async, but it can now also return a new config
+      // that will be merged with the default one
+      //extendTsConfig: (tsConfig: TSConfig) => void | TSConfig,
       // ignorePublicFolder: true,
       // minify: false,
-      // polyfillModulePreload: true,
       // distDir
       distDir: '../photobooth-app/src/web/frontend/',
 
@@ -71,7 +78,8 @@ export default defineConfig((ctx) => {
             ssr: ctx.modeName === 'ssr',
 
             // you need to set i18n resource including paths !
-            include: [fileURLToPath(new URL('./src/i18n', import.meta.url))],
+            //include: [fileURLToPath(new URL('./src/i18n', import.meta.url))],
+            //include: [new URL('/i18n', import.meta.url)],
           },
         ],
 
@@ -82,10 +90,6 @@ export default defineConfig((ctx) => {
               initialIsOpen: false,
             },
             vueTsc: true,
-            eslint: {
-              lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{ts,js,mjs,cjs,vue}"',
-              useFlatConfig: true,
-            },
           },
           { server: false },
         ],

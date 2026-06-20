@@ -1,14 +1,14 @@
 {
   "name": "photobooth-app",
   "version": "2.0.0",
+  "private": true,
   "description": "photobooth-app frontend",
-  "productName": "Photobooth-App",
   "author": "michael <me@mgrl.de>",
   "type": "module",
-  "private": true,
   "scripts": {
-    "lint": "eslint ./**/*.{js,ts,mjs,cjs,vue}",
-    "lint:fix": "eslint --fix ./**/*.{js,ts,mjs,cjs,vue}",
+    "lint": "oxfmt && oxlint --fix",
+    "lint:check": "oxfmt --check && oxlint",
+    "typecheck": "vue-tsc --noEmit",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "generate-types": "openapi-typescript  http://localhost:8000/api/openapi.json --output ./src/dto/api.ts",
     "check-types": "openapi-typescript  http://localhost:8000/api/openapi.json --output ./src/dto/api.ts --check",
@@ -31,20 +31,16 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@intlify/eslint-plugin-vue-i18n": "^4.5.1",
     "@intlify/unplugin-vue-i18n": "^11.2.4",
-    "@quasar/app-vite": "^2.6.2",
+    "@quasar/app-vite": "^3.0.0-rc.3",
     "@types/lodash": "^4.17.24",
-    "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.8.0",
     "autoprefixer": "^10.5.0",
-    "eslint": "^10.5.0",
-    "eslint-plugin-vue": "^10.9.2",
     "globals": "^17.6.0",
-    "openapi-typescript": "^7.13.0",
+    "oxfmt": "^0.x",
+    "oxlint": "^1.x",
+    "oxlint-tsgolint": "^0.x",
     "prettier": "^3.8.4",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.0",
     "vite-plugin-checker": "^0.14.4",
     "vue-tsc": "^3.3.5"
   },
@@ -52,5 +48,6 @@
     "node": "^28 || ^26 || ^24 || ^22 || ^20 || ^18",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
-  }
+  },
+  "productName": "Photobooth-App"
 }

@@ -65,8 +65,8 @@
 </template>
 
 <script setup lang="ts">
-import type { components } from 'src/dto/api'
-import { isVideo, isImage } from 'src/util/media_is_type'
+import type { components } from '@/dto/api'
+import { isVideo, isImage } from '@/util/media_is_type'
 defineProps<{
   item: components['schemas']['MediaitemPublic']
 }>()

@@ -30,14 +30,14 @@
 </template>
 
 <script setup lang="ts">
-import { useStateStore } from '../stores/state-store'
-import { useConfigurationStore } from '../stores/configuration-store'
-import { useRouter, useRoute } from 'vue-router'
 import { onMounted, onUnmounted, computed } from 'vue'
-import { remoteProcedureCall } from '../util/fetch_api.js'
-import ReturnButton from '../components/ReturnButton.vue'
-import RouteAfterTimeout from 'src/components/RouteAfterTimeout.vue'
-import { useMediacollectionStore } from '../stores/mediacollection-store'
+import { useRouter, useRoute } from 'vue-router'
+import { useStateStore } from '@/stores/state-store'
+import { useMediacollectionStore } from '@/stores/mediacollection-store'
+import { useConfigurationStore } from '@/stores/configuration-store'
+import { remoteProcedureCall } from '@/util/fetch_api.js'
+import ReturnButton from '@/components/ReturnButton.vue'
+import RouteAfterTimeout from '@/components/RouteAfterTimeout.vue'
 
 const stateStore = useStateStore()
 const router = useRouter()
@@ -61,7 +61,10 @@ stateStore.$subscribe((mutation, state) => {
   }
   if (state.source == 'completed' && state.target == 'present') {
     // if aborted, source can by anything but completed. when source is completed, the job was successful and we have an id
-    router.push({ name: 'itempresenter', params: { id: stateStore.jobmodel.present_mediaitem_id } })
+    router.push({
+      name: 'itempresenter',
+      params: { id: stateStore.jobmodel.present_mediaitem_id },
+    })
   }
 })
 

@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
-import { type components } from '../dto/api'
-import { remoteProcedureCall } from '../util/fetch_api'
+import { type components } from '@/dto/api'
+import { remoteProcedureCall } from '@/util/fetch_api'
 const STATES = {
   //https://stackoverflow.com/a/75060220
   INIT: 0,
@@ -27,8 +27,8 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
       this.storeState = STATES.WIP
 
       fetch('/api/mediacollection/')
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           console.log('loadMediacollection finished successfully')
           console.log(data)
 
@@ -36,17 +36,17 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
 
           this.storeState = STATES.DONE
         })
-        .catch((e) => {
+        .catch(e => {
           console.log('loadMediacollection failed', e)
           console.log(e)
           this.storeState = STATES.ERROR
         })
     },
     getIndexOfItemId(id: string) {
-      return this.collection.findIndex((item) => item.id == id)
+      return this.collection.findIndex(item => item.id == id)
     },
     getMediaitemById(id: string) {
-      return this.collection.find((mediaitem) => mediaitem.id == id)
+      return this.collection.find(mediaitem => mediaitem.id == id)
     },
     // add new item on first position to store
     addMediaitem(mediaitem: components['schemas']['MediaitemPublic']) {
@@ -67,12 +67,12 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
       if (removed_mediaitem.length == 0) console.log('no item removed from collection, maybe it was deleted by UI earlier already')
       else console.log(`${removed_mediaitem.length} mediaitem deleted`)
     },
-    deleteItem(id: string) {
-      remoteProcedureCall(`/api/mediacollection/${id}`, 'DELETE')
+    async deleteItem(id: string) {
+      await remoteProcedureCall(`/api/mediacollection/${id}`, 'DELETE')
     },
     // remove mediaitem from store
-    deleteAllItems() {
-      remoteProcedureCall('/api/mediacollection/', 'DELETE')
+    async deleteAllItems() {
+      await remoteProcedureCall('/api/mediacollection/', 'DELETE')
 
       this.initStore(true)
       // updated store only on the device invoking the action.
@@ -80,16 +80,9 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
     },
   },
   getters: {
-    isLoaded() {
-      return this.storeState === STATES.DONE
-    },
-    isLoading() {
-      return this.storeState === STATES.WIP
-    },
-
-    collection_number_of_items() {
-      return this.collection.length
-    },
+    isLoaded: state => state.storeState === STATES.DONE,
+    isLoading: state => state.storeState === STATES.WIP,
+    collection_number_of_items: state => state.collection.length,
   },
 })
 

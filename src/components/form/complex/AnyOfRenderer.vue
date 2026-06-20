@@ -62,9 +62,9 @@ export default defineComponent({
         'anyOf',
         this.control.uischema,
         this.control.path,
-        this.control.uischemas,
+        this.control.uischemas
       )
-      return result.filter((info) => info.uischema)
+      return result.filter(info => info.uischema)
     },
   },
 })

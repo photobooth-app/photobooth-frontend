@@ -35,7 +35,8 @@
     <div>
       <q-card v-if="multicamNodes.length == 0" flat class="q-pa-md q-mb-md">
         <div class="text-h5">
-          {{ $t('Calibrate') }} <q-badge color="negative" align="top"><q-icon name="sym_o_error" color="white" size="15px" /> </q-badge>
+          {{ $t('Calibrate') }}
+          <q-badge color="negative" align="top"><q-icon name="sym_o_error" color="white" size="15px" /> </q-badge>
         </div>
 
         <p>{{ $t('The tool is not available, because there is no multicamera enabled in the backends.') }}</p>
@@ -215,12 +216,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { remoteProcedureCall, _fetch } from '../util/fetch_api'
+import { remoteProcedureCall, _fetch } from '@/util/fetch_api'
 
 import { ref } from 'vue'
-import { useConfigurationStore } from '../stores/configuration-store'
-import type { components } from 'src/dto/api'
-import CharucoGenerator from 'src/components/CharucoGenerator.vue'
+import { useConfigurationStore } from '@/stores/configuration-store'
+import type { components } from '@/dto/api'
+import CharucoGenerator from '@/components/CharucoGenerator.vue'
 import { Notify } from 'quasar'
 
 type WigglecamNodes = components['schemas']['WigglecamNodes']
@@ -247,7 +248,7 @@ async function capture() {
     const data: string[] = await res.json() // one image per camera
 
     if (images.value.length === 0) {
-      images.value = data.map((img) => [img])
+      images.value = data.map(img => [img])
     } else {
       data.forEach((img, i) => images.value[i].unshift(img)) // add new to the beginning of the array
     }

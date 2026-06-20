@@ -106,15 +106,15 @@
 import { useRouter } from 'vue-router'
 import { watchDebounced, refThrottled } from '@vueuse/core'
 import { computed, ref } from 'vue'
-import { remoteProcedureCall } from '../util/fetch_api.js'
-import { useStateStore } from '../stores/state-store'
-import { useConfigurationStore } from '../stores/configuration-store'
-import CountdownTimer from '../components/CountdownTimer.vue'
-import type { TriggerSchema } from '../components/FrontpageTriggerButtons.vue'
-import { default as FrontpageTriggerButtons } from '../components/FrontpageTriggerButtons.vue'
-import { default as PreviewStream } from '../components/PreviewStream.vue'
+import { remoteProcedureCall } from '@/util/fetch_api.js'
+import { useStateStore } from '@/stores/state-store'
+import { useConfigurationStore } from '@/stores/configuration-store'
+import CountdownTimer from '@/components/CountdownTimer.vue'
+import type { TriggerSchema } from '@/components/FrontpageTriggerButtons.vue'
+import { default as FrontpageTriggerButtons } from '@/components/FrontpageTriggerButtons.vue'
+import { default as PreviewStream } from '@/components/PreviewStream.vue'
 import _ from 'lodash'
-import MediaItemApprovalViewer from 'src/components/MediaItemApprovalViewer.vue'
+import MediaItemApprovalViewer from '@/components/MediaItemApprovalViewer.vue'
 
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
@@ -129,7 +129,7 @@ watchDebounced(
     }
     btnAdminClickCounter.value = 0
   },
-  { debounce: 500 },
+  { debounce: 500 }
 )
 const triggerButtons = computed(() => {
   const result: TriggerSchema[] = []

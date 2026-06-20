@@ -107,7 +107,10 @@ async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 8): Pr
   const dsHeight = Math.ceil(bitmap.height / scale)
   const computeCanvas = new OffscreenCanvas(dsWidth, dsHeight)
   // will not read frequently but will read at least once. if not set, the context is placed in the GPU and copy times are longer.
-  const computeCtx = computeCanvas.getContext('2d', { willReadFrequently: true, alpha: true })!
+  const computeCtx = computeCanvas.getContext('2d', {
+    willReadFrequently: true,
+    alpha: true,
+  })!
 
   computeCtx.drawImage(bitmap, 0, 0, dsWidth, dsHeight)
   const dsImage = computeCtx.getImageData(0, 0, dsWidth, dsHeight)
@@ -138,7 +141,10 @@ async function loadOverlay(url: string): Promise<Overlay> {
 function getDrawableSize(drawable: ImageBitmap | VideoFrame) {
   if ('codedWidth' in drawable) {
     // VideoFrame
-    return { width: drawable.displayWidth ?? drawable.codedWidth, height: drawable.displayHeight ?? drawable.codedHeight }
+    return {
+      width: drawable.displayWidth ?? drawable.codedWidth,
+      height: drawable.displayHeight ?? drawable.codedHeight,
+    }
   } else {
     // ImageBitmap
     return { width: drawable.width, height: drawable.height }
@@ -165,7 +171,7 @@ function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap | VideoFrame, ove
       drawableSize.width,
       drawableSize.height,
       overlay.transparentBBox.width,
-      overlay.transparentBBox.height,
+      overlay.transparentBBox.height
     )
 
     // draw stream image into transparent bbox area
@@ -237,8 +243,14 @@ class StreamRenderer {
   }
 
   init(canvases: { stream: OffscreenCanvas; blurred: OffscreenCanvas }, streamRendererImageDecoderMode: boolean, opts: Partial<StreamConfig>) {
-    this.stream = { canvas: canvases.stream, ctx: canvases.stream.getContext('2d', { alpha: false })! }
-    this.blurred = { canvas: canvases.blurred, ctx: canvases.blurred.getContext('2d', { alpha: false })! }
+    this.stream = {
+      canvas: canvases.stream,
+      ctx: canvases.stream.getContext('2d', { alpha: false })!,
+    }
+    this.blurred = {
+      canvas: canvases.blurred,
+      ctx: canvases.blurred.getContext('2d', { alpha: false })!,
+    }
     this.streamRendererImageDecoderMode = streamRendererImageDecoderMode
     Object.assign(this.config, opts)
     // ensure lastLog is fresh on init
@@ -294,7 +306,10 @@ class StreamRenderer {
     try {
       if (this.streamRendererImageDecoderMode) {
         // Use ImageDecoder if supported (localhost and secure contexts only)
-        const decoder = new ImageDecoder({ data: drawable as ArrayBuffer, type: 'image/jpeg' })
+        const decoder = new ImageDecoder({
+          data: drawable as ArrayBuffer,
+          type: 'image/jpeg',
+        })
         const result = await decoder.decode()
         bitmap = result.image
       } else {
@@ -359,7 +374,10 @@ self.onmessage = async (ev: MessageEvent) => {
   const data = ev.data
   try {
     if (data.type === 'init') {
-      const canvases = data.canvases as { stream: OffscreenCanvas; blurred: OffscreenCanvas }
+      const canvases = data.canvases as {
+        stream: OffscreenCanvas
+        blurred: OffscreenCanvas
+      }
       const opts: Partial<StreamConfig> = {
         enableMirrorEffectStream: !!data.enableMirrorEffectStream,
         enableMirrorEffectFrame: !!data.enableMirrorEffectFrame,

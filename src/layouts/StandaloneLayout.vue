@@ -10,9 +10,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
 import { computed } from 'vue'
-import ReturnButton from '../components/ReturnButton.vue'
+import { useRoute } from 'vue-router'
+import ReturnButton from '@/components/ReturnButton.vue'
 
 const route = useRoute()
 const isSubPage = computed(() => route.matched.length > 1 && route.matched[0].path != route.matched[1].path)

@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { login } from 'src/util/auth'
+import { login } from '@/util/auth'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

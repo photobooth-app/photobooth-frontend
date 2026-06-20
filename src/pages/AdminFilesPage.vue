@@ -127,8 +127,8 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 import { useQuasar } from 'quasar'
-import { _fetch } from 'src/util/fetch_api'
-import { getAccessToken } from 'src/util/auth'
+import { _fetch } from '@/util/fetch_api'
+import { getAccessToken } from '@/util/auth'
 
 const $q = useQuasar()
 
@@ -204,8 +204,8 @@ const onNameClick = (row: PathListItem) => {
     folder_current.value = row.filepath
   } else {
     _fetch(`/api/admin/files/file/${row.filepath}`, {})
-      .then((res) => res.blob())
-      .then((blob) => window.open(URL.createObjectURL(blob)))
+      .then(res => res.blob())
+      .then(blob => window.open(URL.createObjectURL(blob)))
   }
 }
 
@@ -362,7 +362,7 @@ async function createNewFolder(folder_name: string) {
 const trimSlashes = (str: string) =>
   str
     .split('/')
-    .filter((v) => v !== '')
+    .filter(v => v !== '')
     .join('/')
 
 const formatBytes = (bytes: number, decimals = 2) => {

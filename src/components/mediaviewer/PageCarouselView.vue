@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { toRef, watch } from 'vue'
-import type { components } from 'src/dto/api'
+import type { components } from '@/dto/api'
 
 import { default as MediaItemPreviewViewer } from '../MediaItemPreviewViewer.vue'
 
@@ -36,9 +36,9 @@ const currentMediaitemId = toRef(props.mediaitemId)
 // update currentSlide if changed externally, so slide can be updated
 watch(
   () => props.mediaitemId,
-  (mediaitemId) => {
+  mediaitemId => {
     currentMediaitemId.value = mediaitemId
-  },
+  }
 )
 
 const emit = defineEmits<{

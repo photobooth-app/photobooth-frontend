@@ -61,13 +61,13 @@ export default defineComponent({
           // should be acceptable since there are only a few 10s items, maybe 100 and no need to trigger a search on every char typed
 
           await _fetch(`${useControl.control.value.schema['list_api']}?q=`, {})
-            .then((res) => {
+            .then(res => {
               return res.json()
             })
             .then((json: [string]) => {
               availableOptions.value = json
             })
-            .catch((err) => {
+            .catch(err => {
               console.log(err)
             })
             .finally(() => {})
@@ -78,7 +78,7 @@ export default defineComponent({
             filteredOptions.value = availableOptions.value
           } else {
             const needle = val.toLowerCase()
-            filteredOptions.value = availableOptions.value.filter((v) => v.toLowerCase().indexOf(needle) > -1)
+            filteredOptions.value = availableOptions.value.filter(v => v.toLowerCase().indexOf(needle) > -1)
           }
         })
       },

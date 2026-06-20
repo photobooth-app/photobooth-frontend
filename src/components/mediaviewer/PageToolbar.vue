@@ -45,7 +45,10 @@
       </div>
 
       <div class="q-mr-sm row flex flex-center">
-        <q-badge color="grey-8" class="q-mr-xs"> <q-icon name="sym_o_image" color="white" class="q-mr-xs" /> {{ item.id }}</q-badge>
+        <q-badge color="grey-8" class="q-mr-xs">
+          <q-icon name="sym_o_image" color="white" class="q-mr-xs" />
+          {{ item.id }}</q-badge
+        >
         <q-badge color="grey-8" class="q-mr-xs" v-if="props.image_number && props.images_total">
           <q-icon name="sym_o_tag" color="white" class="q-mr-xs" />
           {{
@@ -76,9 +79,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { openURL } from 'quasar'
-import type { components } from 'src/dto/api'
-import { isPrintableImage } from 'src/util/media_is_type'
 import { default as ShareTriggerButtons, type ShareSchema } from '../ShareTriggerButtons.vue'
+import type { components } from '@/dto/api'
+import { isPrintableImage } from '@/util/media_is_type'
 const confirmDeleteDialog = ref(false)
 
 const props = defineProps<{

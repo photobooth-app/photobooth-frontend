@@ -14,31 +14,43 @@
           <q-btn-dropdown auto-close stretch flat label="">
             <q-list class="bg-green-5">
               <q-item to="/admin/1ststart">
-                <q-item-section avatar> <q-icon name="sym_o_info" /> </q-item-section>
+                <q-item-section avatar>
+                  <q-icon name="sym_o_info" />
+                </q-item-section>
                 <q-item-section>
                   <q-item-label>{{ $t('1st Start') }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item to="/admin/help">
-                <q-item-section avatar> <q-icon name="sym_o_help" /> </q-item-section>
+                <q-item-section avatar>
+                  <q-icon name="sym_o_help" />
+                </q-item-section>
                 <q-item-section>
                   <q-item-label>{{ $t('TAB_LABEL_HELP') }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item href="/api/doc" target="_blank">
-                <q-item-section avatar> <q-icon name="sym_o_api" /> </q-item-section>
+                <q-item-section avatar>
+                  <q-icon name="sym_o_api" />
+                </q-item-section>
                 <q-item-section>
                   <q-item-label>{{ $t('Rest-API documentation') }}</q-item-label>
                 </q-item-section>
-                <q-item-section side> <q-icon name="sym_o_open_in_new" /> </q-item-section>
+                <q-item-section side>
+                  <q-icon name="sym_o_open_in_new" />
+                </q-item-section>
               </q-item>
               <q-item href="https://photobooth-app.org/" target="_blank">
-                <q-item-section avatar> <q-icon name="sym_o_link" /> </q-item-section>
+                <q-item-section avatar>
+                  <q-icon name="sym_o_link" />
+                </q-item-section>
                 <q-item-section>
                   <!--eslint-disable-next-line @intlify/vue-i18n/no-raw-text-->
                   <q-item-label>photobooth-app.org</q-item-label>
                 </q-item-section>
-                <q-item-section side> <q-icon name="sym_o_open_in_new" /> </q-item-section>
+                <q-item-section side>
+                  <q-icon name="sym_o_open_in_new" />
+                </q-item-section>
               </q-item>
             </q-list>
           </q-btn-dropdown>
@@ -67,8 +79,8 @@
 </template>
 
 <script setup lang="ts">
-import { logout } from '../util/auth'
 import { useRouter } from 'vue-router'
+import { logout } from '@/util/auth'
 const router = useRouter()
 
 const click_logout = () => {

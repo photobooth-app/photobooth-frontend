@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { _fetch } from 'src/util/fetch_api'
+import { _fetch } from '@/util/fetch_api'
 import { ref } from 'vue'
 import type { components } from '../dto/api'
 import { Notify } from 'quasar'

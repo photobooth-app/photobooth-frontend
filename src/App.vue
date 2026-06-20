@@ -13,17 +13,17 @@ import { useI18n } from 'vue-i18n'
 
 <script setup lang="ts">
 import { ref, watch, computed, onBeforeMount } from 'vue'
-import { useMainStore } from 'src/stores/main-store'
-import { useStateStore } from 'src/stores/state-store'
-import { useConfigurationStore } from 'stores/configuration-store'
-import { useMediacollectionStore } from 'src/stores/mediacollection-store'
+import { useMainStore } from '@/stores/main-store'
+import { useStateStore } from '@/stores/state-store'
+import { useConfigurationStore } from '@/stores/configuration-store'
+import { useMediacollectionStore } from '@/stores/mediacollection-store'
 import ConnectionOverlay from './components/ConnectionOverlay.vue'
 import { useQuasar } from 'quasar'
 import type { EventSourceStatus } from '@vueuse/core'
 import { useEventSource } from '@vueuse/core'
 const { t } = useI18n()
 
-console.log('frontend build date', process.env.BUILD_DATE)
+console.log('frontend build date', import.meta.env.BUILD_DATE)
 
 const store = useMainStore()
 const stateStore = useStateStore()
@@ -55,7 +55,7 @@ const init = async () => {
 }
 
 const until = (conditionFunction: { (): boolean }) => {
-  const poll = (resolve) => {
+  const poll = resolve => {
     if (conditionFunction()) resolve()
     else setTimeout(() => poll(resolve), 400)
   }
@@ -72,7 +72,7 @@ const initSseClient = () => {
     immediate: true,
   })
 
-  watch(error, (err) => {
+  watch(error, err => {
     if (err) {
       console.error('SSE error:', err)
     }
@@ -82,11 +82,11 @@ const initSseClient = () => {
     connected.value = stat == 'OPEN'
   })
 
-  eventSource.value?.addEventListener('LogRecord', (evt) => {
+  eventSource.value?.addEventListener('LogRecord', evt => {
     store.logrecords = [JSON.parse(evt.data), ...store.logrecords.slice(0, 199)]
   })
 
-  eventSource.value?.addEventListener('TranslateableFrontendNotification', (evt) => {
+  eventSource.value?.addEventListener('TranslateableFrontendNotification', evt => {
     // TODO: at one point in future, we can probably use generate typescript to generate types for sse also:
     // as components['schemas']['TranslateableFrontendNotification']
     const _notification = JSON.parse(evt.data)
@@ -108,7 +108,7 @@ const initSseClient = () => {
     })
   })
 
-  eventSource.value?.addEventListener('ProcessStateinfo', (evt) => {
+  eventSource.value?.addEventListener('ProcessStateinfo', evt => {
     const _procinfo = JSON.parse(evt.data)
     console.log('ProcessStateinfo', _procinfo)
     if (Object.keys(_procinfo).length === 0 && _procinfo.constructor === Object) {
@@ -118,29 +118,29 @@ const initSseClient = () => {
     }
   })
 
-  eventSource.value?.addEventListener('DbInsert', (evt) => {
+  eventSource.value?.addEventListener('DbInsert', evt => {
     const _mediaitem = JSON.parse(evt.data)
     console.log('received new item to add to collection:', _mediaitem)
     mediacollectionStore.addMediaitem(_mediaitem)
   })
 
-  eventSource.value?.addEventListener('DbUpdate', (evt) => {
+  eventSource.value?.addEventListener('DbUpdate', evt => {
     const _mediaitem = JSON.parse(evt.data)
     console.log('received item to update in collection:', _mediaitem)
     mediacollectionStore.updateMediaitem(_mediaitem)
   })
 
-  eventSource.value?.addEventListener('DbRemove', (evt) => {
+  eventSource.value?.addEventListener('DbRemove', evt => {
     const _mediaitem = JSON.parse(evt.data)
     console.log('received request to remove item from collection:', _mediaitem)
     mediacollectionStore.removeMediaitem(_mediaitem)
   })
 
-  eventSource.value?.addEventListener('OnetimeInformationRecord', (evt) => {
+  eventSource.value?.addEventListener('OnetimeInformationRecord', evt => {
     Object.assign(store.information_onetime, JSON.parse(evt.data))
   })
 
-  eventSource.value?.addEventListener('IntervalInformationRecord', (evt) => {
+  eventSource.value?.addEventListener('IntervalInformationRecord', evt => {
     Object.assign(store.information_interval, JSON.parse(evt.data))
   })
 }

@@ -3,7 +3,9 @@
     <div v-if="!isGalleryEmpty" class="row justify-center q-gutter-sm">
       <q-intersection v-for="item in mediacollectionStore.collection" :key="item.id" once class="preview-item">
         <router-link :to="`${$route.path}/mediaviewer/${item.id}`">
-          <q-card class="q-ma-xs no-shadow"> <MediaItemThumbnailViewer :item="item" /> </q-card>
+          <q-card class="q-ma-xs no-shadow">
+            <MediaItemThumbnailViewer :item="item" />
+          </q-card>
         </router-link>
       </q-intersection>
     </div>
@@ -12,10 +14,10 @@
   </q-page>
 </template>
 <script setup lang="ts">
-import { useConfigurationStore } from '../stores/configuration-store'
-import { useMediacollectionStore } from '../stores/mediacollection-store'
 import { computed } from 'vue'
-import { default as MediaItemThumbnailViewer } from '../components/MediaItemThumbnailViewer.vue'
+import { useConfigurationStore } from '@/stores/configuration-store'
+import { useMediacollectionStore } from '@/stores/mediacollection-store'
+import { default as MediaItemThumbnailViewer } from '@/components/MediaItemThumbnailViewer.vue'
 
 const configurationStore = useConfigurationStore()
 const mediacollectionStore = useMediacollectionStore()

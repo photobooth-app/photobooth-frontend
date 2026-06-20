@@ -88,23 +88,23 @@
 </template>
 
 <script setup lang="ts">
-import { useConfigurationStore } from '../stores/configuration-store'
-import { useMediacollectionStore } from '../stores/mediacollection-store'
+import { useConfigurationStore } from '@/stores/configuration-store'
+import { useMediacollectionStore } from '@/stores/mediacollection-store'
 import { ref, onBeforeMount, computed, onMounted, watch } from 'vue'
-import { default as PageShareParameters } from '../components/mediaviewer/PageShareParameters.vue'
-import { default as PageToolbar } from '../components/mediaviewer/PageToolbar.vue'
-import { default as HeaderCountdownTimer } from '../components/mediaviewer/HeaderCountdownTimer.vue'
-import { default as HeaderProcessing } from '../components/mediaviewer/HeaderProcessing.vue'
-import { default as DrawerFilter } from '../components/mediaviewer/DrawerFilter.vue'
-import { default as PageQrCode } from '../components/mediaviewer/PageQrCode.vue'
-import { default as PageCarouselView } from '../components/mediaviewer/PageCarouselView.vue'
-import ItemNotAvailableError from '../components/ItemNotAvailableError.vue'
+import { default as PageShareParameters } from '@/components/mediaviewer/PageShareParameters.vue'
+import { default as PageToolbar } from '@/components/mediaviewer/PageToolbar.vue'
+import { default as HeaderCountdownTimer } from '@/components/mediaviewer/HeaderCountdownTimer.vue'
+import { default as HeaderProcessing } from '@/components/mediaviewer/HeaderProcessing.vue'
+import { default as DrawerFilter } from '@/components/mediaviewer/DrawerFilter.vue'
+import { default as PageQrCode } from '@/components/mediaviewer/PageQrCode.vue'
+import { default as PageCarouselView } from '@/components/mediaviewer/PageCarouselView.vue'
+import ItemNotAvailableError from '@/components/ItemNotAvailableError.vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { type ShareSchema } from '../components/ShareTriggerButtons.vue'
-import { remoteProcedureCall, _fetch } from '../util/fetch_api.js'
+import { type ShareSchema } from '@/components/ShareTriggerButtons.vue'
+import { remoteProcedureCall, _fetch } from '@/util/fetch_api.js'
 import { watchDebounced } from '@vueuse/core'
-import { default as MediaItemPreviewViewer } from '../components/MediaItemPreviewViewer.vue'
+import { default as MediaItemPreviewViewer } from '@/components/MediaItemPreviewViewer.vue'
 
 const $q = useQuasar()
 const route = useRoute()
@@ -128,7 +128,7 @@ onBeforeMount(() => {
   selectedMediaitemId.value = route.params.id as string
   getAvailableFilter()
 })
-watch(route, (to) => {
+watch(route, to => {
   selectedMediaitemId.value = to.params.id as string
 })
 onMounted(() => {
@@ -157,11 +157,11 @@ watchDebounced(
     }
   },
 
-  { debounce: 600 },
+  { debounce: 600 }
 )
 
 const currentMediaitemNumber = computed(() => {
-  return mediacollectionStore.collection.findIndex((mediaitem) => mediaitem.id == selectedMediaitemId.value) + 1
+  return mediacollectionStore.collection.findIndex(mediaitem => mediaitem.id == selectedMediaitemId.value) + 1
 })
 const showFilter = computed(() => {
   return configurationStore.configuration.uisettings.gallery_show_filter && filterEnabled(currentMediaitem.value.media_type)
@@ -185,7 +185,7 @@ const shareButtons = computed(() => {
   return result
 })
 const getMediaitemById = (id: string) => {
-  return mediacollectionStore.collection.find((mediaitem) => mediaitem.id == id)
+  return mediacollectionStore.collection.find(mediaitem => mediaitem.id == id)
 }
 
 const filterEnabled = (media_type: string) => {
@@ -205,14 +205,14 @@ const getAvailableFilter = async () => {
 const doApplyFilter = (id: string, filter: string) => {
   displayIndeterminateProgressbar.value = true
   fetch(`/api/filter/${id}?filter=${filter}`, { method: 'PATCH' })
-    .then((response) => {
+    .then(response => {
       if (!response.ok) {
         throw new Error('Server returned ' + response.status)
       }
 
       displayIndeterminateProgressbar.value = false
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err)
       displayIndeterminateProgressbar.value = false
     })
