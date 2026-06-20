@@ -44,7 +44,7 @@
     "globals": "^17.6.0",
     "openapi-typescript": "^7.13.0",
     "prettier": "^3.8.4",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vite-plugin-checker": "^0.14.4",
     "vue-tsc": "^3.3.5"
   },
