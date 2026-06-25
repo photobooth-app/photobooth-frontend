@@ -24,8 +24,7 @@
                     (parameter.valid_max && parseInt(val) <= parseInt(parameter.valid_max)) ||
                     `Please type a number lower than ${parameter.valid_max}`,
                   val =>
-                    (parameter.valid_min && parseInt(val) >= parseInt(parameter.valid_min)) ||
-                    `Please type a number more than ${parameter.valid_min}`,
+                    (parameter.valid_min && parseInt(val) >= parseInt(parameter.valid_min)) || `Please type a number more than ${parameter.valid_min}`
                 ]"
               >
                 <template v-slot:before>
@@ -34,7 +33,7 @@
                     color="primary"
                     flat
                     @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) - 1)"
-                    :disable="parameter.valid_min && parseInt(formData[parameter.key]) <= parseInt(parameter.valid_min)"
+                    :disable="!isEmpty(parameter.valid_min) && parseInt(formData[parameter.key]) <= parseInt(parameter.valid_min)"
                   />
                 </template>
                 <template v-slot:after>
@@ -43,7 +42,7 @@
                     color="primary"
                     flat
                     @click="formData[parameter.key] = String(parseInt(formData[parameter.key]) + 1)"
-                    :disable="parameter.valid_max && parseInt(formData[parameter.key]) >= parseInt(parameter.valid_max)"
+                    :disable="!isEmpty(parameter.valid_max) && parseInt(formData[parameter.key]) >= parseInt(parameter.valid_max)"
                   />
                 </template>
               </q-input>
@@ -62,7 +61,7 @@
                   val =>
                     (parameter.valid_max && val.length <= parseInt(parameter.valid_max)) || `Please type text longest ${parameter.valid_max} chars.`,
                   val =>
-                    (parameter.valid_min && val.length >= parseInt(parameter.valid_min)) || `Please type text shortest ${parameter.valid_min} chars.`,
+                    (parameter.valid_min && val.length >= parseInt(parameter.valid_min)) || `Please type text shortest ${parameter.valid_min} chars.`
                 ]"
               />
             </div>
@@ -84,7 +83,7 @@
 import { reactive } from 'vue'
 import { onBeforeMount } from 'vue'
 import { isEmpty } from 'lodash'
-const formData = reactive({})
+const formData = reactive<Record<string, any>>({})
 
 import type { components } from '@/dto/api'
 

@@ -36,40 +36,23 @@ const $q = useQuasar()
 const showConnectionOverlay = computed(() => {
   return !connected.value
 })
-
 onBeforeMount(async () => {
   console.log('app created, waiting for stores to init first dataset')
-  await init()
-  console.log('data initialization finished')
-  initialInitDone.value = true
-})
-
-const init = async () => {
-  configurationStore.initStore()
-  mediacollectionStore.initStore()
-
-  await until(() => configurationStore.isLoaded == true)
-  await until(() => mediacollectionStore.isLoaded == true)
+  await Promise.all([configurationStore.initStore(), mediacollectionStore.initStore()])
 
   initSseClient()
-}
+  initialInitDone.value = true
 
-const until = (conditionFunction: { (): boolean }) => {
-  const poll = resolve => {
-    if (conditionFunction()) resolve()
-    else setTimeout(() => poll(resolve), 400)
-  }
-
-  return new Promise(poll)
-}
+  console.log('data initialization finished')
+})
 
 const initSseClient = () => {
   const { status, error, eventSource } = useEventSource('/api/sse', [], {
     autoReconnect: {
       retries: -1,
-      delay: 1000,
+      delay: 1000
     },
-    immediate: true,
+    immediate: true
   })
 
   watch(error, err => {
@@ -102,9 +85,9 @@ const initSseClient = () => {
         {
           icon: 'sym_o_close',
           color: 'white',
-          round: true,
-        },
-      ],
+          round: true
+        }
+      ]
     })
   })
 

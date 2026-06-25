@@ -47,7 +47,7 @@
           <p class="q-ml-sm">
             {{
               $t('Are you sure that you want to delete the configuration for {selected_configuration} and reset to the defaults?', {
-                selected_configuration: selected_configuration,
+                selected_configuration: selected_configuration
               })
             }}
           </p>
@@ -87,7 +87,7 @@ const configurationStore = useConfigurationStore()
 const isLoadingState = ref(true)
 const confirm_reset_config = ref(false)
 
-const configurables = ref([])
+const configurables = ref<string[]>([])
 const selected_configuration = ref('')
 
 const configuration = ref({})
@@ -96,7 +96,7 @@ const cuischema = ref(generateDefaultUISchema({}))
 const ajv = createAjv({
   multipleOfPrecision: 2,
   useDefaults: false,
-  removeAdditional: false,
+  removeAdditional: false
 }) // https://ajv.js.org/options.html#usedefaults // https://ajv.js.org/json-schema.html#discriminator use in future?
 const renderers = Object.freeze([...quasarRenderers])
 const myStyles = mergeStyles(defaultStyles, { control: { label: 'q-label' } })
@@ -135,7 +135,7 @@ const getSchema = async () => {
     Notify.create({
       message: String(err),
       caption: 'Error getting configuration scheme',
-      color: 'negative',
+      color: 'negative'
     })
   } finally {
     // commit('setLoading', false);
@@ -165,7 +165,7 @@ const getConfigurables = async () => {
     Notify.create({
       message: String(error),
       caption: 'Error getting configurables!',
-      color: 'red',
+      color: 'red'
     })
   } finally {
     // commit('setLoading', false);
@@ -184,7 +184,7 @@ const getConfig = async () => {
     Notify.create({
       message: String(error),
       caption: 'Error getting config!',
-      color: 'red',
+      color: 'red'
     })
   } finally {
     // commit('setLoading', false);
@@ -200,7 +200,7 @@ const saveConfig = async () => {
     const response = await _fetch(`/api/admin/config/${selected_configuration.value}?reload=${autoReloadServicesOnSave.value}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(configuration.value),
+      body: JSON.stringify(configuration.value)
     })
 
     if (response.ok) {
@@ -220,7 +220,7 @@ const saveConfig = async () => {
       }
       Notify.create({
         message: message,
-        color: 'positive',
+        color: 'positive'
       })
     } else {
       // The request was made and the server responded with a status code
@@ -244,7 +244,7 @@ const saveConfig = async () => {
         icon: 'sym_o_error',
         html: true,
         message: notify_msg,
-        color: 'negative',
+        color: 'negative'
       })
       return
     }
@@ -253,7 +253,7 @@ const saveConfig = async () => {
     Notify.create({
       message: String(error),
       caption: 'Error saving config',
-      color: 'negative',
+      color: 'negative'
     })
   }
 }

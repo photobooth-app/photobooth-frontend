@@ -14,8 +14,16 @@ export const useStateStore = defineStore('state-store', {
   state: () => ({
     source: null as string | null,
     target: null as string | null,
-
-    jobmodel: null as JobModel | null
+    jobmodel: {
+      typ: '',
+      total_captures_to_take: 0,
+      remaining_captures_to_take: 0,
+      number_captures_taken: 0,
+      duration: 0,
+      present_mediaitem_id: '',
+      approval_id: '',
+      configuration_set: {}
+    } as JobModel
   }),
   actions: {},
   getters: {

@@ -7,7 +7,7 @@ const STATES = {
   INIT: 0,
   DONE: 1,
   WIP: 2,
-  ERROR: 3,
+  ERROR: 3
 }
 
 export const useConfigurationStore = defineStore('configuration-store', {
@@ -16,7 +16,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
     // configuration: {} as AppConfig,
     configuration: {} as components['schemas']['AppConfig'],
 
-    storeState: STATES.INIT,
+    storeState: STATES.INIT
   }),
   actions: {
     postConfigchanged() {
@@ -27,7 +27,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
       Dark.set(theme === 'system' ? 'auto' : theme === 'dark')
     },
 
-    initStore(forceReload = false) {
+    async initStore(forceReload = false) {
       console.log('loading configuration store')
       if (this.isLoaded && forceReload == false) {
         console.log('settings loaded once already, skipping')
@@ -36,7 +36,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
 
       this.storeState = STATES.WIP
 
-      fetch('/api/config')
+      await fetch('/api/config')
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -52,7 +52,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
           console.log(e)
           this.storeState = STATES.ERROR
         })
-    },
+    }
   },
   getters: {
     isLoaded(): boolean {
@@ -60,8 +60,8 @@ export const useConfigurationStore = defineStore('configuration-store', {
     },
     isLoading(): boolean {
       return this.storeState === STATES.WIP
-    },
-  },
+    }
+  }
 })
 
 if (import.meta.hot) {

@@ -42,14 +42,14 @@ watch(
 )
 
 const emit = defineEmits<{
-  triggerChangedItem: [id: string]
+  triggerChangedItem: [id: string | number]
 }>()
 
 function handleSwipeDown() {
   console.log('TODO: add method to close dialog programmatically')
 }
 
-function carouselTransition(newval: string) {
+function carouselTransition(newval: string | number) {
   emit('triggerChangedItem', newval)
 }
 </script>

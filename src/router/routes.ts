@@ -11,16 +11,17 @@ const routes: RouteRecordRaw[] = [
       { path: 'gallery', component: () => import('@/pages/GalleryPage.vue') },
       {
         path: 'gallery/mediaviewer/:id',
+        name: 'mediaviewer',
         component: () => import('@/pages/GalleryDetailPage.vue'),
-        props: { startTimer: false },
+        props: { startTimer: false }
       },
       {
         path: 'itempresenter/:id',
         name: 'itempresenter',
         component: () => import('@/pages/GalleryDetailPage.vue'),
-        props: { startTimer: true, itemPresenterMode: true },
-      },
-    ],
+        props: { startTimer: true, itemPresenterMode: true }
+      }
+    ]
   },
   {
     // standby-path: used on the same device as the photobooth usually
@@ -31,9 +32,9 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'slideshow/random',
-        component: () => import('@/pages/SlideshowPage.vue'),
-      },
-    ],
+        component: () => import('@/pages/SlideshowPage.vue')
+      }
+    ]
   },
 
   {
@@ -46,9 +47,9 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'mediaviewer/:id',
         component: () => import('@/pages/GalleryDetailPage.vue'),
-        props: { startTimer: false },
-      },
-    ],
+        props: { startTimer: false }
+      }
+    ]
   },
   {
     // standalone-path: used on secondary devices to display the gallery or a slideshow.
@@ -56,8 +57,8 @@ const routes: RouteRecordRaw[] = [
     path: '/standalone/slideshow',
     component: () => import('@/layouts/StandaloneLayout.vue'),
     children: [
-      { path: '', component: () => import('@/pages/SlideshowPage.vue') }, // autodetected as main page (other than subpage)
-    ],
+      { path: '', component: () => import('@/pages/SlideshowPage.vue') } // autodetected as main page (other than subpage)
+    ]
   },
 
   {
@@ -67,8 +68,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', redirect: '/auth/login' },
       { path: '/', redirect: '/auth/login' },
-      { path: 'login', component: () => import('@/pages/LoginPage.vue') },
-    ],
+      { path: 'login', component: () => import('@/pages/LoginPage.vue') }
+    ]
   },
 
   {
@@ -84,26 +85,26 @@ const routes: RouteRecordRaw[] = [
       { path: 'help', component: () => import('@/pages/AdminHelpPage.vue') },
       {
         path: '1ststart',
-        component: () => import('@/pages/Admin1stStartPage.vue'),
+        component: () => import('@/pages/Admin1stStartPage.vue')
       },
       {
         path: 'multicam',
-        component: () => import('@/pages/AdminMulticamPage.vue'),
+        component: () => import('@/pages/AdminMulticamPage.vue')
       },
       {
         name: 'config',
         path: 'config/:section?',
-        component: () => import('@/pages/AdminConfigPage.vue'),
-      },
-    ],
+        component: () => import('@/pages/AdminConfigPage.vue')
+      }
+    ]
   },
 
   // Always leave this as last one,
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('@/pages/ErrorNotFound.vue'),
-  },
+    component: () => import('@/pages/ErrorNotFound.vue')
+  }
 ]
 
 export default routes

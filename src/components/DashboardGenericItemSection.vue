@@ -32,7 +32,7 @@ defineProps<{
   substats: components['schemas']['SubStats']
 }>()
 
-const formatValue = (val: string | number | boolean, decimals: number, suffix: string) => {
+const formatValue = (val: string | number | boolean | null, decimals: number, suffix: string) => {
   if (val === null || val === undefined) return 'N/A'
   if (typeof val === 'string') return val
   if (typeof val === 'boolean') return val

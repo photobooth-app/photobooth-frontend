@@ -23,7 +23,7 @@ export default defineComponent({
   name: 'AnyOfOptionalRenderer',
   components: { DispatchRenderer },
   props: {
-    ...rendererProps<ControlElement>(),
+    ...rendererProps<ControlElement>()
   },
   setup(props: RendererProps<ControlElement>) {
     const input = useJsonFormsAnyOfControl(props)
@@ -43,14 +43,14 @@ export default defineComponent({
     return {
       ...useQuasarControl(input),
       editedSchema,
-      nonNullType,
+      nonNullType
     }
   },
   computed: {
     NonNullType() {
       return {
-        ...this.control.value,
-        schema: { ...this.editedSchema, ...this.nonNullType },
+        ...this.control,
+        schema: { ...this.editedSchema, ...this.nonNullType }
       }
     },
 
@@ -64,7 +64,7 @@ export default defineComponent({
         this.control.uischemas
       )
       return result.filter(info => info.uischema)[0]
-    },
-  },
+    }
+  }
 })
 </script>

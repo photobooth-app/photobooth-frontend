@@ -173,13 +173,17 @@ const showPreview = computed(() => {
 // just a moment later it's disabled again.
 const showPreviewThrottled = refThrottled(showPreview, 500)
 
-const frameOverlayImage = computed(() => {
+const frameOverlayImage = computed((): string => {
   const enable_action_frame_overlay = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_enable', false)
-  const action_frame_overlay_image = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_file', '')
+  const action_frame_overlay_image = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_file', '') as string
   if (stateStore.isStateCountdown && enable_action_frame_overlay) {
     //during countdown the action frame is priorized.
     return action_frame_overlay_image
-  } else if (stateStore.isStateIdle && configurationStore.configuration.uisettings.enable_livestream_frameoverlay) {
+  } else if (
+    stateStore.isStateIdle &&
+    configurationStore.configuration.uisettings.enable_livestream_frameoverlay &&
+    configurationStore.configuration.uisettings.livestream_frameoverlay_image
+  ) {
     // the live frame is shown in idle only
     return configurationStore.configuration.uisettings.livestream_frameoverlay_image
   } else {
