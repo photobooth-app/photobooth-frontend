@@ -107,11 +107,11 @@ import { watchDebounced } from '@vueuse/core'
 import { default as MediaItemPreviewViewer } from '@/components/MediaItemPreviewViewer.vue'
 
 const $q = useQuasar()
-const route = useRoute()
+const route = useRoute('mediaviewer')
 const router = useRouter()
 const configurationStore = useConfigurationStore()
 const mediacollectionStore = useMediacollectionStore()
-const selectedMediaitemId = ref('')
+const selectedMediaitemId = ref<string | null>(null)
 const rightDrawerOpen = ref(false)
 const headercountdowntimer = ref(false) // likely not used here, move to newitempresenter and approval...
 const displayIndeterminateProgressbar = ref(false)
@@ -134,17 +134,16 @@ watch(route, to => {
 onMounted(() => {
   headercountdowntimer.value = props.startTimer
 })
-const onCarouselTransition = (newMediaitemId: string) => {
-  selectedMediaitemId.value = newMediaitemId
+const onCarouselTransition = (newMediaitemId: string | number) => {
+  selectedMediaitemId.value = newMediaitemId as string
 }
-
-const currentMediaitem = computed(() => {
-  return getMediaitemById(selectedMediaitemId.value)
-})
+const currentMediaitem = computed(() => (selectedMediaitemId.value ? getMediaitemById(selectedMediaitemId.value) : null))
 
 watchDebounced(
   selectedMediaitemId,
   async () => {
+    if (selectedMediaitemId.value === null) return
+
     try {
       const response = await _fetch(`/api/share/download/${selectedMediaitemId.value}`)
       if (!response.ok) {
@@ -164,6 +163,7 @@ const currentMediaitemNumber = computed(() => {
   return mediacollectionStore.collection.findIndex(mediaitem => mediaitem.id == selectedMediaitemId.value) + 1
 })
 const showFilter = computed(() => {
+  if (!currentMediaitem.value) return false
   return configurationStore.configuration.uisettings.gallery_show_filter && filterEnabled(currentMediaitem.value.media_type)
 })
 const shareButtons = computed(() => {
@@ -176,7 +176,7 @@ const shareButtons = computed(() => {
       handles_images_only: action.handles_images_only,
       show_button: action.trigger.ui_trigger.show_button,
       title: action.trigger.ui_trigger.title,
-      icon: action.trigger.ui_trigger.icon,
+      icon: action.trigger.ui_trigger.icon
     }
 
     result.push(trigger)
@@ -218,7 +218,7 @@ const doApplyFilter = (id: string, filter: string) => {
     })
 }
 const doDeleteItem = (id: string) => {
-  selectedMediaitemId.value = undefined
+  selectedMediaitemId.value = null
   mediacollectionStore.deleteItem(id)
   router.back()
 }
@@ -242,18 +242,19 @@ const doShareActionWithParameters = async (config_index: number, input_data: unk
     const response = await _fetch(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(input_data),
+      body: JSON.stringify(input_data)
     })
     console.log(response)
     if (!response.ok) {
-      throw `Error: ${response.status} ${response.statusText}`
+      throw new Error(`Network error:${response.status} ${response.statusText}}`)
     }
   } catch (error) {
     console.error(error)
+    const msg = error instanceof Error ? error.message : String(error)
     $q.notify({
-      message: error,
+      message: msg,
       caption: 'Request Error!',
-      color: 'negative',
+      color: 'negative'
     })
   }
 }
