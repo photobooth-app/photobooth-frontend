@@ -25,7 +25,7 @@
     "@vueuse/integrations": "^14.3.0",
     "pinia": "^3.0.4",
     "qrcode.vue": "^3.10.0",
-    "quasar": "^2.20.1",
+    "quasar": "^2.20.2",
     "vue": "^3.5.38",
     "vue-i18n": "^11.4.6",
     "vue-router": "^5.1.0"
