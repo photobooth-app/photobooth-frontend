@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} kvóta je {current_shares} z {quota}",
       "wrong_media_type": "{action_name} podporuje pouze obrázky.",
       "printer_not_ready": "'{printer_name}' není připraven k tisku. Zkontrolujte napájecí zdroj, připojení, papír a kazety."
+    },
+    "acquisition": {
+      "stream_error": "😔 Chyba při streamování živého náhledu z kamery. Aplikace se pokouší obnovit - pokud selže, zkuste restartovat."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formulář je vymazán po přepnutí karty. Chcete pokračovat?",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "Čtvereční délka (mm)",
   "Marker Length (mm)": "Délka značky (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "Nástroj není k dispozici, protože v pozadí není povolena žádná multicamera.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "Nástroj není k dispozici, protože v sekci Kamera není povolena žádná multicamera.",
   "Camera Index/Device-Id:": "Index kamery/ID zařízení:",
   "Address": "Adresa",
   "Index/Device-Id": "Index/ID zařízení",

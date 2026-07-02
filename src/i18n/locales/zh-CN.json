@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} 配额为 {current_shares} of {quota}",
       "wrong_media_type": "{action_name} 只支持图像。",
       "printer_not_ready": "'{printer_name}' 尚未准备好打印。检查电源、连接、纸张和墨盒。"
+    },
+    "acquisition": {
+      "stream_error": ":pensive_face：从摄像头直播预览时出错。应用程序试图恢复 - 如果失败，请尝试重启。"
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "当您切换标签页时表单已清除。您想要继续吗？",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "平方长度 (mm)",
   "Marker Length (mm)": "标记长度 (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "该工具不可用，因为后端没有启用多功能版本。",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "该工具不可用，因为相机部分没有启用多功能版本。",
   "Camera Index/Device-Id:": "相机索引/指定ID：",
   "Address": "地址",
   "Index/Device-Id": "Index/DEfirer Id",

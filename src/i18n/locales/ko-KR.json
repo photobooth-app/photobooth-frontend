@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} 할당량은 {current_shares} 의 {quota}",
       "wrong_media_type": "{action_name} 는 이미지만 지원합니다.",
       "printer_not_ready": "'{printer_name}' 인쇄할 준비가 되지 않았습니다. 전원 공급 장치, 연결, 용지 및 카트리지를 확인하세요."
+    },
+    "acquisition": {
+      "stream_error": "😔 카메라에서 실시간 미리보기를 스트리밍하는 중 오류가 발생했습니다. 앱에서 복구를 시도 중입니다. 복구에 실패할 경우, 앱을 다시 시작해 보세요."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "탭을 전환하면 양식이 지워집니다. 계속하시겠습니까?",
@@ -171,7 +174,7 @@
   "Squares Y": "사각형 Y",
   "Square Length (mm)": "정사각형 길이(mm)",
   "Marker Length (mm)": "마커 길이(mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "백엔드에 멀티 카메라가 활성화되어 있지 않기 때문에 이 도구를 사용할 수 없습니다.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "카메라 섹션에서 멀티카메라 기능이 활성화되어 있지 않아 해당 도구를 사용할 수 없습니다.",
   "Camera Index/Device-Id:": "카메라 인덱스/장치 ID:",
   "Address": "주소",
   "Index/Device-Id": "인덱스/장치 ID",

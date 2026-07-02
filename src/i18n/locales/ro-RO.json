@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} contingent este {current_shares} {quota}",
       "wrong_media_type": "{action_name} suportă doar imagini.",
       "printer_not_ready": "'{printer_name}' nu este gata de tipar. Verificați sursa de energie, conectivitatea, hârtia și cartușele."
+    },
+    "acquisition": {
+      "stream_error": "😔 Eroare la redarea previzualizării live din camera foto. Aplicația încearcă să se recupereze - dacă nu reușește, încearcă să repornești."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularul este șters atunci când comutați fila. Doriți să continuați?",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "Lungime pătrată (mm)",
   "Marker Length (mm)": "Lungimea marcatorului (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "Unealta nu este disponibila, pentru ca nu este activata multicamera in backend-uri.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "Unealta nu este disponibilă, deoarece nu este activată o activitate multicameră în secțiunea camerei.",
   "Camera Index/Device-Id:": "Index/Dispozitiv:",
   "Address": "Adresa",
   "Index/Device-Id": "Index/Dispozitiv-Id",

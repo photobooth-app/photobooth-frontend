@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} kvoten är {current_shares} av {quota}",
       "wrong_media_type": "{action_name} stöder endast bilder.",
       "printer_not_ready": "'{printer_name}' är inte redo att skriva. Kontrollera strömförsörjning, anslutning, papper och patroner."
+    },
+    "acquisition": {
+      "stream_error": "😔 Fel vid strömning av direktsänd förhandsvisning från kameran. Appen försöker återhämta sig - om den misslyckas, försök att starta om."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formuläret rensas när du byter flik. Vill du fortsätta?",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "Fyrkantig längd (mm)",
   "Marker Length (mm)": "Markörens längd (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "Verktyget är inte tillgängligt, eftersom det inte finns någon multicamera aktiverad i backends.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "Verktyget är inte tillgängligt, eftersom det inte finns någon multicamera aktiverad i kamerasektionen.",
   "Camera Index/Device-Id:": "Kamera Index/Enhet-Id:",
   "Address": "Adress",
   "Index/Device-Id": "Index/Enhet-ID",

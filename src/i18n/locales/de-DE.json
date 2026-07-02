@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} Kontingent ist {current_shares} von {quota}",
       "wrong_media_type": "{action_name} unterstützt nur Bilder.",
       "printer_not_ready": "'{printer_name}' ist nicht zum Drucken bereit. Prüfen Sie die Stromversorgung, Verbindung, Papier und Patronen."
+    },
+    "acquisition": {
+      "stream_error": "😔 Fehler beim Streamen der Live-Vorschau von der Kamera. Die App versucht wiederherzustellen - falls es fehlschlägt, versuchen Sie neu zu starten."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Das Formular wird gelöscht, wenn Sie den Tab wechseln. Möchten Sie fortfahren?",
@@ -171,7 +174,7 @@
   "Squares Y": "Quadrate Y",
   "Square Length (mm)": "Quadratlänge (mm)",
   "Marker Length (mm)": "Marker-Länge (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "Das Werkzeug ist nicht verfügbar, da im Backend keine Multicamera aktiviert ist.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "Das Werkzeug ist nicht verfügbar, da im Kamera-Bereich keine Multicamera aktiviert ist.",
   "Camera Index/Device-Id:": "Kamera-Index/Geräte-Id:",
   "Address": "Adresse",
   "Index/Device-Id": "Index/Geräte-Id",

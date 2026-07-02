@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} quota is {current_shares} of {quota}",
       "wrong_media_type": "{action_name} supports only images.",
       "printer_not_ready": "'{printer_name}' is not ready to print. Check power supply, connectivity, paper and cartridges."
+    },
+    "acquisition": {
+      "stream_error": "😔 Error while streaming the live preview from the camera. The app tries to recover - if it fails, try to restart."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "The form is cleared when you switch the tab. Do you want to continue?",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "Square Length (mm)",
   "Marker Length (mm)": "Marker Length (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "The tool is not available, because there is no multicamera enabled in the backends.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "The tool is not available, because there is no multicamera enabled in the camera section.",
   "Camera Index/Device-Id:": "Camera Index/Device-Id:",
   "Address": "Address",
   "Index/Device-Id": "Index/Device-Id",

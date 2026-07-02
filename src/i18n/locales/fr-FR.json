@@ -152,6 +152,9 @@
       "quota_notification": "Le quota {action_name} est de {current_shares} sur {quota}",
       "wrong_media_type": "{action_name} prend uniquement en charge les images.",
       "printer_not_ready": "'{printer_name}' n'est pas prêt à imprimer. Vérifiez l'alimentation, la connectivité, le papier et les cartouches."
+    },
+    "acquisition": {
+      "stream_error": "😔 Erreur lors du streaming de l'aperçu en direct depuis la caméra. L'application tente de récupérer - si elle échoue, essayez de redémarrer."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Le formulaire est effacé lorsque vous changer d'onglet. Voulez-vous continuer ?",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "Longueur carrée (mm)",
   "Marker Length (mm)": "Longueur du marqueur (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "L'outil n'est pas disponible, car il n'y a pas de multicamera activé dans les backends.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "L'outil n'est pas disponible, car il n'y a pas de multicamera activé dans la section caméra.",
   "Camera Index/Device-Id:": "Index/ID Appareil photo :",
   "Address": "Adresses",
   "Index/Device-Id": "Index/ID-Périphérique",

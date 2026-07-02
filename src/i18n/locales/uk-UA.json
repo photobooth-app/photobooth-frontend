@@ -152,6 +152,9 @@
       "quota_notification": "Квота {action_name} складає {current_shares} {quota}",
       "wrong_media_type": "{action_name} підтримує тільки зображення.",
       "printer_not_ready": "'{printer_name}' не готовий до друку. Перевірте джерело живлення, з'єднання, папери та кошики."
+    },
+    "acquisition": {
+      "stream_error": "😔 Помилка під час потокового перегляду з камери. Додаток намагається відновити - якщо нічого не вийде, спробуйте перезавантажити."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Форма буде очищена коли ви зміните вкладку. Бажаєте продовжити?",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "Квадратна довжина (мм)",
   "Marker Length (mm)": "Довжина позначки (мм)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "Інструмент не доступний, тому що в задньому плані немає ввімкненого мультичастоти.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "Інструмент не доступний, тому що в розділі камери немає мультичастоти.",
   "Camera Index/Device-Id:": "ID камери/пристрою:",
   "Address": "Адреса",
   "Index/Device-Id": "Індекс/Device-Id",

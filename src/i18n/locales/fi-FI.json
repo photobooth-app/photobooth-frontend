@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} kiintiö on {current_shares} of {quota}",
       "wrong_media_type": "{action_name} tukee vain kuvia.",
       "printer_not_ready": "'{printer_name}' ei ole valmis tulostamaan. Tarkista virtalähde, liitettävyys, paperi ja patruunat."
+    },
+    "acquisition": {
+      "stream_error": "😔 Virhe suoratoistettaessa live esikatselua kamerasta. Sovellus yrittää palauttaa - jos se epäonnistuu, yritä käynnistää ohjelma uudelleen."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Lomake on tyhjennetty, kun vaihdat välilehteä. Haluatko jatkaa?",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "Neliön Pituus (mm)",
   "Marker Length (mm)": "Merkin Pituus (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "Työkalu ei ole käytettävissä, koska taustaosissa ei ole käytössä multicameraa.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "Työkalu ei ole käytettävissä, koska kameran osiossa ei ole käytössä multicameraa.",
   "Camera Index/Device-Id:": "Kamera Indeksi/Laitetunnus:",
   "Address": "Osoite",
   "Index/Device-Id": "Indeksi/Laitetunniste",

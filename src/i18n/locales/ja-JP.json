@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} クォータは {current_shares} / {quota} です",
       "wrong_media_type": "{action_name} は画像のみをサポートしています。",
       "printer_not_ready": "'{printer_name}' は印刷の準備ができていません。電源、接続、紙、カートリッジを確認してください。"
+    },
+    "acquisition": {
+      "stream_error": "😔 カメラからライブプレビューをストリーミング中にエラーが発生しました。アプリが復旧しようとします。失敗した場合は、再起動してみてください。"
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "タブを切り替えるとフォームがクリアされます。続行しますか？",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "平方メートルの長さ (mm)",
   "Marker Length (mm)": "マーカーの長さ (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "バックエンドにマルチカメラが有効になっていないため、ツールは使用できません。",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "カメラセクションで有効になっているマルチカメラがないため、ツールは使用できません。",
   "Camera Index/Device-Id:": "カメラインデックス/デバイスID:",
   "Address": "住所",
   "Index/Device-Id": "インデックス/デバイスID",

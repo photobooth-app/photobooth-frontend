@@ -152,6 +152,9 @@
       "quota_notification": "Kontyngent {action_name} to {current_shares} {quota}",
       "wrong_media_type": "{action_name} obsługuje tylko obrazy.",
       "printer_not_ready": "'{printer_name}' nie jest gotowy do wydruku. Sprawdź zasilanie, łączność, papier i nabojy."
+    },
+    "acquisition": {
+      "stream_error": "😔 Błąd podczas streamowania podglądu na żywo z aparatu. Aplikacja próbuje odzyskać - jeśli się nie uda, spróbuj uruchomić ponownie."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Formularz jest wyczyszczony po przełączeniu karty. Czy chcesz kontynuować?",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "Długość kwadratowa (mm)",
   "Marker Length (mm)": "Długość znacznika (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "Narzędzie nie jest dostępne, ponieważ w zapleczu nie ma włączonej multicamery.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "Narzędzie nie jest dostępne, ponieważ w sekcji kamery nie jest włączona multicamera.",
   "Camera Index/Device-Id:": "Indeks kamery / Id urządzenia:",
   "Address": "Adres",
   "Index/Device-Id": "Indeks/Identyfikator urządzenia",

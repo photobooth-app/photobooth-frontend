@@ -152,6 +152,9 @@
       "quota_notification": "crwdns453:0{action_name}crwdnd453:0{current_shares}crwdnd453:0{quota}crwdne453:0",
       "wrong_media_type": "crwdns806:0{action_name}crwdne806:0",
       "printer_not_ready": "crwdns880:0{printer_name}crwdne880:0"
+    },
+    "acquisition": {
+      "stream_error": "crwdns883:0crwdne883:0"
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "crwdns800:0crwdne800:0",
@@ -171,7 +174,7 @@
   "Squares Y": "crwdns826:0crwdne826:0",
   "Square Length (mm)": "crwdns828:0crwdne828:0",
   "Marker Length (mm)": "crwdns830:0crwdne830:0",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "crwdns832:0crwdne832:0",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "crwdns885:0crwdne885:0",
   "Camera Index/Device-Id:": "crwdns870:0crwdne870:0",
   "Address": "crwdns862:0crwdne862:0",
   "Index/Device-Id": "crwdns864:0crwdne864:0",

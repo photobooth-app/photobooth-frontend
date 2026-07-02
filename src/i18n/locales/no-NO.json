@@ -152,6 +152,9 @@
       "quota_notification": "{action_name} kvote er {current_shares} av {quota}",
       "wrong_media_type": "{action_name} støtter bare bilder.",
       "printer_not_ready": "{printer_name}' er ikke klar til å skrive ut. Kontroller strømtilførselen, tilkoblingen, papir og sylinderampuller."
+    },
+    "acquisition": {
+      "stream_error": "Feil under strømming av live forhåndsvisning fra kameraet. Appen prøver å gjenopprette - hvis den mislykkes, prøv å starte på nytt."
     }
   },
   "The form is cleared when you switch the tab. Do you want to continue?": "Skjemaet blir tilbakestilt når du bytter fane. Vil du fortsette?",
@@ -171,7 +174,7 @@
   "Squares Y": "Squares Y",
   "Square Length (mm)": "Kvadratisk lengde (mm)",
   "Marker Length (mm)": "Markørlengde (mm)",
-  "The tool is not available, because there is no multicamera enabled in the backends.": "Verktøyet er ikke tilgjengelig fordi det ikke er noen multicamera aktivert i backend.",
+  "The tool is not available, because there is no multicamera enabled in the camera section.": "Verktøyet er ikke tilgjengelig fordi det ikke er aktivert noen multicamera i kameraseksjonen.",
   "Camera Index/Device-Id:": "Kamera Indeks/Enhets-ID:",
   "Address": "Adresse",
   "Index/Device-Id": "Indeks/Enhets-ID",
