@@ -45,7 +45,7 @@ export default defineComponent({
   name: 'StringAutosuggestControlRenderer',
   components: { ControlWrapper },
   props: {
-    ...rendererProps<ControlElement>()
+    ...rendererProps<ControlElement>(),
   },
   computed: {},
   setup(props: RendererProps<ControlElement>) {
@@ -94,8 +94,8 @@ export default defineComponent({
 
       abortFilterFn() {
         // console.log('delayed filter aborted')
-      }
+      },
     }
-  }
+  },
 })
 </script>

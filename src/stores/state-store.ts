@@ -22,8 +22,8 @@ export const useStateStore = defineStore('state-store', {
       duration: 0,
       present_mediaitem_id: '',
       approval_id: '',
-      configuration_set: {}
-    } as JobModel
+      configuration_set: {},
+    } as JobModel,
   }),
   actions: {},
   getters: {
@@ -32,8 +32,8 @@ export const useStateStore = defineStore('state-store', {
     isStateRecording: state => state.target == 'capture' && state.jobmodel && state.jobmodel.typ == 'video',
     isStateProcessing: state => state.target == 'completed',
     isStateCapture: state => state.target == 'capture',
-    isStateApproval: state => state.target == 'approval'
-  }
+    isStateApproval: state => state.target == 'approval',
+  },
 })
 
 if (import.meta.hot) {

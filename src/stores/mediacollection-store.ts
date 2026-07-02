@@ -7,14 +7,14 @@ const STATES = {
   INIT: 0,
   DONE: 1,
   WIP: 2,
-  ERROR: 3
+  ERROR: 3,
 }
 
 export const useMediacollectionStore = defineStore('mediacollection-store', {
   state: () => ({
     collection: [] as components['schemas']['MediaitemPublic'][],
 
-    storeState: STATES.INIT
+    storeState: STATES.INIT,
   }),
   actions: {
     async initStore(forceReload = false) {
@@ -74,16 +74,16 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
     async deleteAllItems() {
       await remoteProcedureCall('/api/mediacollection/', 'DELETE')
 
-      this.initStore(true)
+      await this.initStore(true)
       // updated store only on the device invoking the action.
       // other devices still have the old DB - since we consider this as admin function only it is ok for now.
-    }
+    },
   },
   getters: {
     isLoaded: state => state.storeState === STATES.DONE,
     isLoading: state => state.storeState === STATES.WIP,
-    collection_number_of_items: state => state.collection.length
-  }
+    collection_number_of_items: state => state.collection.length,
+  },
 })
 
 if (import.meta.hot) {

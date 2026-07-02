@@ -32,7 +32,7 @@ async function remoteProcedureCall(url, method = 'GET') {
   try {
     const response = await _fetch(url, {
       method: method,
-      headers: headers
+      headers: headers,
     })
     console.log(response)
     if (!response.ok) {
@@ -43,7 +43,7 @@ async function remoteProcedureCall(url, method = 'GET') {
     Notify.create({
       message: error,
       caption: 'Request Error!',
-      color: 'negative'
+      color: 'negative',
     })
   }
 }

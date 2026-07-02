@@ -176,7 +176,7 @@ const shareButtons = computed(() => {
       handles_images_only: action.handles_images_only,
       show_button: action.trigger.ui_trigger.show_button,
       title: action.trigger.ui_trigger.title,
-      icon: action.trigger.ui_trigger.icon
+      icon: action.trigger.ui_trigger.icon,
     }
 
     result.push(trigger)
@@ -242,7 +242,7 @@ const doShareActionWithParameters = async (config_index: number, input_data: unk
     const response = await _fetch(`/api/share/actions/${selectedMediaitemId.value}/${config_index}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(input_data)
+      body: JSON.stringify(input_data),
     })
     console.log(response)
     if (!response.ok) {
@@ -254,7 +254,7 @@ const doShareActionWithParameters = async (config_index: number, input_data: unk
     $q.notify({
       message: msg,
       caption: 'Request Error!',
-      color: 'negative'
+      color: 'negative',
     })
   }
 }

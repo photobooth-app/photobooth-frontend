@@ -24,7 +24,8 @@
                     (parameter.valid_max && parseInt(val) <= parseInt(parameter.valid_max)) ||
                     `Please type a number lower than ${parameter.valid_max}`,
                   val =>
-                    (parameter.valid_min && parseInt(val) >= parseInt(parameter.valid_min)) || `Please type a number more than ${parameter.valid_min}`
+                    (parameter.valid_min && parseInt(val) >= parseInt(parameter.valid_min)) ||
+                    `Please type a number more than ${parameter.valid_min}`,
                 ]"
               >
                 <template v-slot:before>
@@ -61,7 +62,7 @@
                   val =>
                     (parameter.valid_max && val.length <= parseInt(parameter.valid_max)) || `Please type text longest ${parameter.valid_max} chars.`,
                   val =>
-                    (parameter.valid_min && val.length >= parseInt(parameter.valid_min)) || `Please type text shortest ${parameter.valid_min} chars.`
+                    (parameter.valid_min && val.length >= parseInt(parameter.valid_min)) || `Please type text shortest ${parameter.valid_min} chars.`,
                 ]"
               />
             </div>

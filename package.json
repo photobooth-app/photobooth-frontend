@@ -55,9 +55,9 @@
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   },
-  "productName": "Photobooth-App",
   "allowScripts": {
     "esbuild@0.25.12": true,
     "@parcel/watcher@2.5.6": true
-  }
+  },
+  "productName": "Photobooth-App"
 }

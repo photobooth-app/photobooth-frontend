@@ -234,7 +234,7 @@ const charucoBoardDefinition = ref<CharucoBoardDefinition>({
   squares_x: 14,
   squares_y: 9,
   square_length_mm: 20,
-  marker_length_mm: 15
+  marker_length_mm: 15,
 })
 const images = ref<string[][]>([])
 const step = ref(0)
@@ -268,8 +268,8 @@ async function postCalibration() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         filess_in: images.value,
-        board_definition: charucoBoardDefinition.value
-      } satisfies CalibrationRequest)
+        board_definition: charucoBoardDefinition.value,
+      } satisfies CalibrationRequest),
     })
     const result = await res.json()
     console.log('Calibration result:', result)
@@ -279,7 +279,7 @@ async function postCalibration() {
 
     Notify.create({
       message: 'Calibration finished and saved.',
-      color: 'positive'
+      color: 'positive',
     })
   } catch (err) {
     console.error('Error posting calibration:', err)
@@ -288,7 +288,7 @@ async function postCalibration() {
     Notify.create({
       message: String(err),
       caption: 'Error posting the calibration data',
-      color: 'negative'
+      color: 'negative',
     })
   } finally {
     loading.value = false
@@ -301,7 +301,7 @@ async function captureCreateWigglegram() {
     loading.value = true
 
     const response = await _fetch('/api/admin/multicamera/result', {
-      method: 'GET'
+      method: 'GET',
     })
 
     if (!response.ok) {
@@ -319,7 +319,7 @@ async function captureCreateWigglegram() {
     Notify.create({
       message: String(err),
       caption: 'Error creating the wigglegram',
-      color: 'negative'
+      color: 'negative',
     })
   } finally {
     // commit('setLoading', false);

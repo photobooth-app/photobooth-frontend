@@ -7,7 +7,7 @@ const STATES = {
   INIT: 0,
   DONE: 1,
   WIP: 2,
-  ERROR: 3
+  ERROR: 3,
 }
 
 export const useConfigurationStore = defineStore('configuration-store', {
@@ -16,7 +16,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
     // configuration: {} as AppConfig,
     configuration: {} as components['schemas']['AppConfig'],
 
-    storeState: STATES.INIT
+    storeState: STATES.INIT,
   }),
   actions: {
     postConfigchanged() {
@@ -52,7 +52,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
           console.log(e)
           this.storeState = STATES.ERROR
         })
-    }
+    },
   },
   getters: {
     isLoaded(): boolean {
@@ -60,8 +60,8 @@ export const useConfigurationStore = defineStore('configuration-store', {
     },
     isLoading(): boolean {
       return this.storeState === STATES.WIP
-    }
-  }
+    },
+  },
 })
 
 if (import.meta.hot) {

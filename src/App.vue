@@ -50,9 +50,9 @@ const initSseClient = () => {
   const { status, error, eventSource } = useEventSource('/api/sse', [], {
     autoReconnect: {
       retries: -1,
-      delay: 1000
+      delay: 1000,
     },
-    immediate: true
+    immediate: true,
   })
 
   watch(error, err => {
@@ -85,9 +85,9 @@ const initSseClient = () => {
         {
           icon: 'sym_o_close',
           color: 'white',
-          round: true
-        }
-      ]
+          round: true,
+        },
+      ],
     })
   })
 
