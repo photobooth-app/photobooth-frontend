@@ -20,19 +20,19 @@
   "dependencies": {
     "@jsonforms/core": "^3.7.0",
     "@jsonforms/vue": "^3.8.0",
-    "@quasar/extras": "^2.0.1",
+    "@quasar/extras": "^2.0.2",
     "@vueuse/core": "^14.3.0",
     "@vueuse/integrations": "^14.3.0",
     "pinia": "^3.0.4",
     "qrcode.vue": "^3.10.0",
-    "quasar": "^2.20.1",
+    "quasar": "^2.20.3",
     "vue": "^3.5.38",
     "vue-i18n": "^11.4.6",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^11.2.4",
-    "@quasar/app-vite": "^3.0.0-rc.3",
+    "@quasar/app-vite": "^3.0.0-rc.5",
     "@types/lodash": "^4.17.24",
     "autoprefixer": "^10.5.2",
     "globals": "^17.7.0",
@@ -55,5 +55,9 @@
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   },
-  "productName": "Photobooth-App"
+  "productName": "Photobooth-App",
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "@parcel/watcher@2.5.6": true
+  }
 }
