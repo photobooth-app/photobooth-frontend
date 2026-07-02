@@ -89,7 +89,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/aquisition/mode/{mode}": {
+    "/api/aquisition/mode/{backend_index}/{mode}": {
         parameters: {
             query?: never;
             header?: never;
@@ -100,7 +100,7 @@ export interface paths {
          * Api Cmd Aquisition Capturemode Get
          * @description set backends to preview or capture mode (usually automatically switched as needed by processingservice)
          */
-        get: operations["api_cmd_aquisition_capturemode_get_api_aquisition_mode__mode__get"];
+        get: operations["api_cmd_aquisition_capturemode_get_api_aquisition_mode__backend_index___mode__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -606,6 +606,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/enumerate/rclone_remotes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Api Get Rclone Remotes */
+        get: operations["api_get_rclone_remotes_api_admin_enumerate_rclone_remotes_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/files/list/{dir}": {
         parameters: {
             query?: never;
@@ -940,6 +957,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Index
+         * @description Serve index.html with forced revalidation (ETag checked every time).
+         */
+        get: operations["index__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/userdata/{filepath}": {
         parameters: {
             query?: never;
@@ -1043,7 +1080,7 @@ export interface components {
              *           },
              *           "name": "default action",
              *           "processing": {
-             *             "fill_background_color": "blue",
+             *             "fill_background_color": "#2d68c4",
              *             "fill_background_enable": false,
              *             "image_filter": "original",
              *             "img_background_enable": true,
@@ -1093,7 +1130,7 @@ export interface components {
              *           },
              *           "name": "default action",
              *           "processing": {
-             *             "canvas_fill_background_color": "green",
+             *             "canvas_fill_background_color": "#2e6f40",
              *             "canvas_fill_background_enable": false,
              *             "canvas_height": 1280,
              *             "canvas_img_background_enable": false,
@@ -1123,6 +1160,7 @@ export interface components {
              *                 "image_filter": "FilterPilgram2.earlybird",
              *                 "pos_x": 160,
              *                 "pos_y": 220,
+             *                 "pos_z": 0,
              *                 "rotate": 0,
              *                 "width": 510
              *               },
@@ -1132,6 +1170,7 @@ export interface components {
              *                 "image_filter": "original",
              *                 "pos_x": 705,
              *                 "pos_y": 66,
+             *                 "pos_z": 0,
              *                 "predefined_image": "userdata/demoassets/predefined_images/photobooth-collage-predefined-image.png",
              *                 "rotate": 0,
              *                 "width": 510
@@ -1142,6 +1181,7 @@ export interface components {
              *                 "image_filter": "FilterPilgram2.reyes",
              *                 "pos_x": 1245,
              *                 "pos_y": 220,
+             *                 "pos_z": 0,
              *                 "rotate": 0,
              *                 "width": 510
              *               }
@@ -1291,6 +1331,7 @@ export interface components {
              *           "name": "Printing",
              *           "processing": {
              *             "ask_user_for_parameter_input": false,
+             *             "check_if_printer_is_idle": false,
              *             "max_shares": 0,
              *             "parameters": [
              *               {
@@ -1305,8 +1346,9 @@ export interface components {
              *             "parameters_dialog_action_icon": "print",
              *             "parameters_dialog_action_label": "GO",
              *             "parameters_dialog_caption": "Make your choice!",
+             *             "printer_name": "PDF",
              *             "share_blocked_time": 3,
-             *             "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
+             *             "share_command": "echo printing {filename} on {printer_name} media_type={media_type} action_config_name={action_config_name} copies={copies}"
              *           },
              *           "trigger": {
              *             "gpio_trigger": {
@@ -1330,6 +1372,7 @@ export interface components {
              *           "name": "Printing copies",
              *           "processing": {
              *             "ask_user_for_parameter_input": true,
+             *             "check_if_printer_is_idle": false,
              *             "max_shares": 0,
              *             "parameters": [
              *               {
@@ -1344,8 +1387,9 @@ export interface components {
              *             "parameters_dialog_action_icon": "print",
              *             "parameters_dialog_action_label": "GO",
              *             "parameters_dialog_caption": "How many copies?",
+             *             "printer_name": "PDF",
              *             "share_blocked_time": 3,
-             *             "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
+             *             "share_command": "echo printing {filename} on {printer_name} media_type={media_type} action_config_name={action_config_name} copies={copies}"
              *           },
              *           "trigger": {
              *             "gpio_trigger": {
@@ -1369,6 +1413,7 @@ export interface components {
              *           "name": "Mailing action",
              *           "processing": {
              *             "ask_user_for_parameter_input": true,
+             *             "check_if_printer_is_idle": false,
              *             "max_shares": 0,
              *             "parameters": [
              *               {
@@ -1383,6 +1428,7 @@ export interface components {
              *             "parameters_dialog_action_icon": "mail",
              *             "parameters_dialog_action_label": "Send",
              *             "parameters_dialog_caption": "E-Mail your image...",
+             *             "printer_name": "PDF",
              *             "share_blocked_time": 3,
              *             "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} to mail {mail}"
              *           },
@@ -1407,23 +1453,6 @@ export interface components {
              *     }
              */
             share: components["schemas"]["GroupShare"];
-            /**
-             * @default {
-             *       "enabled": false,
-             *       "shareservice_url": "https://photobooth-app.org/extras/shareservice-landing/",
-             *       "shareservice_apikey": "changedefault!",
-             *       "enabled_custom": false,
-             *       "share_custom_qr_url": "http://michael-MINIPC-PN52:8000/download/#?url=http://michael-MINIPC-PN52:8000/media/full/{identifier}"
-             *     }
-             */
-            qrshare: components["schemas"]["GroupQrShare"];
-            /**
-             * @default {
-             *       "enabled": false,
-             *       "target_folder_name": "photobooth"
-             *     }
-             */
-            filetransfer: components["schemas"]["GroupFileTransfer"];
             /**
              * @default {
              *       "full_still_length": 1500,
@@ -1484,6 +1513,8 @@ export interface components {
              *         {
              *           "backend_config": {
              *             "backend_type": "VirtualCamera",
+             *             "camera_standby_when_inactive": true,
+             *             "camera_standby_when_inactive_time": 30,
              *             "emulate_hires_static_still": false,
              *             "emulate_multicam_capture_devices": 4,
              *             "framerate": 15,
@@ -1495,7 +1526,7 @@ export interface components {
              *       ]
              *     }
              */
-            backends: components["schemas"]["GroupCameras"];
+            cameras: components["schemas"]["GroupCameras"];
             /**
              * @default {
              *       "keyboard_input_enabled": false,
@@ -1510,7 +1541,7 @@ export interface components {
             hardwareinputoutput: components["schemas"]["GroupHardwareInputOutput"];
             /**
              * @default {
-             *       "secret_key": "ThisIsTheDefaultSecret",
+             *       "secret_key": "ThisIsTheDefaultSecretWhichShouldBeLongerThan32Chars",
              *       "cmd_shutdown": "shutdown now",
              *       "cmd_reboot": "reboot"
              *     }
@@ -1596,35 +1627,50 @@ export interface components {
         CollageMergeDefinition: {
             /**
              * Description
+             * @description A description just for you.
              * @default
              */
             description: string;
             /**
              * Pos X
+             * @description Position of the image's left edge in reference to the left edge of the canvas.
              * @default 50
              */
             pos_x: number;
             /**
              * Pos Y
+             * @description Position of the image's top edge in reference to the top edge of the canvas.
              * @default 50
              */
             pos_y: number;
             /**
+             * Pos Z
+             * @description Layer the image is mounted to. Higher numbered layers are stacked in front of lower layers. If a number is used multiple times, the sequence of capture is used.
+             * @default 0
+             */
+            pos_z: number;
+            /**
              * Width
+             * @description Width the image is fit to on the canvas. If the aspect ratio mismatches, the algorithm chooses to cover the width/height avoiding blank areas in favor to cut off some parts of the image.
              * @default 600
              */
             width: number;
             /**
              * Height
+             * @description Height the image is fit to on the canvas. If the aspect ratio mismatches, the algorithm chooses to cover the width/height avoiding blank areas in favor to cut off some parts of the image.
              * @default 600
              */
             height: number;
             /**
              * Rotate
+             * @description Rotate the image before merging. Positive numbers rotate counterclockwise, negative clockwise.
              * @default 0
              */
             rotate: number;
-            /** Predefined Image */
+            /**
+             * Predefined Image
+             * @description Use a predefined image instead of a capture from camera for static content.
+             */
             predefined_image?: string | null;
             /** @default original */
             image_filter: components["schemas"]["PluginFilters"];
@@ -1650,7 +1696,7 @@ export interface components {
              * Capture Fill Background Color
              * Format: color
              * @description Solid color used to fill background.
-             * @default blue
+             * @default #2d68c4
              */
             capture_fill_background_color: string;
             /**
@@ -1691,7 +1737,7 @@ export interface components {
              * Canvas Fill Background Color
              * Format: color
              * @description Solid color used to fill background.
-             * @default green
+             * @default #2e6f40
              */
             canvas_fill_background_color: string;
             /**
@@ -1754,6 +1800,36 @@ export interface components {
             stats?: (components["schemas"]["SubStats"] | components["schemas"]["SubList"])[];
         };
         /**
+         * Gphoto2 Parameters
+         * @description Configure different settings when switching between modes.
+         */
+        Gphoto2Parameters: {
+            /**
+             * Enabled
+             * @description Enable to write this setting to the camera when the mode switches.
+             * @default true
+             */
+            enabled: boolean;
+            /**
+             * Name
+             * @description The name of the config element. Typical names are 'shutterspeed', 'iso', and manufacturer specific settings like 'eosmoviemode', 'viewfinder'.
+             * @default
+             */
+            name: string;
+            /**
+             * Value
+             * @description The value to set the camera to.
+             * @default
+             */
+            value: string;
+            /**
+             * Note
+             * @description A field just for you to keep track why you chose a setting.
+             * @default
+             */
+            note: string;
+        };
+        /**
          * GPIO triggers configuration
          * @description Configure trigger the user can interact with. Sources are GPIO and keyboard.
          */
@@ -1787,7 +1863,7 @@ export interface components {
              *           "countdown_capture": 2
              *         },
              *         "processing": {
-             *           "fill_background_color": "blue",
+             *           "fill_background_color": "#2d68c4",
              *           "fill_background_enable": false,
              *           "image_filter": "original",
              *           "img_background_enable": true,
@@ -1842,7 +1918,7 @@ export interface components {
              *           "show_individual_captures_in_gallery": true
              *         },
              *         "processing": {
-             *           "canvas_fill_background_color": "green",
+             *           "canvas_fill_background_color": "#2e6f40",
              *           "canvas_fill_background_enable": false,
              *           "canvas_height": 1280,
              *           "canvas_img_background_enable": false,
@@ -1872,6 +1948,7 @@ export interface components {
              *               "image_filter": "FilterPilgram2.earlybird",
              *               "pos_x": 160,
              *               "pos_y": 220,
+             *               "pos_z": 0,
              *               "rotate": 0,
              *               "width": 510
              *             },
@@ -1881,6 +1958,7 @@ export interface components {
              *               "image_filter": "original",
              *               "pos_x": 705,
              *               "pos_y": 66,
+             *               "pos_z": 0,
              *               "predefined_image": "userdata/demoassets/predefined_images/photobooth-collage-predefined-image.png",
              *               "rotate": 0,
              *               "width": 510
@@ -1891,6 +1969,7 @@ export interface components {
              *               "image_filter": "FilterPilgram2.reyes",
              *               "pos_x": 1245,
              *               "pos_y": 220,
+             *               "pos_z": 0,
              *               "rotate": 0,
              *               "width": 510
              *             }
@@ -2077,6 +2156,18 @@ export interface components {
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
             /**
+             * Camera Standby When Inactive
+             * @description When enabled, the app tries to disable the cameras livestream when no livestream is requested. It helps to avoid sensor overheating for older cameras by setting viewfinder=0.
+             * @default true
+             */
+            camera_standby_when_inactive: boolean;
+            /**
+             * Camera Standby When Inactive Time
+             * @description Delay after which the livestream is considered as inactive and camera should idle.
+             * @default 30
+             */
+            camera_standby_when_inactive_time: number;
+            /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
@@ -2088,53 +2179,59 @@ export interface components {
              */
             gcapture_target: string;
             /**
-             * Disable Viewfinder Before Capture
-             * @description Disable viewfinder before capture might speed up following capture autofocus. Might not work with every camera.
-             * @default true
+             * Parameterset Standby
+             * @default [
+             *       {
+             *         "enabled": true,
+             *         "name": "viewfinder",
+             *         "value": "0",
+             *         "note": ""
+             *       },
+             *       {
+             *         "enabled": true,
+             *         "name": "eosmoviemode",
+             *         "value": "0",
+             *         "note": ""
+             *       }
+             *     ]
              */
-            disable_viewfinder_before_capture: boolean;
+            parameterset_standby: components["schemas"]["Gphoto2Parameters"][];
             /**
-             * Iso Liveview
-             * @description Sets the ISO for when the photobooth is in live preview modus. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. Only works when the camera is in manual. (Example Values: Auto, 100, 200, ...)
-             * @default
+             * Parameterset Video
+             * @default [
+             *       {
+             *         "enabled": true,
+             *         "name": "iso",
+             *         "value": "Auto",
+             *         "note": ""
+             *       },
+             *       {
+             *         "enabled": true,
+             *         "name": "eosmoviemode",
+             *         "value": "1",
+             *         "note": ""
+             *       }
+             *     ]
              */
-            iso_liveview: string;
+            parameterset_video: components["schemas"]["Gphoto2Parameters"][];
             /**
-             * Iso Capture
-             * @description Sets the ISO for when the photobooth captures a photo. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. Only works when the camera is in manual. (Example Values: Auto, 100, 200, ...)
-             * @default
+             * Parameterset Still
+             * @default [
+             *       {
+             *         "enabled": true,
+             *         "name": "viewfinder",
+             *         "value": "0",
+             *         "note": "allows camera to autofocus fast in native mode not contrast mode"
+             *       },
+             *       {
+             *         "enabled": true,
+             *         "name": "eosmoviemode",
+             *         "value": "0",
+             *         "note": ""
+             *       }
+             *     ]
              */
-            iso_capture: string;
-            /**
-             * Shutter Speed Liveview
-             * @description Sets the shutter speed for the camera during the photobooth's live preview mode. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. This setting is effective only when the camera is in manual mode. (Example Values: 1, 1/5, 1/20, 1/30, 1/60, 1/1000, 1/4000, ...) Choose a very high default shutter speed in combination with Auto iso to emulate auto exposure.
-             * @default
-             */
-            shutter_speed_liveview: string;
-            /**
-             * Shutter Speed Capture
-             * @description Configures the shutter speed for the camera at the time of capturing a photo in the photobooth. Very useful, when Camera does not support Exposure Simulation, and an external Flash is used. Operational only in manual mode. (Example Values: 1/60, 1/320, 1/1000, 1/2000, 1/4000, ...)
-             * @default
-             */
-            shutter_speed_capture: string;
-            /**
-             * Canon Eosmoviemode
-             * @description Canon specific. Switch on/off eosmoviemode when streaming videos. Might not work with every camera.
-             * @default false
-             */
-            canon_eosmoviemode: boolean;
-            /**
-             * Pause Camera On Livestream Inactive
-             * @description When enabled, the app tries to disable the cameras livestream when no livestream is requested. It helps to avoid sensor overheating for older cameras by setting viewfinder=0.
-             * @default false
-             */
-            pause_camera_on_livestream_inactive: boolean;
-            /**
-             * Timeout Until Inactive
-             * @description Delay after which the livestream is considered as inactive and camera should idle.
-             * @default 30
-             */
-            timeout_until_inactive: number;
+            parameterset_still: components["schemas"]["Gphoto2Parameters"][];
         };
         /** Picamera2 */
         GroupCameraPicamera2: {
@@ -2145,6 +2242,18 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * Camera Standby When Inactive
+             * @description When enabled, the app tries to disable the cameras livestream when no livestream is requested. It helps to avoid sensor overheating for older cameras by setting viewfinder=0.
+             * @default true
+             */
+            camera_standby_when_inactive: boolean;
+            /**
+             * Camera Standby When Inactive Time
+             * @description Delay after which the livestream is considered as inactive and camera should idle.
+             * @default 30
+             */
+            camera_standby_when_inactive_time: number;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -2194,13 +2303,13 @@ export interface components {
             LIVEVIEW_RESOLUTION_HEIGHT: number;
             /**
              * Framerate Still Mode
-             * @description Reduce the framerate to save cpu/gpu on device displaying the live preview
+             * @description Framerate of the camera when in still capture mode.
              * @default 10
              */
             framerate_still_mode: number;
             /**
              * Framerate Video Mode
-             * @description Reduce the framerate to save cpu/gpu on device displaying the live preview
+             * @description Framerate of the camera when in video mode or idle.
              * @default 25
              */
             framerate_video_mode: number;
@@ -2240,6 +2349,18 @@ export interface components {
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
             /**
+             * Camera Standby When Inactive
+             * @description When enabled, the app tries to disable the cameras livestream when no livestream is requested. It helps to avoid sensor overheating for older cameras by setting viewfinder=0.
+             * @default true
+             */
+            camera_standby_when_inactive: boolean;
+            /**
+             * Camera Standby When Inactive Time
+             * @description Delay after which the livestream is considered as inactive and camera should idle.
+             * @default 30
+             */
+            camera_standby_when_inactive_time: number;
+            /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
@@ -2251,15 +2372,22 @@ export interface components {
              */
             device_identifier: string;
             /**
+             * Pixel Format
+             * @description mjpeg is preferred usually. Some cameras (especially virtual cameras) or systems (Mac) do not support MJPG, so you can fall back to uncompressed rawvideo types here.
+             * @default auto
+             * @enum {string}
+             */
+            pixel_format: "auto" | "mjpeg" | "yuyv422" | "uyvy422" | "nv12";
+            /**
              * Cam Resolution Width
              * @description camera resolution width to capture high resolution photo
-             * @default 3840
+             * @default 1920
              */
             cam_resolution_width: number;
             /**
              * Cam Resolution Height
              * @description camera resolution height to capture high resolution photo
-             * @default 2160
+             * @default 1080
              */
             cam_resolution_height: number;
             /**
@@ -2291,6 +2419,18 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * Camera Standby When Inactive
+             * @description When enabled, the app tries to disable the cameras livestream when no livestream is requested. It helps to avoid sensor overheating for older cameras by setting viewfinder=0.
+             * @default true
+             */
+            camera_standby_when_inactive: boolean;
+            /**
+             * Camera Standby When Inactive Time
+             * @description Delay after which the livestream is considered as inactive and camera should idle.
+             * @default 30
+             */
+            camera_standby_when_inactive_time: number;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -2330,13 +2470,13 @@ export interface components {
             /**
              * Hires Cam Resolution Width
              * @description camera resolution width to capture high resolution photo
-             * @default 4192
+             * @default 1920
              */
             HIRES_CAM_RESOLUTION_WIDTH: number;
             /**
              * Hires Cam Resolution Height
              * @description camera resolution height to capture high resolution photo
-             * @default 3104
+             * @default 1080
              */
             HIRES_CAM_RESOLUTION_HEIGHT: number;
             /**
@@ -2355,6 +2495,18 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * Camera Standby When Inactive
+             * @description When enabled, the app tries to disable the cameras livestream when no livestream is requested. It helps to avoid sensor overheating for older cameras by setting viewfinder=0.
+             * @default true
+             */
+            camera_standby_when_inactive: boolean;
+            /**
+             * Camera Standby When Inactive Time
+             * @description Delay after which the livestream is considered as inactive and camera should idle.
+             * @default 30
+             */
+            camera_standby_when_inactive_time: number;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -2388,6 +2540,18 @@ export interface components {
              * @enum {string}
              */
             orientation: "1: 0°" | "2: 0° mirrored" | "3: 180°" | "4: 180° mirrored" | "5: 90°" | "6: 90° mirrored" | "7: 270°" | "8: 270° mirrored";
+            /**
+             * Camera Standby When Inactive
+             * @description When enabled, the app tries to disable the cameras livestream when no livestream is requested. It helps to avoid sensor overheating for older cameras by setting viewfinder=0.
+             * @default true
+             */
+            camera_standby_when_inactive: boolean;
+            /**
+             * Camera Standby When Inactive Time
+             * @description Delay after which the livestream is considered as inactive and camera should idle.
+             * @default 30
+             */
+            camera_standby_when_inactive_time: number;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -2485,6 +2649,8 @@ export interface components {
              *         "description": "virtual camera",
              *         "backend_config": {
              *           "backend_type": "VirtualCamera",
+             *           "camera_standby_when_inactive": true,
+             *           "camera_standby_when_inactive_time": 30,
              *           "emulate_hires_static_still": false,
              *           "emulate_multicam_capture_devices": 4,
              *           "framerate": 15,
@@ -2520,24 +2686,6 @@ export interface components {
              * @default true
              */
             users_delete_to_recycle_dir: boolean;
-        };
-        /**
-         * USB File Transfer Service Config (deprecated since v8)
-         * @description Configuration for USB File Transfer Service.
-         */
-        GroupFileTransfer: {
-            /**
-             * Enabled
-             * @description (DEPRECATED in v8) Enable the automatic file transfer to USB service. Files are copied when the USB drive is inserted.
-             * @default false
-             */
-            enabled: boolean;
-            /**
-             * Target Folder Name
-             * @description (DEPRECATED in v8) Name of the top-level folder on the USB drive where files will be copied to.
-             * @default photobooth
-             */
-            target_folder_name: string;
         };
         /**
          * Hardware Input/Output Config
@@ -2635,7 +2783,7 @@ export interface components {
              * @default webp
              * @enum {string}
              */
-            fileformat_animations: "webp" | "avif" | "gif";
+            fileformat_animations: "mp4" | "webp" | "avif" | "gif";
             /**
              * Fileformat Multicamera
              * @description Format in which wigglegrams are stored. MP4 is recommended for quality and filesize as well as compatibility. WebP/AVIF are recommended over MP4 and GIF but still lack support sharing via WhatsApp. GIF is lower quality (max 256 colors), more compute intensive to encode but offers best compatibility. GIF is deprecated here.
@@ -2652,7 +2800,7 @@ export interface components {
             /**
              * Secret Key
              * @description Secret to encrypt authentication data. If changed, login authorization is invalidated.
-             * @default ThisIsTheDefaultSecret
+             * @default ThisIsTheDefaultSecretWhichShouldBeLongerThan32Chars
              */
             secret_key: string;
             /**
@@ -2667,42 +2815,6 @@ export interface components {
              * @default reboot
              */
             cmd_reboot: string;
-        };
-        /**
-         * QR code share
-         * @description Settings about shareing media
-         */
-        GroupQrShare: {
-            /**
-             * Enabled
-             * @description (DEPRECATED in v8) Enable qr share service. To enable URL needs to be configured and dl.php script setup properly.
-             * @default false
-             */
-            enabled: boolean;
-            /**
-             * Shareservice Url
-             * @description (DEPRECATED in v8) URL of php script that is used to serve files and share via QR code. The default is a landingpage with further instructions how to setup.
-             * @default https://photobooth-app.org/extras/shareservice-landing/
-             */
-            shareservice_url: string;
-            /**
-             * Shareservice Apikey
-             * @description (DEPRECATED in v8) Key to secure the download php script. Set the key in dl.php script to same value. Only if correct key is provided the shareservice works properly.
-             * @default changedefault!
-             */
-            shareservice_apikey: string;
-            /**
-             * Enabled Custom
-             * @description Enable qr share service. To enable URL needs to be configured and dl.php script setup properly.
-             * @default false
-             */
-            enabled_custom: boolean;
-            /**
-             * Share Custom Qr Url
-             * @description URL displayed as QR code to image for download. Need you to sync the files on your own or allow the user to access via hotspot. {identifier} is replaced by the actual item's id, {filename} is replaced by the actual filename on the photobooth-data, in QR code.
-             * @default http://michael-MINIPC-PN52:8000/download/#?url=http://michael-MINIPC-PN52:8000/media/full/{identifier}
-             */
-            share_custom_qr_url: string;
         };
         /**
          * Define Share and Print Actions
@@ -2724,6 +2836,7 @@ export interface components {
              *         "handles_images_only": true,
              *         "processing": {
              *           "ask_user_for_parameter_input": false,
+             *           "check_if_printer_is_idle": false,
              *           "max_shares": 0,
              *           "parameters": [
              *             {
@@ -2738,8 +2851,9 @@ export interface components {
              *           "parameters_dialog_action_icon": "print",
              *           "parameters_dialog_action_label": "GO",
              *           "parameters_dialog_caption": "Make your choice!",
+             *           "printer_name": "PDF",
              *           "share_blocked_time": 3,
-             *           "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
+             *           "share_command": "echo printing {filename} on {printer_name} media_type={media_type} action_config_name={action_config_name} copies={copies}"
              *         },
              *         "trigger": {
              *           "gpio_trigger": {
@@ -2763,6 +2877,7 @@ export interface components {
              *         "handles_images_only": true,
              *         "processing": {
              *           "ask_user_for_parameter_input": true,
+             *           "check_if_printer_is_idle": false,
              *           "max_shares": 0,
              *           "parameters": [
              *             {
@@ -2777,8 +2892,9 @@ export interface components {
              *           "parameters_dialog_action_icon": "print",
              *           "parameters_dialog_action_label": "GO",
              *           "parameters_dialog_caption": "How many copies?",
+             *           "printer_name": "PDF",
              *           "share_blocked_time": 3,
-             *           "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} copies={copies}"
+             *           "share_command": "echo printing {filename} on {printer_name} media_type={media_type} action_config_name={action_config_name} copies={copies}"
              *         },
              *         "trigger": {
              *           "gpio_trigger": {
@@ -2802,6 +2918,7 @@ export interface components {
              *         "handles_images_only": false,
              *         "processing": {
              *           "ask_user_for_parameter_input": true,
+             *           "check_if_printer_is_idle": false,
              *           "max_shares": 0,
              *           "parameters": [
              *             {
@@ -2816,6 +2933,7 @@ export interface components {
              *           "parameters_dialog_action_icon": "mail",
              *           "parameters_dialog_action_label": "Send",
              *           "parameters_dialog_caption": "E-Mail your image...",
+             *           "printer_name": "PDF",
              *           "share_blocked_time": 3,
              *           "share_command": "echo {filename} media_type={media_type} action_config_name={action_config_name} to mail {mail}"
              *         },
@@ -2941,9 +3059,8 @@ export interface components {
             /**
              * Livestream Frameoverlay Image
              * @description When enabled, the frame is overlayed the livestream. This image is not used in the postprocessing. If mirroreffect is on, it will also be mirrored. Text in the frame appears in the wrong direction but the final image is correct.
-             * @default userdata/demoassets/frames/frame_image_photobooth-app.png
              */
-            livestream_frameoverlay_image: string | null;
+            livestream_frameoverlay_image?: string | null;
             /**
              * Livestream Frameoverlay Mirror Effect
              * @description Flip the frame overlaid horizontally to create a mirror effect. Useful to flip also if video is flipped when people shall align to the frame. If there is text in the frame it's also mirrored.
@@ -3223,10 +3340,22 @@ export interface components {
         ShareProcessing: {
             /**
              * Share Command
-             * @description Command issued to share/print. Use {filename} as placeholder for the mediaitem to be shared/printed. Also available: {media_type}=[image,collage,video,animation] and {action_config_name} which is the action name defined in the config.
+             * @description Command issued to share/print. Use {filename} as placeholder for the mediaitem to be shared/printed. Also available: {printer_name}=given printer name below, {media_type}=[image,collage,video,animation] and {action_config_name} which is the action name defined in the config.
              * @default echo {filename}
              */
             share_command: string;
+            /**
+             * Printer Name
+             * @description When the command is to print to a real printer, you can set it's name here and it will be available as {printer_name} in the share command. Doing so allows to check if the printer is idle before a print.
+             * @default PDF
+             */
+            printer_name: string;
+            /**
+             * Check If Printer Is Idle
+             * @description Check if the printer is idle, which is an indicator for availablity. Otherwise the OS may state the printer is busy (actually printing or missing paper, ...). This way, prints can be stopped in the app to avoid flooding the print spooler.
+             * @default false
+             */
+            check_if_printer_is_idle: boolean;
             /**
              * Ask User For Parameter Input
              * @description If enabled, when the share button is activated, a dialog pops up to input below configured parameters.
@@ -3358,7 +3487,7 @@ export interface components {
              * Fill Background Color
              * Format: color
              * @description Solid color used to fill background.
-             * @default blue
+             * @default #2d68c4
              */
             fill_background_color: string;
             /**
@@ -3398,7 +3527,10 @@ export interface components {
              */
             texts: components["schemas"]["TextsConfig"][];
         };
-        /** SseEventIntervalInformationRecord */
+        /**
+         * SseEventIntervalInformationRecord
+         * @description basic class for sse events
+         */
         SseEventIntervalInformationRecord: {
             /** Cpu Percent */
             cpu_percent: number;
@@ -3439,7 +3571,10 @@ export interface components {
                 [key: string]: boolean;
             };
         };
-        /** SseEventOnetimeInformationRecord */
+        /**
+         * SseEventOnetimeInformationRecord
+         * @description basic class for sse events
+         */
         SseEventOnetimeInformationRecord: {
             /** Version */
             version: string;
@@ -3522,15 +3657,12 @@ export interface components {
              * @default 40
              */
             font_size: number;
-            /**
-             * Font
-             * @default userdata/demoassets/fonts/Roboto-Bold.ttf
-             */
-            font: string | null;
+            /** Font */
+            font?: string | null;
             /**
              * Color
              * Format: color
-             * @default red
+             * @default #cd1c18
              */
             color: string;
         };
@@ -3634,6 +3766,10 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+            /** Input */
+            input?: unknown;
+            /** Context */
+            ctx?: Record<string, never>;
         };
         /**
          * Postprocess video captures
@@ -3857,12 +3993,13 @@ export interface operations {
             };
         };
     };
-    api_cmd_aquisition_capturemode_get_api_aquisition_mode__mode__get: {
+    api_cmd_aquisition_capturemode_get_api_aquisition_mode__backend_index___mode__get: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                mode: "preview" | "capture" | "video" | "idle";
+                backend_index: number;
+                mode: "capture" | "video" | "standby";
             };
             cookie?: never;
         };
@@ -4789,6 +4926,26 @@ export interface operations {
             };
         };
     };
+    api_get_rclone_remotes_api_admin_enumerate_rclone_remotes_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
+                };
+            };
+        };
+    };
     get_list_api_admin_files_list__dir__get: {
         parameters: {
             query?: never;
@@ -5324,6 +5481,26 @@ export interface operations {
         };
     };
     ui_private_css_private_css_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    index__get: {
         parameters: {
             query?: never;
             header?: never;
