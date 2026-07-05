@@ -40,6 +40,16 @@ onBeforeMount(async () => {
   console.log('app created, waiting for stores to init first dataset')
   await Promise.all([configurationStore.initStore(), mediacollectionStore.initStore()])
 
+  if (!configurationStore.isLoaded || !mediacollectionStore.isLoaded) {
+    $q.notify({
+      message: t('Error loading the data from the server to initialize the app! Check the browser console for errors.'),
+      color: 'negative',
+      icon: 'sym_o_error',
+      timeout: 0,
+    })
+    return
+  }
+
   initSseClient()
   initialInitDone.value = true
 
