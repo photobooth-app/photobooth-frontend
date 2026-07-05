@@ -386,6 +386,7 @@ self.onmessage = async (ev: MessageEvent) => {
       }
 
       renderer.init(canvases, data.streamRendererImageDecoderMode, opts)
+      self.postMessage({ type: 'frame-finished' })
     } else if (data.type === 'frame') {
       // payload is Blob/ArrayBuffer depending on the availablity of the ImageDecoder
 
@@ -397,6 +398,7 @@ self.onmessage = async (ev: MessageEvent) => {
       // data.url may be null to clear overlay
       await renderer.updateOverlay(data.url ?? null)
       console.log(`overlay updated to ${data.url}`)
+      self.postMessage({ type: 'frame-finished' })
       // } else if (data.type === 'getStats') {
       //   // optional: return stats
       //   const stats = renderer.getStats()
