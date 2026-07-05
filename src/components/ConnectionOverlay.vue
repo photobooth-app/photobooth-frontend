@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-pa-sm">
+  <q-card class="q-pa-sm" flat>
     <q-card-section class="row items-center" style="flex-wrap: nowrap">
       <q-spinner color="negative" size="2em" />
       <span class="q-ml-sm">{{ $t('MSG_CONNECTING_TO_BACKEND') }}</span>
