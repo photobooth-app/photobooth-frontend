@@ -1,14 +1,14 @@
 <template>
   <div class="canvas-stack">
-    <canvas id="canvas-stream"></canvas>
+    <canvas id="canvas-stream" v-show="!stalled"></canvas>
     <!-- canvas kept on dom because it's not expensive and keeps the stream worker simple as we just don't process the data -->
     <canvas id="canvas-blurred" v-show="enableBlurredBackgroundStream"></canvas>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, watch, watchEffect } from 'vue'
-import { useWebSocket, useDocumentVisibility } from '@vueuse/core'
+import { onMounted, onUnmounted, watch, watchEffect, ref } from 'vue'
+import { useWebSocket, useDocumentVisibility, useDebounceFn } from '@vueuse/core'
 
 const props = defineProps<{
   // from docs: An absent optional prop other than Boolean will have undefined value.
@@ -22,20 +22,20 @@ const props = defineProps<{
 
 let wsRef: WebSocket | null = null
 const visibility = useDocumentVisibility()
-let pendingReady = false // if worker says ready but ws not open yet
 const streamRenderer = new Worker(new URL('/src/util/streamRenderer.ts', import.meta.url), { type: 'module' })
 const streamRendererImageDecoderMode = typeof ImageDecoder !== 'undefined'
+const stalled = ref(false) //can replace by useDebounceFn once next vueuse is released: https://vueuse.org/shared/useDebounceFn/#pending-state
+const markFrameReceived = useDebounceFn(() => {
+  stalled.value = true // set to true after timeout
+}, 4000)
 
 // handle worker messages
 streamRenderer.onmessage = ev => {
   const msg = ev.data
-  if (msg?.type === 'ready') {
+  if (msg?.type === 'frame-finished') {
     // worker finished rendering the last frame
     if (wsRef && wsRef.readyState === WebSocket.OPEN) {
       wsRef.send('ready')
-    } else {
-      console.log('not open, yet')
-      pendingReady = true
     }
 
     return
@@ -77,11 +77,8 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
       '(only modern browser and secure contexts)'
     )
 
-    // if worker already signalled ready while reconnecting
-    if (pendingReady) {
-      ws.send('ready')
-      pendingReady = false
-    }
+    // should not be needed, as we shove down the first frame from backend to client anyways right after connect...
+    ws.send('ready')
   },
   onDisconnected() {
     wsRef = null
@@ -89,6 +86,11 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
   },
 
   async onMessage(ws, event) {
+    // mark stream as not stalled once a frame is received.
+    // there is a timer marking it as stalled after 1 sec to show it in the ui
+    stalled.value = false
+    markFrameReceived()
+
     if (document.hidden) {
       console.log('The document was hidden while receiving a frame. The frame is not processed to save cpu.')
       // if paused, the app needs to ensure sending a ready via websocket, to resume streaming.
@@ -108,7 +110,9 @@ watch(visibility, currentVisibility => {
     console.log('The document is now hidden!')
   } else {
     console.log('The document is visible again, send a ready signal to resume streaming.')
-    if (wsRef) wsRef.send('ready')
+    if (wsRef && wsRef.readyState === WebSocket.OPEN) {
+      wsRef.send('ready')
+    }
   }
 })
 
