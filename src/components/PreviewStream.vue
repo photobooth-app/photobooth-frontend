@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, watch, watchEffect, ref } from 'vue'
+import { onMounted, onUnmounted, watch, watchEffect, ref, computed } from 'vue'
 import { useWebSocket, useDocumentVisibility, useDebounceFn } from '@vueuse/core'
 
 const props = defineProps<{
@@ -20,7 +20,14 @@ const props = defineProps<{
   frameOverlayImage?: string
 }>()
 
-let wsRef: WebSocket | null = null
+// fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
+// so we generate the absolute URL to connect to
+// const websocketStreamUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream?index_device=${props.index_device}&index_subdevice=0`
+const websocketStreamUrl = computed(
+  () =>
+    `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream?index_device=${props.index_device}&index_subdevice=0`
+)
+
 const visibility = useDocumentVisibility()
 const streamRenderer = new Worker(new URL('/src/util/streamRenderer.ts', import.meta.url), { type: 'module' })
 const streamRendererImageDecoderMode = typeof ImageDecoder !== 'undefined'
@@ -28,21 +35,6 @@ const stalled = ref(false) //can replace by useDebounceFn once next vueuse is re
 const markFrameReceived = useDebounceFn(() => {
   stalled.value = true // set to true after timeout
 }, 4000)
-
-// handle worker messages
-streamRenderer.onmessage = ev => {
-  const msg = ev.data
-  if (msg?.type === 'frame-finished') {
-    // worker finished rendering the last frame
-    if (wsRef && wsRef.readyState === WebSocket.OPEN) {
-      wsRef.send('ready')
-    }
-
-    return
-  }
-  // other worker messages like stats or errors
-  console.log(ev.data)
-}
 
 watchEffect(() => {
   if (props.frameOverlayImage) {
@@ -52,11 +44,13 @@ watchEffect(() => {
     streamRenderer.postMessage({ type: 'overlay', url: null })
   }
 })
-// fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
-// so we generate the absolute URL to connect to
-const websocketStreamUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/aquisition/stream?index_device=${props.index_device}&index_subdevice=0`
 
-const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(websocketStreamUrl, {
+const {
+  status: webSocketStreamStatus,
+  open: openWebSocketStream,
+  close: closeWebSocketStream,
+  ws: wsRef,
+} = useWebSocket(websocketStreamUrl, {
   immediate: false,
   // autoClose: true,
   autoReconnect: {
@@ -64,7 +58,6 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
     delay: 1000,
   },
   onConnected(ws) {
-    wsRef = ws
     if (streamRendererImageDecoderMode)
       ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
     else ws.binaryType = 'blob' // blob is not transferrable to worker but we use it as it avoid recreation in the worker
@@ -81,7 +74,6 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
     ws.send('ready')
   },
   onDisconnected() {
-    wsRef = null
     console.log('stream disconnected from websocket')
   },
 
@@ -105,13 +97,27 @@ const { open: openWebSocketStream, close: closeWebSocketStream } = useWebSocket(
   },
 })
 
+// handle worker messages
+streamRenderer.onmessage = ev => {
+  const msg = ev.data
+  if (msg?.type === 'frame-finished') {
+    // worker finished rendering the last frame
+    if (webSocketStreamStatus.value == 'OPEN') {
+      wsRef.value?.send('ready')
+    }
+
+    return
+  }
+  // other worker messages like stats or errors
+  console.log(ev.data)
+}
 watch(visibility, currentVisibility => {
   if (currentVisibility === 'hidden') {
     console.log('The document is now hidden!')
   } else {
     console.log('The document is visible again, send a ready signal to resume streaming.')
-    if (wsRef && wsRef.readyState === WebSocket.OPEN) {
-      wsRef.send('ready')
+    if (webSocketStreamStatus.value == 'OPEN') {
+      wsRef.value?.send('ready')
     }
   }
 })
