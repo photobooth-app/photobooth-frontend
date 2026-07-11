@@ -11,14 +11,28 @@
         <HeaderProcessing v-if="displayIndeterminateProgressbar"></HeaderProcessing>
       </q-header>
 
-      <q-drawer v-if="showFilter" id="gallery-drawer-filters" v-model="rightDrawerOpen" class="q-pa-sm" side="right" overlay elevated>
-        <DrawerFilter
-          v-if="rightDrawerOpen"
-          :id="currentMediaitem.id"
-          :available-filter="available_filter"
-          @trigger-apply-filter="doApplyFilter"
-        ></DrawerFilter>
-      </q-drawer>
+      <q-dialog v-if="showFilter" v-model="openFilterDialog">
+        <q-card style="min-width: 550px; min-height: 400px; max-width: 90vw; max-height: 90vh" flat>
+          <!-- TOP BAR -->
+          <q-card-section class="row items-center q-pb-none">
+            <q-space />
+            <div class="text-h6">{{ $t('Choose your filter') }}</div>
+            <q-space />
+            <q-btn icon="sym_o_close" flat round v-close-popup />
+          </q-card-section>
+
+          <!-- MAIN Q-CARD TO LAYOUT THE FILTER DIALOG -->
+          <q-card-section>
+            <!-- FILTER DIALOG CONTENT -->
+            <FilterCards
+              v-if="openFilterDialog"
+              :id="currentMediaitem.id"
+              :available-filter="available_filter"
+              @trigger-apply-filter="doApplyFilter"
+            ></FilterCards>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
 
       <q-page-container class="q-pa-none galleryimagedetail full-height">
         <q-page class="full-height">
@@ -30,7 +44,6 @@
               :mediaitem-id="currentMediaitem.id"
               :sliced-images="mediacollectionStore.collection"
               @trigger-changed-item="onCarouselTransition"
-              @click="rightDrawerOpen = false"
             />
           </template>
 
@@ -55,9 +68,15 @@
             :show-download="configurationStore.configuration.uisettings.gallery_show_download"
             :image_number="currentMediaitemNumber"
             :images_total="mediacollectionStore.collection_number_of_items"
-            @trigger-toggle-display-filter="rightDrawerOpen = !rightDrawerOpen"
+            :last-action-trigger-button="
+              itemPresenterMode && configurationStore.configuration.uisettings.itempresenter_show_trigger_last_action_again
+                ? lastActionTriggerButton
+                : null
+            "
+            @trigger-toggle-display-filter="openFilterDialog = !openFilterDialog"
             @trigger-delete-mediaitem="doDeleteItem"
             @trigger-share-action="doShareAction"
+            @trigger-action="invokeAction"
           ></PageToolbar>
 
           <q-dialog v-model="showDialogShareActionWithParameters">
@@ -87,7 +106,13 @@
   </q-layout>
 </template>
 
+<script lang="ts">
+import { useI18n } from 'vue-i18n'
+</script>
+
 <script setup lang="ts">
+import type { TriggerSchema } from '@/types/trigger-schema'
+import { useMainStore } from '@/stores/main-store'
 import { useConfigurationStore } from '@/stores/configuration-store'
 import { useMediacollectionStore } from '@/stores/mediacollection-store'
 import { ref, onBeforeMount, computed, onMounted, watch } from 'vue'
@@ -95,7 +120,7 @@ import { default as PageShareParameters } from '@/components/mediaviewer/PageSha
 import { default as PageToolbar } from '@/components/mediaviewer/PageToolbar.vue'
 import { default as HeaderCountdownTimer } from '@/components/mediaviewer/HeaderCountdownTimer.vue'
 import { default as HeaderProcessing } from '@/components/mediaviewer/HeaderProcessing.vue'
-import { default as DrawerFilter } from '@/components/mediaviewer/DrawerFilter.vue'
+import { default as FilterCards } from '@/components/mediaviewer/FilterCards.vue'
 import { default as PageQrCode } from '@/components/mediaviewer/PageQrCode.vue'
 import { default as PageCarouselView } from '@/components/mediaviewer/PageCarouselView.vue'
 import ItemNotAvailableError from '@/components/ItemNotAvailableError.vue'
@@ -106,13 +131,15 @@ import { remoteProcedureCall, _fetch } from '@/util/fetch_api.js'
 import { watchDebounced } from '@vueuse/core'
 import { default as MediaItemPreviewViewer } from '@/components/MediaItemPreviewViewer.vue'
 
+const { t } = useI18n()
 const $q = useQuasar()
 const route = useRoute('mediaviewer')
 const router = useRouter()
+const mainStore = useMainStore()
 const configurationStore = useConfigurationStore()
 const mediacollectionStore = useMediacollectionStore()
 const selectedMediaitemId = ref<string | null>(null)
-const rightDrawerOpen = ref(false)
+const openFilterDialog = ref(false)
 const headercountdowntimer = ref(false) // likely not used here, move to newitempresenter and approval...
 const displayIndeterminateProgressbar = ref(false)
 const showDialogShareActionWithParameters = ref(false)
@@ -139,6 +166,19 @@ const onCarouselTransition = (newMediaitemId: string | number) => {
 }
 const currentMediaitem = computed(() => (selectedMediaitemId.value ? getMediaitemById(selectedMediaitemId.value) : null))
 
+const lastActionTriggerButton = computed<TriggerSchema | null>(() => {
+  return mainStore.lastAction
+    ? {
+        title: t('Take one more!'),
+        show_button: true,
+        icon: mainStore.lastAction.icon,
+        use_custom_color: mainStore.lastAction.use_custom_color,
+        custom_color: mainStore.lastAction.custom_color,
+        action: mainStore.lastAction.action,
+        config_index: mainStore.lastAction.config_index,
+      }
+    : null
+})
 watchDebounced(
   selectedMediaitemId,
   async () => {
@@ -203,6 +243,9 @@ const getAvailableFilter = async () => {
   }
 }
 const doApplyFilter = (id: string, filter: string) => {
+  // close filter dialog
+  openFilterDialog.value = false
+
   displayIndeterminateProgressbar.value = true
   fetch(`/api/filter/${id}?filter=${filter}`, { method: 'PATCH' })
     .then(response => {
@@ -257,5 +300,8 @@ const doShareActionWithParameters = async (config_index: number, input_data: unk
       color: 'negative',
     })
   }
+}
+const invokeAction = (trigger: TriggerSchema) => {
+  remoteProcedureCall(`/api/${trigger.action}/${trigger.config_index}`)
 }
 </script>

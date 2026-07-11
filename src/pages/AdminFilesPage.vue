@@ -86,7 +86,7 @@
 
       <template #top-left>
         <q-dialog v-model="confirm_delete">
-          <q-card class="q-pa-sm" style="min-width: 350px">
+          <q-card class="q-pa-sm" style="min-width: 350px" flat>
             <q-card-section class="row items-center" style="flex-wrap: nowrap">
               <q-avatar icon="sym_o_delete" color="negative" text-color="white" />
               <span class="q-ml-sm">{{ $t('Are you sure you want to delete the selected files and subfolders?') }}</span>

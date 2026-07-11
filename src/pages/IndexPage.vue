@@ -107,15 +107,17 @@ import { useRouter } from 'vue-router'
 import { watchDebounced, refThrottled } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import { remoteProcedureCall } from '@/util/fetch_api.js'
+import { useMainStore } from '@/stores/main-store'
 import { useStateStore } from '@/stores/state-store'
 import { useConfigurationStore } from '@/stores/configuration-store'
 import CountdownTimer from '@/components/CountdownTimer.vue'
-import type { TriggerSchema } from '@/components/FrontpageTriggerButtons.vue'
+import type { TriggerSchema } from '@/types/trigger-schema'
 import { default as FrontpageTriggerButtons } from '@/components/FrontpageTriggerButtons.vue'
 import { default as PreviewStream } from '@/components/PreviewStream.vue'
 import _ from 'lodash'
 import MediaItemApprovalViewer from '@/components/MediaItemApprovalViewer.vue'
 
+const mainStore = useMainStore()
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
 const router = useRouter()
@@ -198,8 +200,9 @@ const onBtnAdminClick = () => {
     router.push('/admin')
   }
 }
-const invokeAction = (action: string, config_index: number) => {
-  remoteProcedureCall(`/api/${action}/${config_index}`)
+const invokeAction = (trigger: TriggerSchema) => {
+  mainStore.lastAction = trigger // save last action so it can be started from itempresenter directly again.
+  remoteProcedureCall(`/api/${trigger.action}/${trigger.config_index}`)
 }
 const stopRecordingVideo = () => {
   remoteProcedureCall('/api/processing/next')

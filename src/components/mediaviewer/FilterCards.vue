@@ -1,10 +1,9 @@
 <template>
-  <div v-if="availableFilter.length > 0">
-    <div class="text-center text-overline">{{ $t('Choose your filter') }}</div>
-    <q-card v-for="filter in availableFilter" :key="filter" bordered class="q-mb-sm no-shadow">
+  <div v-if="availableFilter.length > 0" class="flex flex-center q-gutter-sm full-width">
+    <q-card v-for="filter in availableFilter" :key="filter" class="q-mb-sm no-shadow" style="min-width: 150px; max-width: 250px; width: 100%">
       <q-card-section class="q-pa-none">
         <q-img class="rounded-borders" loading="lazy" :src="`/api/filter/${id}?filter=${filter}`" @click="applyFilterClick(filter)">
-          <div class="absolute-bottom-right text-subtitle1 text-center" style="padding: 4px; pointer-events: none">
+          <div class="absolute-bottom-right text-caption text-center" style="padding: 4px; pointer-events: none">
             {{ filter }}
           </div>
         </q-img>

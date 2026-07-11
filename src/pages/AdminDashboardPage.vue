@@ -372,7 +372,7 @@
       </q-card>
     </div>
     <q-dialog v-model="confirm_reboot_host">
-      <q-card class="q-pa-sm" style="min-width: 350px">
+      <q-card class="q-pa-sm" style="min-width: 350px" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_restart_alt" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('MSG_CONFIRM_REBOOT') }}</span>
@@ -386,7 +386,7 @@
     </q-dialog>
 
     <q-dialog v-model="confirm_shutdown_host">
-      <q-card class="q-pa-sm" style="min-width: 350px">
+      <q-card class="q-pa-sm" style="min-width: 350px" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_power_settings_new" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('MSG_CONFIRM_SHUTDOWN') }}</span>
@@ -400,7 +400,7 @@
     </q-dialog>
 
     <q-dialog v-model="confirm_reload_service">
-      <q-card class="q-pa-sm" style="min-width: 350px">
+      <q-card class="q-pa-sm" style="min-width: 350px" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_restart_alt" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('You sure to reload the services?') }}</span>
@@ -420,7 +420,7 @@
     </q-dialog>
 
     <q-dialog v-model="confirm_restart_systemctl">
-      <q-card class="q-pa-sm" style="min-width: 350px">
+      <q-card class="q-pa-sm" style="min-width: 350px" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_restart_alt" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('MSG_CONFIRM_RESTART_SERVICE') }}</span>
@@ -440,7 +440,7 @@
     </q-dialog>
 
     <q-dialog v-model="confirm_install_systemctl">
-      <q-card class="q-pa-sm" style="min-width: 350px">
+      <q-card class="q-pa-sm" style="min-width: 350px" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_add_circle" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('MSG_CONFIRM_INSTALL_SERVICE') }}</span>
@@ -460,7 +460,7 @@
     </q-dialog>
 
     <q-dialog v-model="confirm_uninstall_systemctl">
-      <q-card class="q-pa-sm" style="min-width: 350px">
+      <q-card class="q-pa-sm" style="min-width: 350px" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_cancel" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('MSG_CONFIRM_UNINSTALL_SERVICE') }}</span>
@@ -480,7 +480,7 @@
     </q-dialog>
 
     <q-dialog v-model="confirm_reset_stats_counter">
-      <q-card class="q-pa-sm">
+      <q-card class="q-pa-sm" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_history" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('Are you sure you want to reset the usage statistics counter?') }}</span>
@@ -494,7 +494,7 @@
     </q-dialog>
 
     <q-dialog v-model="confirm_reset_limits_counter">
-      <q-card class="q-pa-sm">
+      <q-card class="q-pa-sm" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_history" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('Are you sure you want to reset the share limits counter?') }}</span>
@@ -508,7 +508,7 @@
     </q-dialog>
 
     <q-dialog v-model="confirm_delete_all">
-      <q-card class="q-pa-sm">
+      <q-card class="q-pa-sm" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_delete" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('MSG_CONFIRM_DELETE_ALL_MEDIA_FILES') }}</span>
@@ -522,7 +522,7 @@
     </q-dialog>
 
     <q-dialog v-model="confirm_clear_recycle_directory">
-      <q-card class="q-pa-sm">
+      <q-card class="q-pa-sm" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_delete" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('Are you sure to clear the recycle directory?') }}</span>

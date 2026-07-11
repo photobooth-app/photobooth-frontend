@@ -1,5 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import type { components } from '@/dto/api'
+import type { TriggerSchema } from '@/types/trigger-schema'
 
 function defaultOnetimeInformation(): components['schemas']['SseEventOnetimeInformationRecord'] {
   return {
@@ -39,6 +40,8 @@ export const useMainStore = defineStore('main-store', {
 
     information_onetime: defaultOnetimeInformation(),
     information_interval: defaultIntervalInformation(),
+
+    lastAction: null as TriggerSchema | null,
 
     //   /* plugins stats */
     //   plugins: {},

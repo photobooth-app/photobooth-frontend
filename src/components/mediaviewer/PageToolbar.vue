@@ -42,6 +42,13 @@
           :current-item-is-image="isPrintableImage(item.unprocessed)"
           @trigger-action="invokeShareAction"
         ></ShareTriggerButtons>
+
+        <FrontpageTriggerButtons
+          v-if="lastActionTriggerButton"
+          class="q-ml-md"
+          :triggers="[lastActionTriggerButton]"
+          @trigger-action="invokeAction"
+        ></FrontpageTriggerButtons>
       </div>
 
       <div class="q-mr-sm row flex flex-center">
@@ -62,7 +69,7 @@
     </div>
   </q-page-sticky>
   <q-dialog v-model="confirmDeleteDialog">
-    <q-card id="gallery-confirm-delete-dialog" class="q-pa-sm" style="min-width: 350px">
+    <q-card id="gallery-confirm-delete-dialog" class="q-pa-sm" style="min-width: 350px" flat>
       <q-card-section class="row items-center" style="flex-wrap: nowrap">
         <q-avatar icon="sym_o_delete" color="primary" text-color="white" />
         <span class="q-ml-sm">{{ $t('MSG_CONFIRM_DELETE_IMAGE') }}</span>
@@ -80,8 +87,11 @@
 import { ref } from 'vue'
 import { openURL } from 'quasar'
 import { default as ShareTriggerButtons, type ShareSchema } from '../ShareTriggerButtons.vue'
+import { default as FrontpageTriggerButtons } from '../FrontpageTriggerButtons.vue'
+import type { TriggerSchema } from '@/types/trigger-schema'
 import type { components } from '@/dto/api'
 import { isPrintableImage } from '@/util/media_is_type'
+
 const confirmDeleteDialog = ref(false)
 
 const props = defineProps<{
@@ -94,12 +104,14 @@ const props = defineProps<{
   showShare: boolean
   shareButtons: ShareSchema[]
   enableFilter: boolean
+  lastActionTriggerButton: TriggerSchema | null
 }>()
 
 const emit = defineEmits<{
   triggerShareAction: [config_index: number]
   triggerToggleDisplayFilter: []
   triggerDeleteMediaitem: [id: string]
+  triggerAction: [trigger: TriggerSchema]
   closeEvent: [] // from quasar
 }>()
 
@@ -113,6 +125,10 @@ function invokeToggleDisplayFilter() {
 
 function invokeDeleteMediaitem(id: string) {
   emit('triggerDeleteMediaitem', id)
+}
+
+function invokeAction(trigger: TriggerSchema) {
+  emit('triggerAction', trigger)
 }
 </script>
 

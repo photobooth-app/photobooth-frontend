@@ -36,7 +36,7 @@
     </q-tab-panels>
 
     <q-dialog v-model="dialog">
-      <q-card class="q-pa-sm" style="min-width: 350px">
+      <q-card class="q-pa-sm" style="min-width: 350px" flat>
         <q-card-section class="row items-center" style="flex-wrap: nowrap">
           <q-avatar icon="sym_o_delete" color="green" text-color="white" />
           <span class="q-ml-sm">{{ $t('The form is cleared when you switch the tab. Do you want to continue?') }}</span>
