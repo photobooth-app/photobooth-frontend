@@ -1455,6 +1455,14 @@ export interface components {
             share: components["schemas"]["GroupShare"];
             /**
              * @default {
+             *       "enabled": false,
+             *       "baseurl": "https://photobooth-app.org/extras/shareondemand-landing/",
+             *       "apikey": "changedefault!"
+             *     }
+             */
+            shareondemand: components["schemas"]["GroupShareOnDemand"];
+            /**
+             * @default {
              *       "full_still_length": 1500,
              *       "preview_still_length": 1200,
              *       "thumbnail_still_length": 400,
@@ -1497,7 +1505,8 @@ export interface components {
              *       "gallery_show_filter": true,
              *       "gallery_show_download": true,
              *       "gallery_show_delete": true,
-             *       "gallery_show_shareprint": true
+             *       "gallery_show_shareprint": true,
+             *       "itempresenter_show_trigger_last_action_again": true
              *     }
              */
             uisettings: components["schemas"]["GroupUiSettings"];
@@ -2173,23 +2182,35 @@ export interface components {
              */
             backend_type: "Gphoto2";
             /**
-             * Gcapture Target
-             * @description Set capture target (examples: 'Internal RAM', 'Memory card'). To keep images, capture to a disk target. Empty means default of camera (mostly RAM).
-             * @default
+             * Parameterset Device Init
+             * @default [
+             *       {
+             *         "enabled": false,
+             *         "name": "capturetarget",
+             *         "value": "",
+             *         "note": ""
+             *       },
+             *       {
+             *         "enabled": false,
+             *         "name": "shutterspeed",
+             *         "value": "1/50",
+             *         "note": ""
+             *       },
+             *       {
+             *         "enabled": true,
+             *         "name": "iso",
+             *         "value": "Auto",
+             *         "note": ""
+             *       }
+             *     ]
              */
-            gcapture_target: string;
+            parameterset_device_init: components["schemas"]["Gphoto2Parameters"][];
             /**
              * Parameterset Standby
              * @default [
              *       {
              *         "enabled": true,
              *         "name": "viewfinder",
-             *         "value": "0",
-             *         "note": ""
-             *       },
-             *       {
-             *         "enabled": true,
-             *         "name": "eosmoviemode",
              *         "value": "0",
              *         "note": ""
              *       }
@@ -2201,13 +2222,7 @@ export interface components {
              * @default [
              *       {
              *         "enabled": true,
-             *         "name": "iso",
-             *         "value": "Auto",
-             *         "note": ""
-             *       },
-             *       {
-             *         "enabled": true,
-             *         "name": "eosmoviemode",
+             *         "name": "viewfinder",
              *         "value": "1",
              *         "note": ""
              *       }
@@ -2222,12 +2237,6 @@ export interface components {
              *         "name": "viewfinder",
              *         "value": "0",
              *         "note": "allows camera to autofocus fast in native mode not contrast mode"
-             *       },
-             *       {
-             *         "enabled": true,
-             *         "name": "eosmoviemode",
-             *         "value": "0",
-             *         "note": ""
              *       }
              *     ]
              */
@@ -2958,6 +2967,27 @@ export interface components {
              */
             actions: components["schemas"]["ShareConfigurationSet"][];
         };
+        /** Share on Demand */
+        GroupShareOnDemand: {
+            /**
+             * Enabled
+             * @description Enable on demand share service using QR codes. To enable the URL needs to be configured and the api.php script setup properly.
+             * @default false
+             */
+            enabled: boolean;
+            /**
+             * Baseurl
+             * @description URL to the folder on a webspace where the api.php is located. The default is a landingpage with further instructions how to setup and needs to be changed.
+             * @default https://photobooth-app.org/extras/shareondemand-landing/
+             */
+            baseurl: string;
+            /**
+             * Apikey
+             * @description Key to secure the api.php script. Set the key in api.php script to same value. Only if the keys match on both ends, the service can operate.
+             * @default changedefault!
+             */
+            apikey: string;
+        };
         /**
          * Personalize the User Interface
          * @description Personalize the booth's UI.
@@ -3145,6 +3175,12 @@ export interface components {
              * @default true
              */
             gallery_show_shareprint: boolean;
+            /**
+             * Itempresenter Show Trigger Last Action Again
+             * @description Show a button to directly trigger the last action again in the presenter after a capture has been taken.
+             * @default true
+             */
+            itempresenter_show_trigger_last_action_again: boolean;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
