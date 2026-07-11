@@ -126,6 +126,7 @@
   "Yes, delete": "Yes, delete",
   "Reload services on save to apply settings. Reloading might take some time.": "Reload services on save to apply settings. Reloading might take some time.",
   "Apply": "Apply",
+  "Take one more!": "Take one more!",
   "You sure to reload the services?": "You sure to reload the services?",
   "restart systemctl service": "restart systemctl service",
   "uninstall systemctl service": "uninstall systemctl service",
