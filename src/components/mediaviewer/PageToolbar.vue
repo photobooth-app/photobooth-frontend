@@ -39,7 +39,7 @@
         <ShareTriggerButtons
           v-if="showShare"
           :triggers="shareButtons"
-          :current-item-is-image="isPrintableImage(item.unprocessed)"
+          :current-item-is-image="isPrintableImage(item.processed)"
           @trigger-action="invokeShareAction"
         ></ShareTriggerButtons>
 

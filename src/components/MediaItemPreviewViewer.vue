@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isImage(item.unprocessed)" class="full-height full-width">
+  <div v-if="isImage(item.processed)" class="full-height full-width">
     <q-img
       :draggable="false"
       class="full-height"
@@ -7,13 +7,13 @@
       loading="eager"
       loading-show-delay="800"
       no-transition
-      :src="`/media/preview/${item.id}?${item.updated_at}`"
+      :src="`/media/preview/${item.id}?${item.revision}`"
     />
   </div>
-  <div v-else-if="isVideo(item.unprocessed)" class="full-height">
+  <div v-else-if="isVideo(item.processed)" class="full-height">
     <video
       :draggable="false"
-      :src="`/media/preview/${item.id}?${item.updated_at}`"
+      :src="`/media/preview/${item.id}?${item.revision}`"
       class="rounded-borders full-height full-width"
       muted
       autoplay

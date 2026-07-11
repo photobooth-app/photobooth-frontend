@@ -1,12 +1,12 @@
 <template>
   <div>
     <!-- Display Elements -->
-    <div v-if="isImage(item.unprocessed)">
-      <q-img :src="`/media/thumbnail/${item.id}?${item.updated_at}`" loading="eager" loading-show-delay="800" :ratio="1" class="rounded-borders">
+    <div v-if="isImage(item.processed)">
+      <q-img :src="`/media/thumbnail/${item.id}?${item.revision}`" loading="eager" loading-show-delay="800" :ratio="1" class="rounded-borders">
       </q-img>
     </div>
 
-    <div v-else-if="isVideo(item.unprocessed)" class="full-height">
+    <div v-else-if="isVideo(item.processed)" class="full-height">
       <!-- mimic the q-img for video-elements to make it look same as images but display mp4 gif-like-->
 
       <div style="padding-bottom: 100%"></div>
@@ -18,7 +18,7 @@
           loop
           muted
           playsinline
-          :src="`/media/thumbnail/${item.id}?${item.updated_at}`"
+          :src="`/media/thumbnail/${item.id}?${item.revision}`"
           class="rounded-borders"
         ></video>
       </div>
