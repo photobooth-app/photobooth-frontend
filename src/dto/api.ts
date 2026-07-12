@@ -1085,8 +1085,11 @@ export interface components {
              *             "image_filter": "original",
              *             "img_background_enable": true,
              *             "img_background_file": "userdata/demoassets/backgrounds/background.jpg",
-             *             "img_frame_enable": true,
-             *             "img_frame_file": "userdata/demoassets/frames/frame_image_photobooth-app.png",
+             *             "img_frame": {
+             *               "enable": true,
+             *               "image": "userdata/demoassets/frames/frame_image_photobooth-app.png",
+             *               "mirror_effect": false
+             *             },
              *             "remove_background": true,
              *             "texts": [
              *               {
@@ -1490,9 +1493,11 @@ export interface components {
              *       "livestream_mirror_effect": true,
              *       "livestream_blurredbackground": true,
              *       "livestream_blurredbackground_high_framerate": false,
-             *       "enable_livestream_frameoverlay": true,
-             *       "livestream_frameoverlay_image": "userdata/demoassets/frames/frame_image_photobooth-app.png",
-             *       "livestream_frameoverlay_mirror_effect": false,
+             *       "livestream_frameoverlay": {
+             *         "enable": true,
+             *         "image": "userdata/demoassets/frames/frame_image_photobooth-app.png",
+             *         "mirror_effect": true
+             *       },
              *       "FRONTPAGE_TEXT": "<div class=\"fixed-center text-h2 text-weight-bold text-center text-white\" style=\"text-shadow: 4px 4px 4px #666;\">Hey!<br>Let's take some pictures! <br>📷</div>",
              *       "TAKEPIC_MSG_TIME": 0.5,
              *       "TAKEPIC_MSG_TEXT": "😃",
@@ -1797,6 +1802,26 @@ export interface components {
          * @enum {string}
          */
         DisplayEnum: "label" | "checkbox" | "toggle" | "spinner";
+        /** FrameOverlay */
+        FrameOverlay: {
+            /**
+             * Enable
+             * @description Enable to overlay to be displayed.
+             * @default false
+             */
+            enable: boolean;
+            /**
+             * Image
+             * @description This image frame is overlayed the camera images. This image determines the output image size and aspect ratio during image processing. Photos are visible through transparant parts, so the overlay should be in PNG format usually.
+             */
+            image?: string | null;
+            /**
+             * Mirror Effect
+             * @description Flip the overlay image horizontally to achieve a mirror effect. This can be useful as it helps users to gather and align in the scene. Text in the image appears in the wrong direction but the final image is correct as the effect is only applied during display, not job processing.
+             * @default false
+             */
+            mirror_effect: boolean;
+        };
         /** GenericStats */
         GenericStats: {
             /** Id */
@@ -1877,8 +1902,11 @@ export interface components {
              *           "image_filter": "original",
              *           "img_background_enable": true,
              *           "img_background_file": "userdata/demoassets/backgrounds/background.jpg",
-             *           "img_frame_enable": true,
-             *           "img_frame_file": "userdata/demoassets/frames/frame_image_photobooth-app.png",
+             *           "img_frame": {
+             *             "enable": true,
+             *             "image": "userdata/demoassets/frames/frame_image_photobooth-app.png",
+             *             "mirror_effect": false
+             *           },
              *           "remove_background": true,
              *           "texts": [
              *             {
@@ -3081,22 +3109,15 @@ export interface components {
              */
             livestream_blurredbackground_high_framerate: boolean;
             /**
-             * Enable Livestream Frameoverlay
-             * @description Enable to overlay livestream_frameoverlay_image the livestream.
-             * @default true
+             * Livestream Frame Overlay
+             * @description test
+             * @default {
+             *       "enable": true,
+             *       "image": "userdata/demoassets/frames/frame_image_photobooth-app.png",
+             *       "mirror_effect": true
+             *     }
              */
-            enable_livestream_frameoverlay: boolean;
-            /**
-             * Livestream Frameoverlay Image
-             * @description When enabled, the frame is overlayed the livestream. This image is not used in the postprocessing. If mirroreffect is on, it will also be mirrored. Text in the frame appears in the wrong direction but the final image is correct.
-             */
-            livestream_frameoverlay_image?: string | null;
-            /**
-             * Livestream Frameoverlay Mirror Effect
-             * @description Flip the frame overlaid horizontally to create a mirror effect. Useful to flip also if video is flipped when people shall align to the frame. If there is text in the frame it's also mirrored.
-             * @default false
-             */
-            livestream_frameoverlay_mirror_effect: boolean;
+            livestream_frameoverlay: components["schemas"]["FrameOverlay"];
             /**
              * Frontpage Text
              * @description Text/HTML displayed on frontpage.
@@ -3532,16 +3553,12 @@ export interface components {
             /** @default original */
             image_filter: components["schemas"]["PluginFilters"];
             /**
-             * Img Frame Enable
-             * @description Mount captured image to frame.
-             * @default false
+             * @default {
+             *       "enable": false,
+             *       "mirror_effect": false
+             *     }
              */
-            img_frame_enable: boolean;
-            /**
-             * Img Frame File
-             * @description Image file to which the captured image is mounted to. Frame determines the output image size! Photos are visible through transparant parts. Image needs to be transparent (PNG). File needs to be located in userdata/*
-             */
-            img_frame_file?: string | null;
+            img_frame: components["schemas"]["FrameOverlay"];
             /**
              * Texts Enable
              * @description General enable apply texts below.

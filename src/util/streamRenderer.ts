@@ -8,6 +8,7 @@ interface BoundingBox {
 interface Overlay {
   bitmap: ImageBitmap | null
   transparentBBox: BoundingBox | null
+  enableMirrorEffect: boolean
 }
 
 interface CanvasPair {
@@ -18,7 +19,6 @@ interface CanvasPair {
 interface StreamConfig {
   enableBlurredBackgroundStream: boolean
   enableMirrorEffectStream: boolean
-  enableMirrorEffectFrame: boolean
   blurInterval: number
   debugRectangleBbox: boolean
 }
@@ -128,16 +128,6 @@ async function computeTransparentBoundingBox(bitmap: ImageBitmap, scale = 8): Pr
   }
 }
 
-async function loadOverlay(url: string): Promise<Overlay> {
-  const t0 = performance.now()
-  const resp = await fetch(url)
-  const blob = await resp.blob()
-  const overlayBitmap = await createImageBitmap(blob)
-  const overlayTransparentBBox = await computeTransparentBoundingBox(overlayBitmap)
-  const te = performance.now()
-  console.log('load overlay+calc transparency bbox took ', (te - t0).toFixed(1), 'ms, bbox is ', overlayTransparentBBox)
-  return { bitmap: overlayBitmap, transparentBBox: overlayTransparentBBox }
-}
 function getDrawableSize(drawable: ImageBitmap | VideoFrame) {
   if ('codedWidth' in drawable) {
     // VideoFrame
@@ -181,7 +171,7 @@ function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap | VideoFrame, ove
     canvasPair.ctx.drawImage(img, overlay.transparentBBox.x + offsetX, overlay.transparentBBox.y + offsetY, drawW, drawH)
 
     // overlay on top
-    if (config.enableMirrorEffectFrame) canvasPair.ctx.setTransform(-1, 0, 0, 1, canvasPair.canvas.width, 0)
+    if (overlay.enableMirrorEffect) canvasPair.ctx.setTransform(-1, 0, 0, 1, canvasPair.canvas.width, 0)
     else canvasPair.ctx.resetTransform()
 
     canvasPair.ctx.drawImage(overlay.bitmap, 0, 0)
@@ -230,7 +220,6 @@ class StreamRenderer {
   private config: StreamConfig = {
     enableBlurredBackgroundStream: false,
     enableMirrorEffectStream: false,
-    enableMirrorEffectFrame: false,
     blurInterval: 300,
     debugRectangleBbox: false,
   }
@@ -261,13 +250,20 @@ class StreamRenderer {
     console.log('StreamRenderer initialized with config', this.config)
   }
 
-  async updateOverlay(url: string | null) {
-    let newOverlay = null
+  async updateOverlay(url: string | null, mirrorEffect: boolean) {
+    let newOverlay: Overlay | null = null
 
     try {
       // start loading into nextOverlay
       if (url) {
-        newOverlay = await loadOverlay(url)
+        const t0 = performance.now()
+        const resp = await fetch(url)
+        const blob = await resp.blob()
+        const overlayBitmap = await createImageBitmap(blob)
+        const overlayTransparentBBox = await computeTransparentBoundingBox(overlayBitmap)
+        const te = performance.now()
+        console.log('load overlay+calc transparency bbox took ', (te - t0).toFixed(1), 'ms, bbox is ', overlayTransparentBBox)
+        newOverlay = { bitmap: overlayBitmap, transparentBBox: overlayTransparentBBox, enableMirrorEffect: mirrorEffect }
       }
     } catch (e) {
       console.error('updateOverlay error', e)
@@ -380,7 +376,6 @@ self.onmessage = async (ev: MessageEvent) => {
       }
       const opts: Partial<StreamConfig> = {
         enableMirrorEffectStream: !!data.enableMirrorEffectStream,
-        enableMirrorEffectFrame: !!data.enableMirrorEffectFrame,
         enableBlurredBackgroundStream: !!data.enableBlurredBackgroundStream,
         blurInterval: data.blurredbackgroundHighFramerate ? 50 : 300,
       }
@@ -396,8 +391,8 @@ self.onmessage = async (ev: MessageEvent) => {
       self.postMessage({ type: 'frame-finished' })
     } else if (data.type === 'overlay') {
       // data.url may be null to clear overlay
-      await renderer.updateOverlay(data.url ?? null)
-      console.log(`overlay updated to ${data.url}`)
+      await renderer.updateOverlay(data.url ?? null, data.mirror_effect ?? false)
+      console.log('overlay updated', data)
       self.postMessage({ type: 'frame-finished' })
       // } else if (data.type === 'getStats') {
       //   // optional: return stats

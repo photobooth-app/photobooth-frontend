@@ -3,10 +3,9 @@
     <preview-stream
       v-if="showPreviewThrottled"
       :index_device="configurationStore.configuration.cameras.index_backend_video"
-      :frame-overlay-image="frameOverlayImage"
+      :frame-overlay="frameOverlay"
       :enable-blurred-background-stream="configurationStore.configuration.uisettings.livestream_blurredbackground"
       :enable-mirror-effect-stream="configurationStore.configuration.uisettings.livestream_mirror_effect"
-      :enable-mirror-effect-frame="configurationStore.configuration.uisettings.livestream_frameoverlay_mirror_effect"
       :blurredbackground-high-framerate="configurationStore.configuration.uisettings.livestream_blurredbackground_high_framerate"
     ></preview-stream>
 
@@ -116,6 +115,7 @@ import { default as FrontpageTriggerButtons } from '@/components/FrontpageTrigge
 import { default as PreviewStream } from '@/components/PreviewStream.vue'
 import _ from 'lodash'
 import MediaItemApprovalViewer from '@/components/MediaItemApprovalViewer.vue'
+import type { components } from '@/dto/api'
 
 const mainStore = useMainStore()
 const stateStore = useStateStore()
@@ -175,21 +175,19 @@ const showPreview = computed(() => {
 // just a moment later it's disabled again.
 const showPreviewThrottled = refThrottled(showPreview, 500)
 
-const frameOverlayImage = computed((): string => {
-  const enable_action_frame_overlay = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_enable', false)
-  const action_frame_overlay_image = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame_file', '') as string
-  if (stateStore.isStateCountdown && enable_action_frame_overlay) {
-    //during countdown the action frame is priorized.
-    return action_frame_overlay_image
-  } else if (
-    stateStore.isStateIdle &&
-    configurationStore.configuration.uisettings.enable_livestream_frameoverlay &&
-    configurationStore.configuration.uisettings.livestream_frameoverlay_image
-  ) {
+const frameOverlay = computed((): components['schemas']['FrameOverlay'] | null => {
+  const actionFrameOverlay = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame', null) as
+    components['schemas']['FrameOverlay'] | null
+  const idleFrameOverlay = configurationStore.configuration.uisettings.livestream_frameoverlay
+
+  if (stateStore.isStateCountdown && actionFrameOverlay && actionFrameOverlay.enable) {
+    //during countdown the action frame is priorized if the action has this feature...
+    return actionFrameOverlay
+  } else if (stateStore.isStateIdle && idleFrameOverlay.enable) {
     // the live frame is shown in idle only
-    return configurationStore.configuration.uisettings.livestream_frameoverlay_image
+    return idleFrameOverlay
   } else {
-    return ''
+    return null
   }
 })
 

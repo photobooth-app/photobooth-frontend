@@ -9,15 +9,15 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, watch, watchEffect, ref, computed } from 'vue'
 import { useWebSocket, useDocumentVisibility, useDebounceFn } from '@vueuse/core'
+import type { components } from '@/dto/api'
 
 const props = defineProps<{
   // from docs: An absent optional prop other than Boolean will have undefined value.
   index_device: number
   enableMirrorEffectStream?: boolean
-  enableMirrorEffectFrame?: boolean
   enableBlurredBackgroundStream?: boolean
   blurredbackgroundHighFramerate?: boolean
-  frameOverlayImage?: string
+  frameOverlay: components['schemas']['FrameOverlay'] | null
 }>()
 
 // fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
@@ -37,11 +37,11 @@ const markFrameReceived = useDebounceFn(() => {
 }, 4000)
 
 watchEffect(() => {
-  if (props.frameOverlayImage) {
-    const overlayAbsUrl = new URL(props.frameOverlayImage, document.baseURI).href
-    streamRenderer.postMessage({ type: 'overlay', url: overlayAbsUrl })
+  if (props.frameOverlay && props.frameOverlay.image) {
+    const overlayAbsUrl = new URL(props.frameOverlay.image, document.baseURI).href
+    streamRenderer.postMessage({ type: 'overlay', url: overlayAbsUrl, mirror_effect: props.frameOverlay.mirror_effect })
   } else {
-    streamRenderer.postMessage({ type: 'overlay', url: null })
+    streamRenderer.postMessage({ type: 'overlay', url: null, mirror_effect: false })
   }
 })
 
@@ -133,7 +133,6 @@ onMounted(() => {
       type: 'init',
       enableBlurredBackgroundStream: props.enableBlurredBackgroundStream,
       enableMirrorEffectStream: props.enableMirrorEffectStream,
-      enableMirrorEffectFrame: props.enableMirrorEffectFrame,
       blurredbackgroundHighFramerate: props.blurredbackgroundHighFramerate,
       canvases: { stream: canvasStream, blurred: canvasBlurred },
       streamRendererImageDecoderMode: streamRendererImageDecoderMode,
