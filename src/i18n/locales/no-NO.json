@@ -126,6 +126,7 @@
   "Yes, delete": "Ja, slett",
   "Reload services on save to apply settings. Reloading might take some time.": "Oppdater tjenester ved lagring for å bruke innstillinger. Det kan ta litt tid.",
   "Apply": "Bruk",
+  "Take one more!": "Ta en til!",
   "You sure to reload the services?": "Du vil laste tjenestene på nytt?",
   "restart systemctl service": "start systemctl på nytt",
   "uninstall systemctl service": "avinstallere systemctl-tjeneste",

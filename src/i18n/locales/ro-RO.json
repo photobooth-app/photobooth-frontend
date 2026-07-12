@@ -126,6 +126,7 @@
   "Yes, delete": "Da, șterge",
   "Reload services on save to apply settings. Reloading might take some time.": "Reîncarcă serviciile la salvare pentru a aplica setările. Reîncărcarea poate dura ceva timp.",
   "Apply": "Aplică",
+  "Take one more!": "Mai iei unul!",
   "You sure to reload the services?": "Doriţi să reîncărcaţi serviciile?",
   "restart systemctl service": "reporniți serviciul systemctl",
   "uninstall systemctl service": "dezinstalați serviciul systemctl",

@@ -126,6 +126,7 @@
   "Yes, delete": "Ja, verwijderen",
   "Reload services on save to apply settings. Reloading might take some time.": "Herlaad services bij opslaan om instellingen toe te passen. Het herladen kan enige tijd duren.",
   "Apply": "Toepassen",
+  "Take one more!": "Neem nog een stap!",
   "You sure to reload the services?": "Weet je zeker dat je de diensten wilt herladen?",
   "restart systemctl service": "systeemservice herstarten",
   "uninstall systemctl service": "systeemservice verwijderen",
