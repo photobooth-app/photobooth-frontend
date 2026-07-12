@@ -126,6 +126,7 @@
   "Yes, delete": "Igen, törölni",
   "Reload services on save to apply settings. Reloading might take some time.": "A beállítások alkalmazásához a mentéskor töltse újra a szolgáltatásokat. Az újratöltés eltarthat egy ideig.",
   "Apply": "Alkalmazza a",
+  "Take one more!": "Még egyet!",
   "You sure to reload the services?": "Biztos, hogy újra kell tölteni a szolgáltatásokat?",
   "restart systemctl service": "systemctl szolgáltatás újraindítása",
   "uninstall systemctl service": "uninstall systemctl service",

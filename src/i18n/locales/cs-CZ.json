@@ -126,6 +126,7 @@
   "Yes, delete": "Ano, smazat",
   "Reload services on save to apply settings. Reloading might take some time.": "Znovu načíst služby při uložení, abyste mohli použít nastavení. Obnovení může chvíli trvat.",
   "Apply": "Použít",
+  "Take one more!": "Vezmi si ještě jednu věc!",
   "You sure to reload the services?": "Opravdu chcete znovu načíst služby?",
   "restart systemctl service": "restartovat systemctl službu",
   "uninstall systemctl service": "odinstalovat službu systemctl",

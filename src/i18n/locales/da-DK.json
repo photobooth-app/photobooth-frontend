@@ -126,6 +126,7 @@
   "Yes, delete": "Ja, slet",
   "Reload services on save to apply settings. Reloading might take some time.": "Genindlæs tjenester når du gemmer for at anvende indstillinger. Genindlæsning kan tage lidt tid.",
   "Apply": "Anvend",
+  "Take one more!": "Tag endnu en gang!",
   "You sure to reload the services?": "Du er sikker på at genindlæse tjenesterne?",
   "restart systemctl service": "genstart systemctl-tjeneste",
   "uninstall systemctl service": "afinstallere systemctl service",
