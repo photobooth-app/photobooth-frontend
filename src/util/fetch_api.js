@@ -1,5 +1,5 @@
 import { Notify } from 'quasar'
-import { hasAccessToken, getAccessToken, authStateChange } from './auth'
+import { hasAccessToken, getAccessToken, authStateChange, UnauthorizedError } from './auth'
 import { set } from 'lodash'
 const originalFetch = window.fetch.bind(window)
 
@@ -20,7 +20,7 @@ async function _fetch(...args) {
   if (response.status == 401) {
     // could add redirect here?
     authStateChange(null) // change state to logout, so ui can require login again.
-    throw new Error('You are not authorized or authorization invalidated after timeout.')
+    throw new UnauthorizedError('You are not authorized or authorization invalidated after timeout.')
   }
 
   return response

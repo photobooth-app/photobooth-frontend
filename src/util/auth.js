@@ -1,6 +1,13 @@
 import { SessionStorage } from 'quasar'
 import { Notify } from 'quasar'
 
+export class UnauthorizedError extends Error {
+  constructor(message = 'Unauthorized') {
+    super(message)
+    this.name = 'UnauthorizedError'
+  }
+}
+
 export const authStateChange = credentials => {
   if (credentials) {
     SessionStorage.setItem('credentials', credentials)

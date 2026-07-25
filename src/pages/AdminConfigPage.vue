@@ -75,14 +75,16 @@ import { defaultStyles, mergeStyles, createAjv, quasarRenderers } from '@/compon
 import { remoteProcedureCall, _fetch } from '@/util/fetch_api'
 import { useConfigurationStore } from '@/stores/configuration-store'
 import { Notify } from 'quasar'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import type { components } from '@/dto/api'
 import { useLocalStorage } from '@vueuse/core'
+import { UnauthorizedError } from '@/util/auth'
 
 // bind object
 
 const autoReloadServicesOnSave = useLocalStorage('autoReloadServicesOnSave', true)
 const route = useRoute()
+const router = useRouter()
 const configurationStore = useConfigurationStore()
 const isLoadingState = ref(true)
 const confirm_reset_config = ref(false)
@@ -125,18 +127,24 @@ const getSchema = async () => {
   try {
     const response = await _fetch(`/api/admin/config/${selected_configuration.value}/schema?schema_type=dereferenced`)
     console.log(response)
+
     if (!response.ok) {
       throw new Error('Server returned ' + response.status)
     }
     return await response.json()
-  } catch (err: unknown) {
-    console.warn(err)
+  } catch (error) {
+    console.warn(error)
 
     Notify.create({
-      message: String(err),
+      message: String(error),
       caption: 'Error getting configuration scheme',
       color: 'negative',
     })
+
+    if (error instanceof UnauthorizedError) {
+      router.push('/auth/login')
+      return
+    }
   } finally {
     // commit('setLoading', false);
   }
@@ -167,6 +175,11 @@ const getConfigurables = async () => {
       caption: 'Error getting configurables!',
       color: 'red',
     })
+
+    if (error instanceof UnauthorizedError) {
+      router.push('/auth/login')
+      return
+    }
   } finally {
     // commit('setLoading', false);
   }
@@ -175,6 +188,7 @@ const getConfigurables = async () => {
 const getConfig = async () => {
   try {
     const response = await _fetch(`/api/admin/config/${selected_configuration.value}`)
+
     console.log(response)
 
     return await response.json()
@@ -186,6 +200,11 @@ const getConfig = async () => {
       caption: 'Error getting config!',
       color: 'red',
     })
+
+    if (error instanceof UnauthorizedError) {
+      router.push('/auth/login')
+      return
+    }
   } finally {
     // commit('setLoading', false);
   }
