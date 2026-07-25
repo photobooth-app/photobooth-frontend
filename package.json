@@ -25,25 +25,24 @@
     "@vueuse/integrations": "^14.3.0",
     "pinia": "^3.0.4",
     "qrcode.vue": "^3.10.0",
-    "quasar": "^2.21.2",
-    "vue": "^3.5.38",
-    "vue-i18n": "^11.4.6",
-    "vue-router": "^5.1.0"
+    "quasar": "^2.23.1",
+    "vue": "^3.5.40",
+    "vue-i18n": "^11.4.7",
+    "vue-router": "^5.2.0"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^11.2.4",
-    "@quasar/app-vite": "^3.0.1",
+    "@quasar/app-vite": "^3.2.0",
     "@types/lodash": "^4.17.24",
-    "autoprefixer": "^10.5.2",
+    "autoprefixer": "^10.5.4",
     "globals": "^17.7.0",
     "openapi-typescript": "^7.13.0",
     "oxfmt": "^0.57.0",
-    "oxlint": "^1.71.0",
-    "oxlint-tsgolint": "^0.24.0",
-    "prettier": "^3.8.4",
+    "oxlint": "^1.75.0",
+    "prettier": "^3.9.6",
     "typescript": "^6.0.3",
-    "vite-plugin-checker": "^0.14.4",
-    "vue-tsc": "^3.3.5"
+    "vite-plugin-checker": "^0.14.5",
+    "vue-tsc": "^3.3.8"
   },
   "overrides": {
     "openapi-typescript": {
@@ -57,7 +56,7 @@
   },
   "allowScripts": {
     "esbuild@0.25.12": true,
-    "@parcel/watcher@2.5.6": true
+    "@parcel/watcher@2.6.0": true
   },
   "productName": "Photobooth-App"
 }
