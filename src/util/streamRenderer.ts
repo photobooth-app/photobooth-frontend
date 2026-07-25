@@ -5,8 +5,19 @@ interface BoundingBox {
   height: number
 }
 
+// interface Crop {
+//   top: number
+//   right: number
+//   bottom: number
+//   left: number
+// }
+
+// interface AspectRatio {
+//   ratio: number
+// }
+
 interface Overlay {
-  bitmap: ImageBitmap | null
+  bitmap: ImageBitmap
   transparentBBox: BoundingBox | null
   enableMirrorEffect: boolean
 }
@@ -147,8 +158,13 @@ function getDrawableSize(drawable: ImageBitmap | VideoFrame) {
 
 function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap | VideoFrame, overlay: Overlay | null, config: StreamConfig) {
   const drawableSize = getDrawableSize(img)
-  const cW = overlay && overlay.bitmap ? overlay.bitmap.width : drawableSize.width
-  const cH = overlay && overlay.bitmap ? overlay.bitmap.height : drawableSize.height
+  const cW = overlay ? overlay.bitmap.width : drawableSize.width
+  const cH = overlay ? overlay.bitmap.height : drawableSize.height
+
+  //1st - determine canvas width/height
+  //1 no manipulation: just stream -- getDrawableSize
+  //2 ALT1: overlay: get overlay bitmap width/height
+  //3 ALT2: aspect-ratio: get bounds from aspect-ratio and crop rest
 
   if (canvasPair.canvas.width !== cW || canvasPair.canvas.height !== cH) {
     canvasPair.canvas.width = cW
@@ -156,7 +172,7 @@ function updateCanvas(canvasPair: CanvasPair, img: ImageBitmap | VideoFrame, ove
     console.log(`set stream canvas size to ${cW}x${cH}`)
   }
 
-  if (overlay && overlay.bitmap && overlay.transparentBBox) {
+  if (overlay?.transparentBBox) {
     const { drawW, drawH, offsetX, offsetY } = fitCover(
       drawableSize.width,
       drawableSize.height,
