@@ -132,9 +132,7 @@ export default defineConfig(ctx => {
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
       config: {
-        notify: {
-          /* look at QuasarConfOptions from the API card */
-        },
+        notify: {/* look at QuasarConfOptions from the API card */},
         dark: 'auto',
       },
 
