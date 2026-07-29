@@ -22,7 +22,7 @@
     "@jsonforms/vue": "^3.8.0",
     "@quasar/extras": "^2.0.2",
     "@vueuse/core": "^14.3.0",
-    "@vueuse/integrations": "^14.3.0",
+    "@vueuse/integrations": "^14.4.0",
     "pinia": "^4.0.0",
     "qrcode.vue": "^3.10.0",
     "quasar": "^2.23.1",
