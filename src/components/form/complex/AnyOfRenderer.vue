@@ -1,6 +1,6 @@
 <template>
   <div v-if="control.visible">
-    <combinator-properties :schema="control.schema" combinator-keyword="anyOf" :path="path" />
+    <combinator-properties :schema="control.schema" combinator-keyword="anyOf" :path="path" :rootSchema="control.rootSchema" />
     <q-tabs v-model="selectedIndex" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
       <q-tab v-for="(anyOfRenderInfo, anyOfIndex) in anyOfRenderInfos" :key="`${control.path}-${anyOfIndex}`" :name="anyOfIndex">
         {{ anyOfRenderInfo.label }}
@@ -19,6 +19,7 @@
           :renderers="control.renderers"
           :cells="control.cells"
           :enabled="control.enabled"
+          :rootSchema="control.rootSchema"
         />
       </q-tab-panel>
     </q-tab-panels>

@@ -125,7 +125,7 @@ const onChange = (event: JsonFormsChangeEvent) => {
 
 const getSchema = async () => {
   try {
-    const response = await _fetch(`/api/admin/config/${selected_configuration.value}/schema?schema_type=dereferenced`)
+    const response = await _fetch(`/api/admin/config/${selected_configuration.value}/schema`)
     console.log(response)
 
     if (!response.ok) {

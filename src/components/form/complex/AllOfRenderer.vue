@@ -12,7 +12,7 @@
     </template>
     <template v-else-if="allOfRenderInfos">
       <div>
-        <combinator-properties :schema="control.schema" combinator-keyword="allOf" :path="path" />
+        <combinator-properties :schema="control.schema" combinator-keyword="allOf" :path="path" :rootSchema="control.rootSchema" />
         <dispatch-renderer
           v-for="(allOfRenderInfo, allOfIndex) in allOfRenderInfos"
           :key="`${control.path}-${allOfIndex}`"
@@ -22,6 +22,7 @@
           :enabled="control.enabled"
           :renderers="control.renderers"
           :cells="control.cells"
+          :rootSchema="control.rootSchema"
         />
       </div>
     </template>

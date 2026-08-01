@@ -31,6 +31,7 @@
           :path="control.path"
           :renderers="control.renderers"
           :cells="control.cells"
+          :rootSchema="control.rootSchema"
         />
       </q-tab-panel>
     </q-tab-panels>

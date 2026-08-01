@@ -7,6 +7,7 @@
       :renderers="control.renderers"
       :cells="control.cells"
       :enabled="control.enabled"
+      :rootSchema="control.rootSchema"
     />
   </div>
 </template>

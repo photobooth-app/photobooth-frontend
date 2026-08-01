@@ -3,11 +3,13 @@
     <dispatch-renderer
       :visible="control.visible"
       :enabled="control.enabled"
+      :readonly="control.readonly"
       :schema="control.schema"
       :uischema="detailUiSchema"
       :path="control.path"
       :renderers="control.renderers"
       :cells="control.cells"
+      :rootSchema="control.rootSchema"
     />
   </div>
 </template>
@@ -17,7 +19,7 @@ import { type ControlElement, findUISchema, Generate, type GroupLayout, type UIS
 import { DispatchRenderer, rendererProps, type RendererProps, useJsonFormsControlWithDetail } from '@jsonforms/vue'
 import cloneDeep from 'lodash/cloneDeep'
 import isEmpty from 'lodash/isEmpty'
-import { defineComponent } from 'vue'
+import { DefineComponent, defineComponent } from 'vue'
 import { useNested, useQuasarControl } from '../util'
 
 export default defineComponent({
@@ -40,7 +42,7 @@ export default defineComponent({
   computed: {
     detailUiSchema(): UISchemaElement {
       const uiSchemaGenerator = () => {
-        const uiSchema = Generate.uiSchema(this.control.schema, 'Group')
+        const uiSchema = Generate.uiSchema(this.control.schema, 'Group', undefined, this.control.rootSchema)
         if (isEmpty(this.control.path)) {
           uiSchema.type = 'VerticalLayout'
         } else {
@@ -71,5 +73,5 @@ export default defineComponent({
       return result
     },
   },
-})
+}) as DefineComponent<any, any, any>
 </script>

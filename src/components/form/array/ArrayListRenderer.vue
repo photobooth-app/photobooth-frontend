@@ -4,7 +4,7 @@
 
   <q-card v-if="control.visible" flat :class="styles.arrayList.root">
     <!-- eslint-disable-next-line vue/no-unused-vars -->
-    <div v-for="[index, _] in control.data.entries()" :key="`${control.path}-${index}`" :class="styles.arrayList.itemWrapper">
+    <div v-for="(_element, index) in control.data as Array<any>" :key="`${control.path}-${index}`" :class="styles.arrayList.itemWrapper">
       <array-list-element
         :move-up="moveUp?.(control.path, index)"
         :move-up-enabled="control.enabled && index > 0"

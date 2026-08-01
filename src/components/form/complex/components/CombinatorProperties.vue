@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLayoutWithElements">
-    <dispatch-renderer :schema="otherProps" :path="path" :uischema="foundUISchema" />
+    <dispatch-renderer :schema="otherProps" :path="path" :uischema="foundUISchema" :rootSchema="rootSchema" />
   </div>
 </template>
 
@@ -14,6 +14,7 @@ interface CombinatorProps {
   schema: JsonSchema
   combinatorKeyword: 'oneOf' | 'anyOf' | 'allOf'
   path: string
+  rootSchema: JsonSchema
 }
 
 export default defineComponent({
@@ -34,10 +35,14 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    rootSchema: {
+      type: Object as PropType<JsonSchema>,
+      required: true,
+    },
   },
   setup(props: CombinatorProps) {
     const otherProps: JsonSchema = omit(props.schema, props.combinatorKeyword) as JsonSchema
-    const foundUISchema: UISchemaElement = Generate.uiSchema(otherProps, 'VerticalLayout')
+    const foundUISchema: UISchemaElement = Generate.uiSchema(otherProps, 'VerticalLayout', undefined, props.rootSchema)
 
     const isLayout = (uischema: UISchemaElement): uischema is Layout => Object.prototype.hasOwnProperty.call(uischema, 'elements')
 
