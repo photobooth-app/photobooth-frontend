@@ -4,6 +4,7 @@
       v-if="showPreviewThrottled"
       :index_device="configurationStore.configuration.cameras.index_backend_video"
       :frame-overlay="frameOverlay"
+      :fixed-size="fixedSize"
       :enable-blurred-background-stream="configurationStore.configuration.uisettings.livestream_blurredbackground"
       :enable-mirror-effect-stream="configurationStore.configuration.uisettings.livestream_mirror_effect"
       :blurredbackground-high-framerate="configurationStore.configuration.uisettings.livestream_blurredbackground_high_framerate"
@@ -34,7 +35,7 @@
     <div v-if="stateStore.isStateIdle" id="frontpage_text" v-html="configurationStore.configuration.uisettings.FRONTPAGE_TEXT"></div>
 
     <!-- dialog for approval -->
-    <div v-if="stateStore.isStateApproval">
+    <div v-if="stateStore.isStateApproval && stateStore.jobmodel.approval_id">
       <MediaItemApprovalViewer
         :approval_id="stateStore.jobmodel.approval_id"
         :number_captures_taken="stateStore.jobmodel.number_captures_taken"
@@ -116,7 +117,7 @@ import { default as PreviewStream } from '@/components/PreviewStream.vue'
 import _ from 'lodash'
 import MediaItemApprovalViewer from '@/components/MediaItemApprovalViewer.vue'
 import type { components } from '@/dto/api'
-
+import type { Size2D } from '@/util/streamRenderer.ts'
 const mainStore = useMainStore()
 const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
@@ -175,17 +176,30 @@ const showPreview = computed(() => {
 // just a moment later it's disabled again.
 const showPreviewThrottled = refThrottled(showPreview, 500)
 
-const frameOverlay = computed((): components['schemas']['FrameOverlay'] | null => {
-  const actionFrameOverlay = _.get(stateStore.jobmodel.configuration_set, 'processing.img_frame', null) as
-    components['schemas']['FrameOverlay'] | null
-  const idleFrameOverlay = configurationStore.configuration.uisettings.livestream_frameoverlay
+const fixedSize = computed((): Size2D | null => {
+  console.log('fixedSize determined:')
+  console.info(stateStore.jobmodel)
+  const captureDefinition = stateStore.jobmodel.captures_definition
 
-  if (stateStore.isStateCountdown && actionFrameOverlay && actionFrameOverlay.enable) {
+  if (captureDefinition) {
+    return {
+      width: captureDefinition.width,
+      height: captureDefinition.height,
+    }
+  } else {
+    return null
+  }
+})
+const frameOverlay = computed((): components['schemas']['UiFrameOverlay'] | null => {
+  const idleFrameOverlay = configurationStore.configuration.uisettings.livestream_frameoverlay
+  const actionFrameOverlay = stateStore.jobmodel.frame_overlay
+
+  if (stateStore.isStateCountdown && actionFrameOverlay) {
     //during countdown the action frame is priorized if the action has this feature...
     return actionFrameOverlay
-  } else if (stateStore.isStateIdle && idleFrameOverlay.enable) {
+  } else if (stateStore.isStateIdle && idleFrameOverlay.enable && idleFrameOverlay.image) {
     // the live frame is shown in idle only
-    return idleFrameOverlay
+    return idleFrameOverlay as components['schemas']['UiFrameOverlay']
   } else {
     return null
   }

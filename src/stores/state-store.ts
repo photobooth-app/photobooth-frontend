@@ -1,14 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-export interface JobModel {
-  typ: string
-  total_captures_to_take: number
-  remaining_captures_to_take: number
-  number_captures_taken: number
-  duration: number
-  present_mediaitem_id: string
-  approval_id: string
-  configuration_set: Record<string, unknown>
-}
+import { type components } from '@/dto/api'
 
 export const useStateStore = defineStore('state-store', {
   state: () => ({
@@ -22,8 +13,9 @@ export const useStateStore = defineStore('state-store', {
       duration: 0,
       present_mediaitem_id: '',
       approval_id: '',
-      configuration_set: {},
-    } as JobModel,
+      captures_definition: null,
+      frame_overlay: null,
+    } as components['schemas']['UiJobModel'],
   }),
   actions: {},
   getters: {

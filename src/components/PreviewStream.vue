@@ -24,7 +24,8 @@ const props = defineProps<{
   enableMirrorEffectStream?: boolean
   enableBlurredBackgroundStream?: boolean
   blurredbackgroundHighFramerate?: boolean
-  frameOverlay: components['schemas']['FrameOverlay'] | null
+  frameOverlay: components['schemas']['UiFrameOverlay'] | null
+  fixedSize: Size2D | null
 }>()
 
 // fixes https://github.com/photobooth-app/photobooth-app/issues/613, relative ws URLs seem to be an addition in 2024,
@@ -44,8 +45,10 @@ watchEffect(() => {
   if (props.frameOverlay && props.frameOverlay.image) {
     const overlayAbsUrl = new URL(props.frameOverlay.image, document.baseURI).href
     streamRenderer.postMessage({ type: 'overlay', url: overlayAbsUrl, mirror_effect: props.frameOverlay.mirror_effect })
+  } else if (props.fixedSize) {
+    streamRenderer.postMessage({ type: 'fixedSize', fixedSize: props.fixedSize })
   } else {
-    streamRenderer.postMessage({ type: 'overlay', url: null, mirror_effect: false })
+    streamRenderer.postMessage({ type: 'resetMode' })
   }
 })
 
