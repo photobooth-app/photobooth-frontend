@@ -785,40 +785,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/information/stts/onetime": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Api Get Stats Onetime */
-        get: operations["api_get_stats_onetime_api_admin_information_stts_onetime_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/information/stts/interval": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Api Get Stats Interval */
-        get: operations["api_get_stats_interval_api_admin_information_stts_interval_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/admin/multicamera/calibration": {
         parameters: {
             query?: never;
@@ -1458,14 +1424,6 @@ export interface components {
             share: components["schemas"]["GroupShare"];
             /**
              * @default {
-             *       "enabled": false,
-             *       "baseurl": "https://photobooth-app.org/extras/shareondemand-landing/",
-             *       "apikey": "changedefault!"
-             *     }
-             */
-            shareondemand: components["schemas"]["GroupShareOnDemand"];
-            /**
-             * @default {
              *       "full_still_length": 1500,
              *       "preview_still_length": 1200,
              *       "thumbnail_still_length": 400,
@@ -1555,7 +1513,7 @@ export interface components {
             hardwareinputoutput: components["schemas"]["GroupHardwareInputOutput"];
             /**
              * @default {
-             *       "secret_key": "ThisIsTheDefaultSecretWhichShouldBeLongerThan32Chars",
+             *       "secret": "e080dd1c5158d2347b7a2f421367be64",
              *       "cmd_shutdown": "shutdown now",
              *       "cmd_reboot": "reboot"
              *     }
@@ -1790,14 +1748,6 @@ export interface components {
             canvas_texts: components["schemas"]["TextsConfig"][];
         };
         /**
-         * DimensionTypes
-         * @description SQLalchemy persists the name, fastapi validates against the value.
-         *     We just set name==value so it works in both worlds without any conversion.
-         *     Ref: https://github.com/fastapi/fastapi/discussions/11098
-         * @enum {string}
-         */
-        DimensionTypes: "full" | "preview" | "thumbnail";
-        /**
          * DisplayEnum
          * @enum {string}
          */
@@ -1817,7 +1767,7 @@ export interface components {
             image?: string | null;
             /**
              * Mirror Effect
-             * @description Flip the overlay image horizontally to achieve a mirror effect. This can be useful as it helps users to gather and align in the scene. Text in the image appears in the wrong direction but the final image is correct as the effect is only applied during display, not job processing.
+             * @description Flip the overlay image horizontally. This can be when the livestream is also flipped (mirror-effect on) as it helps users to gather and align in the scene. Text in the overlay appears in the wrong direction but the final image is correct as the effect is only applied during display, not job processing.
              * @default false
              */
             mirror_effect: boolean;
@@ -2835,11 +2785,10 @@ export interface components {
          */
         GroupMisc: {
             /**
-             * Secret Key
+             * Secret
              * @description Secret to encrypt authentication data. If changed, login authorization is invalidated.
-             * @default ThisIsTheDefaultSecretWhichShouldBeLongerThan32Chars
              */
-            secret_key: string;
+            secret?: string;
             /**
              * Cmd Shutdown
              * @description Command to shutdown when requested by the app. Change it if you have custom UPS solutions that need to poweroff properly.
@@ -2994,27 +2943,6 @@ export interface components {
              *     ]
              */
             actions: components["schemas"]["ShareConfigurationSet"][];
-        };
-        /** Share on Demand */
-        GroupShareOnDemand: {
-            /**
-             * Enabled
-             * @description Enable on demand share service using QR codes. To enable the URL needs to be configured and the api.php script setup properly.
-             * @default false
-             */
-            enabled: boolean;
-            /**
-             * Baseurl
-             * @description URL to the folder on a webspace where the api.php is located. The default is a landingpage with further instructions how to setup and needs to be changed.
-             * @default https://photobooth-app.org/extras/shareondemand-landing/
-             */
-            baseurl: string;
-            /**
-             * Apikey
-             * @description Key to secure the api.php script. Set the key in api.php script to same value. Only if the keys match on both ends, the service can operate.
-             * @default changedefault!
-             */
-            apikey: string;
         };
         /**
          * Personalize the User Interface
@@ -3227,7 +3155,11 @@ export interface components {
              * Format: uuid
              */
             id: string;
-            media_type: components["schemas"]["MediaitemTypes"];
+            /**
+             * Media Type
+             * @enum {string}
+             */
+            media_type: "image" | "collage" | "animation" | "video" | "multicamera";
             /**
              * Created At
              * Format: date-time
@@ -3243,14 +3175,6 @@ export interface components {
             /** Show In Gallery */
             show_in_gallery: boolean;
         };
-        /**
-         * MediaitemTypes
-         * @description SQLalchemy persists the name, fastapi validates against the value.
-         *     We just set name==value so it works in both worlds without any conversion.
-         *     Ref: https://github.com/fastapi/fastapi/discussions/11098
-         * @enum {string}
-         */
-        MediaitemTypes: "image" | "collage" | "animation" | "video" | "multicamera";
         /**
          * Job control for multiple captures
          * @description Configure job control affecting the procedure.
@@ -3572,6 +3496,18 @@ export interface components {
              */
             texts: components["schemas"]["TextsConfig"][];
         };
+        /** SseEventDbInsert */
+        SseEventDbInsert: {
+            mediaitem: components["schemas"]["MediaitemPublic"];
+        };
+        /** SseEventDbRemove */
+        SseEventDbRemove: {
+            mediaitem: components["schemas"]["MediaitemPublic"];
+        };
+        /** SseEventDbUpdate */
+        SseEventDbUpdate: {
+            mediaitem: components["schemas"]["MediaitemPublic"];
+        };
         /**
          * SseEventIntervalInformationRecord
          * @description basic class for sse events
@@ -3617,6 +3553,24 @@ export interface components {
             };
         };
         /**
+         * SseEventLogRecord
+         * @description basic class for sse events
+         */
+        SseEventLogRecord: {
+            /** Time */
+            time: string;
+            /** Level */
+            level: string;
+            /** Message */
+            message: string;
+            /** Name */
+            name: string;
+            /** Funcname */
+            funcName: string;
+            /** Lineno */
+            lineno: string;
+        };
+        /**
          * SseEventOnetimeInformationRecord
          * @description basic class for sse events
          */
@@ -3648,6 +3602,38 @@ export interface components {
             disk: {
                 [key: string]: number;
             };
+        };
+        /**
+         * SseEventProcessStateinfo
+         * @description _summary_
+         */
+        SseEventProcessStateinfo: {
+            /** Source */
+            source: string | null;
+            /** Target */
+            target: string | null;
+            jobmodel: components["schemas"]["UiJobModel"] | null;
+        };
+        /**
+         * SseEventTranslateableFrontendNotification
+         * @description some visible message in frontend
+         */
+        SseEventTranslateableFrontendNotification: {
+            /**
+             * Message Key
+             * @default
+             */
+            message_key: string;
+            /** Context Data */
+            context_data?: {
+                [key: string]: string;
+            };
+            /** Color */
+            color?: string | null;
+            /** Icon */
+            icon?: string | null;
+            /** Spinner */
+            spinner?: boolean | null;
         };
         /** SubList */
         SubList: {
@@ -3746,6 +3732,44 @@ export interface components {
              *     }
              */
             gpio_trigger: components["schemas"]["GpioTrigger"];
+        };
+        /** UiCaptureDefinition */
+        UiCaptureDefinition: {
+            /** Name */
+            name: string;
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+        };
+        /** UiFrameOverlay */
+        UiFrameOverlay: {
+            /**
+             * Image
+             * Format: path
+             */
+            image: string;
+            /** Mirror Effect */
+            mirror_effect: boolean;
+        };
+        /** UiJobModel */
+        UiJobModel: {
+            /** Typ */
+            typ: string;
+            /** Total Captures To Take */
+            total_captures_to_take: number;
+            /** Remaining Captures To Take */
+            remaining_captures_to_take: number;
+            /** Number Captures Taken */
+            number_captures_taken: number;
+            /** Duration */
+            duration: number;
+            /** Present Mediaitem Id */
+            present_mediaitem_id: string | null;
+            /** Approval Id */
+            approval_id: string | null;
+            captures_definition: components["schemas"]["UiCaptureDefinition"] | null;
+            frame_overlay: components["schemas"]["UiFrameOverlay"] | null;
         };
         /**
          * UI button configuration
@@ -4575,7 +4599,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["SseEventTranslateableFrontendNotification"] | components["schemas"]["SseEventProcessStateinfo"] | components["schemas"]["SseEventDbInsert"] | components["schemas"]["SseEventDbUpdate"] | components["schemas"]["SseEventDbRemove"] | components["schemas"]["SseEventLogRecord"] | components["schemas"]["SseEventOnetimeInformationRecord"] | components["schemas"]["SseEventIntervalInformationRecord"];
                 };
             };
         };
@@ -4869,9 +4893,7 @@ export interface operations {
     };
     api_get_config_schema_api_admin_config__configurable__schema_get: {
         parameters: {
-            query?: {
-                schema_type?: "default" | "dereferenced";
-            };
+            query?: never;
             header?: never;
             path: {
                 configurable: string;
@@ -5248,46 +5270,6 @@ export interface operations {
             };
         };
     };
-    api_get_stats_onetime_api_admin_information_stts_onetime_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SseEventOnetimeInformationRecord"];
-                };
-            };
-        };
-    };
-    api_get_stats_interval_api_admin_information_stts_interval_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SseEventIntervalInformationRecord"];
-                };
-            };
-        };
-    };
     api_get_calibration_stats_api_admin_multicamera_calibration_get: {
         parameters: {
             query?: never;
@@ -5467,7 +5449,7 @@ export interface operations {
             header?: never;
             path: {
                 mediaitem_id: string;
-                dimension: components["schemas"]["DimensionTypes"];
+                dimension: "full" | "preview" | "thumbnail";
             };
             cookie?: never;
         };
@@ -5499,7 +5481,7 @@ export interface operations {
             header?: never;
             path: {
                 mediaitem_id: string;
-                dimension: components["schemas"]["DimensionTypes"];
+                dimension: "full" | "preview" | "thumbnail";
             };
             cookie?: never;
         };
