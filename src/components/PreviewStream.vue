@@ -10,6 +10,13 @@
 import { onMounted, onUnmounted, watch, watchEffect, ref, computed } from 'vue'
 import { useWebSocket, useDocumentVisibility, useDebounceFn } from '@vueuse/core'
 import type { components } from '@/dto/api'
+import type { Size2D } from '@/util/streamRenderer.ts'
+
+function useStallDetector(ms: number) {
+  const fn = useDebounceFn(() => {}, ms)
+  const stalled = computed(() => !fn.isPending.value)
+  return { stalled, markFrameReceived: fn }
+}
 
 const props = defineProps<{
   // from docs: An absent optional prop other than Boolean will have undefined value.
@@ -29,12 +36,9 @@ const websocketStreamUrl = computed(
 )
 
 const visibility = useDocumentVisibility()
-const streamRenderer = new Worker(new URL('/src/util/streamRenderer.ts', import.meta.url), { type: 'module' })
+const streamRenderer = new Worker(new URL('@/util/streamRenderer.ts', import.meta.url), { type: 'module' })
 const streamRendererImageDecoderMode = typeof ImageDecoder !== 'undefined'
-const stalled = ref(false) //can replace by useDebounceFn once next vueuse is released: https://vueuse.org/shared/useDebounceFn/#pending-state
-const markFrameReceived = useDebounceFn(() => {
-  stalled.value = true // set to true after timeout
-}, 4000)
+const { stalled, markFrameReceived } = useStallDetector(2000)
 
 watchEffect(() => {
   if (props.frameOverlay && props.frameOverlay.image) {
@@ -80,7 +84,6 @@ const {
   async onMessage(ws, event) {
     // mark stream as not stalled once a frame is received.
     // there is a timer marking it as stalled after 1 sec to show it in the ui
-    stalled.value = false
     markFrameReceived()
 
     if (document.hidden) {
