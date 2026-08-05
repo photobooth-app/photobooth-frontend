@@ -126,6 +126,7 @@
   "Yes, delete": "Так, видалити",
   "Reload services on save to apply settings. Reloading might take some time.": "Перезавантажити служби при збереженні для застосування налаштувань. Перезавантаження може зайняти деякий час.",
   "Apply": "Прийняти",
+  "Take one more!": "Візьміть ще один!",
   "You sure to reload the services?": "Ви впевнені, що бажаєте перезавантажити сервіси?",
   "restart systemctl service": "перезапустити службу systemctl",
   "uninstall systemctl service": "видалити системну службу",

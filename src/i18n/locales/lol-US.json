@@ -126,6 +126,7 @@
   "Yes, delete": "crwdns412:0crwdne412:0",
   "Reload services on save to apply settings. Reloading might take some time.": "crwdns414:0crwdne414:0",
   "Apply": "crwdns416:0crwdne416:0",
+  "Take one more!": "crwdns887:0crwdne887:0",
   "You sure to reload the services?": "crwdns418:0crwdne418:0",
   "restart systemctl service": "crwdns420:0crwdne420:0",
   "uninstall systemctl service": "crwdns422:0crwdne422:0",
