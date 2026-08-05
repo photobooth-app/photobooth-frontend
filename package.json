@@ -25,14 +25,14 @@
     "@vueuse/integrations": "^14.4.0",
     "pinia": "^4.0.0",
     "qrcode.vue": "^3.10.0",
-    "quasar": "^2.23.5",
+    "quasar": "^2.24.0",
     "vue": "^3.5.40",
     "vue-i18n": "^11.4.7",
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^11.2.4",
-    "@quasar/app-vite": "^3.3.1",
+    "@quasar/app-vite": "^3.4.0",
     "@types/lodash": "^4.17.24",
     "autoprefixer": "^10.5.4",
     "globals": "^17.7.0",
