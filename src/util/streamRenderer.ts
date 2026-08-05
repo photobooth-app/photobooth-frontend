@@ -414,6 +414,8 @@ class StreamRenderer {
           type: 'image/jpeg',
         })
         const result = await decoder.decode()
+        decoder.close()
+
         bitmap = result.image
       } else {
         // Fallback to createImageBitmap
