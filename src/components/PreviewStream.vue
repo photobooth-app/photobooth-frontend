@@ -96,10 +96,13 @@ const {
       return
     }
 
-    streamRenderer.postMessage({ type: 'frame', payload: event.data })
-
-    // the ImageDecoder consumes arraybuffer which would be transferable - we do not transfer as there is no speed improvement
-    // streamRenderer.postMessage({ type: 'frame', payload: event.data }, [event.data])
+    if (ws.binaryType == 'arraybuffer') {
+      // the ImageDecoder consumes arraybuffer which would be transferable
+      streamRenderer.postMessage({ type: 'frame', payload: event.data }, [event.data])
+    } else {
+      // the fallback is blob, which cannot be transferred only copied.
+      streamRenderer.postMessage({ type: 'frame', payload: event.data })
+    }
   },
 })
 
