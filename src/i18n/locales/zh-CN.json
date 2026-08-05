@@ -126,6 +126,7 @@
   "Yes, delete": "是，删除",
   "Reload services on save to apply settings. Reloading might take some time.": "保存时重新加载服务以应用设置。重新加载可能需要一些时间。",
   "Apply": "应用",
+  "Take one more!": "再花一次！",
   "You sure to reload the services?": "您确定要重新加载服务吗？",
   "restart systemctl service": "重启 systemctl 服务",
   "uninstall systemctl service": "卸载 systemctl 服务",
