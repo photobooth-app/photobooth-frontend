@@ -126,6 +126,7 @@
   "Yes, delete": "Evet, silin",
   "Reload services on save to apply settings. Reloading might take some time.": "Ayarları uygulamak için kaydettikten sonra hizmetleri yeniden yükleyin. Yeniden yükleme biraz zaman alabilir.",
   "Apply": "Başvurmak",
+  "Take one more!": "Bir tane daha çek!",
   "You sure to reload the services?": "Hizmetleri yeniden yüklediğinizden emin misiniz?",
   "restart systemctl service": "systemctl hizmetini yeniden başlat",
   "uninstall systemctl service": "systemctl hizmetini kaldır",
