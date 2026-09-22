@@ -23,6 +23,7 @@
     "@quasar/extras": "^2.0.4",
     "@vueuse/core": "^14.4.0",
     "@vueuse/integrations": "^14.4.0",
+    "lodash": "^4.18.1",
     "pinia": "^4.0.3",
     "qrcode.vue": "^3.10.0",
     "quasar": "^2.25.1",

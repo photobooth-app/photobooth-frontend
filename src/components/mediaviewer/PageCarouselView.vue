@@ -16,7 +16,7 @@
     @transition="carouselTransition"
   >
     <q-carousel-slide v-for="slide in props.slicedImages" :key="slide.id" :name="slide.id" class="column no-wrap flex-center full-height q-pa-sm">
-      <MediaItemPreviewViewer :item="slide" />
+      <MediaItemPreviewViewer :item="slide" :is-applying-long-running-filter="slide.id === props.mediaitemId && props.isApplyingLongRunningFilter" />
     </q-carousel-slide>
   </q-carousel>
 </template>
@@ -30,6 +30,7 @@ import { default as MediaItemPreviewViewer } from '../MediaItemPreviewViewer.vue
 const props = defineProps<{
   slicedImages: components['schemas']['MediaitemPublic'][]
   mediaitemId: string // warning: if invalid ID is given, there is just shown nothing...
+  isApplyingLongRunningFilter?: boolean
 }>()
 
 const currentMediaitemId = toRef(props.mediaitemId)

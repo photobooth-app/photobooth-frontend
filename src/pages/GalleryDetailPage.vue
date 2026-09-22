@@ -37,12 +37,17 @@
       <q-page-container class="q-pa-none galleryimagedetail full-height">
         <q-page class="full-height">
           <template v-if="itemPresenterMode">
-            <MediaItemPreviewViewer :item="currentMediaitem" style="user-select: none" />
+            <MediaItemPreviewViewer
+              :item="currentMediaitem"
+              :is-applying-long-running-filter="isApplyingLongRunningFilter"
+              style="user-select: none"
+            />
           </template>
           <template v-else>
             <PageCarouselView
               :mediaitem-id="currentMediaitem.id"
               :sliced-images="mediacollectionStore.collection"
+              :is-applying-long-running-filter="isApplyingLongRunningFilter"
               @trigger-changed-item="onCarouselTransition"
             />
           </template>
@@ -113,6 +118,7 @@ import { useI18n } from 'vue-i18n'
 <script setup lang="ts">
 import type { TriggerSchema } from '@/types/trigger-schema'
 import { useMainStore } from '@/stores/main-store'
+import { useStateStore } from '@/stores/state-store'
 import { useConfigurationStore } from '@/stores/configuration-store'
 import { useMediacollectionStore } from '@/stores/mediacollection-store'
 import { ref, onBeforeMount, computed, onMounted, watch } from 'vue'
@@ -136,6 +142,7 @@ const $q = useQuasar()
 const route = useRoute('mediaviewer')
 const router = useRouter()
 const mainStore = useMainStore()
+const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
 const mediacollectionStore = useMediacollectionStore()
 const selectedMediaitemId = ref<string | null>(null)
@@ -145,18 +152,27 @@ const displayIndeterminateProgressbar = ref(false)
 const showDialogShareActionWithParameters = ref(false)
 const shareActionWithParametersConfigIndex = ref(0)
 const available_filter = ref([])
+const long_running_filters = ref<string[]>([])
+const isApplyingLongRunningFilter = ref<boolean>(false)
 const qrShareUrls = ref([])
 const props = defineProps<{
   startTimer: boolean
   itemPresenterMode?: boolean
 }>()
 
+const checkJustPresentedLongRunningFilter = () => {
+  // Not used for action presenter transition
+}
+
 onBeforeMount(() => {
   selectedMediaitemId.value = route.params.id as string
   getAvailableFilter()
+  getLongRunningFilters()
+  checkJustPresentedLongRunningFilter()
 })
 watch(route, to => {
   selectedMediaitemId.value = to.params.id as string
+  checkJustPresentedLongRunningFilter()
 })
 onMounted(() => {
   headercountdowntimer.value = props.startTimer
@@ -242,11 +258,33 @@ const getAvailableFilter = async () => {
     console.warn(error)
   }
 }
+const getLongRunningFilters = async () => {
+  try {
+    const response = await _fetch('/api/filter/long_running')
+
+    long_running_filters.value = await response.json()
+  } catch (error) {
+    console.warn(error)
+  }
+}
+watch(
+  () => currentMediaitem.value?.revision,
+  () => {
+    isApplyingLongRunningFilter.value = false
+  }
+)
 const doApplyFilter = (id: string, filter: string) => {
   // close filter dialog
   openFilterDialog.value = false
 
-  displayIndeterminateProgressbar.value = true
+  if (long_running_filters.value.includes(filter)) {
+    isApplyingLongRunningFilter.value = true
+    displayIndeterminateProgressbar.value = false
+  } else {
+    isApplyingLongRunningFilter.value = false
+    displayIndeterminateProgressbar.value = true
+  }
+
   fetch(`/api/filter/${id}?filter=${filter}`, { method: 'PATCH' })
     .then(response => {
       if (!response.ok) {
@@ -258,6 +296,7 @@ const doApplyFilter = (id: string, filter: string) => {
     .catch(err => {
       console.error(err)
       displayIndeterminateProgressbar.value = false
+      isApplyingLongRunningFilter.value = false
     })
 }
 const doDeleteItem = (id: string) => {

@@ -3770,6 +3770,8 @@ export interface components {
             approval_id: string | null;
             captures_definition: components["schemas"]["UiCaptureDefinition"] | null;
             frame_overlay: components["schemas"]["UiFrameOverlay"] | null;
+            is_long_running_filter?: boolean;
+            latest_capture_id?: string | null;
         };
         /**
          * UI button configuration

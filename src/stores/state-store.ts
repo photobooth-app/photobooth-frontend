@@ -15,6 +15,8 @@ export const useStateStore = defineStore('state-store', {
       approval_id: '',
       captures_definition: null,
       frame_overlay: null,
+      is_long_running_filter: false,
+      latest_capture_id: null,
     } as components['schemas']['UiJobModel'],
   }),
   actions: {},

@@ -11,9 +11,38 @@
     ></preview-stream>
 
     <!-- layer display processing spinner grid to show user computer working hard -->
-    <div v-if="stateStore.isStateProcessing" class="full-height full-width column justify-center content-center" style="position: absolute">
-      <q-spinner-grid size="20em" />
-    </div>
+    <transition name="fade">
+      <div
+        v-if="stateStore.isStateProcessing && (!stateStore.jobmodel.is_long_running_filter || (!stateStore.jobmodel.latest_capture_id && !stateStore.jobmodel.approval_id))"
+        class="absolute-full flex flex-center overflow-hidden"
+        style="z-index: 100; background: black"
+      >
+        <q-spinner-grid size="20em" />
+      </div>
+    </transition>
+
+    <!-- long-running filter preview shown overlaying stream during processing -->
+    <transition name="fade">
+      <div
+        v-if="stateStore.isStateProcessing && stateStore.jobmodel.is_long_running_filter && (stateStore.jobmodel.latest_capture_id || stateStore.jobmodel.approval_id)"
+        class="absolute-full flex flex-center overflow-hidden"
+        style="z-index: 90; background: black"
+      >
+        <div class="relative-position image-wrapper">
+          <img
+            loading="eager"
+            class="preview-image"
+            :src="`/api/processing/approval/${stateStore.jobmodel.latest_capture_id || stateStore.jobmodel.approval_id}`"
+          />
+          <div class="rainbow-frame-overlay">
+            <div class="rainbow-badge row items-center q-px-md q-py-xs text-white shadow-10">
+              <q-spinner-dots size="1.6em" color="white" class="q-mr-sm" />
+              <div class="text-subtitle1 text-weight-medium">{{ $t('Filter is processing...') }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
 
     <!-- layer display the countdown timer -->
     <div
@@ -35,14 +64,16 @@
     <div v-if="stateStore.isStateIdle" id="frontpage_text" v-html="configurationStore.configuration.uisettings.FRONTPAGE_TEXT"></div>
 
     <!-- dialog for approval -->
-    <div v-if="stateStore.isStateApproval && stateStore.jobmodel.approval_id">
-      <MediaItemApprovalViewer
-        :approval_id="stateStore.jobmodel.approval_id"
-        :number_captures_taken="stateStore.jobmodel.number_captures_taken"
-        :total_captures_to_take="stateStore.jobmodel.total_captures_to_take"
-      >
-      </MediaItemApprovalViewer>
-    </div>
+    <transition name="fade">
+      <div v-if="stateStore.isStateApproval && stateStore.jobmodel.approval_id">
+        <MediaItemApprovalViewer
+          :approval_id="stateStore.jobmodel.approval_id"
+          :number_captures_taken="stateStore.jobmodel.number_captures_taken"
+          :total_captures_to_take="stateStore.jobmodel.total_captures_to_take"
+        >
+        </MediaItemApprovalViewer>
+      </div>
+    </transition>
 
     <q-page-sticky position="bottom" class="q-mb-lg">
       <div v-if="stateStore.isStateIdle">
@@ -216,6 +247,15 @@ const invokeAction = (trigger: TriggerSchema) => {
   mainStore.lastAction = trigger // save last action so it can be started from itempresenter directly again.
   remoteProcedureCall(`/api/${trigger.action}/${trigger.config_index}`)
 }
+const actionAspectRatio = ref<number | null>(null)
+
+function onActionImgLoad(e: Event) {
+  const target = e.target as HTMLImageElement
+  if (target && target.naturalWidth && target.naturalHeight) {
+    actionAspectRatio.value = target.naturalWidth / target.naturalHeight
+  }
+}
+
 const stopRecordingVideo = () => {
   remoteProcedureCall('/api/processing/next')
 }
@@ -227,4 +267,61 @@ const stopRecordingVideo = () => {
 .action-button-admin-invisible
   opacity: 0.0
   cursor: default
+
+.fade-enter-active
+  transition: opacity 0.4s ease
+
+.fade-leave-active
+  transition: opacity 0.4s ease
+
+.fade-enter-from,
+.fade-leave-to
+  opacity: 0
+
+.image-wrapper
+  position: relative
+  height: 100%
+  width: auto
+  max-width: 100%
+  max-height: 100%
+
+.preview-image
+  width: 100%
+  height: 100%
+  object-fit: contain
+  display: block
+
+.rainbow-frame-overlay
+  position: absolute
+  inset: 0
+  z-index: 10
+  pointer-events: none
+  box-sizing: border-box
+
+.rainbow-frame-overlay::before
+  content: ''
+  position: absolute
+  inset: 0
+  border: 4px solid transparent
+  border-image: linear-gradient(135deg, #ff0055, #ff5000, #ffcc00, #00ff66, #00ccff, #7000ff, #ff0055) 1
+  animation: rainbow-border 3s linear infinite
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3), 0 0 15px rgba(0, 204, 255, 0.4)
+
+.rainbow-badge
+  position: absolute
+  top: 16px
+  left: 50%
+  transform: translateX(-50%)
+  background: rgba(0, 0, 0, 0.65)
+  backdrop-filter: blur(12px)
+  -webkit-backdrop-filter: blur(12px)
+  border: 1px solid rgba(255, 255, 255, 0.2)
+  border-radius: 24px
+  white-space: nowrap
+
+@keyframes rainbow-border
+  0%
+    filter: hue-rotate(0deg)
+  100%
+    filter: hue-rotate(360deg)
 </style>
