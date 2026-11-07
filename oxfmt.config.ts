@@ -11,6 +11,7 @@ export default defineConfig({
     'src-cordova/',
     'src-capacitor/',
     'src/router/typed-router.d.ts',
+    'src/dto/api.ts',
   ],
 
   printWidth: 150,

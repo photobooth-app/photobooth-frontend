@@ -9,7 +9,7 @@
     "lint": "oxfmt && oxlint --fix",
     "lint:check": "oxfmt --check && oxlint",
     "typecheck": "vue-tsc --noEmit",
-    "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "format": "oxfmt",
     "generate-types": "openapi-typescript  http://localhost:8000/api/openapi.json --output ./src/dto/api.ts",
     "check-types": "openapi-typescript  http://localhost:8000/api/openapi.json --output ./src/dto/api.ts --check",
     "test": "echo \"No test specified\" && exit 0",
@@ -40,10 +40,9 @@
     "oxfmt": "^0.60.0",
     "oxlint": "^1.79.0",
     "oxlint-tsgolint": "^7.0.2001",
-    "prettier": "^3.9.6",
     "typescript": "^6.0.3",
     "vite-plugin-checker": "^0.14.5",
-    "vue-tsc": "^3.3.10"
+    "vue-tsc": "3.3.11"
   },
   "overrides": {
     "openapi-typescript": {
