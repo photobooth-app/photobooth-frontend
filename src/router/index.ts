@@ -34,7 +34,7 @@ export default defineRouter(function (/* { store, ssrContext } */) {
     history: createHistory(import.meta.env.QUASAR_VUE_ROUTER_BASE),
   })
 
-  Router.beforeEach((to, _): import('vue-router').NavigationGuardReturn => {
+  Router.beforeEach((to): import('vue-router').NavigationGuardReturn => {
     if (to.meta.requiresAdmin && !hasAccessToken()) {
       return '/auth/login'
     }
