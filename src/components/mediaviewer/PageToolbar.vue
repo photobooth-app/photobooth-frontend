@@ -34,7 +34,7 @@
           class="q-mr-sm action-button action-button-download col-auto glass-effect"
           icon="sym_o_download"
           :label="$t('BTN_LABEL_GALLERY_DOWNLOAD')"
-          @click="openURL(`/sharepage/#?url=/media/full/${item.id}`)"
+          @click="openURL(`/sharepage/#?url=/media/full/${item.id}?v=${item.revision}`)"
         />
         <ShareTriggerButtons
           v-if="showShare"
