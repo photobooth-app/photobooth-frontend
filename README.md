@@ -32,7 +32,7 @@ In development mode hot-code reloading, error reporting, etc. is enabled. Also t
 quasar dev
 ```
 
-After starting `quasar dev`, it starts a proxy server on port 9000. So browse to http://localhost:9000 and it will open the development version of the frontend.
+After starting `quasar dev`, it starts a proxy server on port 9000. So browse to <http://localhost:9000> and it will open the development version of the frontend.
 Requests to the backend are transparently forwarded by the proxy to the photobooth-app listening to port 8000 usually.
 So to develop the frontend you also need the photobooth-app installed and started in the background. The app has a virtual camera that is used by default so there is no hardware required to develop the frontend.
 
