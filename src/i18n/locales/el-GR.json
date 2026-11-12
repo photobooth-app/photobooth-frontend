@@ -126,6 +126,7 @@
   "Yes, delete": "Ναι, διαγραφή",
   "Reload services on save to apply settings. Reloading might take some time.": "Επαναφόρτωση των υπηρεσιών στην αποθήκευση για να εφαρμοστούν οι ρυθμίσεις. Η επαναφόρτωση μπορεί να πάρει κάποιο χρόνο.",
   "Apply": "Εφαρμογή",
+  "Take one more!": "Πάρτε ένα ακόμη!",
   "You sure to reload the services?": "Σίγουρα να φορτώσετε ξανά τις υπηρεσίες?",
   "restart systemctl service": "επανεκκίνηση υπηρεσίας systemctl",
   "uninstall systemctl service": "κατάργηση εγκατάστασης υπηρεσίας systemctl",
