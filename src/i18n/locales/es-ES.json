@@ -126,6 +126,7 @@
   "Yes, delete": "Sí, eliminar",
   "Reload services on save to apply settings. Reloading might take some time.": "Recargar servicios al guardar para aplicar ajustes. Recargar puede tardar un tiempo.",
   "Apply": "Aplicar",
+  "Take one more!": "¡Tome una más!",
   "You sure to reload the services?": "¿Seguro que quieres recargar los servicios?",
   "restart systemctl service": "reiniciar el servicio systemctl",
   "uninstall systemctl service": "desinstalar el servicio systemctl",

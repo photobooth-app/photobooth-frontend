@@ -126,6 +126,7 @@
   "Yes, delete": "はい、削除します",
   "Reload services on save to apply settings. Reloading might take some time.": "設定を適用するためにセーブ時にサービスを再読み込みします。リロードに時間がかかる場合があります。",
   "Apply": "適用",
+  "Take one more!": "もう一度取りましょう！",
   "You sure to reload the services?": "サービスを再読み込みしますか？",
   "restart systemctl service": "systemctl サービスを再起動します",
   "uninstall systemctl service": "systemctl サービスのアンインストール",
