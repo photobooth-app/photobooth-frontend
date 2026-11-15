@@ -1,33 +1,41 @@
 <template>
   <div class="on-screen-keyboard" :class="`on-screen-keyboard--${mode}`">
     <div v-for="(row, rowIndex) in rows" :key="`${mode}-${layer}-${rowIndex}`" class="on-screen-keyboard__row">
-      <q-btn
+      <!-- plain buttons instead of q-btn: no ripple, no focus handling, much cheaper on a Raspberry Pi -->
+      <button
         v-for="key in row"
         :key="key.id"
-        unelevated
-        no-caps
-        :color="key.kind === 'char' ? 'grey-3' : key.kind === 'enter' ? 'primary' : 'grey-5'"
-        :text-color="key.kind === 'enter' ? 'white' : 'dark'"
-        :icon="key.icon"
-        :label="key.label"
-        :aria-label="key.ariaLabel ?? key.label"
+        type="button"
+        tabindex="-1"
         class="on-screen-keyboard__key"
-        :class="[`on-screen-keyboard__key--${key.kind}`, { 'on-screen-keyboard__key--active': key.active }]"
+        :class="[
+          `on-screen-keyboard__key--${key.kind}`,
+          { 'on-screen-keyboard__key--active': key.active, 'on-screen-keyboard__key--pressed': pressedId === key.id },
+        ]"
         :style="{ flexGrow: key.grow ?? 1 }"
+        :aria-label="key.ariaLabel ?? key.label"
+        @pointerdown.prevent="onPointerDown(key)"
+        @pointerup="onPointerEnd"
+        @pointercancel="onPointerEnd"
+        @pointerleave="onPointerEnd"
         @mousedown.prevent
-        @click="press(key)"
-      />
+        @click="onClick(key, $event)"
+      >
+        <q-icon v-if="key.icon" :name="key.icon" />
+        <template v-else>{{ key.label }}</template>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 
 /**
  * Touch keyboard rendered inside the app.
  * Needed because system on-screen keyboards do not show up above a browser running in kiosk mode.
- * Keys do not take focus (mousedown.prevent), so a focused input stays focused while typing.
+ * Keys react on pointerdown (immediate, no lost taps when typing fast) and never take focus,
+ * so a focused input stays focused while typing. Holding backspace repeats it.
  */
 
 export type KeyboardMode = 'numeric' | 'text'
@@ -44,6 +52,9 @@ interface KeyDef {
   grow?: number
   active?: boolean
 }
+
+const REPEAT_DELAY_MS = 450
+const REPEAT_INTERVAL_MS = 70
 
 const model = defineModel<string | null>({ default: '' })
 const mode = defineModel<KeyboardMode>('mode', { default: 'numeric' })
@@ -69,8 +80,10 @@ const emit = defineEmits<{
 
 const shift = ref(false)
 const layer = ref<'letters' | 'symbols'>('letters')
+const pressedId = ref<string | null>(null)
 
-const charKeys = (chars: string): KeyDef[] => [...chars].map(c => ({ id: `char-${c}`, kind: 'char', label: c, value: c }))
+// id based on the lowercase char, so toggling shift only relabels the keys instead of recreating them
+const charKeys = (chars: string): KeyDef[] => [...chars].map(c => ({ id: `char-${c.toLowerCase()}`, kind: 'char', label: c, value: c }))
 
 const backspaceKey: KeyDef = { id: 'backspace', kind: 'backspace', icon: 'sym_o_backspace', ariaLabel: 'Backspace', grow: 1.5 }
 const enterKey: KeyDef = { id: 'enter', kind: 'enter', icon: 'sym_o_keyboard_return', ariaLabel: 'Enter', grow: 1.5 }
@@ -143,6 +156,39 @@ const press = (key: KeyDef) => {
       break
   }
 }
+
+let repeatDelay: ReturnType<typeof setTimeout> | null = null
+let repeatInterval: ReturnType<typeof setInterval> | null = null
+
+const stopRepeat = () => {
+  if (repeatDelay !== null) clearTimeout(repeatDelay)
+  if (repeatInterval !== null) clearInterval(repeatInterval)
+  repeatDelay = repeatInterval = null
+}
+
+const onPointerDown = (key: KeyDef) => {
+  stopRepeat()
+  pressedId.value = key.id
+  press(key)
+  if (key.kind === 'backspace') {
+    repeatDelay = setTimeout(() => {
+      repeatInterval = setInterval(() => press(key), REPEAT_INTERVAL_MS)
+    }, REPEAT_DELAY_MS)
+  }
+}
+
+const onPointerEnd = () => {
+  stopRepeat()
+  pressedId.value = null
+}
+
+// real mouse/touch presses are handled on pointerdown already (event.detail > 0);
+// only clicks without a pointer (assistive technology, scripted) are handled here
+const onClick = (key: KeyDef, evt: MouseEvent) => {
+  if (evt.detail === 0) press(key)
+}
+
+onBeforeUnmount(stopRepeat)
 </script>
 
 <style lang="scss">
@@ -153,6 +199,7 @@ const press = (key: KeyDef) => {
   width: 100%;
   margin: 0 auto;
   user-select: none;
+  -webkit-user-select: none;
   touch-action: manipulation;
 
   &--numeric {
@@ -169,12 +216,27 @@ const press = (key: KeyDef) => {
   }
 
   &__key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-basis: 0;
     min-width: 0;
     min-height: 52px;
-    font-size: 1.25rem;
-    border-radius: 8px;
+    margin: 0;
     padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: #eeeeee;
+    color: #1d1d1d;
+    font: inherit;
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    .q-icon {
+      font-size: 1.5em;
+    }
   }
 
   &--numeric &__key {
@@ -182,13 +244,51 @@ const press = (key: KeyDef) => {
     font-size: 1.6rem;
   }
 
+  &__key--backspace,
+  &__key--shift,
+  &__key--layer,
+  &__key--mode {
+    background: #bdbdbd;
+  }
+
+  &__key--enter {
+    background: var(--q-primary);
+    color: #ffffff;
+  }
+
   &__key--mode,
   &__key--layer {
     font-size: 1rem;
   }
 
+  &--numeric &__key--mode {
+    font-size: 1.1rem;
+  }
+
   &__key--active {
     outline: 2px solid var(--q-primary);
+  }
+
+  // instant feedback without animations, cheap to render
+  &__key--pressed {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18));
+  }
+}
+
+body.body--dark .on-screen-keyboard__key {
+  background: #424242;
+  color: #f5f5f5;
+
+  &--backspace,
+  &--shift,
+  &--layer,
+  &--mode {
+    background: #616161;
+  }
+
+  &--enter {
+    background: var(--q-primary);
+    color: #ffffff;
   }
 }
 </style>
