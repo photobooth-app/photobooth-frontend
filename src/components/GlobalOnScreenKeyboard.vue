@@ -63,9 +63,16 @@ const onFocusIn = (evt: FocusEvent) => {
 }
 
 const onFocusOut = () => {
-  // focus may move directly to another field; only hide if nothing editable is focused afterwards
   setTimeout(() => {
-    if (!isEditable(document.activeElement)) target.value = null
+    const active = document.activeElement
+    // on touch, QBtn moves focus to its internal focus helper when the finger lifts (mouse presses are already
+    // prevented via mousedown.prevent). Focus inside the keyboard is never a reason to close: give it back to the field.
+    if (target.value && active && panel.value?.contains(active)) {
+      target.value.focus({ preventScroll: true })
+      return
+    }
+    // focus may move directly to another field; only hide if nothing editable is focused afterwards
+    if (!isEditable(active)) target.value = null
   }, 0)
 }
 
