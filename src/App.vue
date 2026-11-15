@@ -4,6 +4,7 @@
     <q-dialog v-model="showConnectionOverlay" persistent>
       <connection-overlay />
     </q-dialog>
+    <global-on-screen-keyboard />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import { useStateStore } from '@/stores/state-store'
 import { useConfigurationStore } from '@/stores/configuration-store'
 import { useMediacollectionStore } from '@/stores/mediacollection-store'
 import ConnectionOverlay from './components/ConnectionOverlay.vue'
+import GlobalOnScreenKeyboard from './components/GlobalOnScreenKeyboard.vue'
 import { useQuasar } from 'quasar'
 import type { EventSourceStatus } from '@vueuse/core'
 import { useEventSource } from '@vueuse/core'

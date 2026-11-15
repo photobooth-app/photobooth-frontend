@@ -67,6 +67,19 @@
         </div>
 
         <div>
+          <q-btn
+            flat
+            round
+            :color="onScreenKeyboardEnabled ? 'white' : 'green-3'"
+            icon="sym_o_keyboard"
+            :aria-label="$t('Toggle on-screen keyboard')"
+            @click="onScreenKeyboardEnabled = !onScreenKeyboardEnabled"
+          >
+            <q-tooltip>{{ $t('Toggle on-screen keyboard') }}</q-tooltip>
+          </q-btn>
+        </div>
+
+        <div>
           <q-btn flat no-caps color="green-1" class="q-mx-sm" stack icon="sym_o_logout" :label="$t('Sign out')" @click="click_logout" />
         </div>
       </q-toolbar>
@@ -81,7 +94,9 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { logout } from '@/util/auth'
+import { useOnScreenKeyboardEnabled } from '@/util/onScreenKeyboard'
 const router = useRouter()
+const onScreenKeyboardEnabled = useOnScreenKeyboardEnabled()
 
 const click_logout = () => {
   logout()

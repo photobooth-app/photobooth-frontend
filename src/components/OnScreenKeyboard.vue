@@ -48,13 +48,23 @@ interface KeyDef {
 const model = defineModel<string | null>({ default: '' })
 const mode = defineModel<KeyboardMode>('mode', { default: 'numeric' })
 
-const { layout = 'qwerty' } = defineProps<{
+const {
+  layout = 'qwerty',
+  decimal = false,
+  external = false,
+} = defineProps<{
   /** letter arrangement of the text keyboard */
   layout?: 'qwerty' | 'qwertz'
+  /** add minus and decimal point keys to the numeric pad */
+  decimal?: boolean
+  /** do not edit v-model, only emit char/backspace so the parent can edit the target itself (e.g. at the caret) */
+  external?: boolean
 }>()
 
 const emit = defineEmits<{
   enter: []
+  char: [value: string]
+  backspace: []
 }>()
 
 const shift = ref(false)
@@ -74,7 +84,7 @@ const rows = computed<KeyDef[][]>(() => {
       charKeys('456'),
       charKeys('789'),
       [{ id: 'mode', kind: 'mode', label: 'ABC', ariaLabel: 'Letters' }, ...charKeys('0'), backspaceKey],
-      [enterKey],
+      decimal ? [...charKeys('-.'), { ...enterKey, grow: 1 }] : [enterKey],
     ]
   }
 
@@ -111,11 +121,13 @@ const press = (key: KeyDef) => {
   switch (key.kind) {
     case 'char':
     case 'space':
-      model.value = current + key.value
+      if (external) emit('char', key.value ?? '')
+      else model.value = current + key.value
       if (shift.value) shift.value = false // one-shot shift like on phones
       break
     case 'backspace':
-      model.value = current.slice(0, -1)
+      if (external) emit('backspace')
+      else model.value = current.slice(0, -1)
       break
     case 'enter':
       emit('enter')
