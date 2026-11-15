@@ -1,8 +1,14 @@
+import type { InjectionKey } from 'vue'
 import type { components } from '@/dto/api'
 
 export type CollageProcessing = components['schemas']['CollageProcessing']
 export type CollageMergeDefinition = components['schemas']['CollageMergeDefinition']
 export type TextsConfig = components['schemas']['TextsConfig']
+
+/** ui schema element type of the editor button inside the collage form */
+export const COLLAGE_EDITOR_BUTTON = 'CollageEditorButton'
+/** provided by the collage form renderer, opens its editor */
+export const OPEN_COLLAGE_EDITOR: InjectionKey<() => void> = Symbol('openCollageEditor')
 
 export type SampleSource = 'placeholder' | 'gallery'
 
@@ -53,4 +59,25 @@ export const sanitizeDefinition = (def: CollageMergeDefinition): CollageMergeDef
   width: Math.max(1, Math.round(def.width)),
   height: Math.max(1, Math.round(def.height)),
   rotate: Math.round(def.rotate),
+})
+
+export const DEFAULT_FONT = 'userdata/demoassets/fonts/Roboto-Bold.ttf'
+
+/** default values of a new text, same as the backend model */
+export const newText = (): TextsConfig => ({
+  text: '',
+  pos_x: 50,
+  pos_y: 50,
+  rotate: 0,
+  font_size: 40,
+  font: DEFAULT_FONT,
+  color: '#cd1c18',
+})
+
+export const sanitizeText = (text: TextsConfig): TextsConfig => ({
+  ...text,
+  pos_x: Math.max(0, Math.round(text.pos_x)),
+  pos_y: Math.max(0, Math.round(text.pos_y)),
+  rotate: Math.round(text.rotate),
+  font_size: Math.max(1, Math.round(text.font_size)),
 })

@@ -40,13 +40,17 @@
 
         <template v-if="showTexts && config.canvas_texts_enable">
           <div
-            v-for="(text, index) in config.canvas_texts"
+            v-for="(text, index) in texts"
             :key="index"
             class="collage-canvas__text-layer"
+            :class="{ 'collage-canvas__text-layer--editable': editable }"
             :style="{ transform: `rotate(${-(text.rotate ?? 0)}deg)` }"
           >
             <span
               class="collage-canvas__text"
+              :class="{ 'collage-canvas__text--selected': editable && index === selectedText, 'collage-canvas__text--empty': !text.text }"
+              :data-index="editable ? index : undefined"
+              :data-action="editable ? 'move-text' : undefined"
               :style="{
                 left: `${text.pos_x}px`,
                 top: `${text.pos_y}px`,
@@ -54,7 +58,7 @@
                 color: text.color,
                 fontFamily: fontFamilies[text.font ?? ''] ?? 'sans-serif',
               }"
-              >{{ formatText(text.text) }}</span
+              >{{ formatText(text.text) || (editable ? '…' : '') }}</span
             >
           </div>
         </template>
@@ -112,7 +116,15 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useElementSize } from '@vueuse/core'
-import { type CollageMergeDefinition, type CollageProcessing, placeholderImage, sanitizeDefinition, userfileUrl } from './collage'
+import {
+  type CollageMergeDefinition,
+  type CollageProcessing,
+  type TextsConfig,
+  sanitizeText,
+  placeholderImage,
+  sanitizeDefinition,
+  userfileUrl,
+} from './collage'
 
 /**
  * Renders a collage like the backend (photobooth MergeCollageStep + background/overlay/text steps) does, with sample images.
@@ -134,6 +146,8 @@ const MIN_SIZE = 20
 
 const definitions = defineModel<CollageMergeDefinition[]>('definitions', { required: true })
 const selected = defineModel<number | null>('selected', { default: null })
+const texts = defineModel<TextsConfig[]>('texts', { default: () => [] })
+const selectedText = defineModel<number | null>('selectedText', { default: null })
 
 const {
   config,
@@ -195,7 +209,7 @@ const slots = computed(() => {
 // fonts from the backend's userdata folder, loaded once per file
 const fontFamilies = ref<Record<string, string>>({})
 watch(
-  () => (config.canvas_texts_enable ? config.canvas_texts.map(t => t.font ?? '') : []),
+  () => (config.canvas_texts_enable ? texts.value.map(t => t.font ?? '') : []),
   fonts => {
     for (const font of new Set(fonts)) {
       const url = userfileUrl(font)
@@ -228,11 +242,12 @@ const guides = ref<Guide[]>([])
 
 interface DragState {
   pointerId: number
-  action: 'move' | 'resize' | 'rotate'
+  action: 'move' | 'resize' | 'rotate' | 'move-text'
   index: number
   startX: number
   startY: number
   start: CollageMergeDefinition
+  startText: TextsConfig | null
   sx: number
   sy: number
 }
@@ -250,11 +265,14 @@ const onStagePointerDown = (evt: PointerEvent) => {
   const el = (evt.target as HTMLElement).closest<HTMLElement>('[data-action]')
   if (!el) {
     selected.value = null
+    selectedText.value = null
     return
   }
   evt.preventDefault()
   const index = Number(el.dataset.index)
-  selected.value = index
+  const isText = el.dataset.action === 'move-text'
+  selected.value = isText ? null : index
+  selectedText.value = isText ? index : null
   const start = toCanvas(evt)
   drag = {
     pointerId: evt.pointerId,
@@ -262,7 +280,8 @@ const onStagePointerDown = (evt: PointerEvent) => {
     index,
     startX: start.x,
     startY: start.y,
-    start: { ...definitions.value[index]! },
+    start: { ...definitions.value[isText ? 0 : index]! },
+    startText: isText ? { ...texts.value[index]! } : null,
     sx: Number(el.dataset.sx ?? 0),
     sy: Number(el.dataset.sy ?? 0),
   }
@@ -285,6 +304,8 @@ const applyPendingMove = () => {
   const p = toCanvas(pendingEvent)
   const shift = pendingEvent.shiftKey
   pendingEvent = null
+  if (drag.action === 'move-text') return moveText(drag.index, drag.startText!, p.x - drag.startX, p.y - drag.startY)
+
   const s = drag.start
   let next: CollageMergeDefinition
 
@@ -309,6 +330,16 @@ const applyPendingMove = () => {
   const list = [...definitions.value]
   list[drag.index] = sanitizeDefinition(next)
   definitions.value = list
+}
+
+// texts are positioned inside a layer rotated around the canvas center, so move along the layer's axes
+const moveText = (index: number, start: TextsConfig, dx: number, dy: number) => {
+  const rad = (-(start.rotate ?? 0) * Math.PI) / 180
+  const lx = dx * Math.cos(rad) + dy * Math.sin(rad)
+  const ly = -dx * Math.sin(rad) + dy * Math.cos(rad)
+  const list = [...texts.value]
+  list[index] = sanitizeText({ ...start, pos_x: start.pos_x + lx, pos_y: start.pos_y + ly })
+  texts.value = list
 }
 
 const resize = (s: CollageMergeDefinition, dx: number, dy: number, sx: number, sy: number, aspect: boolean): CollageMergeDefinition => {
@@ -446,10 +477,28 @@ onBeforeUnmount(() => {
     pointer-events: none;
   }
 
+  &__text-layer--editable {
+    z-index: 960; // above the outlines of unselected images, so texts can be picked
+  }
+
   &__text {
     position: absolute;
     white-space: pre;
     line-height: normal;
+  }
+
+  &__text-layer--editable &__text {
+    pointer-events: auto;
+    cursor: move;
+    outline: calc(1px * var(--inv-scale)) dashed rgba(255, 255, 255, 0.7);
+
+    &--selected {
+      outline: calc(2px * var(--inv-scale)) solid var(--q-primary);
+    }
+
+    &--empty {
+      opacity: 0.5;
+    }
   }
 
   &__frame {
