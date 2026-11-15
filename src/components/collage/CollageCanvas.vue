@@ -313,7 +313,7 @@ const applyPendingMove = () => {
     next = { ...s, pos_x: s.pos_x + p.x - drag.startX, pos_y: s.pos_y + p.y - drag.startY }
     next = snapMove(next, drag.index)
   } else if (drag.action === 'resize') {
-    next = resize(s, p.x - drag.startX, p.y - drag.startY, drag.sx, drag.sy, keepAspect || shift)
+    next = resize(s, p.x - drag.startX, p.y - drag.startY, drag.sx, drag.sy, keepAspect !== shift) // shift temporarily inverts the setting
   } else {
     const cx = s.pos_x + s.width / 2
     const cy = s.pos_y + s.height / 2

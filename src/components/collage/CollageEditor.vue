@@ -426,7 +426,7 @@ const showOutlines = useLocalStorage('collageEditorShowOutlines', true)
 const showFront = ref(true)
 const showTexts = ref(true)
 const snap = useLocalStorage('collageEditorSnap', true)
-const keepAspect = ref(false)
+const keepAspect = useLocalStorage('collageEditorKeepAspect', true)
 const sampleSource = useLocalStorage<SampleSource>('collageEditorSampleSource', 'placeholder')
 
 const galleryImages = computed(() =>
