@@ -96,7 +96,7 @@ const rows = computed<KeyDef[][]>(() => {
       charKeys('123'),
       charKeys('456'),
       charKeys('789'),
-      [{ id: 'mode', kind: 'mode', label: 'ABC', ariaLabel: 'Letters' }, ...charKeys('0'), backspaceKey],
+      [{ id: 'mode', kind: 'mode', label: 'ABC', ariaLabel: 'Letters' }, ...charKeys('0'), { ...backspaceKey, grow: 1 }], // same width as the digits above, so the columns line up
       decimal ? [...charKeys('-.'), { ...enterKey, grow: 1 }] : [enterKey],
     ]
   }
