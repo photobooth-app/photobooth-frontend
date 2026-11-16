@@ -21,6 +21,9 @@ import { default as AnyOfOptionalRenderer } from './AnyOfOptionalRenderer.vue'
 // import { default as ArrayControlRenderer } from "./ArrayControlRenderer.vue";
 import { default as EnumArrayRenderer } from './EnumArrayRenderer.vue'
 import { default as ObjectRenderer } from './ObjectRenderer.vue'
+import { default as CollageProcessingRenderer } from './CollageProcessingRenderer.vue'
+import { default as CollageEditorButtonRenderer } from './CollageEditorButtonRenderer.vue'
+import { COLLAGE_EDITOR_BUTTON } from '@/components/collage/collage'
 // import { default as OneOfRenderer } from "./OneOfRenderer.vue";
 import { default as OneOfTabRenderer } from './OneOfTabRenderer.vue'
 
@@ -77,6 +80,20 @@ export const ObjectRendererEntry: JsonFormsRendererRegistryEntry = {
   tester: rankWith(2, isObjectControl),
 }
 
+// collage processing settings get a visual editor for the image arrangement
+const isCollageProcessing = (schema: JsonSchema): boolean =>
+  schema.type === 'object' && !!schema.properties?.merge_definition && !!schema.properties?.canvas_width && !!schema.properties?.canvas_texts
+
+export const CollageProcessingRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: CollageProcessingRenderer,
+  tester: rankWith(2.5, and(isObjectControl, schemaMatches(isCollageProcessing))),
+}
+
+const CollageEditorButtonRendererEntry: JsonFormsRendererRegistryEntry = {
+  renderer: CollageEditorButtonRenderer,
+  tester: rankWith(10, uiTypeIs(COLLAGE_EDITOR_BUTTON)),
+}
+
 export const oneOfTabRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: OneOfTabRenderer,
   tester: rankWith(4, isOneOfControl),
@@ -89,6 +106,8 @@ export const complexRenderers = [
   // arrayControlRendererEntry,
   EnumArrayRendererEntry,
   ObjectRendererEntry,
+  CollageProcessingRendererEntry,
+  CollageEditorButtonRendererEntry,
   // oneOfRendererEntry,
   oneOfTabRendererEntry,
 ]
