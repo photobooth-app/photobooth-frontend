@@ -41,14 +41,11 @@
 
 <script setup lang="ts">
 import DashboardGenericItemSection from './DashboardGenericItemSection.vue'
-import type { components } from '@/dto/api'
-
-type SubStats = components['schemas']['SubStats']
-type SubList = components['schemas']['SubList']
+import type { GenericStats, SubList, SubStats } from '@/dto/generated'
 type StatEntry = SubStats | SubList
 
 defineProps<{
-  stats: components['schemas']['GenericStats']
+  stats: GenericStats
 }>()
 
 const emit = defineEmits<{

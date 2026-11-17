@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
-import { type components } from '@/dto/api'
+import type { MediaitemPublic } from '@/dto/generated'
 import { remoteProcedureCall } from '@/util/fetch_api'
 const STATES = {
   //https://stackoverflow.com/a/75060220
@@ -12,7 +12,7 @@ const STATES = {
 
 export const useMediacollectionStore = defineStore('mediacollection-store', {
   state: () => ({
-    collection: [] as components['schemas']['MediaitemPublic'][],
+    collection: [] as MediaitemPublic[],
 
     storeState: STATES.INIT,
   }),
@@ -49,11 +49,11 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
       return this.collection.find(mediaitem => mediaitem.id == id)
     },
     // add new item on first position to store
-    addMediaitem(mediaitem: components['schemas']['MediaitemPublic']) {
+    addMediaitem(mediaitem: MediaitemPublic) {
       this.collection.unshift(mediaitem)
     },
     // update mediaitem in case there was server side processing. used to bust cache usually.
-    updateMediaitem(mediaitem: components['schemas']['MediaitemPublic']) {
+    updateMediaitem(mediaitem: MediaitemPublic) {
       const update_index = this.getIndexOfItemId(mediaitem.id)
       if (update_index > -1) {
         this.collection[update_index] = mediaitem
@@ -62,7 +62,7 @@ export const useMediacollectionStore = defineStore('mediacollection-store', {
       }
     },
     // remove mediaitem from store
-    removeMediaitem(mediaitem: components['schemas']['MediaitemPublic']) {
+    removeMediaitem(mediaitem: MediaitemPublic) {
       const removed_mediaitem = this.collection.splice(this.getIndexOfItemId(mediaitem.id), 1)
       if (removed_mediaitem.length == 0) console.log('no item removed from collection, maybe it was deleted by UI earlier already')
       else console.log(`${removed_mediaitem.length} mediaitem deleted`)

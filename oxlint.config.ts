@@ -7,6 +7,7 @@ export default defineConfig({
     '**/node_modules/',
     'dist/',
     'quasar.config.*.temporary.compiled*',
+    'src/dto/generated/',
     '.quasar/',
     'src-cordova/',
     'src-capacitor/',

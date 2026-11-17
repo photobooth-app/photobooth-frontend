@@ -80,8 +80,6 @@ const initSseClient = () => {
   })
 
   eventSource.value?.addEventListener('TranslateableFrontendNotification', evt => {
-    // TODO: at one point in future, we can probably use generate typescript to generate types for sse also:
-    // as components['schemas']['TranslateableFrontendNotification']
     const _notification = JSON.parse(evt.data)
     console.log(_notification)
 

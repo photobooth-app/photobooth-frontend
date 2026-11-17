@@ -81,15 +81,17 @@
 
           <q-dialog v-model="showDialogShareActionWithParameters">
             <PageShareParameters
-              :parameters="configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters"
+              :parameters="configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters ?? []"
               :parameters_dialog_caption="
-                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_caption
+                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_caption ??
+                'Make your choice!'
               "
               :parameters_dialog_action_icon="
-                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_icon
+                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_icon ??
+                'print'
               "
               :parameters_dialog_action_label="
-                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_label
+                configurationStore.configuration.share.actions[shareActionWithParametersConfigIndex].processing.parameters_dialog_action_label ?? 'GO'
               "
               :config_index="shareActionWithParametersConfigIndex"
               @trigger-share-action-with-parameters="doShareActionWithParameters"
@@ -213,7 +215,7 @@ const shareButtons = computed(() => {
   share_config.forEach((action, index: number) => {
     const trigger: ShareSchema = {
       config_index: index,
-      handles_images_only: action.handles_images_only,
+      handles_images_only: action.handles_images_only ?? false,
       show_button: action.trigger.ui_trigger.show_button,
       title: action.trigger.ui_trigger.title,
       icon: action.trigger.ui_trigger.icon,

@@ -7,11 +7,11 @@ export default defineConfig({
     '**/node_modules/',
     'dist/',
     'quasar.config.*.temporary.compiled*',
+    'src/dto/generated/',
     '.quasar/',
     'src-cordova/',
     'src-capacitor/',
     'src/router/typed-router.d.ts',
-    'src/dto/api.ts',
   ],
 
   printWidth: 150,

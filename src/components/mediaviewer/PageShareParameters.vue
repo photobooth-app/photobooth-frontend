@@ -86,14 +86,14 @@ import { onBeforeMount } from 'vue'
 import { isEmpty } from 'lodash'
 const formData = reactive<Record<string, any>>({})
 
-import type { components } from '@/dto/api'
+import type { ShareProcessingParameters } from '@/dto/generated'
 
 const props = defineProps<{
   config_index: number
   parameters_dialog_caption: string
   parameters_dialog_action_icon: string
   parameters_dialog_action_label: string
-  parameters: components['schemas']['ShareProcessingParameters'][]
+  parameters: ShareProcessingParameters[]
 }>()
 
 const emit = defineEmits<{

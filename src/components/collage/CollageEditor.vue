@@ -414,8 +414,16 @@ const emit = defineEmits<{ apply: [config: CollageProcessing]; cancel: [] }>()
 const { t } = useI18n()
 const mediacollectionStore = useMediacollectionStore()
 
-const draft = ref<CollageProcessing>(
-  cloneDeep({ ...config, merge_definition: config.merge_definition ?? [], canvas_texts: config.canvas_texts ?? [] })
+type EditableCollageProcessing = CollageProcessing & Required<Pick<CollageProcessing, 'canvas_width' | 'canvas_height' | 'canvas_texts'>>
+
+const draft = ref<EditableCollageProcessing>(
+  cloneDeep({
+    ...config,
+    canvas_width: config.canvas_width ?? 1920,
+    canvas_height: config.canvas_height ?? 1280,
+    merge_definition: config.merge_definition ?? [],
+    canvas_texts: config.canvas_texts ?? [],
+  })
 )
 const selected = ref<number | null>(draft.value.merge_definition.length ? 0 : null)
 const selectedText = ref<number | null>(null)

@@ -29,11 +29,8 @@
 <script setup lang="ts">
 import { _fetch } from '@/util/fetch_api'
 import { ref } from 'vue'
-import type { components } from '../dto/api'
+import type { CharucoBoardDefinition } from '@/dto/generated'
 import { Notify } from 'quasar'
-
-type CharucoBoardDefinition = components['schemas']['CharucoBoardDefinition']
-
 const props = withDefaults(defineProps<{ charucoBoardDefinition: CharucoBoardDefinition }>(), {
   charucoBoardDefinition: () => ({
     squares_x: 14,

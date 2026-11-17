@@ -10,8 +10,7 @@
     "lint:check": "oxfmt --check && oxlint",
     "typecheck": "vue-tsc --noEmit",
     "format": "oxfmt",
-    "generate-types": "openapi-typescript  http://localhost:8000/api/openapi.json --output ./src/dto/api.ts",
-    "check-types": "openapi-typescript  http://localhost:8000/api/openapi.json --output ./src/dto/api.ts --check",
+    "generate-types": "openapi-ts --no-log-file",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "build": "quasar build",
@@ -31,12 +30,12 @@
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
+    "@hey-api/openapi-ts": "0.99.0",
     "@intlify/unplugin-vue-i18n": "^11.2.5",
     "@quasar/app-vite": "^3.7.0",
     "@types/lodash": "^4.17.25",
     "autoprefixer": "^10.5.4",
     "globals": "^17.11.0",
-    "openapi-typescript": "^7.13.0",
     "oxfmt": "^0.78.0",
     "oxlint": "^1.79.0",
     "oxlint-tsgolint": "^7.0.2001",
@@ -44,13 +43,8 @@
     "vite-plugin-checker": "^0.14.5",
     "vue-tsc": "3.3.11"
   },
-  "overrides": {
-    "openapi-typescript": {
-      "typescript": "^6.0.0"
-    }
-  },
   "engines": {
-    "node": "^28 || ^26 || ^24 || ^22 || ^20 || ^18",
+    "node": ">= 26 || ^24 || ^22.22.3",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   },

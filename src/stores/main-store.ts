@@ -1,8 +1,8 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import type { components } from '@/dto/api'
+import type { SseEventIntervalInformationRecord, SseEventOnetimeInformationRecord } from '@/dto/generated'
 import type { TriggerSchema } from '@/types/trigger-schema'
 
-function defaultOnetimeInformation(): components['schemas']['SseEventOnetimeInformationRecord'] {
+function defaultOnetimeInformation(): SseEventOnetimeInformationRecord {
   return {
     version: '',
     platform_system: '',
@@ -18,7 +18,7 @@ function defaultOnetimeInformation(): components['schemas']['SseEventOnetimeInfo
   }
 }
 
-function defaultIntervalInformation(): components['schemas']['SseEventIntervalInformationRecord'] {
+function defaultIntervalInformation(): SseEventIntervalInformationRecord {
   return {
     cpu_percent: 0,
     memory: {},

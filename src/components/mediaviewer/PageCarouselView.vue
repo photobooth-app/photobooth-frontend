@@ -23,12 +23,12 @@
 
 <script setup lang="ts">
 import { toRef, watch } from 'vue'
-import type { components } from '@/dto/api'
+import type { MediaitemPublic } from '@/dto/generated'
 
 import { default as MediaItemPreviewViewer } from '../MediaItemPreviewViewer.vue'
 
 const props = defineProps<{
-  slicedImages: components['schemas']['MediaitemPublic'][]
+  slicedImages: MediaitemPublic[]
   mediaitemId: string // warning: if invalid ID is given, there is just shown nothing...
 }>()
 

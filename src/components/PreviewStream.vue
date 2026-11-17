@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, watch, watchEffect, ref, computed } from 'vue'
 import { useWebSocket, useDocumentVisibility, useDebounceFn } from '@vueuse/core'
-import type { components } from '@/dto/api'
+import type { UiFrameOverlay } from '@/dto/generated'
 import type { Size2D } from '@/util/streamRenderer.ts'
 
 function useStallDetector(ms: number) {
@@ -24,7 +24,7 @@ const props = defineProps<{
   enableMirrorEffectStream?: boolean
   enableBlurredBackgroundStream?: boolean
   blurredbackgroundHighFramerate?: boolean
-  frameOverlay: components['schemas']['UiFrameOverlay'] | null
+  frameOverlay: UiFrameOverlay | null
   fixedSize: Size2D | null
 }>()
 
@@ -65,8 +65,7 @@ const {
     delay: 1000,
   },
   onConnected(ws) {
-    if (streamRendererImageDecoderMode)
-      ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
+    if (streamRendererImageDecoderMode) ws.binaryType = 'arraybuffer' // arraybuffer is transferrable to the worker, blob (default) not
     else ws.binaryType = 'blob' // blob is not transferrable to worker but we use it as it avoid recreation in the worker
 
     console.log(

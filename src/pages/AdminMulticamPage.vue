@@ -220,13 +220,9 @@ import { remoteProcedureCall, _fetch } from '@/util/fetch_api'
 
 import { ref } from 'vue'
 import { useConfigurationStore } from '@/stores/configuration-store'
-import type { components } from '@/dto/api'
+import type { CalibrationRequest, CharucoBoardDefinition, WigglecamNodes } from '@/dto/generated'
 import CharucoGenerator from '@/components/CharucoGenerator.vue'
 import { Notify } from 'quasar'
-
-type WigglecamNodes = components['schemas']['WigglecamNodes']
-type CharucoBoardDefinition = components['schemas']['CharucoBoardDefinition']
-type CalibrationRequest = components['schemas']['CalibrationRequest']
 const configurationStore = useConfigurationStore()
 
 const dialogCharucoGenerator = ref(false)

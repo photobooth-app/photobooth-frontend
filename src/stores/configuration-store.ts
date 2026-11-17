@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { setCssVar, Dark } from 'quasar'
-import type { components } from '@/dto/api'
+import type { AppConfig } from '@/dto/generated'
 
 const STATES = {
   //https://stackoverflow.com/a/75060220
@@ -14,7 +14,7 @@ export const useConfigurationStore = defineStore('configuration-store', {
   state: () => ({
     // all config settings. used by app as well as to configure in admin and update to server.
     // configuration: {} as AppConfig,
-    configuration: {} as components['schemas']['AppConfig'],
+    configuration: {} as AppConfig,
 
     storeState: STATES.INIT,
   }),

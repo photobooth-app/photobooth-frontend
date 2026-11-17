@@ -85,13 +85,13 @@ import { openURL } from 'quasar'
 import { default as ShareTriggerButtons, type ShareSchema } from '../ShareTriggerButtons.vue'
 import { default as FrontpageTriggerButtons } from '../FrontpageTriggerButtons.vue'
 import type { TriggerSchema } from '@/types/trigger-schema'
-import type { components } from '@/dto/api'
+import type { MediaitemPublic } from '@/dto/generated'
 import { isPrintableImage } from '@/util/media_is_type'
 
 const confirmDeleteDialog = ref(false)
 
 const props = defineProps<{
-  item: components['schemas']['MediaitemPublic']
+  item: MediaitemPublic
   image_number?: number
   images_total?: number
   showDownload: boolean

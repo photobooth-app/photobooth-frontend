@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { type components } from '@/dto/api'
+import type { UiJobModel } from '@/dto/generated'
 
 export const useStateStore = defineStore('state-store', {
   state: () => ({
@@ -15,7 +15,7 @@ export const useStateStore = defineStore('state-store', {
       approval_id: '',
       captures_definition: null,
       frame_overlay: null,
-    } as components['schemas']['UiJobModel'],
+    } as UiJobModel,
   }),
   actions: {},
   getters: {

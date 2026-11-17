@@ -2,7 +2,7 @@
   <q-item-section>
     <q-item-label caption>{{ substats.name }} </q-item-label>
     <template v-if="substats.display == 'label'">
-      <q-item-label>{{ formatValue(substats.val, substats.decimals, substats.unit) }} </q-item-label>
+      <q-item-label>{{ formatValue(substats.val, substats.decimals ?? 0, substats.unit ?? '') }} </q-item-label>
     </template>
     <template v-else-if="substats.display == 'checkbox'">
       <q-item-label><q-checkbox :model-value="substats.val"></q-checkbox> </q-item-label>
@@ -26,10 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import type { components } from '@/dto/api'
+import type { SubStats } from '@/dto/generated'
 
 defineProps<{
-  substats: components['schemas']['SubStats']
+  substats: SubStats
 }>()
 
 const formatValue = (val: string | number | boolean | null, decimals: number, suffix: string) => {

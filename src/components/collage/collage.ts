@@ -1,9 +1,13 @@
 import type { InjectionKey } from 'vue'
-import type { components } from '@/dto/api'
+import type {
+  CollageMergeDefinition as ApiCollageMergeDefinition,
+  CollageProcessing as ApiCollageProcessing,
+  TextsConfig as ApiTextsConfig,
+} from '@/dto/generated'
 
-export type CollageProcessing = components['schemas']['CollageProcessing']
-export type CollageMergeDefinition = components['schemas']['CollageMergeDefinition']
-export type TextsConfig = components['schemas']['TextsConfig']
+export type CollageProcessing = ApiCollageProcessing
+export type CollageMergeDefinition = ApiCollageMergeDefinition
+export type TextsConfig = ApiTextsConfig
 
 /** ui schema element type of the editor button inside the collage form */
 export const COLLAGE_EDITOR_BUTTON = 'CollageEditorButton'

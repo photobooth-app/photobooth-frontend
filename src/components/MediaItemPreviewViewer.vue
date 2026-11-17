@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import type { components } from '@/dto/api'
+import type { MediaitemPublic } from '@/dto/generated'
 import { isVideo, isImage } from '@/util/media_is_type'
 
 defineProps<{
-  item: components['schemas']['MediaitemPublic']
+  item: MediaitemPublic
 }>()
 </script>

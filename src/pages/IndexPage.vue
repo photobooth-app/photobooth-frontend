@@ -116,7 +116,7 @@ import { default as FrontpageTriggerButtons } from '@/components/FrontpageTrigge
 import { default as PreviewStream } from '@/components/PreviewStream.vue'
 import _ from 'lodash'
 import MediaItemApprovalViewer from '@/components/MediaItemApprovalViewer.vue'
-import type { components } from '@/dto/api'
+import type { UiFrameOverlay } from '@/dto/generated'
 import type { Size2D } from '@/util/streamRenderer.ts'
 const mainStore = useMainStore()
 const stateStore = useStateStore()
@@ -190,7 +190,7 @@ const fixedSize = computed((): Size2D | null => {
     return null
   }
 })
-const frameOverlay = computed((): components['schemas']['UiFrameOverlay'] | null => {
+const frameOverlay = computed((): UiFrameOverlay | null => {
   const idleFrameOverlay = configurationStore.configuration.uisettings.livestream_frameoverlay
   const actionFrameOverlay = stateStore.jobmodel.frame_overlay
 
@@ -199,7 +199,7 @@ const frameOverlay = computed((): components['schemas']['UiFrameOverlay'] | null
     return actionFrameOverlay
   } else if (stateStore.isStateIdle && idleFrameOverlay.enable && idleFrameOverlay.image) {
     // the live frame is shown in idle only
-    return idleFrameOverlay as components['schemas']['UiFrameOverlay']
+    return idleFrameOverlay as UiFrameOverlay
   } else {
     return null
   }
@@ -222,7 +222,6 @@ const stopRecordingVideo = () => {
 </script>
 
 <style lang="sass">
-
 // if button shall be invisible, set it to transparent and on mouseover use default cursor, no pointer
 .action-button-admin-invisible
   opacity: 0.0

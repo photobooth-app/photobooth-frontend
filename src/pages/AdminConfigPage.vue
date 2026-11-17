@@ -76,7 +76,7 @@ import { remoteProcedureCall, _fetch } from '@/util/fetch_api'
 import { useConfigurationStore } from '@/stores/configuration-store'
 import { Notify } from 'quasar'
 import { useRoute, useRouter } from 'vue-router'
-import type { components } from '@/dto/api'
+import type { AppConfig } from '@/dto/generated'
 import { useLocalStorage } from '@vueuse/core'
 import { UnauthorizedError } from '@/util/auth'
 
@@ -229,7 +229,7 @@ const saveConfig = async () => {
 
       if (selected_configuration.value == 'app') {
         // 'app' means AppConfig is selected. For AppConfig the data is stored in the pinia store and updated here.
-        configurationStore.configuration = configuration.value as components['schemas']['AppConfig']
+        configurationStore.configuration = configuration.value as AppConfig
         configurationStore.postConfigchanged()
       }
 
