@@ -281,6 +281,7 @@ const doShareAction = (config_index: number) => {
   }
 }
 const doShareActionWithParameters = async (config_index: number, input_data: unknown) => {
+  showDialogShareActionWithParameters.value = false
   console.warn(selectedMediaitemId.value, config_index, input_data)
   console.log(JSON.stringify(input_data))
   try {

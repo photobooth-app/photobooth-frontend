@@ -71,7 +71,7 @@
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn stack no-caps color="primary" class="q-ma-sm" type="submit" v-close-popup size="md" padding="md lg">
+        <q-btn stack no-caps color="primary" class="q-ma-sm" type="submit" size="md" padding="md lg">
           <q-icon v-if="!isEmpty(parameters_dialog_action_icon)" :name="`sym_o_${parameters_dialog_action_icon}`" />
           <div>{{ parameters_dialog_action_label }}</div>
         </q-btn>
