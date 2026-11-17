@@ -12,7 +12,7 @@ Following guide is just very basic instructions. If you run into issues, please 
 ## Prerequisites
 
 - VS Code
-- Node 22 incl. npm
+- Node 22 or above incl. npm
 - photobooth-app installed and started
 
 ## Setup the repo
@@ -44,4 +44,4 @@ Once coding is finished, the frontend can be build so the photobooth-app serves 
 quasar build
 ```
 
-The build is written to `../photobooth-app/photobooth/web_spa/`.
+The build is written to `../photobooth-app/src/web/frontend/`.
