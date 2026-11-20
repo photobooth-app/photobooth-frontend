@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { useIdle, useTimestamp } from '@vueuse/core'
+import { useIdle, useIntervalFn, useTimestamp } from '@vueuse/core'
 import { computed, watch, onBeforeUnmount } from 'vue'
 import { useQuasar } from 'quasar'
 const $q = useQuasar()
@@ -24,7 +24,7 @@ const props = defineProps({
 })
 
 const { idle, lastActive } = useIdle(props.timeoutMs)
-const now = useTimestamp({ interval: 1000 })
+const now = useTimestamp({ scheduler: cb => useIntervalFn(cb, 1000) })
 const remainingTime = computed(() => props.timeoutMs - (now.value - lastActive.value))
 const showWarning = computed(() => props.warningTimeMs > remainingTime.value)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
