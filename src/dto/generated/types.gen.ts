@@ -327,17 +327,17 @@ export type CollageProcessing = {
      */
     canvas_img_front_file?: string | null;
     /**
-     * Canvas Texts Enable
+     * Canvas Elements Enable
      *
-     * General enable apply texts below.
+     * General enable apply texts and images below.
      */
-    canvas_texts_enable?: boolean;
+    canvas_elements_enable?: boolean;
     /**
-     * Canvas Texts
+     * Canvas Elements
      *
-     * Text to overlay on final collage. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in working directory/userdata*
+     * Texts and images (like logos or watermarks) to overlay on final collage. Elements are drawn in list order, later elements on top. Pos_x/Pos_y is the element's top-left corner in pixel starting 0/0 at top-left in image. Rotation is around the element's center. Files need to be located in working directory/userdata*
      */
-    canvas_texts?: Array<TextsConfig>;
+    canvas_elements?: Array<TextElementConfig | ImageElementConfig>;
 };
 
 /**
@@ -514,7 +514,9 @@ export type GroupBackend = {
         backend_type: 'WebcamV4l';
     } & GroupCameraV4L2) | ({
         backend_type: 'Gphoto2';
-    } & GroupCameraGphoto2);
+    } & GroupCameraGphoto2) | ({
+        backend_type: 'Olympus';
+    } & GroupCameraOlympus);
 };
 
 /**
@@ -559,6 +561,64 @@ export type GroupCameraGphoto2 = {
      * Parameterset Still
      */
     parameterset_still: Array<Gphoto2Parameters>;
+};
+
+/**
+ * Olympus
+ */
+export type GroupCameraOlympus = {
+    /**
+     * Orientation
+     *
+     * Choose the orientation of the camera. 0° is default orientation and applies no adjustment. The orientation will be set in the EXIF data so transformations are applied lossless.
+     */
+    orientation: '1: 0°' | '2: 0° mirrored' | '3: 180°' | '4: 180° mirrored' | '5: 90°' | '6: 90° mirrored' | '7: 270°' | '8: 270° mirrored';
+    /**
+     * Camera Standby When Inactive
+     *
+     * When enabled, the app tries to disable the cameras livestream when no livestream is requested. It helps to avoid sensor overheating for older cameras by setting viewfinder=0.
+     */
+    camera_standby_when_inactive: boolean;
+    /**
+     * Camera Standby When Inactive Time
+     *
+     * Delay after which the livestream is considered as inactive and camera should idle.
+     */
+    camera_standby_when_inactive_time: number;
+    /**
+     * Backend Type
+     */
+    backend_type: 'Olympus';
+    /**
+     * Device Ip
+     *
+     * Wi-Fi IP address of the Olympus camera.
+     */
+    device_ip: string;
+    /**
+     * Liveview Port
+     *
+     * Local UDP port used for the RTP LiveView stream.
+     */
+    liveview_port: number;
+    /**
+     * Capture Timeout
+     *
+     * Maximum time to poll for the new image to appear after capture (seconds).
+     */
+    capture_timeout: number;
+    /**
+     * Download Timeout
+     *
+     * Maximum time to download the image from the camera (seconds). Increase this for slow Wi-Fi transfers; the total capture time remains bounded by the backend wait timeout.
+     */
+    download_timeout: number;
+    /**
+     * Camera Settle After Capture
+     *
+     * Stabilization time after a photo before resuming the live stream (seconds). Keep it short (0.5-1s) to resume the actual stream and frame the next shot; the download already waits for a frame.
+     */
+    camera_settle_after_capture: number;
 };
 
 /**
@@ -1340,6 +1400,58 @@ export type HttpValidationError = {
 };
 
 /**
+ * Image
+ */
+export type ImageElementConfig = {
+    /**
+     * Type
+     */
+    type: 'image';
+    /**
+     * Image
+     *
+     * Image to place, for example a logo or watermark. Transparent PNGs are supported. File needs to be located in working directory/userdata*
+     */
+    image: string | null;
+    /**
+     * Pos X
+     *
+     * Position of the element's left edge in reference to the left edge of the canvas.
+     */
+    pos_x: number;
+    /**
+     * Pos Y
+     *
+     * Position of the element's top edge in reference to the top edge of the canvas.
+     */
+    pos_y: number;
+    /**
+     * Width
+     *
+     * Width of the element. The image is fit into width/height keeping its aspect ratio.
+     */
+    width: number;
+    /**
+     * Height
+     *
+     * Height of the element. The image is fit into width/height keeping its aspect ratio.
+     */
+    height: number;
+    /**
+     * Rotate
+     *
+     * Rotate the image around its own center. Positive numbers rotate counterclockwise, negative clockwise.
+     */
+    rotate: number;
+    /**
+     * Opacity
+     *
+     * Opacity of the image, 0 is fully transparent, 1 is fully opaque.
+     */
+    opacity: number;
+};
+
+/**
  * Keyboard triggers configuration
  *
  * Configure trigger the user can interact with. Sources are GPIO and keyboard.
@@ -1549,7 +1661,7 @@ export type ShareProcessing = {
     /**
      * Share Command
      *
-     * Command issued to share/print. Use {filename} as placeholder for the mediaitem to be shared/printed. Also available: {printer_name}=given printer name below, {media_type}=[image,collage,video,animation] and {action_config_name} which is the action name defined in the config.
+     * Executable and arguments issued to share/print; shell syntax is not supported. Use {filename} as a placeholder for the mediaitem. Also available: {printer_name}, {media_type} and {action_config_name}. Put shell logic in a separate script and invoke that script here.
      */
     share_command?: string;
     /**
@@ -1718,17 +1830,17 @@ export type SingleImageProcessing = {
     image_filter: PluginFilters;
     img_frame: FrameOverlay;
     /**
-     * Texts Enable
+     * Elements Enable
      *
-     * General enable apply texts below.
+     * General enable apply texts and images below.
      */
-    texts_enable: boolean;
+    elements_enable: boolean;
     /**
-     * Texts
+     * Elements
      *
-     * Text to overlay on images after capture. Pos_x/Pos_y measure in pixel starting 0/0 at top-left in image. Font to use in text stages. File needs to be located in working directory/userdata*
+     * Texts and images (like logos or watermarks) to overlay on images after capture. Elements are drawn in list order, later elements on top. Pos_x/Pos_y is the element's top-left corner in pixel starting 0/0 at top-left in image. Rotation is around the element's center. Files need to be located in working directory/userdata*
      */
-    texts: Array<TextsConfig>;
+    elements: Array<TextElementConfig | ImageElementConfig>;
 };
 
 /**
@@ -1991,23 +2103,35 @@ export type SubStats = {
 };
 
 /**
- * TextsConfig
+ * Text
  */
-export type TextsConfig = {
+export type TextElementConfig = {
+    /**
+     * Type
+     */
+    type: 'text';
     /**
      * Text
+     *
+     * Text to render. Use {date} and {time} for dynamic content.
      */
     text: string;
     /**
      * Pos X
+     *
+     * Position of the text's left edge in reference to the left edge of the canvas.
      */
     pos_x: number;
     /**
      * Pos Y
+     *
+     * Position of the text's top edge in reference to the top edge of the canvas.
      */
     pos_y: number;
     /**
      * Rotate
+     *
+     * Rotate the text around its own center. Positive numbers rotate counterclockwise, negative clockwise.
      */
     rotate: number;
     /**

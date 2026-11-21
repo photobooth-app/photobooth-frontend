@@ -1,6 +1,6 @@
 <template>
   <div v-if="layout.visible" :class="layoutClassObject.root">
-    <div v-for="(element, index) in (layout.uischema as Layout).elements" :key="`${layout.path}-${index}`" :class="layoutClassObject.item">
+    <div v-for="(element, index) in elements" :key="`${layout.path}-${index}`" :class="layoutClassObject.item">
       <dispatch-renderer
         :schema="layout.schema"
         :uischema="element"
@@ -14,10 +14,10 @@
 </template>
 
 <script lang="ts">
-import type { Layout } from '@jsonforms/core'
+import type { Layout, UISchemaElement } from '@jsonforms/core'
 import { defineComponent } from 'vue'
 import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue'
-import { useQuasarLayout } from '../util'
+import { useQuasarLayout, withoutConstControls } from '../util'
 
 export default defineComponent({
   name: 'LayoutRenderer',
@@ -31,6 +31,9 @@ export default defineComponent({
     return useQuasarLayout(useJsonFormsLayout(props))
   },
   computed: {
+    elements(): UISchemaElement[] {
+      return withoutConstControls((this.layout.uischema as Layout).elements, this.layout.schema)
+    },
     layoutClassObject(): any {
       return this.layout.direction === 'row' ? this.styles.horizontalLayout : this.styles.verticalLayout
     },

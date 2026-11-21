@@ -2,12 +2,18 @@ import type { InjectionKey } from 'vue'
 import type {
   CollageMergeDefinition as ApiCollageMergeDefinition,
   CollageProcessing as ApiCollageProcessing,
-  TextsConfig as ApiTextsConfig,
+  ImageElementConfig as ApiImageElementConfig,
+  TextElementConfig as ApiTextElementConfig,
 } from '@/dto/generated'
 
 export type CollageProcessing = ApiCollageProcessing
 export type CollageMergeDefinition = ApiCollageMergeDefinition
-export type TextsConfig = ApiTextsConfig
+export type TextElementConfig = ApiTextElementConfig
+export type ImageElementConfig = ApiImageElementConfig
+/** element drawn on top of the collage, texts and images in the order of the list */
+export type CanvasElement = TextElementConfig | ImageElementConfig
+
+export const isImageElement = (element: CanvasElement): element is ImageElementConfig => element.type === 'image'
 
 /** ui schema element type of the editor button inside the collage form */
 export const COLLAGE_EDITOR_BUTTON = 'CollageEditorButton'
@@ -68,7 +74,8 @@ export const sanitizeDefinition = (def: CollageMergeDefinition): CollageMergeDef
 export const DEFAULT_FONT = 'userdata/demoassets/fonts/Roboto-Bold.ttf'
 
 /** default values of a new text, same as the backend model */
-export const newText = (): TextsConfig => ({
+export const newText = (): TextElementConfig => ({
+  type: 'text',
   text: '',
   pos_x: 50,
   pos_y: 50,
@@ -78,10 +85,37 @@ export const newText = (): TextsConfig => ({
   color: '#cd1c18',
 })
 
-export const sanitizeText = (text: TextsConfig): TextsConfig => ({
-  ...text,
-  pos_x: Math.max(0, Math.round(text.pos_x)),
-  pos_y: Math.max(0, Math.round(text.pos_y)),
-  rotate: Math.round(text.rotate),
-  font_size: Math.max(1, Math.round(text.font_size)),
+/** default values of a new image element, same as the backend model */
+export const newImageElement = (): ImageElementConfig => ({
+  type: 'image',
+  image: null,
+  pos_x: 50,
+  pos_y: 50,
+  width: 200,
+  height: 200,
+  rotate: 0,
+  opacity: 1,
 })
+
+/** the backend expects whole, non negative numbers for positions and sizes */
+export const sanitizeElement = (element: CanvasElement): CanvasElement => {
+  if (isImageElement(element)) {
+    return {
+      ...element,
+      pos_x: Math.max(0, Math.round(element.pos_x)),
+      pos_y: Math.max(0, Math.round(element.pos_y)),
+      width: Math.max(1, Math.round(element.width)),
+      height: Math.max(1, Math.round(element.height)),
+      rotate: Math.round(element.rotate),
+      opacity: Math.min(1, Math.max(0, element.opacity)),
+    }
+  }
+  return {
+    ...element,
+    type: 'text',
+    pos_x: Math.max(0, Math.round(element.pos_x)),
+    pos_y: Math.max(0, Math.round(element.pos_y)),
+    rotate: Math.round(element.rotate),
+    font_size: Math.max(1, Math.round(element.font_size)),
+  }
+}

@@ -4,17 +4,9 @@ import cloneDeep from 'lodash/cloneDeep'
 import debounce from 'lodash/debounce'
 import merge from 'lodash/merge'
 
-import {
-  composePaths,
-  computeLabel,
-  getFirstPrimitiveProp,
-  isDescriptionHidden,
-  Resolve,
-  findUISchema,
-  type JsonFormsSubStates,
-  extractAjv,
-} from '@jsonforms/core'
+import { composePaths, computeLabel, isDescriptionHidden, Resolve, findUISchema, type JsonFormsSubStates, extractAjv } from '@jsonforms/core'
 import type { Options } from './options'
+import { arrayItemLabel } from './schema'
 
 export const useControlAppliedOptions = <I extends { control: any }>(input: I) => {
   return computed<Options>(() =>
@@ -139,15 +131,16 @@ export const useQuasarArrayControl = <I extends { control: any }>(input: I) => {
   )
 
   const childLabelForIndex = (index: number) => {
-    const childLabelProp = input.control.value.uischema.options?.childLabelProp ?? getFirstPrimitiveProp(input.control.value.schema)
-    if (!childLabelProp) {
-      return `${index}`
+    const control = input.control.value
+    const childLabelProp = control.uischema.options?.childLabelProp
+    if (childLabelProp) {
+      const labelValue = Resolve.data(control.data, composePaths(`${index}`, childLabelProp))
+      if (labelValue === undefined || labelValue === null || Number.isNaN(labelValue)) {
+        return ''
+      }
+      return `${labelValue}`
     }
-    const labelValue = Resolve.data(input.control.value.data, composePaths(`${index}`, childLabelProp))
-    if (labelValue === undefined || labelValue === null || Number.isNaN(labelValue)) {
-      return ''
-    }
-    return `${labelValue}`
+    return arrayItemLabel(control.schema, control.data?.[index], control.rootSchema) ?? `${index}`
   }
   return {
     ...input,

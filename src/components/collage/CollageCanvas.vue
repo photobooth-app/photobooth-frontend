@@ -38,29 +38,68 @@
 
         <img v-if="frontUrl" class="collage-canvas__cover collage-canvas__front" :src="frontUrl" alt="" draggable="false" />
 
-        <template v-if="showTexts && config.canvas_texts_enable">
-          <div
-            v-for="(text, index) in texts"
-            :key="index"
-            class="collage-canvas__text-layer"
-            :class="{ 'collage-canvas__text-layer--editable': editable }"
-            :style="{ transform: `rotate(${-(text.rotate ?? 0)}deg)` }"
-          >
-            <span
-              class="collage-canvas__text"
-              :class="{ 'collage-canvas__text--selected': editable && index === selectedText, 'collage-canvas__text--empty': !text.text }"
-              :data-index="editable ? index : undefined"
-              :data-action="editable ? 'move-text' : undefined"
+        <!-- texts and images, drawn above the overlay in the order of the list -->
+        <template v-if="showElements && config.canvas_elements_enable">
+          <template v-for="(element, index) in elements" :key="`element-${index}`">
+            <div
+              v-if="isImageElement(element)"
+              class="collage-canvas__element collage-canvas__image"
+              :class="elementClasses(index, !element.image)"
               :style="{
-                left: `${text.pos_x}px`,
-                top: `${text.pos_y}px`,
-                fontSize: `${text.font_size}px`,
-                color: text.color,
-                fontFamily: fontFamilies[text.font ?? ''] ?? 'sans-serif',
+                left: `${element.pos_x}px`,
+                top: `${element.pos_y}px`,
+                width: `${element.width}px`,
+                height: `${element.height}px`,
+                transform: `rotate(${-element.rotate}deg)`,
+                zIndex: elementZIndex(index),
               }"
-              >{{ formatText(text.text) || (editable ? '…' : '') }}</span
+              :data-index="editable ? index : undefined"
+              :data-target="editable ? 'element' : undefined"
+              :data-action="editable ? 'move' : undefined"
             >
-          </div>
+              <img
+                v-if="element.image"
+                class="collage-canvas__contain"
+                :src="userfileUrl(element.image)!"
+                :style="{ opacity: element.opacity }"
+                alt=""
+                draggable="false"
+              />
+              <template v-if="editable && index === selectedElement">
+                <span
+                  v-for="handle in HANDLES"
+                  :key="handle.name"
+                  class="collage-canvas__handle"
+                  :class="`collage-canvas__handle--${handle.name}`"
+                  :data-index="index"
+                  data-target="element"
+                  data-action="resize"
+                  :data-sx="handle.sx"
+                  :data-sy="handle.sy"
+                />
+                <span class="collage-canvas__rotate-line" />
+                <span class="collage-canvas__handle collage-canvas__handle--rotate" :data-index="index" data-target="element" data-action="rotate" />
+              </template>
+            </div>
+            <span
+              v-else
+              class="collage-canvas__element collage-canvas__text"
+              :class="elementClasses(index, !element.text)"
+              :data-index="editable ? index : undefined"
+              :data-target="editable ? 'element' : undefined"
+              :data-action="editable ? 'move' : undefined"
+              :style="{
+                left: `${element.pos_x}px`,
+                top: `${element.pos_y}px`,
+                fontSize: `${element.font_size}px`,
+                color: element.color,
+                fontFamily: fontFamilies[element.font ?? ''] ?? 'sans-serif',
+                transform: `rotate(${-element.rotate}deg)`,
+                zIndex: elementZIndex(index),
+              }"
+              >{{ formatText(element.text) || (editable ? '…' : '') }}</span
+            >
+          </template>
         </template>
 
         <!-- editing helpers, drawn above everything -->
@@ -82,6 +121,7 @@
               zIndex: slot.index === selected ? 1000 : 900 + slot.zIndex,
             }"
             :data-index="slot.index"
+            data-target="slot"
             data-action="move"
           >
             <span class="collage-canvas__badge">{{ slot.label }}</span>
@@ -92,12 +132,13 @@
                 class="collage-canvas__handle"
                 :class="`collage-canvas__handle--${handle.name}`"
                 :data-index="slot.index"
+                data-target="slot"
                 data-action="resize"
                 :data-sx="handle.sx"
                 :data-sy="handle.sy"
               />
               <span class="collage-canvas__rotate-line" />
-              <span class="collage-canvas__handle collage-canvas__handle--rotate" :data-index="slot.index" data-action="rotate" />
+              <span class="collage-canvas__handle collage-canvas__handle--rotate" :data-index="slot.index" data-target="slot" data-action="rotate" />
             </template>
           </div>
           <div
@@ -119,9 +160,10 @@ import { useElementSize } from '@vueuse/core'
 import {
   type CollageMergeDefinition,
   type CollageProcessing,
-  type TextsConfig,
-  sanitizeText,
+  type CanvasElement,
+  isImageElement,
   placeholderImage,
+  sanitizeElement,
   sanitizeDefinition,
   userfileUrl,
 } from './collage'
@@ -130,8 +172,9 @@ import {
  * Renders a collage like the backend (photobooth MergeCollageStep + background/overlay/text steps) does, with sample images.
  * - images are fit by covering the slot (like PIL ImageOps.fit), centered
  * - rotation is around the slot's center, positive values counterclockwise
- * - texts rotate around the canvas center (the backend rotates the whole text mask)
- * When editable, slots can be moved, resized and rotated with mouse or touch.
+ * - texts and images (canvas elements) are drawn above the overlay in list order, positioned by their top-left corner and
+ *   rotated around their own center. Images are fit into their box keeping the aspect ratio (like PIL ImageOps.contain).
+ * When editable, slots and image elements can be moved, resized and rotated with mouse or touch, texts can be moved.
  */
 
 const HANDLES = [
@@ -146,8 +189,8 @@ const MIN_SIZE = 20
 
 const definitions = defineModel<CollageMergeDefinition[]>('definitions', { required: true })
 const selected = defineModel<number | null>('selected', { default: null })
-const texts = defineModel<TextsConfig[]>('texts', { default: () => [] })
-const selectedText = defineModel<number | null>('selectedText', { default: null })
+const elements = defineModel<CanvasElement[]>('elements', { default: () => [] })
+const selectedElement = defineModel<number | null>('selectedElement', { default: null })
 
 const {
   config,
@@ -155,18 +198,18 @@ const {
   editable = false,
   showOutlines = true,
   showFront = true,
-  showTexts = true,
+  showElements = true,
   snap = true,
   keepAspect = false,
 } = defineProps<{
-  /** processing config, used for canvas size, backgrounds, overlay and texts */
+  /** processing config, used for canvas size, backgrounds, overlay and canvas elements */
   config: CollageProcessing
   /** images used for captures, in capture order. Placeholders are used if empty. */
   sampleImages?: string[]
   editable?: boolean
   showOutlines?: boolean
   showFront?: boolean
-  showTexts?: boolean
+  showElements?: boolean
   snap?: boolean
   keepAspect?: boolean
 }>()
@@ -209,7 +252,7 @@ const slots = computed(() => {
 // fonts from the backend's userdata folder, loaded once per file
 const fontFamilies = ref<Record<string, string>>({})
 watch(
-  () => (config.canvas_texts_enable ? texts.value.map(t => t.font ?? '') : []),
+  () => (config.canvas_elements_enable ? elements.value.flatMap(element => (isImageElement(element) ? [] : [element.font ?? ''])) : []),
   fonts => {
     for (const font of new Set(fonts)) {
       const url = userfileUrl(font)
@@ -227,6 +270,18 @@ watch(
   { immediate: true }
 )
 
+// above the overlay (500), when editable above the outlines of unselected slots (900+) so elements can be picked
+const elementZIndex = (index: number) => {
+  if (!editable) return 600 + index
+  return index === selectedElement.value ? 1050 : 960 + index
+}
+
+const elementClasses = (index: number, empty: boolean) => ({
+  'collage-canvas__element--editable': editable,
+  'collage-canvas__element--selected': editable && index === selectedElement.value,
+  'collage-canvas__element--empty': editable && empty,
+})
+
 const formatText = (text: string) => {
   const now = new Date()
   return text.replace(/\{date\}/g, now.toLocaleDateString()).replace(/\{time\}/g, now.toLocaleTimeString())
@@ -240,14 +295,23 @@ interface Guide {
 }
 const guides = ref<Guide[]>([])
 
+/** position, size and rotation shared by slots and image elements */
+interface Box {
+  pos_x: number
+  pos_y: number
+  width: number
+  height: number
+  rotate: number
+}
+
 interface DragState {
   pointerId: number
-  action: 'move' | 'resize' | 'rotate' | 'move-text'
+  target: 'slot' | 'element'
+  action: 'move' | 'resize' | 'rotate'
   index: number
   startX: number
   startY: number
-  start: CollageMergeDefinition
-  startText: TextsConfig | null
+  start: CollageMergeDefinition | CanvasElement
   sx: number
   sy: number
 }
@@ -265,23 +329,23 @@ const onStagePointerDown = (evt: PointerEvent) => {
   const el = (evt.target as HTMLElement).closest<HTMLElement>('[data-action]')
   if (!el) {
     selected.value = null
-    selectedText.value = null
+    selectedElement.value = null
     return
   }
   evt.preventDefault()
   const index = Number(el.dataset.index)
-  const isText = el.dataset.action === 'move-text'
-  selected.value = isText ? null : index
-  selectedText.value = isText ? index : null
+  const target = el.dataset.target === 'element' ? 'element' : 'slot'
+  selected.value = target === 'slot' ? index : null
+  selectedElement.value = target === 'element' ? index : null
   const start = toCanvas(evt)
   drag = {
     pointerId: evt.pointerId,
+    target,
     action: el.dataset.action as DragState['action'],
     index,
     startX: start.x,
     startY: start.y,
-    start: { ...definitions.value[isText ? 0 : index]! },
-    startText: isText ? { ...texts.value[index]! } : null,
+    start: target === 'slot' ? { ...definitions.value[index]! } : { ...elements.value[index]! },
     sx: Number(el.dataset.sx ?? 0),
     sy: Number(el.dataset.sy ?? 0),
   }
@@ -304,47 +368,44 @@ const applyPendingMove = () => {
   const p = toCanvas(pendingEvent)
   const shift = pendingEvent.shiftKey
   pendingEvent = null
-  if (drag.action === 'move-text') return moveText(drag.index, drag.startText!, p.x - drag.startX, p.y - drag.startY)
+  const dx = p.x - drag.startX
+  const dy = p.y - drag.startY
 
-  const s = drag.start
-  let next: CollageMergeDefinition
-
-  if (drag.action === 'move') {
-    next = { ...s, pos_x: s.pos_x + p.x - drag.startX, pos_y: s.pos_y + p.y - drag.startY }
-    next = snapMove(next, drag.index)
-  } else if (drag.action === 'resize') {
-    next = resize(s, p.x - drag.startX, p.y - drag.startY, drag.sx, drag.sy, keepAspect !== shift) // shift temporarily inverts the setting
-  } else {
-    const cx = s.pos_x + s.width / 2
-    const cy = s.pos_y + s.height / 2
-    // handle sits above the slot: pointing straight up means no rotation. CSS angles are clockwise, the backend's counterclockwise.
-    let angle = -((Math.atan2(p.y - cy, p.x - cx) * 180) / Math.PI + 90)
-    angle = ((((angle + 180) % 360) + 360) % 360) - 180
-    if (!shift) {
-      const nearest = Math.round(angle / 45) * 45
-      if (Math.abs(angle - nearest) < 4) angle = nearest
-    }
-    next = { ...s, rotate: angle === -180 ? 180 : angle }
+  if (drag.target === 'element') {
+    const start = drag.start as CanvasElement
+    let next: CanvasElement
+    if (!isImageElement(start)) next = { ...start, pos_x: start.pos_x + dx, pos_y: start.pos_y + dy }
+    else next = transformBox(start, drag, p, dx, dy, shift)
+    const list = [...elements.value]
+    list[drag.index] = sanitizeElement(next)
+    elements.value = list
+    return
   }
 
   const list = [...definitions.value]
-  list[drag.index] = sanitizeDefinition(next)
+  list[drag.index] = sanitizeDefinition(transformBox(drag.start as CollageMergeDefinition, drag, p, dx, dy, shift))
   definitions.value = list
 }
 
-// texts are positioned inside a layer rotated around the canvas center, so move along the layer's axes
-const moveText = (index: number, start: TextsConfig, dx: number, dy: number) => {
-  const rad = (-(start.rotate ?? 0) * Math.PI) / 180
-  const lx = dx * Math.cos(rad) + dy * Math.sin(rad)
-  const ly = -dx * Math.sin(rad) + dy * Math.cos(rad)
-  const list = [...texts.value]
-  list[index] = sanitizeText({ ...start, pos_x: start.pos_x + lx, pos_y: start.pos_y + ly })
-  texts.value = list
+const transformBox = <T extends Box>(s: T, d: DragState, p: { x: number; y: number }, dx: number, dy: number, shift: boolean): T => {
+  if (d.action === 'move') return snapMove({ ...s, pos_x: s.pos_x + dx, pos_y: s.pos_y + dy }, d)
+  if (d.action === 'resize') return resize(s, dx, dy, d.sx, d.sy, keepAspect !== shift) // shift temporarily inverts the setting
+
+  const cx = s.pos_x + s.width / 2
+  const cy = s.pos_y + s.height / 2
+  // handle sits above the box: pointing straight up means no rotation. CSS angles are clockwise, the backend's counterclockwise.
+  let angle = -((Math.atan2(p.y - cy, p.x - cx) * 180) / Math.PI + 90)
+  angle = ((((angle + 180) % 360) + 360) % 360) - 180
+  if (!shift) {
+    const nearest = Math.round(angle / 45) * 45
+    if (Math.abs(angle - nearest) < 4) angle = nearest
+  }
+  return { ...s, rotate: angle === -180 ? 180 : angle }
 }
 
-const resize = (s: CollageMergeDefinition, dx: number, dy: number, sx: number, sy: number, aspect: boolean): CollageMergeDefinition => {
-  // pointer movement in the slot's own (rotated) axes
-  const rad = (-s.rotate * Math.PI) / 180 // CSS rotation of the slot
+const resize = <T extends Box>(s: T, dx: number, dy: number, sx: number, sy: number, aspect: boolean): T => {
+  // pointer movement in the box's own (rotated) axes
+  const rad = (-s.rotate * Math.PI) / 180 // CSS rotation of the box
   const lx = dx * Math.cos(rad) + dy * Math.sin(rad)
   const ly = -dx * Math.sin(rad) + dy * Math.cos(rad)
   let width = Math.max(MIN_SIZE, s.width + sx * lx)
@@ -362,14 +423,19 @@ const resize = (s: CollageMergeDefinition, dx: number, dy: number, sx: number, s
   return { ...s, width, height, pos_x: cx - width / 2, pos_y: cy - height / 2 }
 }
 
-const snapMove = (def: CollageMergeDefinition, index: number): CollageMergeDefinition => {
+/** snaps edges and center of an unrotated box to the canvas and to other unrotated slots and image elements */
+const snapMove = <T extends Box>(def: T, d: DragState): T => {
   guides.value = []
   if (!snap || def.rotate !== 0) return def
   const threshold = SNAP_SCREEN_PX / scale.value
   const targetsX = [0, canvasWidth.value / 2, canvasWidth.value]
   const targetsY = [0, canvasHeight.value / 2, canvasHeight.value]
-  definitions.value.forEach((other, i) => {
-    if (i === index || other.rotate !== 0) return
+  const others: Box[] = [
+    ...definitions.value.filter((_, i) => d.target !== 'slot' || i !== d.index),
+    ...elements.value.filter((element, i) => isImageElement(element) && (d.target !== 'element' || i !== d.index)),
+  ] as Box[]
+  others.forEach(other => {
+    if (other.rotate !== 0) return
     targetsX.push(other.pos_x, other.pos_x + other.width / 2, other.pos_x + other.width)
     targetsY.push(other.pos_y, other.pos_y + other.height / 2, other.pos_y + other.height)
   })
@@ -470,35 +536,42 @@ onBeforeUnmount(() => {
     z-index: 500;
   }
 
-  &__text-layer {
+  &__contain {
     position: absolute;
     inset: 0;
-    z-index: 600;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     pointer-events: none;
   }
 
-  &__text-layer--editable {
-    z-index: 960; // above the outlines of unselected images, so texts can be picked
-  }
-
-  &__text {
+  &__element {
     position: absolute;
-    white-space: pre;
-    line-height: normal;
-  }
+    pointer-events: none;
 
-  &__text-layer--editable &__text {
-    pointer-events: auto;
-    cursor: move;
-    outline: calc(1px * var(--inv-scale)) dashed rgba(255, 255, 255, 0.7);
+    &--editable {
+      pointer-events: auto;
+      cursor: move;
+      outline: calc(1px * var(--inv-scale)) dashed rgba(255, 255, 255, 0.7);
+    }
 
     &--selected {
       outline: calc(2px * var(--inv-scale)) solid var(--q-primary);
     }
+  }
 
-    &--empty {
-      opacity: 0.5;
-    }
+  &__text.collage-canvas__element--empty {
+    opacity: 0.5;
+  }
+
+  &__image.collage-canvas__element--empty {
+    background: repeating-conic-gradient(rgba(255, 255, 255, 0.5) 0 25%, rgba(0, 0, 0, 0.3) 0 50%) 0 0 / calc(20px * var(--inv-scale))
+      calc(20px * var(--inv-scale));
+  }
+
+  &__text {
+    white-space: pre;
+    line-height: normal;
   }
 
   &__frame {

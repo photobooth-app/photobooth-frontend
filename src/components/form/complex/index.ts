@@ -82,7 +82,7 @@ export const ObjectRendererEntry: JsonFormsRendererRegistryEntry = {
 
 // collage processing settings get a visual editor for the image arrangement
 const isCollageProcessing = (schema: JsonSchema): boolean =>
-  schema.type === 'object' && !!schema.properties?.merge_definition && !!schema.properties?.canvas_width && !!schema.properties?.canvas_texts
+  schema.type === 'object' && !!schema.properties?.merge_definition && !!schema.properties?.canvas_width && !!schema.properties?.canvas_elements
 
 export const CollageProcessingRendererEntry: JsonFormsRendererRegistryEntry = {
   renderer: CollageProcessingRenderer,

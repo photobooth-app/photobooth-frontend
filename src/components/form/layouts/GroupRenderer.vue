@@ -5,12 +5,7 @@
         <div class="text-h6">{{ layout.label }}</div>
       </q-card-section>
 
-      <q-card-section
-        v-for="(element, index) in (layout.uischema as Layout).elements"
-        :key="`${layout.path}-${index}`"
-        class="q-pt-none"
-        :class="styles.group.item"
-      >
+      <q-card-section v-for="(element, index) in elements" :key="`${layout.path}-${index}`" class="q-pt-none" :class="styles.group.item">
         <dispatch-renderer
           :schema="layout.schema"
           :uischema="element"
@@ -25,10 +20,10 @@
 </template>
 
 <script lang="ts">
-import { type Layout } from '@jsonforms/core'
+import type { Layout, UISchemaElement } from '@jsonforms/core'
 import { defineComponent } from 'vue'
 import { DispatchRenderer, rendererProps, useJsonFormsLayout, type RendererProps } from '@jsonforms/vue'
-import { useQuasarLayout } from '../util'
+import { useQuasarLayout, withoutConstControls } from '../util'
 
 export default defineComponent({
   name: 'GroupRenderer',
@@ -42,6 +37,9 @@ export default defineComponent({
     return useQuasarLayout(useJsonFormsLayout(props))
   },
   computed: {
+    elements(): UISchemaElement[] {
+      return withoutConstControls((this.layout.uischema as Layout).elements, this.layout.schema)
+    },
     bare(): boolean {
       return !!this.appliedOptions.bare
     },

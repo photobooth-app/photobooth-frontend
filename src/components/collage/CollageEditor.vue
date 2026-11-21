@@ -22,7 +22,7 @@
       <q-toggle v-model="previewOnly" dense :label="$t('Preview only')" />
       <q-toggle v-model="showOutlines" dense :disable="previewOnly" :label="$t('Outlines')" />
       <q-toggle v-model="showFront" dense :disable="!draft.canvas_img_front_enable" :label="$t('Overlay')" />
-      <q-toggle v-model="showTexts" dense :disable="!draft.canvas_texts_enable" :label="$t('Texts')" />
+      <q-toggle v-model="showElements" dense :disable="!draft.canvas_elements_enable" :label="$t('Elements')" />
       <q-toggle v-model="snap" dense :disable="previewOnly" :label="$t('Snap')" />
       <q-toggle v-model="keepAspect" dense :disable="previewOnly" :label="$t('Keep aspect ratio')" />
       <q-space />
@@ -36,14 +36,14 @@
         <collage-canvas
           v-model:definitions="draft.merge_definition"
           v-model:selected="selected"
-          v-model:texts="draft.canvas_texts"
-          v-model:selected-text="selectedText"
+          v-model:elements="draft.canvas_elements"
+          v-model:selected-element="selectedElement"
           :config="draft"
           :sample-images="sampleImages"
           :editable="!previewOnly"
           :show-outlines="showOutlines"
           :show-front="showFront"
-          :show-texts="showTexts"
+          :show-elements="showElements"
           :snap="snap"
           :keep-aspect="keepAspect"
         />
@@ -53,7 +53,7 @@
         <q-tabs v-model="tab" dense no-caps align="justify" active-color="primary" indicator-color="primary" class="text-grey-8">
           <q-tab name="images" icon="sym_o_photo_library" :label="$t('Images')" />
           <q-tab name="canvas" icon="sym_o_wallpaper" :label="$t('Canvas')" />
-          <q-tab name="texts" icon="sym_o_text_fields" :label="$t('Texts')" />
+          <q-tab name="elements" icon="sym_o_text_fields" :label="$t('Elements')" />
         </q-tabs>
         <q-separator />
 
@@ -261,100 +261,182 @@
               </div>
             </q-tab-panel>
 
-            <!-- ================= texts ================= -->
-            <q-tab-panel name="texts" class="q-gutter-y-md">
-              <q-toggle v-model="draft.canvas_texts_enable" :label="$t('Apply texts')" />
+            <!-- ================= texts and images ================= -->
+            <q-tab-panel name="elements" class="q-gutter-y-md">
+              <q-toggle v-model="draft.canvas_elements_enable" :label="$t('Apply texts and images')" />
 
               <div>
                 <div class="row items-center">
-                  <div class="text-subtitle2 col">{{ $t('Texts') }}</div>
-                  <q-btn flat round dense icon="sym_o_add" :aria-label="$t('Add text')" @click="addText">
+                  <div class="text-subtitle2 col">{{ $t('Elements') }}</div>
+                  <q-btn flat round dense icon="sym_o_title" :aria-label="$t('Add text')" @click="addText">
                     <q-tooltip>{{ $t('Add text') }}</q-tooltip>
                   </q-btn>
+                  <q-btn flat round dense icon="sym_o_add_photo_alternate" :aria-label="$t('Add image')" @click="addImageElement">
+                    <q-tooltip>{{ $t('Add image') }}</q-tooltip>
+                  </q-btn>
                 </div>
-                <q-list bordered separator dense class="rounded-borders" :class="{ 'collage-editor__list--disabled': !draft.canvas_texts_enable }">
+                <q-list bordered separator dense class="rounded-borders" :class="{ 'collage-editor__list--disabled': !draft.canvas_elements_enable }">
                   <q-item
-                    v-for="(text, index) in draft.canvas_texts"
+                    v-for="(element, index) in draft.canvas_elements"
                     :key="index"
                     clickable
-                    :active="index === selectedText"
-                    @click="selectText(index)"
+                    :active="index === selectedElement"
+                    @click="selectElement(index)"
                   >
                     <q-item-section avatar>
-                      <q-avatar size="28px" :style="{ background: text.color }" text-color="white" icon="sym_o_title" />
+                      <q-avatar v-if="isImageElement(element)" size="28px" color="grey-6" text-color="white" icon="sym_o_image" />
+                      <q-avatar v-else size="28px" :style="{ background: element.color }" text-color="white" icon="sym_o_title" />
                     </q-item-section>
-                    <q-item-section>
-                      <q-item-label lines="1">{{ text.text || $t('(empty)') }}</q-item-label>
+                    <q-item-section v-if="isImageElement(element)">
+                      <q-item-label lines="1">{{ element.image ? fileName(element.image) : $t('(no image)') }}</q-item-label>
                       <q-item-label caption lines="1"
-                        >{{ text.font_size }} px @ {{ text.pos_x }},{{ text.pos_y }}{{ text.rotate ? ` ⟲${text.rotate}°` : '' }}</q-item-label
+                        >{{ element.width }}×{{ element.height }} px @ {{ element.pos_x }},{{ element.pos_y
+                        }}{{ element.rotate ? ` ⟲${element.rotate}°` : '' }}</q-item-label
+                      >
+                    </q-item-section>
+                    <q-item-section v-else>
+                      <q-item-label lines="1">{{ element.text || $t('(empty)') }}</q-item-label>
+                      <q-item-label caption lines="1"
+                        >{{ element.font_size }} px @ {{ element.pos_x }},{{ element.pos_y
+                        }}{{ element.rotate ? ` ⟲${element.rotate}°` : '' }}</q-item-label
                       >
                     </q-item-section>
                   </q-item>
-                  <q-item v-if="draft.canvas_texts.length === 0">
-                    <q-item-section class="text-grey-7">{{ $t('No texts yet.') }}</q-item-section>
+                  <q-item v-if="draft.canvas_elements.length === 0">
+                    <q-item-section class="text-grey-7">{{ $t('No texts or images yet.') }}</q-item-section>
                   </q-item>
                 </q-list>
+                <div class="text-caption text-grey-7 q-mt-xs">{{ $t('Drawn above the overlay, later elements on top.') }}</div>
               </div>
 
-              <div v-if="currentText">
+              <div v-if="currentElement">
                 <div class="row items-center">
-                  <div class="text-subtitle2 col">{{ $t('Text {number}', { number: (selectedText ?? 0) + 1 }) }}</div>
-                  <q-btn flat round dense icon="sym_o_content_copy" :aria-label="$t('Duplicate')" @click="duplicateText">
+                  <div class="text-subtitle2 col">
+                    {{
+                      isImageElement(currentElement)
+                        ? $t('Image element {number}', { number: (selectedElement ?? 0) + 1 })
+                        : $t('Text {number}', { number: (selectedElement ?? 0) + 1 })
+                    }}
+                  </div>
+                  <q-btn
+                    flat
+                    round
+                    dense
+                    icon="sym_o_arrow_upward"
+                    :disable="selectedElement === 0"
+                    :aria-label="$t('Move up')"
+                    @click="moveElement(-1)"
+                  >
+                    <q-tooltip>{{ $t('Move up') }}</q-tooltip>
+                  </q-btn>
+                  <q-btn
+                    flat
+                    round
+                    dense
+                    icon="sym_o_arrow_downward"
+                    :disable="selectedElement === draft.canvas_elements.length - 1"
+                    :aria-label="$t('Move down')"
+                    @click="moveElement(1)"
+                  >
+                    <q-tooltip>{{ $t('Move down') }}</q-tooltip>
+                  </q-btn>
+                  <q-btn flat round dense icon="sym_o_content_copy" :aria-label="$t('Duplicate')" @click="duplicateElement">
                     <q-tooltip>{{ $t('Duplicate') }}</q-tooltip>
                   </q-btn>
-                  <q-btn flat round dense color="negative" icon="sym_o_delete" :aria-label="$t('Remove')" @click="removeText">
+                  <q-btn flat round dense color="negative" icon="sym_o_delete" :aria-label="$t('Remove')" @click="removeElement">
                     <q-tooltip>{{ $t('Remove') }}</q-tooltip>
                   </q-btn>
                 </div>
 
-                <q-input
-                  dense
-                  outlined
-                  autogrow
-                  type="textarea"
-                  :label="$t('Text')"
-                  :hint="$t('Placeholders: {date} and {time}', { date: '{date}', time: '{time}' })"
-                  :model-value="currentText.text"
-                  @update:model-value="v => updateText({ text: String(v ?? '') })"
-                />
+                <template v-if="isImageElement(currentElement)">
+                  <userfile-select
+                    kind="image"
+                    :label="$t('Image file')"
+                    :hint="$t('Fit into the box keeping its aspect ratio. Use a PNG for transparency.')"
+                    :model-value="currentElement.image"
+                    @update:model-value="v => updateElement({ image: v || null })"
+                  />
+                  <div v-if="!currentElement.image" class="text-caption text-negative">
+                    {{ $t('Choose a file, otherwise creating the collage fails.') }}
+                  </div>
 
-                <div class="row q-col-gutter-sm q-mt-xs">
+                  <div class="row q-col-gutter-sm q-mt-xs">
+                    <q-input
+                      v-for="field in IMAGE_ELEMENT_FIELDS"
+                      :key="field.key"
+                      class="col-6"
+                      dense
+                      outlined
+                      type="number"
+                      :label="$t(field.label)"
+                      :suffix="field.suffix"
+                      :model-value="currentElement[field.key]"
+                      @update:model-value="v => updateElement({ [field.key]: toInt(v, field.min) })"
+                    />
+                  </div>
+
+                  <div class="q-mt-md">
+                    <div class="text-caption text-grey-8">{{ $t('Opacity') }}: {{ Math.round(currentElement.opacity * 100) }} %</div>
+                    <q-slider
+                      :min="0"
+                      :max="1"
+                      :step="0.05"
+                      :model-value="currentElement.opacity"
+                      @update:model-value="v => updateElement({ opacity: v ?? 1 })"
+                    />
+                  </div>
+                </template>
+
+                <template v-else>
                   <q-input
-                    v-for="field in TEXT_FIELDS"
-                    :key="field.key"
-                    class="col-6"
                     dense
                     outlined
-                    type="number"
-                    :label="$t(field.label)"
-                    :suffix="field.suffix"
-                    :model-value="currentText[field.key]"
-                    @update:model-value="v => updateText({ [field.key]: toInt(v, field.min) })"
+                    autogrow
+                    type="textarea"
+                    :label="$t('Text')"
+                    :hint="$t('Placeholders: {date} and {time}', { date: '{date}', time: '{time}' })"
+                    :model-value="currentElement.text"
+                    @update:model-value="v => updateElement({ text: String(v ?? '') })"
                   />
-                </div>
+
+                  <div class="row q-col-gutter-sm q-mt-xs">
+                    <q-input
+                      v-for="field in TEXT_FIELDS"
+                      :key="field.key"
+                      class="col-6"
+                      dense
+                      outlined
+                      type="number"
+                      :label="$t(field.label)"
+                      :suffix="field.suffix"
+                      :model-value="currentElement[field.key]"
+                      @update:model-value="v => updateElement({ [field.key]: toInt(v, field.min) })"
+                    />
+                  </div>
+
+                  <userfile-select
+                    class="q-mt-md"
+                    kind="font"
+                    :label="$t('Font')"
+                    :model-value="currentElement.font"
+                    @update:model-value="v => updateElement({ font: v || null })"
+                  />
+                  <div v-if="!currentElement.font && currentElement.text" class="text-caption text-negative">
+                    {{ $t('Choose a font, otherwise creating the collage fails.') }}
+                  </div>
+
+                  <color-input
+                    class="q-mt-md"
+                    :label="$t('Color')"
+                    :model-value="currentElement.color"
+                    @update:model-value="v => updateElement({ color: v ?? '' })"
+                  />
+                </template>
                 <div class="text-caption text-grey-7 q-mt-xs">{{
-                  $t('Texts rotate around the center of the canvas, like in the final collage.')
+                  $t('Position is the top-left corner. Elements rotate around their own center.')
                 }}</div>
-
-                <userfile-select
-                  class="q-mt-md"
-                  kind="font"
-                  :label="$t('Font')"
-                  :model-value="currentText.font"
-                  @update:model-value="v => updateText({ font: v || null })"
-                />
-                <div v-if="!currentText.font && currentText.text" class="text-caption text-negative">
-                  {{ $t('Choose a font, otherwise creating the collage fails.') }}
-                </div>
-
-                <color-input
-                  class="q-mt-md"
-                  :label="$t('Color')"
-                  :model-value="currentText.color"
-                  @update:model-value="v => updateText({ color: v ?? '' })"
-                />
               </div>
-              <div v-else class="text-caption text-grey-7">{{ $t('Select a text in the preview or the list to edit it.') }}</div>
+              <div v-else class="text-caption text-grey-7">{{ $t('Select a text or image in the preview or the list to edit it.') }}</div>
             </q-tab-panel>
           </q-tab-panels>
         </q-scroll-area>
@@ -376,21 +458,26 @@ import {
   type CollageMergeDefinition,
   type CollageProcessing,
   type SampleSource,
-  type TextsConfig,
+  type CanvasElement,
+  type ImageElementConfig,
+  type TextElementConfig,
+  isImageElement,
+  newImageElement,
   newMergeDefinition,
   newText,
   sanitizeDefinition,
-  sanitizeText,
+  sanitizeElement,
 } from './collage'
 
 /**
  * Edit the collage layout visually, with a live preview using sample images:
- * position, size and rotation of the images, canvas size, background, overlay and texts.
+ * position, size and rotation of the images, canvas size, background, overlay, texts and images on top.
  * Works on a copy; "apply" hands the result back to the config form, which is saved as usual.
  */
 
 type SlotNumberKey = 'pos_x' | 'pos_y' | 'width' | 'height' | 'rotate' | 'pos_z'
 type TextNumberKey = 'pos_x' | 'pos_y' | 'font_size' | 'rotate'
+type ImageElementNumberKey = 'pos_x' | 'pos_y' | 'width' | 'height' | 'rotate'
 
 // labels are translation keys
 const SLOT_FIELDS: { key: SlotNumberKey; label: string; suffix?: string; min?: number }[] = [
@@ -407,6 +494,13 @@ const TEXT_FIELDS: { key: TextNumberKey; label: string; suffix?: string; min?: n
   { key: 'font_size', label: 'Font size', suffix: 'px', min: 1 },
   { key: 'rotate', label: 'Rotation', suffix: '°' },
 ]
+const IMAGE_ELEMENT_FIELDS: { key: ImageElementNumberKey; label: string; suffix?: string; min?: number }[] = [
+  { key: 'pos_x', label: 'Position X', suffix: 'px', min: 0 },
+  { key: 'pos_y', label: 'Position Y', suffix: 'px', min: 0 },
+  { key: 'width', label: 'Width', suffix: 'px', min: 1 },
+  { key: 'height', label: 'Height', suffix: 'px', min: 1 },
+  { key: 'rotate', label: 'Rotation', suffix: '°' },
+]
 
 const { config } = defineProps<{ config: CollageProcessing }>()
 const emit = defineEmits<{ apply: [config: CollageProcessing]; cancel: [] }>()
@@ -414,7 +508,7 @@ const emit = defineEmits<{ apply: [config: CollageProcessing]; cancel: [] }>()
 const { t } = useI18n()
 const mediacollectionStore = useMediacollectionStore()
 
-type EditableCollageProcessing = CollageProcessing & Required<Pick<CollageProcessing, 'canvas_width' | 'canvas_height' | 'canvas_texts'>>
+type EditableCollageProcessing = CollageProcessing & Required<Pick<CollageProcessing, 'canvas_width' | 'canvas_height' | 'canvas_elements'>>
 
 const draft = ref<EditableCollageProcessing>(
   cloneDeep({
@@ -422,17 +516,17 @@ const draft = ref<EditableCollageProcessing>(
     canvas_width: config.canvas_width ?? 1920,
     canvas_height: config.canvas_height ?? 1280,
     merge_definition: config.merge_definition ?? [],
-    canvas_texts: config.canvas_texts ?? [],
+    canvas_elements: config.canvas_elements ?? [],
   })
 )
 const selected = ref<number | null>(draft.value.merge_definition.length ? 0 : null)
-const selectedText = ref<number | null>(null)
-const tab = ref<'images' | 'canvas' | 'texts'>('images')
+const selectedElement = ref<number | null>(null)
+const tab = ref<'images' | 'canvas' | 'elements'>('images')
 
 const previewOnly = ref(false)
 const showOutlines = useLocalStorage('collageEditorShowOutlines', true)
 const showFront = ref(true)
-const showTexts = ref(true)
+const showElements = ref(true)
 const snap = useLocalStorage('collageEditorSnap', true)
 const keepAspect = useLocalStorage('collageEditorKeepAspect', true)
 const sampleSource = useLocalStorage<SampleSource>('collageEditorSampleSource', 'placeholder')
@@ -448,7 +542,7 @@ const current = computed(() => (selected.value === null ? null : (draft.value.me
 
 const selectSlot = (index: number) => {
   selected.value = index
-  selectedText.value = null
+  selectedElement.value = null
 }
 
 const slotTitle = (index: number) => {
@@ -508,58 +602,83 @@ const moveSlot = (direction: -1 | 1) => {
   selected.value = target
 }
 
-// ---------- texts ----------
+// ---------- texts and images ----------
 
-const currentText = computed(() => (selectedText.value === null ? null : (draft.value.canvas_texts[selectedText.value] ?? null)))
+const currentElement = computed(() => (selectedElement.value === null ? null : (draft.value.canvas_elements[selectedElement.value] ?? null)))
 
-const selectText = (index: number) => {
-  selectedText.value = index
+const fileName = (path: string) => path.split(/[\\/]/).pop() ?? path
+
+const selectElement = (index: number) => {
+  selectedElement.value = index
   selected.value = null
 }
 
-const updateText = (patch: Partial<TextsConfig>) => {
-  if (selectedText.value === null || !currentText.value) return
-  draft.value.canvas_texts[selectedText.value] = sanitizeText({ ...currentText.value, ...patch })
+const updateElement = (patch: Partial<TextElementConfig> | Partial<ImageElementConfig>) => {
+  if (selectedElement.value === null || !currentElement.value) return
+  draft.value.canvas_elements[selectedElement.value] = sanitizeElement({ ...currentElement.value, ...patch } as CanvasElement)
+}
+
+const pushElement = (element: CanvasElement) => {
+  draft.value.canvas_elements.push(element)
+  draft.value.canvas_elements_enable = true
+  showElements.value = true
+  selectElement(draft.value.canvas_elements.length - 1)
 }
 
 const addText = () => {
-  const text = {
+  pushElement({
     ...newText(),
     text: t('Your text'),
     pos_x: Math.round(draft.value.canvas_width / 2 - 100),
     pos_y: Math.round(draft.value.canvas_height / 2),
-  }
-  draft.value.canvas_texts.push(text)
-  draft.value.canvas_texts_enable = true
-  showTexts.value = true
-  selectText(draft.value.canvas_texts.length - 1)
+  })
 }
 
-const duplicateText = () => {
-  if (selectedText.value === null || !currentText.value) return
-  const copy = sanitizeText({ ...cloneDeep(currentText.value), pos_y: currentText.value.pos_y + currentText.value.font_size * 1.5 })
-  draft.value.canvas_texts.splice(selectedText.value + 1, 0, copy)
-  selectedText.value += 1
+const addImageElement = () => {
+  const element = newImageElement()
+  pushElement({
+    ...element,
+    pos_x: Math.max(0, Math.round((draft.value.canvas_width - element.width) / 2)),
+    pos_y: Math.max(0, Math.round((draft.value.canvas_height - element.height) / 2)),
+  })
 }
 
-const removeText = () => {
-  if (selectedText.value === null) return
-  const list = draft.value.canvas_texts
-  list.splice(selectedText.value, 1)
-  selectedText.value = list.length ? Math.min(selectedText.value, list.length - 1) : null
+const duplicateElement = () => {
+  if (selectedElement.value === null || !currentElement.value) return
+  const source = currentElement.value
+  const offset = isImageElement(source) ? { pos_x: source.pos_x + 40, pos_y: source.pos_y + 40 } : { pos_y: source.pos_y + source.font_size * 1.5 }
+  draft.value.canvas_elements.splice(selectedElement.value + 1, 0, sanitizeElement({ ...cloneDeep(source), ...offset }))
+  selectedElement.value += 1
+}
+
+const removeElement = () => {
+  if (selectedElement.value === null) return
+  const list = draft.value.canvas_elements
+  list.splice(selectedElement.value, 1)
+  selectedElement.value = list.length ? Math.min(selectedElement.value, list.length - 1) : null
+}
+
+// the order of the list is the drawing order
+const moveElement = (direction: -1 | 1) => {
+  if (selectedElement.value === null) return
+  const list = draft.value.canvas_elements
+  const target = selectedElement.value + direction
+  if (target < 0 || target >= list.length) return
+  ;[list[selectedElement.value], list[target]] = [list[target]!, list[selectedElement.value]!]
+  selectedElement.value = target
 }
 
 // selecting something in the preview shows its settings
 watch(selected, value => {
   if (value !== null) tab.value = 'images'
 })
-watch(selectedText, value => {
-  if (value !== null) tab.value = 'texts'
+watch(selectedElement, value => {
+  if (value !== null) tab.value = 'elements'
 })
 
 // ---------- keyboard ----------
 
-// arrow keys nudge the selected image or text, unless typing in a field
+// arrow keys nudge the selected image, text or image element, unless typing in a field
 const onKeydown = (evt: KeyboardEvent) => {
   if (previewOnly.value) return
   const el = evt.target as HTMLElement | null
@@ -571,16 +690,16 @@ const onKeydown = (evt: KeyboardEvent) => {
   if (current.value) {
     evt.preventDefault()
     update({ pos_x: current.value.pos_x + move[0], pos_y: current.value.pos_y + move[1] })
-  } else if (currentText.value) {
+  } else if (currentElement.value) {
     evt.preventDefault()
-    updateText({ pos_x: currentText.value.pos_x + move[0], pos_y: currentText.value.pos_y + move[1] })
+    updateElement({ pos_x: currentElement.value.pos_x + move[0], pos_y: currentElement.value.pos_y + move[1] })
   }
 }
 
 watch(previewOnly, value => {
   if (value) {
     selected.value = null
-    selectedText.value = null
+    selectedElement.value = null
   }
 })
 
@@ -588,7 +707,7 @@ const apply = () => {
   emit('apply', {
     ...draft.value,
     merge_definition: draft.value.merge_definition.map(sanitizeDefinition),
-    canvas_texts: draft.value.canvas_texts.map(sanitizeText),
+    canvas_elements: draft.value.canvas_elements.map(sanitizeElement),
   })
 }
 
@@ -630,6 +749,11 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
     width: 380px;
     flex: none;
     border-left: 1px solid rgba(0, 0, 0, 0.12);
+
+    // long labels like file names are cut instead of widening the panel
+    .q-scrollarea__content {
+      width: 100%;
+    }
   }
 
   &__list--disabled {
