@@ -182,12 +182,12 @@ const lastActionTriggerButton = computed<TriggerSchema | null>(() => {
     : null
 })
 watchDebounced(
-  selectedMediaitemId,
+  currentMediaitem,
   async () => {
-    if (selectedMediaitemId.value === null) return
+    if (!currentMediaitem.value) return
 
     try {
-      const response = await _fetch(`/api/share/download/${selectedMediaitemId.value}`)
+      const response = await _fetch(`/api/share/download/${currentMediaitem.value.id}`)
       if (!response.ok) {
         throw `Error: ${response.status} ${response.statusText}`
       }
