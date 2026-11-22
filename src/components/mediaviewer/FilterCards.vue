@@ -1,10 +1,10 @@
 <template>
   <div v-if="availableFilter.length > 0" class="flex flex-center q-gutter-sm full-width">
-    <q-card v-for="filter in availableFilter" :key="filter" class="q-mb-sm no-shadow" style="min-width: 150px; max-width: 250px; width: 100%">
+    <q-card v-for="filter in availableFilter" :key="filter" class="q-mb-sm no-shadow" style="min-width: 200px; max-width: 300px; width: 100%">
       <q-card-section class="q-pa-none">
         <q-img class="rounded-borders" loading="lazy" :src="`/api/filter/${id}?filter=${filter}`" @click="applyFilterClick(filter)">
-          <div class="absolute-bottom-right text-caption text-center" style="padding: 4px; pointer-events: none">
-            {{ filter }}
+          <div class="absolute-bottom text-caption text-center" style="padding: 4px; pointer-events: none">
+            {{ filterLabel(filter) }}
           </div>
         </q-img>
       </q-card-section>
@@ -26,6 +26,12 @@ const props = defineProps<{
 const emit = defineEmits<{
   triggerApplyFilter: [id: string, filter: string]
 }>()
+
+// filters are named "PluginName.filtername"; show only the filter name
+function filterLabel(filter: string) {
+  const separator = filter.indexOf('.')
+  return separator >= 0 ? filter.slice(separator + 1) : filter
+}
 
 function applyFilterClick(filter: string) {
   // console.log(`trigger action ${action}, config_index ${config_index}`);
