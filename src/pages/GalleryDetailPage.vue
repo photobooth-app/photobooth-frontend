@@ -260,6 +260,13 @@ const doApplyFilter = (id: string, filter: string) => {
     .catch(err => {
       console.error(err)
       displayIndeterminateProgressbar.value = false
+
+      const msg = err instanceof Error ? err.message : String(err)
+      $q.notify({
+        message: msg,
+        caption: 'Request Error!',
+        color: 'negative',
+      })
     })
 }
 const doDeleteItem = (id: string) => {
