@@ -126,7 +126,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
-import { useQuasar } from 'quasar'
+import { format, useQuasar } from 'quasar'
 import { _fetch } from '@/util/fetch_api'
 import { getAccessToken } from '@/util/auth'
 
@@ -172,7 +172,7 @@ const folder_columns = [
     required: true,
     align: 'left' as AlignType,
     field: 'size',
-    format: (val: number) => formatBytes(val, 0),
+    format: (val: number) => format.humanStorageSize(val, 0),
   },
 ]
 const selected = ref([])
@@ -364,16 +364,4 @@ const trimSlashes = (str: string) =>
     .split('/')
     .filter(v => v !== '')
     .join('/')
-
-const formatBytes = (bytes: number, decimals = 2) => {
-  if (!+bytes) return '0 Bytes'
-
-  const k = 1024
-  const dm = decimals < 0 ? 0 : decimals
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
-}
 </script>
