@@ -22,7 +22,7 @@ Follow nearby Vue, TypeScript/JavaScript, Quasar, and Pinia patterns. Preserve t
 - `npm run dev` starts the frontend development server, which proxies backend requests to `127.0.0.1:8000`. Most frontend flows require the backend to be running; its virtual camera can be used without physical hardware.
 - `npm run lint:check` checks formatting and lint without applying fixes. `npm run typecheck` runs `vue-tsc`.
 - `npm run lint` and `npm run format` can modify files across the repository; prefer the non-mutating check when validating a focused change.
-- `npm test` is currently a placeholder that prints `No test specified` and exits successfully. Do not report it as meaningful test coverage. Add focused tests when practical, and report manual verification or testing gaps explicitly.
+- `npm test` is currently a placeholder that prints `No test specified` and exits successfully. Do not report it as meaningful test coverage. Do not add tests for now but report manual verification or testing gaps explicitly.
 - `npm run generate-types` uses `@hey-api/openapi-ts` and `openapi-ts.config.ts` to rewrite the API types in `src/dto/generated/` from `http://localhost:8000/api/openapi.json` (excluded from oxfmt/oxlint; do not edit by hand). Run it against the intended backend version and inspect the resulting diff.
 - `npm run build` removes and rebuilds `../photobooth-app/src/web/frontend/`, outside this repository. Check the sibling repository's working tree first; do not overwrite user changes or run the build unless its output is intended.
 
@@ -35,3 +35,4 @@ Run the narrowest relevant checks for a change. Manual checks use the live backe
 - Use the generated API schema types where applicable. Do not hand-edit `src/dto/generated/`; regenerate them when an intentional backend schema change requires it.
 - Localize new user-facing text with Vue I18n and add or update the English source in `src/i18n/locales/en-US.json`. Preserve interpolation placeholders. Other locales are synchronized through Crowdin; register a new locale in `src/i18n/index.js` if adding one.
 - Keep initial store loading and SSE updates consistent when changing shared application or media state.
+- Do not change the README.md if not asked for.

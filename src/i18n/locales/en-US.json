@@ -274,5 +274,7 @@
   "No texts or images yet.": "No texts or images yet.",
   "Opacity": "Opacity",
   "Position is the top-left corner. Elements rotate around their own center.": "Position is the top-left corner. Elements rotate around their own center.",
-  "Select a text or image in the preview or the list to edit it.": "Select a text or image in the preview or the list to edit it."
+  "Select a text or image in the preview or the list to edit it.": "Select a text or image in the preview or the list to edit it.",
+  "Filter is processing...": "Filter is processing...",
+  "Error loading image.": "Error loading image."
 }

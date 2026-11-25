@@ -8,7 +8,6 @@
           :duration="configurationStore.configuration.uisettings.AUTOCLOSE_NEW_ITEM_ARRIVED"
           @trigger-timeout="$router.push({ path: '/' })"
         ></HeaderCountdownTimer>
-        <HeaderProcessing v-if="displayIndeterminateProgressbar"></HeaderProcessing>
       </q-header>
 
       <q-dialog v-if="showFilter" v-model="openFilterDialog">
@@ -37,12 +36,19 @@
       <q-page-container class="q-pa-none galleryimagedetail full-height">
         <q-page class="full-height">
           <template v-if="itemPresenterMode">
-            <MediaItemPreviewViewer :item="currentMediaitem" style="user-select: none" />
+            <MediaItemPreviewViewer
+              :item="currentMediaitem"
+              :is-processing="processingItemIds.includes(currentMediaitem.id)"
+              :show-processing-effect="processingEffectItemIds.includes(currentMediaitem.id)"
+              style="user-select: none"
+            />
           </template>
           <template v-else>
             <PageCarouselView
               :mediaitem-id="currentMediaitem.id"
               :sliced-images="mediacollectionStore.collection"
+              :processing-item-ids="processingItemIds"
+              :processing-effect-item-ids="processingEffectItemIds"
               @trigger-changed-item="onCarouselTransition"
             />
           </template>
@@ -117,11 +123,10 @@ import type { TriggerSchema } from '@/types/trigger-schema'
 import { useMainStore } from '@/stores/main-store'
 import { useConfigurationStore } from '@/stores/configuration-store'
 import { useMediacollectionStore } from '@/stores/mediacollection-store'
-import { ref, onBeforeMount, computed, onMounted, watch } from 'vue'
+import { ref, onBeforeMount, onBeforeUnmount, computed, onMounted, watch } from 'vue'
 import { default as PageShareParameters } from '@/components/mediaviewer/PageShareParameters.vue'
 import { default as PageToolbar } from '@/components/mediaviewer/PageToolbar.vue'
 import { default as HeaderCountdownTimer } from '@/components/mediaviewer/HeaderCountdownTimer.vue'
-import { default as HeaderProcessing } from '@/components/mediaviewer/HeaderProcessing.vue'
 import { default as FilterCards } from '@/components/mediaviewer/FilterCards.vue'
 import { default as PageQrCode } from '@/components/mediaviewer/PageQrCode.vue'
 import { default as PageCarouselView } from '@/components/mediaviewer/PageCarouselView.vue'
@@ -143,7 +148,11 @@ const mediacollectionStore = useMediacollectionStore()
 const selectedMediaitemId = ref<string | null>(null)
 const openFilterDialog = ref(false)
 const headercountdowntimer = ref(false) // likely not used here, move to newitempresenter and approval...
-const displayIndeterminateProgressbar = ref(false)
+const pendingFilters = ref<Record<string, boolean>>({})
+const filterTimers = new Map<string, ReturnType<typeof setTimeout>>()
+const processingItemIds = computed(() => Object.keys(pendingFilters.value))
+const processingEffectItemIds = computed(() => Object.keys(pendingFilters.value).filter(id => pendingFilters.value[id]))
+let unmounted = false
 const showDialogShareActionWithParameters = ref(false)
 const shareActionWithParametersConfigIndex = ref(0)
 const available_filter = ref([])
@@ -162,6 +171,11 @@ watch(route, to => {
 })
 onMounted(() => {
   headercountdowntimer.value = props.startTimer
+})
+onBeforeUnmount(() => {
+  unmounted = true
+  filterTimers.forEach(timer => clearTimeout(timer))
+  filterTimers.clear()
 })
 const onCarouselTransition = (newMediaitemId: string | number) => {
   selectedMediaitemId.value = newMediaitemId as string
@@ -244,30 +258,40 @@ const getAvailableFilter = async () => {
     console.warn(error)
   }
 }
-const doApplyFilter = (id: string, filter: string) => {
+const doApplyFilter = async (id: string, filter: string) => {
   // close filter dialog
   openFilterDialog.value = false
+  if (id in pendingFilters.value) return
 
-  displayIndeterminateProgressbar.value = true
-  fetch(`/api/filter/${id}?filter=${filter}`, { method: 'PATCH' })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Server returned ' + response.status)
-      }
+  pendingFilters.value[id] = false
+  filterTimers.set(
+    id,
+    setTimeout(() => {
+      pendingFilters.value[id] = true
+    }, 900)
+  )
 
-      displayIndeterminateProgressbar.value = false
-    })
-    .catch(err => {
-      console.error(err)
-      displayIndeterminateProgressbar.value = false
+  try {
+    const response = await _fetch(`/api/filter/${id}?filter=${encodeURIComponent(filter)}`, { method: 'PATCH' })
+    if (!response.ok) {
+      throw new Error('Server returned ' + response.status)
+    }
+  } catch (err) {
+    console.error(err)
 
+    if (!unmounted) {
       const msg = err instanceof Error ? err.message : String(err)
       $q.notify({
         message: msg,
         caption: 'Request Error!',
         color: 'negative',
       })
-    })
+    }
+  } finally {
+    clearTimeout(filterTimers.get(id))
+    filterTimers.delete(id)
+    if (!unmounted) delete pendingFilters.value[id]
+  }
 }
 const doDeleteItem = (id: string) => {
   selectedMediaitemId.value = null
