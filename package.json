@@ -21,7 +21,7 @@
     "@jsonforms/vue": "^3.8.0",
     "@quasar/extras": "^2.1.0",
     "@vueuse/core": "^15.0.0",
-    "@vueuse/integrations": "^15.0.0",
+    "@vueuse/integrations": "^15.1.0",
     "pinia": "^4.1.0",
     "qrcode.vue": "^3.11.1",
     "quasar": "^2.35.6",
@@ -37,10 +37,10 @@
     "autoprefixer": "^10.7.0",
     "globals": "^17.14.0",
     "oxfmt": "^0.79.0",
-    "oxlint": "^1.94.0",
+    "oxlint": "^1.95.0",
     "oxlint-tsgolint": "^7.0.2008",
     "typescript": "^6.0.3",
-    "vite-plugin-checker": "^1.0.0",
+    "vite-plugin-checker": "^1.1.0",
     "vue-tsc": "3.3.13"
   },
   "engines": {
