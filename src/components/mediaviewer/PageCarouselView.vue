@@ -16,11 +16,7 @@
     @transition="carouselTransition"
   >
     <q-carousel-slide v-for="slide in props.slicedImages" :key="slide.id" :name="slide.id" class="column no-wrap flex-center full-height q-pa-sm">
-      <MediaItemPreviewViewer
-        :item="slide"
-        :is-processing="props.processingItemIds?.includes(slide.id)"
-        :show-processing-effect="props.processingEffectItemIds?.includes(slide.id)"
-      />
+      <MediaItemPreviewViewer :item="slide" :is-processing="props.processingItemIds?.includes(slide.id)" />
     </q-carousel-slide>
   </q-carousel>
 </template>
@@ -35,7 +31,6 @@ const props = defineProps<{
   slicedImages: MediaitemPublic[]
   mediaitemId: string // warning: if invalid ID is given, there is just shown nothing...
   processingItemIds?: string[]
-  processingEffectItemIds?: string[]
 }>()
 
 const currentMediaitemId = toRef(props.mediaitemId)
