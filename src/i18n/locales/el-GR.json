@@ -274,5 +274,8 @@
   "No texts or images yet.": "Δεν υπάρχουν κείμενα ή εικόνες ακόμα.",
   "Opacity": "Αδιαφάνεια",
   "Position is the top-left corner. Elements rotate around their own center.": "Η θέση είναι η επάνω αριστερή γωνία. Τα στοιχεία περιστρέφονται γύρω από το κέντρο τους.",
-  "Select a text or image in the preview or the list to edit it.": "Επιλέξτε ένα κείμενο ή μια εικόνα στην προεπισκόπηση ή τη λίστα για την επεξεργασία του."
+  "Select a text or image in the preview or the list to edit it.": "Επιλέξτε ένα κείμενο ή μια εικόνα στην προεπισκόπηση ή τη λίστα για την επεξεργασία του.",
+  "Filter is processing...": "Το φίλτρο επεξεργάζεται...",
+  "Error loading image.": "Σφάλμα φόρτωσης εικόνας.",
+  "Getting your photo ready...": "Getting your photo ready..."
 }

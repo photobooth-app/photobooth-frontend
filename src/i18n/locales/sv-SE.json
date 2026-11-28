@@ -274,5 +274,8 @@
   "No texts or images yet.": "Inga texter eller bilder ännu.",
   "Opacity": "Genomskinlighet",
   "Position is the top-left corner. Elements rotate around their own center.": "Position är det övre vänstra hörnet. Element roterar runt sitt eget centrum.",
-  "Select a text or image in the preview or the list to edit it.": "Välj en text eller bild i förhandsgranskningen eller listan för att redigera den."
+  "Select a text or image in the preview or the list to edit it.": "Välj en text eller bild i förhandsgranskningen eller listan för att redigera den.",
+  "Filter is processing...": "Filtret bearbetas...",
+  "Error loading image.": "Fel vid laddning av bild.",
+  "Getting your photo ready...": "Getting your photo ready..."
 }

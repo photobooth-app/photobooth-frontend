@@ -274,5 +274,8 @@
   "No texts or images yet.": "Aucun texte ou image pour le moment.",
   "Opacity": "Opacité",
   "Position is the top-left corner. Elements rotate around their own center.": "La position est le coin supérieur gauche. Les éléments tournent autour de leur propre centre.",
-  "Select a text or image in the preview or the list to edit it.": "Sélectionnez un texte ou une image dans l'aperçu ou la liste pour l'éditer."
+  "Select a text or image in the preview or the list to edit it.": "Sélectionnez un texte ou une image dans l'aperçu ou la liste pour l'éditer.",
+  "Filter is processing...": "Filtre en cours de traitement...",
+  "Error loading image.": "Erreur lors du chargement de l'image.",
+  "Getting your photo ready...": "Préparation de votre photo..."
 }

@@ -274,5 +274,8 @@
   "No texts or images yet.": "Încă nu există texte sau imagini.",
   "Opacity": "Opacitate",
   "Position is the top-left corner. Elements rotate around their own center.": "Poziția este colțul din stânga sus. Elementele se rotesc în jurul centrului lor.",
-  "Select a text or image in the preview or the list to edit it.": "Selectați un text sau o imagine în previzualizare sau în listă pentru a-l edita."
+  "Select a text or image in the preview or the list to edit it.": "Selectați un text sau o imagine în previzualizare sau în listă pentru a-l edita.",
+  "Filter is processing...": "Filtrul se procesează...",
+  "Error loading image.": "Eroare la încărcarea imaginei.",
+  "Getting your photo ready...": "Se pregătește fotografia..."
 }

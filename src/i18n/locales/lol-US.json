@@ -274,5 +274,8 @@
   "No texts or images yet.": "crwdns1029:0crwdne1029:0",
   "Opacity": "crwdns1031:0crwdne1031:0",
   "Position is the top-left corner. Elements rotate around their own center.": "crwdns1033:0crwdne1033:0",
-  "Select a text or image in the preview or the list to edit it.": "crwdns1035:0crwdne1035:0"
+  "Select a text or image in the preview or the list to edit it.": "crwdns1035:0crwdne1035:0",
+  "Filter is processing...": "crwdns1037:0crwdne1037:0",
+  "Error loading image.": "crwdns1039:0crwdne1039:0",
+  "Getting your photo ready...": "crwdns1041:0crwdne1041:0"
 }

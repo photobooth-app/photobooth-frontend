@@ -274,5 +274,8 @@
   "No texts or images yet.": "Henüz metin veya resim yok.",
   "Opacity": "Opaklık",
   "Position is the top-left corner. Elements rotate around their own center.": "Konum, sol üst köşedir. Öğeler kendi merkezleri etrafında döner.",
-  "Select a text or image in the preview or the list to edit it.": "Düzenlemek için önizlemede veya listede bir metin veya resim seçin."
+  "Select a text or image in the preview or the list to edit it.": "Düzenlemek için önizlemede veya listede bir metin veya resim seçin.",
+  "Filter is processing...": "Filtre işleniyor...",
+  "Error loading image.": "Resim yüklenirken hata oluştu.",
+  "Getting your photo ready...": "Getting your photo ready..."
 }

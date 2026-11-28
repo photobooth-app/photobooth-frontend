@@ -274,5 +274,8 @@
   "No texts or images yet.": "Ei vielä tekstejä tai kuvia.",
   "Opacity": "Läpinäkyvyys",
   "Position is the top-left corner. Elements rotate around their own center.": "Sijainti on vasemmassa yläkulmassa. Elementit kiertävät oman keskustansa.",
-  "Select a text or image in the preview or the list to edit it.": "Valitse teksti tai kuva esikatselusta tai luettelosta, jota muokataan."
+  "Select a text or image in the preview or the list to edit it.": "Valitse teksti tai kuva esikatselusta tai luettelosta, jota muokataan.",
+  "Filter is processing...": "Suodatin käsitellään...",
+  "Error loading image.": "Virhe kuvaa ladattaessa.",
+  "Getting your photo ready...": "Getting your photo ready..."
 }

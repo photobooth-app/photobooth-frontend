@@ -274,5 +274,8 @@
   "No texts or images yet.": "Még nincsenek szövegek vagy képek.",
   "Opacity": "Átlátszatlanság",
   "Position is the top-left corner. Elements rotate around their own center.": "A pozíció a bal felső sarok. Az elemek a saját középpontjuk körül forognak.",
-  "Select a text or image in the preview or the list to edit it.": "Válasszon ki egy szöveget vagy képet az előnézetből vagy a listából a szerkesztéshez."
+  "Select a text or image in the preview or the list to edit it.": "Válasszon ki egy szöveget vagy képet az előnézetből vagy a listából a szerkesztéshez.",
+  "Filter is processing...": "A szűrő feldolgozás alatt áll...",
+  "Error loading image.": "Hiba történt a kép betöltése közben.",
+  "Getting your photo ready...": "Getting your photo ready..."
 }

@@ -274,5 +274,8 @@
   "No texts or images yet.": "Ingen tekster eller billeder endnu.",
   "Opacity": "Gennemsigtighed",
   "Position is the top-left corner. Elements rotate around their own center.": "Position er øverste venstre hjørne. Elementer rotere rundt om deres eget centrum.",
-  "Select a text or image in the preview or the list to edit it.": "Vælg en tekst eller et billede i forhåndsvisningen eller listen for at redigere den."
+  "Select a text or image in the preview or the list to edit it.": "Vælg en tekst eller et billede i forhåndsvisningen eller listen for at redigere den.",
+  "Filter is processing...": "Filteret behandler...",
+  "Error loading image.": "Fejl under indlæsning af billede.",
+  "Getting your photo ready...": "Få dit billede klar..."
 }

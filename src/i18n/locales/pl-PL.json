@@ -274,5 +274,8 @@
   "No texts or images yet.": "Brak tekstów lub obrazów.",
   "Opacity": "Przezroczystość",
   "Position is the top-left corner. Elements rotate around their own center.": "Pozycja jest w lewym górnym rogu. Elementy obracają się wokół swojego środka.",
-  "Select a text or image in the preview or the list to edit it.": "Wybierz tekst lub obraz w podglądzie lub na liście do edycji"
+  "Select a text or image in the preview or the list to edit it.": "Wybierz tekst lub obraz w podglądzie lub na liście do edycji",
+  "Filter is processing...": "Filtr jest przetwarzany...",
+  "Error loading image.": "Błąd ładowania obrazu.",
+  "Getting your photo ready...": "Getting your photo ready..."
 }

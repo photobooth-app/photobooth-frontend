@@ -274,5 +274,8 @@
   "No texts or images yet.": "テキストや画像はまだありません。",
   "Opacity": "透明度",
   "Position is the top-left corner. Elements rotate around their own center.": "位置は左上隅です。要素は自分の中心を中心に回転します。",
-  "Select a text or image in the preview or the list to edit it.": "プレビューまたはリストでテキストまたは画像を選択して編集します。"
+  "Select a text or image in the preview or the list to edit it.": "プレビューまたはリストでテキストまたは画像を選択して編集します。",
+  "Filter is processing...": "フィルターを処理中...",
+  "Error loading image.": "画像の読み込みに失敗しました。",
+  "Getting your photo ready...": "Getting your photo ready..."
 }
