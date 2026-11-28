@@ -274,5 +274,8 @@
   "No texts or images yet.": "Ще немає текстів чи зображень.",
   "Opacity": "Непрозорість",
   "Position is the top-left corner. Elements rotate around their own center.": "Позиція — це лівий кут. Елементи обертаються навколо свого центру.",
-  "Select a text or image in the preview or the list to edit it.": "Виберіть текст або зображення в попередньому перегляді або список для його редагування."
+  "Select a text or image in the preview or the list to edit it.": "Виберіть текст або зображення в попередньому перегляді або список для його редагування.",
+  "Filter is processing...": "Фільтр обробляє...",
+  "Error loading image.": "Помилка при завантаженні зображення.",
+  "Getting your photo ready...": "Getting your photo ready..."
 }

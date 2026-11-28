@@ -274,5 +274,8 @@
   "No texts or images yet.": "아직 텍스트나 이미지가 없습니다.",
   "Opacity": "불투명도",
   "Position is the top-left corner. Elements rotate around their own center.": "위치는 왼쪽 상단 모서리입니다. 요소는 각자의 중심을 기준으로 회전합니다.",
-  "Select a text or image in the preview or the list to edit it.": "미리보기 또는 목록에서 텍스트나 이미지를 선택하여 편집하세요."
+  "Select a text or image in the preview or the list to edit it.": "미리보기 또는 목록에서 텍스트나 이미지를 선택하여 편집하세요.",
+  "Filter is processing...": "필터 처리 중...",
+  "Error loading image.": "이미지 불러오는 중 오류가 발생했습니다.",
+  "Getting your photo ready...": "Getting your photo ready..."
 }

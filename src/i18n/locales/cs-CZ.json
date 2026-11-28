@@ -274,5 +274,8 @@
   "No texts or images yet.": "Zatím žádné texty ani obrázky.",
   "Opacity": "Neprůhlednost",
   "Position is the top-left corner. Elements rotate around their own center.": "Poloha je levý horní roh. Elementy se otáčí kolem svého středu.",
-  "Select a text or image in the preview or the list to edit it.": "Vyberte text nebo obrázek v náhledu nebo seznam pro jeho úpravu."
+  "Select a text or image in the preview or the list to edit it.": "Vyberte text nebo obrázek v náhledu nebo seznam pro jeho úpravu.",
+  "Filter is processing...": "Filtr se zpracovává...",
+  "Error loading image.": "Chyba při načítání obrázku.",
+  "Getting your photo ready...": "Získávám vaši fotku..."
 }

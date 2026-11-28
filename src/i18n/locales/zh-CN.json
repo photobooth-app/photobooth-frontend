@@ -274,5 +274,8 @@
   "No texts or images yet.": "尚无文本或图像。",
   "Opacity": "不透明度",
   "Position is the top-left corner. Elements rotate around their own center.": "位置是左上角。元素环绕他们自己的中心。",
-  "Select a text or image in the preview or the list to edit it.": "在预览或列表中选择要编辑的文本或图像。"
+  "Select a text or image in the preview or the list to edit it.": "在预览或列表中选择要编辑的文本或图像。",
+  "Filter is processing...": "过滤器正在处理...",
+  "Error loading image.": "加载图像时出错。",
+  "Getting your photo ready...": "Getting your photo ready..."
 }

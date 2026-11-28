@@ -274,5 +274,8 @@
   "No texts or images yet.": "Geen teksten of afbeeldingen",
   "Opacity": "Transparantie",
   "Position is the top-left corner. Elements rotate around their own center.": "Positie is de linkerbovenhoek. Elementen draaien rond hun eigen centrum.",
-  "Select a text or image in the preview or the list to edit it.": "Selecteer een tekst of afbeelding in de preview of de lijst om te bewerken."
+  "Select a text or image in the preview or the list to edit it.": "Selecteer een tekst of afbeelding in de preview of de lijst om te bewerken.",
+  "Filter is processing...": "Filter wordt verwerkt...",
+  "Error loading image.": "Fout bij laden afbeelding.",
+  "Getting your photo ready...": "Getting your photo ready..."
 }
