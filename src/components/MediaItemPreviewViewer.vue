@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isImage(item.processed)" ref="imageContainer" class="full-height full-width relative-position flex flex-center overflow-hidden">
+  <div v-if="isImagePreview" ref="imageContainer" class="full-height full-width relative-position flex flex-center overflow-hidden">
     <div v-if="displayedImage" class="relative-position" :style="imageFrameStyle">
       <Transition name="preview-fade">
         <img
@@ -10,22 +10,25 @@
           class="preview-image absolute-full full-height full-width"
         />
       </Transition>
-      <div v-if="showProcessingEffect" class="rainbow-frame-overlay"> </div>
     </div>
     <q-spinner v-else-if="isLoading" class="preview-loading" size="2em" />
 
     <div
       v-if="isProcessing"
-      class="full-height full-width column justify-center content-center"
+      class="full-height full-width column no-wrap justify-center items-center q-pa-md"
       style="position: absolute; pointer-events: none"
       role="status"
     >
-      <q-spinner-grid size="20em" />
+      <q-spinner-grid class="processing-spinner" size="20em" />
+
+      <q-chip class="processing-message q-mt-sm text-center" :style="{ visibility: showProcessingMessage ? 'visible' : 'hidden' }">
+        <span class="processing-message-text">{{ $t('Getting your photo ready...') }}</span>
+      </q-chip>
     </div>
 
     <div v-if="imageLoadFailed" class="absolute-center text-center" role="alert">{{ $t('Error loading image.') }}</div>
   </div>
-  <div v-else-if="isVideo(item.processed)" class="full-height">
+  <div v-else-if="item && isVideo(item.processed)" class="full-height">
     <video
       :draggable="false"
       :src="`/media/preview/${item.id}?${item.revision}`"
@@ -51,11 +54,14 @@ import type { MediaitemPublic } from '@/dto/generated'
 import { isVideo, isImage } from '@/util/media_is_type'
 
 const props = defineProps<{
-  item: MediaitemPublic
+  item?: MediaitemPublic
+  src?: string
   isProcessing?: boolean
-  showProcessingEffect?: boolean
 }>()
 
+const isImagePreview = computed(() => Boolean(props.src) || Boolean(props.item && isImage(props.item.processed)))
+const previewSrc = computed(() => props.src ?? (props.item ? `/media/preview/${props.item.id}?${props.item.revision}` : null))
+const showProcessingMessage = ref(false)
 const imageContainer = ref<HTMLElement | null>(null)
 const { width, height } = useElementSize(imageContainer)
 const displayedImage = ref<{ id: string; src: string; width: number; height: number } | null>(null)
@@ -69,16 +75,16 @@ const imageFrameStyle = computed(() => {
 })
 
 watch(
-  () => [props.item.id, props.item.revision, isImage(props.item.processed)] as const,
-  ([id, revision, image], _, onCleanup) => {
-    if (displayedImage.value?.id !== id || !image) displayedImage.value = null
+  () => [previewSrc.value, isImagePreview.value] as const,
+  ([src, image], _, onCleanup) => {
+    if (displayedImage.value?.src !== src || !image) displayedImage.value = null
     imageLoadFailed.value = false
-    isLoading.value = image
-    if (!image) return
+    isLoading.value = image && src !== null
+    if (!isLoading.value || !src) return
 
     const preview = new Image()
     preview.onload = () => {
-      displayedImage.value = { id, src: preview.src, width: preview.naturalWidth, height: preview.naturalHeight }
+      displayedImage.value = { id: src, src: preview.src, width: preview.naturalWidth, height: preview.naturalHeight }
       isLoading.value = false
     }
     preview.onerror = () => {
@@ -90,7 +96,21 @@ watch(
       preview.onload = null
       preview.onerror = null
     })
-    preview.src = `/media/preview/${id}?${revision}`
+    preview.src = src
+  },
+  { immediate: true }
+)
+
+watch(
+  () => props.isProcessing,
+  (isProcessing, _, onCleanup) => {
+    showProcessingMessage.value = false
+    if (!isProcessing) return
+
+    const timer = setTimeout(() => {
+      showProcessingMessage.value = true
+    }, 2000)
+    onCleanup(() => clearTimeout(timer))
   },
   { immediate: true }
 )
@@ -124,42 +144,19 @@ watch(
   }
 }
 
-.rainbow-frame-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
+.processing-spinner {
+  min-height: 0;
+  max-width: 100%;
 }
 
-.rainbow-frame-overlay::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 4px solid transparent;
-  border-image: linear-gradient(135deg, #ff0055, #ff5000, #ffcc00, #00ff66, #00ccff, #7000ff, #ff0055) 1;
-  animation: rainbow-border 3s linear infinite;
-  box-shadow:
-    inset 0 0 10px rgba(255, 255, 255, 0.3),
-    0 0 15px rgba(0, 204, 255, 0.4);
+.processing-message {
+  flex-shrink: 0;
+  height: auto;
+  max-width: 100%;
 }
 
-.rainbow-badge {
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: calc(100% - 16px);
-  flex-wrap: nowrap;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 24px;
-  text-align: center;
-}
-
-@keyframes rainbow-border {
-  to {
-    filter: hue-rotate(360deg);
-  }
+.processing-message-text {
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 </style>

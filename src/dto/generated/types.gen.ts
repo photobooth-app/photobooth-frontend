@@ -2239,6 +2239,10 @@ export type UiJobModel = {
     approval_id: string | null;
     captures_definition: UiCaptureDefinition | null;
     frame_overlay: UiFrameOverlay | null;
+    /**
+     * Preview Capture Id
+     */
+    preview_capture_id?: string | null;
 };
 
 /**

@@ -13,6 +13,7 @@ export const useStateStore = defineStore('state-store', {
       duration: 0,
       present_mediaitem_id: '',
       approval_id: '',
+      preview_capture_id: null,
       captures_definition: null,
       frame_overlay: null,
     } as UiJobModel,

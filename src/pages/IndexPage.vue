@@ -10,8 +10,16 @@
       :blurredbackground-high-framerate="configurationStore.configuration.uisettings.livestream_blurredbackground_high_framerate"
     ></preview-stream>
 
-    <!-- layer display processing spinner grid to show user computer working hard -->
-    <div v-if="stateStore.isStateProcessing" class="full-height full-width column justify-center content-center" style="position: absolute">
+    <!-- layer display processing spinner grid to show user computer working hard ON IMAGES with a preview -->
+    <MediaItemPreviewViewer
+      v-if="stateStore.isStateProcessing && stateStore.jobmodel.typ === 'image' && stateStore.jobmodel.preview_capture_id"
+      class="fixed-full"
+      :src="`/api/processing/approval/${stateStore.jobmodel.preview_capture_id}`"
+      :is-processing="true"
+    />
+
+    <!-- layer display processing spinner grid to show user computer working hard ON NON-IMAGES without a preview -->
+    <div v-else-if="stateStore.isStateProcessing" class="full-height full-width column justify-center content-center" style="position: absolute">
       <q-spinner-grid size="20em" />
     </div>
 
@@ -116,6 +124,7 @@ import { default as FrontpageTriggerButtons } from '@/components/FrontpageTrigge
 import { default as PreviewStream } from '@/components/PreviewStream.vue'
 import _ from 'lodash'
 import MediaItemApprovalViewer from '@/components/MediaItemApprovalViewer.vue'
+import MediaItemPreviewViewer from '@/components/MediaItemPreviewViewer.vue'
 import type { UiFrameOverlay } from '@/dto/generated'
 import type { Size2D } from '@/util/streamRenderer.ts'
 const mainStore = useMainStore()
