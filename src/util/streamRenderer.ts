@@ -28,7 +28,26 @@ type WorkerMessageFixedSize = {
 type WorkerMessageResetMode = {
   type: 'resetMode'
 }
-type WorkerMessageUnion = WorkerMessageInit | WorkerMessageFrame | WorkerMessageOverlay | WorkerMessageFixedSize | WorkerMessageResetMode
+type WorkerMessageSetSnapshotEnabled = {
+  type: 'setSnapshotEnabled'
+  enabled: boolean
+}
+type WorkerMessageRequestSnapshot = {
+  type: 'requestSnapshot'
+}
+type WorkerMessageSetMirrorEffect = {
+  type: 'setMirrorEffect'
+  enabled: boolean
+}
+type WorkerMessageUnion =
+  | WorkerMessageInit
+  | WorkerMessageFrame
+  | WorkerMessageOverlay
+  | WorkerMessageFixedSize
+  | WorkerMessageResetMode
+  | WorkerMessageSetSnapshotEnabled
+  | WorkerMessageRequestSnapshot
+  | WorkerMessageSetMirrorEffect
 
 interface Vec2 {
   x: number
@@ -65,6 +84,7 @@ interface StreamConfig {
   enableMirrorEffectStream: boolean
   blurInterval: number
   debugRectangleBbox: boolean
+  snapshotEnabled: boolean
 }
 
 interface DrawState {
@@ -72,6 +92,8 @@ interface DrawState {
   droppedFrameCount: number
   lastLog: number
   lastBlurUpdate: number
+  lastSnapshot: Blob | null
+  lastSnapshotTime: number
 }
 
 /* -------------------------
@@ -318,6 +340,7 @@ class StreamRenderer {
     enableMirrorEffectStream: false,
     blurInterval: 300,
     debugRectangleBbox: false,
+    snapshotEnabled: false,
   }
 
   private draw: DrawState = {
@@ -325,6 +348,8 @@ class StreamRenderer {
     droppedFrameCount: 0,
     lastLog: performance.now(),
     lastBlurUpdate: 0,
+    lastSnapshot: null,
+    lastSnapshotTime: 0,
   }
 
   init(canvases: { stream: OffscreenCanvas; blurred: OffscreenCanvas }, streamRendererImageDecoderMode: boolean, opts: Partial<StreamConfig>) {
@@ -364,6 +389,35 @@ class StreamRenderer {
 
   async setOriginalMode() {
     this.setDrawMode({ mode: 'original' })
+  }
+
+  setSnapshotEnabled(enabled: boolean) {
+    this.config.snapshotEnabled = enabled
+    if (!enabled) this.draw.lastSnapshot = null
+  }
+
+  setMirrorEffect(enabled: boolean) {
+    this.config.enableMirrorEffectStream = enabled
+  }
+
+  getSnapshot(): Blob | null {
+    return this.draw.lastSnapshot
+  }
+
+  // downscaled jpeg copy of the current stream canvas, posted to the main thread at most every 500ms while enabled
+  private async maybeSnapshot() {
+    if (!this.config.snapshotEnabled || !this.streamCanvas) return
+    const now = performance.now()
+    if (now - this.draw.lastSnapshotTime < 500) return
+    this.draw.lastSnapshotTime = now
+
+    const src = this.streamCanvas.canvas
+    const scale = Math.min(1, 640 / src.width)
+    const snap = new OffscreenCanvas(Math.max(1, Math.round(src.width * scale)), Math.max(1, Math.round(src.height * scale)))
+    snap.getContext('2d')!.drawImage(src, 0, 0, snap.width, snap.height)
+    const blob = await snap.convertToBlob({ type: 'image/jpeg', quality: 0.85 })
+    this.draw.lastSnapshot = blob
+    self.postMessage({ type: 'snapshot', payload: blob })
   }
 
   async setFixedSize(fixedSize: Size2D) {
@@ -436,6 +490,9 @@ class StreamRenderer {
           drawFrameModeFixedSize(this.streamCanvas, bitmap, this.drawState.fixedSize, this.config)
           break
       }
+
+      // post a downscaled snapshot of the just-drawn frame if enabled
+      await this.maybeSnapshot()
 
       // update blurred canvas if enabled and interval passed
       if (this.config.enableBlurredBackgroundStream && this.blurredCanvas) {
@@ -523,6 +580,22 @@ self.onmessage = async (ev: MessageEvent<WorkerMessageUnion>) => {
       case 'resetMode': {
         console.log('setting original draw mode')
         await renderer.setOriginalMode()
+        break
+      }
+
+      case 'setSnapshotEnabled': {
+        renderer.setSnapshotEnabled(data.enabled)
+        break
+      }
+
+      case 'requestSnapshot': {
+        const snapshot = renderer.getSnapshot()
+        if (snapshot) self.postMessage({ type: 'snapshot', payload: snapshot })
+        break
+      }
+
+      case 'setMirrorEffect': {
+        renderer.setMirrorEffect(data.enabled)
         break
       }
 

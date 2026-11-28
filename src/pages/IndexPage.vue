@@ -1,6 +1,7 @@
 <template>
   <q-page id="index-page" class="q-pa-none full-height">
     <preview-stream
+      ref="previewStream"
       v-if="showPreviewThrottled"
       :index_device="configurationStore.configuration.cameras.index_backend_video"
       :frame-overlay="frameOverlay"
@@ -10,10 +11,29 @@
       :blurredbackground-high-framerate="configurationStore.configuration.uisettings.livestream_blurredbackground_high_framerate"
     ></preview-stream>
 
-    <!-- layer display processing spinner grid to show user computer working hard -->
-    <div v-if="stateStore.isStateProcessing" class="full-height full-width column justify-center content-center" style="position: absolute">
-      <q-spinner-grid size="20em" />
-    </div>
+    <!-- layer showing the frozen preview frame from the moment the picture was taken while the backend processes (e.g. a filter applied as part of an action). fills the full canvas. the snapshot inherits the preview mirror, so it is flipped back when the mirror preview setting is on, making it correspond to the final (unmirrored) image. fades in right after the shot; replaced by the processed image in the item presenter once done -->
+    <Transition name="processing-fade">
+      <div v-if="frozenFrameUrl" class="absolute-full overflow-hidden" style="z-index: 90; background: #000">
+        <img
+          :src="frozenFrameUrl"
+          alt=""
+          class="processing-frozen-image"
+          :class="{ 'processing-frozen-image-flipped': livestreamMirrorEffect }"
+          draggable="false"
+        />
+      </div>
+    </Transition>
+
+    <!-- semitransparent processing spinner on top of the taken image. delayed and faded so short processing does not flash -->
+    <Transition name="processing-fade">
+      <div
+        v-if="showProcessingSpinner"
+        class="processing-overlay full-height full-width column justify-center content-center"
+        style="position: absolute; z-index: 100"
+      >
+        <q-spinner-grid size="20em" />
+      </div>
+    </Transition>
 
     <!-- layer display the countdown timer -->
     <div
@@ -105,7 +125,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { watchDebounced, refThrottled } from '@vueuse/core'
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { remoteProcedureCall } from '@/util/fetch_api.js'
 import { useMainStore } from '@/stores/main-store'
 import { useStateStore } from '@/stores/state-store'
@@ -123,6 +143,63 @@ const stateStore = useStateStore()
 const configurationStore = useConfigurationStore()
 const router = useRouter()
 const btnAdminClickCounter = ref(0)
+
+// delay showing the processing spinner so short-running processing (e.g. quick filters) does not flash it; then fade in/out
+const PROCESSING_SPINNER_DELAY_MS = 1000
+const showProcessingSpinner = ref(false)
+let processingSpinnerTimer: ReturnType<typeof setTimeout> | undefined
+watch(
+  () => stateStore.isStateProcessing,
+  processing => {
+    if (processingSpinnerTimer) {
+      clearTimeout(processingSpinnerTimer)
+      processingSpinnerTimer = undefined
+    }
+    if (processing) {
+      processingSpinnerTimer = setTimeout(() => {
+        showProcessingSpinner.value = true
+      }, PROCESSING_SPINNER_DELAY_MS)
+    } else {
+      showProcessingSpinner.value = false
+    }
+  },
+  { immediate: true }
+)
+onBeforeUnmount(() => {
+  if (processingSpinnerTimer) clearTimeout(processingSpinnerTimer)
+})
+
+// frozen preview frame from the moment the picture was taken, shown while the backend processes.
+// the snapshot copies the stream canvas, which is mirrored when livestream_mirror_effect is on —
+// but the final captured image is not mirrored, so flip the frozen frame back in that case
+const previewStream = ref<InstanceType<typeof PreviewStream> | null>(null)
+const lastFrameUrl = ref<string | null>(null)
+const frozenFrameUrl = ref<string | null>(null)
+const livestreamMirrorEffect = computed(() => configurationStore.configuration.uisettings.livestream_mirror_effect)
+
+// keep track of the latest preview frame while the stream is alive
+watch(
+  () => previewStream.value?.lastSnapshotUrl,
+  url => {
+    if (url) lastFrameUrl.value = url
+  }
+)
+// ask the stream worker for fresh snapshots while counting down / capturing, so the frame at shot time is available
+watch(
+  () => stateStore.isStateCountdown || stateStore.isStateCapture,
+  active => previewStream.value?.setSnapshotEnabled(active)
+)
+watch(
+  () => stateStore.isStateProcessing,
+  processing => {
+    if (processing) {
+      previewStream.value?.requestSnapshot()
+      frozenFrameUrl.value = lastFrameUrl.value
+    } else {
+      frozenFrameUrl.value = null
+    }
+  }
+)
 
 watchDebounced(
   btnAdminClickCounter,
@@ -226,4 +303,35 @@ const stopRecordingVideo = () => {
 .action-button-admin-invisible
   opacity: 0.0
   cursor: default
+</style>
+
+<style scoped>
+.processing-overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.processing-frozen-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* fully visible, scaled so the longest side fills the canvas; remaining bars stay black */
+  object-fit: contain;
+}
+
+/* undo the preview mirror so the frozen frame matches the final unmirrored image */
+.processing-frozen-image-flipped {
+  transform: scaleX(-1);
+}
+
+
+.processing-fade-enter-active,
+.processing-fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.processing-fade-enter-from,
+.processing-fade-leave-to {
+  opacity: 0;
+}
 </style>

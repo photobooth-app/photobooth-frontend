@@ -39,7 +39,6 @@
             <MediaItemPreviewViewer
               :item="currentMediaitem"
               :is-processing="processingItemIds.includes(currentMediaitem.id)"
-              :show-processing-effect="processingEffectItemIds.includes(currentMediaitem.id)"
               style="user-select: none"
             />
           </template>
@@ -48,7 +47,6 @@
               :mediaitem-id="currentMediaitem.id"
               :sliced-images="mediacollectionStore.collection"
               :processing-item-ids="processingItemIds"
-              :processing-effect-item-ids="processingEffectItemIds"
               @trigger-changed-item="onCarouselTransition"
             />
           </template>
@@ -148,10 +146,8 @@ const mediacollectionStore = useMediacollectionStore()
 const selectedMediaitemId = ref<string | null>(null)
 const openFilterDialog = ref(false)
 const headercountdowntimer = ref(false) // likely not used here, move to newitempresenter and approval...
-const pendingFilters = ref<Record<string, boolean>>({})
-const filterTimers = new Map<string, ReturnType<typeof setTimeout>>()
-const processingItemIds = computed(() => Object.keys(pendingFilters.value))
-const processingEffectItemIds = computed(() => Object.keys(pendingFilters.value).filter(id => pendingFilters.value[id]))
+const pendingFilterIds = ref<string[]>([])
+const processingItemIds = computed(() => pendingFilterIds.value)
 let unmounted = false
 const showDialogShareActionWithParameters = ref(false)
 const shareActionWithParametersConfigIndex = ref(0)
@@ -174,8 +170,6 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   unmounted = true
-  filterTimers.forEach(timer => clearTimeout(timer))
-  filterTimers.clear()
 })
 const onCarouselTransition = (newMediaitemId: string | number) => {
   selectedMediaitemId.value = newMediaitemId as string
@@ -261,15 +255,9 @@ const getAvailableFilter = async () => {
 const doApplyFilter = async (id: string, filter: string) => {
   // close filter dialog
   openFilterDialog.value = false
-  if (id in pendingFilters.value) return
+  if (pendingFilterIds.value.includes(id)) return
 
-  pendingFilters.value[id] = false
-  filterTimers.set(
-    id,
-    setTimeout(() => {
-      pendingFilters.value[id] = true
-    }, 900)
-  )
+  pendingFilterIds.value.push(id)
 
   try {
     const response = await _fetch(`/api/filter/${id}?filter=${encodeURIComponent(filter)}`, { method: 'PATCH' })
@@ -288,9 +276,7 @@ const doApplyFilter = async (id: string, filter: string) => {
       })
     }
   } finally {
-    clearTimeout(filterTimers.get(id))
-    filterTimers.delete(id)
-    if (!unmounted) delete pendingFilters.value[id]
+    if (!unmounted) pendingFilterIds.value = pendingFilterIds.value.filter(pendingId => pendingId !== id)
   }
 }
 const doDeleteItem = (id: string) => {

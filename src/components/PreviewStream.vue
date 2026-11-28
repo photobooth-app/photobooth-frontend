@@ -108,6 +108,12 @@ const {
 // handle worker messages
 streamRenderer.onmessage = ev => {
   const msg = ev.data
+  if (msg?.type === 'snapshot') {
+    // downscaled copy of the current stream frame, e.g. to freeze the preview at shot time
+    if (lastSnapshotUrl.value) URL.revokeObjectURL(lastSnapshotUrl.value)
+    lastSnapshotUrl.value = URL.createObjectURL(msg.payload as Blob)
+    return
+  }
   if (msg?.type === 'frame-finished') {
     // worker finished rendering the last frame
     if (webSocketStreamStatus.value == 'OPEN') {
@@ -119,6 +125,18 @@ streamRenderer.onmessage = ev => {
   // other worker messages like stats or errors
   console.log(ev.data)
 }
+
+// latest downscaled preview frame as object URL (null if snapshots disabled or no frame yet)
+const lastSnapshotUrl = ref<string | null>(null)
+const setSnapshotEnabled = (enabled: boolean) => streamRenderer.postMessage({ type: 'setSnapshotEnabled', enabled })
+const requestSnapshot = () => streamRenderer.postMessage({ type: 'requestSnapshot' })
+// keep the worker's mirror flag in sync with the mirror-preview setting, so the
+// stream canvas (and with it the snapshot) is mirrored exactly when the setting is on
+watch(
+  () => props.enableMirrorEffectStream,
+  enabled => streamRenderer.postMessage({ type: 'setMirrorEffect', enabled: !!enabled })
+)
+defineExpose({ lastSnapshotUrl, setSnapshotEnabled, requestSnapshot })
 watch(visibility, currentVisibility => {
   if (currentVisibility === 'hidden') {
     console.log('The document is now hidden!')
@@ -147,6 +165,8 @@ onMounted(() => {
     },
     [canvasStream, canvasBlurred]
   )
+  // re-assert the mirror flag after init so it can never be clobbered by an undefined prop at mount time
+  streamRenderer.postMessage({ type: 'setMirrorEffect', enabled: !!props.enableMirrorEffectStream })
 
   openWebSocketStream()
 })

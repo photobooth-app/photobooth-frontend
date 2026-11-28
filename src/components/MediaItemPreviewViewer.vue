@@ -10,18 +10,18 @@
           class="preview-image absolute-full full-height full-width"
         />
       </Transition>
-      <div v-if="showProcessingEffect" class="rainbow-frame-overlay"> </div>
     </div>
     <q-spinner v-else-if="isLoading" class="preview-loading" size="2em" />
 
-    <div
-      v-if="isProcessing"
-      class="full-height full-width column justify-center content-center"
-      style="position: absolute; pointer-events: none"
-      role="status"
-    >
-      <q-spinner-grid size="20em" />
-    </div>
+    <Transition name="processing-fade">
+      <div
+        v-if="showProcessingSpinner"
+        class="processing-overlay full-height full-width column justify-center content-center"
+        role="status"
+      >
+        <q-spinner-grid size="20em" />
+      </div>
+    </Transition>
 
     <div v-if="imageLoadFailed" class="absolute-center text-center" role="alert">{{ $t('Error loading image.') }}</div>
   </div>
@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useElementSize } from '@vueuse/core'
 import type { MediaitemPublic } from '@/dto/generated'
 import { isVideo, isImage } from '@/util/media_is_type'
@@ -53,8 +53,32 @@ import { isVideo, isImage } from '@/util/media_is_type'
 const props = defineProps<{
   item: MediaitemPublic
   isProcessing?: boolean
-  showProcessingEffect?: boolean
 }>()
+
+// delay showing the spinner so short-running filters do not flash it; then fade in/out
+const PROCESSING_SPINNER_DELAY_MS = 1000
+const showProcessingSpinner = ref(false)
+let processingSpinnerTimer: ReturnType<typeof setTimeout> | undefined
+watch(
+  () => props.isProcessing,
+  processing => {
+    if (processingSpinnerTimer) {
+      clearTimeout(processingSpinnerTimer)
+      processingSpinnerTimer = undefined
+    }
+    if (processing) {
+      processingSpinnerTimer = setTimeout(() => {
+        showProcessingSpinner.value = true
+      }, PROCESSING_SPINNER_DELAY_MS)
+    } else {
+      showProcessingSpinner.value = false
+    }
+  },
+  { immediate: true }
+)
+onBeforeUnmount(() => {
+  if (processingSpinnerTimer) clearTimeout(processingSpinnerTimer)
+})
 
 const imageContainer = ref<HTMLElement | null>(null)
 const { width, height } = useElementSize(imageContainer)
@@ -124,42 +148,19 @@ watch(
   }
 }
 
-.rainbow-frame-overlay {
+.processing-overlay {
   position: absolute;
-  inset: 0;
-  z-index: 1;
   pointer-events: none;
+  background: rgba(0, 0, 0, 0.4);
 }
 
-.rainbow-frame-overlay::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 4px solid transparent;
-  border-image: linear-gradient(135deg, #ff0055, #ff5000, #ffcc00, #00ff66, #00ccff, #7000ff, #ff0055) 1;
-  animation: rainbow-border 3s linear infinite;
-  box-shadow:
-    inset 0 0 10px rgba(255, 255, 255, 0.3),
-    0 0 15px rgba(0, 204, 255, 0.4);
+.processing-fade-enter-active,
+.processing-fade-leave-active {
+  transition: opacity 0.4s ease;
 }
 
-.rainbow-badge {
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: calc(100% - 16px);
-  flex-wrap: nowrap;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 24px;
-  text-align: center;
-}
-
-@keyframes rainbow-border {
-  to {
-    filter: hue-rotate(360deg);
-  }
+.processing-fade-enter-from,
+.processing-fade-leave-to {
+  opacity: 0;
 }
 </style>
